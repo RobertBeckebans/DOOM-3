@@ -2988,7 +2988,7 @@ GLAPI void APIENTRY glFogCoordd( GLdouble );
 GLAPI void APIENTRY glFogCoorddv( const GLdouble* );
 GLAPI void APIENTRY glFogCoordPointer( GLenum, GLsizei, const GLvoid* );
 GLAPI void APIENTRY glMultiDrawArrays( GLenum, GLint*, GLsizei*, GLsizei );
-GLAPI void APIENTRY glMultiDrawElements( GLenum, const GLsizei*, GLenum, const GLvoid **, GLsizei );
+GLAPI void APIENTRY glMultiDrawElements( GLenum, const GLsizei*, GLenum, const GLvoid**, GLsizei );
 GLAPI void APIENTRY glPointParameterf( GLenum, GLfloat );
 GLAPI void APIENTRY glPointParameterfv( GLenum, const GLfloat* );
 GLAPI void APIENTRY glPointParameteri( GLenum, GLint );
@@ -3095,7 +3095,7 @@ GLAPI void APIENTRY glGetBufferSubData( GLenum, GLintptr, GLsizeiptr, GLvoid* );
 GLAPI GLvoid* APIENTRY glMapBuffer( GLenum, GLenum );
 GLAPI GLboolean APIENTRY glUnmapBuffer( GLenum );
 GLAPI void APIENTRY glGetBufferParameteriv( GLenum, GLenum, GLint* );
-GLAPI void APIENTRY glGetBufferPointerv( GLenum, GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetBufferPointerv( GLenum, GLenum, GLvoid** );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLGENQUERIESPROC )( GLsizei n, GLuint* ids );
 typedef void ( APIENTRYP PFNGLDELETEQUERIESPROC )( GLsizei n, const GLuint* ids );
@@ -3427,7 +3427,7 @@ GLAPI void APIENTRY glGetProgramStringARB( GLenum, GLenum, GLvoid* );
 GLAPI void APIENTRY glGetVertexAttribdvARB( GLuint, GLenum, GLdouble* );
 GLAPI void APIENTRY glGetVertexAttribfvARB( GLuint, GLenum, GLfloat* );
 GLAPI void APIENTRY glGetVertexAttribivARB( GLuint, GLenum, GLint* );
-GLAPI void APIENTRY glGetVertexAttribPointervARB( GLuint, GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetVertexAttribPointervARB( GLuint, GLenum, GLvoid** );
 GLAPI GLboolean APIENTRY glIsProgramARB( GLuint );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLVERTEXATTRIB1DARBPROC )( GLuint index, GLdouble x );
@@ -3512,7 +3512,7 @@ GLAPI void APIENTRY glGetBufferSubDataARB( GLenum, GLintptrARB, GLsizeiptrARB, G
 GLAPI GLvoid* APIENTRY glMapBufferARB( GLenum, GLenum );
 GLAPI GLboolean APIENTRY glUnmapBufferARB( GLenum );
 GLAPI void APIENTRY glGetBufferParameterivARB( GLenum, GLenum, GLint* );
-GLAPI void APIENTRY glGetBufferPointervARB( GLenum, GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetBufferPointervARB( GLenum, GLenum, GLvoid** );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLBINDBUFFERARBPROC )( GLenum target, GLuint buffer );
 typedef void ( APIENTRYP PFNGLDELETEBUFFERSARBPROC )( GLsizei n, const GLuint* buffers );
@@ -3556,7 +3556,7 @@ GLAPI void APIENTRY glDeleteObjectARB( GLhandleARB );
 GLAPI GLhandleARB APIENTRY glGetHandleARB( GLenum );
 GLAPI void APIENTRY glDetachObjectARB( GLhandleARB, GLhandleARB );
 GLAPI GLhandleARB APIENTRY glCreateShaderObjectARB( GLenum );
-GLAPI void APIENTRY glShaderSourceARB( GLhandleARB, GLsizei, const GLcharARB **, const GLint* );
+GLAPI void APIENTRY glShaderSourceARB( GLhandleARB, GLsizei, const GLcharARB**, const GLint* );
 GLAPI void APIENTRY glCompileShaderARB( GLhandleARB );
 GLAPI GLhandleARB APIENTRY glCreateProgramObjectARB( void );
 GLAPI void APIENTRY glAttachObjectARB( GLhandleARB, GLhandleARB );
@@ -3924,7 +3924,7 @@ GLAPI void APIENTRY glArrayElementEXT( GLint );
 GLAPI void APIENTRY glColorPointerEXT( GLint, GLenum, GLsizei, GLsizei, const GLvoid* );
 GLAPI void APIENTRY glDrawArraysEXT( GLenum, GLint, GLsizei );
 GLAPI void APIENTRY glEdgeFlagPointerEXT( GLsizei, GLsizei, const GLboolean* );
-GLAPI void APIENTRY glGetPointervEXT( GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetPointervEXT( GLenum, GLvoid** );
 GLAPI void APIENTRY glIndexPointerEXT( GLenum, GLsizei, GLsizei, const GLvoid* );
 GLAPI void APIENTRY glNormalPointerEXT( GLenum, GLsizei, GLsizei, const GLvoid* );
 GLAPI void APIENTRY glTexCoordPointerEXT( GLint, GLenum, GLsizei, GLsizei, const GLvoid* );
@@ -4380,10 +4380,10 @@ typedef GLboolean( APIENTRYP PFNGLISASYNCMARKERSGIXPROC )( GLuint marker );
 #ifndef GL_INTEL_parallel_arrays
 #define GL_INTEL_parallel_arrays 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glVertexPointervINTEL( GLint, GLenum, const GLvoid ** );
-GLAPI void APIENTRY glNormalPointervINTEL( GLenum, const GLvoid ** );
-GLAPI void APIENTRY glColorPointervINTEL( GLint, GLenum, const GLvoid ** );
-GLAPI void APIENTRY glTexCoordPointervINTEL( GLint, GLenum, const GLvoid ** );
+GLAPI void APIENTRY glVertexPointervINTEL( GLint, GLenum, const GLvoid** );
+GLAPI void APIENTRY glNormalPointervINTEL( GLenum, const GLvoid** );
+GLAPI void APIENTRY glColorPointervINTEL( GLint, GLenum, const GLvoid** );
+GLAPI void APIENTRY glTexCoordPointervINTEL( GLint, GLenum, const GLvoid** );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLVERTEXPOINTERVINTELPROC )( GLint size, GLenum type, const GLvoid * *pointer );
 typedef void ( APIENTRYP PFNGLNORMALPOINTERVINTELPROC )( GLenum type, const GLvoid * *pointer );
@@ -4473,7 +4473,7 @@ typedef void ( APIENTRYP PFNGLTEXTURENORMALEXTPROC )( GLenum mode );
 #define GL_EXT_multi_draw_arrays 1
 #ifdef GL_GLEXT_PROTOTYPES
 GLAPI void APIENTRY glMultiDrawArraysEXT( GLenum, GLint*, GLsizei*, GLsizei );
-GLAPI void APIENTRY glMultiDrawElementsEXT( GLenum, const GLsizei*, GLenum, const GLvoid **, GLsizei );
+GLAPI void APIENTRY glMultiDrawElementsEXT( GLenum, const GLsizei*, GLenum, const GLvoid**, GLsizei );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLMULTIDRAWARRAYSEXTPROC )( GLenum mode, GLint* first, GLsizei* count, GLsizei primcount );
 typedef void ( APIENTRYP PFNGLMULTIDRAWELEMENTSEXTPROC )( GLenum mode, const GLsizei* count, GLenum type, const GLvoid * *indices, GLsizei primcount );
@@ -4604,7 +4604,7 @@ GLAPI void APIENTRY glReplacementCodeubSUN( GLubyte );
 GLAPI void APIENTRY glReplacementCodeuivSUN( const GLuint* );
 GLAPI void APIENTRY glReplacementCodeusvSUN( const GLushort* );
 GLAPI void APIENTRY glReplacementCodeubvSUN( const GLubyte* );
-GLAPI void APIENTRY glReplacementCodePointerSUN( GLenum, GLsizei, const GLvoid ** );
+GLAPI void APIENTRY glReplacementCodePointerSUN( GLenum, GLsizei, const GLvoid** );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLREPLACEMENTCODEUISUNPROC )( GLuint code );
 typedef void ( APIENTRYP PFNGLREPLACEMENTCODEUSSUNPROC )( GLushort code );
@@ -4906,14 +4906,14 @@ typedef void ( APIENTRYP PFNGLMULTIMODEDRAWELEMENTSIBMPROC )( const GLenum* mode
 #ifndef GL_IBM_vertex_array_lists
 #define GL_IBM_vertex_array_lists 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glColorPointerListIBM( GLint, GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glSecondaryColorPointerListIBM( GLint, GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glEdgeFlagPointerListIBM( GLint, const GLboolean **, GLint );
-GLAPI void APIENTRY glFogCoordPointerListIBM( GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glIndexPointerListIBM( GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glNormalPointerListIBM( GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glTexCoordPointerListIBM( GLint, GLenum, GLint, const GLvoid **, GLint );
-GLAPI void APIENTRY glVertexPointerListIBM( GLint, GLenum, GLint, const GLvoid **, GLint );
+GLAPI void APIENTRY glColorPointerListIBM( GLint, GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glSecondaryColorPointerListIBM( GLint, GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glEdgeFlagPointerListIBM( GLint, const GLboolean**, GLint );
+GLAPI void APIENTRY glFogCoordPointerListIBM( GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glIndexPointerListIBM( GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glNormalPointerListIBM( GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glTexCoordPointerListIBM( GLint, GLenum, GLint, const GLvoid**, GLint );
+GLAPI void APIENTRY glVertexPointerListIBM( GLint, GLenum, GLint, const GLvoid**, GLint );
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLCOLORPOINTERLISTIBMPROC )( GLint size, GLenum type, GLint stride, const GLvoid * *pointer, GLint ptrstride );
 typedef void ( APIENTRYP PFNGLSECONDARYCOLORPOINTERLISTIBMPROC )( GLint size, GLenum type, GLint stride, const GLvoid * *pointer, GLint ptrstride );
@@ -5101,7 +5101,7 @@ GLAPI void APIENTRY glGetTrackMatrixivNV( GLenum, GLuint, GLenum, GLint* );
 GLAPI void APIENTRY glGetVertexAttribdvNV( GLuint, GLenum, GLdouble* );
 GLAPI void APIENTRY glGetVertexAttribfvNV( GLuint, GLenum, GLfloat* );
 GLAPI void APIENTRY glGetVertexAttribivNV( GLuint, GLenum, GLint* );
-GLAPI void APIENTRY glGetVertexAttribPointervNV( GLuint, GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetVertexAttribPointervNV( GLuint, GLenum, GLvoid** );
 GLAPI GLboolean APIENTRY glIsProgramNV( GLuint );
 GLAPI void APIENTRY glLoadProgramNV( GLenum, GLuint, GLsizei, const GLubyte* );
 GLAPI void APIENTRY glProgramParameter4dNV( GLenum, GLuint, GLdouble, GLdouble, GLdouble, GLdouble );
@@ -5369,7 +5369,7 @@ GLAPI GLboolean APIENTRY glIsVariantEnabledEXT( GLuint, GLenum );
 GLAPI void APIENTRY glGetVariantBooleanvEXT( GLuint, GLenum, GLboolean* );
 GLAPI void APIENTRY glGetVariantIntegervEXT( GLuint, GLenum, GLint* );
 GLAPI void APIENTRY glGetVariantFloatvEXT( GLuint, GLenum, GLfloat* );
-GLAPI void APIENTRY glGetVariantPointervEXT( GLuint, GLenum, GLvoid ** );
+GLAPI void APIENTRY glGetVariantPointervEXT( GLuint, GLenum, GLvoid** );
 GLAPI void APIENTRY glGetInvariantBooleanvEXT( GLuint, GLenum, GLboolean* );
 GLAPI void APIENTRY glGetInvariantIntegervEXT( GLuint, GLenum, GLint* );
 GLAPI void APIENTRY glGetInvariantFloatvEXT( GLuint, GLenum, GLfloat* );
