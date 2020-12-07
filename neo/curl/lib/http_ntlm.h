@@ -1,10 +1,10 @@
 #ifndef __HTTP_NTLM_H
 #define __HTTP_NTLM_H
 /***************************************************************************
- *                                  _   _ ____  _     
- *  Project                     ___| | | |  _ \| |    
- *                             / __| | | | |_) | |    
- *                            | (__| |_| |  _ <| |___ 
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
@@ -12,7 +12,7 @@
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
  * are also available at http://curl.haxx.se/docs/copyright.html.
- * 
+ *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
  * furnished to do so, under the terms of the COPYING file.
@@ -23,22 +23,23 @@
  * $Id: http_ntlm.h,v 1.6 2004/01/07 09:19:35 bagder Exp $
  ***************************************************************************/
 
-typedef enum {
-  CURLNTLM_NONE, /* not a ntlm */
-  CURLNTLM_BAD,  /* an ntlm, but one we don't like */
-  CURLNTLM_FIRST, /* the first 401-reply we got with NTLM */
-  CURLNTLM_FINE, /* an ntlm we act on */
+typedef enum
+{
+	CURLNTLM_NONE, /* not a ntlm */
+	CURLNTLM_BAD,  /* an ntlm, but one we don't like */
+	CURLNTLM_FIRST, /* the first 401-reply we got with NTLM */
+	CURLNTLM_FINE, /* an ntlm we act on */
 
-  CURLNTLM_LAST  /* last entry in this enum, don't use */
+	CURLNTLM_LAST  /* last entry in this enum, don't use */
 } CURLntlm;
 
 /* this is for ntlm header input */
-CURLntlm Curl_input_ntlm(struct connectdata *conn, bool proxy, char *header);
+CURLntlm Curl_input_ntlm( struct connectdata* conn, bool proxy, char* header );
 
 /* this is for creating ntlm header output */
-CURLcode Curl_output_ntlm(struct connectdata *conn, bool proxy, bool *ready);
+CURLcode Curl_output_ntlm( struct connectdata* conn, bool proxy, bool* ready );
 
-void Curl_ntlm_cleanup(struct SessionHandle *data);
+void Curl_ntlm_cleanup( struct SessionHandle* data );
 
 
 /* Flag bits definitions based on http://davenport.sourceforge.net/ntlm.html */

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,17 +29,18 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-typedef struct {
-	char	*name;
+typedef struct
+{
+	char*	name;
 	int		keynum;
-	char	*strId;	// localized string id
+	char*	strId;	// localized string id
 } keyname_t;
 
 // keys that can be set without a special name
 static const char unnamedkeys[] = "*,-=./[\\]1234567890abcdefghijklmnopqrstuvwxyz";
 
 #if MACOS_X
-const char* OSX_GetLocalizedString( const char* );
+	const char* OSX_GetLocalizedString( const char* );
 #endif
 
 // names not in this list can either be lowercase ascii, or '0xnn' hex sequences
@@ -69,7 +70,7 @@ keyname_t keynames[] =
 	{"CAPSLOCK",		K_CAPSLOCK,			"#str_07034"},
 	{"SCROLL",			K_SCROLL,			"#str_07035"},
 	{"PRINTSCREEN",		K_PRINT_SCR,		"#str_07179"},
-	
+
 	{"F1", 				K_F1, 				"#str_07036"},
 	{"F2", 				K_F2, 				"#str_07037"},
 	{"F3", 				K_F3, 				"#str_07038"},
@@ -172,7 +173,7 @@ keyname_t keynames[] =
 	{"KP_EQUALS",		K_KP_EQUALS,		"#str_07127"},
 
 	{"PAUSE",			K_PAUSE,			"#str_07128"},
-	
+
 	{"SEMICOLON",		';',				"#str_07129"},	// because a raw semicolon separates commands
 	{"APOSTROPHE",		'\'',				"#str_07130"},	// because a raw apostrophe messes with parsing
 
@@ -183,9 +184,15 @@ keyname_t keynames[] =
 
 static const int	MAX_KEYS = 256;
 
-class idKey {
+class idKey
+{
 public:
-					idKey( void ) { down = false; repeats = 0; usercmdAction = 0; }
+	idKey( void )
+	{
+		down = false;
+		repeats = 0;
+		usercmdAction = 0;
+	}
 	bool			down;
 	int				repeats;		// if > 1, it is autorepeating
 	idStr			binding;
@@ -193,33 +200,34 @@ public:
 };
 
 bool		key_overstrikeMode = false;
-idKey *		keys = NULL;
+idKey* 		keys = NULL;
 
 #define ID_DOOM_LEGACY
 
 #ifdef ID_DOOM_LEGACY
 
-char *		cheatCodes[] = {
+char* 		cheatCodes[] =
+{
 	"iddqd",		// Invincibility
 	"idkfa",		// All weapons, keys, ammo, and 200% armor
 	"idfa",			// Reset ammunition
 	"idspispopd",	// Walk through walls
 	"idclip",		// Walk through walls
 	"idchoppers",	// Chainsaw
-/*
-	"idbeholds",	// Berserker strength
-	"idbeholdv",	// Temporary invincibility
-	"idbeholdi",	// Temporary invisibility
-	"idbeholda",	// Full automap
-	"idbeholdr",	// Anti-radiation suit
-	"idbeholdl",	// Light amplification visor
-	"idclev",		// Level select
-	"iddt",			// Toggle full map; full map and objects; normal map
-	"idmypos",		// Display coordinates and heading
-	"idmus",		// Change music to indicated level
-	"fhhall",		// Kill all enemies in level
-	"fhshh",		// Invisible to enemies until attack
-*/
+	/*
+		"idbeholds",	// Berserker strength
+		"idbeholdv",	// Temporary invincibility
+		"idbeholdi",	// Temporary invisibility
+		"idbeholda",	// Full automap
+		"idbeholdr",	// Anti-radiation suit
+		"idbeholdl",	// Light amplification visor
+		"idclev",		// Level select
+		"iddt",			// Toggle full map; full map and objects; normal map
+		"idmypos",		// Display coordinates and heading
+		"idmus",		// Change music to indicated level
+		"fhhall",		// Kill all enemies in level
+		"fhshh",		// Invisible to enemies until attack
+	*/
 	NULL
 };
 char		lastKeys[32];
@@ -232,15 +240,18 @@ int			lastKeyIndex;
 idKeyInput::ArgCompletion_KeyName
 ===================
 */
-void idKeyInput::ArgCompletion_KeyName( const idCmdArgs &args, void(*callback)( const char *s ) ) {
-	keyname_t *kn;
+void idKeyInput::ArgCompletion_KeyName( const idCmdArgs& args, void( *callback )( const char* s ) )
+{
+	keyname_t* kn;
 	int i;
 
-	for( i = 0; i < sizeof( unnamedkeys ) - 1; i++ ) {
+	for( i = 0; i < sizeof( unnamedkeys ) - 1; i++ )
+	{
 		callback( va( "%s %c", args.Argv( 0 ), unnamedkeys[ i ] ) );
 	}
 
-	for ( kn = keynames; kn->name; kn++ ) {
+	for( kn = keynames; kn->name; kn++ )
+	{
 		callback( va( "%s %s", args.Argv( 0 ), kn->name ) );
 	}
 }
@@ -250,7 +261,8 @@ void idKeyInput::ArgCompletion_KeyName( const idCmdArgs &args, void(*callback)( 
 idKeyInput::GetOverstrikeMode
 ===================
 */
-bool idKeyInput::GetOverstrikeMode( void ) {
+bool idKeyInput::GetOverstrikeMode( void )
+{
 	return key_overstrikeMode;
 }
 
@@ -259,7 +271,8 @@ bool idKeyInput::GetOverstrikeMode( void ) {
 idKeyInput::SetOverstrikeMode
 ===================
 */
-void idKeyInput::SetOverstrikeMode( bool state ) {
+void idKeyInput::SetOverstrikeMode( bool state )
+{
 	key_overstrikeMode = state;
 }
 
@@ -268,8 +281,10 @@ void idKeyInput::SetOverstrikeMode( bool state ) {
 idKeyInput::IsDown
 ===================
 */
-bool idKeyInput::IsDown( int keynum ) {
-	if ( keynum == -1 ) {
+bool idKeyInput::IsDown( int keynum )
+{
+	if( keynum == -1 )
+	{
 		return false;
 	}
 
@@ -288,35 +303,49 @@ the K_* names are matched up.
 to be configured even if they don't have defined names.
 ===================
 */
-int idKeyInput::StringToKeyNum( const char *str ) {
-	keyname_t	*kn;
-	
-	if ( !str || !str[0] ) {
+int idKeyInput::StringToKeyNum( const char* str )
+{
+	keyname_t*	kn;
+
+	if( !str || !str[0] )
+	{
 		return -1;
 	}
-	if ( !str[1] ) {
-		return (unsigned char)(str[0]);
+	if( !str[1] )
+	{
+		return ( unsigned char )( str[0] );
 	}
 
 	// check for hex code
-	if ( str[0] == '0' && str[1] == 'x' && strlen( str ) == 4 ) {
+	if( str[0] == '0' && str[1] == 'x' && strlen( str ) == 4 )
+	{
 		int		n1, n2;
-		
+
 		n1 = str[2];
-		if ( n1 >= '0' && n1 <= '9' ) {
+		if( n1 >= '0' && n1 <= '9' )
+		{
 			n1 -= '0';
-		} else if ( n1 >= 'a' && n1 <= 'f' ) {
+		}
+		else if( n1 >= 'a' && n1 <= 'f' )
+		{
 			n1 = n1 - 'a' + 10;
-		} else {
+		}
+		else
+		{
 			n1 = 0;
 		}
 
 		n2 = str[3];
-		if ( n2 >= '0' && n2 <= '9' ) {
+		if( n2 >= '0' && n2 <= '9' )
+		{
 			n2 -= '0';
-		} else if ( n2 >= 'a' && n2 <= 'f' ) {
+		}
+		else if( n2 >= 'a' && n2 <= 'f' )
+		{
 			n2 = n2 - 'a' + 10;
-		} else {
+		}
+		else
+		{
 			n2 = 0;
 		}
 
@@ -324,8 +353,10 @@ int idKeyInput::StringToKeyNum( const char *str ) {
 	}
 
 	// scan for a text match
-	for ( kn = keynames; kn->name; kn++ ) {
-		if ( !idStr::Icmp( str, kn->name ) ) {
+	for( kn = keynames; kn->name; kn++ )
+	{
+		if( !idStr::Icmp( str, kn->name ) )
+		{
 			return kn->keynum;
 		}
 	}
@@ -341,44 +372,55 @@ Returns a string (either a single ascii char, a K_* name, or a 0x11 hex string) 
 given keynum.
 ===================
 */
-const char *idKeyInput::KeyNumToString( int keynum, bool localized ) {
-	keyname_t	*kn;	
+const char* idKeyInput::KeyNumToString( int keynum, bool localized )
+{
+	keyname_t*	kn;
 	static	char	tinystr[5];
 	int			i, j;
 
-	if ( keynum == -1 ) {
+	if( keynum == -1 )
+	{
 		return "<KEY NOT FOUND>";
 	}
 
-	if ( keynum < 0 || keynum > 255 ) {
+	if( keynum < 0 || keynum > 255 )
+	{
 		return "<OUT OF RANGE>";
 	}
 
 	// check for printable ascii (don't use quote)
-	if ( keynum > 32 && keynum < 127 && keynum != '"' && keynum != ';' && keynum != '\'' ) {
+	if( keynum > 32 && keynum < 127 && keynum != '"' && keynum != ';' && keynum != '\'' )
+	{
 		tinystr[0] = Sys_MapCharForKey( keynum );
 		tinystr[1] = 0;
 		return tinystr;
 	}
 
 	// check for a key string
-	for ( kn = keynames; kn->name; kn++ ) {
-		if ( keynum == kn->keynum ) {
-			if ( !localized || kn->strId[0] != '#' ) {
+	for( kn = keynames; kn->name; kn++ )
+	{
+		if( keynum == kn->keynum )
+		{
+			if( !localized || kn->strId[0] != '#' )
+			{
 				return kn->name;
-			} else {
+			}
+			else
+			{
 #if MACOS_X
-				
-				switch ( kn->keynum ) {
-					case K_ENTER:		
-					case K_BACKSPACE:	
-					case K_ALT:			
+
+				switch( kn->keynum )
+				{
+					case K_ENTER:
+					case K_BACKSPACE:
+					case K_ALT:
 					case K_INS:
 					case K_PRINT_SCR:
 						return OSX_GetLocalizedString( kn->name );
 						break;
 					default :
-						return common->GetLanguageDict()->GetString( kn->strId ); break;
+						return common->GetLanguageDict()->GetString( kn->strId );
+						break;
 				}
 #else
 				return common->GetLanguageDict()->GetString( kn->strId );
@@ -388,7 +430,8 @@ const char *idKeyInput::KeyNumToString( int keynum, bool localized ) {
 	}
 
 	// check for European high-ASCII characters
-	if ( localized && keynum >= 161 && keynum <= 255 ) {
+	if( localized && keynum >= 161 && keynum <= 255 )
+	{
 		tinystr[0] = keynum;
 		tinystr[1] = 0;
 		return tinystr;
@@ -412,8 +455,10 @@ const char *idKeyInput::KeyNumToString( int keynum, bool localized ) {
 idKeyInput::SetBinding
 ===================
 */
-void idKeyInput::SetBinding( int keynum, const char *binding ) {
-	if ( keynum == -1 ) {
+void idKeyInput::SetBinding( int keynum, const char* binding )
+{
+	if( keynum == -1 )
+	{
 		return;
 	}
 
@@ -437,8 +482,10 @@ void idKeyInput::SetBinding( int keynum, const char *binding ) {
 idKeyInput::GetBinding
 ===================
 */
-const char *idKeyInput::GetBinding( int keynum ) {
-	if ( keynum == -1 ) {
+const char* idKeyInput::GetBinding( int keynum )
+{
+	if( keynum == -1 )
+	{
 		return "";
 	}
 
@@ -450,7 +497,8 @@ const char *idKeyInput::GetBinding( int keynum ) {
 idKeyInput::GetUsercmdAction
 ===================
 */
-int idKeyInput::GetUsercmdAction( int keynum ) {
+int idKeyInput::GetUsercmdAction( int keynum )
+{
 	return keys[ keynum ].usercmdAction;
 }
 
@@ -459,21 +507,27 @@ int idKeyInput::GetUsercmdAction( int keynum ) {
 Key_Unbind_f
 ===================
 */
-void Key_Unbind_f( const idCmdArgs &args ) {
+void Key_Unbind_f( const idCmdArgs& args )
+{
 	int		b;
 
-	if ( args.Argc() != 2 ) {
+	if( args.Argc() != 2 )
+	{
 		common->Printf( "unbind <key> : remove commands from a key\n" );
 		return;
 	}
-	
-	b = idKeyInput::StringToKeyNum( args.Argv(1) );
-	if ( b == -1 ) {
+
+	b = idKeyInput::StringToKeyNum( args.Argv( 1 ) );
+	if( b == -1 )
+	{
 		// If it wasn't a key, it could be a command
-		if ( !idKeyInput::UnbindBinding( args.Argv(1) ) ) {
-			common->Printf( "\"%s\" isn't a valid key\n", args.Argv(1) );
+		if( !idKeyInput::UnbindBinding( args.Argv( 1 ) ) )
+		{
+			common->Printf( "\"%s\" isn't a valid key\n", args.Argv( 1 ) );
 		}
-	} else {
+	}
+	else
+	{
 		idKeyInput::SetBinding( b, "" );
 	}
 }
@@ -483,10 +537,12 @@ void Key_Unbind_f( const idCmdArgs &args ) {
 Key_Unbindall_f
 ===================
 */
-void Key_Unbindall_f( const idCmdArgs &args ) {
+void Key_Unbindall_f( const idCmdArgs& args )
+{
 	int		i;
-	
-	for ( i = 0; i < MAX_KEYS; i++ ) {
+
+	for( i = 0; i < MAX_KEYS; i++ )
+	{
 		idKeyInput::SetBinding( i, "" );
 	}
 }
@@ -496,37 +552,45 @@ void Key_Unbindall_f( const idCmdArgs &args ) {
 Key_Bind_f
 ===================
 */
-void Key_Bind_f( const idCmdArgs &args ) {
+void Key_Bind_f( const idCmdArgs& args )
+{
 	int			i, c, b;
 	char		cmd[MAX_STRING_CHARS];
-	
+
 	c = args.Argc();
 
-	if ( c < 2 ) {
+	if( c < 2 )
+	{
 		common->Printf( "bind <key> [command] : attach a command to a key\n" );
 		return;
 	}
-	b = idKeyInput::StringToKeyNum( args.Argv(1) );
-	if ( b == -1 ) {
-		common->Printf( "\"%s\" isn't a valid key\n", args.Argv(1) );
+	b = idKeyInput::StringToKeyNum( args.Argv( 1 ) );
+	if( b == -1 )
+	{
+		common->Printf( "\"%s\" isn't a valid key\n", args.Argv( 1 ) );
 		return;
 	}
 
-	if ( c == 2 ) {
-		if ( keys[b].binding.Length() ) {
-			common->Printf( "\"%s\" = \"%s\"\n", args.Argv(1), keys[b].binding.c_str() );
+	if( c == 2 )
+	{
+		if( keys[b].binding.Length() )
+		{
+			common->Printf( "\"%s\" = \"%s\"\n", args.Argv( 1 ), keys[b].binding.c_str() );
 		}
-		else {
-			common->Printf( "\"%s\" is not bound\n", args.Argv(1) );
+		else
+		{
+			common->Printf( "\"%s\" is not bound\n", args.Argv( 1 ) );
 		}
 		return;
 	}
-	
+
 	// copy the rest of the command line
 	cmd[0] = 0;		// start out with a null string
-	for ( i = 2; i < c; i++ ) {
+	for( i = 2; i < c; i++ )
+	{
 		strcat( cmd, args.Argv( i ) );
-		if ( i != (c-1) ) {
+		if( i != ( c - 1 ) )
+		{
 			strcat( cmd, " " );
 		}
 	}
@@ -541,15 +605,18 @@ Key_BindUnBindTwo_f
 binds keynum to bindcommand and unbinds if there are already two binds on the key
 ============
 */
-void Key_BindUnBindTwo_f( const idCmdArgs &args ) {
+void Key_BindUnBindTwo_f( const idCmdArgs& args )
+{
 	int c = args.Argc();
-	if ( c < 3 ) {
+	if( c < 3 )
+	{
 		common->Printf( "bindunbindtwo <keynum> [command]\n" );
 		return;
 	}
 	int key = atoi( args.Argv( 1 ) );
 	idStr bind = args.Argv( 2 );
-	if ( idKeyInput::NumBinds( bind ) >= 2 && !idKeyInput::KeyIsBoundTo( key, bind ) ) {
+	if( idKeyInput::NumBinds( bind ) >= 2 && !idKeyInput::KeyIsBoundTo( key, bind ) )
+	{
 		idKeyInput::UnbindBinding( bind );
 	}
 	idKeyInput::SetBinding( key, bind );
@@ -564,19 +631,25 @@ idKeyInput::WriteBindings
 Writes lines containing "bind key value"
 ============
 */
-void idKeyInput::WriteBindings( idFile *f ) {
+void idKeyInput::WriteBindings( idFile* f )
+{
 	int		i;
 
 	f->Printf( "unbindall\n" );
 
-	for ( i = 0; i < MAX_KEYS; i++ ) {
-		if ( keys[i].binding.Length() ) {
-			const char *name = KeyNumToString( i, false );
+	for( i = 0; i < MAX_KEYS; i++ )
+	{
+		if( keys[i].binding.Length() )
+		{
+			const char* name = KeyNumToString( i, false );
 
 			// handle the escape character nicely
-			if ( !strcmp( name, "\\" ) ) {
+			if( !strcmp( name, "\\" ) )
+			{
 				f->Printf( "bind \"\\\" \"%s\"\n", keys[i].binding.c_str() );
-			} else {
+			}
+			else
+			{
 				f->Printf( "bind \"%s\" \"%s\"\n", KeyNumToString( i, false ), keys[i].binding.c_str() );
 			}
 		}
@@ -588,11 +661,14 @@ void idKeyInput::WriteBindings( idFile *f ) {
 Key_ListBinds_f
 ============
 */
-void Key_ListBinds_f( const idCmdArgs &args ) {
+void Key_ListBinds_f( const idCmdArgs& args )
+{
 	int		i;
 
-	for ( i = 0; i < MAX_KEYS; i++ ) {
-		if ( keys[i].binding.Length() ) {
+	for( i = 0; i < MAX_KEYS; i++ )
+	{
+		if( keys[i].binding.Length() )
+		{
 			common->Printf( "%s \"%s\"\n", idKeyInput::KeyNumToString( i, false ), keys[i].binding.c_str() );
 		}
 	}
@@ -604,22 +680,28 @@ idKeyInput::KeysFromBinding
 returns the localized name of the key for the binding
 ============
 */
-const char *idKeyInput::KeysFromBinding( const char *bind ) {
+const char* idKeyInput::KeysFromBinding( const char* bind )
+{
 	int i;
 	static char keyName[MAX_STRING_CHARS];
 
 	keyName[0] = '\0';
-	if ( bind && *bind ) {
-		for ( i = 0; i < MAX_KEYS; i++ ) {
-			if ( keys[i].binding.Icmp( bind ) == 0 ) {
-				if ( keyName[0] != '\0' ) {
+	if( bind && *bind )
+	{
+		for( i = 0; i < MAX_KEYS; i++ )
+		{
+			if( keys[i].binding.Icmp( bind ) == 0 )
+			{
+				if( keyName[0] != '\0' )
+				{
 					idStr::Append( keyName, sizeof( keyName ), common->GetLanguageDict()->GetString( "#str_07183" ) );
-				} 
+				}
 				idStr::Append( keyName, sizeof( keyName ), KeyNumToString( i, true ) );
 			}
 		}
 	}
-	if ( keyName[0] == '\0' ) {
+	if( keyName[0] == '\0' )
+	{
 		idStr::Copynz( keyName, common->GetLanguageDict()->GetString( "#str_07133" ), sizeof( keyName ) );
 	}
 	idStr::ToLower( keyName );
@@ -632,9 +714,11 @@ idKeyInput::BindingFromKey
 returns the binding for the localized name of the key
 ============
 */
-const char *idKeyInput::BindingFromKey( const char *key ) {
+const char* idKeyInput::BindingFromKey( const char* key )
+{
 	const int keyNum = idKeyInput::StringToKeyNum( key );
-	if ( keyNum<0 || keyNum >= MAX_KEYS ) {
+	if( keyNum < 0 || keyNum >= MAX_KEYS )
+	{
 		return NULL;
 	}
 	return keys[keyNum].binding.c_str();
@@ -645,13 +729,17 @@ const char *idKeyInput::BindingFromKey( const char *key ) {
 idKeyInput::UnbindBinding
 ============
 */
-bool idKeyInput::UnbindBinding( const char *binding ) {
+bool idKeyInput::UnbindBinding( const char* binding )
+{
 	bool unbound = false;
 	int i;
 
-	if ( binding && *binding ) {
-		for ( i = 0; i < MAX_KEYS; i++ ) {
-			if ( keys[i].binding.Icmp( binding ) == 0 ) {
+	if( binding && *binding )
+	{
+		for( i = 0; i < MAX_KEYS; i++ )
+		{
+			if( keys[i].binding.Icmp( binding ) == 0 )
+			{
 				SetBinding( i, "" );
 				unbound = true;
 			}
@@ -665,12 +753,16 @@ bool idKeyInput::UnbindBinding( const char *binding ) {
 idKeyInput::NumBinds
 ============
 */
-int idKeyInput::NumBinds( const char *binding ) {
+int idKeyInput::NumBinds( const char* binding )
+{
 	int i, count = 0;
 
-	if ( binding && *binding ) {
-		for ( i = 0; i < MAX_KEYS; i++ ) {
-			if ( keys[i].binding.Icmp( binding ) == 0 ) {
+	if( binding && *binding )
+	{
+		for( i = 0; i < MAX_KEYS; i++ )
+		{
+			if( keys[i].binding.Icmp( binding ) == 0 )
+			{
 				count++;
 			}
 		}
@@ -683,8 +775,10 @@ int idKeyInput::NumBinds( const char *binding ) {
 idKeyInput::KeyIsBountTo
 ============
 */
-bool idKeyInput::KeyIsBoundTo( int keynum, const char *binding ) {
-	if ( keynum >= 0 && keynum < MAX_KEYS ) {
+bool idKeyInput::KeyIsBoundTo( int keynum, const char* binding )
+{
+	if( keynum >= 0 && keynum < MAX_KEYS )
+	{
 		return ( keys[keynum].binding.Icmp( binding ) == 0 );
 	}
 	return false;
@@ -698,18 +792,22 @@ Tracks global key up/down state
 Called by the system for both key up and key down events
 ===================
 */
-void idKeyInput::PreliminaryKeyEvent( int keynum, bool down ) {
+void idKeyInput::PreliminaryKeyEvent( int keynum, bool down )
+{
 	keys[keynum].down = down;
 
 #ifdef ID_DOOM_LEGACY
-	if ( down ) {
+	if( down )
+	{
 		lastKeys[ 0 + ( lastKeyIndex & 15 )] = keynum;
 		lastKeys[16 + ( lastKeyIndex & 15 )] = keynum;
 		lastKeyIndex = ( lastKeyIndex + 1 ) & 15;
-		for ( int i = 0; cheatCodes[i] != NULL; i++ ) {
+		for( int i = 0; cheatCodes[i] != NULL; i++ )
+		{
 			int l = strlen( cheatCodes[i] );
 			assert( l <= 16 );
-			if ( idStr::Icmpn( lastKeys + 16 + ( lastKeyIndex & 15 ) - l, cheatCodes[i], l ) == 0 ) {
+			if( idStr::Icmpn( lastKeys + 16 + ( lastKeyIndex & 15 ) - l, cheatCodes[i], l ) == 0 )
+			{
 				common->Printf( "your memory serves you well!\n" );
 				break;
 			}
@@ -723,15 +821,18 @@ void idKeyInput::PreliminaryKeyEvent( int keynum, bool down ) {
 idKeyInput::ExecKeyBinding
 =================
 */
-bool idKeyInput::ExecKeyBinding( int keynum ) {
+bool idKeyInput::ExecKeyBinding( int keynum )
+{
 	// commands that are used by the async thread
 	// don't add text
-	if ( keys[keynum].usercmdAction ) {
+	if( keys[keynum].usercmdAction )
+	{
 		return false;
 	}
 
 	// send the bound action
-	if ( keys[keynum].binding.Length() ) {
+	if( keys[keynum].binding.Length() )
+	{
 		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, keys[keynum].binding.c_str() );
 		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "\n" );
 	}
@@ -743,11 +844,14 @@ bool idKeyInput::ExecKeyBinding( int keynum ) {
 idKeyInput::ClearStates
 ===================
 */
-void idKeyInput::ClearStates( void ) {
+void idKeyInput::ClearStates( void )
+{
 	int i;
 
-	for ( i = 0; i < MAX_KEYS; i++ ) {
-		if ( keys[i].down ) {
+	for( i = 0; i < MAX_KEYS; i++ )
+	{
+		if( keys[i].down )
+		{
 			PreliminaryKeyEvent( i, false );
 		}
 		keys[i].down = false;
@@ -762,7 +866,8 @@ void idKeyInput::ClearStates( void ) {
 idKeyInput::Init
 ===================
 */
-void idKeyInput::Init( void ) {
+void idKeyInput::Init( void )
+{
 
 	keys = new idKey[MAX_KEYS];
 
@@ -779,7 +884,8 @@ void idKeyInput::Init( void ) {
 idKeyInput::Shutdown
 ===================
 */
-void idKeyInput::Shutdown( void ) {
+void idKeyInput::Shutdown( void )
+{
 	delete [] keys;
 	keys = NULL;
 }

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,23 +42,24 @@ extern "C" {
 #define CIN_silent	8
 #define CIN_shader	16
 
-class idCinematicLocal : public idCinematic {
+class idCinematicLocal : public idCinematic
+{
 public:
-							idCinematicLocal();
+	idCinematicLocal();
 	virtual					~idCinematicLocal();
 
-	virtual bool			InitFromFile( const char *qpath, bool looping );
+	virtual bool			InitFromFile( const char* qpath, bool looping );
 	virtual cinData_t		ImageForTime( int milliseconds );
 	virtual int				AnimationLength();
 	virtual void			Close();
-	virtual void			ResetTime(int time);
+	virtual void			ResetTime( int time );
 
 private:
 	unsigned int			mcomp[256];
-	byte **					qStatus[2];
+	byte** 					qStatus[2];
 	idStr					fileName;
 	int						CIN_WIDTH, CIN_HEIGHT;
-	idFile *				iFile;
+	idFile* 				iFile;
 	cinStatus_t				status;
 	long					tfps;
 	long					RoQPlayed;
@@ -69,7 +70,7 @@ private:
 	long					samplesPerLine;
 	unsigned int			roq_id;
 	long					screenDelta;
-	byte *					buf;
+	byte* 					buf;
 	long					samplesPerPixel;				// defaults to 2
 	unsigned int			xsize, ysize, maxsize, minsize;
 	long					normalBuffer0;
@@ -84,7 +85,7 @@ private:
 	int						startTime;
 	float					frameRate;
 
-	byte *					image;
+	byte* 					image;
 
 	bool					looping;
 	bool					dirty;
@@ -93,23 +94,23 @@ private:
 	bool					inMemory;
 
 	void					RoQ_init( void );
-	void					blitVQQuad32fs( byte **status, unsigned char *data );
+	void					blitVQQuad32fs( byte** status, unsigned char* data );
 	void					RoQShutdown( void );
-	void					RoQInterrupt(void);
+	void					RoQInterrupt( void );
 
-	void					move8_32( byte *src, byte *dst, int spl );
-	void					move4_32( byte *src, byte *dst, int spl );
-	void					blit8_32( byte *src, byte *dst, int spl );
-	void					blit4_32( byte *src, byte *dst, int spl );
-	void					blit2_32( byte *src, byte *dst, int spl );
+	void					move8_32( byte* src, byte* dst, int spl );
+	void					move4_32( byte* src, byte* dst, int spl );
+	void					blit8_32( byte* src, byte* dst, int spl );
+	void					blit4_32( byte* src, byte* dst, int spl );
+	void					blit2_32( byte* src, byte* dst, int spl );
 
 	unsigned short			yuv_to_rgb( long y, long u, long v );
 	unsigned int			yuv_to_rgb24( long y, long u, long v );
 
-	void					decodeCodeBook( byte *input, unsigned short roq_flags );
+	void					decodeCodeBook( byte* input, unsigned short roq_flags );
 	void					recurseQuad( long startX, long startY, long quadSize, long xOff, long yOff );
 	void					setupQuad( long xOff, long yOff );
-	void					readQuadInfo( byte *qData );
+	void					readQuadInfo( byte* qData );
 	void					RoQPrepMcomp( long xoff, long yoff );
 	void					RoQReset();
 };
@@ -136,10 +137,10 @@ static long				ROQ_UB_tab[256];
 static long				ROQ_UG_tab[256];
 static long				ROQ_VG_tab[256];
 static long				ROQ_VR_tab[256];
-static byte *			file = NULL;
-static unsigned short *	vq2 = NULL;
-static unsigned short *	vq4 = NULL;
-static unsigned short *	vq8 = NULL;
+static byte* 			file = NULL;
+static unsigned short* 	vq2 = NULL;
+static unsigned short* 	vq4 = NULL;
+static unsigned short* 	vq8 = NULL;
 
 
 
@@ -150,29 +151,31 @@ static unsigned short *	vq8 = NULL;
 idCinematicLocal::InitCinematic
 ==============
 */
-void idCinematic::InitCinematic( void ) {
-	float t_ub,t_vr,t_ug,t_vg;
+void idCinematic::InitCinematic( void )
+{
+	float t_ub, t_vr, t_ug, t_vg;
 	long i;
 
 	// generate YUV tables
-	t_ub = (1.77200f/2.0f) * (float)(1<<6) + 0.5f;
-	t_vr = (1.40200f/2.0f) * (float)(1<<6) + 0.5f;
-	t_ug = (0.34414f/2.0f) * (float)(1<<6) + 0.5f;
-	t_vg = (0.71414f/2.0f) * (float)(1<<6) + 0.5f;
-	for( i = 0; i < 256; i++ ) {
-		float x = (float)(2 * i - 255);
-	
-		ROQ_UB_tab[i] = (long)( ( t_ub * x) + (1<<5));
-		ROQ_VR_tab[i] = (long)( ( t_vr * x) + (1<<5));
-		ROQ_UG_tab[i] = (long)( (-t_ug * x)		 );
-		ROQ_VG_tab[i] = (long)( (-t_vg * x) + (1<<5));
-		ROQ_YY_tab[i] = (long)( (i << 6) | (i >> 2) );
+	t_ub = ( 1.77200f / 2.0f ) * ( float )( 1 << 6 ) + 0.5f;
+	t_vr = ( 1.40200f / 2.0f ) * ( float )( 1 << 6 ) + 0.5f;
+	t_ug = ( 0.34414f / 2.0f ) * ( float )( 1 << 6 ) + 0.5f;
+	t_vg = ( 0.71414f / 2.0f ) * ( float )( 1 << 6 ) + 0.5f;
+	for( i = 0; i < 256; i++ )
+	{
+		float x = ( float )( 2 * i - 255 );
+
+		ROQ_UB_tab[i] = ( long )( ( t_ub * x ) + ( 1 << 5 ) );
+		ROQ_VR_tab[i] = ( long )( ( t_vr * x ) + ( 1 << 5 ) );
+		ROQ_UG_tab[i] = ( long )( ( -t_ug * x ) );
+		ROQ_VG_tab[i] = ( long )( ( -t_vg * x ) + ( 1 << 5 ) );
+		ROQ_YY_tab[i] = ( long )( ( i << 6 ) | ( i >> 2 ) );
 	}
 
-	file = (byte *)Mem_Alloc( 65536 );
-	vq2 = (word *)Mem_Alloc( 256*16*4 * sizeof( word ) );
-	vq4 = (word *)Mem_Alloc( 256*64*4 * sizeof( word ) );
-	vq8 = (word *)Mem_Alloc( 256*256*4 * sizeof( word ) );
+	file = ( byte* )Mem_Alloc( 65536 );
+	vq2 = ( word* )Mem_Alloc( 256 * 16 * 4 * sizeof( word ) );
+	vq4 = ( word* )Mem_Alloc( 256 * 64 * 4 * sizeof( word ) );
+	vq8 = ( word* )Mem_Alloc( 256 * 256 * 4 * sizeof( word ) );
 }
 
 /*
@@ -180,7 +183,8 @@ void idCinematic::InitCinematic( void ) {
 idCinematicLocal::ShutdownCinematic
 ==============
 */
-void idCinematic::ShutdownCinematic( void ) {
+void idCinematic::ShutdownCinematic( void )
+{
 	Mem_Free( file );
 	file = NULL;
 	Mem_Free( vq2 );
@@ -196,7 +200,8 @@ void idCinematic::ShutdownCinematic( void ) {
 idCinematicLocal::Alloc
 ==============
 */
-idCinematic *idCinematic::Alloc() {
+idCinematic* idCinematic::Alloc()
+{
 	return new idCinematicLocal;
 }
 
@@ -205,7 +210,8 @@ idCinematic *idCinematic::Alloc() {
 idCinematicLocal::~idCinematic
 ==============
 */
-idCinematic::~idCinematic( ) {
+idCinematic::~idCinematic( )
+{
 	Close();
 }
 
@@ -214,7 +220,8 @@ idCinematic::~idCinematic( ) {
 idCinematicLocal::InitFromFile
 ==============
 */
-bool idCinematic::InitFromFile( const char *qpath, bool looping ) {
+bool idCinematic::InitFromFile( const char* qpath, bool looping )
+{
 	return false;
 }
 
@@ -223,7 +230,8 @@ bool idCinematic::InitFromFile( const char *qpath, bool looping ) {
 idCinematicLocal::AnimationLength
 ==============
 */
-int idCinematic::AnimationLength() {
+int idCinematic::AnimationLength()
+{
 	return 0;
 }
 
@@ -232,7 +240,8 @@ int idCinematic::AnimationLength() {
 idCinematicLocal::ResetTime
 ==============
 */
-void idCinematic::ResetTime(int milliseconds) {
+void idCinematic::ResetTime( int milliseconds )
+{
 }
 
 /*
@@ -240,7 +249,8 @@ void idCinematic::ResetTime(int milliseconds) {
 idCinematicLocal::ImageForTime
 ==============
 */
-cinData_t idCinematic::ImageForTime( int milliseconds ) {
+cinData_t idCinematic::ImageForTime( int milliseconds )
+{
 	cinData_t c;
 	memset( &c, 0, sizeof( c ) );
 	return c;
@@ -251,7 +261,8 @@ cinData_t idCinematic::ImageForTime( int milliseconds ) {
 idCinematicLocal::Close
 ==============
 */
-void idCinematic::Close() {
+void idCinematic::Close()
+{
 }
 
 //===========================================
@@ -261,14 +272,15 @@ void idCinematic::Close() {
 idCinematicLocal::idCinematicLocal
 ==============
 */
-idCinematicLocal::idCinematicLocal() {
+idCinematicLocal::idCinematicLocal()
+{
 	image = NULL;
 	status = FMV_EOF;
 	buf = NULL;
 	iFile = NULL;
 
-	qStatus[0] = (byte **)Mem_Alloc( 32768 * sizeof( byte *) );
-	qStatus[1] = (byte **)Mem_Alloc( 32768 * sizeof( byte *) );
+	qStatus[0] = ( byte** )Mem_Alloc( 32768 * sizeof( byte* ) );
+	qStatus[1] = ( byte** )Mem_Alloc( 32768 * sizeof( byte* ) );
 }
 
 /*
@@ -276,7 +288,8 @@ idCinematicLocal::idCinematicLocal() {
 idCinematicLocal::~idCinematicLocal
 ==============
 */
-idCinematicLocal::~idCinematicLocal() {
+idCinematicLocal::~idCinematicLocal()
+{
 	Close();
 
 	Mem_Free( qStatus[0] );
@@ -290,7 +303,8 @@ idCinematicLocal::~idCinematicLocal() {
 idCinematicLocal::InitFromFile
 ==============
 */
-bool idCinematicLocal::InitFromFile( const char *qpath, bool amilooping ) {
+bool idCinematicLocal::InitFromFile( const char* qpath, bool amilooping )
+{
 	unsigned short RoQID;
 
 	Close();
@@ -298,15 +312,19 @@ bool idCinematicLocal::InitFromFile( const char *qpath, bool amilooping ) {
 	inMemory = 0;
 	animationLength = 100000;
 
-	if ( strstr( qpath, "/" ) == NULL && strstr( qpath, "\\" ) == NULL ) {
+	if( strstr( qpath, "/" ) == NULL && strstr( qpath, "\\" ) == NULL )
+	{
 		sprintf( fileName, "video/%s", qpath );
-	} else {
+	}
+	else
+	{
 		sprintf( fileName, "%s", qpath );
 	}
 
 	iFile = fileSystem->OpenFileRead( fileName );
 
-	if ( !iFile ) {
+	if( !iFile )
+	{
 		return false;
 	}
 
@@ -322,14 +340,16 @@ bool idCinematicLocal::InitFromFile( const char *qpath, bool amilooping ) {
 
 	iFile->Read( file, 16 );
 
-	RoQID = (unsigned short)(file[0]) + (unsigned short)(file[1])*256;
+	RoQID = ( unsigned short )( file[0] ) + ( unsigned short )( file[1] ) * 256;
 
 	frameRate = file[6];
-	if ( frameRate == 32.0f ) {
+	if( frameRate == 32.0f )
+	{
 		frameRate = 1000.0f / 32.0f;
 	}
 
-	if ( RoQID == ROQ_FILE ) {
+	if( RoQID == ROQ_FILE )
+	{
 		RoQ_init();
 		status = FMV_PLAY;
 		ImageForTime( 0 );
@@ -346,9 +366,11 @@ bool idCinematicLocal::InitFromFile( const char *qpath, bool amilooping ) {
 idCinematicLocal::Close
 ==============
 */
-void idCinematicLocal::Close() {
-	if ( image ) {
-		Mem_Free( (void *)image );
+void idCinematicLocal::Close()
+{
+	if( image )
+	{
+		Mem_Free( ( void* )image );
 		image = NULL;
 		buf = NULL;
 		status = FMV_EOF;
@@ -361,8 +383,9 @@ void idCinematicLocal::Close() {
 idCinematicLocal::AnimationLength
 ==============
 */
-int idCinematicLocal::AnimationLength() { 
-	return animationLength; 
+int idCinematicLocal::AnimationLength()
+{
+	return animationLength;
 }
 
 /*
@@ -370,7 +393,8 @@ int idCinematicLocal::AnimationLength() {
 idCinematicLocal::ResetTime
 ==============
 */
-void idCinematicLocal::ResetTime(int time) {
+void idCinematicLocal::ResetTime( int time )
+{
 	startTime = ( backEnd.viewDef ) ? 1000 * backEnd.viewDef->floatTime : -1;
 	status = FMV_PLAY;
 }
@@ -380,25 +404,31 @@ void idCinematicLocal::ResetTime(int time) {
 idCinematicLocal::ImageForTime
 ==============
 */
-cinData_t idCinematicLocal::ImageForTime( int thisTime ) {
+cinData_t idCinematicLocal::ImageForTime( int thisTime )
+{
 	cinData_t	cinData;
 
-	if ( thisTime < 0 ) {
+	if( thisTime < 0 )
+	{
 		thisTime = 0;
 	}
 
-	memset( &cinData, 0, sizeof(cinData) );
+	memset( &cinData, 0, sizeof( cinData ) );
 
-	if ( r_skipROQ.GetBool() ) {
+	if( r_skipROQ.GetBool() )
+	{
 		return cinData;
 	}
 
-	if ( status == FMV_EOF || status == FMV_IDLE ) {
+	if( status == FMV_EOF || status == FMV_IDLE )
+	{
 		return cinData;
 	}
 
-	if ( buf == NULL || startTime == -1 ) {
-		if ( startTime == -1 ) {
+	if( buf == NULL || startTime == -1 )
+	{
+		if( startTime == -1 )
+		{
 			RoQReset();
 		}
 		startTime = thisTime;
@@ -406,46 +436,61 @@ cinData_t idCinematicLocal::ImageForTime( int thisTime ) {
 
 	tfps = ( ( thisTime - startTime ) * frameRate ) / 1000;
 
-	if ( tfps < 0 ) {
+	if( tfps < 0 )
+	{
 		tfps = 0;
 	}
 
-	if ( tfps < numQuads ) {
+	if( tfps < numQuads )
+	{
 		RoQReset();
 		buf = NULL;
 		status = FMV_PLAY;
 	}
 
-	if ( buf == NULL ) {
-		while( buf == NULL ) {
+	if( buf == NULL )
+	{
+		while( buf == NULL )
+		{
 			RoQInterrupt();
 		}
-	} else {
-		while( (tfps != numQuads && status == FMV_PLAY) ) {
+	}
+	else
+	{
+		while( ( tfps != numQuads && status == FMV_PLAY ) )
+		{
 			RoQInterrupt();
 		}
 	}
 
-	if ( status == FMV_LOOPED ) {
+	if( status == FMV_LOOPED )
+	{
 		status = FMV_PLAY;
-		while( buf == NULL && status == FMV_PLAY ) {
+		while( buf == NULL && status == FMV_PLAY )
+		{
 			RoQInterrupt();
 		}
 		startTime = thisTime;
 	}
 
-	if ( status == FMV_EOF ) {
-		if ( looping ) {
+	if( status == FMV_EOF )
+	{
+		if( looping )
+		{
 			RoQReset();
 			buf = NULL;
-			if ( status == FMV_LOOPED ) {
+			if( status == FMV_LOOPED )
+			{
 				status = FMV_PLAY;
 			}
-			while ( buf == NULL && status == FMV_PLAY ) {
+			while( buf == NULL && status == FMV_PLAY )
+			{
 				RoQInterrupt();
 			}
 			startTime = thisTime;
-		} else {
+		}
+		else
+		{
 			status = FMV_IDLE;
 			RoQShutdown();
 		}
@@ -464,109 +509,141 @@ cinData_t idCinematicLocal::ImageForTime( int thisTime ) {
 idCinematicLocal::move8_32
 ==============
 */
-void idCinematicLocal::move8_32( byte *src, byte *dst, int spl ) {
+void idCinematicLocal::move8_32( byte* src, byte* dst, int spl )
+{
 #if 1
-	int *dsrc, *ddst;
+	int* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (int *)src;
-	ddst = (int *)dst;
-	dspl = spl>>2;
+	dsrc = ( int* )src;
+	ddst = ( int* )dst;
+	dspl = spl >> 2;
 
-	ddst[0*dspl+0] = dsrc[0*dspl+0];
-	ddst[0*dspl+1] = dsrc[0*dspl+1];
-	ddst[0*dspl+2] = dsrc[0*dspl+2];
-	ddst[0*dspl+3] = dsrc[0*dspl+3];
-	ddst[0*dspl+4] = dsrc[0*dspl+4];
-	ddst[0*dspl+5] = dsrc[0*dspl+5];
-	ddst[0*dspl+6] = dsrc[0*dspl+6];
-	ddst[0*dspl+7] = dsrc[0*dspl+7];
+	ddst[0 * dspl + 0] = dsrc[0 * dspl + 0];
+	ddst[0 * dspl + 1] = dsrc[0 * dspl + 1];
+	ddst[0 * dspl + 2] = dsrc[0 * dspl + 2];
+	ddst[0 * dspl + 3] = dsrc[0 * dspl + 3];
+	ddst[0 * dspl + 4] = dsrc[0 * dspl + 4];
+	ddst[0 * dspl + 5] = dsrc[0 * dspl + 5];
+	ddst[0 * dspl + 6] = dsrc[0 * dspl + 6];
+	ddst[0 * dspl + 7] = dsrc[0 * dspl + 7];
 
-	ddst[1*dspl+0] = dsrc[1*dspl+0];
-	ddst[1*dspl+1] = dsrc[1*dspl+1];
-	ddst[1*dspl+2] = dsrc[1*dspl+2];
-	ddst[1*dspl+3] = dsrc[1*dspl+3];
-	ddst[1*dspl+4] = dsrc[1*dspl+4];
-	ddst[1*dspl+5] = dsrc[1*dspl+5];
-	ddst[1*dspl+6] = dsrc[1*dspl+6];
-	ddst[1*dspl+7] = dsrc[1*dspl+7];
+	ddst[1 * dspl + 0] = dsrc[1 * dspl + 0];
+	ddst[1 * dspl + 1] = dsrc[1 * dspl + 1];
+	ddst[1 * dspl + 2] = dsrc[1 * dspl + 2];
+	ddst[1 * dspl + 3] = dsrc[1 * dspl + 3];
+	ddst[1 * dspl + 4] = dsrc[1 * dspl + 4];
+	ddst[1 * dspl + 5] = dsrc[1 * dspl + 5];
+	ddst[1 * dspl + 6] = dsrc[1 * dspl + 6];
+	ddst[1 * dspl + 7] = dsrc[1 * dspl + 7];
 
-	ddst[2*dspl+0] = dsrc[2*dspl+0];
-	ddst[2*dspl+1] = dsrc[2*dspl+1];
-	ddst[2*dspl+2] = dsrc[2*dspl+2];
-	ddst[2*dspl+3] = dsrc[2*dspl+3];
-	ddst[2*dspl+4] = dsrc[2*dspl+4];
-	ddst[2*dspl+5] = dsrc[2*dspl+5];
-	ddst[2*dspl+6] = dsrc[2*dspl+6];
-	ddst[2*dspl+7] = dsrc[2*dspl+7];
+	ddst[2 * dspl + 0] = dsrc[2 * dspl + 0];
+	ddst[2 * dspl + 1] = dsrc[2 * dspl + 1];
+	ddst[2 * dspl + 2] = dsrc[2 * dspl + 2];
+	ddst[2 * dspl + 3] = dsrc[2 * dspl + 3];
+	ddst[2 * dspl + 4] = dsrc[2 * dspl + 4];
+	ddst[2 * dspl + 5] = dsrc[2 * dspl + 5];
+	ddst[2 * dspl + 6] = dsrc[2 * dspl + 6];
+	ddst[2 * dspl + 7] = dsrc[2 * dspl + 7];
 
-	ddst[3*dspl+0] = dsrc[3*dspl+0];
-	ddst[3*dspl+1] = dsrc[3*dspl+1];
-	ddst[3*dspl+2] = dsrc[3*dspl+2];
-	ddst[3*dspl+3] = dsrc[3*dspl+3];
-	ddst[3*dspl+4] = dsrc[3*dspl+4];
-	ddst[3*dspl+5] = dsrc[3*dspl+5];
-	ddst[3*dspl+6] = dsrc[3*dspl+6];
-	ddst[3*dspl+7] = dsrc[3*dspl+7];
+	ddst[3 * dspl + 0] = dsrc[3 * dspl + 0];
+	ddst[3 * dspl + 1] = dsrc[3 * dspl + 1];
+	ddst[3 * dspl + 2] = dsrc[3 * dspl + 2];
+	ddst[3 * dspl + 3] = dsrc[3 * dspl + 3];
+	ddst[3 * dspl + 4] = dsrc[3 * dspl + 4];
+	ddst[3 * dspl + 5] = dsrc[3 * dspl + 5];
+	ddst[3 * dspl + 6] = dsrc[3 * dspl + 6];
+	ddst[3 * dspl + 7] = dsrc[3 * dspl + 7];
 
-	ddst[4*dspl+0] = dsrc[4*dspl+0];
-	ddst[4*dspl+1] = dsrc[4*dspl+1];
-	ddst[4*dspl+2] = dsrc[4*dspl+2];
-	ddst[4*dspl+3] = dsrc[4*dspl+3];
-	ddst[4*dspl+4] = dsrc[4*dspl+4];
-	ddst[4*dspl+5] = dsrc[4*dspl+5];
-	ddst[4*dspl+6] = dsrc[4*dspl+6];
-	ddst[4*dspl+7] = dsrc[4*dspl+7];
+	ddst[4 * dspl + 0] = dsrc[4 * dspl + 0];
+	ddst[4 * dspl + 1] = dsrc[4 * dspl + 1];
+	ddst[4 * dspl + 2] = dsrc[4 * dspl + 2];
+	ddst[4 * dspl + 3] = dsrc[4 * dspl + 3];
+	ddst[4 * dspl + 4] = dsrc[4 * dspl + 4];
+	ddst[4 * dspl + 5] = dsrc[4 * dspl + 5];
+	ddst[4 * dspl + 6] = dsrc[4 * dspl + 6];
+	ddst[4 * dspl + 7] = dsrc[4 * dspl + 7];
 
-	ddst[5*dspl+0] = dsrc[5*dspl+0];
-	ddst[5*dspl+1] = dsrc[5*dspl+1];
-	ddst[5*dspl+2] = dsrc[5*dspl+2];
-	ddst[5*dspl+3] = dsrc[5*dspl+3];
-	ddst[5*dspl+4] = dsrc[5*dspl+4];
-	ddst[5*dspl+5] = dsrc[5*dspl+5];
-	ddst[5*dspl+6] = dsrc[5*dspl+6];
-	ddst[5*dspl+7] = dsrc[5*dspl+7];
+	ddst[5 * dspl + 0] = dsrc[5 * dspl + 0];
+	ddst[5 * dspl + 1] = dsrc[5 * dspl + 1];
+	ddst[5 * dspl + 2] = dsrc[5 * dspl + 2];
+	ddst[5 * dspl + 3] = dsrc[5 * dspl + 3];
+	ddst[5 * dspl + 4] = dsrc[5 * dspl + 4];
+	ddst[5 * dspl + 5] = dsrc[5 * dspl + 5];
+	ddst[5 * dspl + 6] = dsrc[5 * dspl + 6];
+	ddst[5 * dspl + 7] = dsrc[5 * dspl + 7];
 
-	ddst[6*dspl+0] = dsrc[6*dspl+0];
-	ddst[6*dspl+1] = dsrc[6*dspl+1];
-	ddst[6*dspl+2] = dsrc[6*dspl+2];
-	ddst[6*dspl+3] = dsrc[6*dspl+3];
-	ddst[6*dspl+4] = dsrc[6*dspl+4];
-	ddst[6*dspl+5] = dsrc[6*dspl+5];
-	ddst[6*dspl+6] = dsrc[6*dspl+6];
-	ddst[6*dspl+7] = dsrc[6*dspl+7];
+	ddst[6 * dspl + 0] = dsrc[6 * dspl + 0];
+	ddst[6 * dspl + 1] = dsrc[6 * dspl + 1];
+	ddst[6 * dspl + 2] = dsrc[6 * dspl + 2];
+	ddst[6 * dspl + 3] = dsrc[6 * dspl + 3];
+	ddst[6 * dspl + 4] = dsrc[6 * dspl + 4];
+	ddst[6 * dspl + 5] = dsrc[6 * dspl + 5];
+	ddst[6 * dspl + 6] = dsrc[6 * dspl + 6];
+	ddst[6 * dspl + 7] = dsrc[6 * dspl + 7];
 
-	ddst[7*dspl+0] = dsrc[7*dspl+0];
-	ddst[7*dspl+1] = dsrc[7*dspl+1];
-	ddst[7*dspl+2] = dsrc[7*dspl+2];
-	ddst[7*dspl+3] = dsrc[7*dspl+3];
-	ddst[7*dspl+4] = dsrc[7*dspl+4];
-	ddst[7*dspl+5] = dsrc[7*dspl+5];
-	ddst[7*dspl+6] = dsrc[7*dspl+6];
-	ddst[7*dspl+7] = dsrc[7*dspl+7];
+	ddst[7 * dspl + 0] = dsrc[7 * dspl + 0];
+	ddst[7 * dspl + 1] = dsrc[7 * dspl + 1];
+	ddst[7 * dspl + 2] = dsrc[7 * dspl + 2];
+	ddst[7 * dspl + 3] = dsrc[7 * dspl + 3];
+	ddst[7 * dspl + 4] = dsrc[7 * dspl + 4];
+	ddst[7 * dspl + 5] = dsrc[7 * dspl + 5];
+	ddst[7 * dspl + 6] = dsrc[7 * dspl + 6];
+	ddst[7 * dspl + 7] = dsrc[7 * dspl + 7];
 #else
-	double *dsrc, *ddst;
+	double* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (double *)src;
-	ddst = (double *)dst;
-	dspl = spl>>3;
+	dsrc = ( double* )src;
+	ddst = ( double* )dst;
+	dspl = spl >> 3;
 
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
 #endif
 }
 
@@ -575,49 +652,57 @@ void idCinematicLocal::move8_32( byte *src, byte *dst, int spl ) {
 idCinematicLocal::move4_32
 ==============
 */
-void idCinematicLocal::move4_32( byte *src, byte *dst, int spl  ) {
+void idCinematicLocal::move4_32( byte* src, byte* dst, int spl )
+{
 #if 1
-	int *dsrc, *ddst;
+	int* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (int *)src;
-	ddst = (int *)dst;
-	dspl = spl>>2;
+	dsrc = ( int* )src;
+	ddst = ( int* )dst;
+	dspl = spl >> 2;
 
-	ddst[0*dspl+0] = dsrc[0*dspl+0];
-	ddst[0*dspl+1] = dsrc[0*dspl+1];
-	ddst[0*dspl+2] = dsrc[0*dspl+2];
-	ddst[0*dspl+3] = dsrc[0*dspl+3];
+	ddst[0 * dspl + 0] = dsrc[0 * dspl + 0];
+	ddst[0 * dspl + 1] = dsrc[0 * dspl + 1];
+	ddst[0 * dspl + 2] = dsrc[0 * dspl + 2];
+	ddst[0 * dspl + 3] = dsrc[0 * dspl + 3];
 
-	ddst[1*dspl+0] = dsrc[1*dspl+0];
-	ddst[1*dspl+1] = dsrc[1*dspl+1];
-	ddst[1*dspl+2] = dsrc[1*dspl+2];
-	ddst[1*dspl+3] = dsrc[1*dspl+3];
+	ddst[1 * dspl + 0] = dsrc[1 * dspl + 0];
+	ddst[1 * dspl + 1] = dsrc[1 * dspl + 1];
+	ddst[1 * dspl + 2] = dsrc[1 * dspl + 2];
+	ddst[1 * dspl + 3] = dsrc[1 * dspl + 3];
 
-	ddst[2*dspl+0] = dsrc[2*dspl+0];
-	ddst[2*dspl+1] = dsrc[2*dspl+1];
-	ddst[2*dspl+2] = dsrc[2*dspl+2];
-	ddst[2*dspl+3] = dsrc[2*dspl+3];
+	ddst[2 * dspl + 0] = dsrc[2 * dspl + 0];
+	ddst[2 * dspl + 1] = dsrc[2 * dspl + 1];
+	ddst[2 * dspl + 2] = dsrc[2 * dspl + 2];
+	ddst[2 * dspl + 3] = dsrc[2 * dspl + 3];
 
-	ddst[3*dspl+0] = dsrc[3*dspl+0];
-	ddst[3*dspl+1] = dsrc[3*dspl+1];
-	ddst[3*dspl+2] = dsrc[3*dspl+2];
-	ddst[3*dspl+3] = dsrc[3*dspl+3];
+	ddst[3 * dspl + 0] = dsrc[3 * dspl + 0];
+	ddst[3 * dspl + 1] = dsrc[3 * dspl + 1];
+	ddst[3 * dspl + 2] = dsrc[3 * dspl + 2];
+	ddst[3 * dspl + 3] = dsrc[3 * dspl + 3];
 #else
-	double *dsrc, *ddst;
+	double* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (double *)src;
-	ddst = (double *)dst;
-	dspl = spl>>3;
+	dsrc = ( double* )src;
+	ddst = ( double* )dst;
+	dspl = spl >> 3;
 
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += dspl; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += dspl;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
 #endif
 }
 
@@ -626,109 +711,141 @@ void idCinematicLocal::move4_32( byte *src, byte *dst, int spl  ) {
 idCinematicLocal::blit8_32
 ==============
 */
-void idCinematicLocal::blit8_32( byte *src, byte *dst, int spl  ) {
+void idCinematicLocal::blit8_32( byte* src, byte* dst, int spl )
+{
 #if 1
-	int *dsrc, *ddst;
+	int* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (int *)src;
-	ddst = (int *)dst;
-	dspl = spl>>2;
+	dsrc = ( int* )src;
+	ddst = ( int* )dst;
+	dspl = spl >> 2;
 
-	ddst[0*dspl+0] = dsrc[ 0];
-	ddst[0*dspl+1] = dsrc[ 1];
-	ddst[0*dspl+2] = dsrc[ 2];
-	ddst[0*dspl+3] = dsrc[ 3];
-	ddst[0*dspl+4] = dsrc[ 4];
-	ddst[0*dspl+5] = dsrc[ 5];
-	ddst[0*dspl+6] = dsrc[ 6];
-	ddst[0*dspl+7] = dsrc[ 7];
+	ddst[0 * dspl + 0] = dsrc[ 0];
+	ddst[0 * dspl + 1] = dsrc[ 1];
+	ddst[0 * dspl + 2] = dsrc[ 2];
+	ddst[0 * dspl + 3] = dsrc[ 3];
+	ddst[0 * dspl + 4] = dsrc[ 4];
+	ddst[0 * dspl + 5] = dsrc[ 5];
+	ddst[0 * dspl + 6] = dsrc[ 6];
+	ddst[0 * dspl + 7] = dsrc[ 7];
 
-	ddst[1*dspl+0] = dsrc[ 8];
-	ddst[1*dspl+1] = dsrc[ 9];
-	ddst[1*dspl+2] = dsrc[10];
-	ddst[1*dspl+3] = dsrc[11];
-	ddst[1*dspl+4] = dsrc[12];
-	ddst[1*dspl+5] = dsrc[13];
-	ddst[1*dspl+6] = dsrc[14];
-	ddst[1*dspl+7] = dsrc[15];
+	ddst[1 * dspl + 0] = dsrc[ 8];
+	ddst[1 * dspl + 1] = dsrc[ 9];
+	ddst[1 * dspl + 2] = dsrc[10];
+	ddst[1 * dspl + 3] = dsrc[11];
+	ddst[1 * dspl + 4] = dsrc[12];
+	ddst[1 * dspl + 5] = dsrc[13];
+	ddst[1 * dspl + 6] = dsrc[14];
+	ddst[1 * dspl + 7] = dsrc[15];
 
-	ddst[2*dspl+0] = dsrc[16];
-	ddst[2*dspl+1] = dsrc[17];
-	ddst[2*dspl+2] = dsrc[18];
-	ddst[2*dspl+3] = dsrc[19];
-	ddst[2*dspl+4] = dsrc[20];
-	ddst[2*dspl+5] = dsrc[21];
-	ddst[2*dspl+6] = dsrc[22];
-	ddst[2*dspl+7] = dsrc[23];
+	ddst[2 * dspl + 0] = dsrc[16];
+	ddst[2 * dspl + 1] = dsrc[17];
+	ddst[2 * dspl + 2] = dsrc[18];
+	ddst[2 * dspl + 3] = dsrc[19];
+	ddst[2 * dspl + 4] = dsrc[20];
+	ddst[2 * dspl + 5] = dsrc[21];
+	ddst[2 * dspl + 6] = dsrc[22];
+	ddst[2 * dspl + 7] = dsrc[23];
 
-	ddst[3*dspl+0] = dsrc[24];
-	ddst[3*dspl+1] = dsrc[25];
-	ddst[3*dspl+2] = dsrc[26];
-	ddst[3*dspl+3] = dsrc[27];
-	ddst[3*dspl+4] = dsrc[28];
-	ddst[3*dspl+5] = dsrc[29];
-	ddst[3*dspl+6] = dsrc[30];
-	ddst[3*dspl+7] = dsrc[31];
+	ddst[3 * dspl + 0] = dsrc[24];
+	ddst[3 * dspl + 1] = dsrc[25];
+	ddst[3 * dspl + 2] = dsrc[26];
+	ddst[3 * dspl + 3] = dsrc[27];
+	ddst[3 * dspl + 4] = dsrc[28];
+	ddst[3 * dspl + 5] = dsrc[29];
+	ddst[3 * dspl + 6] = dsrc[30];
+	ddst[3 * dspl + 7] = dsrc[31];
 
-	ddst[4*dspl+0] = dsrc[32];
-	ddst[4*dspl+1] = dsrc[33];
-	ddst[4*dspl+2] = dsrc[34];
-	ddst[4*dspl+3] = dsrc[35];
-	ddst[4*dspl+4] = dsrc[36];
-	ddst[4*dspl+5] = dsrc[37];
-	ddst[4*dspl+6] = dsrc[38];
-	ddst[4*dspl+7] = dsrc[39];
+	ddst[4 * dspl + 0] = dsrc[32];
+	ddst[4 * dspl + 1] = dsrc[33];
+	ddst[4 * dspl + 2] = dsrc[34];
+	ddst[4 * dspl + 3] = dsrc[35];
+	ddst[4 * dspl + 4] = dsrc[36];
+	ddst[4 * dspl + 5] = dsrc[37];
+	ddst[4 * dspl + 6] = dsrc[38];
+	ddst[4 * dspl + 7] = dsrc[39];
 
-	ddst[5*dspl+0] = dsrc[40];
-	ddst[5*dspl+1] = dsrc[41];
-	ddst[5*dspl+2] = dsrc[42];
-	ddst[5*dspl+3] = dsrc[43];
-	ddst[5*dspl+4] = dsrc[44];
-	ddst[5*dspl+5] = dsrc[45];
-	ddst[5*dspl+6] = dsrc[46];
-	ddst[5*dspl+7] = dsrc[47];
+	ddst[5 * dspl + 0] = dsrc[40];
+	ddst[5 * dspl + 1] = dsrc[41];
+	ddst[5 * dspl + 2] = dsrc[42];
+	ddst[5 * dspl + 3] = dsrc[43];
+	ddst[5 * dspl + 4] = dsrc[44];
+	ddst[5 * dspl + 5] = dsrc[45];
+	ddst[5 * dspl + 6] = dsrc[46];
+	ddst[5 * dspl + 7] = dsrc[47];
 
-	ddst[6*dspl+0] = dsrc[48];
-	ddst[6*dspl+1] = dsrc[49];
-	ddst[6*dspl+2] = dsrc[50];
-	ddst[6*dspl+3] = dsrc[51];
-	ddst[6*dspl+4] = dsrc[52];
-	ddst[6*dspl+5] = dsrc[53];
-	ddst[6*dspl+6] = dsrc[54];
-	ddst[6*dspl+7] = dsrc[55];
+	ddst[6 * dspl + 0] = dsrc[48];
+	ddst[6 * dspl + 1] = dsrc[49];
+	ddst[6 * dspl + 2] = dsrc[50];
+	ddst[6 * dspl + 3] = dsrc[51];
+	ddst[6 * dspl + 4] = dsrc[52];
+	ddst[6 * dspl + 5] = dsrc[53];
+	ddst[6 * dspl + 6] = dsrc[54];
+	ddst[6 * dspl + 7] = dsrc[55];
 
-	ddst[7*dspl+0] = dsrc[56];
-	ddst[7*dspl+1] = dsrc[57];
-	ddst[7*dspl+2] = dsrc[58];
-	ddst[7*dspl+3] = dsrc[59];
-	ddst[7*dspl+4] = dsrc[60];
-	ddst[7*dspl+5] = dsrc[61];
-	ddst[7*dspl+6] = dsrc[62];
-	ddst[7*dspl+7] = dsrc[63];
+	ddst[7 * dspl + 0] = dsrc[56];
+	ddst[7 * dspl + 1] = dsrc[57];
+	ddst[7 * dspl + 2] = dsrc[58];
+	ddst[7 * dspl + 3] = dsrc[59];
+	ddst[7 * dspl + 4] = dsrc[60];
+	ddst[7 * dspl + 5] = dsrc[61];
+	ddst[7 * dspl + 6] = dsrc[62];
+	ddst[7 * dspl + 7] = dsrc[63];
 #else
-	double *dsrc, *ddst;
+	double* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (double *)src;
-	ddst = (double *)dst;
-	dspl = spl>>3;
+	dsrc = ( double* )src;
+	ddst = ( double* )dst;
+	dspl = spl >> 3;
 
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
-	dsrc += 4; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1]; ddst[2] = dsrc[2]; ddst[3] = dsrc[3];
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
+	dsrc += 4;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	ddst[2] = dsrc[2];
+	ddst[3] = dsrc[3];
 #endif
 }
 
@@ -737,46 +854,54 @@ void idCinematicLocal::blit8_32( byte *src, byte *dst, int spl  ) {
 idCinematicLocal::blit4_32
 ==============
 */
-void idCinematicLocal::blit4_32( byte *src, byte *dst, int spl  ) {
+void idCinematicLocal::blit4_32( byte* src, byte* dst, int spl )
+{
 #if 1
-	int *dsrc, *ddst;
+	int* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (int *)src;
-	ddst = (int *)dst;
-	dspl = spl>>2;
+	dsrc = ( int* )src;
+	ddst = ( int* )dst;
+	dspl = spl >> 2;
 
-	ddst[0*dspl+0] = dsrc[ 0];
-	ddst[0*dspl+1] = dsrc[ 1];
-	ddst[0*dspl+2] = dsrc[ 2];
-	ddst[0*dspl+3] = dsrc[ 3];
-	ddst[1*dspl+0] = dsrc[ 4];
-	ddst[1*dspl+1] = dsrc[ 5];
-	ddst[1*dspl+2] = dsrc[ 6];
-	ddst[1*dspl+3] = dsrc[ 7];
-	ddst[2*dspl+0] = dsrc[ 8];
-	ddst[2*dspl+1] = dsrc[ 9];
-	ddst[2*dspl+2] = dsrc[10];
-	ddst[2*dspl+3] = dsrc[11];
-	ddst[3*dspl+0] = dsrc[12];
-	ddst[3*dspl+1] = dsrc[13];
-	ddst[3*dspl+2] = dsrc[14];
-	ddst[3*dspl+3] = dsrc[15];
+	ddst[0 * dspl + 0] = dsrc[ 0];
+	ddst[0 * dspl + 1] = dsrc[ 1];
+	ddst[0 * dspl + 2] = dsrc[ 2];
+	ddst[0 * dspl + 3] = dsrc[ 3];
+	ddst[1 * dspl + 0] = dsrc[ 4];
+	ddst[1 * dspl + 1] = dsrc[ 5];
+	ddst[1 * dspl + 2] = dsrc[ 6];
+	ddst[1 * dspl + 3] = dsrc[ 7];
+	ddst[2 * dspl + 0] = dsrc[ 8];
+	ddst[2 * dspl + 1] = dsrc[ 9];
+	ddst[2 * dspl + 2] = dsrc[10];
+	ddst[2 * dspl + 3] = dsrc[11];
+	ddst[3 * dspl + 0] = dsrc[12];
+	ddst[3 * dspl + 1] = dsrc[13];
+	ddst[3 * dspl + 2] = dsrc[14];
+	ddst[3 * dspl + 3] = dsrc[15];
 #else
-	double *dsrc, *ddst;
+	double* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (double *)src;
-	ddst = (double *)dst;
-	dspl = spl>>3;
+	dsrc = ( double* )src;
+	ddst = ( double* )dst;
+	dspl = spl >> 3;
 
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += 2; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += 2; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
-	dsrc += 2; ddst += dspl;
-	ddst[0] = dsrc[0]; ddst[1] = dsrc[1];
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += 2;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += 2;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
+	dsrc += 2;
+	ddst += dspl;
+	ddst[0] = dsrc[0];
+	ddst[1] = dsrc[1];
 #endif
 }
 
@@ -785,26 +910,27 @@ void idCinematicLocal::blit4_32( byte *src, byte *dst, int spl  ) {
 idCinematicLocal::blit2_32
 ==============
 */
-void idCinematicLocal::blit2_32( byte *src, byte *dst, int spl  ) {
+void idCinematicLocal::blit2_32( byte* src, byte* dst, int spl )
+{
 #if 1
-	int *dsrc, *ddst;
+	int* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (int *)src;
-	ddst = (int *)dst;
-	dspl = spl>>2;
+	dsrc = ( int* )src;
+	ddst = ( int* )dst;
+	dspl = spl >> 2;
 
-	ddst[0*dspl+0] = dsrc[0];
-	ddst[0*dspl+1] = dsrc[1];
-	ddst[1*dspl+0] = dsrc[2];
-	ddst[1*dspl+1] = dsrc[3];
+	ddst[0 * dspl + 0] = dsrc[0];
+	ddst[0 * dspl + 1] = dsrc[1];
+	ddst[1 * dspl + 0] = dsrc[2];
+	ddst[1 * dspl + 1] = dsrc[3];
 #else
-	double *dsrc, *ddst;
+	double* dsrc, *ddst;
 	int dspl;
 
-	dsrc = (double *)src;
-	ddst = (double *)dst;
-	dspl = spl>>3;
+	dsrc = ( double* )src;
+	ddst = ( double* )dst;
+	dspl = spl >> 3;
 
 	ddst[0] = dsrc[0];
 	ddst[dspl] = dsrc[1];
@@ -816,62 +942,74 @@ void idCinematicLocal::blit2_32( byte *src, byte *dst, int spl  ) {
 idCinematicLocal::blitVQQuad32fs
 ==============
 */
-void idCinematicLocal::blitVQQuad32fs( byte **status, unsigned char *data ) {
+void idCinematicLocal::blitVQQuad32fs( byte** status, unsigned char* data )
+{
 	unsigned short	newd, celdata, code;
 	unsigned int	index, i;
 
 	newd	= 0;
 	celdata = 0;
 	index	= 0;
-	
-	do {
-		if (!newd) { 
+
+	do
+	{
+		if( !newd )
+		{
 			newd = 7;
-			celdata = data[0] + data[1]*256;
+			celdata = data[0] + data[1] * 256;
 			data += 2;
-		} else {
+		}
+		else
+		{
 			newd--;
 		}
 
-		code = (unsigned short)(celdata&0xc000); 
+		code = ( unsigned short )( celdata & 0xc000 );
 		celdata <<= 2;
-		
-		switch (code) {
+
+		switch( code )
+		{
 			case	0x8000:													// vq code
-				blit8_32( (byte *)&vq8[(*data)*128], status[index], samplesPerLine );
+				blit8_32( ( byte* )&vq8[( *data ) * 128], status[index], samplesPerLine );
 				data++;
 				index += 5;
 				break;
 			case	0xc000:													// drop
 				index++;													// skip 8x8
-				for(i=0;i<4;i++) {
-					if (!newd) { 
+				for( i = 0; i < 4; i++ )
+				{
+					if( !newd )
+					{
 						newd = 7;
-						celdata = data[0] + data[1]*256;
+						celdata = data[0] + data[1] * 256;
 						data += 2;
-					} else {
+					}
+					else
+					{
 						newd--;
 					}
-						
-					code = (unsigned short)(celdata&0xc000); celdata <<= 2; 
 
-					switch (code) {											// code in top two bits of code
+					code = ( unsigned short )( celdata & 0xc000 );
+					celdata <<= 2;
+
+					switch( code )  											// code in top two bits of code
+					{
 						case	0x8000:										// 4x4 vq code
-							blit4_32( (byte *)&vq4[(*data)*32], status[index], samplesPerLine );
+							blit4_32( ( byte* )&vq4[( *data ) * 32], status[index], samplesPerLine );
 							data++;
 							break;
 						case	0xc000:										// 2x2 vq code
-							blit2_32( (byte *)&vq2[(*data)*8], status[index], samplesPerLine );
+							blit2_32( ( byte* )&vq2[( *data ) * 8], status[index], samplesPerLine );
 							data++;
-							blit2_32( (byte *)&vq2[(*data)*8], status[index]+8, samplesPerLine );
+							blit2_32( ( byte* )&vq2[( *data ) * 8], status[index] + 8, samplesPerLine );
 							data++;
-							blit2_32( (byte *)&vq2[(*data)*8], status[index]+samplesPerLine*2, samplesPerLine );
+							blit2_32( ( byte* )&vq2[( *data ) * 8], status[index] + samplesPerLine * 2, samplesPerLine );
 							data++;
-							blit2_32( (byte *)&vq2[(*data)*8], status[index]+samplesPerLine*2+8, samplesPerLine );
+							blit2_32( ( byte* )&vq2[( *data ) * 8], status[index] + samplesPerLine * 2 + 8, samplesPerLine );
 							data++;
 							break;
 						case	0x4000:										// motion compensation
-							move4_32( status[index] + mcomp[(*data)], status[index], samplesPerLine );
+							move4_32( status[index] + mcomp[( *data )], status[index], samplesPerLine );
 							data++;
 							break;
 					}
@@ -879,7 +1017,7 @@ void idCinematicLocal::blitVQQuad32fs( byte **status, unsigned char *data ) {
 				}
 				break;
 			case	0x4000:													// motion compensation
-				move8_32( status[index] + mcomp[(*data)], status[index], samplesPerLine );
+				move8_32( status[index] + mcomp[( *data )], status[index], samplesPerLine );
 				data++;
 				index += 5;
 				break;
@@ -887,7 +1025,8 @@ void idCinematicLocal::blitVQQuad32fs( byte **status, unsigned char *data ) {
 				index += 5;
 				break;
 		}
-	} while ( status[index] != NULL );
+	}
+	while( status[index] != NULL );
 }
 
 #define VQ2TO4(a,b,c,d) { \
@@ -912,7 +1051,7 @@ void idCinematicLocal::blitVQQuad32fs( byte **status, unsigned char *data ) {
 	*d++ = b[1];	\
 	*d++ = b[1];	\
 	a += 2; b += 2; }
- 
+
 #define VQ2TO2(a,b,c,d) { \
 	*c++ = *a;	\
 	*d++ = *a;	\
@@ -931,17 +1070,40 @@ void idCinematicLocal::blitVQQuad32fs( byte **status, unsigned char *data ) {
 idCinematicLocal::yuv_to_rgb
 ==============
 */
-unsigned short idCinematicLocal::yuv_to_rgb( long y, long u, long v ) { 
-	long r,g,b,YY = (long)(ROQ_YY_tab[(y)]);
+unsigned short idCinematicLocal::yuv_to_rgb( long y, long u, long v )
+{
+	long r, g, b, YY = ( long )( ROQ_YY_tab[( y )] );
 
-	r = (YY + ROQ_VR_tab[v]) >> 9;
-	g = (YY + ROQ_UG_tab[u] + ROQ_VG_tab[v]) >> 8;
-	b = (YY + ROQ_UB_tab[u]) >> 9;
-	
-	if (r<0) r = 0; if (g<0) g = 0; if (b<0) b = 0;
-	if (r > 31) r = 31; if (g > 63) g = 63; if (b > 31) b = 31;
+	r = ( YY + ROQ_VR_tab[v] ) >> 9;
+	g = ( YY + ROQ_UG_tab[u] + ROQ_VG_tab[v] ) >> 8;
+	b = ( YY + ROQ_UB_tab[u] ) >> 9;
 
-	return (unsigned short)((r<<11)+(g<<5)+(b));
+	if( r < 0 )
+	{
+		r = 0;
+	}
+	if( g < 0 )
+	{
+		g = 0;
+	}
+	if( b < 0 )
+	{
+		b = 0;
+	}
+	if( r > 31 )
+	{
+		r = 31;
+	}
+	if( g > 63 )
+	{
+		g = 63;
+	}
+	if( b > 31 )
+	{
+		b = 31;
+	}
+
+	return ( unsigned short )( ( r << 11 ) + ( g << 5 ) + ( b ) );
 }
 
 /*
@@ -949,17 +1111,40 @@ unsigned short idCinematicLocal::yuv_to_rgb( long y, long u, long v ) {
 idCinematicLocal::yuv_to_rgb24
 ==============
 */
-unsigned int idCinematicLocal::yuv_to_rgb24( long y, long u, long v ) { 
-	long r,g,b,YY = (long)(ROQ_YY_tab[(y)]);
+unsigned int idCinematicLocal::yuv_to_rgb24( long y, long u, long v )
+{
+	long r, g, b, YY = ( long )( ROQ_YY_tab[( y )] );
 
-	r = (YY + ROQ_VR_tab[v]) >> 6;
-	g = (YY + ROQ_UG_tab[u] + ROQ_VG_tab[v]) >> 6;
-	b = (YY + ROQ_UB_tab[u]) >> 6;
-	
-	if (r<0) r = 0; if (g<0) g = 0; if (b<0) b = 0;
-	if (r > 255) r = 255; if (g > 255) g = 255; if (b > 255) b = 255;
-	
-	return LittleLong((r)+(g<<8)+(b<<16));
+	r = ( YY + ROQ_VR_tab[v] ) >> 6;
+	g = ( YY + ROQ_UG_tab[u] + ROQ_VG_tab[v] ) >> 6;
+	b = ( YY + ROQ_UB_tab[u] ) >> 6;
+
+	if( r < 0 )
+	{
+		r = 0;
+	}
+	if( g < 0 )
+	{
+		g = 0;
+	}
+	if( b < 0 )
+	{
+		b = 0;
+	}
+	if( r > 255 )
+	{
+		r = 255;
+	}
+	if( g > 255 )
+	{
+		g = 255;
+	}
+	if( b > 255 )
+	{
+		b = 255;
+	}
+
+	return LittleLong( ( r ) + ( g << 8 ) + ( b << 16 ) );
 }
 
 /*
@@ -967,185 +1152,231 @@ unsigned int idCinematicLocal::yuv_to_rgb24( long y, long u, long v ) {
 idCinematicLocal::decodeCodeBook
 ==============
 */
-void idCinematicLocal::decodeCodeBook( byte *input, unsigned short roq_flags ) {
+void idCinematicLocal::decodeCodeBook( byte* input, unsigned short roq_flags )
+{
 	long	i, j, two, four;
-	unsigned short	*aptr, *bptr, *cptr, *dptr;
-	long	y0,y1,y2,y3,cr,cb;
-	unsigned int *iaptr, *ibptr, *icptr, *idptr;
+	unsigned short*	aptr, *bptr, *cptr, *dptr;
+	long	y0, y1, y2, y3, cr, cb;
+	unsigned int* iaptr, *ibptr, *icptr, *idptr;
 
-	if (!roq_flags) {
+	if( !roq_flags )
+	{
 		two = four = 256;
-	} else {
-		two  = roq_flags>>8;
-		if (!two) two = 256;
-		four = roq_flags&0xff;
+	}
+	else
+	{
+		two  = roq_flags >> 8;
+		if( !two )
+		{
+			two = 256;
+		}
+		four = roq_flags & 0xff;
 	}
 
 	four *= 2;
 
-	bptr = (unsigned short *)vq2;
+	bptr = ( unsigned short* )vq2;
 
-	if (!half) {
-		if (!smootheddouble) {
+	if( !half )
+	{
+		if( !smootheddouble )
+		{
 //
 // normal height
 //
-			if (samplesPerPixel==2) {
-				for(i=0;i<two;i++) {
-					y0 = (long)*input++;
-					y1 = (long)*input++;
-					y2 = (long)*input++;
-					y3 = (long)*input++;
-					cr = (long)*input++;
-					cb = (long)*input++;
+			if( samplesPerPixel == 2 )
+			{
+				for( i = 0; i < two; i++ )
+				{
+					y0 = ( long ) * input++;
+					y1 = ( long ) * input++;
+					y2 = ( long ) * input++;
+					y3 = ( long ) * input++;
+					cr = ( long ) * input++;
+					cb = ( long ) * input++;
 					*bptr++ = yuv_to_rgb( y0, cr, cb );
 					*bptr++ = yuv_to_rgb( y1, cr, cb );
 					*bptr++ = yuv_to_rgb( y2, cr, cb );
 					*bptr++ = yuv_to_rgb( y3, cr, cb );
 				}
 
-				cptr = (unsigned short *)vq4;
-				dptr = (unsigned short *)vq8;
-		
-				for(i=0;i<four;i++) {
-					aptr = (unsigned short *)vq2 + (*input++)*4;
-					bptr = (unsigned short *)vq2 + (*input++)*4;
-					for(j=0;j<2;j++)
-						VQ2TO4(aptr,bptr,cptr,dptr);
+				cptr = ( unsigned short* )vq4;
+				dptr = ( unsigned short* )vq8;
+
+				for( i = 0; i < four; i++ )
+				{
+					aptr = ( unsigned short* )vq2 + ( *input++ ) * 4;
+					bptr = ( unsigned short* )vq2 + ( *input++ ) * 4;
+					for( j = 0; j < 2; j++ )
+					{
+						VQ2TO4( aptr, bptr, cptr, dptr );
+					}
 				}
-			} else if (samplesPerPixel==4) {
-				ibptr = (unsigned int *)bptr;
-				for(i=0;i<two;i++) {
-					y0 = (long)*input++;
-					y1 = (long)*input++;
-					y2 = (long)*input++;
-					y3 = (long)*input++;
-					cr = (long)*input++;
-					cb = (long)*input++;
+			}
+			else if( samplesPerPixel == 4 )
+			{
+				ibptr = ( unsigned int* )bptr;
+				for( i = 0; i < two; i++ )
+				{
+					y0 = ( long ) * input++;
+					y1 = ( long ) * input++;
+					y2 = ( long ) * input++;
+					y3 = ( long ) * input++;
+					cr = ( long ) * input++;
+					cb = ( long ) * input++;
 					*ibptr++ = yuv_to_rgb24( y0, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y1, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y2, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y3, cr, cb );
 				}
 
-				icptr = (unsigned int *)vq4;
-				idptr = (unsigned int *)vq8;
-	
-				for(i=0;i<four;i++) {
-					iaptr = (unsigned int *)vq2 + (*input++)*4;
-					ibptr = (unsigned int *)vq2 + (*input++)*4;
-					for(j=0;j<2;j++) 
-						VQ2TO4(iaptr, ibptr, icptr, idptr);
+				icptr = ( unsigned int* )vq4;
+				idptr = ( unsigned int* )vq8;
+
+				for( i = 0; i < four; i++ )
+				{
+					iaptr = ( unsigned int* )vq2 + ( *input++ ) * 4;
+					ibptr = ( unsigned int* )vq2 + ( *input++ ) * 4;
+					for( j = 0; j < 2; j++ )
+					{
+						VQ2TO4( iaptr, ibptr, icptr, idptr );
+					}
 				}
 			}
-		} else {
+		}
+		else
+		{
 //
 // double height, smoothed
 //
-			if (samplesPerPixel==2) {
-				for(i=0;i<two;i++) {
-					y0 = (long)*input++;
-					y1 = (long)*input++;
-					y2 = (long)*input++;
-					y3 = (long)*input++;
-					cr = (long)*input++;
-					cb = (long)*input++;
+			if( samplesPerPixel == 2 )
+			{
+				for( i = 0; i < two; i++ )
+				{
+					y0 = ( long ) * input++;
+					y1 = ( long ) * input++;
+					y2 = ( long ) * input++;
+					y3 = ( long ) * input++;
+					cr = ( long ) * input++;
+					cb = ( long ) * input++;
 					*bptr++ = yuv_to_rgb( y0, cr, cb );
 					*bptr++ = yuv_to_rgb( y1, cr, cb );
-					*bptr++ = yuv_to_rgb( ((y0*3)+y2)/4, cr, cb );
-					*bptr++ = yuv_to_rgb( ((y1*3)+y3)/4, cr, cb );
-					*bptr++ = yuv_to_rgb( (y0+(y2*3))/4, cr, cb );
-					*bptr++ = yuv_to_rgb( (y1+(y3*3))/4, cr, cb );
+					*bptr++ = yuv_to_rgb( ( ( y0 * 3 ) + y2 ) / 4, cr, cb );
+					*bptr++ = yuv_to_rgb( ( ( y1 * 3 ) + y3 ) / 4, cr, cb );
+					*bptr++ = yuv_to_rgb( ( y0 + ( y2 * 3 ) ) / 4, cr, cb );
+					*bptr++ = yuv_to_rgb( ( y1 + ( y3 * 3 ) ) / 4, cr, cb );
 					*bptr++ = yuv_to_rgb( y2, cr, cb );
 					*bptr++ = yuv_to_rgb( y3, cr, cb );
 				}
 
-				cptr = (unsigned short *)vq4;
-				dptr = (unsigned short *)vq8;
-		
-				for(i=0;i<four;i++) {
-					aptr = (unsigned short *)vq2 + (*input++)*8;
-					bptr = (unsigned short *)vq2 + (*input++)*8;
-					for(j=0;j<2;j++) {
-						VQ2TO4(aptr,bptr,cptr,dptr);
-						VQ2TO4(aptr,bptr,cptr,dptr);
+				cptr = ( unsigned short* )vq4;
+				dptr = ( unsigned short* )vq8;
+
+				for( i = 0; i < four; i++ )
+				{
+					aptr = ( unsigned short* )vq2 + ( *input++ ) * 8;
+					bptr = ( unsigned short* )vq2 + ( *input++ ) * 8;
+					for( j = 0; j < 2; j++ )
+					{
+						VQ2TO4( aptr, bptr, cptr, dptr );
+						VQ2TO4( aptr, bptr, cptr, dptr );
 					}
 				}
-			} else if (samplesPerPixel==4) {
-				ibptr = (unsigned int *)bptr;
-				for(i=0;i<two;i++) {
-					y0 = (long)*input++;
-					y1 = (long)*input++;
-					y2 = (long)*input++;
-					y3 = (long)*input++;
-					cr = (long)*input++;
-					cb = (long)*input++;
+			}
+			else if( samplesPerPixel == 4 )
+			{
+				ibptr = ( unsigned int* )bptr;
+				for( i = 0; i < two; i++ )
+				{
+					y0 = ( long ) * input++;
+					y1 = ( long ) * input++;
+					y2 = ( long ) * input++;
+					y3 = ( long ) * input++;
+					cr = ( long ) * input++;
+					cb = ( long ) * input++;
 					*ibptr++ = yuv_to_rgb24( y0, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y1, cr, cb );
-					*ibptr++ = yuv_to_rgb24( ((y0*3)+y2)/4, cr, cb );
-					*ibptr++ = yuv_to_rgb24( ((y1*3)+y3)/4, cr, cb );
-					*ibptr++ = yuv_to_rgb24( (y0+(y2*3))/4, cr, cb );
-					*ibptr++ = yuv_to_rgb24( (y1+(y3*3))/4, cr, cb );
+					*ibptr++ = yuv_to_rgb24( ( ( y0 * 3 ) + y2 ) / 4, cr, cb );
+					*ibptr++ = yuv_to_rgb24( ( ( y1 * 3 ) + y3 ) / 4, cr, cb );
+					*ibptr++ = yuv_to_rgb24( ( y0 + ( y2 * 3 ) ) / 4, cr, cb );
+					*ibptr++ = yuv_to_rgb24( ( y1 + ( y3 * 3 ) ) / 4, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y2, cr, cb );
 					*ibptr++ = yuv_to_rgb24( y3, cr, cb );
 				}
 
-				icptr = (unsigned int *)vq4;
-				idptr = (unsigned int *)vq8;
-	
-				for(i=0;i<four;i++) {
-					iaptr = (unsigned int *)vq2 + (*input++)*8;
-					ibptr = (unsigned int *)vq2 + (*input++)*8;
-					for(j=0;j<2;j++) {
-						VQ2TO4(iaptr, ibptr, icptr, idptr);
-						VQ2TO4(iaptr, ibptr, icptr, idptr);
+				icptr = ( unsigned int* )vq4;
+				idptr = ( unsigned int* )vq8;
+
+				for( i = 0; i < four; i++ )
+				{
+					iaptr = ( unsigned int* )vq2 + ( *input++ ) * 8;
+					ibptr = ( unsigned int* )vq2 + ( *input++ ) * 8;
+					for( j = 0; j < 2; j++ )
+					{
+						VQ2TO4( iaptr, ibptr, icptr, idptr );
+						VQ2TO4( iaptr, ibptr, icptr, idptr );
 					}
 				}
-			}			
+			}
 		}
-	} else {
+	}
+	else
+	{
 //
 // 1/4 screen
 //
-		if (samplesPerPixel==2) {
-			for(i=0;i<two;i++) {
-				y0 = (long)*input; input+=2;
-				y2 = (long)*input; input+=2;
-				cr = (long)*input++;
-				cb = (long)*input++;
+		if( samplesPerPixel == 2 )
+		{
+			for( i = 0; i < two; i++ )
+			{
+				y0 = ( long ) * input;
+				input += 2;
+				y2 = ( long ) * input;
+				input += 2;
+				cr = ( long ) * input++;
+				cb = ( long ) * input++;
 				*bptr++ = yuv_to_rgb( y0, cr, cb );
 				*bptr++ = yuv_to_rgb( y2, cr, cb );
 			}
 
-			cptr = (unsigned short *)vq4;
-			dptr = (unsigned short *)vq8;
-	
-			for(i=0;i<four;i++) {
-				aptr = (unsigned short *)vq2 + (*input++)*2;
-				bptr = (unsigned short *)vq2 + (*input++)*2;
-				for(j=0;j<2;j++) { 
-					VQ2TO2(aptr,bptr,cptr,dptr);
+			cptr = ( unsigned short* )vq4;
+			dptr = ( unsigned short* )vq8;
+
+			for( i = 0; i < four; i++ )
+			{
+				aptr = ( unsigned short* )vq2 + ( *input++ ) * 2;
+				bptr = ( unsigned short* )vq2 + ( *input++ ) * 2;
+				for( j = 0; j < 2; j++ )
+				{
+					VQ2TO2( aptr, bptr, cptr, dptr );
 				}
 			}
-		} else if (samplesPerPixel == 4) {
-			ibptr = (unsigned int *) bptr;
-			for(i=0;i<two;i++) {
-				y0 = (long)*input; input+=2;
-				y2 = (long)*input; input+=2;
-				cr = (long)*input++;
-				cb = (long)*input++;
+		}
+		else if( samplesPerPixel == 4 )
+		{
+			ibptr = ( unsigned int* ) bptr;
+			for( i = 0; i < two; i++ )
+			{
+				y0 = ( long ) * input;
+				input += 2;
+				y2 = ( long ) * input;
+				input += 2;
+				cr = ( long ) * input++;
+				cb = ( long ) * input++;
 				*ibptr++ = yuv_to_rgb24( y0, cr, cb );
 				*ibptr++ = yuv_to_rgb24( y2, cr, cb );
 			}
 
-			icptr = (unsigned int *)vq4;
-			idptr = (unsigned int *)vq8;
-	
-			for(i=0;i<four;i++) {
-				iaptr = (unsigned int *)vq2 + (*input++)*2;
-				ibptr = (unsigned int *)vq2 + (*input++)*2;
-				for(j=0;j<2;j++) { 
-					VQ2TO2(iaptr,ibptr,icptr,idptr);
+			icptr = ( unsigned int* )vq4;
+			idptr = ( unsigned int* )vq8;
+
+			for( i = 0; i < four; i++ )
+			{
+				iaptr = ( unsigned int* )vq2 + ( *input++ ) * 2;
+				ibptr = ( unsigned int* )vq2 + ( *input++ ) * 2;
+				for( j = 0; j < 2; j++ )
+				{
+					VQ2TO2( iaptr, ibptr, icptr, idptr );
 				}
 			}
 		}
@@ -1157,34 +1388,43 @@ void idCinematicLocal::decodeCodeBook( byte *input, unsigned short roq_flags ) {
 idCinematicLocal::recurseQuad
 ==============
 */
-void idCinematicLocal::recurseQuad( long startX, long startY, long quadSize, long xOff, long yOff ) {
-	byte *scroff;
+void idCinematicLocal::recurseQuad( long startX, long startY, long quadSize, long xOff, long yOff )
+{
+	byte* scroff;
 	long bigx, bigy, lowx, lowy, useY;
 	long offset;
 
 	offset = screenDelta;
-	
+
 	lowx = lowy = 0;
 	bigx = xsize;
 	bigy = ysize;
 
-	if (bigx > CIN_WIDTH) bigx = CIN_WIDTH;
-	if (bigy > CIN_HEIGHT) bigy = CIN_HEIGHT;
-
-	if ( (startX >= lowx) && (startX+quadSize) <= (bigx) && (startY+quadSize) <= (bigy) && (startY >= lowy) && quadSize <= MAXSIZE) {
-		useY = startY;
-		scroff = image + (useY+((CIN_HEIGHT-bigy)>>1)+yOff)*(samplesPerLine) + (((startX+xOff))*samplesPerPixel);
-
-		qStatus[0][onQuad  ] = scroff;
-		qStatus[1][onQuad++] = scroff+offset;
+	if( bigx > CIN_WIDTH )
+	{
+		bigx = CIN_WIDTH;
+	}
+	if( bigy > CIN_HEIGHT )
+	{
+		bigy = CIN_HEIGHT;
 	}
 
-	if ( quadSize != MINSIZE ) {
+	if( ( startX >= lowx ) && ( startX + quadSize ) <= ( bigx ) && ( startY + quadSize ) <= ( bigy ) && ( startY >= lowy ) && quadSize <= MAXSIZE )
+	{
+		useY = startY;
+		scroff = image + ( useY + ( ( CIN_HEIGHT - bigy ) >> 1 ) + yOff ) * ( samplesPerLine ) + ( ( ( startX + xOff ) ) * samplesPerPixel );
+
+		qStatus[0][onQuad  ] = scroff;
+		qStatus[1][onQuad++] = scroff + offset;
+	}
+
+	if( quadSize != MINSIZE )
+	{
 		quadSize >>= 1;
 		recurseQuad( startX,		  startY		  , quadSize, xOff, yOff );
-		recurseQuad( startX+quadSize, startY		  , quadSize, xOff, yOff );
-		recurseQuad( startX,		  startY+quadSize , quadSize, xOff, yOff );
-		recurseQuad( startX+quadSize, startY+quadSize , quadSize, xOff, yOff );
+		recurseQuad( startX + quadSize, startY		  , quadSize, xOff, yOff );
+		recurseQuad( startX,		  startY + quadSize , quadSize, xOff, yOff );
+		recurseQuad( startX + quadSize, startY + quadSize , quadSize, xOff, yOff );
 	}
 }
 
@@ -1193,27 +1433,31 @@ void idCinematicLocal::recurseQuad( long startX, long startY, long quadSize, lon
 idCinematicLocal::setupQuad
 ==============
 */
-void idCinematicLocal::setupQuad( long xOff, long yOff ) {
-	long numQuadCels, i,x,y;
-	byte *temp;
+void idCinematicLocal::setupQuad( long xOff, long yOff )
+{
+	long numQuadCels, i, x, y;
+	byte* temp;
 
-	numQuadCels  = (CIN_WIDTH*CIN_HEIGHT) / (16);
-	numQuadCels += numQuadCels/4 + numQuadCels/16;
+	numQuadCels  = ( CIN_WIDTH * CIN_HEIGHT ) / ( 16 );
+	numQuadCels += numQuadCels / 4 + numQuadCels / 16;
 	numQuadCels += 64;							  // for overflow
 
-	numQuadCels  = (xsize*ysize) / (16);
-	numQuadCels += numQuadCels/4;
+	numQuadCels  = ( xsize * ysize ) / ( 16 );
+	numQuadCels += numQuadCels / 4;
 	numQuadCels += 64;							  // for overflow
 
 	onQuad = 0;
 
-	for(y=0;y<(long)ysize;y+=16) 
-		for(x=0;x<(long)xsize;x+=16) 
+	for( y = 0; y < ( long )ysize; y += 16 )
+		for( x = 0; x < ( long )xsize; x += 16 )
+		{
 			recurseQuad( x, y, 16, xOff, yOff );
+		}
 
 	temp = NULL;
 
-	for(i=(numQuadCels-64);i<numQuadCels;i++) {
+	for( i = ( numQuadCels - 64 ); i < numQuadCels; i++ )
+	{
 		qStatus[0][i] = temp;			  // eoq
 		qStatus[1][i] = temp;			  // eoq
 	}
@@ -1224,27 +1468,29 @@ void idCinematicLocal::setupQuad( long xOff, long yOff ) {
 idCinematicLocal::readQuadInfo
 ==============
 */
-void idCinematicLocal::readQuadInfo( byte *qData ) {
-	xsize    = qData[0]+qData[1]*256;
-	ysize    = qData[2]+qData[3]*256;
-	maxsize  = qData[4]+qData[5]*256;
-	minsize  = qData[6]+qData[7]*256;
-	
+void idCinematicLocal::readQuadInfo( byte* qData )
+{
+	xsize    = qData[0] + qData[1] * 256;
+	ysize    = qData[2] + qData[3] * 256;
+	maxsize  = qData[4] + qData[5] * 256;
+	minsize  = qData[6] + qData[7] * 256;
+
 	CIN_HEIGHT = ysize;
 	CIN_WIDTH  = xsize;
 
-	samplesPerLine = CIN_WIDTH*samplesPerPixel;
-	screenDelta = CIN_HEIGHT*samplesPerLine;
+	samplesPerLine = CIN_WIDTH * samplesPerPixel;
+	screenDelta = CIN_HEIGHT * samplesPerLine;
 
-	if (!image ) {
-		image = (byte *)Mem_Alloc( CIN_WIDTH*CIN_HEIGHT*samplesPerPixel*2 );
+	if( !image )
+	{
+		image = ( byte* )Mem_Alloc( CIN_WIDTH * CIN_HEIGHT * samplesPerPixel * 2 );
 	}
 
 	half = false;
 	smootheddouble = false;
-	
-	t[0] = (0 - (unsigned int)image)+(unsigned int)image+screenDelta;
-	t[1] = (0 - ((unsigned int)image + screenDelta))+(unsigned int)image;
+
+	t[0] = ( 0 - ( unsigned int )image ) + ( unsigned int )image + screenDelta;
+	t[1] = ( 0 - ( ( unsigned int )image + screenDelta ) ) + ( unsigned int )image;
 
 	drawX = CIN_WIDTH;
 	drawY = CIN_HEIGHT;
@@ -1255,17 +1501,25 @@ void idCinematicLocal::readQuadInfo( byte *qData ) {
 idCinematicLocal::RoQPrepMcomp
 ==============
 */
-void idCinematicLocal::RoQPrepMcomp( long xoff, long yoff ) {
+void idCinematicLocal::RoQPrepMcomp( long xoff, long yoff )
+{
 	long i, j, x, y, temp, temp2;
 
-	i=samplesPerLine; j=samplesPerPixel;
-	if ( xsize == (ysize*4) && !half ) { j = j+j; i = i+i; }
-	
-	for(y=0;y<16;y++) {
-		temp2 = (y+yoff-8)*i;
-		for(x=0;x<16;x++) {
-			temp = (x+xoff-8)*j;
-			mcomp[(x*16)+y] = normalBuffer0-(temp2+temp);
+	i = samplesPerLine;
+	j = samplesPerPixel;
+	if( xsize == ( ysize * 4 ) && !half )
+	{
+		j = j + j;
+		i = i + i;
+	}
+
+	for( y = 0; y < 16; y++ )
+	{
+		temp2 = ( y + yoff - 8 ) * i;
+		for( x = 0; x < 16; x++ )
+		{
+			temp = ( x + xoff - 8 ) * j;
+			mcomp[( x * 16 ) + y] = normalBuffer0 - ( temp2 + temp );
 		}
 	}
 }
@@ -1275,8 +1529,9 @@ void idCinematicLocal::RoQPrepMcomp( long xoff, long yoff ) {
 idCinematicLocal::RoQReset
 ==============
 */
-void idCinematicLocal::RoQReset() {
-	
+void idCinematicLocal::RoQReset()
+{
+
 	iFile->Seek( 0, FS_SEEK_SET );
 	iFile->Read( file, 16 );
 	RoQ_init();
@@ -1284,16 +1539,17 @@ void idCinematicLocal::RoQReset() {
 }
 
 
-typedef struct {
-  struct jpeg_source_mgr pub;	/* public fields */
+typedef struct
+{
+	struct jpeg_source_mgr pub;	/* public fields */
 
-  byte   *infile;		/* source stream */
-  JOCTET * buffer;		/* start of buffer */
-  boolean start_of_file;	/* have we gotten any data yet? */
-  int	memsize;
+	byte*   infile;		/* source stream */
+	JOCTET* buffer;		/* start of buffer */
+	boolean start_of_file;	/* have we gotten any data yet? */
+	int	memsize;
 } my_source_mgr;
 
-typedef my_source_mgr * my_src_ptr;
+typedef my_source_mgr* my_src_ptr;
 
 #define INPUT_BUF_SIZE  32768	/* choose an efficiently fread'able size */
 
@@ -1336,26 +1592,32 @@ struct jpeg_error_mgr jerr;
 
 METHODDEF boolean fill_input_buffer( j_decompress_ptr cinfo )
 {
-  my_src_ptr src = (my_src_ptr) cinfo->src;
-  int nbytes;
+	my_src_ptr src = ( my_src_ptr ) cinfo->src;
+	int nbytes;
 
-  nbytes = INPUT_BUF_SIZE;
-  if (nbytes > src->memsize) nbytes = src->memsize;
-  if (nbytes == 0) {
-    /* Insert a fake EOI marker */
-    src->buffer[0] = (JOCTET) 0xFF;
-    src->buffer[1] = (JOCTET) JPEG_EOI;
-    nbytes = 2;
-  } else {
-	  memcpy( src->buffer, src->infile, INPUT_BUF_SIZE );
-	  src->infile = src->infile + nbytes;
- 	  src->memsize = src->memsize - INPUT_BUF_SIZE;
-  }
-  src->pub.next_input_byte = src->buffer;
-  src->pub.bytes_in_buffer = nbytes;
-  src->start_of_file = FALSE;
+	nbytes = INPUT_BUF_SIZE;
+	if( nbytes > src->memsize )
+	{
+		nbytes = src->memsize;
+	}
+	if( nbytes == 0 )
+	{
+		/* Insert a fake EOI marker */
+		src->buffer[0] = ( JOCTET ) 0xFF;
+		src->buffer[1] = ( JOCTET ) JPEG_EOI;
+		nbytes = 2;
+	}
+	else
+	{
+		memcpy( src->buffer, src->infile, INPUT_BUF_SIZE );
+		src->infile = src->infile + nbytes;
+		src->memsize = src->memsize - INPUT_BUF_SIZE;
+	}
+	src->pub.next_input_byte = src->buffer;
+	src->pub.bytes_in_buffer = nbytes;
+	src->start_of_file = FALSE;
 
-  return TRUE;
+	return TRUE;
 }
 /*
  * Initialize source --- called by jpeg_read_header
@@ -1363,15 +1625,15 @@ METHODDEF boolean fill_input_buffer( j_decompress_ptr cinfo )
  */
 
 
-METHODDEF void init_source (j_decompress_ptr cinfo)
+METHODDEF void init_source( j_decompress_ptr cinfo )
 {
-  my_src_ptr src = (my_src_ptr) cinfo->src;
+	my_src_ptr src = ( my_src_ptr ) cinfo->src;
 
-  /* We reset the empty-input-file flag for each image,
-   * but we don't clear the input buffer.
-   * This is correct behavior for reading a series of images from one source.
-   */
-  src->start_of_file = TRUE;
+	/* We reset the empty-input-file flag for each image,
+	 * but we don't clear the input buffer.
+	 * This is correct behavior for reading a series of images from one source.
+	 */
+	src->start_of_file = TRUE;
 }
 
 /*
@@ -1387,19 +1649,20 @@ METHODDEF void init_source (j_decompress_ptr cinfo)
  */
 
 METHODDEF void
-skip_input_data (j_decompress_ptr cinfo, long num_bytes)
+skip_input_data( j_decompress_ptr cinfo, long num_bytes )
 {
-  my_src_ptr src = (my_src_ptr) cinfo->src;
+	my_src_ptr src = ( my_src_ptr ) cinfo->src;
 
-  /* Just a dumb implementation for now.  Could use fseek() except
-   * it doesn't work on pipes.  Not clear that being smart is worth
-   * any trouble anyway --- large skips are infrequent.
-   */
-  if (num_bytes > 0) {
-	src->infile = src->infile + num_bytes;
-    src->pub.next_input_byte += (size_t) num_bytes;
-    src->pub.bytes_in_buffer -= (size_t) num_bytes;
-  }
+	/* Just a dumb implementation for now.  Could use fseek() except
+	 * it doesn't work on pipes.  Not clear that being smart is worth
+	 * any trouble anyway --- large skips are infrequent.
+	 */
+	if( num_bytes > 0 )
+	{
+		src->infile = src->infile + num_bytes;
+		src->pub.next_input_byte += ( size_t ) num_bytes;
+		src->pub.bytes_in_buffer -= ( size_t ) num_bytes;
+	}
 }
 
 
@@ -1422,164 +1685,166 @@ skip_input_data (j_decompress_ptr cinfo, long num_bytes)
  */
 
 METHODDEF void
-term_source (j_decompress_ptr cinfo)
+term_source( j_decompress_ptr cinfo )
 {
 	cinfo = cinfo;
-  /* no work necessary here */
+	/* no work necessary here */
 }
 
 GLOBAL void
-jpeg_memory_src (j_decompress_ptr cinfo, byte *infile, int size)
+jpeg_memory_src( j_decompress_ptr cinfo, byte* infile, int size )
 {
-  my_src_ptr src;
+	my_src_ptr src;
 
-  /* The source object and input buffer are made permanent so that a series
-   * of JPEG images can be read from the same file by calling jpeg_stdio_src
-   * only before the first one.  (If we discarded the buffer at the end of
-   * one image, we'd likely lose the start of the next one.)
-   * This makes it unsafe to use this manager and a different source
-   * manager serially with the same JPEG object.  Caveat programmer.
-   */
-  if (cinfo->src == NULL) {	/* first time for this JPEG object? */
-    cinfo->src = (struct jpeg_source_mgr *)
-      (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
-				  sizeof(my_source_mgr));
-    src = (my_src_ptr) cinfo->src;
-    src->buffer = (JOCTET *)
-      (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
-				  INPUT_BUF_SIZE * sizeof(JOCTET));
-  }
+	/* The source object and input buffer are made permanent so that a series
+	 * of JPEG images can be read from the same file by calling jpeg_stdio_src
+	 * only before the first one.  (If we discarded the buffer at the end of
+	 * one image, we'd likely lose the start of the next one.)
+	 * This makes it unsafe to use this manager and a different source
+	 * manager serially with the same JPEG object.  Caveat programmer.
+	 */
+	if( cinfo->src == NULL )  	/* first time for this JPEG object? */
+	{
+		cinfo->src = ( struct jpeg_source_mgr* )
+					 ( *cinfo->mem->alloc_small )( ( j_common_ptr ) cinfo, JPOOL_PERMANENT,
+							 sizeof( my_source_mgr ) );
+		src = ( my_src_ptr ) cinfo->src;
+		src->buffer = ( JOCTET* )
+					  ( *cinfo->mem->alloc_small )( ( j_common_ptr ) cinfo, JPOOL_PERMANENT,
+							  INPUT_BUF_SIZE * sizeof( JOCTET ) );
+	}
 
-  src = (my_src_ptr) cinfo->src;
-  src->pub.init_source = init_source;
-  src->pub.fill_input_buffer = fill_input_buffer;
-  src->pub.skip_input_data = skip_input_data;
-  src->pub.resync_to_restart = jpeg_resync_to_restart; /* use default method */
-  src->pub.term_source = term_source;
-  src->infile = infile;
-  src->memsize = size;
-  src->pub.bytes_in_buffer = 0; /* forces fill_input_buffer on first read */
-  src->pub.next_input_byte = NULL; /* until buffer loaded */
+	src = ( my_src_ptr ) cinfo->src;
+	src->pub.init_source = init_source;
+	src->pub.fill_input_buffer = fill_input_buffer;
+	src->pub.skip_input_data = skip_input_data;
+	src->pub.resync_to_restart = jpeg_resync_to_restart; /* use default method */
+	src->pub.term_source = term_source;
+	src->infile = infile;
+	src->memsize = size;
+	src->pub.bytes_in_buffer = 0; /* forces fill_input_buffer on first read */
+	src->pub.next_input_byte = NULL; /* until buffer loaded */
 }
 
-int JPEGBlit( byte *wStatus, byte *data, int datasize )
+int JPEGBlit( byte* wStatus, byte* data, int datasize )
 {
-  /* This struct contains the JPEG decompression parameters and pointers to
-   * working space (which is allocated as needed by the JPEG library).
-   */
-  struct jpeg_decompress_struct cinfo;
-  /* We use our private extension JPEG error handler.
-   * Note that this struct must live as long as the main JPEG parameter
-   * struct, to avoid dangling-pointer problems.
-   */
-  /* More stuff */
-  JSAMPARRAY buffer;		/* Output row buffer */
-  int row_stride;		/* physical row width in output buffer */
+	/* This struct contains the JPEG decompression parameters and pointers to
+	 * working space (which is allocated as needed by the JPEG library).
+	 */
+	struct jpeg_decompress_struct cinfo;
+	/* We use our private extension JPEG error handler.
+	 * Note that this struct must live as long as the main JPEG parameter
+	 * struct, to avoid dangling-pointer problems.
+	 */
+	/* More stuff */
+	JSAMPARRAY buffer;		/* Output row buffer */
+	int row_stride;		/* physical row width in output buffer */
 
-  /* Step 1: allocate and initialize JPEG decompression object */
+	/* Step 1: allocate and initialize JPEG decompression object */
 
-  /* We set up the normal JPEG error routines, then override error_exit. */
-  cinfo.err = jpeg_std_error(&jerr);
+	/* We set up the normal JPEG error routines, then override error_exit. */
+	cinfo.err = jpeg_std_error( &jerr );
 
-  /* Now we can initialize the JPEG decompression object. */
-  jpeg_create_decompress(&cinfo);
+	/* Now we can initialize the JPEG decompression object. */
+	jpeg_create_decompress( &cinfo );
 
-  /* Step 2: specify data source (eg, a file) */
+	/* Step 2: specify data source (eg, a file) */
 
-  jpeg_memory_src(&cinfo, data, datasize);
+	jpeg_memory_src( &cinfo, data, datasize );
 
-  /* Step 3: read file parameters with jpeg_read_header() */
+	/* Step 3: read file parameters with jpeg_read_header() */
 
-  (void) jpeg_read_header(&cinfo, TRUE);
-  /* We can ignore the return value from jpeg_read_header since
-   *   (a) suspension is not possible with the stdio data source, and
-   *   (b) we passed TRUE to reject a tables-only JPEG file as an error.
-   * See libjpeg.doc for more info.
-   */
+	( void ) jpeg_read_header( &cinfo, TRUE );
+	/* We can ignore the return value from jpeg_read_header since
+	 *   (a) suspension is not possible with the stdio data source, and
+	 *   (b) we passed TRUE to reject a tables-only JPEG file as an error.
+	 * See libjpeg.doc for more info.
+	 */
 
-  /* Step 4: set parameters for decompression */
+	/* Step 4: set parameters for decompression */
 
-  /* In this example, we don't need to change any of the defaults set by
-   * jpeg_read_header(), so we do nothing here.
-   */
+	/* In this example, we don't need to change any of the defaults set by
+	 * jpeg_read_header(), so we do nothing here.
+	 */
 
-  /* Step 5: Start decompressor */
+	/* Step 5: Start decompressor */
 
 	cinfo.dct_method = JDCT_IFAST;
-    cinfo.dct_method = JDCT_FASTEST;
+	cinfo.dct_method = JDCT_FASTEST;
 	cinfo.dither_mode = JDITHER_NONE;
-    cinfo.do_fancy_upsampling = FALSE;
+	cinfo.do_fancy_upsampling = FALSE;
 //	cinfo.out_color_space = JCS_GRAYSCALE;
-	
-  (void) jpeg_start_decompress(&cinfo);
-  /* We can ignore the return value since suspension is not possible
-   * with the stdio data source.
-   */
 
-  /* We may need to do some setup of our own at this point before reading
-   * the data.  After jpeg_start_decompress() we have the correct scaled
-   * output image dimensions available, as well as the output colormap
-   * if we asked for color quantization.
-   * In this example, we need to make an output work buffer of the right size.
-   */ 
-  /* JSAMPLEs per row in output buffer */
-  row_stride = cinfo.output_width * cinfo.output_components;
+	( void ) jpeg_start_decompress( &cinfo );
+	/* We can ignore the return value since suspension is not possible
+	 * with the stdio data source.
+	 */
 
-  /* Make a one-row-high sample array that will go away when done with image */
-  buffer = (*cinfo.mem->alloc_sarray)
-		((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+	/* We may need to do some setup of our own at this point before reading
+	 * the data.  After jpeg_start_decompress() we have the correct scaled
+	 * output image dimensions available, as well as the output colormap
+	 * if we asked for color quantization.
+	 * In this example, we need to make an output work buffer of the right size.
+	 */
+	/* JSAMPLEs per row in output buffer */
+	row_stride = cinfo.output_width * cinfo.output_components;
 
-  /* Step 6: while (scan lines remain to be read) */
-  /*           jpeg_read_scanlines(...); */
+	/* Make a one-row-high sample array that will go away when done with image */
+	buffer = ( *cinfo.mem->alloc_sarray )
+			 ( ( j_common_ptr ) &cinfo, JPOOL_IMAGE, row_stride, 1 );
 
-  /* Here we use the library's state variable cinfo.output_scanline as the
-   * loop counter, so that we don't have to keep track ourselves.
-   */
-   
-  wStatus += (cinfo.output_height-1)*row_stride;
-  while (cinfo.output_scanline < cinfo.output_height) {
-    /* jpeg_read_scanlines expects an array of pointers to scanlines.
-     * Here the array is only one element long, but you could ask for
-     * more than one scanline at a time if that's more convenient.
-     */
-    (void) jpeg_read_scanlines(&cinfo, &buffer[0], 1);
+	/* Step 6: while (scan lines remain to be read) */
+	/*           jpeg_read_scanlines(...); */
 
-    /* Assume put_scanline_someplace wants a pointer and sample count. */
-	memcpy( wStatus, &buffer[0][0], row_stride );
-	/*
-	int x;
-	unsigned int *buf = (unsigned int *)&buffer[0][0];
-	unsigned int *out = (unsigned int *)wStatus;
-	for(x=0;x<cinfo.output_width;x++) {
-		unsigned int pixel = buf[x];
-		byte *roof = (byte *)&pixel;
-		byte temp = roof[0];
-		roof[0] = roof[2];
-		roof[2] = temp;
-		out[x] = pixel;
+	/* Here we use the library's state variable cinfo.output_scanline as the
+	 * loop counter, so that we don't have to keep track ourselves.
+	 */
+
+	wStatus += ( cinfo.output_height - 1 ) * row_stride;
+	while( cinfo.output_scanline < cinfo.output_height )
+	{
+		/* jpeg_read_scanlines expects an array of pointers to scanlines.
+		 * Here the array is only one element long, but you could ask for
+		 * more than one scanline at a time if that's more convenient.
+		 */
+		( void ) jpeg_read_scanlines( &cinfo, &buffer[0], 1 );
+
+		/* Assume put_scanline_someplace wants a pointer and sample count. */
+		memcpy( wStatus, &buffer[0][0], row_stride );
+		/*
+		int x;
+		unsigned int *buf = (unsigned int *)&buffer[0][0];
+		unsigned int *out = (unsigned int *)wStatus;
+		for(x=0;x<cinfo.output_width;x++) {
+			unsigned int pixel = buf[x];
+			byte *roof = (byte *)&pixel;
+			byte temp = roof[0];
+			roof[0] = roof[2];
+			roof[2] = temp;
+			out[x] = pixel;
+		}
+		*/
+		wStatus -= row_stride;
 	}
-	*/
-	wStatus -= row_stride;
-  }
 
-  /* Step 7: Finish decompression */
+	/* Step 7: Finish decompression */
 
-  (void) jpeg_finish_decompress(&cinfo);
-  /* We can ignore the return value since suspension is not possible
-   * with the stdio data source.
-   */
+	( void ) jpeg_finish_decompress( &cinfo );
+	/* We can ignore the return value since suspension is not possible
+	 * with the stdio data source.
+	 */
 
-  /* Step 8: Release JPEG decompression object */
+	/* Step 8: Release JPEG decompression object */
 
-  /* This is an important step since it will release a good deal of memory. */
-  jpeg_destroy_decompress(&cinfo);
+	/* This is an important step since it will release a good deal of memory. */
+	jpeg_destroy_decompress( &cinfo );
 
-  /* At this point you may want to check to see whether any corrupt-data
-   * warnings occurred (test whether jerr.pub.num_warnings is nonzero).
-   */
+	/* At this point you may want to check to see whether any corrupt-data
+	 * warnings occurred (test whether jerr.pub.num_warnings is nonzero).
+	 */
 
-  /* And we're done! */
-  return 1;
+	/* And we're done! */
+	return 1;
 }
 
 /*
@@ -1587,17 +1852,22 @@ int JPEGBlit( byte *wStatus, byte *data, int datasize )
 idCinematicLocal::RoQInterrupt
 ==============
 */
-void idCinematicLocal::RoQInterrupt(void) {
-	byte				*framedata;
+void idCinematicLocal::RoQInterrupt( void )
+{
+	byte*				framedata;
 
-	iFile->Read( file, RoQFrameSize+8 );
-	if ( RoQPlayed >= ROQSize ) { 
-		if (looping) {
+	iFile->Read( file, RoQFrameSize + 8 );
+	if( RoQPlayed >= ROQSize )
+	{
+		if( looping )
+		{
 			RoQReset();
-		} else {
+		}
+		else
+		{
 			status = FMV_EOF;
 		}
-		return; 
+		return;
 	}
 
 	framedata = file;
@@ -1605,39 +1875,47 @@ void idCinematicLocal::RoQInterrupt(void) {
 // new frame is ready
 //
 redump:
-	switch(roq_id) 
+	switch( roq_id )
 	{
 		case	ROQ_QUAD_VQ:
-			if ((numQuads&1)) {
+			if( ( numQuads & 1 ) )
+			{
 				normalBuffer0 = t[1];
 				RoQPrepMcomp( roqF0, roqF1 );
-				blitVQQuad32fs( qStatus[1], framedata);
+				blitVQQuad32fs( qStatus[1], framedata );
 				buf = 	image + screenDelta;
-			} else {
+			}
+			else
+			{
 				normalBuffer0 = t[0];
 				RoQPrepMcomp( roqF0, roqF1 );
 				blitVQQuad32fs( qStatus[0], framedata );
 				buf = 	image;
 			}
-			if (numQuads == 0) {		// first frame
-				memcpy(image+screenDelta, image, samplesPerLine*ysize);
+			if( numQuads == 0 )  		// first frame
+			{
+				memcpy( image + screenDelta, image, samplesPerLine * ysize );
 			}
 			numQuads++;
 			dirty = true;
 			break;
 		case	ROQ_CODEBOOK:
-			decodeCodeBook( framedata, (unsigned short)roq_flags );
+			decodeCodeBook( framedata, ( unsigned short )roq_flags );
 			break;
 		case	ZA_SOUND_MONO:
 			break;
 		case	ZA_SOUND_STEREO:
 			break;
 		case	ROQ_QUAD_INFO:
-			if (numQuads == -1) {
+			if( numQuads == -1 )
+			{
 				readQuadInfo( framedata );
 				setupQuad( 0, 0 );
 			}
-			if (numQuads != 1) numQuads = 0;
+			if( numQuads != 1 )
+			{
+				numQuads = 0;
+			}
 			break;
 		case	ROQ_PACKET:
 			inMemory = ( roq_flags != 0 );
@@ -1647,53 +1925,63 @@ redump:
 			RoQFrameSize = 0;
 			break;
 		case	ROQ_QUAD_JPEG:
-			if (!numQuads) { 
+			if( !numQuads )
+			{
 				normalBuffer0 = t[0];
 				JPEGBlit( image, framedata, RoQFrameSize );
-				memcpy(image+screenDelta, image, samplesPerLine*ysize);
+				memcpy( image + screenDelta, image, samplesPerLine * ysize );
 				numQuads++;
 			}
 			break;
 		default:
 			status = FMV_EOF;
 			break;
-	}	
+	}
 //
 // read in next frame data
 //
-	if ( RoQPlayed >= ROQSize ) { 
-		if (looping) {
+	if( RoQPlayed >= ROQSize )
+	{
+		if( looping )
+		{
 			RoQReset();
-		} else {
+		}
+		else
+		{
 			status = FMV_EOF;
 		}
-		return; 
+		return;
 	}
-	
-	framedata		 += RoQFrameSize;
-	roq_id		 = framedata[0] + framedata[1]*256;
-	RoQFrameSize = framedata[2] + framedata[3]*256 + framedata[4]*65536;
-	roq_flags	 = framedata[6] + framedata[7]*256;
-	roqF0		 = (char)framedata[7];
-	roqF1		 = (char)framedata[6];
 
-	if (RoQFrameSize>65536||roq_id==0x1084) {
-		common->DPrintf("roq_size>65536||roq_id==0x1084\n");
+	framedata		 += RoQFrameSize;
+	roq_id		 = framedata[0] + framedata[1] * 256;
+	RoQFrameSize = framedata[2] + framedata[3] * 256 + framedata[4] * 65536;
+	roq_flags	 = framedata[6] + framedata[7] * 256;
+	roqF0		 = ( char )framedata[7];
+	roqF1		 = ( char )framedata[6];
+
+	if( RoQFrameSize > 65536 || roq_id == 0x1084 )
+	{
+		common->DPrintf( "roq_size>65536||roq_id==0x1084\n" );
 		status = FMV_EOF;
-		if (looping) {
+		if( looping )
+		{
 			RoQReset();
 		}
 		return;
 	}
-	if (inMemory && (status != FMV_EOF)) { 
-		inMemory = false; framedata += 8; goto redump; 
+	if( inMemory && ( status != FMV_EOF ) )
+	{
+		inMemory = false;
+		framedata += 8;
+		goto redump;
 	}
 //
 // one more frame hits the dust
 //
 //	assert(RoQFrameSize <= 65536);
 //	r = Sys_StreamedRead( file, RoQFrameSize+8, 1, iFile );
-	RoQPlayed	+= RoQFrameSize+8;
+	RoQPlayed	+= RoQFrameSize + 8;
 }
 
 /*
@@ -1701,20 +1989,24 @@ redump:
 idCinematicLocal::RoQ_init
 ==============
 */
-void idCinematicLocal::RoQ_init( void ) {
+void idCinematicLocal::RoQ_init( void )
+{
 
 	RoQPlayed = 24;
 
 	/*	get frame rate */
-	roqFPS	 = file[ 6] + file[ 7]*256;
-	
-	if (!roqFPS) roqFPS = 30;
+	roqFPS	 = file[ 6] + file[ 7] * 256;
+
+	if( !roqFPS )
+	{
+		roqFPS = 30;
+	}
 
 	numQuads = -1;
 
-	roq_id		= file[ 8] + file[ 9]*256;
-	RoQFrameSize= file[10] + file[11]*256 + file[12]*65536;
-	roq_flags	= file[14] + file[15]*256;
+	roq_id		= file[ 8] + file[ 9] * 256;
+	RoQFrameSize = file[10] + file[11] * 256 + file[12] * 65536;
+	roq_flags	= file[14] + file[15] * 256;
 }
 
 /*
@@ -1722,13 +2014,16 @@ void idCinematicLocal::RoQ_init( void ) {
 idCinematicLocal::RoQShutdown
 ==============
 */
-void idCinematicLocal::RoQShutdown( void ) {
-	if ( status == FMV_IDLE ) {
+void idCinematicLocal::RoQShutdown( void )
+{
+	if( status == FMV_IDLE )
+	{
 		return;
 	}
 	status = FMV_IDLE;
 
-	if ( iFile ) {
+	if( iFile )
+	{
 		fileSystem->CloseFile( iFile );
 		iFile = NULL;
 	}
@@ -1743,13 +2038,17 @@ void idCinematicLocal::RoQShutdown( void ) {
 idSndWindow::InitFromFile
 ==============
 */
-bool idSndWindow::InitFromFile( const char *qpath, bool looping ) {
+bool idSndWindow::InitFromFile( const char* qpath, bool looping )
+{
 	idStr fname = qpath;
 
 	fname.ToLower();
-	if ( !fname.Icmp( "waveform" ) ) {
+	if( !fname.Icmp( "waveform" ) )
+	{
 		showWaveform = true;
-	} else {
+	}
+	else
+	{
 		showWaveform = false;
 	}
 	return true;
@@ -1760,7 +2059,8 @@ bool idSndWindow::InitFromFile( const char *qpath, bool looping ) {
 idSndWindow::ImageForTime
 ==============
 */
-cinData_t idSndWindow::ImageForTime( int milliseconds ) {
+cinData_t idSndWindow::ImageForTime( int milliseconds )
+{
 	return soundSystem->ImageForTime( milliseconds, showWaveform );
 }
 
@@ -1769,6 +2069,7 @@ cinData_t idSndWindow::ImageForTime( int milliseconds ) {
 idSndWindow::AnimationLength
 ==============
 */
-int idSndWindow::AnimationLength() {
+int idSndWindow::AnimationLength()
+{
 	return -1;
 }

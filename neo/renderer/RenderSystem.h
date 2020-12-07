@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,12 +41,13 @@ If you have questions concerning this license or the applicable additional terms
 
 // Contains variables specific to the OpenGL configuration being run right now.
 // These are constant once the OpenGL subsystem is initialized.
-typedef struct glconfig_s {
-	const char			*renderer_string;
-	const char			*vendor_string;
-	const char			*version_string;
-	const char			*extensions_string;
-	const char			*wgl_extensions_string;
+typedef struct glconfig_s
+{
+	const char*			renderer_string;
+	const char*			vendor_string;
+	const char*			version_string;
+	const char*			extensions_string;
+	const char*			wgl_extensions_string;
 
 	float				glVersion;				// atof( version_string )
 
@@ -99,14 +100,15 @@ typedef struct glconfig_s {
 } glconfig_t;
 
 
-// font support 
+// font support
 const int GLYPH_START			= 0;
 const int GLYPH_END				= 255;
 const int GLYPH_CHARSTART		= 32;
 const int GLYPH_CHAREND			= 127;
 const int GLYPHS_PER_FONT		= GLYPH_END - GLYPH_START + 1;
 
-typedef struct {
+typedef struct
+{
 	int					height;			// number of scan lines
 	int					top;			// top of glyph in buffer
 	int					bottom;			// bottom of glyph in buffer
@@ -118,17 +120,19 @@ typedef struct {
 	float				t;				// y offset in image where glyph starts
 	float				s2;
 	float				t2;
-	const idMaterial *	glyph;			// shader with the glyph
+	const idMaterial* 	glyph;			// shader with the glyph
 	char				shaderName[32];
 } glyphInfo_t;
 
-typedef struct {
+typedef struct
+{
 	glyphInfo_t			glyphs [GLYPHS_PER_FONT];
 	float				glyphScale;
 	char				name[64];
 } fontInfo_t;
 
-typedef struct {
+typedef struct
+{
 	fontInfo_t			fontInfoSmall;
 	fontInfo_t			fontInfoMedium;
 	fontInfo_t			fontInfoLarge;
@@ -156,7 +160,8 @@ const int SCREEN_HEIGHT			= 480;
 class idRenderWorld;
 
 
-class idRenderSystem {
+class idRenderSystem
+{
 public:
 
 	virtual					~idRenderSystem() {}
@@ -179,8 +184,8 @@ public:
 	virtual int				GetScreenHeight( void ) const = 0;
 
 	// allocate a renderWorld to be used for drawing
-	virtual idRenderWorld *	AllocRenderWorld( void ) = 0;
-	virtual	void			FreeRenderWorld( idRenderWorld * rw ) = 0;
+	virtual idRenderWorld* 	AllocRenderWorld( void ) = 0;
+	virtual	void			FreeRenderWorld( idRenderWorld* rw ) = 0;
 
 	// All data that will be used in a level should be
 	// registered before rendering any frames to prevent disk hits,
@@ -190,25 +195,25 @@ public:
 	virtual void			EndLevelLoad( void ) = 0;
 
 	// font support
-	virtual bool			RegisterFont( const char *fontName, fontInfoEx_t &font ) = 0;
+	virtual bool			RegisterFont( const char* fontName, fontInfoEx_t& font ) = 0;
 
 	// GUI drawing just involves shader parameter setting and axial image subsections
-	virtual void			SetColor( const idVec4 &rgba ) = 0;
+	virtual void			SetColor( const idVec4& rgba ) = 0;
 	virtual void			SetColor4( float r, float g, float b, float a ) = 0;
 
-	virtual void			DrawStretchPic( const idDrawVert *verts, const glIndex_t *indexes, int vertCount, int indexCount, const idMaterial *material,
+	virtual void			DrawStretchPic( const idDrawVert* verts, const glIndex_t* indexes, int vertCount, int indexCount, const idMaterial* material,
 											bool clip = true, float min_x = 0.0f, float min_y = 0.0f, float max_x = 640.0f, float max_y = 480.0f ) = 0;
-	virtual void			DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, const idMaterial *material ) = 0;
+	virtual void			DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, const idMaterial* material ) = 0;
 
-	virtual void			DrawStretchTri ( idVec2 p1, idVec2 p2, idVec2 p3, idVec2 t1, idVec2 t2, idVec2 t3, const idMaterial *material ) = 0;
-	virtual void			GlobalToNormalizedDeviceCoordinates( const idVec3 &global, idVec3 &ndc ) = 0;
+	virtual void			DrawStretchTri( idVec2 p1, idVec2 p2, idVec2 p3, idVec2 t1, idVec2 t2, idVec2 t3, const idMaterial* material ) = 0;
+	virtual void			GlobalToNormalizedDeviceCoordinates( const idVec3& global, idVec3& ndc ) = 0;
 	virtual void			GetGLSettings( int& width, int& height ) = 0;
-	virtual void			PrintMemInfo( MemInfo_t *mi ) = 0;
+	virtual void			PrintMemInfo( MemInfo_t* mi ) = 0;
 
-	virtual void			DrawSmallChar( int x, int y, int ch, const idMaterial *material ) = 0;
-	virtual void			DrawSmallStringExt( int x, int y, const char *string, const idVec4 &setColor, bool forceColor, const idMaterial *material ) = 0;
-	virtual void			DrawBigChar( int x, int y, int ch, const idMaterial *material ) = 0;
-	virtual void			DrawBigStringExt( int x, int y, const char *string, const idVec4 &setColor, bool forceColor, const idMaterial *material ) = 0;
+	virtual void			DrawSmallChar( int x, int y, int ch, const idMaterial* material ) = 0;
+	virtual void			DrawSmallStringExt( int x, int y, const char* string, const idVec4& setColor, bool forceColor, const idMaterial* material ) = 0;
+	virtual void			DrawBigChar( int x, int y, int ch, const idMaterial* material ) = 0;
+	virtual void			DrawBigStringExt( int x, int y, const char* string, const idVec4& setColor, bool forceColor, const idMaterial* material ) = 0;
 
 	// dump all 2D drawing so far this frame to the demo file
 	virtual void			WriteDemoPics() = 0;
@@ -224,7 +229,7 @@ public:
 	virtual void			BeginFrame( int windowWidth, int windowHeight ) = 0;
 
 	// if the pointers are not NULL, timing info will be returned
-	virtual void			EndFrame( int *frontEndMsec, int *backEndMsec ) = 0;
+	virtual void			EndFrame( int* frontEndMsec, int* backEndMsec ) = 0;
 
 	// aviDemo uses this.
 	// Will automatically tile render large screen shots if necessary
@@ -233,7 +238,7 @@ public:
 	// This will perform swapbuffers, so it is NOT an approppriate way to
 	// generate image files that happen during gameplay, as for savegame
 	// markers.  Use WriteRender() instead.
-	virtual void			TakeScreenshot( int width, int height, const char *fileName, int samples, struct renderView_s *ref ) = 0;
+	virtual void			TakeScreenshot( int width, int height, const char* fileName, int samples, struct renderView_s* ref ) = 0;
 
 	// the render output can be cropped down to a subset of the real screen, as
 	// for save-game reviews and split-screen multiplayer.  Users of the renderer
@@ -245,32 +250,32 @@ public:
 	// then perform all desired rendering, then capture to an image
 	// if the specified physical dimensions are larger than the current cropped region, they will be cut down to fit
 	virtual void			CropRenderSize( int width, int height, bool makePowerOfTwo = false, bool forceDimensions = false ) = 0;
-	virtual void			CaptureRenderToImage( const char *imageName ) = 0;
+	virtual void			CaptureRenderToImage( const char* imageName ) = 0;
 	// fixAlpha will set all the alpha channel values to 0xff, which allows screen captures
 	// to use the default tga loading code without having dimmed down areas in many places
-	virtual void			CaptureRenderToFile( const char *fileName, bool fixAlpha = false ) = 0;
+	virtual void			CaptureRenderToFile( const char* fileName, bool fixAlpha = false ) = 0;
 	virtual void			UnCrop() = 0;
-	virtual void			GetCardCaps( bool &oldCard, bool &nv10or20 ) = 0;
+	virtual void			GetCardCaps( bool& oldCard, bool& nv10or20 ) = 0;
 
 	// the image has to be already loaded ( most straightforward way would be through a FindMaterial )
 	// texture filter / mipmapping / repeat won't be modified by the upload
 	// returns false if the image wasn't found
-	virtual bool			UploadImage( const char *imageName, const byte *data, int width, int height ) = 0;
+	virtual bool			UploadImage( const char* imageName, const byte* data, int width, int height ) = 0;
 };
 
-extern idRenderSystem *			renderSystem;
+extern idRenderSystem* 			renderSystem;
 
 //
 // functions mainly intended for editor and dmap integration
 //
 
 // returns the frustum planes in world space
-void R_RenderLightFrustum( const struct renderLight_s &renderLight, idPlane lightFrustum[6] );
+void R_RenderLightFrustum( const struct renderLight_s& renderLight, idPlane lightFrustum[6] );
 
 // for use by dmap to do the carving-on-light-boundaries and for the editor for display
-void R_LightProjectionMatrix( const idVec3 &origin, const idPlane &rearPlane, idVec4 mat[4] );
+void R_LightProjectionMatrix( const idVec3& origin, const idPlane& rearPlane, idVec4 mat[4] );
 
 // used by the view shot taker
-void R_ScreenshotFilename( int &lastNumber, const char *base, idStr &fileName );
+void R_ScreenshotFilename( int& lastNumber, const char* base, idStr& fileName );
 
 #endif /* !__RENDERER_H__ */

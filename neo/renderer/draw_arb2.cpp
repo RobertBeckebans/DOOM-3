@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,9 +35,10 @@ If you have questions concerning this license or the applicable additional terms
 
 CGcontext cg_context;
 
-static void cg_error_callback( void ) {
+static void cg_error_callback( void )
+{
 	CGerror i = cgGetError();
-	common->Printf( "Cg error (%d): %s\n", i, cgGetErrorString(i) );
+	common->Printf( "Cg error (%d): %s\n", i, cgGetErrorString( i ) );
 }
 
 /*
@@ -53,7 +54,8 @@ GENERAL INTERACTION RENDERING
 GL_SelectTextureNoClient
 ====================
 */
-static void GL_SelectTextureNoClient( int unit ) {
+static void GL_SelectTextureNoClient( int unit )
+{
 	backEnd.glState.currenttmu = unit;
 	qglActiveTextureARB( GL_TEXTURE0_ARB + unit );
 	RB_LogComment( "glActiveTextureARB( %i )\n", unit );
@@ -64,7 +66,8 @@ static void GL_SelectTextureNoClient( int unit ) {
 RB_ARB2_DrawInteraction
 ==================
 */
-void	RB_ARB2_DrawInteraction( const drawInteraction_t *din ) {
+void	RB_ARB2_DrawInteraction( const drawInteraction_t* din )
+{
 	// load all the vertex program parameters
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_LIGHT_ORIGIN, din->localLightOrigin.ToFloatPtr() );
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_VIEW_ORIGIN, din->localViewOrigin.ToFloatPtr() );
@@ -80,7 +83,8 @@ void	RB_ARB2_DrawInteraction( const drawInteraction_t *din ) {
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_SPECULAR_MATRIX_T, din->specularMatrix[1].ToFloatPtr() );
 
 	// testing fragment based normal mapping
-	if ( r_testARBProgram.GetBool() ) {
+	if( r_testARBProgram.GetBool() )
+	{
 		qglProgramEnvParameter4fvARB( GL_FRAGMENT_PROGRAM_ARB, 2, din->localLightOrigin.ToFloatPtr() );
 		qglProgramEnvParameter4fvARB( GL_FRAGMENT_PROGRAM_ARB, 3, din->localViewOrigin.ToFloatPtr() );
 	}
@@ -89,19 +93,20 @@ void	RB_ARB2_DrawInteraction( const drawInteraction_t *din ) {
 	static const float one[4] = { 1, 1, 1, 1 };
 	static const float negOne[4] = { -1, -1, -1, -1 };
 
-	switch ( din->vertexColor ) {
-	case SVC_IGNORE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, zero );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
-		break;
-	case SVC_MODULATE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, one );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, zero );
-		break;
-	case SVC_INVERSE_MODULATE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, negOne );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
-		break;
+	switch( din->vertexColor )
+	{
+		case SVC_IGNORE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, zero );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
+			break;
+		case SVC_MODULATE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, one );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, zero );
+			break;
+		case SVC_INVERSE_MODULATE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, negOne );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
+			break;
 	}
 
 	// set the constant colors
@@ -141,8 +146,10 @@ RB_ARB2_CreateDrawInteractions
 
 =============
 */
-void RB_ARB2_CreateDrawInteractions( const drawSurf_t *surf ) {
-	if ( !surf ) {
+void RB_ARB2_CreateDrawInteractions( const drawSurf_t* surf )
+{
+	if( !surf )
+	{
 		return;
 	}
 
@@ -150,16 +157,19 @@ void RB_ARB2_CreateDrawInteractions( const drawSurf_t *surf ) {
 	GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ONE | GLS_DEPTHMASK | backEnd.depthFunc );
 
 	// bind the vertex program
-	if ( r_testARBProgram.GetBool() ) {
+	if( r_testARBProgram.GetBool() )
+	{
 		qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, VPROG_TEST );
 		qglBindProgramARB( GL_FRAGMENT_PROGRAM_ARB, FPROG_TEST );
-	} else {
+	}
+	else
+	{
 		qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, VPROG_INTERACTION );
 		qglBindProgramARB( GL_FRAGMENT_PROGRAM_ARB, FPROG_INTERACTION );
 	}
 
-	qglEnable(GL_VERTEX_PROGRAM_ARB);
-	qglEnable(GL_FRAGMENT_PROGRAM_ARB);
+	qglEnable( GL_VERTEX_PROGRAM_ARB );
+	qglEnable( GL_FRAGMENT_PROGRAM_ARB );
 
 	// enable the vertex arrays
 	qglEnableVertexAttribArrayARB( 8 );
@@ -170,26 +180,33 @@ void RB_ARB2_CreateDrawInteractions( const drawSurf_t *surf ) {
 
 	// texture 0 is the normalization cube map for the vector towards the light
 	GL_SelectTextureNoClient( 0 );
-	if ( backEnd.vLight->lightShader->IsAmbientLight() ) {
+	if( backEnd.vLight->lightShader->IsAmbientLight() )
+	{
 		globalImages->ambientNormalMap->Bind();
-	} else {
+	}
+	else
+	{
 		globalImages->normalCubeMapImage->Bind();
 	}
 
 	// texture 6 is the specular lookup table
 	GL_SelectTextureNoClient( 6 );
-	if ( r_testARBProgram.GetBool() ) {
+	if( r_testARBProgram.GetBool() )
+	{
 		globalImages->specular2DTableImage->Bind();	// variable specularity in alpha channel
-	} else {
+	}
+	else
+	{
 		globalImages->specularTableImage->Bind();
 	}
 
 
-	for ( ; surf ; surf=surf->nextOnLight ) {
+	for( ; surf ; surf = surf->nextOnLight )
+	{
 		// perform setup here that will not change over multiple interaction passes
 
 		// set the vertex pointers
-		idDrawVert	*ac = (idDrawVert *)vertexCache.Position( surf->geo->ambientCache );
+		idDrawVert*	ac = ( idDrawVert* )vertexCache.Position( surf->geo->ambientCache );
 		qglColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( idDrawVert ), ac->color );
 		qglVertexAttribPointerARB( 11, 3, GL_FLOAT, false, sizeof( idDrawVert ), ac->normal.ToFloatPtr() );
 		qglVertexAttribPointerARB( 10, 3, GL_FLOAT, false, sizeof( idDrawVert ), ac->tangents[1].ToFloatPtr() );
@@ -230,8 +247,8 @@ void RB_ARB2_CreateDrawInteractions( const drawSurf_t *surf ) {
 	backEnd.glState.currenttmu = -1;
 	GL_SelectTexture( 0 );
 
-	qglDisable(GL_VERTEX_PROGRAM_ARB);
-	qglDisable(GL_FRAGMENT_PROGRAM_ARB);
+	qglDisable( GL_VERTEX_PROGRAM_ARB );
+	qglDisable( GL_FRAGMENT_PROGRAM_ARB );
 }
 
 
@@ -240,9 +257,10 @@ void RB_ARB2_CreateDrawInteractions( const drawSurf_t *surf ) {
 RB_ARB2_DrawInteractions
 ==================
 */
-void RB_ARB2_DrawInteractions( void ) {
-	viewLight_t		*vLight;
-	const idMaterial	*lightShader;
+void RB_ARB2_DrawInteractions( void )
+{
+	viewLight_t*		vLight;
+	const idMaterial*	lightShader;
 
 	GL_SelectTexture( 0 );
 	qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -250,42 +268,51 @@ void RB_ARB2_DrawInteractions( void ) {
 	//
 	// for each light, perform adding and shadowing
 	//
-	for ( vLight = backEnd.viewDef->viewLights ; vLight ; vLight = vLight->next ) {
+	for( vLight = backEnd.viewDef->viewLights ; vLight ; vLight = vLight->next )
+	{
 		backEnd.vLight = vLight;
 
 		// do fogging later
-		if ( vLight->lightShader->IsFogLight() ) {
+		if( vLight->lightShader->IsFogLight() )
+		{
 			continue;
 		}
-		if ( vLight->lightShader->IsBlendLight() ) {
+		if( vLight->lightShader->IsBlendLight() )
+		{
 			continue;
 		}
 
-		if ( !vLight->localInteractions && !vLight->globalInteractions
-			&& !vLight->translucentInteractions ) {
+		if( !vLight->localInteractions && !vLight->globalInteractions
+				&& !vLight->translucentInteractions )
+		{
 			continue;
 		}
 
 		lightShader = vLight->lightShader;
 
 		// clear the stencil buffer if needed
-		if ( vLight->globalShadows || vLight->localShadows ) {
+		if( vLight->globalShadows || vLight->localShadows )
+		{
 			backEnd.currentScissor = vLight->scissorRect;
-			if ( r_useScissor.GetBool() ) {
-				qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1, 
-					backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
-					backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
-					backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
+			if( r_useScissor.GetBool() )
+			{
+				qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1,
+							backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
+							backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
+							backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
 			}
 			qglClear( GL_STENCIL_BUFFER_BIT );
-		} else {
+		}
+		else
+		{
 			// no shadows, so no need to read or write the stencil buffer
 			// we might in theory want to use GL_ALWAYS instead of disabling
 			// completely, to satisfy the invarience rules
 			qglStencilFunc( GL_ALWAYS, 128, 255 );
 		}
 
-		if ( r_useShadowVertexProgram.GetBool() ) {
+		if( r_useShadowVertexProgram.GetBool() )
+		{
 			qglEnable( GL_VERTEX_PROGRAM_ARB );
 			qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, VPROG_STENCIL_SHADOW );
 			RB_StencilShadowPass( vLight->globalShadows );
@@ -295,7 +322,9 @@ void RB_ARB2_DrawInteractions( void ) {
 			RB_StencilShadowPass( vLight->localShadows );
 			RB_ARB2_CreateDrawInteractions( vLight->globalInteractions );
 			qglDisable( GL_VERTEX_PROGRAM_ARB );	// if there weren't any globalInteractions, it would have stayed on
-		} else {
+		}
+		else
+		{
 			RB_StencilShadowPass( vLight->globalShadows );
 			RB_ARB2_CreateDrawInteractions( vLight->localInteractions );
 			RB_StencilShadowPass( vLight->localShadows );
@@ -303,7 +332,8 @@ void RB_ARB2_DrawInteractions( void ) {
 		}
 
 		// translucent surfaces never get stencil shadowed
-		if ( r_skipTranslucent.GetBool() ) {
+		if( r_skipTranslucent.GetBool() )
+		{
 			continue;
 		}
 
@@ -325,7 +355,8 @@ void RB_ARB2_DrawInteractions( void ) {
 //===================================================================================
 
 
-typedef struct {
+typedef struct
+{
 	GLenum			target;
 	GLuint			ident;
 	char			name[64];
@@ -334,7 +365,8 @@ typedef struct {
 static	const int	MAX_GLPROGS = 200;
 
 // a single file can have both a vertex program and a fragment program
-static progDef_t	progs[MAX_GLPROGS] = {
+static progDef_t	progs[MAX_GLPROGS] =
+{
 	{ GL_VERTEX_PROGRAM_ARB, VPROG_TEST, "test.vfp" },
 	{ GL_FRAGMENT_PROGRAM_ARB, FPROG_TEST, "test.vfp" },
 	{ GL_VERTEX_PROGRAM_ARB, VPROG_INTERACTION, "interaction.vfp" },
@@ -362,38 +394,42 @@ static progDef_t	progs[MAX_GLPROGS] = {
 R_LoadARBProgram
 =================
 */
-void R_LoadARBProgram( int progIndex ) {
+void R_LoadARBProgram( int progIndex )
+{
 	int		ofs;
 	int		err;
 	idStr	fullPath = "glprogs/";
 	fullPath += progs[progIndex].name;
-	char	*fileBuffer;
-	char	*buffer;
-	char	*start, *end;
+	char*	fileBuffer;
+	char*	buffer;
+	char*	start, *end;
 
 	common->Printf( "%s", fullPath.c_str() );
 
 	// load the program even if we don't support it, so
 	// fs_copyfiles can generate cross-platform data dumps
-	fileSystem->ReadFile( fullPath.c_str(), (void **)&fileBuffer, NULL );
-	if ( !fileBuffer ) {
+	fileSystem->ReadFile( fullPath.c_str(), ( void** )&fileBuffer, NULL );
+	if( !fileBuffer )
+	{
 		common->Printf( ": File not found\n" );
 		return;
 	}
 
 	// copy to stack memory and free
-	buffer = (char *)_alloca( strlen( fileBuffer ) + 1 );
+	buffer = ( char* )_alloca( strlen( fileBuffer ) + 1 );
 	strcpy( buffer, fileBuffer );
 	fileSystem->FreeFile( fileBuffer );
 
-	if ( !glConfig.isInitialized ) {
+	if( !glConfig.isInitialized )
+	{
 		return;
 	}
 
 	//
 	// submit the program string at start to GL
 	//
-	if ( progs[progIndex].ident == 0 ) {
+	if( progs[progIndex].ident == 0 )
+	{
 		// allocate a new identifier for this program
 		progs[progIndex].ident = PROG_USER + progIndex;
 	}
@@ -401,27 +437,33 @@ void R_LoadARBProgram( int progIndex ) {
 	// vertex and fragment programs can both be present in a single file, so
 	// scan for the proper header to be the start point, and stamp a 0 in after the end
 
-	if ( progs[progIndex].target == GL_VERTEX_PROGRAM_ARB ) {
-		if ( !glConfig.ARBVertexProgramAvailable ) {
+	if( progs[progIndex].target == GL_VERTEX_PROGRAM_ARB )
+	{
+		if( !glConfig.ARBVertexProgramAvailable )
+		{
 			common->Printf( ": GL_VERTEX_PROGRAM_ARB not available\n" );
 			return;
 		}
-		start = strstr( (char *)buffer, "!!ARBvp" );
+		start = strstr( ( char* )buffer, "!!ARBvp" );
 	}
-	if ( progs[progIndex].target == GL_FRAGMENT_PROGRAM_ARB ) {
-		if ( !glConfig.ARBFragmentProgramAvailable ) {
+	if( progs[progIndex].target == GL_FRAGMENT_PROGRAM_ARB )
+	{
+		if( !glConfig.ARBFragmentProgramAvailable )
+		{
 			common->Printf( ": GL_FRAGMENT_PROGRAM_ARB not available\n" );
 			return;
 		}
-		start = strstr( (char *)buffer, "!!ARBfp" );
+		start = strstr( ( char* )buffer, "!!ARBfp" );
 	}
-	if ( !start ) {
+	if( !start )
+	{
 		common->Printf( ": !!ARB not found\n" );
 		return;
 	}
 	end = strstr( start, "END" );
 
-	if ( !end ) {
+	if( !end )
+	{
 		common->Printf( ": END not found\n" );
 		return;
 	}
@@ -431,23 +473,30 @@ void R_LoadARBProgram( int progIndex ) {
 	qglGetError();
 
 	qglProgramStringARB( progs[progIndex].target, GL_PROGRAM_FORMAT_ASCII_ARB,
-		strlen( start ), (unsigned char *)start );
+						 strlen( start ), ( unsigned char* )start );
 
 	err = qglGetError();
-	qglGetIntegerv( GL_PROGRAM_ERROR_POSITION_ARB, (GLint *)&ofs );
-	if ( err == GL_INVALID_OPERATION ) {
-		const GLubyte *str = qglGetString( GL_PROGRAM_ERROR_STRING_ARB );
+	qglGetIntegerv( GL_PROGRAM_ERROR_POSITION_ARB, ( GLint* )&ofs );
+	if( err == GL_INVALID_OPERATION )
+	{
+		const GLubyte* str = qglGetString( GL_PROGRAM_ERROR_STRING_ARB );
 		common->Printf( "\nGL_PROGRAM_ERROR_STRING_ARB: %s\n", str );
-		if ( ofs < 0 ) {
+		if( ofs < 0 )
+		{
 			common->Printf( "GL_PROGRAM_ERROR_POSITION_ARB < 0 with error\n" );
-		} else if ( ofs >= (int)strlen( (char *)start ) ) {
+		}
+		else if( ofs >= ( int )strlen( ( char* )start ) )
+		{
 			common->Printf( "error at end of program\n" );
-		} else {
+		}
+		else
+		{
 			common->Printf( "error at %i:\n%s", ofs, start + ofs );
 		}
 		return;
 	}
-	if ( ofs != -1 ) {
+	if( ofs != -1 )
+	{
 		common->Printf( "\nGL_PROGRAM_ERROR_POSITION_ARB != -1 without error\n" );
 		return;
 	}
@@ -463,32 +512,37 @@ Returns a GL identifier that can be bound to the given target, parsing
 a text file if it hasn't already been loaded.
 ==================
 */
-int R_FindARBProgram( GLenum target, const char *program ) {
+int R_FindARBProgram( GLenum target, const char* program )
+{
 	int		i;
 	idStr	stripped = program;
 
 	stripped.StripFileExtension();
 
 	// see if it is already loaded
-	for ( i = 0 ; progs[i].name[0] ; i++ ) {
-		if ( progs[i].target != target ) {
+	for( i = 0 ; progs[i].name[0] ; i++ )
+	{
+		if( progs[i].target != target )
+		{
 			continue;
 		}
 
 		idStr	compare = progs[i].name;
 		compare.StripFileExtension();
 
-		if ( !idStr::Icmp( stripped.c_str(), compare.c_str() ) ) {
+		if( !idStr::Icmp( stripped.c_str(), compare.c_str() ) )
+		{
 			return progs[i].ident;
 		}
 	}
 
-	if ( i == MAX_GLPROGS ) {
+	if( i == MAX_GLPROGS )
+	{
 		common->Error( "R_FindARBProgram: MAX_GLPROGS" );
 	}
 
 	// add it to the list and load it
-	progs[i].ident = (program_t)0;	// will be gen'd by R_LoadARBProgram
+	progs[i].ident = ( program_t )0;	// will be gen'd by R_LoadARBProgram
 	progs[i].target = target;
 	strncpy( progs[i].name, program, sizeof( progs[i].name ) - 1 );
 
@@ -502,11 +556,13 @@ int R_FindARBProgram( GLenum target, const char *program ) {
 R_ReloadARBPrograms_f
 ==================
 */
-void R_ReloadARBPrograms_f( const idCmdArgs &args ) {
+void R_ReloadARBPrograms_f( const idCmdArgs& args )
+{
 	int		i;
 
 	common->Printf( "----- R_ReloadARBPrograms -----\n" );
-	for ( i = 0 ; progs[i].name[0] ; i++ ) {
+	for( i = 0 ; progs[i].name[0] ; i++ )
+	{
 		R_LoadARBProgram( i );
 	}
 	common->Printf( "-------------------------------\n" );
@@ -518,12 +574,14 @@ R_ARB2_Init
 
 ==================
 */
-void R_ARB2_Init( void ) {
+void R_ARB2_Init( void )
+{
 	glConfig.allowARB2Path = false;
 
 	common->Printf( "---------- R_ARB2_Init ----------\n" );
 
-	if ( !glConfig.ARBVertexProgramAvailable || !glConfig.ARBFragmentProgramAvailable ) {
+	if( !glConfig.ARBVertexProgramAvailable || !glConfig.ARBFragmentProgramAvailable )
+	{
 		common->Printf( "Not available.\n" );
 		return;
 	}

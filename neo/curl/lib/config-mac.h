@@ -32,8 +32,8 @@
 #define HAVE_SIGACTION		1
 
 #ifdef MACOS_SSL_SUPPORT
-#	define USE_SSLEAY			1
-#	define USE_OPENSSL			1
+	#define USE_SSLEAY			1
+	#define USE_OPENSSL			1
 #endif
 
 #define HAVE_RAND_STATUS	1

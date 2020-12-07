@@ -26,27 +26,27 @@
 
 #ifndef __ixemul__
 
-#include <exec/types.h>
-#include <exec/execbase.h>
+	#include <exec/types.h>
+	#include <exec/execbase.h>
 
-#include <proto/exec.h>
-#include <proto/dos.h>
+	#include <proto/exec.h>
+	#include <proto/dos.h>
 
-#include <bsdsocket.h>
+	#include <bsdsocket.h>
 
-#include "config-amigaos.h"
+	#include "config-amigaos.h"
 
-#define select(args...)	WaitSelect( args, NULL)
-#define inet_ntoa(x)	Inet_NtoA( x ## .s_addr)
-#define ioctl(a,b,c,d)	IoctlSocket( (LONG)a, (ULONG)b, (char*)c)
-#define _AMIGASF	1
+	#define select(args...)	WaitSelect( args, NULL)
+	#define inet_ntoa(x)	Inet_NtoA( x ## .s_addr)
+	#define ioctl(a,b,c,d)	IoctlSocket( (LONG)a, (ULONG)b, (char*)c)
+	#define _AMIGASF	1
 
-extern void amiga_cleanup();
-extern BOOL amiga_init();
+	extern void amiga_cleanup();
+	extern BOOL amiga_init();
 
 #else /* __ixemul__ */
 
-#warning compiling with ixemul...
+	#warning compiling with ixemul...
 
 #endif /* __ixemul__ */
 #endif /* LIBCURL_AMIGAOS_H */

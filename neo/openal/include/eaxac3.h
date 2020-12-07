@@ -22,9 +22,9 @@
 
 // Do not define the symbol EAXAC3_EXPORTS in any projects that use the EAX-AC3 Open AL Extension
 #ifdef EAXAC3_EXPORTS
-#define EAXAC3_API __declspec(dllexport)
+	#define EAXAC3_API __declspec(dllexport)
 #else
-#define EAXAC3_API __declspec(dllimport)
+	#define EAXAC3_API __declspec(dllimport)
 #endif
 
 #ifdef __cplusplus
@@ -87,7 +87,7 @@ typedef unsigned int EAXAC3HANDLE;
 typedef unsigned int AC3STREAM;
 
 // Callback function
-typedef void (__stdcall *LPAC3CALLBACK)(AC3STREAM AC3Stream, int msg);
+typedef void ( __stdcall* LPAC3CALLBACK )( AC3STREAM AC3Stream, int msg );
 
 // Callback messages
 #define EAXAC3NEEDMOREDATA	0
@@ -116,31 +116,31 @@ typedef struct
 
 // Function typedefs
 
-typedef int		(*LPEAXAC3QUERYNUMBEROFDEVICES)		(void);
-typedef HRESULT (*LPEAXAC3QUERYFILE)				(char *, LPAC3FILEINFO, int);
-typedef HRESULT (*LPEAXAC3QUERYMEMORY)				(char *, int, LPAC3FILEINFO, int);
-typedef int		(*LPEAXAC3QUERYNOOFFRAMESREQFORPLAYBACK)	(AC3STREAM);
-typedef HRESULT	(*LPEAXAC3OPENPLAYBACKDEVICE)		(EAXAC3HANDLE);
-typedef HRESULT	(*LPEAXAC3CLOSEPLAYBACKDEVICE)		(EAXAC3HANDLE);
-typedef HRESULT	(*LPEAXAC3QUERYDEVICECAPS)			(EAXAC3HANDLE, LPEAXAC3DEVICEINFO, int);
-typedef HRESULT	(*LPEAXAC3GETPOSITION)				(AC3STREAM, enum POSFORMAT, int *);
-typedef HRESULT (*LPEAXAC3SETFILEPOSITION)			(AC3STREAM, enum POSFORMAT, int);
-typedef HRESULT (*LPEAXAC3OPENSTREAM)				(EAXAC3HANDLE, AC3STREAM *, LPAC3CALLBACK, char *, enum SOURCE);
-typedef HRESULT (*LPEAXAC3CLOSESTREAM)				(AC3STREAM);
-typedef HRESULT (*LPEAXAC3PREPLAYSTREAM)			(AC3STREAM);
-typedef HRESULT (*LPEAXAC3PLAYSTREAM)				(AC3STREAM, int);
-typedef HRESULT (*LPEAXAC3STOPSTREAM)				(AC3STREAM);
-typedef HRESULT	(*LPEAXAC3PAUSESTREAM)				(AC3STREAM);
-typedef HRESULT	(*LPEAXAC3RESUMESTREAM)				(AC3STREAM);
-typedef HRESULT (*LPEAXAC3LOCKBUFFER)				(AC3STREAM, unsigned long, void **, unsigned long *, void **,
-														unsigned long *, unsigned long);
-typedef HRESULT (*LPEAXAC3UNLOCKBUFFER)				(AC3STREAM, void *, unsigned long, void *, unsigned long, int);
-typedef HRESULT	(*LPEAXAC3SETPLAYBACKMODE)			(EAXAC3HANDLE, unsigned int);
-typedef char *	(*LPEAXAC3GETERRORSTRING)			(HRESULT, char *, int);
-typedef HRESULT (*LPEAXAC3GETLASTERROR)				(HRESULT *);
+typedef int	( *LPEAXAC3QUERYNUMBEROFDEVICES )( void );
+typedef HRESULT( *LPEAXAC3QUERYFILE )( char*, LPAC3FILEINFO, int );
+typedef HRESULT( *LPEAXAC3QUERYMEMORY )( char*, int, LPAC3FILEINFO, int );
+typedef int	( *LPEAXAC3QUERYNOOFFRAMESREQFORPLAYBACK )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3OPENPLAYBACKDEVICE )( EAXAC3HANDLE );
+typedef HRESULT( *LPEAXAC3CLOSEPLAYBACKDEVICE )( EAXAC3HANDLE );
+typedef HRESULT( *LPEAXAC3QUERYDEVICECAPS )( EAXAC3HANDLE, LPEAXAC3DEVICEINFO, int );
+typedef HRESULT( *LPEAXAC3GETPOSITION )( AC3STREAM, enum POSFORMAT, int* );
+typedef HRESULT( *LPEAXAC3SETFILEPOSITION )( AC3STREAM, enum POSFORMAT, int );
+typedef HRESULT( *LPEAXAC3OPENSTREAM )( EAXAC3HANDLE, AC3STREAM*, LPAC3CALLBACK, char*, enum SOURCE );
+typedef HRESULT( *LPEAXAC3CLOSESTREAM )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3PREPLAYSTREAM )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3PLAYSTREAM )( AC3STREAM, int );
+typedef HRESULT( *LPEAXAC3STOPSTREAM )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3PAUSESTREAM )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3RESUMESTREAM )( AC3STREAM );
+typedef HRESULT( *LPEAXAC3LOCKBUFFER )( AC3STREAM, unsigned long, void**, unsigned long*, void**,
+										unsigned long*, unsigned long );
+typedef HRESULT( *LPEAXAC3UNLOCKBUFFER )( AC3STREAM, void*, unsigned long, void*, unsigned long, int );
+typedef HRESULT( *LPEAXAC3SETPLAYBACKMODE )( EAXAC3HANDLE, unsigned int );
+typedef char* 	( *LPEAXAC3GETERRORSTRING )( HRESULT, char*, int );
+typedef HRESULT( *LPEAXAC3GETLASTERROR )( HRESULT* );
 
 // Function table declaration
-typedef struct 
+typedef struct
 {
 	LPEAXAC3QUERYNUMBEROFDEVICES					EAXAC3QueryNumberOfDevices;
 	LPEAXAC3QUERYFILE								EAXAC3QueryFile;
@@ -167,62 +167,62 @@ typedef struct
 
 
 #ifndef OPENAL
-typedef EAXAC3_API HRESULT (*LPEAXAC3GETFUNCTIONTABLE)		(LPEAXAC3FNTABLE);
+typedef EAXAC3_API HRESULT( *LPEAXAC3GETFUNCTIONTABLE )( LPEAXAC3FNTABLE );
 #else
-typedef ALboolean (*LPALEAXAC3GETFUNCTIONTABLE) (LPEAXAC3FNTABLE);
+typedef ALboolean( *LPALEAXAC3GETFUNCTIONTABLE )( LPEAXAC3FNTABLE );
 #endif
 
 // Functions exposed in the DLL
 
-EAXAC3_API HRESULT EAXAC3GetFunctionTable(LPEAXAC3FNTABLE lpEAXAC3FnTable);
+EAXAC3_API HRESULT EAXAC3GetFunctionTable( LPEAXAC3FNTABLE lpEAXAC3FnTable );
 
 EAXAC3_API int	   EAXAC3QueryNumberOfDevices();
 
-EAXAC3_API HRESULT EAXAC3QueryFile(char *szAC3Filename, LPAC3FILEINFO lpAC3Caps, int nSizeOfAC3FileInfoStruct);
+EAXAC3_API HRESULT EAXAC3QueryFile( char* szAC3Filename, LPAC3FILEINFO lpAC3Caps, int nSizeOfAC3FileInfoStruct );
 
-EAXAC3_API HRESULT EAXAC3QueryMemory(char *lpBuffer, int nSizeOfBuffer, LPAC3FILEINFO lpAC3FileInfo,
-									 int nSizeOfAC3FileInfoStruct);
+EAXAC3_API HRESULT EAXAC3QueryMemory( char* lpBuffer, int nSizeOfBuffer, LPAC3FILEINFO lpAC3FileInfo,
+									  int nSizeOfAC3FileInfoStruct );
 
-EAXAC3_API int     EAXAC3QueryNoOfFramesReqForPlayback(AC3STREAM AC3Stream);
+EAXAC3_API int     EAXAC3QueryNoOfFramesReqForPlayback( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3OpenPlaybackDevice(EAXAC3HANDLE EAXAC3Handle);
+EAXAC3_API HRESULT EAXAC3OpenPlaybackDevice( EAXAC3HANDLE EAXAC3Handle );
 
-EAXAC3_API HRESULT EAXAC3ClosePlaybackDevice(EAXAC3HANDLE EAXAC3Handle);
+EAXAC3_API HRESULT EAXAC3ClosePlaybackDevice( EAXAC3HANDLE EAXAC3Handle );
 
-EAXAC3_API HRESULT EAXAC3QueryDeviceCaps(EAXAC3HANDLE EAXAC3Handle, LPEAXAC3DEVICEINFO lpEAXAC3DeviceInfo,
-										 int nSizeOfAC3DeviceInfoStruct);
+EAXAC3_API HRESULT EAXAC3QueryDeviceCaps( EAXAC3HANDLE EAXAC3Handle, LPEAXAC3DEVICEINFO lpEAXAC3DeviceInfo,
+		int nSizeOfAC3DeviceInfoStruct );
 
-EAXAC3_API HRESULT EAXAC3GetPosition(AC3STREAM AC3Stream, enum POSFORMAT posFormat, int *lpAmount);
+EAXAC3_API HRESULT EAXAC3GetPosition( AC3STREAM AC3Stream, enum POSFORMAT posFormat, int* lpAmount );
 
-EAXAC3_API HRESULT EAXAC3SetFilePosition(AC3STREAM AC3Stream, enum POSFORMAT posFormat, int nAmount);
+EAXAC3_API HRESULT EAXAC3SetFilePosition( AC3STREAM AC3Stream, enum POSFORMAT posFormat, int nAmount );
 
-EAXAC3_API HRESULT EAXAC3OpenStream(EAXAC3HANDLE EAXAC3Handle, AC3STREAM *lpAC3Stream,
-									LPAC3CALLBACK pAC3CallbackFn, char *szAC3Filename, enum SOURCE src);
+EAXAC3_API HRESULT EAXAC3OpenStream( EAXAC3HANDLE EAXAC3Handle, AC3STREAM* lpAC3Stream,
+									 LPAC3CALLBACK pAC3CallbackFn, char* szAC3Filename, enum SOURCE src );
 
-EAXAC3_API HRESULT EAXAC3CloseStream(AC3STREAM AC3Stream);
+EAXAC3_API HRESULT EAXAC3CloseStream( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3PrePlayStream(AC3STREAM AC3Stream);
+EAXAC3_API HRESULT EAXAC3PrePlayStream( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3PlayStream(AC3STREAM AC3Stream, int nLooping);
+EAXAC3_API HRESULT EAXAC3PlayStream( AC3STREAM AC3Stream, int nLooping );
 
-EAXAC3_API HRESULT EAXAC3StopStream(AC3STREAM AC3Stream);
+EAXAC3_API HRESULT EAXAC3StopStream( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3PauseStream(AC3STREAM AC3Stream);
+EAXAC3_API HRESULT EAXAC3PauseStream( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3ResumeStream(AC3STREAM AC3Stream);
+EAXAC3_API HRESULT EAXAC3ResumeStream( AC3STREAM AC3Stream );
 
-EAXAC3_API HRESULT EAXAC3LockBuffer(AC3STREAM AC3Stream, unsigned long ulBytes, void **ppvPointer1,
-									unsigned long *pdwBytes1, void **ppvPointer2, unsigned long *pdwBytes2,
-									unsigned long ulFlags);
+EAXAC3_API HRESULT EAXAC3LockBuffer( AC3STREAM AC3Stream, unsigned long ulBytes, void** ppvPointer1,
+									 unsigned long* pdwBytes1, void** ppvPointer2, unsigned long* pdwBytes2,
+									 unsigned long ulFlags );
 
-EAXAC3_API HRESULT EAXAC3UnLockBuffer(AC3STREAM AC3Stream, void *pvPointer1, unsigned long ulSize1,
-									  void *pvPointer2, unsigned long ulSize2, int nFinished);
+EAXAC3_API HRESULT EAXAC3UnLockBuffer( AC3STREAM AC3Stream, void* pvPointer1, unsigned long ulSize1,
+									   void* pvPointer2, unsigned long ulSize2, int nFinished );
 
-EAXAC3_API HRESULT EAXAC3SetPlaybackMode(EAXAC3HANDLE EAXAC3Handle, unsigned int ulPlayMode);
+EAXAC3_API HRESULT EAXAC3SetPlaybackMode( EAXAC3HANDLE EAXAC3Handle, unsigned int ulPlayMode );
 
-EAXAC3_API char *  EAXAC3GetErrorString(HRESULT hr, char *szErrorString, int nSizeOfErrorString);
+EAXAC3_API char*   EAXAC3GetErrorString( HRESULT hr, char* szErrorString, int nSizeOfErrorString );
 
-EAXAC3_API HRESULT EAXAC3GetLastError(HRESULT *hr);
+EAXAC3_API HRESULT EAXAC3GetLastError( HRESULT* hr );
 
 #ifdef __cplusplus
 }

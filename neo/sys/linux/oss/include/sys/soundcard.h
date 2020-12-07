@@ -33,9 +33,9 @@
  */
 
 #if defined(__cplusplus)
-#define EXTERNC extern "C"
+	#define EXTERNC extern "C"
 #else
-#define EXTERNC extern
+	#define EXTERNC extern
 #endif /* EXTERN_C_WRAPPERS */
 
 /*
@@ -50,22 +50,22 @@
 #define OPEN_SOUND_SYSTEM
 
 #if defined(__hpux) && !defined(_HPUX_SOURCE)
-#	error "-D_HPUX_SOURCE must be used when compiling OSS applications"
+	#	error "-D_HPUX_SOURCE must be used when compiling OSS applications"
 #endif
 
 #ifdef __hpux
-#include <sys/ioctl.h>
+	#include <sys/ioctl.h>
 #endif
 
 #ifdef linux
-/* In Linux we need to be prepared for cross compiling */
-#include <linux/ioctl.h>
+	/* In Linux we need to be prepared for cross compiling */
+	#include <linux/ioctl.h>
 #else
-# ifdef __FreeBSD__
-#    include <sys/ioccom.h>
-# else
-#    include <sys/ioctl.h>
-# endif
+	#ifdef __FreeBSD__
+		#include <sys/ioccom.h>
+	#else
+		#include <sys/ioctl.h>
+	#endif
 #endif
 
 /*
@@ -105,52 +105,52 @@
  */
 
 #ifndef __SIOWR
-#if defined(__hpux) || (defined(_IOWR) && (defined(_AIX) || (!defined(sun) && !defined(sparc) && !defined(__INCioctlh) && !defined(__Lynx__))))
+	#if defined(__hpux) || (defined(_IOWR) && (defined(_AIX) || (!defined(sun) && !defined(sparc) && !defined(__INCioctlh) && !defined(__Lynx__))))
 
-/* 
- * Use already defined ioctl defines if they exist (except with Sun and some 
- * others) 
- */
-#define	SIOCPARM_MASK	IOCPARM_MASK
-#define	SIOC_VOID	IOC_VOID
-#define	SIOC_OUT	IOC_OUT
-#define	SIOC_IN		IOC_IN
-#define	SIOC_INOUT	IOC_INOUT
-#define __SIOC_SIZE	_IOC_SIZE
-#define __SIOC_DIR	_IOC_DIR
-#define __SIOC_NONE	_IOC_NONE
-#define __SIOC_READ	_IOC_READ
-#define __SIOC_WRITE	_IOC_WRITE
-#define	__SIO		_IO
-#define	__SIOR		_IOR
-#define	__SIOW		_IOW
-#define	__SIOWR		_IOWR
-#else
+		/*
+		* Use already defined ioctl defines if they exist (except with Sun and some
+		* others)
+		*/
+		#define	SIOCPARM_MASK	IOCPARM_MASK
+		#define	SIOC_VOID	IOC_VOID
+		#define	SIOC_OUT	IOC_OUT
+		#define	SIOC_IN		IOC_IN
+		#define	SIOC_INOUT	IOC_INOUT
+		#define __SIOC_SIZE	_IOC_SIZE
+		#define __SIOC_DIR	_IOC_DIR
+		#define __SIOC_NONE	_IOC_NONE
+		#define __SIOC_READ	_IOC_READ
+		#define __SIOC_WRITE	_IOC_WRITE
+		#define	__SIO		_IO
+		#define	__SIOR		_IOR
+		#define	__SIOW		_IOW
+		#define	__SIOWR		_IOWR
+	#else
 
-/* Ioctl's have the command encoded in the lower word,
- * and the size of any in or out parameters in the upper
- * word.  The high 2 bits of the upper word are used
- * to encode the in/out status of the parameter; for now
- * we restrict parameters to at most 8191 bytes.
- */
-/* #define	SIOCTYPE		(0xff<<8) */
-#define	SIOCPARM_MASK	0x1fff	/* parameters must be < 8192 bytes */
-#define	SIOC_VOID	0x00000000	/* no parameters */
-#define	SIOC_OUT	0x20000000	/* copy out parameters */
-#define	SIOC_IN		0x40000000	/* copy in parameters */
-#define	SIOC_INOUT	(SIOC_IN|SIOC_OUT)
+		/* Ioctl's have the command encoded in the lower word,
+		* and the size of any in or out parameters in the upper
+		* word.  The high 2 bits of the upper word are used
+		* to encode the in/out status of the parameter; for now
+		* we restrict parameters to at most 8191 bytes.
+		*/
+		/* #define	SIOCTYPE		(0xff<<8) */
+		#define	SIOCPARM_MASK	0x1fff	/* parameters must be < 8192 bytes */
+		#define	SIOC_VOID	0x00000000	/* no parameters */
+		#define	SIOC_OUT	0x20000000	/* copy out parameters */
+		#define	SIOC_IN		0x40000000	/* copy in parameters */
+		#define	SIOC_INOUT	(SIOC_IN|SIOC_OUT)
 
-/* the 0x20000000 is so we can distinguish new ioctl's from old */
-#define	__SIO(x,y)	((int)(SIOC_VOID|(x<<8)|y))
-#define	__SIOR(x,y,t)	((int)(SIOC_OUT|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
-#define	__SIOW(x,y,t)	((int)(SIOC_IN|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
-#define	__SIOWR(x,y,t)	((int)(SIOC_INOUT|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
-#define __SIOC_SIZE(x)	((x>>16)&SIOCPARM_MASK)
-#define __SIOC_DIR(x)	(x & 0xf0000000)
-#define __SIOC_NONE	SIOC_VOID
-#define __SIOC_READ	SIOC_OUT
-#define __SIOC_WRITE	SIOC_IN
-#  endif /* _IOWR */
+		/* the 0x20000000 is so we can distinguish new ioctl's from old */
+		#define	__SIO(x,y)	((int)(SIOC_VOID|(x<<8)|y))
+		#define	__SIOR(x,y,t)	((int)(SIOC_OUT|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
+		#define	__SIOW(x,y,t)	((int)(SIOC_IN|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
+		#define	__SIOWR(x,y,t)	((int)(SIOC_INOUT|((sizeof(t)&SIOCPARM_MASK)<<16)|(x<<8)|y))
+		#define __SIOC_SIZE(x)	((x>>16)&SIOCPARM_MASK)
+		#define __SIOC_DIR(x)	(x & 0xf0000000)
+		#define __SIOC_NONE	SIOC_VOID
+		#define __SIOC_READ	SIOC_OUT
+		#define __SIOC_WRITE	SIOC_IN
+	#endif /* _IOWR */
 #endif /* !__SIOWR */
 
 #define SNDCTL_SEQ_RESET		__SIO  ('Q', 0)
@@ -181,20 +181,20 @@
 
 typedef struct synth_control
 {
-  int devno;			/* Synthesizer # */
-  char data[4000];		/* Device spesific command/data record */
+	int devno;			/* Synthesizer # */
+	char data[4000];		/* Device spesific command/data record */
 } synth_control;
 
 typedef struct remove_sample
 {
-  int devno;			/* Synthesizer # */
-  int bankno;			/* MIDI bank # (0=General MIDI) */
-  int instrno;			/* MIDI instrument number */
+	int devno;			/* Synthesizer # */
+	int bankno;			/* MIDI bank # (0=General MIDI) */
+	int instrno;			/* MIDI instrument number */
 } remove_sample;
 
 typedef struct seq_event_rec
 {
-  unsigned char arr[8];
+	unsigned char arr[8];
 } seq_event_rec;
 
 #define SNDCTL_TMR_TIMEBASE		__SIOWR('T', 1, int)
@@ -219,24 +219,24 @@ typedef struct seq_event_rec
 
 #if defined(_AIX) || defined(AIX) || defined(sparc) || defined(__hppa) || defined(PPC) || defined(__powerpc__) && !defined(i386) && !defined(__i386) && !defined(__i386__)
 
-/* Big endian machines */
-#  define _PATCHKEY(id) (0xfd00|id)
-#  define AFMT_S16_NE AFMT_S16_BE
-#  define AFMT_U16_NE AFMT_U16_BE
-#  define AFMT_S32_NE AFMT_S32_BE
-#  define AFMT_S24_NE AFMT_S24_BE
-#  define AFMT_S16_OE AFMT_S16_LE
-#  define AFMT_S32_OE AFMT_S32_LE
-#  define AFMT_S24_OE AFMT_S24_LE
+	/* Big endian machines */
+	#define _PATCHKEY(id) (0xfd00|id)
+	#define AFMT_S16_NE AFMT_S16_BE
+	#define AFMT_U16_NE AFMT_U16_BE
+	#define AFMT_S32_NE AFMT_S32_BE
+	#define AFMT_S24_NE AFMT_S24_BE
+	#define AFMT_S16_OE AFMT_S16_LE
+	#define AFMT_S32_OE AFMT_S32_LE
+	#define AFMT_S24_OE AFMT_S24_LE
 #else
-#  define _PATCHKEY(id) ((id<<8)|0xfd)
-#  define AFMT_S16_NE AFMT_S16_LE
-#  define AFMT_U16_NE AFMT_U16_LE
-#  define AFMT_S32_NE AFMT_S32_LE
-#  define AFMT_S24_NE AFMT_S24_LE
-#  define AFMT_S16_OE AFMT_S16_BE
-#  define AFMT_S32_OE AFMT_S32_BE
-#  define AFMT_S24_OE AFMT_S24_BE
+	#define _PATCHKEY(id) ((id<<8)|0xfd)
+	#define AFMT_S16_NE AFMT_S16_LE
+	#define AFMT_U16_NE AFMT_U16_LE
+	#define AFMT_S32_NE AFMT_S32_LE
+	#define AFMT_S24_NE AFMT_S24_LE
+	#define AFMT_S16_OE AFMT_S16_BE
+	#define AFMT_S32_OE AFMT_S32_BE
+	#define AFMT_S24_OE AFMT_S24_BE
 #endif
 
 /*
@@ -248,19 +248,19 @@ typedef struct seq_event_rec
 
 struct patch_info
 {
-  unsigned short key;		/* Use WAVE_PATCH here */
+	unsigned short key;		/* Use WAVE_PATCH here */
 #define WAVE_PATCH	_PATCHKEY(0x04)
 #define GUS_PATCH	WAVE_PATCH
 #define WAVEFRONT_PATCH _PATCHKEY(0x06)
 
-  short device_no;		/* Synthesizer number */
-  short instr_no;		/* Midi pgm# */
+	short device_no;		/* Synthesizer number */
+	short instr_no;		/* Midi pgm# */
 
-  unsigned int mode;
-/*
- * The least significant byte has the same format than the GUS .PAT
- * files
- */
+	unsigned int mode;
+	/*
+	 * The least significant byte has the same format than the GUS .PAT
+	 * files
+	 */
 #define WAVE_16_BITS	0x01	/* bit 0 = 8 or 16 bit wave data. */
 #define WAVE_UNSIGNED	0x02	/* bit 1 = Signed - Unsigned data. */
 #define WAVE_LOOPING	0x04	/* bit 2 = looping enabled-1. */
@@ -269,88 +269,88 @@ struct patch_info
 #define WAVE_SUSTAIN_ON	0x20	/* bit 5 = Turn sustaining on. (Env. pts. 3) */
 #define WAVE_ENVELOPES	0x40	/* bit 6 = Enable envelopes - 1 */
 #define WAVE_FAST_RELEASE 0x80	/* bit 7 = Shut off immediately after note off */
-  /*  (use the env_rate/env_offs fields). */
-/* Linux specific bits */
+	/*  (use the env_rate/env_offs fields). */
+	/* Linux specific bits */
 #define WAVE_VIBRATO	0x00010000	/* The vibrato info is valid */
 #define WAVE_TREMOLO	0x00020000	/* The tremolo info is valid */
 #define WAVE_SCALE	0x00040000	/* The scaling info is valid */
 #define WAVE_FRACTIONS	0x00080000	/* Fraction information is valid */
-/* Reserved bits */
+	/* Reserved bits */
 #define WAVE_ROM	0x40000000	/* For future use */
 #define WAVE_MULAW	0x20000000	/* For future use */
-/* Other bits must be zeroed */
+	/* Other bits must be zeroed */
 
-  int len;			/* Size of the wave data in bytes */
-  int loop_start, loop_end;	/* Byte offsets from the beginning */
+	int len;			/* Size of the wave data in bytes */
+	int loop_start, loop_end;	/* Byte offsets from the beginning */
 
-/* 
- * The base_freq and base_note fields are used when computing the
- * playback speed for a note. The base_note defines the tone frequency
- * which is heard if the sample is played using the base_freq as the
- * playback speed.
- *
- * The low_note and high_note fields define the minimum and maximum note
- * frequencies for which this sample is valid. It is possible to define
- * more than one samples for an instrument number at the same time. The
- * low_note and high_note fields are used to select the most suitable one.
- *
- * The fields base_note, high_note and low_note should contain
- * the note frequency multiplied by 1000. For example value for the
- * middle A is 440*1000.
- */
+	/*
+	 * The base_freq and base_note fields are used when computing the
+	 * playback speed for a note. The base_note defines the tone frequency
+	 * which is heard if the sample is played using the base_freq as the
+	 * playback speed.
+	 *
+	 * The low_note and high_note fields define the minimum and maximum note
+	 * frequencies for which this sample is valid. It is possible to define
+	 * more than one samples for an instrument number at the same time. The
+	 * low_note and high_note fields are used to select the most suitable one.
+	 *
+	 * The fields base_note, high_note and low_note should contain
+	 * the note frequency multiplied by 1000. For example value for the
+	 * middle A is 440*1000.
+	 */
 
-  unsigned int base_freq;
-  unsigned int base_note;
-  unsigned int high_note;
-  unsigned int low_note;
-  int panning;			/* -128=left, 127=right */
-  int detuning;
+	unsigned int base_freq;
+	unsigned int base_note;
+	unsigned int high_note;
+	unsigned int low_note;
+	int panning;			/* -128=left, 127=right */
+	int detuning;
 
-  /* New fields introduced in version 1.99.5 */
+	/* New fields introduced in version 1.99.5 */
 
-  /* Envelope. Enabled by mode bit WAVE_ENVELOPES  */
-  unsigned char env_rate[6];	/* GUS HW ramping rate */
-  unsigned char env_offset[6];	/* 255 == 100% */
+	/* Envelope. Enabled by mode bit WAVE_ENVELOPES  */
+	unsigned char env_rate[6];	/* GUS HW ramping rate */
+	unsigned char env_offset[6];	/* 255 == 100% */
 
-  /* 
-   * The tremolo, vibrato and scale info are not supported yet.
-   * Enable by setting the mode bits WAVE_TREMOLO, WAVE_VIBRATO or
-   * WAVE_SCALE
-   */
+	/*
+	 * The tremolo, vibrato and scale info are not supported yet.
+	 * Enable by setting the mode bits WAVE_TREMOLO, WAVE_VIBRATO or
+	 * WAVE_SCALE
+	 */
 
-  unsigned char tremolo_sweep;
-  unsigned char tremolo_rate;
-  unsigned char tremolo_depth;
+	unsigned char tremolo_sweep;
+	unsigned char tremolo_rate;
+	unsigned char tremolo_depth;
 
-  unsigned char vibrato_sweep;
-  unsigned char vibrato_rate;
-  unsigned char vibrato_depth;
+	unsigned char vibrato_sweep;
+	unsigned char vibrato_rate;
+	unsigned char vibrato_depth;
 
-  int scale_frequency;
-  unsigned int scale_factor;	/* from 0 to 2048 or 0 to 2 */
+	int scale_frequency;
+	unsigned int scale_factor;	/* from 0 to 2048 or 0 to 2 */
 
-  int volume;
-  int fractions;
-  int reserved1;
-  int spare[2];
-  char data[1];			/* The waveform data starts here */
+	int volume;
+	int fractions;
+	int reserved1;
+	int spare[2];
+	char data[1];			/* The waveform data starts here */
 };
 
 struct sysex_info
 {
-  short key;			/* Use SYSEX_PATCH or MAUI_PATCH here */
+	short key;			/* Use SYSEX_PATCH or MAUI_PATCH here */
 #define SYSEX_PATCH	_PATCHKEY(0x05)
 #define MAUI_PATCH	_PATCHKEY(0x06)
-  short device_no;		/* Synthesizer number */
-  int len;			/* Size of the sysex data in bytes */
-  unsigned char data[1];	/* Sysex data starts here */
+	short device_no;		/* Synthesizer number */
+	int len;			/* Size of the sysex data in bytes */
+	unsigned char data[1];	/* Sysex data starts here */
 };
 
 /*
  * /dev/sequencer input events.
  *
  * The data written to the /dev/sequencer is a stream of events. Events
- * are records of 4 or 8 bytes. The first byte defines the size. 
+ * are records of 4 or 8 bytes. The first byte defines the size.
  * Any number of events can be written with a write call. There
  * is a set of macros for sending these events. Use these macros if you
  * want to maximize portability of your program.
@@ -488,13 +488,13 @@ struct sysex_info
  * of the associated synthesizer device. There is no limit to the size
  * of the extended events. These events are not queued but executed
  * immediately when the write() is called (execution can take several
- * seconds of time). 
+ * seconds of time).
  *
  * When a SEQ_FULLSIZE message is written to the device, it must
  * be written using exactly one write() call. Other events cannot
  * be mixed to the same write.
- *	
- * For FM synths (YM3812/OPL3) use struct sbi_instrument and write it to the 
+ *
+ * For FM synths (YM3812/OPL3) use struct sbi_instrument and write it to the
  * /dev/sequencer. Don't write other data together with the instrument structure
  * Set the key field of the structure to FM_PATCH. The device field is used to
  * route the patch to the corresponding device.
@@ -513,24 +513,25 @@ typedef unsigned char sbi_instr_data[32];
 
 struct sbi_instrument
 {
-  unsigned short key;		/* FM_PATCH or OPL3_PATCH */
+	unsigned short key;		/* FM_PATCH or OPL3_PATCH */
 #define FM_PATCH	_PATCHKEY(0x01)
 #define OPL3_PATCH	_PATCHKEY(0x03)
-  short device;			/*  Synth# (0-4)    */
-  int channel;			/*  Program# to be initialized  */
-  sbi_instr_data operators;	/*  Register settings for operator cells (.SBI format)  */
+	short device;			/*  Synth# (0-4)    */
+	int channel;			/*  Program# to be initialized  */
+	sbi_instr_data operators;	/*  Register settings for operator cells (.SBI format)  */
 };
 
 struct synth_info
-{				/* Read only */
-  char name[30];
-  int device;			/* 0-N. INITIALIZE BEFORE CALLING */
-  int synth_type;
+{
+	/* Read only */
+	char name[30];
+	int device;			/* 0-N. INITIALIZE BEFORE CALLING */
+	int synth_type;
 #define SYNTH_TYPE_FM			0
 #define SYNTH_TYPE_SAMPLE		1
 #define SYNTH_TYPE_MIDI			2	/* Midi interface */
 
-  int synth_subtype;
+	int synth_subtype;
 #define FM_TYPE_ADLIB			0x00
 #define FM_TYPE_OPL3			0x01
 #define MIDI_TYPE_MPU401		0x401
@@ -539,32 +540,32 @@ struct synth_info
 #define SAMPLE_TYPE_GUS			SAMPLE_TYPE_BASIC
 #define SAMPLE_TYPE_WAVEFRONT   	0x11
 
-  int perc_mode;		/* No longer supported */
-  int nr_voices;
-  int nr_drums;			/* Obsolete field */
-  int instr_bank_size;
-  unsigned int capabilities;
+	int perc_mode;		/* No longer supported */
+	int nr_voices;
+	int nr_drums;			/* Obsolete field */
+	int instr_bank_size;
+	unsigned int capabilities;
 #define SYNTH_CAP_PERCMODE	0x00000001	/* No longer used */
 #define SYNTH_CAP_OPL3		0x00000002	/* Set if OPL3 supported */
 #define SYNTH_CAP_INPUT		0x00000004	/* Input (MIDI) device */
-  int dummies[19];		/* Reserve space */
+	int dummies[19];		/* Reserve space */
 };
 
 struct sound_timer_info
 {
-  char name[32];
-  int caps;
+	char name[32];
+	int caps;
 };
 
 #define MIDI_CAP_MPU401		1	/* MPU-401 intelligent mode */
 
 struct midi_info
 {
-  char name[30];
-  int device;			/* 0-N. INITIALIZE BEFORE CALLING */
-  unsigned int capabilities;	/* To be defined later */
-  int dev_type;
-  int dummies[18];		/* Reserve space */
+	char name[30];
+	int device;			/* 0-N. INITIALIZE BEFORE CALLING */
+	unsigned int capabilities;	/* To be defined later */
+	int dev_type;
+	int dummies[18];		/* Reserve space */
 };
 
 /***************************************
@@ -572,9 +573,9 @@ struct midi_info
  ***************************************/
 typedef struct
 {
-  unsigned char cmd;
-  char nr_args, nr_returns;
-  unsigned char data[30];
+	unsigned char cmd;
+	char nr_args, nr_returns;
+	unsigned char data[30];
 } mpu_command_rec;
 
 #define SNDCTL_MIDI_PRETIME	__SIOWR('m', 0, int)
@@ -644,11 +645,11 @@ typedef struct
  */
 typedef struct audio_buf_info
 {
-  int fragments;		/* # of available fragments (partially usend ones not counted) */
-  int fragstotal;		/* Total # of fragments allocated */
-  int fragsize;			/* Size of a fragment in bytes */
-  int bytes;			/* Available space in bytes (includes partially used fragments) */
-  /* Note! 'bytes' could be more than fragments*fragsize */
+	int fragments;		/* # of available fragments (partially usend ones not counted) */
+	int fragstotal;		/* Total # of fragments allocated */
+	int fragsize;			/* Size of a fragment in bytes */
+	int bytes;			/* Available space in bytes (includes partially used fragments) */
+	/* Note! 'bytes' could be more than fragments*fragsize */
 } audio_buf_info;
 
 #define SNDCTL_DSP_GETOSPACE		__SIOR ('P',12, audio_buf_info)
@@ -659,12 +660,12 @@ typedef struct audio_buf_info
 #	define DSP_CAP_DUPLEX		0x00000100	/* Full duplex record/playback */
 #	define DSP_CAP_REALTIME		0x00000200	/* Not in use */
 #	define DSP_CAP_BATCH		0x00000400	/* Device has some kind of */
-							/* internal buffers which may */
-							/* cause some delays and */
-							/* decrease precision of timing */
+/* internal buffers which may */
+/* cause some delays and */
+/* decrease precision of timing */
 #	define DSP_CAP_COPROC		0x00000800	/* Has a coprocessor */
-							/* Sometimes it's a DSP */
-							/* but usually not */
+/* Sometimes it's a DSP */
+/* but usually not */
 #	define DSP_CAP_TRIGGER		0x00001000	/* Supports SETTRIGGER */
 #	define DSP_CAP_MMAP		0x00002000	/* Supports mmap() */
 #	define DSP_CAP_MULTI		0x00004000	/* Supports multiple open */
@@ -682,7 +683,7 @@ typedef struct audio_buf_info
 #	define DSP_CAP_ADMASK		0x00f00000
 /*
  * NOTE! (capabilities & DSP_CAP_ADMASK)==0 means just that the
- * digital/analog interface control features are not supported by the 
+ * digital/analog interface control features are not supported by the
  * device/driver. However the device still supports analog, digital or
  * both inputs/outputs (depending on the device). See the OSS Programmer's
  * Guide for full details.
@@ -699,7 +700,7 @@ typedef struct audio_buf_info
  * the initial setup. However the user should be able to override this
  * selection.
  *
- * To find out which modes are actually supported the application should 
+ * To find out which modes are actually supported the application should
  * try to select them using SNDCTL_DSP_CHANNELS.
  */
 #	define DSP_CH_MASK		0x06000000	/* Mask */
@@ -718,9 +719,9 @@ typedef struct audio_buf_info
 
 typedef struct count_info
 {
-  unsigned int bytes;		/* Total # of bytes processed */
-  int blocks;			/* # of fragment transitions since last time */
-  int ptr;			/* Current DMA pointer value */
+	unsigned int bytes;		/* Total # of bytes processed */
+	int blocks;			/* # of fragment transitions since last time */
+	int ptr;			/* Current DMA pointer value */
 } count_info;
 
 #define SNDCTL_DSP_GETIPTR		__SIOR ('P',17, count_info)
@@ -728,8 +729,8 @@ typedef struct count_info
 
 typedef struct buffmem_desc
 {
-  unsigned *buffer;
-  int size;
+	unsigned* buffer;
+	int size;
 } buffmem_desc;
 #define SNDCTL_DSP_MAPINBUF		__SIOR ('P', 19, buffmem_desc)
 #define SNDCTL_DSP_MAPOUTBUF		__SIOR ('P', 20, buffmem_desc)
@@ -737,15 +738,15 @@ typedef struct buffmem_desc
 #define SNDCTL_DSP_SETDUPLEX		__SIO  ('P', 22)
 
 /*
- * Application's profile defines the way how playback underrun situations 
+ * Application's profile defines the way how playback underrun situations
  * should be handled.
- * 
+ *
  * APF_NORMAL (the default) and APF_NETWORK make the driver to cleanup the
  * playback buffer whenever an underrun occurs. This consumes some time
  * prevents looping the existing buffer.
  * APF_CPUINTENS is intended to be set by CPU intensive applications which
- * are likely to run out of time occasionally. In this mode the buffer cleanup 
- * is disabled which saves CPU time but also let's the previous buffer content 
+ * are likely to run out of time occasionally. In this mode the buffer cleanup
+ * is disabled which saves CPU time but also let's the previous buffer content
  * to be played during the "pause" after the underrun.
  */
 #define SNDCTL_DSP_PROFILE		__SIOW ('P', 23, int)
@@ -759,24 +760,24 @@ typedef struct buffmem_desc
 
 typedef struct audio_errinfo
 {
-  int play_underruns;
-  int rec_overruns;
-  unsigned int play_ptradjust;
-  unsigned int rec_ptradjust;
-  int play_errorcount;
-  int rec_errorcount;
-  int play_lasterror;
-  int rec_lasterror;
-  long play_errorparm;
-  long rec_errorparm;
-  int filler[16];
+	int play_underruns;
+	int rec_overruns;
+	unsigned int play_ptradjust;
+	unsigned int rec_ptradjust;
+	int play_errorcount;
+	int rec_errorcount;
+	int play_lasterror;
+	int rec_lasterror;
+	long play_errorparm;
+	long rec_errorparm;
+	int filler[16];
 } audio_errinfo;
 
 #define SNDCTL_DSP_GETERROR		__SIOR ('P', 25, audio_errinfo)
 
 typedef struct oss_digital_control
 {
-  unsigned int caps;
+	unsigned int caps;
 #define DIG_CBITIN_NONE			0x00000000
 #define DIG_CBITIN_LIMITED		0x00000001
 #define DIG_CBITIN_DATA 		0x00000002
@@ -802,7 +803,7 @@ typedef struct oss_digital_control
 #define DIG_PASSTHROUGH			0x00080000
 #define DIG_OUTSEL			0x00100000
 
-  unsigned int valid;
+	unsigned int valid;
 #define VAL_CBITIN			0x00000001
 #define VAL_UBITIN			0x00000002
 #define VAL_CBITOUT			0x00000004
@@ -817,49 +818,49 @@ typedef struct oss_digital_control
 
 #define VAL_OUTMASK (VAL_CBITOUT|VAL_UBITOUT|VAL_ORATE|VAL_OUTBITS|VAL_OUTSEL)
 
-  unsigned int request, param;
+	unsigned int request, param;
 #define SPD_RQ_PASSTHROUGH				1
 
-  unsigned char cbitin[24];
-  unsigned char ubitin[24];
-  unsigned char cbitout[24];
-  unsigned char ubitout[24];
+	unsigned char cbitin[24];
+	unsigned char ubitin[24];
+	unsigned char cbitout[24];
+	unsigned char ubitout[24];
 
-  unsigned int outsel;
+	unsigned int outsel;
 #define OUTSEL_DIGITAL		1
 #define OUTSEL_ANALOG		2
 #define OUTSEL_BOTH		(OUTSEL_DIGITAL|OUTSEL_ANALOG)
 
-  int in_data;			/* Audio/data if autodetectable by the receiver */
+	int in_data;			/* Audio/data if autodetectable by the receiver */
 #define IND_UNKNOWN		0
 #define IND_AUDIO		1
 #define IND_DATA		2
 
-  int in_locked;		/* Receiver locked */
+	int in_locked;		/* Receiver locked */
 #define LOCK_NOT_INDICATED	0
 #define LOCK_UNLOCKED		1
 #define LOCK_LOCKED		2
 
-  int in_quality;		/* Input signal quality */
+	int in_quality;		/* Input signal quality */
 #define IN_QUAL_NOT_INDICATED	0
 #define IN_QUAL_POOR		1
 #define IN_QUAL_GOOD		2
 
-  int in_vbit, out_vbit;	/* V bits */
+	int in_vbit, out_vbit;	/* V bits */
 #define VBIT_NOT_INDICATED	0
 #define VBIT_OFF		1
 #define VBIT_ON			2
 
-  unsigned int in_errors;	/* Various input errro conditions */
+	unsigned int in_errors;	/* Various input errro conditions */
 #define INERR_CRC		0x0001
 #define INERR_QCODE_CRC		0x0002
 #define INERR_PARITY		0x0004
 #define INERR_BIPHASE		0x0008
 
-  int srate_in, srate_out;
-  int bits_in, bits_out;
+	int srate_in, srate_out;
+	int bits_in, bits_out;
 
-  int filler[32];
+	int filler[32];
 } oss_digital_control;
 
 #define SNDCTL_DSP_READCTL		__SIOWR('P', 26, oss_digital_control)
@@ -867,9 +868,9 @@ typedef struct oss_digital_control
 
 typedef struct oss_syncgroup
 {
-  int id;
-  int mode;
-  int filler[16];
+	int id;
+	int mode;
+	int filler[16];
 } oss_syncgroup;
 
 #define SNDCTL_DSP_SYNCGROUP		__SIOWR('P', 28, oss_syncgroup)
@@ -939,11 +940,11 @@ typedef struct
  * IOCTL commands for /dev/mixer  *
  **********************************/
 
-/* 
+/*
  * Mixer devices
  *
  * There can be up to 20 different analog mixer channels. The
- * SOUND_MIXER_NRDEVICES gives the currently supported maximum. 
+ * SOUND_MIXER_NRDEVICES gives the currently supported maximum.
  * The SOUND_MIXER_READ_DEVMASK returns a bitmask which tells
  * the devices supported by the particular mixer.
  */
@@ -963,10 +964,10 @@ typedef struct
 #define SOUND_MIXER_RECLEV	11	/* Recording level */
 #define SOUND_MIXER_IGAIN	12	/* Input gain */
 #define SOUND_MIXER_OGAIN	13	/* Output gain */
-/* 
- * Some soundcards have three line level inputs (line, aux1 and aux2). 
- * Since each card manufacturer has assigned different meanings to 
- * these inputs, it's impractical to assign specific meanings 
+/*
+ * Some soundcards have three line level inputs (line, aux1 and aux2).
+ * Since each card manufacturer has assigned different meanings to
+ * these inputs, it's impractical to assign specific meanings
  * (eg line, cd, synth etc.) to them.
  */
 #define SOUND_MIXER_LINE1	14	/* Input source 1  (aux1) */
@@ -1126,16 +1127,17 @@ typedef struct
 
 typedef struct mixer_info
 {
-  char id[16];
-  char name[32];
-  int modify_counter;
-  int fillers[10];
+	char id[16];
+	char name[32];
+	int modify_counter;
+	int fillers[10];
 } mixer_info;
 
 typedef struct _old_mixer_info
-{				/* Obsolete */
-  char id[16];
-  char name[32];
+{
+	/* Obsolete */
+	char id[16];
+	char name[32];
 } _old_mixer_info;
 
 #define SOUND_MIXER_INFO		__SIOR ('M', 101, mixer_info)
@@ -1176,15 +1178,15 @@ typedef unsigned char mixer_record[128];
 
 typedef struct mixer_vol_table
 {
-  int num;			/* Index to volume table */
-  char name[32];
-  int levels[32];
+	int num;			/* Index to volume table */
+	char name[32];
+	int levels[32];
 } mixer_vol_table;
 
 #define SOUND_MIXER_GETLEVELS		__SIOWR('M', 116, mixer_vol_table)
 #define SOUND_MIXER_SETLEVELS		__SIOWR('M', 117, mixer_vol_table)
 
-/* 
+/*
  * An ioctl for identifying the driver version. It will return value
  * of the SOUND_VERSION macro used when compiling the driver.
  * This call was introduced in OSS version 3.6 and it will not work
@@ -1218,27 +1220,27 @@ typedef unsigned char oss_reserved_t[512];
 
 typedef struct oss_sysinfo
 {
-  char product[32];		/* For example OSS/Free, OSS/Linux or OSS/Solaris */
-  char version[32];		/* For example 4.0a */
-  int versionnum;		/* See OSS_GETVERSION */
-  char options[128];		/* Reserved */
+	char product[32];		/* For example OSS/Free, OSS/Linux or OSS/Solaris */
+	char version[32];		/* For example 4.0a */
+	int versionnum;		/* See OSS_GETVERSION */
+	char options[128];		/* Reserved */
 
-  int numaudios;		/* # of audio/dsp devices */
-  int openedaudio[8];		/* Bit mask telling which audio devices are busy */
+	int numaudios;		/* # of audio/dsp devices */
+	int openedaudio[8];		/* Bit mask telling which audio devices are busy */
 
-  int numsynths;		/* # of availavle synth devices */
-  int nummidis;			/* # of available MIDI ports */
-  int numtimers;		/* # of available timer devices */
-  int nummixers;		/* # of mixer devices */
+	int numsynths;		/* # of availavle synth devices */
+	int nummidis;			/* # of available MIDI ports */
+	int numtimers;		/* # of available timer devices */
+	int nummixers;		/* # of mixer devices */
 
-  int filler[SYSINFO_FILL_SIZE];	/* For future expansion (set to -1) */
+	int filler[SYSINFO_FILL_SIZE];	/* For future expansion (set to -1) */
 } oss_sysinfo;
 
 typedef struct oss_mixext
 {
-  int dev;			/* Mixer device number */
-  int ctrl;			/* Controller number */
-  int type;			/* Entry type */
+	int dev;			/* Mixer device number */
+	int ctrl;			/* Controller number */
+	int type;			/* Entry type */
 #	define MIXT_DEVROOT	 0	/* Device root entry */
 #	define MIXT_GROUP	 1	/* Controller group */
 #	define MIXT_ONOFF	 2	/* OFF (0) or ON (1) */
@@ -1259,58 +1261,58 @@ typedef struct oss_mixext
 #	define MIXT_SLIDER	17	/* Slider (mono) with full integer range */
 #	define MIXT_3D		18
 
-  /* Possible value range (minvalue to maxvalue) */
-  /* Note that maxvalue may also be smaller than minvalue */
-  int maxvalue;
-  int minvalue;
+	/* Possible value range (minvalue to maxvalue) */
+	/* Note that maxvalue may also be smaller than minvalue */
+	int maxvalue;
+	int minvalue;
 
-  int flags;
+	int flags;
 #	define MIXF_READABLE	0x00000001	/* Has readable value */
 #	define MIXF_WRITEABLE	0x00000002	/* Has writeable value */
 #	define MIXF_POLL	0x00000004	/* May change itself */
 #	define MIXF_HZ		0x00000008	/* Herz scale */
 #	define MIXF_STRING	0x00000010	/* Use dynamic extensions for value */
 #	define MIXF_DYNAMIC	0x00000010	/* Supports dynamic extensions */
-  char id[16];			/* Mnemonic ID (mainly for internal use) */
-  int parent;			/* Entry# of parent (group) node (-1 if root) */
+	char id[16];			/* Mnemonic ID (mainly for internal use) */
+	int parent;			/* Entry# of parent (group) node (-1 if root) */
 
-  int dummy;			/* Internal use */
+	int dummy;			/* Internal use */
 
-  int timestamp;
+	int timestamp;
 
-  char data[64];		/* Misc data (entry type dependent) */
-  unsigned char enum_present[32];	/* Mask of allowed enum values */
-  int control_no;		/* SOUND_MIXER_VOLUME..SOUND_MIXER_MIDI */
-  /* (-1 means not indicated) */
-  int desc;			/* Descriptive code. For future use. */
-  char extname[32];
-  int filler[8];
+	char data[64];		/* Misc data (entry type dependent) */
+	unsigned char enum_present[32];	/* Mask of allowed enum values */
+	int control_no;		/* SOUND_MIXER_VOLUME..SOUND_MIXER_MIDI */
+	/* (-1 means not indicated) */
+	int desc;			/* Descriptive code. For future use. */
+	char extname[32];
+	int filler[8];
 } oss_mixext;
 
 typedef struct oss_mixext_root
 {
-  char id[16];
-  char name[48];
+	char id[16];
+	char name[48];
 } oss_mixext_root;
 
 typedef struct oss_mixer_value
 {
-  int dev;
-  int ctrl;
-  int value;
-  int flags;			/* Reserved for future use. Initialize to 0 */
-  int timestamp;		/* Must be set to oss_mixext.timestamp */
-  int filler[8];		/* Reserved for future use. Initialize to 0 */
+	int dev;
+	int ctrl;
+	int value;
+	int flags;			/* Reserved for future use. Initialize to 0 */
+	int timestamp;		/* Must be set to oss_mixext.timestamp */
+	int filler[8];		/* Reserved for future use. Initialize to 0 */
 } oss_mixer_value;
 
 #define OSS_ENUM_MAXVALUE	255
 typedef struct oss_mixer_enuminfo
 {
-  int dev;
-  int ctrl;
-  int nvalues;
-  short strindex[OSS_ENUM_MAXVALUE];
-  char strings[3000];
+	int dev;
+	int ctrl;
+	int nvalues;
+	short strindex[OSS_ENUM_MAXVALUE];
+	char strings[3000];
 } oss_mixer_enuminfo;
 
 #define OPEN_READ	PCM_ENABLE_INPUT
@@ -1319,27 +1321,27 @@ typedef struct oss_mixer_enuminfo
 
 typedef struct oss_audioinfo
 {
-  int dev;			/* Audio device number */
-  char name[64];
-  int busy;			/* 0, OPEN_READ, OPEN_WRITE or OPEN_READWRITE */
-  int pid;
-  int caps;			/* DSP_CAP_INPUT, DSP_CAP_OUTPUT */
-  int iformats, oformats;
-  int magic;			/* Reserved for internal use */
-  char cmd[64];			/* Command using the device */
-  int card_number;
-  int port_number;
-  int mixer_dev;
-  int real_device;		/* This is the right /dev/dsp# device to open */
-  int enabled;			/* 1=enabled, 0=device not ready at this moment */
-  int flags;			/* For internal use only - no practical meaning */
-  int min_rate, max_rate;	/* Sample rate limits */
-  int min_channels, max_channels;	/* Number of channels supported */
-  int binding;			/* DSP_BIND_FRONT, etc. 0 means undefined */
-  int rate_source;
-  char handle[32];
-  int nrates, rates[20];	/* Please read the manual before using these */
-  int filler[215];
+	int dev;			/* Audio device number */
+	char name[64];
+	int busy;			/* 0, OPEN_READ, OPEN_WRITE or OPEN_READWRITE */
+	int pid;
+	int caps;			/* DSP_CAP_INPUT, DSP_CAP_OUTPUT */
+	int iformats, oformats;
+	int magic;			/* Reserved for internal use */
+	char cmd[64];			/* Command using the device */
+	int card_number;
+	int port_number;
+	int mixer_dev;
+	int real_device;		/* This is the right /dev/dsp# device to open */
+	int enabled;			/* 1=enabled, 0=device not ready at this moment */
+	int flags;			/* For internal use only - no practical meaning */
+	int min_rate, max_rate;	/* Sample rate limits */
+	int min_channels, max_channels;	/* Number of channels supported */
+	int binding;			/* DSP_BIND_FRONT, etc. 0 means undefined */
+	int rate_source;
+	char handle[32];
+	int nrates, rates[20];	/* Please read the manual before using these */
+	int filler[215];
 } oss_audioinfo;
 
 #define OSS_SYSINFO		__SIOR ('X', 1, oss_sysinfo)
@@ -1361,7 +1363,7 @@ typedef struct oss_audioinfo
 
 /*
  * The 4 most significant bits of byte 0 specify the class of
- * the event: 
+ * the event:
  *
  *	0x8X = system level events,
  *	0x9X = device/port specific events, event[1] = device/port,
@@ -1434,19 +1436,19 @@ typedef struct oss_audioinfo
  */
 #define SEQ_DECLAREBUF()		SEQ_USE_EXTBUF()
 
-void seqbuf_dump (void);	/* This function must be provided by programs */
+void seqbuf_dump( void );	/* This function must be provided by programs */
 
-EXTERNC int OSS_init (int seqfd, int buflen);
-EXTERNC void OSS_seqbuf_dump (int fd, unsigned char *buf, int buflen);
-EXTERNC void OSS_seq_advbuf (int len, int fd, unsigned char *buf, int buflen);
-EXTERNC void OSS_seq_needbuf (int len, int fd, unsigned char *buf,
-			      int buflen);
-EXTERNC void OSS_patch_caching (int dev, int chn, int patch, int fd,
-				unsigned char *buf, int buflen);
-EXTERNC void OSS_drum_caching (int dev, int chn, int patch, int fd,
-			       unsigned char *buf, int buflen);
-EXTERNC void OSS_write_patch (int fd, unsigned char *buf, int len);
-EXTERNC int OSS_write_patch2 (int fd, unsigned char *buf, int len);
+EXTERNC int OSS_init( int seqfd, int buflen );
+EXTERNC void OSS_seqbuf_dump( int fd, unsigned char* buf, int buflen );
+EXTERNC void OSS_seq_advbuf( int len, int fd, unsigned char* buf, int buflen );
+EXTERNC void OSS_seq_needbuf( int len, int fd, unsigned char* buf,
+							  int buflen );
+EXTERNC void OSS_patch_caching( int dev, int chn, int patch, int fd,
+								unsigned char* buf, int buflen );
+EXTERNC void OSS_drum_caching( int dev, int chn, int patch, int fd,
+							   unsigned char* buf, int buflen );
+EXTERNC void OSS_write_patch( int fd, unsigned char* buf, int len );
+EXTERNC int OSS_write_patch2( int fd, unsigned char* buf, int len );
 
 #define SEQ_PM_DEFINES int __foo_bar___
 #ifdef OSSLIB
@@ -1501,16 +1503,16 @@ EXTERNC int OSS_write_patch2 (int fd, unsigned char *buf, int len);
 /*
  * This variation of the sequencer macros is used just to format one event
  * using fixed buffer.
- * 
+ *
  * The program using the macro library must define the following macros before
  * using this library.
  *
- * #define _seqbuf 		 name of the buffer (unsigned char[]) 
+ * #define _seqbuf 		 name of the buffer (unsigned char[])
  * #define _SEQ_ADVBUF(len)	 If the applic needs to know the exact
  *				 size of the event, this macro can be used.
  *				 Otherwise this must be defined as empty.
  * #define _seqbufptr		 Define the name of index variable or 0 if
- *				 not required. 
+ *				 not required.
  */
 #define _SEQ_NEEDBUF(len)	/* empty */
 #endif
@@ -1572,7 +1574,7 @@ EXTERNC int OSS_write_patch2 (int fd, unsigned char *buf, int len);
  * sending any MIDI bytes but it's absolutely not possible. Trying to do
  * so _will_ cause problems with MPU401 intelligent mode).
  *
- * Sysex messages are sent in blocks of 1 to 6 bytes. Longer messages must be 
+ * Sysex messages are sent in blocks of 1 to 6 bytes. Longer messages must be
  * sent by calling SEQ_SYSEX() several times (there must be no other events
  * between them). First sysex fragment must have 0xf0 in the first byte
  * and the last byte (buf[len-1] of the last fragment must be 0xf7. No byte
@@ -1679,7 +1681,7 @@ EXTERNC int OSS_write_patch2 (int fd, unsigned char *buf, int len);
 #define SEQ_PLAYAUDIO3(devmask)		_LOCAL_EVENT(LOCL_STARTAUDIO3, devmask)
 #define SEQ_PLAYAUDIO4(devmask)		_LOCAL_EVENT(LOCL_STARTAUDIO4, devmask)
 /*
- * Events for the level 1 interface only 
+ * Events for the level 1 interface only
  */
 
 #define SEQ_MIDIOUT(device, byte)	{_SEQ_NEEDBUF(4);\
@@ -1709,17 +1711,17 @@ EXTERNC int OSS_write_patch2 (int fd, unsigned char *buf, int len);
 #endif
 
 #ifdef OSSLIB
-extern int osslib_open (const char *path, int flags, int dummy);
-extern void ossclose (int fd);
-extern int osslib_write (int fd, const void *buf, int count);
-extern int osslib_read (int fd, void *buf, int count);
-extern int osslib_ioctl (int fd, unsigned int request, void *arg);
+	extern int osslib_open( const char* path, int flags, int dummy );
+	extern void ossclose( int fd );
+	extern int osslib_write( int fd, const void* buf, int count );
+	extern int osslib_read( int fd, void* buf, int count );
+	extern int osslib_ioctl( int fd, unsigned int request, void* arg );
 #else
-#  define osslib_open	open
-#  define osslib_close	close
-#  define osslib_write	write
-#  define osslib_read	read
-#  define osslib_ioctl	ioctl
+	#define osslib_open	open
+	#define osslib_close	close
+	#define osslib_write	write
+	#define osslib_read	read
+	#define osslib_ioctl	ioctl
 #endif
 
 #endif

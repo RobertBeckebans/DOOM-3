@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,21 +38,22 @@ If you have questions concerning this license or the applicable additional terms
 
 // DialogAFConstraintFixed dialog
 
-toolTip_t DialogAFConstraintFixed::toolTips[] = {
+toolTip_t DialogAFConstraintFixed::toolTips[] =
+{
 	{ 0, NULL }
 };
 
-IMPLEMENT_DYNAMIC(DialogAFConstraintFixed, CDialog)
+IMPLEMENT_DYNAMIC( DialogAFConstraintFixed, CDialog )
 
 /*
 ================
 DialogAFConstraintFixed::DialogAFConstraintFixed
 ================
 */
-DialogAFConstraintFixed::DialogAFConstraintFixed(CWnd* pParent /*=NULL*/)
-	: CDialog(DialogAFConstraintFixed::IDD, pParent)
-	, constraint(NULL)
-	, file(NULL)
+DialogAFConstraintFixed::DialogAFConstraintFixed( CWnd* pParent /*=NULL*/ )
+	: CDialog( DialogAFConstraintFixed::IDD, pParent )
+	, constraint( NULL )
+	, file( NULL )
 {
 	Create( IDD_DIALOG_AF_CONSTRAINT_FIXED, pParent );
 	EnableToolTips( TRUE );
@@ -63,7 +64,8 @@ DialogAFConstraintFixed::DialogAFConstraintFixed(CWnd* pParent /*=NULL*/)
 DialogAFConstraintFixed::~DialogAFConstraintFixed
 ================
 */
-DialogAFConstraintFixed::~DialogAFConstraintFixed() {
+DialogAFConstraintFixed::~DialogAFConstraintFixed()
+{
 }
 
 /*
@@ -71,8 +73,9 @@ DialogAFConstraintFixed::~DialogAFConstraintFixed() {
 DialogAFConstraintFixed::DoDataExchange
 ================
 */
-void DialogAFConstraintFixed::DoDataExchange(CDataExchange* pDX) {
-	CDialog::DoDataExchange(pDX);
+void DialogAFConstraintFixed::DoDataExchange( CDataExchange* pDX )
+{
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(DialogAFConstraintHinge)
 	//}}AFX_DATA_MAP
 }
@@ -82,7 +85,8 @@ void DialogAFConstraintFixed::DoDataExchange(CDataExchange* pDX) {
 DialogAFConstraintFixed::InitJointLists
 ================
 */
-void DialogAFConstraintFixed::InitJointLists( void ) {
+void DialogAFConstraintFixed::InitJointLists( void )
+{
 }
 
 /*
@@ -90,7 +94,8 @@ void DialogAFConstraintFixed::InitJointLists( void ) {
 DialogAFConstraintFixed::LoadFile
 ================
 */
-void DialogAFConstraintFixed::LoadFile( idDeclAF *af ) {
+void DialogAFConstraintFixed::LoadFile( idDeclAF* af )
+{
 	file = af;
 	constraint = NULL;
 	InitJointLists();
@@ -101,7 +106,8 @@ void DialogAFConstraintFixed::LoadFile( idDeclAF *af ) {
 DialogAFConstraintFixed::SaveFile
 ================
 */
-void DialogAFConstraintFixed::SaveFile( void ) {
+void DialogAFConstraintFixed::SaveFile( void )
+{
 	SaveConstraint();
 }
 
@@ -110,7 +116,8 @@ void DialogAFConstraintFixed::SaveFile( void ) {
 DialogAFConstraintFixed::LoadConstraint
 ================
 */
-void DialogAFConstraintFixed::LoadConstraint( idDeclAF_Constraint *c ) {
+void DialogAFConstraintFixed::LoadConstraint( idDeclAF_Constraint* c )
+{
 
 	constraint = c;
 
@@ -123,9 +130,11 @@ void DialogAFConstraintFixed::LoadConstraint( idDeclAF_Constraint *c ) {
 DialogAFConstraintFixed::SaveConstraint
 ================
 */
-void DialogAFConstraintFixed::SaveConstraint( void ) {
+void DialogAFConstraintFixed::SaveConstraint( void )
+{
 
-	if ( !file || !constraint ) {
+	if( !file || !constraint )
+	{
 		return;
 	}
 	UpdateData( TRUE );
@@ -138,9 +147,11 @@ void DialogAFConstraintFixed::SaveConstraint( void ) {
 DialogAFConstraintFixed::UpdateFile
 ================
 */
-void DialogAFConstraintFixed::UpdateFile( void ) {
+void DialogAFConstraintFixed::UpdateFile( void )
+{
 	SaveConstraint();
-	if ( file ) {
+	if( file )
+	{
 		gameEdit->AF_UpdateEntities( file->GetName() );
 	}
 }
@@ -150,20 +161,22 @@ void DialogAFConstraintFixed::UpdateFile( void ) {
 DialogAFConstraintFixed::OnToolHitTest
 ================
 */
-int DialogAFConstraintFixed::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const {
+int DialogAFConstraintFixed::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
+{
 	CDialog::OnToolHitTest( point, pTI );
 	return DefaultOnToolHitTest( toolTips, this, point, pTI );
 }
 
 
-BEGIN_MESSAGE_MAP(DialogAFConstraintFixed, CDialog)
-	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify)
-	ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify)
+BEGIN_MESSAGE_MAP( DialogAFConstraintFixed, CDialog )
+	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
 END_MESSAGE_MAP()
 
 
 // DialogAFConstraintFixed message handlers
 
-BOOL DialogAFConstraintFixed::OnToolTipNotify( UINT id, NMHDR *pNMHDR, LRESULT *pResult ) {
+BOOL DialogAFConstraintFixed::OnToolTipNotify( UINT id, NMHDR* pNMHDR, LRESULT* pResult )
+{
 	return DefaultOnToolTipNotify( toolTips, id, pNMHDR, pResult );
 }

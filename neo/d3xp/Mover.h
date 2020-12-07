@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,21 +42,22 @@ extern const idEventDef EV_ReachedAng;
 ===============================================================================
 */
 
-class idMover : public idEntity {
+class idMover : public idEntity
+{
 public:
 	CLASS_PROTOTYPE( idMover );
 
-							idMover( void );
+	idMover( void );
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
-	virtual void			Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
+	virtual void			Killed( idEntity* inflictor, idEntity* attacker, int damage, const idVec3& dir, int location );
 
-	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
-	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
+	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
+	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
 
 	virtual void			Hide( void );
 	virtual void			Show( void );
@@ -64,14 +65,16 @@ public:
 	void					SetPortalState( bool open );
 
 protected:
-	typedef enum {
+	typedef enum
+	{
 		ACCELERATION_STAGE,
 		LINEAR_STAGE,
 		DECELERATION_STAGE,
 		FINISHED_STAGE
 	} moveStage_t;
 
-	typedef enum {
+	typedef enum
+	{
 		MOVER_NONE,
 		MOVER_ROTATING,
 		MOVER_MOVING,
@@ -81,7 +84,8 @@ protected:
 	//
 	// mover directions.  make sure to change script/doom_defs.script if you add any, or change their order
 	//
-	typedef enum {
+	typedef enum
+	{
 		DIR_UP				= -1,
 		DIR_DOWN			= -2,
 		DIR_LEFT			= -3,
@@ -96,7 +100,8 @@ protected:
 		DIR_REL_BACK		= -12
 	} moverDir_t;
 
-	typedef struct {
+	typedef struct
+	{
 		moveStage_t			stage;
 		int					acceleration;
 		int					movetime;
@@ -104,7 +109,8 @@ protected:
 		idVec3				dir;
 	} moveState_t;
 
-	typedef struct {
+	typedef struct
+	{
 		moveStage_t			stage;
 		int					acceleration;
 		int					movetime;
@@ -116,19 +122,19 @@ protected:
 
 	void					Event_OpenPortal( void );
 	void					Event_ClosePortal( void );
-	void					Event_PartBlocked( idEntity *blockingEntity );
+	void					Event_PartBlocked( idEntity* blockingEntity );
 
-	void					MoveToPos( const idVec3 &pos);
+	void					MoveToPos( const idVec3& pos );
 	void					UpdateMoveSound( moveStage_t stage );
 	void					UpdateRotationSound( moveStage_t stage );
-	void					SetGuiStates( const char *state );
+	void					SetGuiStates( const char* state );
 	void					FindGuiTargets( void );
-	void					SetGuiState( const char *key, const char *val ) const;
+	void					SetGuiState( const char* key, const char* val ) const;
 
 	virtual void			DoneMoving( void );
 	virtual void			DoneRotating( void );
-	virtual void			BeginMove( idThread *thread = NULL );
-	virtual void			BeginRotation( idThread *thread, bool stopwhendone );
+	virtual void			BeginMove( idThread* thread = NULL );
+	virtual void			BeginRotation( idThread* thread, bool stopwhendone );
 	moveState_t				move;
 
 private:
@@ -154,11 +160,11 @@ private:
 
 	idList< idEntityPtr<idEntity> >	guiTargets;
 
-	void					VectorForDir( float dir, idVec3 &vec );
-	idCurve_Spline<idVec3> *GetSpline( idEntity *splineEntity ) const;
+	void					VectorForDir( float dir, idVec3& vec );
+	idCurve_Spline<idVec3>* GetSpline( idEntity* splineEntity ) const;
 
-	void					Event_SetCallback( void );	
-	void					Event_TeamBlocked( idEntity *blockedPart, idEntity *blockingEntity );
+	void					Event_SetCallback( void );
+	void					Event_TeamBlocked( idEntity* blockedPart, idEntity* blockingEntity );
 	void					Event_StopMoving( void );
 	void					Event_StopRotating( void );
 	void					Event_UpdateMove( void );
@@ -167,74 +173,78 @@ private:
 	void					Event_SetMoveTime( float time );
 	void					Event_SetDecelerationTime( float time );
 	void					Event_SetAccellerationTime( float time );
-	void					Event_MoveTo( idEntity *ent );
-	void					Event_MoveToPos( idVec3 &pos );
+	void					Event_MoveTo( idEntity* ent );
+	void					Event_MoveToPos( idVec3& pos );
 	void					Event_MoveDir( float angle, float distance );
 	void					Event_MoveAccelerateTo( float speed, float time );
 	void					Event_MoveDecelerateTo( float speed, float time );
 	void					Event_RotateDownTo( int axis, float angle );
 	void					Event_RotateUpTo( int axis, float angle );
-	void					Event_RotateTo( idAngles &angles );
-	void					Event_Rotate( idAngles &angles );
-	void					Event_RotateOnce( idAngles &angles );
-	void					Event_Bob( float speed, float phase, idVec3 &depth );
-	void					Event_Sway( float speed, float phase, idAngles &depth );
-	void					Event_SetAccelSound( const char *sound );
-	void					Event_SetDecelSound( const char *sound );
-	void					Event_SetMoveSound( const char *sound );
+	void					Event_RotateTo( idAngles& angles );
+	void					Event_Rotate( idAngles& angles );
+	void					Event_RotateOnce( idAngles& angles );
+	void					Event_Bob( float speed, float phase, idVec3& depth );
+	void					Event_Sway( float speed, float phase, idAngles& depth );
+	void					Event_SetAccelSound( const char* sound );
+	void					Event_SetDecelSound( const char* sound );
+	void					Event_SetMoveSound( const char* sound );
 	void					Event_FindGuiTargets( void );
 	void					Event_InitGuiTargets( void );
 	void					Event_EnableSplineAngles( void );
 	void					Event_DisableSplineAngles( void );
 	void					Event_RemoveInitialSplineAngles( void );
-	void					Event_StartSpline( idEntity *splineEntity );
+	void					Event_StartSpline( idEntity* splineEntity );
 	void					Event_StopSpline( void );
-	void					Event_Activate( idEntity *activator );
+	void					Event_Activate( idEntity* activator );
 	void					Event_PostRestore( int start, int total, int accel, int decel, int useSplineAng );
 	void					Event_IsMoving( void );
 	void					Event_IsRotating( void );
 };
 
-class idSplinePath : public idEntity {
+class idSplinePath : public idEntity
+{
 public:
 	CLASS_PROTOTYPE( idSplinePath );
 
-							idSplinePath();
+	idSplinePath();
 
 	void					Spawn( void );
 };
 
 
-struct floorInfo_s {
+struct floorInfo_s
+{
 	idVec3					pos;
 	idStr					door;
 	int						floor;
 };
 
-class idElevator : public idMover {
+class idElevator : public idMover
+{
 public:
 	CLASS_PROTOTYPE( idElevator );
 
-							idElevator( void );
+	idElevator( void );
 
 	void					Spawn();
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
-	virtual bool			HandleSingleGuiCommand( idEntity *entityGui, idLexer *src );
+	virtual bool			HandleSingleGuiCommand( idEntity* entityGui, idLexer* src );
 	void					Event_GotoFloor( int floor );
-	floorInfo_s *			GetFloorInfo( int floor );
+	floorInfo_s* 			GetFloorInfo( int floor );
 
 protected:
 	virtual void			DoneMoving( void );
-	virtual void			BeginMove( idThread *thread = NULL );
-	void					SpawnTrigger( const idVec3 &pos );
+	virtual void			BeginMove( idThread* thread = NULL );
+	void					SpawnTrigger( const idVec3& pos );
 	void					GetLocalTriggerPosition();
-	void					Event_Touch( idEntity *other, trace_t *trace );
+	void					Event_Touch( idEntity* other, trace_t* trace );
 
 private:
-	typedef enum {
+	typedef enum
+	{
 		INIT,
 		IDLE,
 		WAITING_ON_DOORS
@@ -250,7 +260,7 @@ private:
 	int						returnFloor;
 	int						lastTouchTime;
 
-	class idDoor *			GetDoor( const char *name );
+	class idDoor* 			GetDoor( const char* name );
 	void					Think( void );
 	void					OpenInnerDoor( void );
 	void					OpenFloorDoor( int floor );
@@ -258,8 +268,8 @@ private:
 	void					DisableAllDoors( void );
 	void					EnableProperDoors( void );
 
-	void					Event_TeamBlocked( idEntity *blockedEntity, idEntity *blockingEntity );
-	void					Event_Activate( idEntity *activator );
+	void					Event_TeamBlocked( idEntity* blockedEntity, idEntity* blockingEntity );
+	void					Event_Activate( idEntity* activator );
 	void					Event_PostFloorArrival();
 
 #ifdef _D3XP
@@ -277,45 +287,53 @@ private:
 ===============================================================================
 */
 
-typedef enum {
+typedef enum
+{
 	MOVER_POS1,
 	MOVER_POS2,
 	MOVER_1TO2,
 	MOVER_2TO1
 } moverState_t;
 
-class idMover_Binary : public idEntity {
+class idMover_Binary : public idEntity
+{
 public:
 	CLASS_PROTOTYPE( idMover_Binary );
 
-							idMover_Binary();
-							~idMover_Binary();
+	idMover_Binary();
+	~idMover_Binary();
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	virtual void			PreBind( void );
 	virtual void			PostBind( void );
 
 	void					Enable( bool b );
-	void					InitSpeed( idVec3 &mpos1, idVec3 &mpos2, float mspeed, float maccelTime, float mdecelTime );
-	void					InitTime( idVec3 &mpos1, idVec3 &mpos2, float mtime, float maccelTime, float mdecelTime );
+	void					InitSpeed( idVec3& mpos1, idVec3& mpos2, float mspeed, float maccelTime, float mdecelTime );
+	void					InitTime( idVec3& mpos1, idVec3& mpos2, float mtime, float maccelTime, float mdecelTime );
 	void					GotoPosition1( void );
 	void					GotoPosition2( void );
-	void					Use_BinaryMover( idEntity *activator );
-	void					SetGuiStates( const char *state );
+	void					Use_BinaryMover( idEntity* activator );
+	void					SetGuiStates( const char* state );
 	void					UpdateBuddies( int val );
-	idMover_Binary *		GetActivateChain( void ) const { return activateChain; }
-	idMover_Binary *		GetMoveMaster( void ) const { return moveMaster; }
-	void					BindTeam( idEntity *bindTo );
+	idMover_Binary* 		GetActivateChain( void ) const
+	{
+		return activateChain;
+	}
+	idMover_Binary* 		GetMoveMaster( void ) const
+	{
+		return moveMaster;
+	}
+	void					BindTeam( idEntity* bindTo );
 	void					SetBlocked( bool b );
 	bool					IsBlocked( void );
-	idEntity *				GetActivator( void ) const;
+	idEntity* 				GetActivator( void ) const;
 
-	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
-	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
+	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
+	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
 
 	void					SetPortalState( bool open );
 
@@ -323,8 +341,8 @@ protected:
 	idVec3					pos1;
 	idVec3					pos2;
 	moverState_t			moverState;
-	idMover_Binary *		moveMaster;
-	idMover_Binary *		activateChain;
+	idMover_Binary* 		moveMaster;
+	idMover_Binary* 		activateChain;
 	int						soundPos1;
 	int						sound1to2;
 	int						sound2to1;
@@ -351,17 +369,20 @@ protected:
 	idList< idEntityPtr<idEntity> >	guiTargets;
 
 	void					MatchActivateTeam( moverState_t newstate, int time );
-	void					JoinActivateTeam( idMover_Binary *master );
+	void					JoinActivateTeam( idMover_Binary* master );
 
 	void					UpdateMoverSound( moverState_t state );
 	void					SetMoverState( moverState_t newstate, int time );
-	moverState_t			GetMoverState( void ) const { return moverState; }
+	moverState_t			GetMoverState( void ) const
+	{
+		return moverState;
+	}
 	void					FindGuiTargets( void );
-	void					SetGuiState( const char *key, const char *val ) const;
+	void					SetGuiState( const char* key, const char* val ) const;
 
 	void					Event_SetCallback( void );
 	void					Event_ReturnToPos1( void );
-	void					Event_Use_BinaryMover( idEntity *activator );
+	void					Event_Use_BinaryMover( idEntity* activator );
 	void					Event_Reached_BinaryMover( void );
 	void					Event_MatchActivateTeam( moverState_t newstate, int time );
 	void					Event_Enable( void );
@@ -371,20 +392,21 @@ protected:
 	void					Event_FindGuiTargets( void );
 	void					Event_InitGuiTargets( void );
 
-	static void				GetMovedir( float dir, idVec3 &movedir );
+	static void				GetMovedir( float dir, idVec3& movedir );
 };
 
-class idDoor : public idMover_Binary {
+class idDoor : public idMover_Binary
+{
 public:
 	CLASS_PROTOTYPE( idDoor );
 
-							idDoor( void );
-							~idDoor( void );
+	idDoor( void );
+	~idDoor( void );
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	virtual void			Think( void );
 	virtual void			PreBind( void );
@@ -395,14 +417,14 @@ public:
 	bool					IsOpen( void );
 	bool					IsNoTouch( void );
 #ifdef _D3XP
-	bool					AllowPlayerOnly( idEntity *ent );
+	bool					AllowPlayerOnly( idEntity* ent );
 #endif
 	int						IsLocked( void );
 	void					Lock( int f );
-	void					Use( idEntity *other, idEntity *activator );
+	void					Use( idEntity* other, idEntity* activator );
 	void					Close( void );
 	void					Open( void );
-	void					SetCompanion( idDoor *door );
+	void					SetCompanion( idDoor* door );
 
 private:
 	float					triggersize;
@@ -410,8 +432,8 @@ private:
 	bool					noTouch;
 	bool					aas_area_closed;
 	idStr					buddyStr;
-	idClipModel *			trigger;
-	idClipModel *			sndTrigger;
+	idClipModel* 			trigger;
+	idClipModel* 			sndTrigger;
 	int						nextSndTriggerTime;
 	idVec3					localTriggerOrigin;
 	idMat3					localTriggerAxis;
@@ -419,18 +441,18 @@ private:
 	int						removeItem;
 	idStr					syncLock;
 	int						normalAxisIndex;		// door faces X or Y for spectator teleports
-	idDoor *				companionDoor;
+	idDoor* 				companionDoor;
 
 	void					SetAASAreaState( bool closed );
 
-	void					GetLocalTriggerPosition( const idClipModel *trigger );
-	void					CalcTriggerBounds( float size, idBounds &bounds );
+	void					GetLocalTriggerPosition( const idClipModel* trigger );
+	void					CalcTriggerBounds( float size, idBounds& bounds );
 
 	void					Event_Reached_BinaryMover( void );
-	void					Event_TeamBlocked( idEntity *blockedEntity, idEntity *blockingEntity );
-	void					Event_PartBlocked( idEntity *blockingEntity );
-	void					Event_Touch( idEntity *other, trace_t *trace );
-	void					Event_Activate( idEntity *activator );
+	void					Event_TeamBlocked( idEntity* blockedEntity, idEntity* blockingEntity );
+	void					Event_PartBlocked( idEntity* blockingEntity );
+	void					Event_Touch( idEntity* other, trace_t* trace );
+	void					Event_Activate( idEntity* activator );
 	void					Event_StartOpen( void );
 	void					Event_SpawnDoorTrigger( void );
 	void					Event_SpawnSoundTrigger( void );
@@ -439,38 +461,39 @@ private:
 	void					Event_Lock( int f );
 	void					Event_IsOpen( void );
 	void					Event_Locked( void );
-	void					Event_SpectatorTouch( idEntity *other, trace_t *trace );
+	void					Event_SpectatorTouch( idEntity* other, trace_t* trace );
 	void					Event_OpenPortal( void );
 	void					Event_ClosePortal( void );
 };
 
-class idPlat : public idMover_Binary {
+class idPlat : public idMover_Binary
+{
 public:
 	CLASS_PROTOTYPE( idPlat );
 
-							idPlat( void );
-							~idPlat( void );
+	idPlat( void );
+	~idPlat( void );
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	virtual void			Think( void );
 	virtual void			PreBind( void );
 	virtual void			PostBind( void );
 
 private:
-	idClipModel *			trigger;
+	idClipModel* 			trigger;
 	idVec3					localTriggerOrigin;
 	idMat3					localTriggerAxis;
 
-	void					GetLocalTriggerPosition( const idClipModel *trigger );
-	void					SpawnPlatTrigger( idVec3 &pos );
+	void					GetLocalTriggerPosition( const idClipModel* trigger );
+	void					SpawnPlatTrigger( idVec3& pos );
 
-	void					Event_TeamBlocked( idEntity *blockedEntity, idEntity *blockingEntity );
-	void					Event_PartBlocked( idEntity *blockingEntity );
-	void					Event_Touch( idEntity *other, trace_t *trace );
+	void					Event_TeamBlocked( idEntity* blockedEntity, idEntity* blockingEntity );
+	void					Event_PartBlocked( idEntity* blockingEntity );
+	void					Event_Touch( idEntity* other, trace_t* trace );
 };
 
 
@@ -482,70 +505,75 @@ private:
 ===============================================================================
 */
 
-class idMover_Periodic : public idEntity {
+class idMover_Periodic : public idEntity
+{
 public:
 	CLASS_PROTOTYPE( idMover_Periodic );
 
-							idMover_Periodic( void );
+	idMover_Periodic( void );
 
 	void					Spawn( void );
-	
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	virtual void			Think( void );
 
-	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
-	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
+	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
+	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
 
 protected:
 	idPhysics_Parametric	physicsObj;
 	float					damage;
 
-	void					Event_TeamBlocked( idEntity *blockedEntity, idEntity *blockingEntity );
-	void					Event_PartBlocked( idEntity *blockingEntity );
+	void					Event_TeamBlocked( idEntity* blockedEntity, idEntity* blockingEntity );
+	void					Event_PartBlocked( idEntity* blockingEntity );
 };
 
-class idRotater : public idMover_Periodic {
+class idRotater : public idMover_Periodic
+{
 public:
 	CLASS_PROTOTYPE( idRotater );
 
-							idRotater( void );
+	idRotater( void );
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 private:
 	idEntityPtr<idEntity>	activatedBy;
 
-	void					Event_Activate( idEntity *activator );
+	void					Event_Activate( idEntity* activator );
 };
 
-class idBobber : public idMover_Periodic {
+class idBobber : public idMover_Periodic
+{
 public:
 	CLASS_PROTOTYPE( idBobber );
 
-							idBobber( void );
+	idBobber( void );
 
 	void					Spawn( void );
 
 private:
 };
 
-class idPendulum : public idMover_Periodic {
+class idPendulum : public idMover_Periodic
+{
 public:
 	CLASS_PROTOTYPE( idPendulum );
 
-							idPendulum( void );
+	idPendulum( void );
 
 	void					Spawn( void );
 
 private:
 };
 
-class idRiser : public idMover_Periodic {
+class idRiser : public idMover_Periodic
+{
 public:
 	CLASS_PROTOTYPE( idRiser );
 
@@ -554,7 +582,7 @@ public:
 	void					Spawn( void );
 
 private:
-	void					Event_Activate( idEntity *activator );
+	void					Event_Activate( idEntity* activator );
 };
 
 #endif /* !__GAME_MOVER_H__ */

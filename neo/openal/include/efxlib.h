@@ -14,18 +14,21 @@
 class idSoundEffect
 {
 public:
-	idSoundEffect() {
+	idSoundEffect()
+	{
 	};
-	~idSoundEffect() { 
-		if ( data && datasize ) {
+	~idSoundEffect()
+	{
+		if( data && datasize )
+		{
 			Mem_Free( data );
 			data = NULL;
 		}
 	}
-	
+
 	idStr name;
 	int datasize;
-	void *data;
+	void* data;
 };
 
 class idEFXFile
@@ -33,24 +36,24 @@ class idEFXFile
 private:
 
 protected:
-    // Protected data members.
+	// Protected data members.
 
 public:
-    // Public data members.
+	// Public data members.
 
 private:
-    
+
 public:
 	idEFXFile();
 	~idEFXFile();
 
-	bool FindEffect( idStr &name, idSoundEffect **effect, int *index );
-	bool ReadEffect( idLexer &lexer, idSoundEffect *effect );
-	bool LoadFile( const char *filename, bool OSPath = false );
+	bool FindEffect( idStr& name, idSoundEffect** effect, int* index );
+	bool ReadEffect( idLexer& lexer, idSoundEffect* effect );
+	bool LoadFile( const char* filename, bool OSPath = false );
 	void UnloadFile( void );
 	void Clear( void );
 
-	idList<idSoundEffect *>effects;
+	idList<idSoundEffect*>effects;
 };
 ///////////////////////////////////////////////////////////
 

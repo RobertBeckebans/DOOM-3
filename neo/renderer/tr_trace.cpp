@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,9 +40,10 @@ R_LocalTrace
 If we resort the vertexes so all silverts come first, we can save some work here.
 =================
 */
-localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float radius, const srfTriangles_t *tri ) {
+localTrace_t R_LocalTrace( const idVec3& start, const idVec3& end, const float radius, const srfTriangles_t* tri )
+{
 	int			i, j;
-	byte *		cullBits;
+	byte* 		cullBits;
 	idPlane		planes[4];
 	localTrace_t	hit;
 	int			c_testEdges, c_testPlanes, c_intersect;
@@ -71,17 +72,19 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 	planes[3][3] = - end * planes[3].Normal();
 
 	// catagorize each point against the four planes
-	cullBits = (byte *) _alloca16( tri->numVerts );
+	cullBits = ( byte* ) _alloca16( tri->numVerts );
 	SIMDProcessor->TracePointCull( cullBits, totalOr, radius, planes, tri->verts, tri->numVerts );
 
 	// if we don't have points on both sides of both the ray planes, no intersection
-	if ( ( totalOr ^ ( totalOr >> 4 ) ) & 3 ) {
+	if( ( totalOr ^ ( totalOr >> 4 ) ) & 3 )
+	{
 		//common->Printf( "nothing crossed the trace planes\n" );
 		return hit;
 	}
 
 	// if we don't have any points between front and end, no intersection
-	if ( ( totalOr ^ ( totalOr >> 1 ) ) & 4 ) {
+	if( ( totalOr ^ ( totalOr >> 1 ) ) & 4 )
+	{
 		//common->Printf( "trace didn't reach any triangles\n" );
 		return hit;
 	}
@@ -94,14 +97,16 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 	radiusSqr = Square( radius );
 	startDir = end - start;
 
-	if ( !tri->facePlanes || !tri->facePlanesCalculated ) {
-		R_DeriveFacePlanes( const_cast<srfTriangles_t *>( tri ) );
+	if( !tri->facePlanes || !tri->facePlanesCalculated )
+	{
+		R_DeriveFacePlanes( const_cast<srfTriangles_t*>( tri ) );
 	}
 
-	for ( i = 0, j = 0; i < tri->numIndexes; i += 3, j++ ) {
+	for( i = 0, j = 0; i < tri->numIndexes; i += 3, j++ )
+	{
 		float		d1, d2, f, d;
 		float		edgeLengthSqr;
-		idPlane *	plane;
+		idPlane* 	plane;
 		idVec3		point;
 		idVec3		dir[3];
 		idVec3		cross;
@@ -109,17 +114,19 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 		byte		triOr;
 
 		// get sidedness info for the triangle
-		triOr  = cullBits[ tri->indexes[i+0] ];
-		triOr |= cullBits[ tri->indexes[i+1] ];
-		triOr |= cullBits[ tri->indexes[i+2] ];
+		triOr  = cullBits[ tri->indexes[i + 0] ];
+		triOr |= cullBits[ tri->indexes[i + 1] ];
+		triOr |= cullBits[ tri->indexes[i + 2] ];
 
 		// if we don't have points on both sides of both the ray planes, no intersection
-		if ( ( triOr ^ ( triOr >> 4 ) ) & 3 ) {
+		if( ( triOr ^ ( triOr >> 4 ) ) & 3 )
+		{
 			continue;
 		}
 
 		// if we don't have any points between front and end, no intersection
-		if ( ( triOr ^ ( triOr >> 1 ) ) & 4 ) {
+		if( ( triOr ^ ( triOr >> 1 ) ) & 4 )
+		{
 			continue;
 		}
 
@@ -129,25 +136,30 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 		d1 = plane->Distance( start );
 		d2 = plane->Distance( end );
 
-		if ( d1 <= d2 ) {
+		if( d1 <= d2 )
+		{
 			continue;		// comning at it from behind or parallel
 		}
 
-		if ( d1 < 0.0f ) {
+		if( d1 < 0.0f )
+		{
 			continue;		// starts past it
 		}
 
-		if ( d2 > 0.0f ) {
+		if( d2 > 0.0f )
+		{
 			continue;		// finishes in front of it
 		}
 
 		f = d1 / ( d1 - d2 );
 
-		if ( f < 0.0f ) {
+		if( f < 0.0f )
+		{
 			continue;		// shouldn't happen
 		}
-		
-		if ( f >= hit.fraction ) {
+
+		if( f >= hit.fraction )
+		{
 			continue;		// have already hit something closer
 		}
 
@@ -159,67 +171,87 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 		// see if the point is within the three edges
 		// if radius > 0 the triangle is expanded with a circle in the triangle plane
 
-		dir[0] = tri->verts[ tri->indexes[i+0] ].xyz - point;
-		dir[1] = tri->verts[ tri->indexes[i+1] ].xyz - point;
+		dir[0] = tri->verts[ tri->indexes[i + 0] ].xyz - point;
+		dir[1] = tri->verts[ tri->indexes[i + 1] ].xyz - point;
 
 		cross = dir[0].Cross( dir[1] );
 		d = plane->Normal() * cross;
-		if ( d > 0.0f ) {
-			if ( radiusSqr <= 0.0f ) {
+		if( d > 0.0f )
+		{
+			if( radiusSqr <= 0.0f )
+			{
 				continue;
 			}
-			edge = tri->verts[ tri->indexes[i+0] ].xyz - tri->verts[ tri->indexes[i+1] ].xyz;
+			edge = tri->verts[ tri->indexes[i + 0] ].xyz - tri->verts[ tri->indexes[i + 1] ].xyz;
 			edgeLengthSqr = edge.LengthSqr();
-			if ( cross.LengthSqr() > edgeLengthSqr * radiusSqr ) {
+			if( cross.LengthSqr() > edgeLengthSqr * radiusSqr )
+			{
 				continue;
 			}
 			d = edge * dir[0];
-			if ( d < 0.0f ) {
-				edge = tri->verts[ tri->indexes[i+0] ].xyz - tri->verts[ tri->indexes[i+2] ].xyz;
+			if( d < 0.0f )
+			{
+				edge = tri->verts[ tri->indexes[i + 0] ].xyz - tri->verts[ tri->indexes[i + 2] ].xyz;
 				d = edge * dir[0];
-				if ( d < 0.0f ) {
-					if ( dir[0].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[0].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
-			} else if ( d > edgeLengthSqr ) {
-				edge = tri->verts[ tri->indexes[i+1] ].xyz - tri->verts[ tri->indexes[i+2] ].xyz;
+			}
+			else if( d > edgeLengthSqr )
+			{
+				edge = tri->verts[ tri->indexes[i + 1] ].xyz - tri->verts[ tri->indexes[i + 2] ].xyz;
 				d = edge * dir[1];
-				if ( d < 0.0f ) {
-					if ( dir[1].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[1].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
 			}
 		}
 
-		dir[2] = tri->verts[ tri->indexes[i+2] ].xyz - point;
+		dir[2] = tri->verts[ tri->indexes[i + 2] ].xyz - point;
 
 		cross = dir[1].Cross( dir[2] );
 		d = plane->Normal() * cross;
-		if ( d > 0.0f ) {
-			if ( radiusSqr <= 0.0f ) {
+		if( d > 0.0f )
+		{
+			if( radiusSqr <= 0.0f )
+			{
 				continue;
 			}
-			edge = tri->verts[ tri->indexes[i+1] ].xyz - tri->verts[ tri->indexes[i+2] ].xyz;
+			edge = tri->verts[ tri->indexes[i + 1] ].xyz - tri->verts[ tri->indexes[i + 2] ].xyz;
 			edgeLengthSqr = edge.LengthSqr();
-			if ( cross.LengthSqr() > edgeLengthSqr * radiusSqr ) {
+			if( cross.LengthSqr() > edgeLengthSqr * radiusSqr )
+			{
 				continue;
 			}
 			d = edge * dir[1];
-			if ( d < 0.0f ) {
-				edge = tri->verts[ tri->indexes[i+1] ].xyz - tri->verts[ tri->indexes[i+0] ].xyz;
+			if( d < 0.0f )
+			{
+				edge = tri->verts[ tri->indexes[i + 1] ].xyz - tri->verts[ tri->indexes[i + 0] ].xyz;
 				d = edge * dir[1];
-				if ( d < 0.0f ) {
-					if ( dir[1].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[1].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
-			} else if ( d > edgeLengthSqr ) {
-				edge = tri->verts[ tri->indexes[i+2] ].xyz - tri->verts[ tri->indexes[i+0] ].xyz;
+			}
+			else if( d > edgeLengthSqr )
+			{
+				edge = tri->verts[ tri->indexes[i + 2] ].xyz - tri->verts[ tri->indexes[i + 0] ].xyz;
 				d = edge * dir[2];
-				if ( d < 0.0f ) {
-					if ( dir[2].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[2].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
@@ -228,29 +260,39 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 
 		cross = dir[2].Cross( dir[0] );
 		d = plane->Normal() * cross;
-		if ( d > 0.0f ) {
-			if ( radiusSqr <= 0.0f ) {
+		if( d > 0.0f )
+		{
+			if( radiusSqr <= 0.0f )
+			{
 				continue;
 			}
-			edge = tri->verts[ tri->indexes[i+2] ].xyz - tri->verts[ tri->indexes[i+0] ].xyz;
+			edge = tri->verts[ tri->indexes[i + 2] ].xyz - tri->verts[ tri->indexes[i + 0] ].xyz;
 			edgeLengthSqr = edge.LengthSqr();
-			if ( cross.LengthSqr() > edgeLengthSqr * radiusSqr ) {
+			if( cross.LengthSqr() > edgeLengthSqr * radiusSqr )
+			{
 				continue;
 			}
 			d = edge * dir[2];
-			if ( d < 0.0f ) {
-				edge = tri->verts[ tri->indexes[i+2] ].xyz - tri->verts[ tri->indexes[i+1] ].xyz;
+			if( d < 0.0f )
+			{
+				edge = tri->verts[ tri->indexes[i + 2] ].xyz - tri->verts[ tri->indexes[i + 1] ].xyz;
 				d = edge * dir[2];
-				if ( d < 0.0f ) {
-					if ( dir[2].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[2].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
-			} else if ( d > edgeLengthSqr ) {
-				edge = tri->verts[ tri->indexes[i+0] ].xyz - tri->verts[ tri->indexes[i+1] ].xyz;
+			}
+			else if( d > edgeLengthSqr )
+			{
+				edge = tri->verts[ tri->indexes[i + 0] ].xyz - tri->verts[ tri->indexes[i + 1] ].xyz;
 				d = edge * dir[0];
-				if ( d < 0.0f ) {
-					if ( dir[0].LengthSqr() > radiusSqr ) {
+				if( d < 0.0f )
+				{
+					if( dir[0].LengthSqr() > radiusSqr )
+					{
 						continue;
 					}
 				}
@@ -264,14 +306,14 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 		hit.normal = plane->Normal();
 		hit.point = point;
 		hit.indexes[0] = tri->indexes[i];
-		hit.indexes[1] = tri->indexes[i+1];
-		hit.indexes[2] = tri->indexes[i+2];
+		hit.indexes[1] = tri->indexes[i + 1];
+		hit.indexes[2] = tri->indexes[i + 2];
 	}
 
 
 #ifdef TEST_TRACE
 	trace_timer.Stop();
-	common->Printf( "testVerts:%i c_testPlanes:%i c_testEdges:%i c_intersect:%i msec:%1.4f\n", 
+	common->Printf( "testVerts:%i c_testPlanes:%i c_testEdges:%i c_intersect:%i msec:%1.4f\n",
 					tri->numVerts, c_testPlanes, c_testEdges, c_intersect, trace_timer.Milliseconds() );
 #endif
 
@@ -283,11 +325,13 @@ localTrace_t R_LocalTrace( const idVec3 &start, const idVec3 &end, const float r
 RB_DrawExpandedTriangles
 =================
 */
-void RB_DrawExpandedTriangles( const srfTriangles_t *tri, const float radius, const idVec3 &vieworg ) {
+void RB_DrawExpandedTriangles( const srfTriangles_t* tri, const float radius, const idVec3& vieworg )
+{
 	int i, j, k;
 	idVec3 dir[6], normal, point;
 
-	for ( i = 0; i < tri->numIndexes; i += 3 ) {
+	for( i = 0; i < tri->numIndexes; i += 3 )
+	{
 
 		idVec3 p[3] = { tri->verts[ tri->indexes[ i + 0 ] ].xyz, tri->verts[ tri->indexes[ i + 1 ] ].xyz, tri->verts[ tri->indexes[ i + 2 ] ].xyz };
 
@@ -297,7 +341,8 @@ void RB_DrawExpandedTriangles( const srfTriangles_t *tri, const float radius, co
 
 		normal = dir[0].Cross( dir[1] );
 
-		if ( normal * p[0] < normal * vieworg ) {
+		if( normal * p[0] < normal * vieworg )
+		{
 			continue;
 		}
 
@@ -311,7 +356,8 @@ void RB_DrawExpandedTriangles( const srfTriangles_t *tri, const float radius, co
 
 		qglBegin( GL_LINE_LOOP );
 
-		for ( j = 0; j < 3; j++ ) {
+		for( j = 0; j < 3; j++ )
+		{
 			k = ( j + 1 ) % 3;
 
 			dir[4] = ( dir[j] + dir[k] ) * 0.5f;
@@ -350,22 +396,27 @@ RB_ShowTrace
 Debug visualization
 ================
 */
-void RB_ShowTrace( drawSurf_t **drawSurfs, int numDrawSurfs ) {
+void RB_ShowTrace( drawSurf_t** drawSurfs, int numDrawSurfs )
+{
 	int						i;
-	const srfTriangles_t	*tri;
-	const drawSurf_t		*surf;
+	const srfTriangles_t*	tri;
+	const drawSurf_t*		surf;
 	idVec3					start, end;
 	idVec3					localStart, localEnd;
 	localTrace_t			hit;
 	float					radius;
 
-	if ( r_showTrace.GetInteger() == 0 ) {
+	if( r_showTrace.GetInteger() == 0 )
+	{
 		return;
 	}
 
-	if ( r_showTrace.GetInteger() == 2 ) {
+	if( r_showTrace.GetInteger() == 2 )
+	{
 		radius = 5.0f;
-	} else {
+	}
+	else
+	{
 		radius = 0.0f;
 	}
 
@@ -380,11 +431,13 @@ void RB_ShowTrace( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 	globalImages->whiteImage->Bind();
 
 	// find how many are ambient
-	for ( i = 0 ; i < numDrawSurfs ; i++ ) {
+	for( i = 0 ; i < numDrawSurfs ; i++ )
+	{
 		surf = drawSurfs[i];
 		tri = surf->geo;
 
-		if ( tri == NULL || tri->verts == NULL ) {
+		if( tri == NULL || tri->verts == NULL )
+		{
 			continue;
 		}
 
@@ -393,7 +446,8 @@ void RB_ShowTrace( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 		R_GlobalPointToLocal( surf->space->modelMatrix, end, localEnd );
 
 		// check the bounding box
-		if ( !tri->bounds.Expand( radius ).LineIntersection( localStart, localEnd ) ) {
+		if( !tri->bounds.Expand( radius ).LineIntersection( localStart, localEnd ) )
+		{
 			continue;
 		}
 
@@ -411,7 +465,8 @@ void RB_ShowTrace( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 		qglColor4f( 1, 1, 1, 1 );
 		RB_DrawBounds( tri->bounds );
 
-		if ( radius != 0.0f ) {
+		if( radius != 0.0f )
+		{
 			// draw the expanded triangles
 			qglColor4f( 0.5f, 0.5f, 1.0f, 1.0f );
 			RB_DrawExpandedTriangles( tri, radius, localStart );
@@ -419,7 +474,8 @@ void RB_ShowTrace( drawSurf_t **drawSurfs, int numDrawSurfs ) {
 
 		// check the exact surfaces
 		hit = R_LocalTrace( localStart, localEnd, radius, tri );
-		if ( hit.fraction < 1.0 ) {
+		if( hit.fraction < 1.0 )
+		{
 			qglColor4f( 1, 1, 1, 1 );
 			RB_DrawBounds( idBounds( hit.point ).Expand( 1 ) );
 		}

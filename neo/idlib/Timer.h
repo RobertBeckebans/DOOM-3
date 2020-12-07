@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,16 +37,17 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-class idTimer {
+class idTimer
+{
 public:
-					idTimer( void );
-					idTimer( double clockTicks );
-					~idTimer( void );
+	idTimer( void );
+	idTimer( double clockTicks );
+	~idTimer( void );
 
-	idTimer			operator+( const idTimer &t ) const;
-	idTimer			operator-( const idTimer &t ) const;
-	idTimer &		operator+=( const idTimer &t );
-	idTimer &		operator-=( const idTimer &t );
+	idTimer			operator+( const idTimer& t ) const;
+	idTimer			operator-( const idTimer& t ) const;
+	idTimer& 		operator+=( const idTimer& t );
+	idTimer& 		operator-=( const idTimer& t );
 
 	void			Start( void );
 	void			Stop( void );
@@ -56,10 +57,11 @@ public:
 
 private:
 	static double	base;
-	enum			{
-						TS_STARTED,
-						TS_STOPPED
-					} state;
+	enum
+	{
+		TS_STARTED,
+		TS_STOPPED
+	} state;
 	double			start;
 	double			clockTicks;
 
@@ -71,7 +73,8 @@ private:
 idTimer::idTimer
 =================
 */
-ID_INLINE idTimer::idTimer( void ) {
+ID_INLINE idTimer::idTimer( void )
+{
 	state = TS_STOPPED;
 	clockTicks = 0.0;
 }
@@ -81,7 +84,8 @@ ID_INLINE idTimer::idTimer( void ) {
 idTimer::idTimer
 =================
 */
-ID_INLINE idTimer::idTimer( double _clockTicks ) {
+ID_INLINE idTimer::idTimer( double _clockTicks )
+{
 	state = TS_STOPPED;
 	clockTicks = _clockTicks;
 }
@@ -91,7 +95,8 @@ ID_INLINE idTimer::idTimer( double _clockTicks ) {
 idTimer::~idTimer
 =================
 */
-ID_INLINE idTimer::~idTimer( void ) {
+ID_INLINE idTimer::~idTimer( void )
+{
 }
 
 /*
@@ -99,7 +104,8 @@ ID_INLINE idTimer::~idTimer( void ) {
 idTimer::operator+
 =================
 */
-ID_INLINE idTimer idTimer::operator+( const idTimer &t ) const {
+ID_INLINE idTimer idTimer::operator+( const idTimer& t ) const
+{
 	assert( state == TS_STOPPED && t.state == TS_STOPPED );
 	return idTimer( clockTicks + t.clockTicks );
 }
@@ -109,7 +115,8 @@ ID_INLINE idTimer idTimer::operator+( const idTimer &t ) const {
 idTimer::operator-
 =================
 */
-ID_INLINE idTimer idTimer::operator-( const idTimer &t ) const {
+ID_INLINE idTimer idTimer::operator-( const idTimer& t ) const
+{
 	assert( state == TS_STOPPED && t.state == TS_STOPPED );
 	return idTimer( clockTicks - t.clockTicks );
 }
@@ -119,7 +126,8 @@ ID_INLINE idTimer idTimer::operator-( const idTimer &t ) const {
 idTimer::operator+=
 =================
 */
-ID_INLINE idTimer &idTimer::operator+=( const idTimer &t ) {
+ID_INLINE idTimer& idTimer::operator+=( const idTimer& t )
+{
 	assert( state == TS_STOPPED && t.state == TS_STOPPED );
 	clockTicks += t.clockTicks;
 	return *this;
@@ -130,7 +138,8 @@ ID_INLINE idTimer &idTimer::operator+=( const idTimer &t ) {
 idTimer::operator-=
 =================
 */
-ID_INLINE idTimer &idTimer::operator-=( const idTimer &t ) {
+ID_INLINE idTimer& idTimer::operator-=( const idTimer& t )
+{
 	assert( state == TS_STOPPED && t.state == TS_STOPPED );
 	clockTicks -= t.clockTicks;
 	return *this;
@@ -141,7 +150,8 @@ ID_INLINE idTimer &idTimer::operator-=( const idTimer &t ) {
 idTimer::Start
 =================
 */
-ID_INLINE void idTimer::Start( void ) {
+ID_INLINE void idTimer::Start( void )
+{
 	assert( state == TS_STOPPED );
 	state = TS_STARTED;
 	start = idLib::sys->GetClockTicks();
@@ -152,13 +162,16 @@ ID_INLINE void idTimer::Start( void ) {
 idTimer::Stop
 =================
 */
-ID_INLINE void idTimer::Stop( void ) {
+ID_INLINE void idTimer::Stop( void )
+{
 	assert( state == TS_STARTED );
 	clockTicks += idLib::sys->GetClockTicks() - start;
-	if ( base < 0.0 ) {
+	if( base < 0.0 )
+	{
 		InitBaseClockTicks();
 	}
-	if ( clockTicks > base ) {
+	if( clockTicks > base )
+	{
 		clockTicks -= base;
 	}
 	state = TS_STOPPED;
@@ -169,7 +182,8 @@ ID_INLINE void idTimer::Stop( void ) {
 idTimer::Clear
 =================
 */
-ID_INLINE void idTimer::Clear( void ) {
+ID_INLINE void idTimer::Clear( void )
+{
 	clockTicks = 0.0;
 }
 
@@ -178,7 +192,8 @@ ID_INLINE void idTimer::Clear( void ) {
 idTimer::ClockTicks
 =================
 */
-ID_INLINE double idTimer::ClockTicks( void ) const {
+ID_INLINE double idTimer::ClockTicks( void ) const
+{
 	assert( state == TS_STOPPED );
 	return clockTicks;
 }
@@ -188,7 +203,8 @@ ID_INLINE double idTimer::ClockTicks( void ) const {
 idTimer::Milliseconds
 =================
 */
-ID_INLINE double idTimer::Milliseconds( void ) const {
+ID_INLINE double idTimer::Milliseconds( void ) const
+{
 	assert( state == TS_STOPPED );
 	return clockTicks / ( idLib::sys->ClockTicksPerSecond() * 0.001 );
 }
@@ -202,17 +218,18 @@ ID_INLINE double idTimer::Milliseconds( void ) const {
 ===============================================================================
 */
 
-class idTimerReport {
+class idTimerReport
+{
 public:
-					idTimerReport( void );
-					~idTimerReport( void );
+	idTimerReport( void );
+	~idTimerReport( void );
 
-	void			SetReportName( const char *name );
-	int				AddReport( const char *name );
+	void			SetReportName( const char* name );
+	int				AddReport( const char* name );
 	void			Clear( void );
 	void			Reset( void );
 	void			PrintReport( void );
-	void			AddTime( const char *name, idTimer *time );
+	void			AddTime( const char* name, idTimer* time );
 
 private:
 	idList<idTimer*>timers;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@ If you have questions concerning this license or the applicable additional terms
 #define __MATH_MATH_H__
 
 #ifdef MACOS_X
-// for square root estimate instruction
-#include <ppc_intrinsics.h>
-// for FLT_MIN
-#include <float.h>
+	// for square root estimate instruction
+	#include <ppc_intrinsics.h>
+	// for FLT_MIN
+	#include <float.h>
 #endif
 /*
 ===============================================================================
@@ -44,11 +44,11 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 #ifdef INFINITY
-#undef INFINITY
+	#undef INFINITY
 #endif
 
 #ifdef FLT_EPSILON
-#undef FLT_EPSILON
+	#undef FLT_EPSILON
 #endif
 
 #define DEG2RAD(a)				( (a) * idMath::M_DEG2RAD )
@@ -90,20 +90,48 @@ If you have questions concerning this license or the applicable additional terms
 #define IEEE_DBLE_EXPONENT_BIAS	0
 #define IEEE_DBLE_SIGN_BIT		79
 
-template<class T> ID_INLINE int	MaxIndex( T x, T y ) { return  ( x > y ) ? 0 : 1; }
-template<class T> ID_INLINE int	MinIndex( T x, T y ) { return ( x < y ) ? 0 : 1; }
+template<class T> ID_INLINE int	MaxIndex( T x, T y )
+{
+	return ( x > y ) ? 0 : 1;
+}
+template<class T> ID_INLINE int	MinIndex( T x, T y )
+{
+	return ( x < y ) ? 0 : 1;
+}
 
-template<class T> ID_INLINE T	Max3( T x, T y, T z ) { return ( x > y ) ? ( ( x > z ) ? x : z ) : ( ( y > z ) ? y : z ); }
-template<class T> ID_INLINE T	Min3( T x, T y, T z ) { return ( x < y ) ? ( ( x < z ) ? x : z ) : ( ( y < z ) ? y : z ); }
-template<class T> ID_INLINE int	Max3Index( T x, T y, T z ) { return ( x > y ) ? ( ( x > z ) ? 0 : 2 ) : ( ( y > z ) ? 1 : 2 ); }
-template<class T> ID_INLINE int	Min3Index( T x, T y, T z ) { return ( x < y ) ? ( ( x < z ) ? 0 : 2 ) : ( ( y < z ) ? 1 : 2 ); }
+template<class T> ID_INLINE T	Max3( T x, T y, T z )
+{
+	return ( x > y ) ? ( ( x > z ) ? x : z ) : ( ( y > z ) ? y : z );
+}
+template<class T> ID_INLINE T	Min3( T x, T y, T z )
+{
+	return ( x < y ) ? ( ( x < z ) ? x : z ) : ( ( y < z ) ? y : z );
+}
+template<class T> ID_INLINE int	Max3Index( T x, T y, T z )
+{
+	return ( x > y ) ? ( ( x > z ) ? 0 : 2 ) : ( ( y > z ) ? 1 : 2 );
+}
+template<class T> ID_INLINE int	Min3Index( T x, T y, T z )
+{
+	return ( x < y ) ? ( ( x < z ) ? 0 : 2 ) : ( ( y < z ) ? 1 : 2 );
+}
 
-template<class T> ID_INLINE T	Sign( T f ) { return ( f > 0 ) ? 1 : ( ( f < 0 ) ? -1 : 0 ); }
-template<class T> ID_INLINE T	Square( T x ) { return x * x; }
-template<class T> ID_INLINE T	Cube( T x ) { return x * x * x; }
+template<class T> ID_INLINE T	Sign( T f )
+{
+	return ( f > 0 ) ? 1 : ( ( f < 0 ) ? -1 : 0 );
+}
+template<class T> ID_INLINE T	Square( T x )
+{
+	return x * x;
+}
+template<class T> ID_INLINE T	Cube( T x )
+{
+	return x * x * x;
+}
 
 
-class idMath {
+class idMath
+{
 public:
 
 	static void					Init( void );
@@ -126,9 +154,9 @@ public:
 	static float				Cos16( float a );			// cosine with 16 bits precision, maximum absolute error is 2.3082e-09
 	static double				Cos64( float a );			// cosine with 64 bits precision
 
-	static void					SinCos( float a, float &s, float &c );		// sine and cosine with 32 bits precision
-	static void					SinCos16( float a, float &s, float &c );	// sine and cosine with 16 bits precision
-	static void					SinCos64( float a, double &s, double &c );	// sine and cosine with 64 bits precision
+	static void					SinCos( float a, float& s, float& c );		// sine and cosine with 32 bits precision
+	static void					SinCos16( float a, float& s, float& c );	// sine and cosine with 16 bits precision
+	static void					SinCos64( float a, double& s, double& c );	// sine and cosine with 64 bits precision
 
 	static float				Tan( float a );				// tangent with 32 bits precision
 	static float				Tan16( float a );			// tangent with 16 bits precision, maximum absolute error is 1.8897e-08
@@ -198,7 +226,7 @@ public:
 	static int					FloatToBits( float f, int exponentBits, int mantissaBits );
 	static float				BitsToFloat( int i, int exponentBits, int mantissaBits );
 
-	static int					FloatHash( const float *array, const int numFloats );
+	static int					FloatHash( const float* array, const int numFloats );
 
 	static const float			PI;							// pi
 	static const float			TWO_PI;						// pi * 2
@@ -217,17 +245,19 @@ public:
 	static const float			FLT_EPSILON;				// smallest positive number such that 1.0+FLT_EPSILON != 1.0
 
 private:
-	enum {
-		LOOKUP_BITS				= 8,							
-		EXP_POS					= 23,							
-		EXP_BIAS				= 127,							
-		LOOKUP_POS				= (EXP_POS-LOOKUP_BITS),
-		SEED_POS				= (EXP_POS-8),
-		SQRT_TABLE_SIZE			= (2<<LOOKUP_BITS),
-		LOOKUP_MASK				= (SQRT_TABLE_SIZE-1)
+	enum
+	{
+		LOOKUP_BITS				= 8,
+		EXP_POS					= 23,
+		EXP_BIAS				= 127,
+		LOOKUP_POS				= ( EXP_POS - LOOKUP_BITS ),
+		SEED_POS				= ( EXP_POS - 8 ),
+		SQRT_TABLE_SIZE			= ( 2 << LOOKUP_BITS ),
+		LOOKUP_MASK				= ( SQRT_TABLE_SIZE - 1 )
 	};
 
-	union _flint {
+	union _flint
+	{
 		dword					i;
 		float					f;
 	};
@@ -236,56 +266,60 @@ private:
 	static bool					initialized;
 };
 
-ID_INLINE float idMath::RSqrt( float x ) {
+ID_INLINE float idMath::RSqrt( float x )
+{
 
 	long i;
 	float y, r;
 
 	y = x * 0.5f;
-	i = *reinterpret_cast<long *>( &x );
+	i = *reinterpret_cast<long*>( &x );
 	i = 0x5f3759df - ( i >> 1 );
-	r = *reinterpret_cast<float *>( &i );
+	r = *reinterpret_cast<float*>( &i );
 	r = r * ( 1.5f - r * r * y );
 	return r;
 }
 
-ID_INLINE float idMath::InvSqrt16( float x ) {
+ID_INLINE float idMath::InvSqrt16( float x )
+{
 
-	dword a = ((union _flint*)(&x))->i;
+	dword a = ( ( union _flint* )( &x ) )->i;
 	union _flint seed;
 
 	assert( initialized );
 
 	double y = x * 0.5f;
-	seed.i = (( ( (3*EXP_BIAS-1) - ( (a >> EXP_POS) & 0xFF) ) >> 1)<<EXP_POS) | iSqrt[(a >> (EXP_POS-LOOKUP_BITS)) & LOOKUP_MASK];
+	seed.i = ( ( ( ( 3 * EXP_BIAS - 1 ) - ( ( a >> EXP_POS ) & 0xFF ) ) >> 1 ) << EXP_POS ) | iSqrt[( a >> ( EXP_POS - LOOKUP_BITS ) ) & LOOKUP_MASK];
 	double r = seed.f;
 	r = r * ( 1.5f - r * r * y );
-	return (float) r;
+	return ( float ) r;
 }
 
-ID_INLINE float idMath::InvSqrt( float x ) {
+ID_INLINE float idMath::InvSqrt( float x )
+{
 
-	dword a = ((union _flint*)(&x))->i;
+	dword a = ( ( union _flint* )( &x ) )->i;
 	union _flint seed;
 
 	assert( initialized );
 
 	double y = x * 0.5f;
-	seed.i = (( ( (3*EXP_BIAS-1) - ( (a >> EXP_POS) & 0xFF) ) >> 1)<<EXP_POS) | iSqrt[(a >> (EXP_POS-LOOKUP_BITS)) & LOOKUP_MASK];
+	seed.i = ( ( ( ( 3 * EXP_BIAS - 1 ) - ( ( a >> EXP_POS ) & 0xFF ) ) >> 1 ) << EXP_POS ) | iSqrt[( a >> ( EXP_POS - LOOKUP_BITS ) ) & LOOKUP_MASK];
 	double r = seed.f;
 	r = r * ( 1.5f - r * r * y );
 	r = r * ( 1.5f - r * r * y );
-	return (float) r;
+	return ( float ) r;
 }
 
-ID_INLINE double idMath::InvSqrt64( float x ) {
-	dword a = ((union _flint*)(&x))->i;
+ID_INLINE double idMath::InvSqrt64( float x )
+{
+	dword a = ( ( union _flint* )( &x ) )->i;
 	union _flint seed;
 
 	assert( initialized );
 
 	double y = x * 0.5f;
-	seed.i = (( ( (3*EXP_BIAS-1) - ( (a >> EXP_POS) & 0xFF) ) >> 1)<<EXP_POS) | iSqrt[(a >> (EXP_POS-LOOKUP_BITS)) & LOOKUP_MASK];
+	seed.i = ( ( ( ( 3 * EXP_BIAS - 1 ) - ( ( a >> EXP_POS ) & 0xFF ) ) >> 1 ) << EXP_POS ) | iSqrt[( a >> ( EXP_POS - LOOKUP_BITS ) ) & LOOKUP_MASK];
 	double r = seed.f;
 	r = r * ( 1.5f - r * r * y );
 	r = r * ( 1.5f - r * r * y );
@@ -293,43 +327,57 @@ ID_INLINE double idMath::InvSqrt64( float x ) {
 	return r;
 }
 
-ID_INLINE float idMath::Sqrt16( float x ) {
+ID_INLINE float idMath::Sqrt16( float x )
+{
 	return x * InvSqrt16( x );
 }
 
-ID_INLINE float idMath::Sqrt( float x ) {
+ID_INLINE float idMath::Sqrt( float x )
+{
 	return x * InvSqrt( x );
 }
 
-ID_INLINE double idMath::Sqrt64( float x ) {
+ID_INLINE double idMath::Sqrt64( float x )
+{
 	return x * InvSqrt64( x );
 }
 
-ID_INLINE float idMath::Sin( float a ) {
+ID_INLINE float idMath::Sin( float a )
+{
 	return sinf( a );
 }
 
-ID_INLINE float idMath::Sin16( float a ) {
+ID_INLINE float idMath::Sin16( float a )
+{
 	float s;
 
-	if ( ( a < 0.0f ) || ( a >= TWO_PI ) ) {
+	if( ( a < 0.0f ) || ( a >= TWO_PI ) )
+	{
 		a -= floorf( a / TWO_PI ) * TWO_PI;
 	}
 #if 1
-	if ( a < PI ) {
-		if ( a > HALF_PI ) {
+	if( a < PI )
+	{
+		if( a > HALF_PI )
+		{
 			a = PI - a;
 		}
-	} else {
-		if ( a > PI + HALF_PI ) {
+	}
+	else
+	{
+		if( a > PI + HALF_PI )
+		{
 			a = a - TWO_PI;
-		} else {
+		}
+		else
+		{
 			a = PI - a;
 		}
 	}
 #else
 	a = PI - a;
-	if ( fabs( a ) >= HALF_PI ) {
+	if( fabs( a ) >= HALF_PI )
+	{
 		a = ( ( a < 0.0f ) ? -PI : PI ) - a;
 	}
 #endif
@@ -337,43 +385,59 @@ ID_INLINE float idMath::Sin16( float a ) {
 	return a * ( ( ( ( ( -2.39e-08f * s + 2.7526e-06f ) * s - 1.98409e-04f ) * s + 8.3333315e-03f ) * s - 1.666666664e-01f ) * s + 1.0f );
 }
 
-ID_INLINE double idMath::Sin64( float a ) {
+ID_INLINE double idMath::Sin64( float a )
+{
 	return sin( a );
 }
 
-ID_INLINE float idMath::Cos( float a ) {
+ID_INLINE float idMath::Cos( float a )
+{
 	return cosf( a );
 }
 
-ID_INLINE float idMath::Cos16( float a ) {
+ID_INLINE float idMath::Cos16( float a )
+{
 	float s, d;
 
-	if ( ( a < 0.0f ) || ( a >= TWO_PI ) ) {
+	if( ( a < 0.0f ) || ( a >= TWO_PI ) )
+	{
 		a -= floorf( a / TWO_PI ) * TWO_PI;
 	}
 #if 1
-	if ( a < PI ) {
-		if ( a > HALF_PI ) {
+	if( a < PI )
+	{
+		if( a > HALF_PI )
+		{
 			a = PI - a;
 			d = -1.0f;
-		} else {
+		}
+		else
+		{
 			d = 1.0f;
 		}
-	} else {
-		if ( a > PI + HALF_PI ) {
+	}
+	else
+	{
+		if( a > PI + HALF_PI )
+		{
 			a = a - TWO_PI;
 			d = 1.0f;
-		} else {
+		}
+		else
+		{
 			a = PI - a;
 			d = -1.0f;
 		}
 	}
 #else
 	a = PI - a;
-	if ( fabs( a ) >= HALF_PI ) {
+	if( fabs( a ) >= HALF_PI )
+	{
 		a = ( ( a < 0.0f ) ? -PI : PI ) - a;
 		d = 1.0f;
-	} else {
+	}
+	else
+	{
 		d = -1.0f;
 	}
 #endif
@@ -381,13 +445,16 @@ ID_INLINE float idMath::Cos16( float a ) {
 	return d * ( ( ( ( ( -2.605e-07f * s + 2.47609e-05f ) * s - 1.3888397e-03f ) * s + 4.16666418e-02f ) * s - 4.999999963e-01f ) * s + 1.0f );
 }
 
-ID_INLINE double idMath::Cos64( float a ) {
+ID_INLINE double idMath::Cos64( float a )
+{
 	return cos( a );
 }
 
-ID_INLINE void idMath::SinCos( float a, float &s, float &c ) {
+ID_INLINE void idMath::SinCos( float a, float& s, float& c )
+{
 #ifdef _WIN32
-	_asm {
+	_asm
+	{
 		fld		a
 		fsincos
 		mov		ecx, c
@@ -401,35 +468,49 @@ ID_INLINE void idMath::SinCos( float a, float &s, float &c ) {
 #endif
 }
 
-ID_INLINE void idMath::SinCos16( float a, float &s, float &c ) {
+ID_INLINE void idMath::SinCos16( float a, float& s, float& c )
+{
 	float t, d;
 
-	if ( ( a < 0.0f ) || ( a >= idMath::TWO_PI ) ) {
+	if( ( a < 0.0f ) || ( a >= idMath::TWO_PI ) )
+	{
 		a -= floorf( a / idMath::TWO_PI ) * idMath::TWO_PI;
 	}
 #if 1
-	if ( a < PI ) {
-		if ( a > HALF_PI ) {
+	if( a < PI )
+	{
+		if( a > HALF_PI )
+		{
 			a = PI - a;
 			d = -1.0f;
-		} else {
+		}
+		else
+		{
 			d = 1.0f;
 		}
-	} else {
-		if ( a > PI + HALF_PI ) {
+	}
+	else
+	{
+		if( a > PI + HALF_PI )
+		{
 			a = a - TWO_PI;
 			d = 1.0f;
-		} else {
+		}
+		else
+		{
 			a = PI - a;
 			d = -1.0f;
 		}
 	}
 #else
 	a = PI - a;
-	if ( fabs( a ) >= HALF_PI ) {
+	if( fabs( a ) >= HALF_PI )
+	{
 		a = ( ( a < 0.0f ) ? -PI : PI ) - a;
 		d = 1.0f;
-	} else {
+	}
+	else
+	{
 		d = -1.0f;
 	}
 #endif
@@ -438,9 +519,11 @@ ID_INLINE void idMath::SinCos16( float a, float &s, float &c ) {
 	c = d * ( ( ( ( ( -2.605e-07f * t + 2.47609e-05f ) * t - 1.3888397e-03f ) * t + 4.16666418e-02f ) * t - 4.999999963e-01f ) * t + 1.0f );
 }
 
-ID_INLINE void idMath::SinCos64( float a, double &s, double &c ) {
+ID_INLINE void idMath::SinCos64( float a, double& s, double& c )
+{
 #ifdef _WIN32
-	_asm {
+	_asm
+	{
 		fld		a
 		fsincos
 		mov		ecx, c
@@ -454,220 +537,288 @@ ID_INLINE void idMath::SinCos64( float a, double &s, double &c ) {
 #endif
 }
 
-ID_INLINE float idMath::Tan( float a ) {
+ID_INLINE float idMath::Tan( float a )
+{
 	return tanf( a );
 }
 
-ID_INLINE float idMath::Tan16( float a ) {
+ID_INLINE float idMath::Tan16( float a )
+{
 	float s;
 	bool reciprocal;
 
-	if ( ( a < 0.0f ) || ( a >= PI ) ) {
+	if( ( a < 0.0f ) || ( a >= PI ) )
+	{
 		a -= floorf( a / PI ) * PI;
 	}
 #if 1
-	if ( a < HALF_PI ) {
-		if ( a > ONEFOURTH_PI ) {
+	if( a < HALF_PI )
+	{
+		if( a > ONEFOURTH_PI )
+		{
 			a = HALF_PI - a;
 			reciprocal = true;
-		} else {
+		}
+		else
+		{
 			reciprocal = false;
 		}
-	} else {
-		if ( a > HALF_PI + ONEFOURTH_PI ) {
+	}
+	else
+	{
+		if( a > HALF_PI + ONEFOURTH_PI )
+		{
 			a = a - PI;
 			reciprocal = false;
-		} else {
+		}
+		else
+		{
 			a = HALF_PI - a;
 			reciprocal = true;
 		}
 	}
 #else
 	a = HALF_PI - a;
-	if ( fabs( a ) >= ONEFOURTH_PI ) {
+	if( fabs( a ) >= ONEFOURTH_PI )
+	{
 		a = ( ( a < 0.0f ) ? -HALF_PI : HALF_PI ) - a;
 		reciprocal = false;
-	} else {
+	}
+	else
+	{
 		reciprocal = true;
 	}
 #endif
 	s = a * a;
 	s = a * ( ( ( ( ( ( 9.5168091e-03f * s + 2.900525e-03f ) * s + 2.45650893e-02f ) * s + 5.33740603e-02f ) * s + 1.333923995e-01f ) * s + 3.333314036e-01f ) * s + 1.0f );
-	if ( reciprocal ) {
+	if( reciprocal )
+	{
 		return 1.0f / s;
-	} else {
+	}
+	else
+	{
 		return s;
 	}
 }
 
-ID_INLINE double idMath::Tan64( float a ) {
+ID_INLINE double idMath::Tan64( float a )
+{
 	return tan( a );
 }
 
-ID_INLINE float idMath::ASin( float a ) {
-	if ( a <= -1.0f ) {
+ID_INLINE float idMath::ASin( float a )
+{
+	if( a <= -1.0f )
+	{
 		return -HALF_PI;
 	}
-	if ( a >= 1.0f ) {
+	if( a >= 1.0f )
+	{
 		return HALF_PI;
 	}
 	return asinf( a );
 }
 
-ID_INLINE float idMath::ASin16( float a ) {
-	if ( FLOATSIGNBITSET( a ) ) {
-		if ( a <= -1.0f ) {
+ID_INLINE float idMath::ASin16( float a )
+{
+	if( FLOATSIGNBITSET( a ) )
+	{
+		if( a <= -1.0f )
+		{
 			return -HALF_PI;
 		}
 		a = fabs( a );
 		return ( ( ( -0.0187293f * a + 0.0742610f ) * a - 0.2121144f ) * a + 1.5707288f ) * sqrt( 1.0f - a ) - HALF_PI;
-	} else {
-		if ( a >= 1.0f ) {
+	}
+	else
+	{
+		if( a >= 1.0f )
+		{
 			return HALF_PI;
 		}
 		return HALF_PI - ( ( ( -0.0187293f * a + 0.0742610f ) * a - 0.2121144f ) * a + 1.5707288f ) * sqrt( 1.0f - a );
 	}
 }
 
-ID_INLINE double idMath::ASin64( float a ) {
-	if ( a <= -1.0f ) {
+ID_INLINE double idMath::ASin64( float a )
+{
+	if( a <= -1.0f )
+	{
 		return -HALF_PI;
 	}
-	if ( a >= 1.0f ) {
+	if( a >= 1.0f )
+	{
 		return HALF_PI;
 	}
 	return asin( a );
 }
 
-ID_INLINE float idMath::ACos( float a ) {
-	if ( a <= -1.0f ) {
+ID_INLINE float idMath::ACos( float a )
+{
+	if( a <= -1.0f )
+	{
 		return PI;
 	}
-	if ( a >= 1.0f ) {
+	if( a >= 1.0f )
+	{
 		return 0.0f;
 	}
 	return acosf( a );
 }
 
-ID_INLINE float idMath::ACos16( float a ) {
-	if ( FLOATSIGNBITSET( a ) ) {
-		if ( a <= -1.0f ) {
+ID_INLINE float idMath::ACos16( float a )
+{
+	if( FLOATSIGNBITSET( a ) )
+	{
+		if( a <= -1.0f )
+		{
 			return PI;
 		}
 		a = fabs( a );
 		return PI - ( ( ( -0.0187293f * a + 0.0742610f ) * a - 0.2121144f ) * a + 1.5707288f ) * sqrt( 1.0f - a );
-	} else {
-		if ( a >= 1.0f ) {
+	}
+	else
+	{
+		if( a >= 1.0f )
+		{
 			return 0.0f;
 		}
 		return ( ( ( -0.0187293f * a + 0.0742610f ) * a - 0.2121144f ) * a + 1.5707288f ) * sqrt( 1.0f - a );
 	}
 }
 
-ID_INLINE double idMath::ACos64( float a ) {
-	if ( a <= -1.0f ) {
+ID_INLINE double idMath::ACos64( float a )
+{
+	if( a <= -1.0f )
+	{
 		return PI;
 	}
-	if ( a >= 1.0f ) {
+	if( a >= 1.0f )
+	{
 		return 0.0f;
 	}
 	return acos( a );
 }
 
-ID_INLINE float idMath::ATan( float a ) {
+ID_INLINE float idMath::ATan( float a )
+{
 	return atanf( a );
 }
 
-ID_INLINE float idMath::ATan16( float a ) {
+ID_INLINE float idMath::ATan16( float a )
+{
 	float s;
 
-	if ( fabs( a ) > 1.0f ) {
+	if( fabs( a ) > 1.0f )
+	{
 		a = 1.0f / a;
 		s = a * a;
 		s = - ( ( ( ( ( ( ( ( ( 0.0028662257f * s - 0.0161657367f ) * s + 0.0429096138f ) * s - 0.0752896400f )
-				* s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
-		if ( FLOATSIGNBITSET( a ) ) {
+						  * s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
+		if( FLOATSIGNBITSET( a ) )
+		{
 			return s - HALF_PI;
-		} else {
+		}
+		else
+		{
 			return s + HALF_PI;
 		}
-	} else {
+	}
+	else
+	{
 		s = a * a;
 		return ( ( ( ( ( ( ( ( ( 0.0028662257f * s - 0.0161657367f ) * s + 0.0429096138f ) * s - 0.0752896400f )
-			* s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
+						   * s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
 	}
 }
 
-ID_INLINE double idMath::ATan64( float a ) {
+ID_INLINE double idMath::ATan64( float a )
+{
 	return atan( a );
 }
 
-ID_INLINE float idMath::ATan( float y, float x ) {
+ID_INLINE float idMath::ATan( float y, float x )
+{
 	return atan2f( y, x );
 }
 
-ID_INLINE float idMath::ATan16( float y, float x ) {
+ID_INLINE float idMath::ATan16( float y, float x )
+{
 	float a, s;
 
-	if ( fabs( y ) > fabs( x ) ) {
+	if( fabs( y ) > fabs( x ) )
+	{
 		a = x / y;
 		s = a * a;
 		s = - ( ( ( ( ( ( ( ( ( 0.0028662257f * s - 0.0161657367f ) * s + 0.0429096138f ) * s - 0.0752896400f )
-				* s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
-		if ( FLOATSIGNBITSET( a ) ) {
+						  * s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
+		if( FLOATSIGNBITSET( a ) )
+		{
 			return s - HALF_PI;
-		} else {
+		}
+		else
+		{
 			return s + HALF_PI;
 		}
-	} else {
+	}
+	else
+	{
 		a = y / x;
 		s = a * a;
 		return ( ( ( ( ( ( ( ( ( 0.0028662257f * s - 0.0161657367f ) * s + 0.0429096138f ) * s - 0.0752896400f )
-			* s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
+						   * s + 0.1065626393f ) * s - 0.1420889944f ) * s + 0.1999355085f ) * s - 0.3333314528f ) * s ) + 1.0f ) * a;
 	}
 }
 
-ID_INLINE double idMath::ATan64( float y, float x ) {
+ID_INLINE double idMath::ATan64( float y, float x )
+{
 	return atan2( y, x );
 }
 
-ID_INLINE float idMath::Pow( float x, float y ) {
+ID_INLINE float idMath::Pow( float x, float y )
+{
 	return powf( x, y );
 }
 
-ID_INLINE float idMath::Pow16( float x, float y ) {
+ID_INLINE float idMath::Pow16( float x, float y )
+{
 	return Exp16( y * Log16( x ) );
 }
 
-ID_INLINE double idMath::Pow64( float x, float y ) {
+ID_INLINE double idMath::Pow64( float x, float y )
+{
 	return pow( x, y );
 }
 
-ID_INLINE float idMath::Exp( float f ) {
+ID_INLINE float idMath::Exp( float f )
+{
 	return expf( f );
 }
 
-ID_INLINE float idMath::Exp16( float f ) {
+ID_INLINE float idMath::Exp16( float f )
+{
 	int i, s, e, m, exponent;
 	float x, x2, y, p, q;
 
 	x = f * 1.44269504088896340f;		// multiply with ( 1 / log( 2 ) )
 #if 1
-	i = *reinterpret_cast<int *>(&x);
+	i = *reinterpret_cast<int*>( &x );
 	s = ( i >> IEEE_FLT_SIGN_BIT );
 	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
 	i = ( ( m >> ( IEEE_FLT_MANTISSA_BITS - e ) ) & ~( e >> 31 ) ) ^ s;
 #else
-	i = (int) x;
-	if ( x < 0.0f ) {
+	i = ( int ) x;
+	if( x < 0.0f )
+	{
 		i--;
 	}
 #endif
 	exponent = ( i + IEEE_FLT_EXPONENT_BIAS ) << IEEE_FLT_MANTISSA_BITS;
-	y = *reinterpret_cast<float *>(&exponent);
-	x -= (float) i;
-	if ( x >= 0.5f ) {
+	y = *reinterpret_cast<float*>( &exponent );
+	x -= ( float ) i;
+	if( x >= 0.5f )
+	{
 		x -= 0.5f;
 		y *= 1.4142135623730950488f;	// multiply with sqrt( 2 )
 	}
@@ -678,67 +829,85 @@ ID_INLINE float idMath::Exp16( float f ) {
 	return x;
 }
 
-ID_INLINE double idMath::Exp64( float f ) {
+ID_INLINE double idMath::Exp64( float f )
+{
 	return exp( f );
 }
 
-ID_INLINE float idMath::Log( float f ) {
+ID_INLINE float idMath::Log( float f )
+{
 	return logf( f );
 }
 
-ID_INLINE float idMath::Log16( float f ) {
+ID_INLINE float idMath::Log16( float f )
+{
 	int i, exponent;
 	float y, y2;
 
-	i = *reinterpret_cast<int *>(&f);
+	i = *reinterpret_cast<int*>( &f );
 	exponent = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 	i -= ( exponent + 1 ) << IEEE_FLT_MANTISSA_BITS;	// get value in the range [.5, 1>
-	y = *reinterpret_cast<float *>(&i);
+	y = *reinterpret_cast<float*>( &i );
 	y *= 1.4142135623730950488f;						// multiply with sqrt( 2 )
 	y = ( y - 1.0f ) / ( y + 1.0f );
 	y2 = y * y;
 	y = y * ( 2.000000000046727f + y2 * ( 0.666666635059382f + y2 * ( 0.4000059794795f + y2 * ( 0.28525381498f + y2 * 0.2376245609f ) ) ) );
-	y += 0.693147180559945f * ( (float)exponent + 0.5f );
+	y += 0.693147180559945f * ( ( float )exponent + 0.5f );
 	return y;
 }
 
-ID_INLINE double idMath::Log64( float f ) {
+ID_INLINE double idMath::Log64( float f )
+{
 	return log( f );
 }
 
-ID_INLINE int idMath::IPow( int x, int y ) {
-	int r; for( r = x; y > 1; y-- ) { r *= x; } return r;
+ID_INLINE int idMath::IPow( int x, int y )
+{
+	int r;
+	for( r = x; y > 1; y-- )
+	{
+		r *= x;
+	}
+	return r;
 }
 
-ID_INLINE int idMath::ILog2( float f ) {
-	return ( ( (*reinterpret_cast<int *>(&f)) >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+ID_INLINE int idMath::ILog2( float f )
+{
+	return ( ( ( *reinterpret_cast<int*>( &f ) ) >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 }
 
-ID_INLINE int idMath::ILog2( int i ) {
-	return ILog2( (float)i );
+ID_INLINE int idMath::ILog2( int i )
+{
+	return ILog2( ( float )i );
 }
 
-ID_INLINE int idMath::BitsForFloat( float f ) {
+ID_INLINE int idMath::BitsForFloat( float f )
+{
 	return ILog2( f ) + 1;
 }
 
-ID_INLINE int idMath::BitsForInteger( int i ) {
-	return ILog2( (float)i ) + 1;
+ID_INLINE int idMath::BitsForInteger( int i )
+{
+	return ILog2( ( float )i ) + 1;
 }
 
-ID_INLINE int idMath::MaskForFloatSign( float f ) {
-	return ( (*reinterpret_cast<int *>(&f)) >> 31 );
+ID_INLINE int idMath::MaskForFloatSign( float f )
+{
+	return ( ( *reinterpret_cast<int*>( &f ) ) >> 31 );
 }
 
-ID_INLINE int idMath::MaskForIntegerSign( int i ) {
+ID_INLINE int idMath::MaskForIntegerSign( int i )
+{
 	return ( i >> 31 );
 }
 
-ID_INLINE int idMath::FloorPowerOfTwo( int x ) {
+ID_INLINE int idMath::FloorPowerOfTwo( int x )
+{
 	return CeilPowerOfTwo( x ) >> 1;
 }
 
-ID_INLINE int idMath::CeilPowerOfTwo( int x ) {
+ID_INLINE int idMath::CeilPowerOfTwo( int x )
+{
 	x--;
 	x |= x >> 1;
 	x |= x >> 2;
@@ -749,11 +918,13 @@ ID_INLINE int idMath::CeilPowerOfTwo( int x ) {
 	return x;
 }
 
-ID_INLINE bool idMath::IsPowerOfTwo( int x ) {
+ID_INLINE bool idMath::IsPowerOfTwo( int x )
+{
 	return ( x & ( x - 1 ) ) == 0 && x > 0;
 }
 
-ID_INLINE int idMath::BitCount( int x ) {
+ID_INLINE int idMath::BitCount( int x )
+{
 	x -= ( ( x >> 1 ) & 0x55555555 );
 	x = ( ( ( x >> 2 ) & 0x33333333 ) + ( x & 0x33333333 ) );
 	x = ( ( ( x >> 4 ) + x ) & 0x0f0f0f0f );
@@ -761,7 +932,8 @@ ID_INLINE int idMath::BitCount( int x ) {
 	return ( ( x + ( x >> 16 ) ) & 0x0000003f );
 }
 
-ID_INLINE int idMath::BitReverse( int x ) {
+ID_INLINE int idMath::BitReverse( int x )
+{
 	x = ( ( ( x >> 1 ) & 0x55555555 ) | ( ( x & 0x55555555 ) << 1 ) );
 	x = ( ( ( x >> 2 ) & 0x33333333 ) | ( ( x & 0x33333333 ) << 2 ) );
 	x = ( ( ( x >> 4 ) & 0x0f0f0f0f ) | ( ( x & 0x0f0f0f0f ) << 4 ) );
@@ -769,34 +941,41 @@ ID_INLINE int idMath::BitReverse( int x ) {
 	return ( ( x >> 16 ) | ( x << 16 ) );
 }
 
-ID_INLINE int idMath::Abs( int x ) {
-   int y = x >> 31;
-   return ( ( x ^ y ) - y );
+ID_INLINE int idMath::Abs( int x )
+{
+	int y = x >> 31;
+	return ( ( x ^ y ) - y );
 }
 
-ID_INLINE float idMath::Fabs( float f ) {
-	int tmp = *reinterpret_cast<int *>( &f );
+ID_INLINE float idMath::Fabs( float f )
+{
+	int tmp = *reinterpret_cast<int*>( &f );
 	tmp &= 0x7FFFFFFF;
-	return *reinterpret_cast<float *>( &tmp );
+	return *reinterpret_cast<float*>( &tmp );
 }
 
-ID_INLINE float idMath::Floor( float f ) {
+ID_INLINE float idMath::Floor( float f )
+{
 	return floorf( f );
 }
 
-ID_INLINE float idMath::Ceil( float f ) {
+ID_INLINE float idMath::Ceil( float f )
+{
 	return ceilf( f );
 }
 
-ID_INLINE float idMath::Rint( float f ) {
+ID_INLINE float idMath::Rint( float f )
+{
 	return floorf( f + 0.5f );
 }
 
-ID_INLINE int idMath::Ftoi( float f ) {
-	return (int) f;
+ID_INLINE int idMath::Ftoi( float f )
+{
+	return ( int ) f;
 }
 
-ID_INLINE int idMath::FtoiFast( float f ) {
+ID_INLINE int idMath::FtoiFast( float f )
+{
 #ifdef _WIN32
 	int i;
 	__asm fld		f
@@ -804,7 +983,7 @@ ID_INLINE int idMath::FtoiFast( float f ) {
 	return i;
 #elif 0						// round chop (C/C++ standard)
 	int i, s, e, m, shift;
-	i = *reinterpret_cast<int *>(&f);
+	i = *reinterpret_cast<int*>( &f );
 	s = i >> IEEE_FLT_SIGN_BIT;
 	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
@@ -813,22 +992,24 @@ ID_INLINE int idMath::FtoiFast( float f ) {
 //#elif defined( __i386__ )
 #elif 0
 	int i = 0;
-	__asm__ __volatile__ (
-						  "fld %1\n" \
-						  "fistp %0\n" \
-						  : "=m" (i) \
-						  : "m" (f) );
+	__asm__ __volatile__(
+		"fld %1\n" \
+		"fistp %0\n" \
+		: "=m"( i ) \
+		: "m"( f ) );
 	return i;
 #else
-	return (int) f;
+	return ( int ) f;
 #endif
 }
 
-ID_INLINE unsigned long idMath::Ftol( float f ) {
-	return (unsigned long) f;
+ID_INLINE unsigned long idMath::Ftol( float f )
+{
+	return ( unsigned long ) f;
 }
 
-ID_INLINE unsigned long idMath::FtolFast( float f ) {
+ID_INLINE unsigned long idMath::FtolFast( float f )
+{
 #ifdef _WIN32
 	// FIXME: this overflows on 31bits still .. same as FtoiFast
 	unsigned long i;
@@ -837,7 +1018,7 @@ ID_INLINE unsigned long idMath::FtolFast( float f ) {
 	return i;
 #elif 0						// round chop (C/C++ standard)
 	int i, s, e, m, shift;
-	i = *reinterpret_cast<int *>(&f);
+	i = *reinterpret_cast<int*>( &f );
 	s = i >> IEEE_FLT_SIGN_BIT;
 	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
@@ -847,82 +1028,101 @@ ID_INLINE unsigned long idMath::FtolFast( float f ) {
 #elif 0
 	// for some reason, on gcc I need to make sure i == 0 before performing a fistp
 	int i = 0;
-	__asm__ __volatile__ (
-						  "fld %1\n" \
-						  "fistp %0\n" \
-						  : "=m" (i) \
-						  : "m" (f) );
+	__asm__ __volatile__(
+		"fld %1\n" \
+		"fistp %0\n" \
+		: "=m"( i ) \
+		: "m"( f ) );
 	return i;
 #else
-	return (unsigned long) f;
+	return ( unsigned long ) f;
 #endif
 }
 
-ID_INLINE signed char idMath::ClampChar( int i ) {
-	if ( i < -128 ) {
+ID_INLINE signed char idMath::ClampChar( int i )
+{
+	if( i < -128 )
+	{
 		return -128;
 	}
-	if ( i > 127 ) {
+	if( i > 127 )
+	{
 		return 127;
 	}
 	return i;
 }
 
-ID_INLINE signed short idMath::ClampShort( int i ) {
-	if ( i < -32768 ) {
+ID_INLINE signed short idMath::ClampShort( int i )
+{
+	if( i < -32768 )
+	{
 		return -32768;
 	}
-	if ( i > 32767 ) {
+	if( i > 32767 )
+	{
 		return 32767;
 	}
 	return i;
 }
 
-ID_INLINE int idMath::ClampInt( int min, int max, int value ) {
-	if ( value < min ) {
+ID_INLINE int idMath::ClampInt( int min, int max, int value )
+{
+	if( value < min )
+	{
 		return min;
 	}
-	if ( value > max ) {
+	if( value > max )
+	{
 		return max;
 	}
 	return value;
 }
 
-ID_INLINE float idMath::ClampFloat( float min, float max, float value ) {
-	if ( value < min ) {
+ID_INLINE float idMath::ClampFloat( float min, float max, float value )
+{
+	if( value < min )
+	{
 		return min;
 	}
-	if ( value > max ) {
+	if( value > max )
+	{
 		return max;
 	}
 	return value;
 }
 
-ID_INLINE float idMath::AngleNormalize360( float angle ) {
-	if ( ( angle >= 360.0f ) || ( angle < 0.0f ) ) {
+ID_INLINE float idMath::AngleNormalize360( float angle )
+{
+	if( ( angle >= 360.0f ) || ( angle < 0.0f ) )
+	{
 		angle -= floor( angle / 360.0f ) * 360.0f;
 	}
 	return angle;
 }
 
-ID_INLINE float idMath::AngleNormalize180( float angle ) {
+ID_INLINE float idMath::AngleNormalize180( float angle )
+{
 	angle = AngleNormalize360( angle );
-	if ( angle > 180.0f ) {
+	if( angle > 180.0f )
+	{
 		angle -= 360.0f;
 	}
 	return angle;
 }
 
-ID_INLINE float idMath::AngleDelta( float angle1, float angle2 ) {
+ID_INLINE float idMath::AngleDelta( float angle1, float angle2 )
+{
 	return AngleNormalize180( angle1 - angle2 );
 }
 
-ID_INLINE int idMath::FloatHash( const float *array, const int numFloats ) {
+ID_INLINE int idMath::FloatHash( const float* array, const int numFloats )
+{
 	int i, hash = 0;
-	const int *ptr;
+	const int* ptr;
 
-	ptr = reinterpret_cast<const int *>( array );
-	for ( i = 0; i < numFloats; i++ ) {
+	ptr = reinterpret_cast<const int*>( array );
+	for( i = 0; i < numFloats; i++ )
+	{
 		hash ^= ptr[i];
 	}
 	return hash;

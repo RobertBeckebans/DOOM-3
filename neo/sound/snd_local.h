@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,24 +31,25 @@ If you have questions concerning this license or the applicable additional terms
 
 // you need the OpenAL headers for build, even if AL is not enabled - http://www.openal.org/
 #ifdef _WIN32
-#include "../openal/include/al.h"
-#include "../openal/include/alc.h"
-#include "../openal/idal.h"
-// broken OpenAL SDK ?
-#define ID_ALCHAR (ALubyte *)
+	#include "../openal/include/al.h"
+	#include "../openal/include/alc.h"
+	#include "../openal/idal.h"
+	// broken OpenAL SDK ?
+	#define ID_ALCHAR (ALubyte *)
 #elif defined( MACOS_X )
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#define ID_ALCHAR
-#else         
-#include <AL/al.h>
-#include <AL/alc.h>
-#define ID_ALCHAR
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
+	#define ID_ALCHAR
+#else
+	#include <AL/al.h>
+	#include <AL/alc.h>
+	#define ID_ALCHAR
 #endif
 #include "../openal/include/efxlib.h"
 
 // demo sound commands
-typedef enum {
+typedef enum
+{
 	SCMD_STATE,				// followed by a load game state
 	SCMD_PLACE_LISTENER,
 	SCMD_ALLOC_EMITTER,
@@ -88,45 +89,49 @@ class idSoundWorldLocal;
 */
 
 #ifdef WIN32
-#pragma pack(1)
+	#pragma pack(1)
 #endif
 #ifdef __MWERKS__
-#pragma pack (push, 1)
+	#pragma pack (push, 1)
 #endif
-struct waveformatex_s {
-    word    wFormatTag;        /* format type */
-    word    nChannels;         /* number of channels (i.e. mono, stereo...) */
-    dword   nSamplesPerSec;    /* sample rate */
-    dword   nAvgBytesPerSec;   /* for buffer estimation */
-    word    nBlockAlign;       /* block size of data */
-    word    wBitsPerSample;    /* Number of bits per sample of mono data */
-    word    cbSize;            /* The count in bytes of the size of
+struct waveformatex_s
+{
+	word    wFormatTag;        /* format type */
+	word    nChannels;         /* number of channels (i.e. mono, stereo...) */
+	dword   nSamplesPerSec;    /* sample rate */
+	dword   nAvgBytesPerSec;   /* for buffer estimation */
+	word    nBlockAlign;       /* block size of data */
+	word    wBitsPerSample;    /* Number of bits per sample of mono data */
+	word    cbSize;            /* The count in bytes of the size of
                                     extra information (after cbSize) */
 } PACKED;
 
 typedef waveformatex_s waveformatex_t;
 
 /* OLD general waveform format structure (information common to all formats) */
-struct waveformat_s {
-    word    wFormatTag;        /* format type */
-    word    nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
-    dword   nSamplesPerSec;    /* sample rate */
-    dword   nAvgBytesPerSec;   /* for buffer estimation */
-    word    nBlockAlign;       /* block size of data */
+struct waveformat_s
+{
+	word    wFormatTag;        /* format type */
+	word    nChannels;         /* number of channels (i.e. mono, stereo, etc.) */
+	dword   nSamplesPerSec;    /* sample rate */
+	dword   nAvgBytesPerSec;   /* for buffer estimation */
+	word    nBlockAlign;       /* block size of data */
 } PACKED;
 
 typedef waveformat_s waveformat_t;
 
 /* flags for wFormatTag field of WAVEFORMAT */
-enum {
+enum
+{
 	WAVE_FORMAT_TAG_PCM		= 1,
 	WAVE_FORMAT_TAG_OGG		= 2
 };
 
 /* specific waveform format structure for PCM data */
-struct pcmwaveformat_s {
-    waveformat_t	wf;
-    word			wBitsPerSample;
+struct pcmwaveformat_s
+{
+	waveformat_t	wf;
+	word			wBitsPerSample;
 } PACKED;
 
 typedef pcmwaveformat_s pcmwaveformat_t;
@@ -139,16 +144,18 @@ typedef pcmwaveformat_s pcmwaveformat_t;
 
 #define fourcc_riff     mmioFOURCC('R', 'I', 'F', 'F')
 
-struct waveformatextensible_s {
-    waveformatex_t    Format;
-    union {
-        word wValidBitsPerSample;       /* bits of precision  */
-        word wSamplesPerBlock;          /* valid if wBitsPerSample==0*/
-        word wReserved;                 /* If neither applies, set to zero*/
-    } Samples;
-    dword           dwChannelMask;      /* which channels are */
-                                        /* present in stream  */
-    int            SubFormat;
+struct waveformatextensible_s
+{
+	waveformatex_t    Format;
+	union
+	{
+		word wValidBitsPerSample;       /* bits of precision  */
+		word wSamplesPerBlock;          /* valid if wBitsPerSample==0*/
+		word wReserved;                 /* If neither applies, set to zero*/
+	} Samples;
+	dword           dwChannelMask;      /* which channels are */
+	/* present in stream  */
+	int            SubFormat;
 } PACKED;
 
 typedef waveformatextensible_s waveformatextensible_t;
@@ -156,7 +163,8 @@ typedef waveformatextensible_s waveformatextensible_t;
 typedef dword fourcc;
 
 /* RIFF chunk information data structure */
-struct mminfo_s {
+struct mminfo_s
+{
 	fourcc			ckid;           /* chunk ID */
 	dword			cksize;         /* chunk size */
 	fourcc			fccType;        /* form type or list type */
@@ -166,10 +174,10 @@ struct mminfo_s {
 typedef mminfo_s mminfo_t;
 
 #ifdef WIN32
-#pragma pack()
+	#pragma pack()
 #endif
 #ifdef __MWERKS__
-#pragma pack (pop)
+	#pragma pack (pop)
 #endif
 
 /*
@@ -180,45 +188,52 @@ idWaveFile
 ===================================================================================
 */
 
-class idWaveFile {
+class idWaveFile
+{
 public:
-				    idWaveFile( void );
-					~idWaveFile( void );
+	idWaveFile( void );
+	~idWaveFile( void );
 
-    int				Open( const char* strFileName, waveformatex_t* pwfx = NULL );
-    int				OpenFromMemory( short* pbData, int ulDataSize, waveformatextensible_t* pwfx );
-    int				Read( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead );
+	int				Open( const char* strFileName, waveformatex_t* pwfx = NULL );
+	int				OpenFromMemory( short* pbData, int ulDataSize, waveformatextensible_t* pwfx );
+	int				Read( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead );
 	int				Seek( int offset );
-    int				Close( void );
-    int				ResetFile( void );
+	int				Close( void );
+	int				ResetFile( void );
 
-	int				GetOutputSize( void ) { return mdwSize; }
-	int				GetMemorySize( void ) { return mMemSize; }
+	int				GetOutputSize( void )
+	{
+		return mdwSize;
+	}
+	int				GetMemorySize( void )
+	{
+		return mMemSize;
+	}
 
-    waveformatextensible_t	mpwfx;        // Pointer to waveformatex structure
+	waveformatextensible_t	mpwfx;        // Pointer to waveformatex structure
 
 private:
-	idFile *		mhmmio;			// I/O handle for the WAVE
-    mminfo_t		mck;			// Multimedia RIFF chunk
-    mminfo_t		mckRiff;		// used when opening a WAVE file
-    dword			mdwSize;		// size in samples
+	idFile* 		mhmmio;			// I/O handle for the WAVE
+	mminfo_t		mck;			// Multimedia RIFF chunk
+	mminfo_t		mckRiff;		// used when opening a WAVE file
+	dword			mdwSize;		// size in samples
 	dword			mMemSize;		// size of the wave data in memory
 	dword			mseekBase;
 	ID_TIME_T			mfileTime;
 
-    bool			mbIsReadingFromMemory;
-    short *			mpbData;
-    short *			mpbDataCur;
-    dword			mulDataSize;
+	bool			mbIsReadingFromMemory;
+	short* 			mpbData;
+	short* 			mpbDataCur;
+	dword			mulDataSize;
 
-	void *			ogg;			// only !NULL when !s_realTimeDecoding
+	void* 			ogg;			// only !NULL when !s_realTimeDecoding
 	bool			isOgg;
 
 private:
-    int				ReadMMIO( void );
+	int				ReadMMIO( void );
 
-    int				OpenOGG( const char* strFileName, waveformatex_t* pwfx = NULL );
-	int				ReadOGG( byte* pBuffer, int dwSizeToRead, int *pdwSizeRead );
+	int				OpenOGG( const char* strFileName, waveformatex_t* pwfx = NULL );
+	int				ReadOGG( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead );
 	int				CloseOGG( void );
 };
 
@@ -231,25 +246,26 @@ idAudioHardware
 ===================================================================================
 */
 
-class idAudioHardware {
+class idAudioHardware
+{
 public:
-	static idAudioHardware *Alloc();
+	static idAudioHardware* Alloc();
 
-    virtual					~idAudioHardware();
+	virtual					~idAudioHardware();
 
-    virtual bool			Initialize( ) = 0;
+	virtual bool			Initialize( ) = 0;
 
-	virtual bool			Lock( void **pDSLockedBuffer, ulong *dwDSLockedBufferSize ) = 0;
-	virtual bool			Unlock( void *pDSLockedBuffer, dword dwDSLockedBufferSize ) = 0;
-	virtual bool			GetCurrentPosition( ulong *pdwCurrentWriteCursor ) = 0;
-	
+	virtual bool			Lock( void** pDSLockedBuffer, ulong* dwDSLockedBufferSize ) = 0;
+	virtual bool			Unlock( void* pDSLockedBuffer, dword dwDSLockedBufferSize ) = 0;
+	virtual bool			GetCurrentPosition( ulong* pdwCurrentWriteCursor ) = 0;
+
 	// try to write as many sound samples to the device as possible without blocking and prepare for a possible new mixing call
 	// returns wether there is *some* space for writing available
 	virtual bool			Flush( void ) = 0;
 
 	virtual void			Write( bool flushing ) = 0;
 
-	virtual int				GetNumberOfSpeakers( void )= 0;
+	virtual int				GetNumberOfSpeakers( void ) = 0;
 	virtual int				GetMixBufferSize( void ) = 0;
 	virtual short*			GetMixBuffer( void ) = 0;
 };
@@ -263,13 +279,14 @@ Encapsulates functionality of a DirectSound buffer.
 ===================================================================================
 */
 
-class idAudioBuffer {
+class idAudioBuffer
+{
 public:
-    virtual int 		Play( dword dwPriority=0, dword dwFlags=0 ) = 0;
-    virtual int			Stop( void ) = 0;
-    virtual int			Reset( void ) = 0;
-    virtual bool		IsSoundPlaying( void ) = 0;
-    virtual void	 	SetVolume( float x ) = 0;
+	virtual int 		Play( dword dwPriority = 0, dword dwFlags = 0 ) = 0;
+	virtual int			Stop( void ) = 0;
+	virtual int			Reset( void ) = 0;
+	virtual bool		IsSoundPlaying( void ) = 0;
+	virtual void	 	SetVolume( float x ) = 0;
 };
 
 
@@ -281,14 +298,16 @@ idSoundEmitterLocal
 ===================================================================================
 */
 
-typedef enum {
+typedef enum
+{
 	REMOVE_STATUS_INVALID				= -1,
 	REMOVE_STATUS_ALIVE					=  0,
 	REMOVE_STATUS_WAITSAMPLEFINISHED	=  1,
 	REMOVE_STATUS_SAMPLEFINISHED		=  2
 } removeStatus_t;
 
-class idSoundFade {
+class idSoundFade
+{
 public:
 	int					fadeStart44kHz;
 	int					fadeEnd44kHz;
@@ -299,7 +318,8 @@ public:
 	float				FadeDbAt44kHz( int current44kHz );
 };
 
-class SoundFX {
+class SoundFX
+{
 protected:
 	bool				initialized;
 
@@ -312,27 +332,63 @@ protected:
 	float				param;
 
 public:
-						SoundFX()										{ channel = 0; buffer = NULL; initialized = false; maxlen = 0; memset( continuitySamples, 0, sizeof( float ) * 4 ); };
-	virtual				~SoundFX()										{ if ( buffer ) delete buffer; };
+	SoundFX()
+	{
+		channel = 0;
+		buffer = NULL;
+		initialized = false;
+		maxlen = 0;
+		memset( continuitySamples, 0, sizeof( float ) * 4 );
+	};
+	virtual				~SoundFX()
+	{
+		if( buffer )
+		{
+			delete buffer;
+		}
+	};
 
 	virtual void		Initialize()									{ };
 	virtual void		ProcessSample( float* in, float* out ) = 0;
 
-	void				SetChannel( int chan )							{ channel = chan; };
-	int					GetChannel()									{ return channel; };
+	void				SetChannel( int chan )
+	{
+		channel = chan;
+	};
+	int					GetChannel()
+	{
+		return channel;
+	};
 
-	void				SetContinuitySamples( float in1, float in2, float out1, float out2 )		{ continuitySamples[0] = in1; continuitySamples[1] = in2; continuitySamples[2] = out1; continuitySamples[3] = out2; };		// FIXME?
-	void				GetContinuitySamples( float& in1, float& in2, float& out1, float& out2 )	{ in1 = continuitySamples[0]; in2 = continuitySamples[1]; out1 = continuitySamples[2]; out2 = continuitySamples[3]; };
+	void				SetContinuitySamples( float in1, float in2, float out1, float out2 )
+	{
+		continuitySamples[0] = in1;
+		continuitySamples[1] = in2;
+		continuitySamples[2] = out1;
+		continuitySamples[3] = out2;
+	};		// FIXME?
+	void				GetContinuitySamples( float& in1, float& in2, float& out1, float& out2 )
+	{
+		in1 = continuitySamples[0];
+		in2 = continuitySamples[1];
+		out1 = continuitySamples[2];
+		out2 = continuitySamples[3];
+	};
 
-	void				SetParameter( float val )						{ param = val; };
+	void				SetParameter( float val )
+	{
+		param = val;
+	};
 };
 
-class SoundFX_Lowpass : public SoundFX {
+class SoundFX_Lowpass : public SoundFX
+{
 public:
 	virtual void		ProcessSample( float* in, float* out );
 };
 
-class SoundFX_LowpassFast : public SoundFX {
+class SoundFX_LowpassFast : public SoundFX
+{
 	float				freq;
 	float				res;
 	float				a1, a2, a3;
@@ -343,7 +399,8 @@ public:
 	void				SetParms( float p1 = 0, float p2 = 0, float p3 = 0 );
 };
 
-class SoundFX_Comb : public SoundFX {
+class SoundFX_Comb : public SoundFX
+{
 	int					currentTime;
 
 public:
@@ -351,23 +408,38 @@ public:
 	virtual void		ProcessSample( float* in, float* out );
 };
 
-class FracTime {
+class FracTime
+{
 public:
 	int			time;
 	float		frac;
 
-	void		Set( int val )					{ time = val; frac = 0; };
-	void		Increment( float val )			{ frac += val; while ( frac >= 1.f ) { time++; frac--; } };
+	void		Set( int val )
+	{
+		time = val;
+		frac = 0;
+	};
+	void		Increment( float val )
+	{
+		frac += val;
+		while( frac >= 1.f )
+		{
+			time++;
+			frac--;
+		}
+	};
 };
 
-enum {
+enum
+{
 	PLAYBACK_RESET,
 	PLAYBACK_ADVANCING
 };
 
 class idSoundChannel;
 
-class idSlowChannel {
+class idSlowChannel
+{
 	bool					active;
 	const idSoundChannel*	chan;
 
@@ -389,34 +461,41 @@ class idSlowChannel {
 
 public:
 
-	void					AttachSoundChannel( const idSoundChannel *chan );
+	void					AttachSoundChannel( const idSoundChannel* chan );
 	void					Reset();
 
-	void					GatherChannelSamples( int sampleOffset44k, int sampleCount44k, float *dest );
+	void					GatherChannelSamples( int sampleOffset44k, int sampleCount44k, float* dest );
 
-	bool					IsActive()				{ return active; };
-	FracTime				GetCurrentPosition()	{ return curPosition; };
+	bool					IsActive()
+	{
+		return active;
+	};
+	FracTime				GetCurrentPosition()
+	{
+		return curPosition;
+	};
 };
 
-class idSoundChannel {
+class idSoundChannel
+{
 public:
-						idSoundChannel( void );
-						~idSoundChannel( void );
+	idSoundChannel( void );
+	~idSoundChannel( void );
 
 	void				Clear( void );
 	void				Start( void );
 	void				Stop( void );
-	void				GatherChannelSamples( int sampleOffset44k, int sampleCount44k, float *dest ) const;
+	void				GatherChannelSamples( int sampleOffset44k, int sampleCount44k, float* dest ) const;
 	void				ALStop( void );			// free OpenAL resources if any
 
 	bool				triggerState;
 	int					trigger44kHzTime;		// hardware time sample the channel started
 	int					triggerGame44kHzTime;	// game time sample time the channel started
 	soundShaderParms_t	parms;					// combines the shader parms and the per-channel overrides
-	idSoundSample *		leadinSample;			// if not looped, this is the only sample
+	idSoundSample* 		leadinSample;			// if not looped, this is the only sample
 	s_channelType		triggerChannel;
-	const idSoundShader *soundShader;
-	idSampleDecoder *	decoder;
+	const idSoundShader* soundShader;
+	idSampleDecoder* 	decoder;
 	float				diversity;
 	float				lastVolume;				// last calculated volume based on distance
 	float				lastV[6];				// last calculated volume for each speaker, so we can smoothly fade
@@ -431,10 +510,11 @@ public:
 
 };
 
-class idSoundEmitterLocal : public idSoundEmitter {
+class idSoundEmitterLocal : public idSoundEmitter
+{
 public:
 
-						idSoundEmitterLocal( void );
+	idSoundEmitterLocal( void );
 	virtual				~idSoundEmitterLocal( void );
 
 	//----------------------------------------------
@@ -447,13 +527,13 @@ public:
 
 	// the parms specified will be the default overrides for all sounds started on this emitter.
 	// NULL is acceptable for parms
-	virtual void		UpdateEmitter( const idVec3 &origin, int listenerId, const soundShaderParms_t *parms );
+	virtual void		UpdateEmitter( const idVec3& origin, int listenerId, const soundShaderParms_t* parms );
 
 	// returns the length of the started sound in msec
-	virtual int			StartSound( const idSoundShader *shader, const s_channelType channel, float diversity = 0, int shaderFlags = 0, bool allowSlow = true /* D3XP */ );
+	virtual int			StartSound( const idSoundShader* shader, const s_channelType channel, float diversity = 0, int shaderFlags = 0, bool allowSlow = true /* D3XP */ );
 
 	// can pass SCHANNEL_ANY
-	virtual void		ModifySound( const s_channelType channel, const soundShaderParms_t *parms );
+	virtual void		ModifySound( const s_channelType channel, const soundShaderParms_t* parms );
 	virtual void		StopSound( const s_channelType channel );
 	virtual void		FadeSound( const s_channelType channel, float to, float over );
 
@@ -469,17 +549,17 @@ public:
 
 	void				Clear( void );
 
-	void				OverrideParms( const soundShaderParms_t *base, const soundShaderParms_t *over, soundShaderParms_t *out );
+	void				OverrideParms( const soundShaderParms_t* base, const soundShaderParms_t* over, soundShaderParms_t* out );
 	void				CheckForCompletion( int current44kHzTime );
-	void				Spatialize( idVec3 listenerPos, int listenerArea, idRenderWorld *rw );
+	void				Spatialize( idVec3 listenerPos, int listenerArea, idRenderWorld* rw );
 
-	idSoundWorldLocal *	soundWorld;				// the world that holds this emitter
+	idSoundWorldLocal* 	soundWorld;				// the world that holds this emitter
 
 	int					index;						// in world emitter list
 	removeStatus_t		removeStatus;
 
 	idVec3				origin;
-	int					listenerId;		
+	int					listenerId;
 	soundShaderParms_t	parms;						// default overrides for all channels
 
 
@@ -489,20 +569,20 @@ public:
 	bool				playing;					// if false, no channel is active
 	bool				hasShakes;
 	idVec3				spatializedOrigin;			// the virtual sound origin, either the real sound origin,
-													// or a point through a portal chain
+	// or a point through a portal chain
 	float				realDistance;				// in meters
 	float				distance;					// in meters, this may be the straight-line distance, or
-													// it may go through a chain of portals.  If there
-													// is not an open-portal path, distance will be > maxDistance
+	// it may go through a chain of portals.  If there
+	// is not an open-portal path, distance will be > maxDistance
 
 	// a single soundEmitter can have many channels playing from the same point
 	idSoundChannel		channels[SOUND_MAX_CHANNELS];
 
 	idSlowChannel		slowChannels[SOUND_MAX_CHANNELS];
 
-	idSlowChannel		GetSlowChannel( const idSoundChannel *chan );
-	void				SetSlowChannel( const idSoundChannel *chan, idSlowChannel slow );
-	void				ResetSlowChannel( const idSoundChannel *chan );
+	idSlowChannel		GetSlowChannel( const idSoundChannel* chan );
+	void				SetSlowChannel( const idSoundChannel* chan, idSlowChannel slow );
+	void				ResetSlowChannel( const idSoundChannel* chan );
 
 	// this is just used for feedback to the game or rendering system:
 	// flashing lights and screen shakes.  Because the material expression
@@ -521,9 +601,11 @@ idSoundWorldLocal
 ===================================================================================
 */
 
-class s_stats {
+class s_stats
+{
 public:
-	s_stats( void ) {
+	s_stats( void )
+	{
 		rinuse = 0;
 		runs = 1;
 		timeinprocess = 0;
@@ -539,12 +621,14 @@ public:
 	int		activeSounds;
 };
 
-typedef struct soundPortalTrace_s {
+typedef struct soundPortalTrace_s
+{
 	int		portalArea;
-	const struct soundPortalTrace_s	*prevStack;
+	const struct soundPortalTrace_s*	prevStack;
 } soundPortalTrace_t;
 
-class idSoundWorldLocal : public idSoundWorld {
+class idSoundWorldLocal : public idSoundWorld
+{
 public:
 	virtual					~idSoundWorldLocal( void );
 
@@ -553,31 +637,31 @@ public:
 	virtual void			StopAllSounds( void );
 
 	// get a new emitter that can play sounds in this world
-	virtual idSoundEmitter *AllocSoundEmitter( void );
+	virtual idSoundEmitter* AllocSoundEmitter( void );
 
 	// for load games
-	virtual idSoundEmitter *EmitterForIndex( int index );
+	virtual idSoundEmitter* EmitterForIndex( int index );
 
 	// query data from all emitters in the world
-	virtual float			CurrentShakeAmplitudeForPosition( const int time, const idVec3 &listererPosition );
+	virtual float			CurrentShakeAmplitudeForPosition( const int time, const idVec3& listererPosition );
 
 	// where is the camera/microphone
 	// listenerId allows listener-private sounds to be added
-	virtual void			PlaceListener( const idVec3 &origin, const idMat3 &axis, const int listenerId, const int gameTime, const idStr& areaName );
+	virtual void			PlaceListener( const idVec3& origin, const idMat3& axis, const int listenerId, const int gameTime, const idStr& areaName );
 
 	// fade all sounds in the world with a given shader soundClass
 	// to is in Db (sigh), over is in seconds
 	virtual void			FadeSoundClasses( const int soundClass, const float to, const float over );
 
 	// dumps the current state and begins archiving commands
-	virtual void			StartWritingDemo( idDemoFile *demo );
+	virtual void			StartWritingDemo( idDemoFile* demo );
 	virtual void			StopWritingDemo( void );
 
 	// read a sound command from a demo file
-	virtual void			ProcessDemoCommand( idDemoFile *readDemo );
+	virtual void			ProcessDemoCommand( idDemoFile* readDemo );
 
 	// background music
-	virtual void			PlayShaderDirectly( const char *name, int channel = -1 );
+	virtual void			PlayShaderDirectly( const char* name, int channel = -1 );
 
 	// pause and unpause the sound world
 	virtual void			Pause( void );
@@ -585,47 +669,47 @@ public:
 	virtual bool			IsPaused( void );
 
 	// avidump
-	virtual void			AVIOpen( const char *path, const char *name );
+	virtual void			AVIOpen( const char* path, const char* name );
 	virtual void			AVIClose( void );
 
 	// SaveGame Support
-	virtual void			WriteToSaveGame( idFile *savefile );
-	virtual void			ReadFromSaveGame( idFile *savefile );
-	
-	virtual void			ReadFromSaveGameSoundChannel( idFile *saveGame, idSoundChannel *ch );
-	virtual void			ReadFromSaveGameSoundShaderParams( idFile *saveGame, soundShaderParms_t *params );
-	virtual void			WriteToSaveGameSoundChannel( idFile *saveGame, idSoundChannel *ch );
-	virtual void			WriteToSaveGameSoundShaderParams( idFile *saveGame, soundShaderParms_t *params );
-	
+	virtual void			WriteToSaveGame( idFile* savefile );
+	virtual void			ReadFromSaveGame( idFile* savefile );
+
+	virtual void			ReadFromSaveGameSoundChannel( idFile* saveGame, idSoundChannel* ch );
+	virtual void			ReadFromSaveGameSoundShaderParams( idFile* saveGame, soundShaderParms_t* params );
+	virtual void			WriteToSaveGameSoundChannel( idFile* saveGame, idSoundChannel* ch );
+	virtual void			WriteToSaveGameSoundShaderParams( idFile* saveGame, soundShaderParms_t* params );
+
 	virtual void			SetSlowmo( bool active );
 	virtual void			SetSlowmoSpeed( float speed );
 	virtual void			SetEnviroSuit( bool active );
 
 	//=======================================
 
-							idSoundWorldLocal( void );
+	idSoundWorldLocal( void );
 
 	void					Shutdown( void );
-	void					Init( idRenderWorld *rw );
+	void					Init( idRenderWorld* rw );
 	void					ClearBuffer( void );
 
 	// update
 	void					ForegroundUpdate( int currentTime );
 	void					OffsetSoundTime( int offset44kHz );
 
-	idSoundEmitterLocal *	AllocLocalSoundEmitter();
+	idSoundEmitterLocal* 	AllocLocalSoundEmitter();
 	void					CalcEars( int numSpeakers, idVec3 realOrigin, idVec3 listenerPos, idMat3 listenerAxis, float ears[6], float spatialize );
-	void					AddChannelContribution( idSoundEmitterLocal *sound, idSoundChannel *chan,
-												int current44kHz, int numSpeakers, float *finalMixBuffer );
-	void					MixLoop( int current44kHz, int numSpeakers, float *finalMixBuffer );
+	void					AddChannelContribution( idSoundEmitterLocal* sound, idSoundChannel* chan,
+			int current44kHz, int numSpeakers, float* finalMixBuffer );
+	void					MixLoop( int current44kHz, int numSpeakers, float* finalMixBuffer );
 	void					AVIUpdate( void );
-	void					ResolveOrigin( const int stackDepth, const soundPortalTrace_t *prevStack, const int soundArea, const float dist, const idVec3& soundOrigin, idSoundEmitterLocal *def );
-	float					FindAmplitude( idSoundEmitterLocal *sound, const int localTime, const idVec3 *listenerPosition, const s_channelType channel, bool shakesOnly );
+	void					ResolveOrigin( const int stackDepth, const soundPortalTrace_t* prevStack, const int soundArea, const float dist, const idVec3& soundOrigin, idSoundEmitterLocal* def );
+	float					FindAmplitude( idSoundEmitterLocal* sound, const int localTime, const idVec3* listenerPosition, const s_channelType channel, bool shakesOnly );
 
 	//============================================
 
-	idRenderWorld *			rw;				// for portals and debug drawing
-	idDemoFile *			writeDemo;			// if not NULL, archive commands here
+	idRenderWorld* 			rw;				// for portals and debug drawing
+	idDemoFile* 			writeDemo;			// if not NULL, archive commands here
 
 	idMat3					listenerAxis;
 	idVec3					listenerPos;		// position in meters
@@ -640,16 +724,16 @@ public:
 	int						pause44kHz;
 	int						lastAVI44kHz;		// determine when we need to mix and write another block
 
-	idList<idSoundEmitterLocal *>emitters;
+	idList<idSoundEmitterLocal*>emitters;
 
 	idSoundFade				soundClassFade[SOUND_MAX_CLASSES];	// for global sound fading
 
 	// avi stuff
-	idFile *				fpa[6];
+	idFile* 				fpa[6];
 	idStr					aviDemoPath;
 	idStr					aviDemoName;
 
-	idSoundEmitterLocal *	localSound;		// just for playShaderDirectly()
+	idSoundEmitterLocal* 	localSound;		// just for playShaderDirectly()
 
 	bool					slowmoActive;
 	float					slowmoSpeed;
@@ -664,18 +748,21 @@ idSoundSystemLocal
 ===================================================================================
 */
 
-typedef struct {
+typedef struct
+{
 	ALuint			handle;
 	int				startTime;
-	idSoundChannel	*chan;
+	idSoundChannel*	chan;
 	bool			inUse;
 	bool			looping;
 	bool			stereo;
 } openalSource_t;
 
-class idSoundSystemLocal : public idSoundSystem {
+class idSoundSystemLocal : public idSoundSystem
+{
 public:
-	idSoundSystemLocal( ) {
+	idSoundSystemLocal( )
+	{
 		isInitialized = false;
 	}
 
@@ -695,28 +782,28 @@ public:
 	// async loop, when the sound driver uses a write strategy
 	virtual int				AsyncUpdateWrite( int time );
 	// direct mixing called from the sound driver thread for OSes that support it
-	virtual int				AsyncMix( int soundTime, float *mixBuffer );
+	virtual int				AsyncMix( int soundTime, float* mixBuffer );
 
 	virtual void			SetMute( bool mute );
 
 	virtual cinData_t		ImageForTime( const int milliseconds, const bool waveform );
 
-	int						GetSoundDecoderInfo( int index, soundDecoderInfo_t &decoderInfo );
+	int						GetSoundDecoderInfo( int index, soundDecoderInfo_t& decoderInfo );
 
 	// if rw == NULL, no portal occlusion or rendered debugging is available
-	virtual idSoundWorld	*AllocSoundWorld( idRenderWorld *rw );
+	virtual idSoundWorld*	AllocSoundWorld( idRenderWorld* rw );
 
 	// specifying NULL will cause silence to be played
-	virtual void			SetPlayingSoundWorld( idSoundWorld *soundWorld );
+	virtual void			SetPlayingSoundWorld( idSoundWorld* soundWorld );
 
 	// some tools, like the sound dialog, may be used in both the game and the editor
 	// This can return NULL, so check!
-	virtual idSoundWorld	*GetPlayingSoundWorld( void );
+	virtual idSoundWorld*	GetPlayingSoundWorld( void );
 
 	virtual	void			BeginLevelLoad( void );
-	virtual	void			EndLevelLoad( const char *mapString );
+	virtual	void			EndLevelLoad( const char* mapString );
 
-	virtual void			PrintMemInfo( MemInfo_t *mi );
+	virtual void			PrintMemInfo( MemInfo_t* mi );
 
 	virtual int				IsEAXAvailable( void );
 
@@ -729,13 +816,13 @@ public:
 
 	void					DoEnviroSuit( float* samples, int numSamples, int numSpeakers );
 
-	ALuint					AllocOpenALSource( idSoundChannel *chan, bool looping, bool stereo );
+	ALuint					AllocOpenALSource( idSoundChannel* chan, bool looping, bool stereo );
 	void					FreeOpenALSource( ALuint handle );
 
-	idAudioHardware *		snd_audio_hw;
-	idSoundCache *			soundCache;
+	idAudioHardware* 		snd_audio_hw;
+	idSoundCache* 			soundCache;
 
-	idSoundWorldLocal *		currentSoundWorld;	// the one to mix each async tic
+	idSoundWorldLocal* 		currentSoundWorld;	// the one to mix each async tic
 
 	int						olddwCurrentWritePos;	// statistics
 	int						buffers;				// statistics
@@ -743,8 +830,8 @@ public:
 
 	unsigned int			nextWriteBlock;
 
-	float 					realAccum[6*MIXBUFFER_SAMPLES+16];
-	float *					finalMixBuffer;			// points inside realAccum at a 16 byte aligned boundary
+	float 					realAccum[6 * MIXBUFFER_SAMPLES + 16];
+	float* 					finalMixBuffer;			// points inside realAccum at a 16 byte aligned boundary
 
 	bool					isInitialized;
 	bool					muted;
@@ -755,14 +842,14 @@ public:
 	int						meterTops[256];
 	int						meterTopsTime[256];
 
-	dword *					graph;
+	dword* 					graph;
 
 	float					volumesDB[1200];		// dB to float volume conversion
 
 	idList<SoundFX*>		fxList;
 
-	ALCdevice				*openalDevice;
-	ALCcontext				*openalContext;
+	ALCdevice*				openalDevice;
+	ALCcontext*				openalContext;
 	ALsizei					openalSourceCount;
 	openalSource_t			openalSources[256];
 	EAXSet					alEAXSet;
@@ -771,10 +858,10 @@ public:
 	EAXGetBufferMode		alEAXGetBufferMode;
 	idEFXFile				EFXDatabase;
 	bool					efxloaded;
-							// latches
+	// latches
 	static bool				useOpenAL;
 	static bool				useEAXReverb;
-							// mark available during initialization, or through an explicit test
+	// mark available during initialization, or through an explicit test
 	static int				EAXAvailable;
 
 
@@ -833,12 +920,13 @@ extern	idSoundSystemLocal	soundSystemLocal;
 ===================================================================================
 */
 
-const int SCACHE_SIZE = MIXBUFFER_SAMPLES*20;	// 1/2 of a second (aroundabout)
+const int SCACHE_SIZE = MIXBUFFER_SAMPLES * 20;	// 1/2 of a second (aroundabout)
 
-class idSoundSample {
+class idSoundSample
+{
 public:
-							idSoundSample();
-							~idSoundSample();
+	idSoundSample();
+	~idSoundSample();
 
 	idStr					name;						// name of the sample file
 	ID_TIME_T		 			timestamp;					// the most recent of all images used in creation, for reloadImages command
@@ -846,8 +934,8 @@ public:
 	waveformatex_t			objectInfo;					// what are we caching
 	int						objectSize;					// size of waveform in samples, excludes the header
 	int						objectMemSize;				// object size in memory
-	byte *					nonCacheData;				// if it's not cached
-	byte *					amplitudeData;				// precomputed min,max amplitude pairs
+	byte* 					nonCacheData;				// if it's not cached
+	byte* 					amplitudeData;				// precomputed min,max amplitude pairs
 	ALuint					openalBuffer;				// openal buffer
 	bool					hardwareBuffer;
 	bool					defaultSound;
@@ -862,7 +950,7 @@ public:
 	void					Reload( bool force );		// reloads if timestamp has changed, or always if force
 	void					PurgeSoundSample();			// frees all data
 	void					CheckForDownSample();		// down sample if required
-	bool					FetchFromCache( int offset, const byte **output, int *position, int *size, const bool allowIO );
+	bool					FetchFromCache( int offset, const byte** output, int* position, int* size, const bool allowIO );
 };
 
 
@@ -874,19 +962,20 @@ public:
 ===================================================================================
 */
 
-class idSampleDecoder {
+class idSampleDecoder
+{
 public:
 	static void				Init( void );
 	static void				Shutdown( void );
-	static idSampleDecoder *Alloc( void );
-	static void				Free( idSampleDecoder *decoder );
+	static idSampleDecoder* Alloc( void );
+	static void				Free( idSampleDecoder* decoder );
 	static int				GetNumUsedBlocks( void );
 	static int				GetUsedBlockMemory( void );
 
 	virtual					~idSampleDecoder( void ) {}
-	virtual void			Decode( idSoundSample *sample, int sampleOffset44k, int sampleCount44k, float *dest ) = 0;
+	virtual void			Decode( idSoundSample* sample, int sampleOffset44k, int sampleCount44k, float* dest ) = 0;
 	virtual void			ClearDecoder( void ) = 0;
-	virtual idSoundSample *	GetSample( void ) const = 0;
+	virtual idSoundSample* 	GetSample( void ) const = 0;
 	virtual int				GetLastDecodeTime( void ) const = 0;
 };
 
@@ -899,22 +988,26 @@ public:
 ===================================================================================
 */
 
-class idSoundCache {
+class idSoundCache
+{
 public:
-							idSoundCache();
-							~idSoundCache();
+	idSoundCache();
+	~idSoundCache();
 
-	idSoundSample *			FindSound( const idStr &fname, bool loadOnDemandOnly );
+	idSoundSample* 			FindSound( const idStr& fname, bool loadOnDemandOnly );
 
-	const int				GetNumObjects( void ) { return listCache.Num(); }
-	const idSoundSample *	GetObject( const int index ) const;
+	const int				GetNumObjects( void )
+	{
+		return listCache.Num();
+	}
+	const idSoundSample* 	GetObject( const int index ) const;
 
 	void					ReloadSounds( bool force );
 
 	void					BeginLevelLoad();
 	void					EndLevelLoad();
 
-	void					PrintMemInfo( MemInfo_t *mi );
+	void					PrintMemInfo( MemInfo_t* mi );
 
 private:
 	bool					insideLevelLoad;

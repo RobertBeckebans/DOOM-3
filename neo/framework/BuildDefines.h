@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -110,26 +110,26 @@ If you have questions concerning this license or the applicable additional terms
 #endif
 
 #ifndef ID_ENFORCE_KEY
-#	if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
-#		define ID_ENFORCE_KEY 1
-#	else
-#		define ID_ENFORCE_KEY 0
-#	endif
+	#if !defined( ID_DEDICATED ) && !defined( ID_DEMO_BUILD )
+		#define ID_ENFORCE_KEY 1
+	#else
+		#define ID_ENFORCE_KEY 0
+	#endif
 #endif
 
 #ifndef ID_OPENAL
-#	if ( defined(_WIN32) || defined(MACOS_X) ) && !defined( ID_DEDICATED )
-#		define ID_OPENAL 1
-#	else
-#		define ID_OPENAL 0
-#	endif
+	#if ( defined(_WIN32) || defined(MACOS_X) ) && !defined( ID_DEDICATED )
+		#define ID_OPENAL 1
+	#else
+		#define ID_OPENAL 0
+	#endif
 #endif
 
 #ifndef ID_ALLOW_D3XP
-#	if defined( MACOS_X )
-#		define ID_ALLOW_D3XP 0
-#	else
-#		define ID_ALLOW_D3XP 1
-#	endif
+	#if defined( MACOS_X )
+		#define ID_ALLOW_D3XP 0
+	#else
+		#define ID_ALLOW_D3XP 1
+	#endif
 #endif
 

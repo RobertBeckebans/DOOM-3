@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,56 +34,58 @@ If you have questions concerning this license or the applicable additional terms
 #include "DialogInfo.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CDialogInfo dialog
 CDialogInfo g_dlgInfo;
 
-void ShowInfoDialog(const char* pText)
+void ShowInfoDialog( const char* pText )
 {
-  if (g_dlgInfo.GetSafeHwnd())
-  {
-    g_dlgInfo.m_wndInfo.SetWindowText(pText);
-    g_dlgInfo.ShowWindow(SW_SHOW);
-  }
-  else
-  {
-    g_dlgInfo.Create(IDD_DLG_INFORMATION);
-    g_dlgInfo.m_wndInfo.SetWindowText(pText);
-    g_dlgInfo.ShowWindow(SW_SHOW);
-  }
-  g_pParentWnd->SetFocus();
+	if( g_dlgInfo.GetSafeHwnd() )
+	{
+		g_dlgInfo.m_wndInfo.SetWindowText( pText );
+		g_dlgInfo.ShowWindow( SW_SHOW );
+	}
+	else
+	{
+		g_dlgInfo.Create( IDD_DLG_INFORMATION );
+		g_dlgInfo.m_wndInfo.SetWindowText( pText );
+		g_dlgInfo.ShowWindow( SW_SHOW );
+	}
+	g_pParentWnd->SetFocus();
 }
 
 void HideInfoDialog()
 {
-  if (g_dlgInfo.GetSafeHwnd())
-    g_dlgInfo.ShowWindow(SW_HIDE);
+	if( g_dlgInfo.GetSafeHwnd() )
+	{
+		g_dlgInfo.ShowWindow( SW_HIDE );
+	}
 }
 
 
-CDialogInfo::CDialogInfo(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogInfo::IDD, pParent)
+CDialogInfo::CDialogInfo( CWnd* pParent /*=NULL*/ )
+	: CDialog( CDialogInfo::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CDialogInfo)
 	//}}AFX_DATA_INIT
 }
 
 
-void CDialogInfo::DoDataExchange(CDataExchange* pDX)
+void CDialogInfo::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CDialogInfo)
-	DDX_Control(pDX, IDC_EDIT1, m_wndInfo);
+	DDX_Control( pDX, IDC_EDIT1, m_wndInfo );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CDialogInfo, CDialog)
+BEGIN_MESSAGE_MAP( CDialogInfo, CDialog )
 	//{{AFX_MSG_MAP(CDialogInfo)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -91,11 +93,11 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDialogInfo message handlers
 
-BOOL CDialogInfo::OnInitDialog() 
+BOOL CDialogInfo::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	// TODO: Add extra initialization here
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	// EXCEPTION: OCX Property Pages should return FALSE
 }

@@ -78,7 +78,7 @@
 #define socklen_t int
 
 #ifndef O_RDONLY
-# define O_RDONLY 0x0000
+	#define O_RDONLY 0x0000
 #endif
 
 #endif /* LIBCURL_CONFIG_AMIGAOS_H */

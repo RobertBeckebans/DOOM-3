@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-class idTextureTile {
+class idTextureTile
+{
 public:
 	int		x, y;
 };
@@ -39,15 +40,16 @@ static const int TILE_SIZE = MAX_LEVEL_WIDTH / TILE_PER_LEVEL;
 
 class	idMegaTexture;
 
-class idTextureLevel {
+class idTextureLevel
+{
 public:
-	idMegaTexture	*mega;
+	idMegaTexture*	mega;
 
 	int				tileOffset;
 	int				tilesWide;
 	int				tilesHigh;
 
-	idImage			*image;
+	idImage*			image;
 	idTextureTile	tileMap[TILE_PER_LEVEL][TILE_PER_LEVEL];
 
 	float			parms[4];
@@ -57,30 +59,32 @@ public:
 	void			Invalidate();
 };
 
-typedef struct {
+typedef struct
+{
 	int		tileSize;
 	int		tilesWide;
 	int		tilesHigh;
 } megaTextureHeader_t;
 
 
-class idMegaTexture {
+class idMegaTexture
+{
 public:
-	bool	InitFromMegaFile( const char *fileBase );
-	void	SetMappingForSurface( const srfTriangles_t *tri );	// analyzes xyz and st to create a mapping
+	bool	InitFromMegaFile( const char* fileBase );
+	void	SetMappingForSurface( const srfTriangles_t* tri );	// analyzes xyz and st to create a mapping
 	void	BindForViewOrigin( const idVec3 origin );	// binds images and sets program parameters
 	void	Unbind();								// removes texture bindings
 
-	static	void MakeMegaTexture_f( const idCmdArgs &args );
+	static	void MakeMegaTexture_f( const idCmdArgs& args );
 private:
-friend class idTextureLevel;
+	friend class idTextureLevel;
 	void	SetViewOrigin( const idVec3 origin );
-	static void	GenerateMegaMipMaps( megaTextureHeader_t *header, idFile *file );
-	static void	GenerateMegaPreview( const char *fileName );
+	static void	GenerateMegaMipMaps( megaTextureHeader_t* header, idFile* file );
+	static void	GenerateMegaPreview( const char* fileName );
 
-	idFile			*fileHandle;
+	idFile*			fileHandle;
 
-	const srfTriangles_t *currentTriMapping;
+	const srfTriangles_t* currentTriMapping;
 
 	idVec3			currentViewOrigin;
 

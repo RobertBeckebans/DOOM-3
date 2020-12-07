@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 idTypeInfoGen::idTypeInfoGen
 ================
 */
-idTypeInfoGen::idTypeInfoGen( void ) {
+idTypeInfoGen::idTypeInfoGen( void )
+{
 }
 
 /*
@@ -45,7 +46,8 @@ idTypeInfoGen::idTypeInfoGen( void ) {
 idTypeInfoGen::~idTypeInfoGen
 ================
 */
-idTypeInfoGen::~idTypeInfoGen( void ) {
+idTypeInfoGen::~idTypeInfoGen( void )
+{
 	constants.DeleteContents( true );
 	enums.DeleteContents( true );
 	classes.DeleteContents( true );
@@ -56,12 +58,16 @@ idTypeInfoGen::~idTypeInfoGen( void ) {
 idTypeInfoGen::GetInheritance
 ================
 */
-int idTypeInfoGen::GetInheritance( const char *typeName ) const {
+int idTypeInfoGen::GetInheritance( const char* typeName ) const
+{
 	int i;
 
-	for ( i = 0; i < classes.Num(); i++ ) {
-		if ( classes[i]->typeName.Cmp( typeName ) == 0 ) {
-			if ( classes[i]->superType[0] != '\0' ) {
+	for( i = 0; i < classes.Num(); i++ )
+	{
+		if( classes[i]->typeName.Cmp( typeName ) == 0 )
+		{
+			if( classes[i]->superType[0] != '\0' )
+			{
 				return 1 + GetInheritance( classes[i]->superType );
 			}
 			break;
@@ -75,11 +81,13 @@ int idTypeInfoGen::GetInheritance( const char *typeName ) const {
 idTypeInfoGen::EvaluateIntegerString
 ================
 */
-int idTypeInfoGen::EvaluateIntegerString( const idStr &string ) {
+int idTypeInfoGen::EvaluateIntegerString( const idStr& string )
+{
 	idParser src;
 	idStr evalString;
 
-	if ( string.Find( "::" ) != -1 ) {
+	if( string.Find( "::" ) != -1 )
+	{
 		return 0;
 	}
 	evalString = "$evalint(" + string + ")";
@@ -92,11 +100,13 @@ int idTypeInfoGen::EvaluateIntegerString( const idStr &string ) {
 idTypeInfoGen::EvaluateFloatString
 ================
 */
-float idTypeInfoGen::EvaluateFloatString( const idStr &string ) {
+float idTypeInfoGen::EvaluateFloatString( const idStr& string )
+{
 	idParser src;
 	idStr evalString;
 
-	if ( string.Find( "::" ) != -1 ) {
+	if( string.Find( "::" ) != -1 )
+	{
 		return 0.0f;
 	}
 	evalString = "$evalfloat(" + string + ")";
@@ -109,11 +119,14 @@ float idTypeInfoGen::EvaluateFloatString( const idStr &string ) {
 idTypeInfoGen::FindConstant
 ================
 */
-idConstantInfo *idTypeInfoGen::FindConstant( const char *name ) {
+idConstantInfo* idTypeInfoGen::FindConstant( const char* name )
+{
 	int i;
 
-	for ( i = 0; i < constants.Num(); i++ ) {
-		if ( constants[i]->name.Cmp( name ) == 0 ) {
+	for( i = 0; i < constants.Num(); i++ )
+	{
+		if( constants[i]->name.Cmp( name ) == 0 )
+		{
 			return constants[i];
 		}
 	}
@@ -125,12 +138,15 @@ idConstantInfo *idTypeInfoGen::FindConstant( const char *name ) {
 idTypeInfoGen::GetIntegerConstant
 ================
 */
-int idTypeInfoGen::GetIntegerConstant( const char *scope, const char *name, idParser &src ) {
-	idConstantInfo *constant = FindConstant( idStr( scope ) + name );
-	if ( constant == NULL ) {
+int idTypeInfoGen::GetIntegerConstant( const char* scope, const char* name, idParser& src )
+{
+	idConstantInfo* constant = FindConstant( idStr( scope ) + name );
+	if( constant == NULL )
+	{
 		constant = FindConstant( name );
 	}
-	if ( constant ) {
+	if( constant )
+	{
 		return EvaluateIntegerString( constant->value );
 	}
 	src.Warning( "unknown value '%s' in constant expression", name );
@@ -142,12 +158,15 @@ int idTypeInfoGen::GetIntegerConstant( const char *scope, const char *name, idPa
 idTypeInfoGen::GetFloatConstant
 ================
 */
-float idTypeInfoGen::GetFloatConstant( const char *scope, const char *name, idParser &src ) {
-	idConstantInfo *constant = FindConstant( idStr( scope ) + name );
-	if ( constant == NULL ) {
+float idTypeInfoGen::GetFloatConstant( const char* scope, const char* name, idParser& src )
+{
+	idConstantInfo* constant = FindConstant( idStr( scope ) + name );
+	if( constant == NULL )
+	{
 		constant = FindConstant( name );
 	}
-	if ( constant ) {
+	if( constant )
+	{
 		return EvaluateFloatString( constant->value );
 	}
 	src.Warning( "unknown value '%s' in constant expression", name );
@@ -159,37 +178,49 @@ float idTypeInfoGen::GetFloatConstant( const char *scope, const char *name, idPa
 idTypeInfoGen::ParseArraySize
 ================
 */
-int idTypeInfoGen::ParseArraySize( const char *scope, idParser &src ) {
+int idTypeInfoGen::ParseArraySize( const char* scope, idParser& src )
+{
 	idToken token;
 	idStr sizeString, constantString;
 	int size, totalSize;
 
-	if ( !src.CheckTokenString( "[" ) ) {
+	if( !src.CheckTokenString( "[" ) )
+	{
 		return 0;
 	}
 
 	totalSize = 1;
 	sizeString = "";
-	while( src.ReadToken( &token ) ) {
-		if ( token == "]" ) {
-			if ( sizeString.Length() ) {
+	while( src.ReadToken( &token ) )
+	{
+		if( token == "]" )
+		{
+			if( sizeString.Length() )
+			{
 				size = EvaluateIntegerString( sizeString );
-				if ( size ) {
+				if( size )
+				{
 					totalSize *= size;
 				}
 				sizeString = "";
 			}
-			if ( !src.CheckTokenString( "[" ) ) {
+			if( !src.CheckTokenString( "[" ) )
+			{
 				break;
 			}
-		} else if ( token.type == TT_NAME ) {
+		}
+		else if( token.type == TT_NAME )
+		{
 			constantString = token;
-			while( src.CheckTokenString( "::" ) ) {
+			while( src.CheckTokenString( "::" ) )
+			{
 				src.ExpectTokenType( TT_NAME, 0, &token );
 				constantString += "::" + token;
 			}
 			sizeString += va( "%d", GetIntegerConstant( scope, constantString, src ) );
-		} else {
+		}
+		else
+		{
 			sizeString += token;
 		}
 	}
@@ -202,22 +233,32 @@ int idTypeInfoGen::ParseArraySize( const char *scope, idParser &src ) {
 idTypeInfoGen::ParseConstantValue
 ================
 */
-void idTypeInfoGen::ParseConstantValue( const char *scope, idParser &src, idStr &value ) {
+void idTypeInfoGen::ParseConstantValue( const char* scope, idParser& src, idStr& value )
+{
 	idToken token;
 	idStr constantString;
 
 	int indent = 0;
-	while( src.ReadToken( &token ) ) {
-		if ( token == "(" ) {
+	while( src.ReadToken( &token ) )
+	{
+		if( token == "(" )
+		{
 			indent++;
-		} else if ( token == ")" ) {
+		}
+		else if( token == ")" )
+		{
 			indent--;
-		} else if ( indent == 0 && ( token == ";" || token == "," || token == "}" ) ) {
+		}
+		else if( indent == 0 && ( token == ";" || token == "," || token == "}" ) )
+		{
 			src.UnreadToken( &token );
 			break;
-		} else if ( token.type == TT_NAME ) {
+		}
+		else if( token.type == TT_NAME )
+		{
 			constantString = token;
-			while( src.CheckTokenString( "::" ) ) {
+			while( src.CheckTokenString( "::" ) )
+			{
 				src.ExpectTokenType( TT_NAME, 0, &token );
 				constantString += "::" + token;
 			}
@@ -233,10 +274,11 @@ void idTypeInfoGen::ParseConstantValue( const char *scope, idParser &src, idStr 
 idTypeInfoGen::ParseEnumType
 ================
 */
-idEnumTypeInfo *idTypeInfoGen::ParseEnumType( const char *scope, bool isTemplate, bool typeDef, idParser &src ) {
+idEnumTypeInfo* idTypeInfoGen::ParseEnumType( const char* scope, bool isTemplate, bool typeDef, idParser& src )
+{
 	int value;
 	idToken token;
-	idEnumTypeInfo *typeInfo;
+	idEnumTypeInfo* typeInfo;
 	idEnumValueInfo enumValue;
 	idStr valueString;
 
@@ -244,32 +286,41 @@ idEnumTypeInfo *idTypeInfoGen::ParseEnumType( const char *scope, bool isTemplate
 	typeInfo->scope = scope;
 	typeInfo->isTemplate = isTemplate;
 
-	if ( src.CheckTokenType( TT_NAME, 0, &token ) ) {
+	if( src.CheckTokenType( TT_NAME, 0, &token ) )
+	{
 		typeInfo->typeName = token;
 		typeInfo->unnamed = false;
-	} else {
+	}
+	else
+	{
 		sprintf( typeInfo->typeName, "enum_%d", enums.Num() );
 		typeInfo->unnamed = true;
 	}
 
-	if ( !src.CheckTokenString( "{" ) ) {
+	if( !src.CheckTokenString( "{" ) )
+	{
 		src.UnreadToken( &token );
 		delete typeInfo;
 		return NULL;
 	}
 
 	value = -1;
-	while( src.ExpectTokenType( TT_NAME, 0, &token ) ) {
+	while( src.ExpectTokenType( TT_NAME, 0, &token ) )
+	{
 
 		enumValue.name = token;
 
-		if ( src.CheckTokenString( "=" ) ) {
+		if( src.CheckTokenString( "=" ) )
+		{
 			idStr valueString;
 			ParseConstantValue( scope, src, valueString );
-			if ( valueString.Length() ) {
+			if( valueString.Length() )
+			{
 				value = EvaluateIntegerString( valueString );
 			}
-		} else {
+		}
+		else
+		{
 			value++;
 		}
 
@@ -277,7 +328,7 @@ idEnumTypeInfo *idTypeInfoGen::ParseEnumType( const char *scope, bool isTemplate
 		typeInfo->values.Append( enumValue );
 
 		// add a constant for the enum value
-		idConstantInfo *constantInfo = new idConstantInfo;
+		idConstantInfo* constantInfo = new idConstantInfo;
 		constantInfo->name = scope + enumValue.name;
 		constantInfo->type = "int";
 		constantInfo->value = va( "%d", value );
@@ -285,13 +336,16 @@ idEnumTypeInfo *idTypeInfoGen::ParseEnumType( const char *scope, bool isTemplate
 
 		src.CheckTokenString( "," );
 
-		if ( src.CheckTokenString( "}" ) ) {
+		if( src.CheckTokenString( "}" ) )
+		{
 			break;
 		}
 	}
 
-	if ( typeDef ) {
-		if ( src.CheckTokenType( TT_NAME, 0, &token ) ) {
+	if( typeDef )
+	{
+		if( src.CheckTokenType( TT_NAME, 0, &token ) )
+		{
 			typeInfo->typeName = token;
 			typeInfo->unnamed = false;
 		}
@@ -308,32 +362,40 @@ idEnumTypeInfo *idTypeInfoGen::ParseEnumType( const char *scope, bool isTemplate
 idTypeInfoGen::ParseClassType
 ================
 */
-idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *templateArgs, bool isTemplate, bool typeDef, idParser &src ) {
+idClassTypeInfo* idTypeInfoGen::ParseClassType( const char* scope, const char* templateArgs, bool isTemplate, bool typeDef, idParser& src )
+{
 	idToken token;
-	idClassTypeInfo *typeInfo;
+	idClassTypeInfo* typeInfo;
 
 	typeInfo = new idClassTypeInfo;
 	typeInfo->scope = scope;
 	typeInfo->isTemplate = isTemplate;
 
-	if ( src.CheckTokenType( TT_NAME, 0, &token ) ) {
+	if( src.CheckTokenType( TT_NAME, 0, &token ) )
+	{
 		typeInfo->typeName = token + templateArgs;
 		typeInfo->unnamed = false;
-	} else {
+	}
+	else
+	{
 		sprintf( typeInfo->typeName, "class_%d%s", classes.Num(), templateArgs );
 		typeInfo->unnamed = true;
 	}
 
-	if ( src.CheckTokenString( ":" ) ) {
-		if ( !src.ExpectTokenType( TT_NAME, 0, &token ) ) {
+	if( src.CheckTokenString( ":" ) )
+	{
+		if( !src.ExpectTokenType( TT_NAME, 0, &token ) )
+		{
 			delete typeInfo;
 			return NULL;
 		}
 		while(	token == "public" ||
 				token == "protected" ||
-				token == "private" ) {
+				token == "private" )
+		{
 
-			if ( !src.ExpectTokenType( TT_NAME, 0, &token ) ) {
+			if( !src.ExpectTokenType( TT_NAME, 0, &token ) )
+			{
 				delete typeInfo;
 				return NULL;
 			}
@@ -341,16 +403,22 @@ idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *t
 			typeInfo->superType = token;
 
 			// read template arguments
-			if ( src.CheckTokenString( "<" ) ) {
+			if( src.CheckTokenString( "<" ) )
+			{
 
 				int indent = 1;
 				typeInfo->superType += "< ";
-				while( src.ReadToken( &token ) ) {
-					if ( token == "<" ) {
+				while( src.ReadToken( &token ) )
+				{
+					if( token == "<" )
+					{
 						indent++;
-					} else if ( token == ">" ) {
+					}
+					else if( token == ">" )
+					{
 						indent--;
-						if ( indent == 0 ) {
+						if( indent == 0 )
+						{
 							break;
 						}
 					}
@@ -360,11 +428,13 @@ idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *t
 			}
 
 			// check for multiple inheritance
-			if ( !src.CheckTokenString( "," ) ) {
+			if( !src.CheckTokenString( "," ) )
+			{
 				break;
 			}
 
-			if ( !src.ExpectTokenType( TT_NAME, 0, &token ) ) {
+			if( !src.ExpectTokenType( TT_NAME, 0, &token ) )
+			{
 				delete typeInfo;
 				return NULL;
 			}
@@ -373,7 +443,8 @@ idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *t
 		}
 	}
 
-	if ( !src.CheckTokenString( "{" ) ) {
+	if( !src.CheckTokenString( "{" ) )
+	{
 		src.UnreadToken( &token );
 		delete typeInfo;
 		return NULL;
@@ -381,8 +452,10 @@ idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *t
 
 	ParseScope( typeInfo->scope + typeInfo->typeName + "::", typeInfo->isTemplate, src, typeInfo );
 
-	if ( typeDef ) {
-		if ( src.CheckTokenType( TT_NAME, 0, &token ) ) {
+	if( typeDef )
+	{
+		if( src.CheckTokenType( TT_NAME, 0, &token ) )
+		{
 			typeInfo->typeName = token + templateArgs;
 			typeInfo->unnamed = false;
 		}
@@ -399,75 +472,107 @@ idClassTypeInfo *idTypeInfoGen::ParseClassType( const char *scope, const char *t
 idTypeInfoGen::ParseScope
 ================
 */
-void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &src, idClassTypeInfo *typeInfo ) {
+void idTypeInfoGen::ParseScope( const char* scope, bool isTemplate, idParser& src, idClassTypeInfo* typeInfo )
+{
 	int indent;
 	idToken token;
-	idClassTypeInfo *classInfo;
-	idEnumTypeInfo *enumInfo;
+	idClassTypeInfo* classInfo;
+	idEnumTypeInfo* enumInfo;
 	idStr varType;
 	bool isConst = false;
 	bool isStatic = false;
 
 	indent = 1;
-	while( indent ) {
-		if ( !src.ReadToken( &token ) ) {
+	while( indent )
+	{
+		if( !src.ReadToken( &token ) )
+		{
 			break;
 		}
 
-		if ( token == "{" ) {
+		if( token == "{" )
+		{
 
-			do {
-				if ( token == "{" ) {
+			do
+			{
+				if( token == "{" )
+				{
 					indent++;
-				} else if ( token == "}" ) {
+				}
+				else if( token == "}" )
+				{
 					indent--;
 				}
 				varType += token + " ";
-			} while( indent > 1 && src.ReadToken( &token ) );
+			}
+			while( indent > 1 && src.ReadToken( &token ) );
 
-		} else if ( token == "}" ) {
+		}
+		else if( token == "}" )
+		{
 
 			assert( indent == 1 );
 			indent--;
 
-		} else if ( token == "<" ) {
+		}
+		else if( token == "<" )
+		{
 
-			do {
-				if ( token == "<" ) {
+			do
+			{
+				if( token == "<" )
+				{
 					indent++;
-				} else if ( token == ">" ) {
+				}
+				else if( token == ">" )
+				{
 					indent--;
 				}
 				varType += token + " ";
-			} while( indent > 1 && src.ReadToken( &token ) );
+			}
+			while( indent > 1 && src.ReadToken( &token ) );
 
-		} else if ( token == ";" ) {
+		}
+		else if( token == ";" )
+		{
 
 			varType = "";
 			isConst = false;
 			isStatic = false;
 
-		} else if ( token == "public" || token == "protected" || token == "private" ) {
+		}
+		else if( token == "public" || token == "protected" || token == "private" )
+		{
 
-			if ( !src.ExpectTokenString( ":" ) ) {
+			if( !src.ExpectTokenString( ":" ) )
+			{
 				break;
 			}
 			varType = "";
 			isConst = false;
 			isStatic = false;
 
-		} else if ( token == "friend" ) {
+		}
+		else if( token == "friend" )
+		{
 
 			// skip friend classes/methods
-			while( src.ReadToken( &token ) ) {
-				if ( token == "{" ) {
+			while( src.ReadToken( &token ) )
+			{
+				if( token == "{" )
+				{
 					indent++;
-				} else if ( token == "}" ) {
+				}
+				else if( token == "}" )
+				{
 					indent--;
-					if ( indent == 1 ) {
+					if( indent == 1 )
+					{
 						break;
 					}
-				} else if ( token == ";" && indent == 1 ) {
+				}
+				else if( token == ";" && indent == 1 )
+				{
 					break;
 				}
 			}
@@ -476,20 +581,28 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 			isConst = false;
 			isStatic = false;
 
-		} else if ( token == "template" ) {
+		}
+		else if( token == "template" )
+		{
 
 			varType = "";
 
-			if ( src.CheckTokenString( "<" ) ) {
+			if( src.CheckTokenString( "<" ) )
+			{
 
 				int indent = 1;
 				varType += "< ";
-				while( src.ReadToken( &token ) ) {
-					if ( token == "<" ) {
+				while( src.ReadToken( &token ) )
+				{
+					if( token == "<" )
+					{
 						indent++;
-					} else if ( token == ">" ) {
+					}
+					else if( token == ">" )
+					{
 						indent--;
-						if ( indent == 0 ) {
+						if( indent == 0 )
+						{
 							break;
 						}
 					}
@@ -498,26 +611,37 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 				varType += ">";
 			}
 
-			if ( src.CheckTokenString( "class" ) ) {
+			if( src.CheckTokenString( "class" ) )
+			{
 
 				// parse template class
 				classInfo = ParseClassType( scope, varType, true, false, src );
-				if ( classInfo ) {
+				if( classInfo )
+				{
 					classes.Append( classInfo );
 				}
 
-			} else {
+			}
+			else
+			{
 
 				// skip template methods
-				while( src.ReadToken( &token ) ) {
-					if ( token == "{" ) {
+				while( src.ReadToken( &token ) )
+				{
+					if( token == "{" )
+					{
 						indent++;
-					} else if ( token == "}" ) {
+					}
+					else if( token == "}" )
+					{
 						indent--;
-						if ( indent == 1 ) {
+						if( indent == 1 )
+						{
 							break;
 						}
-					} else if ( token == ";" && indent == 1 ) {
+					}
+					else if( token == ";" && indent == 1 )
+					{
 						break;
 					}
 				}
@@ -527,89 +651,124 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 			isConst = false;
 			isStatic = false;
 
-		} else if ( token == "namespace" ) {
+		}
+		else if( token == "namespace" )
+		{
 
 			// parse namespace
 			classInfo = ParseClassType( scope, "", isTemplate, false, src );
 			delete classInfo;
 
-		} else if ( token == "class" ) {
+		}
+		else if( token == "class" )
+		{
 
 			// parse class
 			classInfo = ParseClassType( scope, "", isTemplate, false, src );
-			if ( classInfo ) {
+			if( classInfo )
+			{
 				classes.Append( classInfo );
 			}
 
-		} else if ( token == "struct" ) {
+		}
+		else if( token == "struct" )
+		{
 
 			// parse struct
 			classInfo = ParseClassType( scope, "", isTemplate, false, src );
-			if ( classInfo ) {
+			if( classInfo )
+			{
 				classes.Append( classInfo );
 				varType = classInfo->scope + classInfo->typeName;
 			}
 
-		} else if ( token == "union" ) {
+		}
+		else if( token == "union" )
+		{
 
 			// parse union
 			classInfo = ParseClassType( scope, "", isTemplate, false, src );
-			if ( classInfo ) {
+			if( classInfo )
+			{
 				classes.Append( classInfo );
 			}
 
-		} else if ( token == "enum" ) {
+		}
+		else if( token == "enum" )
+		{
 
 			// parse enum
 			enumInfo = ParseEnumType( scope, isTemplate, false, src );
-			if ( enumInfo ) {
+			if( enumInfo )
+			{
 				enums.Append( enumInfo );
 				varType = enumInfo->scope + enumInfo->typeName;
 			}
 
-		} else if ( token == "typedef" ) {
+		}
+		else if( token == "typedef" )
+		{
 
-			if ( token == "class" ) {
+			if( token == "class" )
+			{
 
 				// parse typedef class
 				classInfo = ParseClassType( scope, "", isTemplate, true, src );
-				if ( classInfo ) {
+				if( classInfo )
+				{
 					classes.Append( classInfo );
 				}
 
-			} else if ( src.CheckTokenString( "struct" ) ) {
+			}
+			else if( src.CheckTokenString( "struct" ) )
+			{
 
 				// parse typedef struct
 				classInfo = ParseClassType( scope, "", isTemplate, true, src );
-				if ( classInfo ) {
+				if( classInfo )
+				{
 					classes.Append( classInfo );
 				}
 
-			} else if ( src.CheckTokenString( "union" ) ) {
+			}
+			else if( src.CheckTokenString( "union" ) )
+			{
 
 				// parse typedef union
 				classInfo = ParseClassType( scope, "", isTemplate, true, src );
-				if ( classInfo ) {
+				if( classInfo )
+				{
 					classes.Append( classInfo );
 				}
 
-			} else if ( src.CheckTokenString( "enum" ) ) {
+			}
+			else if( src.CheckTokenString( "enum" ) )
+			{
 
 				// parse typedef enum
 				enumInfo = ParseEnumType( scope, isTemplate, true, src );
-				if ( enumInfo ) {
+				if( enumInfo )
+				{
 					enums.Append( enumInfo );
 				}
 
-			} else {
+			}
+			else
+			{
 
 				// skip other typedefs
-				while( src.ReadToken( &token ) ) {
-					if ( token == "{" ) {
+				while( src.ReadToken( &token ) )
+				{
+					if( token == "{" )
+					{
 						indent++;
-					} else if ( token == "}" ) {
+					}
+					else if( token == "}" )
+					{
 						indent--;
-					} else if ( token == ";" && indent == 1 ) {
+					}
+					else if( token == ";" && indent == 1 )
+					{
 						break;
 					}
 				}
@@ -619,24 +778,33 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 			isConst = false;
 			isStatic = false;
 
-		} else if ( token == "const" ) {
+		}
+		else if( token == "const" )
+		{
 
 			varType += token + " ";
 			isConst = true;
 
-		} else if ( token == "static" ) {
+		}
+		else if( token == "static" )
+		{
 
 			varType += token + " ";
 			isStatic = true;
 
-		} else if ( token.type == TT_NAME ) {
-	
+		}
+		else if( token.type == TT_NAME )
+		{
+
 			assert( indent == 1 );
 
 			// if this is a class operator
-			if ( token == "operator" ) {
-				while( src.ReadToken( &token ) ) {
-					if ( token == "(" ) {
+			if( token == "operator" )
+			{
+				while( src.ReadToken( &token ) )
+				{
+					if( token == "(" )
+					{
 						src.UnreadToken( &token );
 						break;
 					}
@@ -644,41 +812,59 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 			}
 
 			// if this is a class method
-			if ( src.CheckTokenString( "(" ) ) {
+			if( src.CheckTokenString( "(" ) )
+			{
 
 				indent++;
-				while( indent > 1 && src.ReadToken( &token ) ) {
-					if ( token == "(" ) {
+				while( indent > 1 && src.ReadToken( &token ) )
+				{
+					if( token == "(" )
+					{
 						indent++;
-					} else if ( token == ")" ) {
+					}
+					else if( token == ")" )
+					{
 						indent--;
 					}
 				}
 
-				if ( src.CheckTokenString( "(" ) ) {
+				if( src.CheckTokenString( "(" ) )
+				{
 					indent++;
-					while( indent > 1 && src.ReadToken( &token ) ) {
-						if ( token == "(" ) {
+					while( indent > 1 && src.ReadToken( &token ) )
+					{
+						if( token == "(" )
+						{
 							indent++;
-						} else if ( token == ")" ) {
+						}
+						else if( token == ")" )
+						{
 							indent--;
 						}
 					}
 				}
 
-				if ( src.CheckTokenString( "const" ) ) {
+				if( src.CheckTokenString( "const" ) )
+				{
 				}
 
-				if ( src.CheckTokenString( "=" ) ) {
+				if( src.CheckTokenString( "=" ) )
+				{
 
 					src.ExpectTokenString( "0" );
 
-				} else if ( src.CheckTokenString( "{" ) ) {
+				}
+				else if( src.CheckTokenString( "{" ) )
+				{
 					indent++;
-					while( indent > 1 && src.ReadToken( &token ) ) {
-						if ( token == "{" ) {
+					while( indent > 1 && src.ReadToken( &token ) )
+					{
+						if( token == "{" )
+						{
 							indent++;
-						} else if ( token == "}" ) {
+						}
+						else if( token == "}" )
+						{
 							indent--;
 						}
 					}
@@ -688,29 +874,37 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 				isConst = false;
 				isStatic = false;
 
-			} else if ( ( isStatic || isConst ) && src.CheckTokenString( "=" ) ) {
+			}
+			else if( ( isStatic || isConst ) && src.CheckTokenString( "=" ) )
+			{
 
 				// constant
-				idConstantInfo *constantInfo = new idConstantInfo;
+				idConstantInfo* constantInfo = new idConstantInfo;
 				constantInfo->name = scope + token;
 				constantInfo->type = varType;
 				constantInfo->type.StripTrailing( ' ' );
 				ParseConstantValue( scope, src, constantInfo->value );
 				constants.Append( constantInfo );
 
-			} else if ( isStatic ) {
+			}
+			else if( isStatic )
+			{
 
 				// static class variable
 				varType += token + " ";
 
-			} else {
+			}
+			else
+			{
 
 				// check for class variables
-				while( 1 ) {
+				while( 1 )
+				{
 
 					int arraySize = ParseArraySize( scope, src );
 
-					if ( arraySize ) {
+					if( arraySize )
+					{
 						idClassVariableInfo var;
 
 						var.name = token;
@@ -719,25 +913,30 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 						var.type += va( "[%d]", arraySize );
 						var.bits = 0;
 						typeInfo->variables.Append( var );
-						if ( !src.CheckTokenString( "," ) ) {
-                            varType = "";
+						if( !src.CheckTokenString( "," ) )
+						{
+							varType = "";
 							isConst = false;
 							isStatic = false;
 							break;
 						}
 						varType.StripTrailing( "* " );
 
-					} else {
+					}
+					else
+					{
 
 						int bits = 0;
 
-						if ( src.CheckTokenString( ":" ) ) {
+						if( src.CheckTokenString( ":" ) )
+						{
 							idToken bitSize;
 							src.ExpectTokenType( TT_NUMBER, TT_INTEGER, &bitSize );
 							bits = bitSize.GetIntValue();
 						}
 
-						if ( src.CheckTokenString( "," ) ) {
+						if( src.CheckTokenString( "," ) )
+						{
 							idClassVariableInfo var;
 
 							var.name = token;
@@ -747,7 +946,9 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 							typeInfo->variables.Append( var );
 							varType.StripTrailing( "* " );
 
-						} else if ( src.CheckTokenString( ";" ) ) {
+						}
+						else if( src.CheckTokenString( ";" ) )
+						{
 							idClassVariableInfo var;
 
 							var.name = token;
@@ -760,23 +961,29 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 							isStatic = false;
 							break;
 
-						} else {
+						}
+						else
+						{
 
 							varType += token + " ";
 							break;
 						}
 					}
 
-					while( src.CheckTokenString( "*" ) ) {
+					while( src.CheckTokenString( "*" ) )
+					{
 						varType += "* ";
 					}
 
-					if ( !src.ExpectTokenType( TT_NAME, 0, &token ) ) {
+					if( !src.ExpectTokenType( TT_NAME, 0, &token ) )
+					{
 						break;
 					}
 				}
 			}
-		} else {
+		}
+		else
+		{
 			varType += token + " ";
 		}
 	}
@@ -787,7 +994,8 @@ void idTypeInfoGen::ParseScope( const char *scope, bool isTemplate, idParser &sr
 idTypeInfoGen::AddDefine
 ================
 */
-void idTypeInfoGen::AddDefine( const char *define ) {
+void idTypeInfoGen::AddDefine( const char* define )
+{
 	defines.Append( define );
 }
 
@@ -796,10 +1004,11 @@ void idTypeInfoGen::AddDefine( const char *define ) {
 idTypeInfoGen::CreateTypeInfo
 ================
 */
-void idTypeInfoGen::CreateTypeInfo( const char *path ) {
+void idTypeInfoGen::CreateTypeInfo( const char* path )
+{
 	int i, j, inheritance;
 	idStr fileName;
-	idFileList *files;
+	idFileList* files;
 	idParser src;
 
 	common->Printf( "Type Info Generator v"TYPE_INFO_GEN_VERSION" (c) 2004 id Software\n" );
@@ -807,24 +1016,27 @@ void idTypeInfoGen::CreateTypeInfo( const char *path ) {
 
 	files = fileSystem->ListFilesTree( path, ".cpp" );
 
-	for ( i = 0; i < files->GetNumFiles(); i++ ) {
+	for( i = 0; i < files->GetNumFiles(); i++ )
+	{
 
 		fileName = fileSystem->RelativePathToOSPath( files->GetFile( i ) );
 
 		common->Printf( "processing '%s' for type info...\n", fileName.c_str() );
 
-		if ( !src.LoadFile( fileName, true ) ) {
+		if( !src.LoadFile( fileName, true ) )
+		{
 			common->Warning( "couldn't load %s", fileName.c_str() );
 			continue;
 		}
 
 		src.SetFlags( LEXFL_NOBASEINCLUDES );
 
-		for ( j = 0; j < defines.Num(); j++ ) {
+		for( j = 0; j < defines.Num(); j++ )
+		{
 			src.AddDefine( defines[j] );
 		}
 
-		idClassTypeInfo *typeInfo = new idClassTypeInfo;
+		idClassTypeInfo* typeInfo = new idClassTypeInfo;
 		ParseScope( "", false, src, typeInfo );
 		delete typeInfo;
 
@@ -836,17 +1048,21 @@ void idTypeInfoGen::CreateTypeInfo( const char *path ) {
 	fileSystem->FreeFileList( files );
 
 	numTemplates = 0;
-	for ( i = 0; i < classes.Num(); i++ ) {
-		if ( classes[i]->isTemplate ) {
+	for( i = 0; i < classes.Num(); i++ )
+	{
+		if( classes[i]->isTemplate )
+		{
 			numTemplates++;
 		}
 	}
 
 	maxInheritance = 0;
 	maxInheritanceClass = "";
-	for ( i = 0; i < classes.Num(); i++ ) {
+	for( i = 0; i < classes.Num(); i++ )
+	{
 		inheritance = GetInheritance( classes[i]->typeName );
-		if ( inheritance > maxInheritance ) {
+		if( inheritance > maxInheritance )
+		{
 			maxInheritance = inheritance;
 			maxInheritanceClass = classes[i]->typeName;
 		}
@@ -864,7 +1080,8 @@ void idTypeInfoGen::CreateTypeInfo( const char *path ) {
 CleanName
 ================
 */
-void CleanName( idStr &name ) {
+void CleanName( idStr& name )
+{
 	name.Replace( "::", "_" );
 	name.Replace( " , ", "_" );
 	name.Replace( "< ", "_" );
@@ -877,15 +1094,17 @@ void CleanName( idStr &name ) {
 idTypeInfoGen::WriteTypeInfo
 ================
 */
-void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
+void idTypeInfoGen::WriteTypeInfo( const char* fileName ) const
+{
 	int i, j;
 	idStr path, define;
-	idFile *file;
+	idFile* file;
 
 	path = fileSystem->RelativePathToOSPath( fileName );
 
 	file = fileSystem->OpenExplicitFileWrite( path );
-	if ( !file ) {
+	if( !file )
+	{
 		common->Warning( "couldn't open %s", path.c_str() );
 		return;
 	}
@@ -915,7 +1134,7 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 		"===================================================================================\n"
 		"*/\n"
 		"\n", define.c_str(), define.c_str(), constants.Num(), enums.Num(), classes.Num(),
-				numTemplates, maxInheritance, maxInheritanceClass.c_str() );
+		numTemplates, maxInheritance, maxInheritanceClass.c_str() );
 
 	file->WriteFloatString(
 		"typedef struct {\n"
@@ -952,8 +1171,9 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 	// constants
 	file->WriteFloatString( "static constantInfo_t constantInfo[] = {\n" );
 
-	for ( i = 0; i < constants.Num(); i++ ) {
-		idConstantInfo *info = constants[i];
+	for( i = 0; i < constants.Num(); i++ )
+	{
+		idConstantInfo* info = constants[i];
 		file->WriteFloatString( "\t{ \"%s\", \"%s\", \"%s\" },\n", info->type.c_str(), info->name.c_str(), info->value.c_str() );
 	}
 
@@ -961,16 +1181,19 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 	file->WriteFloatString( "};\n\n" );
 
 	// enum values
-	for ( i = 0; i < enums.Num(); i++ ) {
-		idEnumTypeInfo *info = enums[i];
+	for( i = 0; i < enums.Num(); i++ )
+	{
+		idEnumTypeInfo* info = enums[i];
 
 		idStr typeInfoName = info->scope + info->typeName;
 		CleanName( typeInfoName );
 
 		file->WriteFloatString( "static enumValueInfo_t %s_typeInfo[] = {\n", typeInfoName.c_str() );
 
-		for ( j = 0; j < info->values.Num(); j++ ) {
-			if ( info->isTemplate ) {
+		for( j = 0; j < info->values.Num(); j++ )
+		{
+			if( info->isTemplate )
+			{
 				file->WriteFloatString( "//" );
 			}
 			file->WriteFloatString( "\t{ \"%s\", %d },\n", info->values[j].name.c_str(), info->values[j].value );
@@ -983,14 +1206,16 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 	// enums
 	file->WriteFloatString( "static enumTypeInfo_t enumTypeInfo[] = {\n" );
 
-	for ( i = 0; i < enums.Num(); i++ ) {
-		idEnumTypeInfo *info = enums[i];
+	for( i = 0; i < enums.Num(); i++ )
+	{
+		idEnumTypeInfo* info = enums[i];
 
 		idStr typeName = info->scope + info->typeName;
 		idStr typeInfoName = typeName;
 		CleanName( typeInfoName );
 
-		if ( info->isTemplate ) {
+		if( info->isTemplate )
+		{
 			file->WriteFloatString( "//" );
 		}
 		file->WriteFloatString( "\t{ \"%s\", %s_typeInfo },\n", typeName.c_str(), typeInfoName.c_str() );
@@ -1000,8 +1225,9 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 	file->WriteFloatString( "};\n\n" );
 
 	// class variables
-	for ( i = 0; i < classes.Num(); i++ ) {
-		idClassTypeInfo *info = classes[i];
+	for( i = 0; i < classes.Num(); i++ )
+	{
+		idClassTypeInfo* info = classes[i];
 
 		idStr typeName = info->scope + info->typeName;
 		idStr typeInfoName = typeName;
@@ -1009,11 +1235,13 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 
 		file->WriteFloatString( "static classVariableInfo_t %s_typeInfo[] = {\n", typeInfoName.c_str() );
 
-		for ( j = 0; j < info->variables.Num(); j++ ) {
-			const char *varName = info->variables[j].name.c_str();
-			const char *varType = info->variables[j].type.c_str();
+		for( j = 0; j < info->variables.Num(); j++ )
+		{
+			const char* varName = info->variables[j].name.c_str();
+			const char* varType = info->variables[j].type.c_str();
 
-			if ( info->unnamed || info->isTemplate || info->variables[j].bits != 0 ) {
+			if( info->unnamed || info->isTemplate || info->variables[j].bits != 0 )
+			{
 				file->WriteFloatString( "//" );
 			}
 			file->WriteFloatString( "\t{ \"%s\", \"%s\", (int)(&((%s *)0)->%s), sizeof( ((%s *)0)->%s ) },\n",
@@ -1027,14 +1255,16 @@ void idTypeInfoGen::WriteTypeInfo( const char *fileName ) const {
 	// classes
 	file->WriteFloatString( "static classTypeInfo_t classTypeInfo[] = {\n" );
 
-	for ( i = 0; i < classes.Num(); i++ ) {
-		idClassTypeInfo *info = classes[i];
+	for( i = 0; i < classes.Num(); i++ )
+	{
+		idClassTypeInfo* info = classes[i];
 
 		idStr typeName = info->scope + info->typeName;
 		idStr typeInfoName = typeName;
 		CleanName( typeInfoName );
 
-		if ( info->unnamed || info->isTemplate ) {
+		if( info->unnamed || info->isTemplate )
+		{
 			file->WriteFloatString( "//" );
 		}
 		file->WriteFloatString( "\t{ \"%s\", \"%s\", sizeof(%s), %s_typeInfo },\n",

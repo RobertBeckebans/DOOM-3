@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,27 +48,31 @@ extern optVertex_t optVerts[MAX_OPT_VERTEXES];
 FindOptVertex
 ================
 */
-optVertex_t *FindOptVertex( idDrawVert *v, optimizeGroup_t *opt ) {
+optVertex_t* FindOptVertex( idDrawVert* v, optimizeGroup_t* opt )
+{
 	int		i;
 	float	x, y;
-	optVertex_t	*vert;
+	optVertex_t*	vert;
 
 	// deal with everything strictly as 2D
 	x = v->xyz * opt->axis[0];
 	y = v->xyz * opt->axis[1];
 
 	// should we match based on the t-junction fixing hash verts?
-	for ( i = 0 ; i < numOptVerts ; i++ ) {
-		if ( optVerts[i].pv[0] == x && optVerts[i].pv[1] == y ) {
+	for( i = 0 ; i < numOptVerts ; i++ )
+	{
+		if( optVerts[i].pv[0] == x && optVerts[i].pv[1] == y )
+		{
 			return &optVerts[i];
 		}
 	}
 
-	if ( numOptVerts >= MAX_OPT_VERTEXES ) {
+	if( numOptVerts >= MAX_OPT_VERTEXES )
+	{
 		common->Error( "MAX_OPT_VERTEXES" );
 		return NULL;
 	}
-	
+
 	numOptVerts++;
 
 	vert = &optVerts[i];

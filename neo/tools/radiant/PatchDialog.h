@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_PATCHDIALOG_H__DE62DFB4_E9EC_11D2_A509_0020AFEB881A__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER > 1000
 // PatchDialog.h : header file
 //
@@ -39,14 +39,14 @@ If you have questions concerning this license or the applicable additional terms
 
 class CPatchDialog : public CDialog
 {
-  patchMesh_t *m_Patch;
+	patchMesh_t* m_Patch;
 // Construction
 public:
 	void UpdateInfo();
 	void SetPatchInfo();
 	void GetPatchInfo();
-	CPatchDialog(CWnd* pParent = NULL);   // standard constructor
-  void UpdateSpinners(bool bUp, int nID);
+	CPatchDialog( CWnd* pParent = NULL ); // standard constructor
+	void UpdateSpinners( bool bUp, int nID );
 
 // Dialog Data
 	//{{AFX_DATA(CPatchDialog)
@@ -76,8 +76,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPatchDialog)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -94,7 +94,7 @@ protected:
 	afx_msg void OnSelchangeComboRow();
 	afx_msg void OnSelchangeComboType();
 	virtual void OnOK();
-	afx_msg void OnDeltaposSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin( NMHDR* pNMHDR, LRESULT* pResult );
 	virtual BOOL OnInitDialog();
 	afx_msg void OnDestroy();
 	afx_msg void OnApply();

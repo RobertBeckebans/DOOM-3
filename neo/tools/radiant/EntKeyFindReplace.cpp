@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,29 +45,29 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CEntKeyFindReplace dialog
 
-CEntKeyFindReplace::CEntKeyFindReplace(	CString* p_strFindKey, 
-										CString* p_strFindValue, 
-										CString* p_strReplaceKey, 
-										CString* p_strReplaceValue, 
+CEntKeyFindReplace::CEntKeyFindReplace(	CString* p_strFindKey,
+										CString* p_strFindValue,
+										CString* p_strReplaceKey,
+										CString* p_strReplaceValue,
 										bool*	 p_bWholeStringMatchOnly,
 										bool*	 p_bSelectAllMatchingEnts,
-										CWnd*	 pParent /*=NULL*/)
-	: CDialog(CEntKeyFindReplace::IDD, pParent)
+										CWnd*	 pParent /*=NULL*/ )
+	: CDialog( CEntKeyFindReplace::IDD, pParent )
 {
 	m_pStrFindKey		= p_strFindKey;
 	m_pStrFindValue		= p_strFindValue;
 	m_pStrReplaceKey	= p_strReplaceKey;
 	m_pStrReplaceValue	= p_strReplaceValue;
 	m_pbWholeStringMatchOnly = p_bWholeStringMatchOnly;
-	m_pbSelectAllMatchingEnts= p_bSelectAllMatchingEnts;
+	m_pbSelectAllMatchingEnts = p_bSelectAllMatchingEnts;
 
 	//{{AFX_DATA_INIT(CEntKeyFindReplace)
 	m_strFindKey	  = *m_pStrFindKey;
@@ -80,58 +80,58 @@ CEntKeyFindReplace::CEntKeyFindReplace(	CString* p_strFindKey,
 }
 
 
-void CEntKeyFindReplace::DoDataExchange(CDataExchange* pDX)
+void CEntKeyFindReplace::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CEntKeyFindReplace)
-	DDX_Text(pDX, IDC_EDIT_FIND_KEY, m_strFindKey);
-	DDX_Text(pDX, IDC_EDIT_FIND_VALUE, m_strFindValue);
-	DDX_Text(pDX, IDC_EDIT_REPLACE_KEY, m_strReplaceKey);
-	DDX_Text(pDX, IDC_EDIT_REPLACE_VALUE, m_strReplaceValue);
-	DDX_Check(pDX, IDC_CHECK_FIND_WHOLESTRINGMATCHONLY, m_bWholeStringMatchOnly);
-	DDX_Check(pDX, IDC_CHECK_SELECTALLMATCHING, m_bSelectAllMatchingEnts);
+	DDX_Text( pDX, IDC_EDIT_FIND_KEY, m_strFindKey );
+	DDX_Text( pDX, IDC_EDIT_FIND_VALUE, m_strFindValue );
+	DDX_Text( pDX, IDC_EDIT_REPLACE_KEY, m_strReplaceKey );
+	DDX_Text( pDX, IDC_EDIT_REPLACE_VALUE, m_strReplaceValue );
+	DDX_Check( pDX, IDC_CHECK_FIND_WHOLESTRINGMATCHONLY, m_bWholeStringMatchOnly );
+	DDX_Check( pDX, IDC_CHECK_SELECTALLMATCHING, m_bSelectAllMatchingEnts );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CEntKeyFindReplace, CDialog)
+BEGIN_MESSAGE_MAP( CEntKeyFindReplace, CDialog )
 	//{{AFX_MSG_MAP(CEntKeyFindReplace)
-	ON_BN_CLICKED(IDC_REPLACE, OnReplace)
-	ON_BN_CLICKED(IDC_FIND,	 OnFind)
-	ON_BN_CLICKED(IDC_KEYCOPY, OnKeycopy)
-	ON_BN_CLICKED(IDC_VALUECOPY, OnValuecopy)
+	ON_BN_CLICKED( IDC_REPLACE, OnReplace )
+	ON_BN_CLICKED( IDC_FIND,	 OnFind )
+	ON_BN_CLICKED( IDC_KEYCOPY, OnKeycopy )
+	ON_BN_CLICKED( IDC_VALUECOPY, OnValuecopy )
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CEntKeyFindReplace message handlers
 
-void CEntKeyFindReplace::OnCancel() 
-{	
+void CEntKeyFindReplace::OnCancel()
+{
 	CDialog::OnCancel();
 }
 
-void CEntKeyFindReplace::OnReplace() 
+void CEntKeyFindReplace::OnReplace()
 {
 	// quick check, if no key value is specified then there's not much to do...
 	//
-	UpdateData(DIALOG_TO_DATA);
-	if (m_strFindKey.IsEmpty())
+	UpdateData( DIALOG_TO_DATA );
+	if( m_strFindKey.IsEmpty() )
 	{
-		ErrorBox("Empty FIND <key>!\n\n(This is only permitted for FIND, not replace, for safety reasons)");
+		ErrorBox( "Empty FIND <key>!\n\n(This is only permitted for FIND, not replace, for safety reasons)" );
 	}
 	else
 	{
-		if (!m_strFindValue.IsEmpty() || GetYesNo(va("Empty FIND <value> means replace any existing ( & non-blank ) <value> for <key> \"%s\"\n\nProceed?",(LPCSTR)m_strFindKey)))
+		if( !m_strFindValue.IsEmpty() || GetYesNo( va( "Empty FIND <value> means replace any existing ( & non-blank ) <value> for <key> \"%s\"\n\nProceed?", ( LPCSTR )m_strFindKey ) ) )
 		{
 			// another check, if they're trying to do a replace with a missing replace key, it'll just delete found keys...
 			//
-			if ((!m_strReplaceKey.IsEmpty() && !m_strReplaceValue.IsEmpty()) || GetYesNo(va("Empty REPLACE <key> or <value> fields will just delete all occurence of <key> \"%s\"\n\nProceed?",m_strFindKey)))
+			if( ( !m_strReplaceKey.IsEmpty() && !m_strReplaceValue.IsEmpty() ) || GetYesNo( va( "Empty REPLACE <key> or <value> fields will just delete all occurence of <key> \"%s\"\n\nProceed?", m_strFindKey ) ) )
 			{
-				if (GetYesNo("Sure?"))
+				if( GetYesNo( "Sure?" ) )
 				{
 					CopyFields();
-					EndDialog(ID_RET_REPLACE);
+					EndDialog( ID_RET_REPLACE );
 				}
 			}
 		}
@@ -142,14 +142,14 @@ void CEntKeyFindReplace::OnFind()
 {
 	// quick check, if no key value is specified then there's not much to do...
 	//
-	UpdateData(DIALOG_TO_DATA);
+	UpdateData( DIALOG_TO_DATA );
 
-	if (m_strFindKey.IsEmpty() && m_strFindValue.IsEmpty())
+	if( m_strFindKey.IsEmpty() && m_strFindValue.IsEmpty() )
 	{
-		ErrorBox("Empty FIND fields!");
+		ErrorBox( "Empty FIND fields!" );
 	}
 	else
-	{	
+	{
 //		if (m_strFindKey.IsEmpty() && m_bSelectAllMatchingEnts)
 //		{
 //			if (GetYesNo("Warning! Having a blank FIND <key> and ticking \"Select all matching ents\" can take a LONG time to do (and is probably a wrong choice anyway?)\n\nProceed?"))
@@ -161,14 +161,14 @@ void CEntKeyFindReplace::OnFind()
 //		else
 		{
 			CopyFields();
-			EndDialog(ID_RET_FIND);
+			EndDialog( ID_RET_FIND );
 		}
 	}
 }
 
 void CEntKeyFindReplace::CopyFields()
 {
-	UpdateData(DIALOG_TO_DATA);
+	UpdateData( DIALOG_TO_DATA );
 
 	*m_pStrFindKey		= m_strFindKey;
 	*m_pStrFindValue	= m_strFindValue;
@@ -179,21 +179,21 @@ void CEntKeyFindReplace::CopyFields()
 }
 
 
-void CEntKeyFindReplace::OnKeycopy() 
+void CEntKeyFindReplace::OnKeycopy()
 {
-	UpdateData(DIALOG_TO_DATA);
+	UpdateData( DIALOG_TO_DATA );
 
 	m_strReplaceKey = m_strFindKey;
 
-	UpdateData(DATA_TO_DIALOG);	
+	UpdateData( DATA_TO_DIALOG );
 }
 
-void CEntKeyFindReplace::OnValuecopy() 
+void CEntKeyFindReplace::OnValuecopy()
 {
-	UpdateData(DIALOG_TO_DATA);
+	UpdateData( DIALOG_TO_DATA );
 
 	m_strReplaceValue = m_strFindValue;
 
-	UpdateData(DATA_TO_DIALOG);	
+	UpdateData( DATA_TO_DIALOG );
 }
 

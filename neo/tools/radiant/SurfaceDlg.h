@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_SURFACEDLG_H__D84E0C22_9EEA_11D1_B570_00AA00A410FC__INCLUDED_
 
 #if _MSC_VER >= 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER >= 1000
 // SurfaceDlg.h : header file
 //
@@ -40,12 +40,12 @@ If you have questions concerning this license or the applicable additional terms
 class CSurfaceDlg : public CDialog
 {
 	bool m_bPatchMode;
-	CWnd *focusControl;
+	CWnd* focusControl;
 
 	// Construction
 public:
-	CSurfaceDlg(CWnd* pParent = NULL);   // standard constructor
-  void SetTexMods();
+	CSurfaceDlg( CWnd* pParent = NULL ); // standard constructor
+	void SetTexMods();
 
 // Dialog Data
 	//{{AFX_DATA(CSurfaceDlg)
@@ -80,24 +80,24 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSurfaceDlg)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+public:
+	virtual BOOL PreTranslateMessage( MSG* pMsg );
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
+	virtual BOOL PreCreateWindow( CREATESTRUCT& cs );
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 
-  void UpdateSpinners(int nScrollCode, int nPos, CScrollBar* pBar);
-  void UpdateSpinners(bool bUp, int nID);
+	void UpdateSpinners( int nScrollCode, int nPos, CScrollBar* pBar );
+	void UpdateSpinners( bool bUp, int nID );
 	// Generated message map functions
 	//{{AFX_MSG(CSurfaceDlg)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
-	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnHScroll( UINT nSBCode, UINT nPos, CScrollBar* pScrollBar );
+	afx_msg void OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags );
+	afx_msg void OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* pScrollBar );
 	afx_msg void OnApply();
 	virtual void OnOK();
 	afx_msg void OnClose();
@@ -105,9 +105,9 @@ protected:
 	afx_msg void OnDestroy();
 	afx_msg void OnBtnCancel();
 	afx_msg void OnBtnColor();
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnDeltaPosSpin(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg HBRUSH OnCtlColor( CDC* pDC, CWnd* pWnd, UINT nCtlColor );
+	afx_msg int OnCreate( LPCREATESTRUCT lpCreateStruct );
+	afx_msg void OnDeltaPosSpin( NMHDR* pNMHDR, LRESULT* pResult );
 	afx_msg void OnBtnPatchdetails();
 	afx_msg void OnBtnPatchnatural();
 	afx_msg void OnBtnPatchreset();

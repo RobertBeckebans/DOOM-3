@@ -4,7 +4,7 @@
    System headers sometimes define this.
    We just want to avoid a redefinition error message.  */
 #ifndef _ALL_SOURCE
-#undef _ALL_SOURCE
+	#undef _ALL_SOURCE
 #endif
 
 /* Define to empty if the keyword does not work.  */

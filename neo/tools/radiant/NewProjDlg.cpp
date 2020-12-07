@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,36 +34,36 @@ If you have questions concerning this license or the applicable additional terms
 #include "NewProjDlg.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CNewProjDlg dialog
 
 
-CNewProjDlg::CNewProjDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CNewProjDlg::IDD, pParent)
+CNewProjDlg::CNewProjDlg( CWnd* pParent /*=NULL*/ )
+	: CDialog( CNewProjDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CNewProjDlg)
-	m_strName = _T("");
+	m_strName = _T( "" );
 	//}}AFX_DATA_INIT
 }
 
 
-void CNewProjDlg::DoDataExchange(CDataExchange* pDX)
+void CNewProjDlg::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CNewProjDlg)
-	DDX_Text(pDX, IDC_EDIT_NAME, m_strName);
+	DDX_Text( pDX, IDC_EDIT_NAME, m_strName );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CNewProjDlg, CDialog)
+BEGIN_MESSAGE_MAP( CNewProjDlg, CDialog )
 	//{{AFX_MSG_MAP(CNewProjDlg)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

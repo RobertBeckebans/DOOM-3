@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,38 +33,38 @@ If you have questions concerning this license or the applicable additional terms
 #include "DlgEvent.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CDlgEvent dialog
 
 
-CDlgEvent::CDlgEvent(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgEvent::IDD, pParent)
+CDlgEvent::CDlgEvent( CWnd* pParent /*=NULL*/ )
+	: CDialog( CDlgEvent::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CDlgEvent)
-	m_strParm = _T("");
+	m_strParm = _T( "" );
 	m_event = 0;
 	//}}AFX_DATA_INIT
 }
 
 
-void CDlgEvent::DoDataExchange(CDataExchange* pDX)
+void CDlgEvent::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CDlgEvent)
-	DDX_Text(pDX, IDC_EDIT_PARAM, m_strParm);
-	DDX_Radio(pDX, IDC_RADIO_EVENT, m_event);
+	DDX_Text( pDX, IDC_EDIT_PARAM, m_strParm );
+	DDX_Radio( pDX, IDC_RADIO_EVENT, m_event );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgEvent, CDialog)
+BEGIN_MESSAGE_MAP( CDlgEvent, CDialog )
 	//{{AFX_MSG_MAP(CDlgEvent)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

@@ -10,28 +10,28 @@
 # include "setup.h"
 
 #ifndef PARAMS
-# if defined PROTOTYPES || (defined __STDC__ && __STDC__)
-#  define PARAMS(Args) Args
-# else
-#  define PARAMS(Args) ()
-# endif
+	#if defined PROTOTYPES || (defined __STDC__ && __STDC__)
+		#define PARAMS(Args) Args
+	#else
+		#define PARAMS(Args) ()
+	#endif
 #endif
 
 #ifdef vms
-# include <types.h>
-# include <time.h>
+	#include <types.h>
+	#include <time.h>
 #else
-# include <sys/types.h>
-# if TIME_WITH_SYS_TIME
-#  include <sys/time.h>
-#  include <time.h>
-# else
-#  if HAVE_SYS_TIME_H
-#   include <sys/time.h>
-#  else
-#   include <time.h>
-#  endif
-# endif
+	#include <sys/types.h>
+	#if TIME_WITH_SYS_TIME
+		#include <sys/time.h>
+		#include <time.h>
+	#else
+		#if HAVE_SYS_TIME_H
+			#include <sys/time.h>
+		#else
+			#include <time.h>
+		#endif
+	#endif
 #endif /* defined (vms) */
 
-time_t curl_getdate PARAMS ((const char *p, const time_t *now));
+time_t curl_getdate PARAMS( ( const char* p, const time_t* now ) );

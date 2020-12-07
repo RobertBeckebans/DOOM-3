@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,17 +34,17 @@ If you have questions concerning this license or the applicable additional terms
 #include "DialogThick.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CDialogThick dialog
 
 
-CDialogThick::CDialogThick(CWnd* pParent /*=NULL*/)
-	: CDialog(CDialogThick::IDD, pParent)
+CDialogThick::CDialogThick( CWnd* pParent /*=NULL*/ )
+	: CDialog( CDialogThick::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CDialogThick)
 	m_bSeams = TRUE;
@@ -53,19 +53,19 @@ CDialogThick::CDialogThick(CWnd* pParent /*=NULL*/)
 }
 
 
-void CDialogThick::DoDataExchange(CDataExchange* pDX)
+void CDialogThick::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CDialogThick)
-	DDX_Check(pDX, IDC_CHECK_SEAMS, m_bSeams);
-	DDX_Text(pDX, IDC_EDIT_AMOUNT, m_nAmount);
+	DDX_Check( pDX, IDC_CHECK_SEAMS, m_bSeams );
+	DDX_Text( pDX, IDC_EDIT_AMOUNT, m_nAmount );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CDialogThick, CDialog)
+BEGIN_MESSAGE_MAP( CDialogThick, CDialog )
 	//{{AFX_MSG_MAP(CDialogThick)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

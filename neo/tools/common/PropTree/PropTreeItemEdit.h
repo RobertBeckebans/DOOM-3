@@ -2,7 +2,7 @@
 #define AFX_PROPTREEITEMEDIT_H__642536B1_1162_4F99_B09D_9B1BD2CF88B6__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER > 1000
 // PropTreeItemEdit.h : header file
 //
@@ -12,13 +12,13 @@
 //
 //  This material is provided "as is", with absolutely no warranty expressed
 //  or implied. Any use is at your own risk.
-// 
-//  Permission to use or copy this software for any purpose is hereby granted 
+//
+//  Permission to use or copy this software for any purpose is hereby granted
 //  without fee, provided the above notices are retained on all copies.
 //  Permission to modify the code and to distribute modified code is granted,
 //  provided the above notices are retained, and a notice that the code was
 //  modified is included with the above copyright notice.
-// 
+//
 //	If you use this code, drop me an email.  I'd like to know if you find the code
 //	useful.
 
@@ -37,13 +37,13 @@ public:
 // Attributes
 public:
 	// The attribute area needs drawing
-	virtual void DrawAttribute(CDC* pDC, const RECT& rc);
+	virtual void DrawAttribute( CDC* pDC, const RECT& rc );
 
 	// Retrieve the item's attribute value
 	virtual LPARAM GetItemValue();
 
 	// Set the item's attribute value
-	virtual void SetItemValue(LPARAM lParam);
+	virtual void SetItemValue( LPARAM lParam );
 
 	// Called when attribute area has changed size
 	virtual void OnMove();
@@ -55,9 +55,9 @@ public:
 	virtual void OnCommit();
 
 	// Called to activate the item
-	virtual void OnActivate(int activateType, CPoint point);
+	virtual void OnActivate( int activateType, CPoint point );
 
-	
+
 	enum ValueFormat
 	{
 		ValueFormatText,
@@ -66,10 +66,10 @@ public:
 	};
 
 	// Set to specifify format of SetItemValue/GetItemValue
-	void SetValueFormat(ValueFormat nFormat);
-		
+	void SetValueFormat( ValueFormat nFormat );
+
 	// Set to TRUE for to use a password edit control
-	void SetAsPassword(BOOL bPassword);
+	void SetAsPassword( BOOL bPassword );
 
 protected:
 	CString		m_sEdit;
@@ -93,7 +93,7 @@ public:
 protected:
 	//{{AFX_MSG(CPropTreeItemEdit)
 	afx_msg UINT OnGetDlgCode();
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags );
 	afx_msg void OnKillfocus();
 	//}}AFX_MSG
 

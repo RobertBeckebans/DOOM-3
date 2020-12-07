@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_DIALOGINFO_H__81DF2A33_A552_11D1_B58E_00AA00A410FC__INCLUDED_
 
 #if _MSC_VER >= 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER >= 1000
 // DialogInfo.h : header file
 //
@@ -37,13 +37,13 @@ If you have questions concerning this license or the applicable additional terms
 /////////////////////////////////////////////////////////////////////////////
 // CDialogInfo dialog
 void HideInfoDialog();
-void ShowInfoDialog(const char* pText);
+void ShowInfoDialog( const char* pText );
 
 class CDialogInfo : public CDialog
 {
 // Construction
 public:
-	CDialogInfo(CWnd* pParent = NULL);   // standard constructor
+	CDialogInfo( CWnd* pParent = NULL ); // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CDialogInfo)
@@ -55,8 +55,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDialogInfo)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation

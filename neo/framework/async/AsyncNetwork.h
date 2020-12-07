@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -76,7 +76,8 @@ const int GAME_INIT_ID_MAP_LOAD		= -2;
 
 
 // unreliable server -> client messages
-enum {
+enum
+{
 	SERVER_UNRELIABLE_MESSAGE_EMPTY = 0,
 	SERVER_UNRELIABLE_MESSAGE_PING,
 	SERVER_UNRELIABLE_MESSAGE_GAMEINIT,
@@ -84,7 +85,8 @@ enum {
 };
 
 // reliable server -> client messages
-enum {
+enum
+{
 	SERVER_RELIABLE_MESSAGE_PURE = 0,
 	SERVER_RELIABLE_MESSAGE_RELOAD,
 	SERVER_RELIABLE_MESSAGE_CLIENTINFO,
@@ -97,14 +99,16 @@ enum {
 };
 
 // unreliable client -> server messages
-enum {
+enum
+{
 	CLIENT_UNRELIABLE_MESSAGE_EMPTY = 0,
 	CLIENT_UNRELIABLE_MESSAGE_PINGRESPONSE,
 	CLIENT_UNRELIABLE_MESSAGE_USERCMD
 };
 
 // reliable client -> server messages
-enum {
+enum
+{
 	CLIENT_RELIABLE_MESSAGE_PURE = 0,
 	CLIENT_RELIABLE_MESSAGE_CLIENTINFO,
 	CLIENT_RELIABLE_MESSAGE_PRINT,
@@ -113,7 +117,8 @@ enum {
 };
 
 // server print messages
-enum {
+enum
+{
 	SERVER_PRINT_MISC = 0,
 	SERVER_PRINT_BADPROTOCOL,
 	SERVER_PRINT_RCON,
@@ -121,52 +126,59 @@ enum {
 	SERVER_PRINT_BADCHALLENGE
 };
 
-enum {
+enum
+{
 	SERVER_DL_REDIRECT = 1,
 	SERVER_DL_LIST,
 	SERVER_DL_NONE
 };
 
-enum {
+enum
+{
 	SERVER_PAK_NO = 0,
 	SERVER_PAK_YES,
 	SERVER_PAK_END
 };
 
-typedef struct master_s {
-	idCVar *		var;
+typedef struct master_s
+{
+	idCVar* 		var;
 	netadr_t		address;
 	bool			resolved;
 } master_t;
 
 
-class idAsyncNetwork {
+class idAsyncNetwork
+{
 public:
-							idAsyncNetwork();
+	idAsyncNetwork();
 
 	static void				Init( void );
 	static void				Shutdown( void );
-	static bool				IsActive( void ) { return ( server.IsActive() || client.IsActive() ); }
+	static bool				IsActive( void )
+	{
+		return ( server.IsActive() || client.IsActive() );
+	}
 	static void				RunFrame( void );
 
-	static void				WriteUserCmdDelta( idBitMsg &msg, const usercmd_t &cmd, const usercmd_t *base );
-	static void				ReadUserCmdDelta( const idBitMsg &msg, usercmd_t &cmd, const usercmd_t *base );
+	static void				WriteUserCmdDelta( idBitMsg& msg, const usercmd_t& cmd, const usercmd_t* base );
+	static void				ReadUserCmdDelta( const idBitMsg& msg, usercmd_t& cmd, const usercmd_t* base );
 
-	static bool				DuplicateUsercmd( const usercmd_t &previousUserCmd, usercmd_t &currentUserCmd, int frame, int time );
-	static bool				UsercmdInputChanged( const usercmd_t &previousUserCmd, const usercmd_t &currentUserCmd );
+	static bool				DuplicateUsercmd( const usercmd_t& previousUserCmd, usercmd_t& currentUserCmd, int frame, int time );
+	static bool				UsercmdInputChanged( const usercmd_t& previousUserCmd, const usercmd_t& currentUserCmd );
 
-							// returns true if the corresponding master is set to something (and could be resolved)
-	static bool				GetMasterAddress( int index, netadr_t &adr );
-							// get the hardcoded idnet master, equivalent to GetMasterAddress( 0, .. )
+	// returns true if the corresponding master is set to something (and could be resolved)
+	static bool				GetMasterAddress( int index, netadr_t& adr );
+	// get the hardcoded idnet master, equivalent to GetMasterAddress( 0, .. )
 	static netadr_t			GetMasterAddress( void );
-	
+
 	static void				GetNETServers( );
-	
-	static void				ExecuteSessionCommand( const char *sessCmd );
+
+	static void				ExecuteSessionCommand( const char* sessCmd );
 
 	static idAsyncServer	server;
 	static idAsyncClient	client;
-	
+
 	static idCVar			verbose;						// verbose output
 	static idCVar			allowCheats;					// allow cheats
 	static idCVar			serverDedicated;				// if set run a dedicated server
@@ -196,24 +208,24 @@ public:
 	static idCVar			clientDownload;					// preferred download policy
 
 	// same message used for offline check and network reply
-	static void				BuildInvalidKeyMsg( idStr &msg, bool valid[ 2 ] );
+	static void				BuildInvalidKeyMsg( idStr& msg, bool valid[ 2 ] );
 
 private:
 	static int				realTime;
 	static master_t			masters[ MAX_MASTER_SERVERS];	// master1 etc.
 
-	static void				SpawnServer_f( const idCmdArgs &args );
-	static void				NextMap_f( const idCmdArgs &args );
-	static void				Connect_f( const idCmdArgs &args );
-	static void				Reconnect_f( const idCmdArgs &args );
-	static void				GetServerInfo_f( const idCmdArgs &args );
-	static void				GetLANServers_f( const idCmdArgs &args );
-	static void				ListServers_f( const idCmdArgs &args );
-	static void				RemoteConsole_f( const idCmdArgs &args );
-	static void				Heartbeat_f( const idCmdArgs &args );
-	static void				Kick_f( const idCmdArgs &args );
-	static void				CheckNewVersion_f( const idCmdArgs &args );
-	static void				UpdateUI_f( const idCmdArgs &args );
+	static void				SpawnServer_f( const idCmdArgs& args );
+	static void				NextMap_f( const idCmdArgs& args );
+	static void				Connect_f( const idCmdArgs& args );
+	static void				Reconnect_f( const idCmdArgs& args );
+	static void				GetServerInfo_f( const idCmdArgs& args );
+	static void				GetLANServers_f( const idCmdArgs& args );
+	static void				ListServers_f( const idCmdArgs& args );
+	static void				RemoteConsole_f( const idCmdArgs& args );
+	static void				Heartbeat_f( const idCmdArgs& args );
+	static void				Kick_f( const idCmdArgs& args );
+	static void				CheckNewVersion_f( const idCmdArgs& args );
+	static void				UpdateUI_f( const idCmdArgs& args );
 };
 
 #endif /* !__ASYNCNETWORK_H__ */

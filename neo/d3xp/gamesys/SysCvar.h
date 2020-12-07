@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ extern idCVar	ai_showPaths;
 extern idCVar	ai_showObstacleAvoidance;
 extern idCVar	ai_blockedFailSafe;
 #ifdef _D3XP
-extern idCVar	ai_showHealth;
+	extern idCVar	ai_showHealth;
 #endif
 
 extern idCVar	g_dvTime;
@@ -120,9 +120,9 @@ extern idCVar	g_vehicleSuspensionKCompress;
 extern idCVar	g_vehicleSuspensionDamping;
 extern idCVar	g_vehicleTireFriction;
 #ifdef _D3XP
-extern idCVar	g_vehicleDebug;
-extern idCVar	g_debugShockwave;
-extern idCVar	g_enablePortalSky;
+	extern idCVar	g_vehicleDebug;
+	extern idCVar	g_debugShockwave;
+	extern idCVar	g_enablePortalSky;
 #endif
 
 extern idCVar	ik_enable;
@@ -231,28 +231,28 @@ extern idCVar	g_exportMask;
 extern idCVar	g_flushSave;
 
 #ifdef _D3XP
-extern idCVar	g_enableSlowmo;
-extern idCVar	g_slowmoStepRate;
-extern idCVar	g_testFullscreenFX;
-extern idCVar	g_testHelltimeFX;
-extern idCVar	g_testMultiplayerFX;
-extern idCVar	g_lowresFullscreenFX;
-extern idCVar	g_moveableDamageScale;
-extern idCVar	g_testBloomSpeed;
-extern idCVar	g_testBloomIntensity;
-extern idCVar	g_testBloomNumPasses;
+	extern idCVar	g_enableSlowmo;
+	extern idCVar	g_slowmoStepRate;
+	extern idCVar	g_testFullscreenFX;
+	extern idCVar	g_testHelltimeFX;
+	extern idCVar	g_testMultiplayerFX;
+	extern idCVar	g_lowresFullscreenFX;
+	extern idCVar	g_moveableDamageScale;
+	extern idCVar	g_testBloomSpeed;
+	extern idCVar	g_testBloomIntensity;
+	extern idCVar	g_testBloomNumPasses;
 #endif
 
 #ifdef _D3XP
-extern idCVar	g_grabberHoldSeconds;
-extern idCVar	g_grabberEnableShake;
-extern idCVar	g_grabberRandomMotion;
-extern idCVar	g_grabberHardStop;
-extern idCVar	g_grabberDamping;
+	extern idCVar	g_grabberHoldSeconds;
+	extern idCVar	g_grabberEnableShake;
+	extern idCVar	g_grabberRandomMotion;
+	extern idCVar	g_grabberHardStop;
+	extern idCVar	g_grabberDamping;
 #endif
 
 #ifdef _D3XP
-extern idCVar	g_xp_bind_run_once;
+	extern idCVar	g_xp_bind_run_once;
 #endif
 
 extern idCVar	aas_test;
@@ -279,26 +279,26 @@ extern idCVar	si_map;
 extern idCVar	si_spectators;
 
 #ifdef CTF
-extern idCVar si_flagDropTimeLimit;
-extern idCVar si_midnight;
+	extern idCVar si_flagDropTimeLimit;
+	extern idCVar si_midnight;
 
-extern idCVar g_flagAttachJoint;
-extern idCVar g_flagAttachOffsetX;
-extern idCVar g_flagAttachOffsetY;
-extern idCVar g_flagAttachOffsetZ;
-extern idCVar g_flagAttachAngleX;
-extern idCVar g_flagAttachAngleY;
-extern idCVar g_flagAttachAngleZ;
+	extern idCVar g_flagAttachJoint;
+	extern idCVar g_flagAttachOffsetX;
+	extern idCVar g_flagAttachOffsetY;
+	extern idCVar g_flagAttachOffsetZ;
+	extern idCVar g_flagAttachAngleX;
+	extern idCVar g_flagAttachAngleY;
+	extern idCVar g_flagAttachAngleZ;
 
-extern idCVar g_CTFArrows;
+	extern idCVar g_CTFArrows;
 
 #endif
 
 extern idCVar	net_clientSelfSmoothing;
 extern idCVar	net_clientLagOMeter;
 
-extern const char *si_gameTypeArgs[];
+extern const char* si_gameTypeArgs[];
 
-extern const char *ui_skinArgs[];
+extern const char* ui_skinArgs[];
 
 #endif /* !__SYS_CVAR_H__ */

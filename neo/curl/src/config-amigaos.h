@@ -28,13 +28,13 @@
 
 
 #ifndef F_OK
-# define F_OK 0
+	#define F_OK 0
 #endif
 #ifndef LONG_MAX
-# define	LONG_MAX	0x7fffffffL		/* max value for a long */
+	#define	LONG_MAX	0x7fffffffL		/* max value for a long */
 #endif
 #ifndef LONG_MIN
-# define	LONG_MIN	(-0x7fffffffL-1)	/* min value for a long */
+	#define	LONG_MIN	(-0x7fffffffL-1)	/* min value for a long */
 #endif
 
 #endif /* CURL_CONFIG_AMIGAOS_H */

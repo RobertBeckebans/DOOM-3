@@ -12,15 +12,18 @@ Copyright (C) 2001 Eric Lavigne	Permission is granted to anyone to use this soft
 #include <stdlib.h>
 
 /* ========================================================================= */
-DECLARE_MAIN(curl)
-REGISTER_MAIN_STARTREGISTER_MAIN(curl)
+DECLARE_MAIN( curl )
+REGISTER_MAIN_STARTREGISTER_MAIN( curl )
 REGISTER_MAIN_END
 /* ========================================================================= */
 
-int main(){	
+int main()
+{
 	::MaxApplZone();
-	for (int i = 1; i <= 10; i++)
+	for( int i = 1; i <= 10; i++ )
+	{
 		::MoreMasters();
-	(void) exec_commands();
+	}
+	( void ) exec_commands();
 	return 0;
 }

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_DLGEVENT_H__B12EEBE1_FB71_407B_9075_50F63B168567__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER > 1000
 // DlgEvent.h : header file
 //
@@ -42,7 +42,7 @@ class CDlgEvent : public CDialog
 {
 // Construction
 public:
-	CDlgEvent(CWnd* pParent = NULL);   // standard constructor
+	CDlgEvent( CWnd* pParent = NULL ); // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CDlgEvent)
@@ -55,8 +55,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDlgEvent)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -64,7 +64,7 @@ protected:
 
 	// Generated message map functions
 	//{{AFX_MSG(CDlgEvent)
-		// NOTE: the ClassWizard will add member functions here
+	// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

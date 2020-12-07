@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,14 +39,15 @@ two points that faces the view, like a dynamic deform tube.
 
 */
 
-static const char *beam_SnapshotName = "_beam_Snapshot_";
+static const char* beam_SnapshotName = "_beam_Snapshot_";
 
 /*
 ===============
 idRenderModelBeam::IsDynamicModel
 ===============
 */
-dynamicModel_t idRenderModelBeam::IsDynamicModel() const {
+dynamicModel_t idRenderModelBeam::IsDynamicModel() const
+{
 	return DM_CONTINUOUS;	// regenerate for every view
 }
 
@@ -55,7 +56,8 @@ dynamicModel_t idRenderModelBeam::IsDynamicModel() const {
 idRenderModelBeam::IsLoaded
 ===============
 */
-bool idRenderModelBeam::IsLoaded() const {
+bool idRenderModelBeam::IsLoaded() const
+{
 	return true;	// don't ever need to load
 }
 
@@ -64,31 +66,37 @@ bool idRenderModelBeam::IsLoaded() const {
 idRenderModelBeam::InstantiateDynamicModel
 ===============
 */
-idRenderModel *idRenderModelBeam::InstantiateDynamicModel( const struct renderEntity_s *renderEntity, const struct viewDef_s *viewDef, idRenderModel *cachedModel ) {
-	idRenderModelStatic *staticModel;
-	srfTriangles_t *tri;
+idRenderModel* idRenderModelBeam::InstantiateDynamicModel( const struct renderEntity_s* renderEntity, const struct viewDef_s* viewDef, idRenderModel* cachedModel )
+{
+	idRenderModelStatic* staticModel;
+	srfTriangles_t* tri;
 	modelSurface_t surf;
 
-	if ( cachedModel ) {
+	if( cachedModel )
+	{
 		delete cachedModel;
 		cachedModel = NULL;
 	}
 
-	if ( renderEntity == NULL || viewDef == NULL ) {
+	if( renderEntity == NULL || viewDef == NULL )
+	{
 		delete cachedModel;
 		return NULL;
 	}
 
-	if ( cachedModel != NULL ) {
+	if( cachedModel != NULL )
+	{
 
-		assert( dynamic_cast<idRenderModelStatic *>( cachedModel ) != NULL );
+		assert( dynamic_cast<idRenderModelStatic*>( cachedModel ) != NULL );
 		assert( idStr::Icmp( cachedModel->Name(), beam_SnapshotName ) == 0 );
 
-		staticModel = static_cast<idRenderModelStatic *>( cachedModel );
+		staticModel = static_cast<idRenderModelStatic*>( cachedModel );
 		surf = *staticModel->Surface( 0 );
 		tri = surf.geometry;
 
-	} else {
+	}
+	else
+	{
 
 		staticModel = new idRenderModelStatic;
 		staticModel->InitEmpty( beam_SnapshotName );
@@ -129,15 +137,15 @@ idRenderModel *idRenderModelBeam::InstantiateDynamicModel( const struct renderEn
 		staticModel->AddSurface( surf );
 	}
 
-	idVec3	target = *reinterpret_cast<const idVec3 *>( &renderEntity->shaderParms[SHADERPARM_BEAM_END_X] );
+	idVec3	target = *reinterpret_cast<const idVec3*>( &renderEntity->shaderParms[SHADERPARM_BEAM_END_X] );
 
 	// we need the view direction to project the minor axis of the tube
 	// as the view changes
 	idVec3	localView, localTarget;
 	float	modelMatrix[16];
 	R_AxisToModelMatrix( renderEntity->axis, renderEntity->origin, modelMatrix );
-	R_GlobalPointToLocal( modelMatrix, viewDef->renderView.vieworg, localView ); 
-	R_GlobalPointToLocal( modelMatrix, target, localTarget ); 
+	R_GlobalPointToLocal( modelMatrix, viewDef->renderView.vieworg, localView );
+	R_GlobalPointToLocal( modelMatrix, target, localTarget );
 
 	idVec3	major = localTarget;
 	idVec3	minor;
@@ -146,7 +154,8 @@ idRenderModel *idRenderModelBeam::InstantiateDynamicModel( const struct renderEn
 	idVec3	dir = mid - localView;
 	minor.Cross( major, dir );
 	minor.Normalize();
-	if ( renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] != 0.0f ) {
+	if( renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] != 0.0f )
+	{
 		minor *= renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] * 0.5f;
 	}
 
@@ -191,21 +200,26 @@ idRenderModel *idRenderModelBeam::InstantiateDynamicModel( const struct renderEn
 idRenderModelBeam::Bounds
 ===============
 */
-idBounds idRenderModelBeam::Bounds( const struct renderEntity_s *renderEntity ) const {
+idBounds idRenderModelBeam::Bounds( const struct renderEntity_s* renderEntity ) const
+{
 	idBounds	b;
 
 	b.Zero();
-	if ( !renderEntity ) {
+	if( !renderEntity )
+	{
 		b.ExpandSelf( 8.0f );
-	} else {
-		idVec3	target = *reinterpret_cast<const idVec3 *>( &renderEntity->shaderParms[SHADERPARM_BEAM_END_X] );
+	}
+	else
+	{
+		idVec3	target = *reinterpret_cast<const idVec3*>( &renderEntity->shaderParms[SHADERPARM_BEAM_END_X] );
 		idVec3	localTarget;
 		float	modelMatrix[16];
 		R_AxisToModelMatrix( renderEntity->axis, renderEntity->origin, modelMatrix );
-		R_GlobalPointToLocal( modelMatrix, target, localTarget ); 
+		R_GlobalPointToLocal( modelMatrix, target, localTarget );
 
 		b.AddPoint( localTarget );
-		if ( renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] != 0.0f ) {
+		if( renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] != 0.0f )
+		{
 			b.ExpandSelf( renderEntity->shaderParms[SHADERPARM_BEAM_WIDTH] * 0.5f );
 		}
 	}

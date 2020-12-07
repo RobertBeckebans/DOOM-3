@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 class CTabsDlg;
 class CTearoffContainerWindow : public CWnd
 {
-	DECLARE_DYNAMIC(CTearoffContainerWindow)
+	DECLARE_DYNAMIC( CTearoffContainerWindow )
 
 public:
 	CTearoffContainerWindow();
@@ -44,16 +44,16 @@ public:
 
 protected:
 	DECLARE_MESSAGE_MAP()
-	bool m_DragPreviewActive;	
+	bool m_DragPreviewActive;
 public:
-	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
-	void SetDialog ( CWnd* dlg , int ID );
-	void SetDockManager ( CTabsDlg* dlg );
+	afx_msg void OnNcLButtonDblClk( UINT nHitTest, CPoint point );
+	void SetDialog( CWnd* dlg , int ID );
+	void SetDockManager( CTabsDlg* dlg );
 	afx_msg void OnClose();
 	BOOL PreTranslateMessage( MSG* pMsg );
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize( UINT nType, int cx, int cy );
 	afx_msg void OnDestroy();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	afx_msg void OnSetFocus( CWnd* pOldWnd );
 };
 
 

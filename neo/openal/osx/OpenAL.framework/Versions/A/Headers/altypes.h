@@ -76,7 +76,7 @@ typedef int ALenum;
 
 /**
   * Indicate the type of AL_SOURCE.
-  * Sources can be spatialized 
+  * Sources can be spatialized
   */
 #define AL_SOURCE_TYPE                           0x200
 
@@ -88,14 +88,14 @@ typedef int ALenum;
 
 /**
  * Directional source, inner cone angle, in degrees.
- * Range:    [0-360] 
+ * Range:    [0-360]
  * Default:  360
  */
 #define AL_CONE_INNER_ANGLE                      0x1001
 
 /**
  * Directional source, outer cone angle, in degrees.
- * Range:    [0-360] 
+ * Range:    [0-360]
  * Default:  360
  */
 #define AL_CONE_OUTER_ANGLE                      0x1002
@@ -108,21 +108,21 @@ typedef int ALenum;
  */
 #define AL_PITCH                                 0x1003
 
-/** 
+/**
  * Specify the current location in three dimensional space.
  * OpenAL, like OpenGL, uses a right handed coordinate system,
- *  where in a frontal default view X (thumb) points right, 
+ *  where in a frontal default view X (thumb) points right,
  *  Y points up (index finger), and Z points towards the
- *  viewer/camera (middle finger). 
+ *  viewer/camera (middle finger).
  * To switch from a left handed coordinate system, flip the
  *  sign on the Z coordinate.
  * Listener position is always in the world coordinate system.
- */ 
+ */
 #define AL_POSITION                              0x1004
-  
+
 /** Specify the current direction as forward vector. */
 #define AL_DIRECTION                             0x1005
-  
+
 /** Specify the current velocity in three dimensional space. */
 #define AL_VELOCITY                              0x1006
 
@@ -135,14 +135,14 @@ typedef int ALenum;
 #define AL_LOOPING                               0x1007
 
 /**
- * Indicate the buffer to provide sound samples. 
+ * Indicate the buffer to provide sound samples.
  * Type: ALuint.
  * Range: any valid Buffer id.
  */
 #define AL_BUFFER                                0x1009
 
 /**
- * Indicate the gain (volume amplification) applied. 
+ * Indicate the gain (volume amplification) applied.
  * Type:     ALfloat.
  * Range:    ]0.0-  ]
  * A value of 1.0 means un-attenuated/unchanged.
@@ -168,7 +168,7 @@ typedef int ALenum;
  */
 #define AL_MAX_GAIN                              0x100E
 
-/** 
+/**
  * Specify the current orientation.
  * Type:	 ALfv6 (at/up)
  * Range:	 N/A
@@ -184,16 +184,16 @@ typedef int ALenum;
  */
 #define AL_REFERENCE_DISTANCE                    0x1020
 
- /**
- * Indicate the rolloff factor for the source.
- * Type: ALfloat
- * Range:    [0.0 - ]
- * Default:  1.0
- */
+/**
+* Indicate the rolloff factor for the source.
+* Type: ALfloat
+* Range:    [0.0 - ]
+* Default:  1.0
+*/
 #define AL_ROLLOFF_FACTOR                        0x1021
 
 /**
- * Indicate the gain (volume amplification) applied. 
+ * Indicate the gain (volume amplification) applied.
  * Type:     ALfloat.
  * Range:    ]0.0-  ]
  * A value of 1.0 means un-attenuated/unchanged.
@@ -205,7 +205,7 @@ typedef int ALenum;
  */
 #define AL_CONE_OUTER_GAIN                       0x1022
 
-/** 
+/**
  * Specify the maximum distance.
  * Type:	 ALfloat
  * Range:	 [0.0 - ]
@@ -233,7 +233,7 @@ typedef int ALenum;
 #define AL_FORMAT_STEREO8                        0x1102
 #define AL_FORMAT_STEREO16                       0x1103
 
-/** 
+/**
  * Sound buffers: frequency, in units of Hertz [Hz].
  * This is the number of samples per second. Half of the
  *  sample frequency marks the maximum significant
@@ -257,21 +257,21 @@ typedef int ALenum;
 /** Errors: No Error. */
 #define AL_NO_ERROR                              AL_FALSE
 
-/** 
+/**
  * Illegal name passed as an argument to an AL call.
  */
 #define AL_INVALID_NAME                          0xA001
 
-/** 
+/**
  * Illegal enum passed as an argument to an AL call.
  */
-#define AL_INVALID_ENUM                          0xA002  
-/** 
+#define AL_INVALID_ENUM                          0xA002
+/**
  * Illegal value passed as an argument to an AL call.
  * Applies to parameter values, but not to enumerations.
  */
 #define AL_INVALID_VALUE                         0xA003
-  
+
 /**
  * A function was called at inappropriate time,
  *  or in an inappropriate way, causing an illegal state.
@@ -298,7 +298,7 @@ typedef int ALenum;
  * Doppler scale.  Default 1.0
  */
 #define AL_DOPPLER_FACTOR                        0xC000
- 
+
 /**
  * Doppler velocity.  Default 1.0
  */
@@ -313,10 +313,10 @@ typedef int ALenum;
 
 #define AL_INVERSE_DISTANCE                      0xD001
 #define AL_INVERSE_DISTANCE_CLAMPED              0xD002
- 
- /**
- * enables
- */
+
+/**
+* enables
+*/
 
 #ifdef __cplusplus
 }

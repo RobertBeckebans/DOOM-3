@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,24 +30,25 @@ If you have questions concerning this license or the applicable additional terms
 #define __DIALOGPDAEDITOR_H__
 
 #if _MSC_VER > 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER > 1000
 
 /////////////////////////////////////////////////////////////////////////////
 // CCDialogPDAEditor dialog
 
-class CDialogPDAEditor : public CDialog {
+class CDialogPDAEditor : public CDialog
+{
 public:
-							CDialogPDAEditor(CWnd* pParent = NULL);   // standard constructor
+	CDialogPDAEditor( CWnd* pParent = NULL ); // standard constructor
 
 	//{{AFX_VIRTUAL(CDialogPDAEditor)
 	virtual BOOL			OnInitDialog();
-	virtual void			DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void			DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 protected:
 	//{{AFX_MSG(CDialogPDAEditor)
-	afx_msg void			OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
+	afx_msg void			OnActivate( UINT nState, CWnd* pWndOther, BOOL bMinimized );
 	afx_msg void			OnMove( int x, int y );
 	afx_msg void			OnDestroy();
 
@@ -66,7 +67,7 @@ protected:
 	afx_msg void			OnBtnClickedAudioAdd();
 	afx_msg void			OnBtnClickedAudioEdit();
 	afx_msg void			OnBtnClickedAudioDel();
-	
+
 	afx_msg void			OnBtnClickedVideoAdd();
 	afx_msg void			OnBtnClickedVideoEdit();
 	afx_msg void			OnBtnClickedVideoDel();
@@ -93,22 +94,23 @@ private:
 	//}}AFX_DATA
 
 private:
-	virtual BOOL			PreTranslateMessage(MSG* pMsg);
+	virtual BOOL			PreTranslateMessage( MSG* pMsg );
 
 	void PopulatePDAList();
 };
 
-class CDialogPDAEditEmail : public CDialog {
+class CDialogPDAEditEmail : public CDialog
+{
 public:
-							CDialogPDAEditEmail(CWnd* pParent = NULL);   // standard constructor
+	CDialogPDAEditEmail( CWnd* pParent = NULL ); // standard constructor
 
 	//{{AFX_VIRTUAL(CDialogPDAEditEmail)
 	virtual BOOL			OnInitDialog();
-	virtual void			DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void			DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-	void SetName( CString &name );
-	void SetEmail( const idDeclEmail *email );
+	void SetName( CString& name );
+	void SetEmail( const idDeclEmail* email );
 
 	CString GetDeclText();
 

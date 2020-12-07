@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,33 +50,33 @@ public:
 		HT_SIZE_LEFT
 	};
 
-	rvGESelectionMgr ( );
+	rvGESelectionMgr( );
 
-	void			SetWorkspace		( rvGEWorkspace* workspace );
+	void			SetWorkspace( rvGEWorkspace* workspace );
 
-	void			Set					( idWindow* );
-	void			Add					( idWindow* window, bool expand = true );
-	void			Remove				( idWindow* );
-	void			Clear				( void );
-	
-	int				Num					( void );
-	
-	void			Render				( void );
-	
-	EHitTest		HitTest				( float x, float y );
-	
-	bool			IsSelected			( idWindow* window );
-	bool			IsExpression		( void );
-	
-	idRectangle&	GetRect				( void );
-	idWindow*		GetBottomMost		( void );
+	void			Set( idWindow* );
+	void			Add( idWindow* window, bool expand = true );
+	void			Remove( idWindow* );
+	void			Clear( void );
+
+	int				Num( void );
+
+	void			Render( void );
+
+	EHitTest		HitTest( float x, float y );
+
+	bool			IsSelected( idWindow* window );
+	bool			IsExpression( void );
+
+	idRectangle&	GetRect( void );
+	idWindow*		GetBottomMost( void );
 
 	idWindow*&		operator[]( int index );
 
 protected:
 
-	void		UpdateRectangle		( void );
-	void		UpdateExpression	( void );
+	void		UpdateRectangle( void );
+	void		UpdateExpression( void );
 
 	idList<idWindow*>	mSelections;
 	idRectangle			mRect;
@@ -84,12 +84,12 @@ protected:
 	bool				mExpression;
 };
 
-ID_INLINE int rvGESelectionMgr::Num ( void )
+ID_INLINE int rvGESelectionMgr::Num( void )
 {
-	return mSelections.Num ( );
+	return mSelections.Num( );
 }
 
-ID_INLINE idWindow*& rvGESelectionMgr::operator[]( int index ) 
+ID_INLINE idWindow*& rvGESelectionMgr::operator[]( int index )
 {
 	assert( index >= 0 );
 	assert( index < mSelections.Num() );
@@ -97,23 +97,23 @@ ID_INLINE idWindow*& rvGESelectionMgr::operator[]( int index )
 	return mSelections[ index ];
 }
 
-ID_INLINE void rvGESelectionMgr::SetWorkspace ( rvGEWorkspace* workspace )
+ID_INLINE void rvGESelectionMgr::SetWorkspace( rvGEWorkspace* workspace )
 {
 	mWorkspace = workspace;
 }
 
-ID_INLINE idRectangle& rvGESelectionMgr::GetRect ( void )
+ID_INLINE idRectangle& rvGESelectionMgr::GetRect( void )
 {
-	UpdateRectangle ( );
+	UpdateRectangle( );
 	return mRect;
 }
 
-ID_INLINE bool rvGESelectionMgr::IsSelected ( idWindow* window )
+ID_INLINE bool rvGESelectionMgr::IsSelected( idWindow* window )
 {
-	return mSelections.FindIndex ( window ) != -1 ? true : false;
+	return mSelections.FindIndex( window ) != -1 ? true : false;
 }
 
-ID_INLINE bool rvGESelectionMgr::IsExpression ( void )
+ID_INLINE bool rvGESelectionMgr::IsExpression( void )
 {
 	return mExpression;
 }

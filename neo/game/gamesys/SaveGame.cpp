@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 /*
 Save game related helper classes.
 
-Save games are implemented in two classes, idSaveGame and idRestoreGame, that implement write/read functions for 
+Save games are implemented in two classes, idSaveGame and idRestoreGame, that implement write/read functions for
 common types.  They're passed in to each entity and object for them to archive themselves.  Each class
 implements save/restore functions for it's own data.  When restoring, all the objects are instantiated,
 then the restore function is called on each, superclass first, then subclasses.
@@ -65,7 +65,8 @@ file be unloadable in some way (for example, due to script changes).
 idSaveGame::idSaveGame()
 ================
 */
-idSaveGame::idSaveGame( idFile *savefile ) {
+idSaveGame::idSaveGame( idFile* savefile )
+{
 
 	file = savefile;
 
@@ -79,8 +80,10 @@ idSaveGame::idSaveGame( idFile *savefile ) {
 idSaveGame::~idSaveGame()
 ================
 */
-idSaveGame::~idSaveGame() {
-	if ( objects.Num() ) {
+idSaveGame::~idSaveGame()
+{
+	if( objects.Num() )
+	{
 		Close();
 	}
 }
@@ -90,7 +93,8 @@ idSaveGame::~idSaveGame() {
 idSaveGame::Close
 ================
 */
-void idSaveGame::Close( void ) {
+void idSaveGame::Close( void )
+{
 	int i;
 
 	WriteSoundCommands();
@@ -98,7 +102,8 @@ void idSaveGame::Close( void ) {
 	// read trace models
 	idClipModel::SaveTraceModels( this );
 
-	for( i = 1; i < objects.Num(); i++ ) {
+	for( i = 1; i < objects.Num(); i++ )
+	{
 		CallSave_r( objects[ i ]->GetType(), objects[ i ] );
 	}
 
@@ -116,11 +121,13 @@ void idSaveGame::Close( void ) {
 idSaveGame::WriteObjectList
 ================
 */
-void idSaveGame::WriteObjectList( void ) {
+void idSaveGame::WriteObjectList( void )
+{
 	int i;
 
 	WriteInt( objects.Num() - 1 );
-	for( i = 1; i < objects.Num(); i++ ) {
+	for( i = 1; i < objects.Num(); i++ )
+	{
 		WriteString( objects[ i ]->GetClassname() );
 	}
 }
@@ -130,15 +137,18 @@ void idSaveGame::WriteObjectList( void ) {
 idSaveGame::CallSave_r
 ================
 */
-void idSaveGame::CallSave_r( const idTypeInfo *cls, const idClass *obj ) {
-	if ( cls->super ) {
+void idSaveGame::CallSave_r( const idTypeInfo* cls, const idClass* obj )
+{
+	if( cls->super )
+	{
 		CallSave_r( cls->super, obj );
-		if ( cls->super->Save == cls->Save ) {
+		if( cls->super->Save == cls->Save )
+		{
 			// don't call save on this inheritance level since the function was called in the super class
 			return;
 		}
 	}
-	
+
 	( obj->*cls->Save )( this );
 }
 
@@ -147,7 +157,8 @@ void idSaveGame::CallSave_r( const idTypeInfo *cls, const idClass *obj ) {
 idSaveGame::AddObject
 ================
 */
-void idSaveGame::AddObject( const idClass *obj ) {
+void idSaveGame::AddObject( const idClass* obj )
+{
 	objects.AddUnique( obj );
 }
 
@@ -156,7 +167,8 @@ void idSaveGame::AddObject( const idClass *obj ) {
 idSaveGame::Write
 ================
 */
-void idSaveGame::Write( const void *buffer, int len ) {
+void idSaveGame::Write( const void* buffer, int len )
+{
 	file->Write( buffer, len );
 }
 
@@ -165,7 +177,8 @@ void idSaveGame::Write( const void *buffer, int len ) {
 idSaveGame::WriteInt
 ================
 */
-void idSaveGame::WriteInt( const int value ) {
+void idSaveGame::WriteInt( const int value )
+{
 	file->WriteInt( value );
 }
 
@@ -174,8 +187,9 @@ void idSaveGame::WriteInt( const int value ) {
 idSaveGame::WriteJoint
 ================
 */
-void idSaveGame::WriteJoint( const jointHandle_t value ) {
-	file->WriteInt( (int&)value );
+void idSaveGame::WriteJoint( const jointHandle_t value )
+{
+	file->WriteInt( ( int& )value );
 }
 
 /*
@@ -183,7 +197,8 @@ void idSaveGame::WriteJoint( const jointHandle_t value ) {
 idSaveGame::WriteShort
 ================
 */
-void idSaveGame::WriteShort( const short value ) {
+void idSaveGame::WriteShort( const short value )
+{
 	file->WriteShort( value );
 }
 
@@ -192,7 +207,8 @@ void idSaveGame::WriteShort( const short value ) {
 idSaveGame::WriteByte
 ================
 */
-void idSaveGame::WriteByte( const byte value ) {
+void idSaveGame::WriteByte( const byte value )
+{
 	file->Write( &value, sizeof( value ) );
 }
 
@@ -201,7 +217,8 @@ void idSaveGame::WriteByte( const byte value ) {
 idSaveGame::WriteSignedChar
 ================
 */
-void idSaveGame::WriteSignedChar( const signed char value ) {
+void idSaveGame::WriteSignedChar( const signed char value )
+{
 	file->Write( &value, sizeof( value ) );
 }
 
@@ -210,7 +227,8 @@ void idSaveGame::WriteSignedChar( const signed char value ) {
 idSaveGame::WriteFloat
 ================
 */
-void idSaveGame::WriteFloat( const float value ) {
+void idSaveGame::WriteFloat( const float value )
+{
 	file->WriteFloat( value );
 }
 
@@ -219,7 +237,8 @@ void idSaveGame::WriteFloat( const float value ) {
 idSaveGame::WriteBool
 ================
 */
-void idSaveGame::WriteBool( const bool value ) {
+void idSaveGame::WriteBool( const bool value )
+{
 	file->WriteBool( value );
 }
 
@@ -227,13 +246,14 @@ void idSaveGame::WriteBool( const bool value ) {
 ================
 idSaveGame::WriteString
 ================
-*/  
-void idSaveGame::WriteString( const char *string ) {
+*/
+void idSaveGame::WriteString( const char* string )
+{
 	int len;
 
 	len = strlen( string );
 	WriteInt( len );
-    file->Write( string, len );
+	file->Write( string, len );
 }
 
 /*
@@ -241,7 +261,8 @@ void idSaveGame::WriteString( const char *string ) {
 idSaveGame::WriteVec2
 ================
 */
-void idSaveGame::WriteVec2( const idVec2 &vec ) {
+void idSaveGame::WriteVec2( const idVec2& vec )
+{
 	file->WriteVec2( vec );
 }
 
@@ -250,7 +271,8 @@ void idSaveGame::WriteVec2( const idVec2 &vec ) {
 idSaveGame::WriteVec3
 ================
 */
-void idSaveGame::WriteVec3( const idVec3 &vec ) {
+void idSaveGame::WriteVec3( const idVec3& vec )
+{
 	file->WriteVec3( vec );
 }
 
@@ -259,7 +281,8 @@ void idSaveGame::WriteVec3( const idVec3 &vec ) {
 idSaveGame::WriteVec4
 ================
 */
-void idSaveGame::WriteVec4( const idVec4 &vec ) {
+void idSaveGame::WriteVec4( const idVec4& vec )
+{
 	file->WriteVec4( vec );
 }
 
@@ -268,7 +291,8 @@ void idSaveGame::WriteVec4( const idVec4 &vec ) {
 idSaveGame::WriteVec6
 ================
 */
-void idSaveGame::WriteVec6( const idVec6 &vec ) {
+void idSaveGame::WriteVec6( const idVec6& vec )
+{
 	file->WriteVec6( vec );
 }
 
@@ -277,9 +301,10 @@ void idSaveGame::WriteVec6( const idVec6 &vec ) {
 idSaveGame::WriteBounds
 ================
 */
-void idSaveGame::WriteBounds( const idBounds &bounds ) {
+void idSaveGame::WriteBounds( const idBounds& bounds )
+{
 	idBounds b = bounds;
-	LittleRevBytes( &b, sizeof(float), sizeof(b)/sizeof(float) );
+	LittleRevBytes( &b, sizeof( float ), sizeof( b ) / sizeof( float ) );
 	file->Write( &b, sizeof( b ) );
 }
 
@@ -288,15 +313,16 @@ void idSaveGame::WriteBounds( const idBounds &bounds ) {
 idSaveGame::WriteBounds
 ================
 */
-void idSaveGame::WriteWinding( const idWinding &w )
+void idSaveGame::WriteWinding( const idWinding& w )
 {
 	int i, num;
 	num = w.GetNumPoints();
 	file->WriteInt( num );
-	for ( i = 0; i < num; i++ ) {
+	for( i = 0; i < num; i++ )
+	{
 		idVec5 v = w[i];
-		LittleRevBytes(&v, sizeof(float), sizeof(v)/sizeof(float) );
-		file->Write( &v, sizeof(v) );
+		LittleRevBytes( &v, sizeof( float ), sizeof( v ) / sizeof( float ) );
+		file->Write( &v, sizeof( v ) );
 	}
 }
 
@@ -306,7 +332,8 @@ void idSaveGame::WriteWinding( const idWinding &w )
 idSaveGame::WriteMat3
 ================
 */
-void idSaveGame::WriteMat3( const idMat3 &mat ) {
+void idSaveGame::WriteMat3( const idMat3& mat )
+{
 	file->WriteMat3( mat );
 }
 
@@ -315,9 +342,10 @@ void idSaveGame::WriteMat3( const idMat3 &mat ) {
 idSaveGame::WriteAngles
 ================
 */
-void idSaveGame::WriteAngles( const idAngles &angles ) {
+void idSaveGame::WriteAngles( const idAngles& angles )
+{
 	idAngles v = angles;
-	LittleRevBytes(&v, sizeof(float), sizeof(v)/sizeof(float) );
+	LittleRevBytes( &v, sizeof( float ), sizeof( v ) / sizeof( float ) );
 	file->Write( &v, sizeof( v ) );
 }
 
@@ -326,11 +354,13 @@ void idSaveGame::WriteAngles( const idAngles &angles ) {
 idSaveGame::WriteObject
 ================
 */
-void idSaveGame::WriteObject( const idClass *obj ) {
+void idSaveGame::WriteObject( const idClass* obj )
+{
 	int index;
 
 	index = objects.FindIndex( obj );
-	if ( index < 0 ) {
+	if( index < 0 )
+	{
 		gameLocal.DPrintf( "idSaveGame::WriteObject - WriteObject FindIndex failed\n" );
 
 		// Use the NULL index
@@ -345,7 +375,8 @@ void idSaveGame::WriteObject( const idClass *obj ) {
 idSaveGame::WriteStaticObject
 ================
 */
-void idSaveGame::WriteStaticObject( const idClass &obj ) {
+void idSaveGame::WriteStaticObject( const idClass& obj )
+{
 	CallSave_r( obj.GetType(), &obj );
 }
 
@@ -354,17 +385,22 @@ void idSaveGame::WriteStaticObject( const idClass &obj ) {
 idSaveGame::WriteDict
 ================
 */
-void idSaveGame::WriteDict( const idDict *dict ) {
+void idSaveGame::WriteDict( const idDict* dict )
+{
 	int num;
 	int i;
-	const idKeyValue *kv;
+	const idKeyValue* kv;
 
-	if ( !dict ) {
+	if( !dict )
+	{
 		WriteInt( -1 );
-	} else {
+	}
+	else
+	{
 		num = dict->GetNumKeyVals();
 		WriteInt( num );
-		for( i = 0; i < num; i++ ) {
+		for( i = 0; i < num; i++ )
+		{
 			kv = dict->GetKeyVal( i );
 			WriteString( kv->GetKey() );
 			WriteString( kv->GetValue() );
@@ -377,10 +413,14 @@ void idSaveGame::WriteDict( const idDict *dict ) {
 idSaveGame::WriteMaterial
 ================
 */
-void idSaveGame::WriteMaterial( const idMaterial *material ) {
-	if ( !material ) {
+void idSaveGame::WriteMaterial( const idMaterial* material )
+{
+	if( !material )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		WriteString( material->GetName() );
 	}
 }
@@ -390,10 +430,14 @@ void idSaveGame::WriteMaterial( const idMaterial *material ) {
 idSaveGame::WriteSkin
 ================
 */
-void idSaveGame::WriteSkin( const idDeclSkin *skin ) {
-	if ( !skin ) {
+void idSaveGame::WriteSkin( const idDeclSkin* skin )
+{
+	if( !skin )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		WriteString( skin->GetName() );
 	}
 }
@@ -403,10 +447,14 @@ void idSaveGame::WriteSkin( const idDeclSkin *skin ) {
 idSaveGame::WriteParticle
 ================
 */
-void idSaveGame::WriteParticle( const idDeclParticle *particle ) {
-	if ( !particle ) {
+void idSaveGame::WriteParticle( const idDeclParticle* particle )
+{
+	if( !particle )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		WriteString( particle->GetName() );
 	}
 }
@@ -416,10 +464,14 @@ void idSaveGame::WriteParticle( const idDeclParticle *particle ) {
 idSaveGame::WriteFX
 ================
 */
-void idSaveGame::WriteFX( const idDeclFX *fx ) {
-	if ( !fx ) {
+void idSaveGame::WriteFX( const idDeclFX* fx )
+{
+	if( !fx )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		WriteString( fx->GetName() );
 	}
 }
@@ -429,10 +481,14 @@ void idSaveGame::WriteFX( const idDeclFX *fx ) {
 idSaveGame::WriteModelDef
 ================
 */
-void idSaveGame::WriteModelDef( const idDeclModelDef *modelDef ) {
-	if ( !modelDef ) {
+void idSaveGame::WriteModelDef( const idDeclModelDef* modelDef )
+{
+	if( !modelDef )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		WriteString( modelDef->GetName() );
 	}
 }
@@ -442,12 +498,16 @@ void idSaveGame::WriteModelDef( const idDeclModelDef *modelDef ) {
 idSaveGame::WriteSoundShader
 ================
 */
-void idSaveGame::WriteSoundShader( const idSoundShader *shader ) {
-	const char *name;
+void idSaveGame::WriteSoundShader( const idSoundShader* shader )
+{
+	const char* name;
 
-	if ( !shader ) {
+	if( !shader )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		name = shader->GetName();
 		WriteString( name );
 	}
@@ -458,12 +518,16 @@ void idSaveGame::WriteSoundShader( const idSoundShader *shader ) {
 idSaveGame::WriteModel
 ================
 */
-void idSaveGame::WriteModel( const idRenderModel *model ) {
-	const char *name;
+void idSaveGame::WriteModel( const idRenderModel* model )
+{
+	const char* name;
 
-	if ( !model ) {
+	if( !model )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		name = model->Name();
 		WriteString( name );
 	}
@@ -474,16 +538,21 @@ void idSaveGame::WriteModel( const idRenderModel *model ) {
 idSaveGame::WriteUserInterface
 ================
 */
-void idSaveGame::WriteUserInterface( const idUserInterface *ui, bool unique ) {
-	const char *name;
+void idSaveGame::WriteUserInterface( const idUserInterface* ui, bool unique )
+{
+	const char* name;
 
-	if ( !ui ) {
+	if( !ui )
+	{
 		WriteString( "" );
-	} else {
+	}
+	else
+	{
 		name = ui->Name();
 		WriteString( name );
 		WriteBool( unique );
-		if ( ui->WriteToSaveGame( file ) == false ) {
+		if( ui->WriteToSaveGame( file ) == false )
+		{
 			gameLocal.Error( "idSaveGame::WriteUserInterface: ui failed to write properly\n" );
 		}
 	}
@@ -494,7 +563,8 @@ void idSaveGame::WriteUserInterface( const idUserInterface *ui, bool unique ) {
 idSaveGame::WriteRenderEntity
 ================
 */
-void idSaveGame::WriteRenderEntity( const renderEntity_t &renderEntity ) {
+void idSaveGame::WriteRenderEntity( const renderEntity_t& renderEntity )
+{
 	int i;
 
 	WriteModel( renderEntity.hModel );
@@ -518,17 +588,22 @@ void idSaveGame::WriteRenderEntity( const renderEntity_t &renderEntity ) {
 	WriteMaterial( renderEntity.referenceShader );
 	WriteSkin( renderEntity.customSkin );
 
-	if ( renderEntity.referenceSound != NULL ) {
+	if( renderEntity.referenceSound != NULL )
+	{
 		WriteInt( renderEntity.referenceSound->Index() );
-	} else {
+	}
+	else
+	{
 		WriteInt( 0 );
 	}
 
-	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ )
+	{
 		WriteFloat( renderEntity.shaderParms[ i ] );
 	}
 
-	for( i = 0; i < MAX_RENDERENTITY_GUI; i++ ) {
+	for( i = 0; i < MAX_RENDERENTITY_GUI; i++ )
+	{
 		WriteUserInterface( renderEntity.gui[ i ], renderEntity.gui[ i ] ? renderEntity.gui[ i ]->IsUniqued() : false );
 	}
 
@@ -547,7 +622,8 @@ void idSaveGame::WriteRenderEntity( const renderEntity_t &renderEntity ) {
 idSaveGame::WriteRenderLight
 ================
 */
-void idSaveGame::WriteRenderLight( const renderLight_t &renderLight ) {
+void idSaveGame::WriteRenderLight( const renderLight_t& renderLight )
+{
 	int i;
 
 	WriteMat3( renderLight.axis );
@@ -576,13 +652,17 @@ void idSaveGame::WriteRenderLight( const renderLight_t &renderLight ) {
 
 	WriteMaterial( renderLight.shader );
 
-	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ )
+	{
 		WriteFloat( renderLight.shaderParms[ i ] );
 	}
 
-	if ( renderLight.referenceSound != NULL ) {
+	if( renderLight.referenceSound != NULL )
+	{
 		WriteInt( renderLight.referenceSound->Index() );
-	} else {
+	}
+	else
+	{
 		WriteInt( 0 );
 	}
 }
@@ -592,10 +672,14 @@ void idSaveGame::WriteRenderLight( const renderLight_t &renderLight ) {
 idSaveGame::WriteRefSound
 ================
 */
-void idSaveGame::WriteRefSound( const refSound_t &refSound ) {
-	if ( refSound.referenceSound ) {
+void idSaveGame::WriteRefSound( const refSound_t& refSound )
+{
+	if( refSound.referenceSound )
+	{
 		WriteInt( refSound.referenceSound->Index() );
-	} else {
+	}
+	else
+	{
 		WriteInt( 0 );
 	}
 	WriteVec3( refSound.origin );
@@ -617,7 +701,8 @@ void idSaveGame::WriteRefSound( const refSound_t &refSound ) {
 idSaveGame::WriteRenderView
 ================
 */
-void idSaveGame::WriteRenderView( const renderView_t &view ) {
+void idSaveGame::WriteRenderView( const renderView_t& view )
+{
 	int i;
 
 	WriteInt( view.viewID );
@@ -635,7 +720,8 @@ void idSaveGame::WriteRenderView( const renderView_t &view ) {
 
 	WriteInt( view.time );
 
-	for( i = 0; i < MAX_GLOBAL_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_GLOBAL_SHADER_PARMS; i++ )
+	{
 		WriteFloat( view.shaderParms[ i ] );
 	}
 }
@@ -645,7 +731,8 @@ void idSaveGame::WriteRenderView( const renderView_t &view ) {
 idSaveGame::WriteUsercmd
 ===================
 */
-void idSaveGame::WriteUsercmd( const usercmd_t &usercmd ) {
+void idSaveGame::WriteUsercmd( const usercmd_t& usercmd )
+{
 	WriteInt( usercmd.gameFrame );
 	WriteInt( usercmd.gameTime );
 	WriteInt( usercmd.duplicateCount );
@@ -668,8 +755,9 @@ void idSaveGame::WriteUsercmd( const usercmd_t &usercmd ) {
 idSaveGame::WriteContactInfo
 ===================
 */
-void idSaveGame::WriteContactInfo( const contactInfo_t &contactInfo ) {
-	WriteInt( (int)contactInfo.type );
+void idSaveGame::WriteContactInfo( const contactInfo_t& contactInfo )
+{
+	WriteInt( ( int )contactInfo.type );
 	WriteVec3( contactInfo.point );
 	WriteVec3( contactInfo.normal );
 	WriteFloat( contactInfo.dist );
@@ -686,7 +774,8 @@ void idSaveGame::WriteContactInfo( const contactInfo_t &contactInfo ) {
 idSaveGame::WriteTrace
 ===================
 */
-void idSaveGame::WriteTrace( const trace_t &trace ) {
+void idSaveGame::WriteTrace( const trace_t& trace )
+{
 	WriteFloat( trace.fraction );
 	WriteVec3( trace.endpos );
 	WriteMat3( trace.endAxis );
@@ -698,27 +787,32 @@ void idSaveGame::WriteTrace( const trace_t &trace ) {
  idRestoreGame::WriteTraceModel
  ===================
  */
-void idSaveGame::WriteTraceModel( const idTraceModel &trace ) {
+void idSaveGame::WriteTraceModel( const idTraceModel& trace )
+{
 	int j, k;
-	
-	WriteInt( (int&)trace.type );
+
+	WriteInt( ( int& )trace.type );
 	WriteInt( trace.numVerts );
-	for ( j = 0; j < MAX_TRACEMODEL_VERTS; j++ ) {
+	for( j = 0; j < MAX_TRACEMODEL_VERTS; j++ )
+	{
 		WriteVec3( trace.verts[j] );
 	}
 	WriteInt( trace.numEdges );
-	for ( j = 0; j < (MAX_TRACEMODEL_EDGES+1); j++ ) {
+	for( j = 0; j < ( MAX_TRACEMODEL_EDGES + 1 ); j++ )
+	{
 		WriteInt( trace.edges[j].v[0] );
 		WriteInt( trace.edges[j].v[1] );
 		WriteVec3( trace.edges[j].normal );
 	}
 	WriteInt( trace.numPolys );
-	for ( j = 0; j < MAX_TRACEMODEL_POLYS; j++ ) {
+	for( j = 0; j < MAX_TRACEMODEL_POLYS; j++ )
+	{
 		WriteVec3( trace.polys[j].normal );
 		WriteFloat( trace.polys[j].dist );
 		WriteBounds( trace.polys[j].bounds );
 		WriteInt( trace.polys[j].numEdges );
-		for ( k = 0; k < MAX_TRACEMODEL_POLYEDGES; k++ ) {
+		for( k = 0; k < MAX_TRACEMODEL_POLYEDGES; k++ )
+		{
 			WriteInt( trace.polys[j].edges[k] );
 		}
 	}
@@ -736,11 +830,15 @@ void idSaveGame::WriteTraceModel( const idTraceModel &trace ) {
 idSaveGame::WriteClipModel
 ===================
 */
-void idSaveGame::WriteClipModel( const idClipModel *clipModel ) {
-	if ( clipModel != NULL ) {
+void idSaveGame::WriteClipModel( const idClipModel* clipModel )
+{
+	if( clipModel != NULL )
+	{
 		WriteBool( true );
 		clipModel->Save( this );
-	} else {
+	}
+	else
+	{
 		WriteBool( false );
 	}
 }
@@ -750,7 +848,8 @@ void idSaveGame::WriteClipModel( const idClipModel *clipModel ) {
 idSaveGame::WriteSoundCommands
 ===================
 */
-void idSaveGame::WriteSoundCommands( void ) {
+void idSaveGame::WriteSoundCommands( void )
+{
 	gameSoundWorld->WriteToSaveGame( file );
 }
 
@@ -759,14 +858,15 @@ void idSaveGame::WriteSoundCommands( void ) {
 idSaveGame::WriteBuildNumber
 ======================
 */
-void idSaveGame::WriteBuildNumber( const int value ) {
+void idSaveGame::WriteBuildNumber( const int value )
+{
 	file->WriteInt( BUILD_NUMBER );
 }
 
 /***********************************************************************
 
 	idRestoreGame
-	
+
 ***********************************************************************/
 
 /*
@@ -774,7 +874,8 @@ void idSaveGame::WriteBuildNumber( const int value ) {
 idRestoreGame::RestoreGame
 ================
 */
-idRestoreGame::idRestoreGame( idFile *savefile ) {
+idRestoreGame::idRestoreGame( idFile* savefile )
+{
 	file = savefile;
 }
 
@@ -783,7 +884,8 @@ idRestoreGame::idRestoreGame( idFile *savefile ) {
 idRestoreGame::~idRestoreGame()
 ================
 */
-idRestoreGame::~idRestoreGame() {
+idRestoreGame::~idRestoreGame()
+{
 }
 
 /*
@@ -791,10 +893,11 @@ idRestoreGame::~idRestoreGame() {
 void idRestoreGame::CreateObjects
 ================
 */
-void idRestoreGame::CreateObjects( void ) {
+void idRestoreGame::CreateObjects( void )
+{
 	int i, num;
 	idStr classname;
-	idTypeInfo *type;
+	idTypeInfo* type;
 
 	ReadInt( num );
 
@@ -802,10 +905,12 @@ void idRestoreGame::CreateObjects( void ) {
 	objects.SetNum( num + 1 );
 	memset( objects.Ptr(), 0, sizeof( objects[ 0 ] ) * objects.Num() );
 
-	for( i = 1; i < objects.Num(); i++ ) {
+	for( i = 1; i < objects.Num(); i++ )
+	{
 		ReadString( classname );
 		type = idClass::GetClass( classname );
-		if ( !type ) {
+		if( !type )
+		{
 			Error( "idRestoreGame::CreateObjects: Unknown class '%s'", classname.c_str() );
 		}
 		objects[ i ] = type->CreateInstance();
@@ -821,7 +926,8 @@ void idRestoreGame::CreateObjects( void ) {
 void idRestoreGame::RestoreObjects
 ================
 */
-void idRestoreGame::RestoreObjects( void ) {
+void idRestoreGame::RestoreObjects( void )
+{
 	int i;
 
 	ReadSoundCommands();
@@ -830,14 +936,17 @@ void idRestoreGame::RestoreObjects( void ) {
 	idClipModel::RestoreTraceModels( this );
 
 	// restore all the objects
-	for( i = 1; i < objects.Num(); i++ ) {
+	for( i = 1; i < objects.Num(); i++ )
+	{
 		CallRestore_r( objects[ i ]->GetType(), objects[ i ] );
 	}
 
 	// regenerate render entities and render lights because are not saved
-	for( i = 1; i < objects.Num(); i++ ) {
-		if ( objects[ i ]->IsType( idEntity::Type ) ) {
-			idEntity *ent = static_cast<idEntity *>( objects[ i ] );
+	for( i = 1; i < objects.Num(); i++ )
+	{
+		if( objects[ i ]->IsType( idEntity::Type ) )
+		{
+			idEntity* ent = static_cast<idEntity*>( objects[ i ] );
 			ent->UpdateVisuals();
 			ent->Present();
 		}
@@ -857,7 +966,8 @@ void idRestoreGame::RestoreObjects( void ) {
 void idRestoreGame::DeleteObjects
 ====================
 */
-void idRestoreGame::DeleteObjects( void ) {
+void idRestoreGame::DeleteObjects( void )
+{
 
 	// Remove the NULL object before deleting
 	objects.RemoveIndex( 0 );
@@ -870,7 +980,8 @@ void idRestoreGame::DeleteObjects( void ) {
 idRestoreGame::Error
 ================
 */
-void idRestoreGame::Error( const char *fmt, ... ) {
+void idRestoreGame::Error( const char* fmt, ... )
+{
 	va_list	argptr;
 	char	text[ 1024 ];
 
@@ -888,15 +999,18 @@ void idRestoreGame::Error( const char *fmt, ... ) {
 idRestoreGame::CallRestore_r
 ================
 */
-void idRestoreGame::CallRestore_r( const idTypeInfo *cls, idClass *obj ) {
-	if ( cls->super ) {
+void idRestoreGame::CallRestore_r( const idTypeInfo* cls, idClass* obj )
+{
+	if( cls->super )
+	{
 		CallRestore_r( cls->super, obj );
-		if ( cls->super->Restore == cls->Restore ) {
+		if( cls->super->Restore == cls->Restore )
+		{
 			// don't call save on this inheritance level since the function was called in the super class
 			return;
 		}
 	}
-	
+
 	( obj->*cls->Restore )( this );
 }
 
@@ -905,7 +1019,8 @@ void idRestoreGame::CallRestore_r( const idTypeInfo *cls, idClass *obj ) {
 idRestoreGame::Read
 ================
 */
-void idRestoreGame::Read( void *buffer, int len ) {
+void idRestoreGame::Read( void* buffer, int len )
+{
 	file->Read( buffer, len );
 }
 
@@ -914,7 +1029,8 @@ void idRestoreGame::Read( void *buffer, int len ) {
 idRestoreGame::ReadInt
 ================
 */
-void idRestoreGame::ReadInt( int &value ) {
+void idRestoreGame::ReadInt( int& value )
+{
 	file->ReadInt( value );
 }
 
@@ -923,8 +1039,9 @@ void idRestoreGame::ReadInt( int &value ) {
 idRestoreGame::ReadJoint
 ================
 */
-void idRestoreGame::ReadJoint( jointHandle_t &value ) {
-	file->ReadInt( (int&)value );
+void idRestoreGame::ReadJoint( jointHandle_t& value )
+{
+	file->ReadInt( ( int& )value );
 }
 
 /*
@@ -932,7 +1049,8 @@ void idRestoreGame::ReadJoint( jointHandle_t &value ) {
 idRestoreGame::ReadShort
 ================
 */
-void idRestoreGame::ReadShort( short &value ) {
+void idRestoreGame::ReadShort( short& value )
+{
 	file->ReadShort( value );
 }
 
@@ -941,7 +1059,8 @@ void idRestoreGame::ReadShort( short &value ) {
 idRestoreGame::ReadByte
 ================
 */
-void idRestoreGame::ReadByte( byte &value ) {
+void idRestoreGame::ReadByte( byte& value )
+{
 	file->Read( &value, sizeof( value ) );
 }
 
@@ -950,7 +1069,8 @@ void idRestoreGame::ReadByte( byte &value ) {
 idRestoreGame::ReadSignedChar
 ================
 */
-void idRestoreGame::ReadSignedChar( signed char &value ) {
+void idRestoreGame::ReadSignedChar( signed char& value )
+{
 	file->Read( &value, sizeof( value ) );
 }
 
@@ -959,7 +1079,8 @@ void idRestoreGame::ReadSignedChar( signed char &value ) {
 idRestoreGame::ReadFloat
 ================
 */
-void idRestoreGame::ReadFloat( float &value ) {
+void idRestoreGame::ReadFloat( float& value )
+{
 	file->ReadFloat( value );
 }
 
@@ -968,7 +1089,8 @@ void idRestoreGame::ReadFloat( float &value ) {
 idRestoreGame::ReadBool
 ================
 */
-void idRestoreGame::ReadBool( bool &value ) {
+void idRestoreGame::ReadBool( bool& value )
+{
 	file->ReadBool( value );
 }
 
@@ -977,11 +1099,13 @@ void idRestoreGame::ReadBool( bool &value ) {
 idRestoreGame::ReadString
 ================
 */
-void idRestoreGame::ReadString( idStr &string ) {
+void idRestoreGame::ReadString( idStr& string )
+{
 	int len;
 
 	ReadInt( len );
-	if ( len < 0 ) {
+	if( len < 0 )
+	{
 		Error( "idRestoreGame::ReadString: invalid length" );
 	}
 
@@ -994,7 +1118,8 @@ void idRestoreGame::ReadString( idStr &string ) {
 idRestoreGame::ReadVec2
 ================
 */
-void idRestoreGame::ReadVec2( idVec2 &vec ) {
+void idRestoreGame::ReadVec2( idVec2& vec )
+{
 	file->ReadVec2( vec );
 }
 
@@ -1003,7 +1128,8 @@ void idRestoreGame::ReadVec2( idVec2 &vec ) {
 idRestoreGame::ReadVec3
 ================
 */
-void idRestoreGame::ReadVec3( idVec3 &vec ) {
+void idRestoreGame::ReadVec3( idVec3& vec )
+{
 	file->ReadVec3( vec );
 }
 
@@ -1012,7 +1138,8 @@ void idRestoreGame::ReadVec3( idVec3 &vec ) {
 idRestoreGame::ReadVec4
 ================
 */
-void idRestoreGame::ReadVec4( idVec4 &vec ) {
+void idRestoreGame::ReadVec4( idVec4& vec )
+{
 	file->ReadVec4( vec );
 }
 
@@ -1021,7 +1148,8 @@ void idRestoreGame::ReadVec4( idVec4 &vec ) {
 idRestoreGame::ReadVec6
 ================
 */
-void idRestoreGame::ReadVec6( idVec6 &vec ) {
+void idRestoreGame::ReadVec6( idVec6& vec )
+{
 	file->ReadVec6( vec );
 }
 
@@ -1030,9 +1158,10 @@ void idRestoreGame::ReadVec6( idVec6 &vec ) {
 idRestoreGame::ReadBounds
 ================
 */
-void idRestoreGame::ReadBounds( idBounds &bounds ) {
+void idRestoreGame::ReadBounds( idBounds& bounds )
+{
 	file->Read( &bounds, sizeof( bounds ) );
-	LittleRevBytes( &bounds, sizeof(float), sizeof(bounds)/sizeof(float) );
+	LittleRevBytes( &bounds, sizeof( float ), sizeof( bounds ) / sizeof( float ) );
 }
 
 /*
@@ -1040,14 +1169,15 @@ void idRestoreGame::ReadBounds( idBounds &bounds ) {
 idRestoreGame::ReadWinding
 ================
 */
-void idRestoreGame::ReadWinding( idWinding &w )
+void idRestoreGame::ReadWinding( idWinding& w )
 {
 	int i, num;
 	file->ReadInt( num );
 	w.SetNumPoints( num );
-	for ( i = 0; i < num; i++ ) {
-		file->Read( &w[i], sizeof(idVec5) );
-		LittleRevBytes(&w[i], sizeof(float), sizeof(idVec5)/sizeof(float) );
+	for( i = 0; i < num; i++ )
+	{
+		file->Read( &w[i], sizeof( idVec5 ) );
+		LittleRevBytes( &w[i], sizeof( float ), sizeof( idVec5 ) / sizeof( float ) );
 	}
 }
 
@@ -1056,7 +1186,8 @@ void idRestoreGame::ReadWinding( idWinding &w )
 idRestoreGame::ReadMat3
 ================
 */
-void idRestoreGame::ReadMat3( idMat3 &mat ) {
+void idRestoreGame::ReadMat3( idMat3& mat )
+{
 	file->ReadMat3( mat );
 }
 
@@ -1065,9 +1196,10 @@ void idRestoreGame::ReadMat3( idMat3 &mat ) {
 idRestoreGame::ReadAngles
 ================
 */
-void idRestoreGame::ReadAngles( idAngles &angles ) {
+void idRestoreGame::ReadAngles( idAngles& angles )
+{
 	file->Read( &angles, sizeof( angles ) );
-	LittleRevBytes(&angles, sizeof(float), sizeof(idAngles)/sizeof(float) );
+	LittleRevBytes( &angles, sizeof( float ), sizeof( idAngles ) / sizeof( float ) );
 }
 
 /*
@@ -1075,11 +1207,13 @@ void idRestoreGame::ReadAngles( idAngles &angles ) {
 idRestoreGame::ReadObject
 ================
 */
-void idRestoreGame::ReadObject( idClass *&obj ) {
+void idRestoreGame::ReadObject( idClass*& obj )
+{
 	int index;
 
 	ReadInt( index );
-	if ( ( index < 0 ) || ( index >= objects.Num() ) ) {
+	if( ( index < 0 ) || ( index >= objects.Num() ) )
+	{
 		Error( "idRestoreGame::ReadObject: invalid object index" );
 	}
 	obj = objects[ index ];
@@ -1090,7 +1224,8 @@ void idRestoreGame::ReadObject( idClass *&obj ) {
 idRestoreGame::ReadStaticObject
 ================
 */
-void idRestoreGame::ReadStaticObject( idClass &obj ) {
+void idRestoreGame::ReadStaticObject( idClass& obj )
+{
 	CallRestore_r( obj.GetType(), &obj );
 }
 
@@ -1099,7 +1234,8 @@ void idRestoreGame::ReadStaticObject( idClass &obj ) {
 idRestoreGame::ReadDict
 ================
 */
-void idRestoreGame::ReadDict( idDict *dict ) {
+void idRestoreGame::ReadDict( idDict* dict )
+{
 	int num;
 	int i;
 	idStr key;
@@ -1107,11 +1243,15 @@ void idRestoreGame::ReadDict( idDict *dict ) {
 
 	ReadInt( num );
 
-	if ( num < 0 ) {
+	if( num < 0 )
+	{
 		dict = NULL;
-	} else {
+	}
+	else
+	{
 		dict->Clear();
-		for( i = 0; i < num; i++ ) {
+		for( i = 0; i < num; i++ )
+		{
 			ReadString( key );
 			ReadString( value );
 			dict->Set( key, value );
@@ -1124,13 +1264,17 @@ void idRestoreGame::ReadDict( idDict *dict ) {
 idRestoreGame::ReadMaterial
 ================
 */
-void idRestoreGame::ReadMaterial( const idMaterial *&material ) {
+void idRestoreGame::ReadMaterial( const idMaterial*& material )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		material = NULL;
-	} else {
+	}
+	else
+	{
 		material = declManager->FindMaterial( name );
 	}
 }
@@ -1140,13 +1284,17 @@ void idRestoreGame::ReadMaterial( const idMaterial *&material ) {
 idRestoreGame::ReadSkin
 ================
 */
-void idRestoreGame::ReadSkin( const idDeclSkin *&skin ) {
+void idRestoreGame::ReadSkin( const idDeclSkin*& skin )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		skin = NULL;
-	} else {
+	}
+	else
+	{
 		skin = declManager->FindSkin( name );
 	}
 }
@@ -1156,14 +1304,18 @@ void idRestoreGame::ReadSkin( const idDeclSkin *&skin ) {
 idRestoreGame::ReadParticle
 ================
 */
-void idRestoreGame::ReadParticle( const idDeclParticle *&particle ) {
+void idRestoreGame::ReadParticle( const idDeclParticle*& particle )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		particle = NULL;
-	} else {
-		particle = static_cast<const idDeclParticle *>( declManager->FindType( DECL_PARTICLE, name ) );
+	}
+	else
+	{
+		particle = static_cast<const idDeclParticle*>( declManager->FindType( DECL_PARTICLE, name ) );
 	}
 }
 
@@ -1172,14 +1324,18 @@ void idRestoreGame::ReadParticle( const idDeclParticle *&particle ) {
 idRestoreGame::ReadFX
 ================
 */
-void idRestoreGame::ReadFX( const idDeclFX *&fx ) {
+void idRestoreGame::ReadFX( const idDeclFX*& fx )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		fx = NULL;
-	} else {
-		fx = static_cast<const idDeclFX *>( declManager->FindType( DECL_FX, name ) );
+	}
+	else
+	{
+		fx = static_cast<const idDeclFX*>( declManager->FindType( DECL_FX, name ) );
 	}
 }
 
@@ -1188,13 +1344,17 @@ void idRestoreGame::ReadFX( const idDeclFX *&fx ) {
 idRestoreGame::ReadSoundShader
 ================
 */
-void idRestoreGame::ReadSoundShader( const idSoundShader *&shader ) {
+void idRestoreGame::ReadSoundShader( const idSoundShader*& shader )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		shader = NULL;
-	} else {
+	}
+	else
+	{
 		shader = declManager->FindSound( name );
 	}
 }
@@ -1204,14 +1364,18 @@ void idRestoreGame::ReadSoundShader( const idSoundShader *&shader ) {
 idRestoreGame::ReadModelDef
 ================
 */
-void idRestoreGame::ReadModelDef( const idDeclModelDef *&modelDef ) {
+void idRestoreGame::ReadModelDef( const idDeclModelDef*& modelDef )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		modelDef = NULL;
-	} else {
-		modelDef = static_cast<const idDeclModelDef *>( declManager->FindType( DECL_MODELDEF, name, false ) );
+	}
+	else
+	{
+		modelDef = static_cast<const idDeclModelDef*>( declManager->FindType( DECL_MODELDEF, name, false ) );
 	}
 }
 
@@ -1220,13 +1384,17 @@ void idRestoreGame::ReadModelDef( const idDeclModelDef *&modelDef ) {
 idRestoreGame::ReadModel
 ================
 */
-void idRestoreGame::ReadModel( idRenderModel *&model ) {
+void idRestoreGame::ReadModel( idRenderModel*& model )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		model = NULL;
-	} else {
+	}
+	else
+	{
 		model = renderModelManager->FindModel( name );
 	}
 }
@@ -1236,20 +1404,28 @@ void idRestoreGame::ReadModel( idRenderModel *&model ) {
 idRestoreGame::ReadUserInterface
 ================
 */
-void idRestoreGame::ReadUserInterface( idUserInterface *&ui ) {
+void idRestoreGame::ReadUserInterface( idUserInterface*& ui )
+{
 	idStr name;
 
 	ReadString( name );
-	if ( !name.Length() ) {
+	if( !name.Length() )
+	{
 		ui = NULL;
-	} else {
+	}
+	else
+	{
 		bool unique;
 		ReadBool( unique );
 		ui = uiManager->FindGui( name, true, unique );
-		if ( ui ) {
-			if ( ui->ReadFromSaveGame( file ) == false ) {
+		if( ui )
+		{
+			if( ui->ReadFromSaveGame( file ) == false )
+			{
 				Error( "idSaveGame::ReadUserInterface: ui failed to read properly\n" );
-			} else {
+			}
+			else
+			{
 				ui->StateChanged( gameLocal.time );
 			}
 		}
@@ -1261,7 +1437,8 @@ void idRestoreGame::ReadUserInterface( idUserInterface *&ui ) {
 idRestoreGame::ReadRenderEntity
 ================
 */
-void idRestoreGame::ReadRenderEntity( renderEntity_t &renderEntity ) {
+void idRestoreGame::ReadRenderEntity( renderEntity_t& renderEntity )
+{
 	int i;
 	int index;
 
@@ -1291,11 +1468,13 @@ void idRestoreGame::ReadRenderEntity( renderEntity_t &renderEntity ) {
 	ReadInt( index );
 	renderEntity.referenceSound = gameSoundWorld->EmitterForIndex( index );
 
-	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ )
+	{
 		ReadFloat( renderEntity.shaderParms[ i ] );
 	}
 
-	for( i = 0; i < MAX_RENDERENTITY_GUI; i++ ) {
+	for( i = 0; i < MAX_RENDERENTITY_GUI; i++ )
+	{
 		ReadUserInterface( renderEntity.gui[ i ] );
 	}
 
@@ -1320,7 +1499,8 @@ void idRestoreGame::ReadRenderEntity( renderEntity_t &renderEntity ) {
 idRestoreGame::ReadRenderLight
 ================
 */
-void idRestoreGame::ReadRenderLight( renderLight_t &renderLight ) {
+void idRestoreGame::ReadRenderLight( renderLight_t& renderLight )
+{
 	int index;
 	int i;
 
@@ -1351,7 +1531,8 @@ void idRestoreGame::ReadRenderLight( renderLight_t &renderLight ) {
 
 	ReadMaterial( renderLight.shader );
 
-	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_ENTITY_SHADER_PARMS; i++ )
+	{
 		ReadFloat( renderLight.shaderParms[ i ] );
 	}
 
@@ -1364,7 +1545,8 @@ void idRestoreGame::ReadRenderLight( renderLight_t &renderLight ) {
 idRestoreGame::ReadRefSound
 ================
 */
-void idRestoreGame::ReadRefSound( refSound_t &refSound ) {
+void idRestoreGame::ReadRefSound( refSound_t& refSound )
+{
 	int		index;
 	ReadInt( index );
 
@@ -1388,7 +1570,8 @@ void idRestoreGame::ReadRefSound( refSound_t &refSound ) {
 idRestoreGame::ReadRenderView
 ================
 */
-void idRestoreGame::ReadRenderView( renderView_t &view ) {
+void idRestoreGame::ReadRenderView( renderView_t& view )
+{
 	int i;
 
 	ReadInt( view.viewID );
@@ -1406,7 +1589,8 @@ void idRestoreGame::ReadRenderView( renderView_t &view ) {
 
 	ReadInt( view.time );
 
-	for( i = 0; i < MAX_GLOBAL_SHADER_PARMS; i++ ) {
+	for( i = 0; i < MAX_GLOBAL_SHADER_PARMS; i++ )
+	{
 		ReadFloat( view.shaderParms[ i ] );
 	}
 }
@@ -1416,7 +1600,8 @@ void idRestoreGame::ReadRenderView( renderView_t &view ) {
 idRestoreGame::ReadUsercmd
 =================
 */
-void idRestoreGame::ReadUsercmd( usercmd_t &usercmd ) {
+void idRestoreGame::ReadUsercmd( usercmd_t& usercmd )
+{
 	ReadInt( usercmd.gameFrame );
 	ReadInt( usercmd.gameTime );
 	ReadInt( usercmd.duplicateCount );
@@ -1439,8 +1624,9 @@ void idRestoreGame::ReadUsercmd( usercmd_t &usercmd ) {
 idRestoreGame::ReadContactInfo
 ===================
 */
-void idRestoreGame::ReadContactInfo( contactInfo_t &contactInfo ) {
-	ReadInt( (int &)contactInfo.type );
+void idRestoreGame::ReadContactInfo( contactInfo_t& contactInfo )
+{
+	ReadInt( ( int& )contactInfo.type );
 	ReadVec3( contactInfo.point );
 	ReadVec3( contactInfo.normal );
 	ReadFloat( contactInfo.dist );
@@ -1457,7 +1643,8 @@ void idRestoreGame::ReadContactInfo( contactInfo_t &contactInfo ) {
 idRestoreGame::ReadTrace
 ===================
 */
-void idRestoreGame::ReadTrace( trace_t &trace ) {
+void idRestoreGame::ReadTrace( trace_t& trace )
+{
 	ReadFloat( trace.fraction );
 	ReadVec3( trace.endpos );
 	ReadMat3( trace.endAxis );
@@ -1469,27 +1656,32 @@ void idRestoreGame::ReadTrace( trace_t &trace ) {
  idRestoreGame::ReadTraceModel
  ===================
  */
-void idRestoreGame::ReadTraceModel( idTraceModel &trace ) {
+void idRestoreGame::ReadTraceModel( idTraceModel& trace )
+{
 	int j, k;
-	
-	ReadInt( (int&)trace.type );
+
+	ReadInt( ( int& )trace.type );
 	ReadInt( trace.numVerts );
-	for ( j = 0; j < MAX_TRACEMODEL_VERTS; j++ ) {
+	for( j = 0; j < MAX_TRACEMODEL_VERTS; j++ )
+	{
 		ReadVec3( trace.verts[j] );
 	}
 	ReadInt( trace.numEdges );
-	for ( j = 0; j < (MAX_TRACEMODEL_EDGES+1); j++ ) {
+	for( j = 0; j < ( MAX_TRACEMODEL_EDGES + 1 ); j++ )
+	{
 		ReadInt( trace.edges[j].v[0] );
 		ReadInt( trace.edges[j].v[1] );
 		ReadVec3( trace.edges[j].normal );
 	}
 	ReadInt( trace.numPolys );
-	for ( j = 0; j < MAX_TRACEMODEL_POLYS; j++ ) {
+	for( j = 0; j < MAX_TRACEMODEL_POLYS; j++ )
+	{
 		ReadVec3( trace.polys[j].normal );
 		ReadFloat( trace.polys[j].dist );
 		ReadBounds( trace.polys[j].bounds );
 		ReadInt( trace.polys[j].numEdges );
-		for ( k = 0; k < MAX_TRACEMODEL_POLYEDGES; k++ ) {
+		for( k = 0; k < MAX_TRACEMODEL_POLYEDGES; k++ )
+		{
 			ReadInt( trace.polys[j].edges[k] );
 		}
 	}
@@ -1506,14 +1698,18 @@ void idRestoreGame::ReadTraceModel( idTraceModel &trace ) {
 idRestoreGame::ReadClipModel
 =====================
 */
-void idRestoreGame::ReadClipModel( idClipModel *&clipModel ) {
+void idRestoreGame::ReadClipModel( idClipModel*& clipModel )
+{
 	bool restoreClipModel;
 
 	ReadBool( restoreClipModel );
-	if ( restoreClipModel ) {
+	if( restoreClipModel )
+	{
 		clipModel = new idClipModel();
 		clipModel->Restore( this );
-	} else {
+	}
+	else
+	{
 		clipModel = NULL;
 	}
 }
@@ -1523,7 +1719,8 @@ void idRestoreGame::ReadClipModel( idClipModel *&clipModel ) {
 idRestoreGame::ReadSoundCommands
 =====================
 */
-void idRestoreGame::ReadSoundCommands( void ) {
+void idRestoreGame::ReadSoundCommands( void )
+{
 	gameSoundWorld->StopAllSounds();
 	gameSoundWorld->ReadFromSaveGame( file );
 }
@@ -1533,7 +1730,8 @@ void idRestoreGame::ReadSoundCommands( void ) {
 idRestoreGame::ReadBuildNumber
 =====================
 */
-void idRestoreGame::ReadBuildNumber( void ) {
+void idRestoreGame::ReadBuildNumber( void )
+{
 	file->ReadInt( buildNumber );
 }
 
@@ -1542,6 +1740,7 @@ void idRestoreGame::ReadBuildNumber( void ) {
 idRestoreGame::GetBuildNumber
 =====================
 */
-int idRestoreGame::GetBuildNumber( void ) {
+int idRestoreGame::GetBuildNumber( void )
+{
 	return buildNumber;
 }

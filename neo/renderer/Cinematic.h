@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,7 +41,8 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // cinematic states
-typedef enum {
+typedef enum
+{
 	FMV_IDLE,
 	FMV_PLAY,			// play
 	FMV_EOF,			// all other conditions, i.e. stop/EOF/abort
@@ -52,13 +53,15 @@ typedef enum {
 } cinStatus_t;
 
 // a cinematic stream generates an image buffer, which the caller will upload to a texture
-typedef struct {
+typedef struct
+{
 	int					imageWidth, imageHeight;	// will be a power of 2
-	const byte *		image;						// RGBA format, alpha will be 255
+	const byte* 		image;						// RGBA format, alpha will be 255
 	int					status;
 } cinData_t;
 
-class idCinematic {
+class idCinematic
+{
 public:
 	// initialize cinematic play back data
 	static void			InitCinematic( void );
@@ -68,13 +71,13 @@ public:
 
 	// allocates and returns a private subclass that implements the methods
 	// This should be used instead of new
-	static idCinematic	*Alloc();
+	static idCinematic*	Alloc();
 
 	// frees all allocated memory
 	virtual				~idCinematic();
 
 	// returns false if it failed to load
-	virtual bool		InitFromFile( const char *qpath, bool looping );
+	virtual bool		InitFromFile( const char* qpath, bool looping );
 
 	// returns the length of the animation in milliseconds
 	virtual int			AnimationLength();
@@ -86,7 +89,7 @@ public:
 	virtual void		Close();
 
 	// closes the file and frees all allocated memory
-	virtual void		ResetTime(int time);
+	virtual void		ResetTime( int time );
 };
 
 /*
@@ -97,13 +100,17 @@ public:
 ===============================================
 */
 
-class idSndWindow : public idCinematic {
+class idSndWindow : public idCinematic
+{
 public:
-	
-						idSndWindow() { showWaveform = false; }
-						~idSndWindow() {}
 
-	bool				InitFromFile( const char *qpath, bool looping );
+	idSndWindow()
+	{
+		showWaveform = false;
+	}
+	~idSndWindow() {}
+
+	bool				InitFromFile( const char* qpath, bool looping );
 	cinData_t			ImageForTime( int milliseconds );
 	int					AnimationLength();
 

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ If you have questions concerning this license or the applicable additional terms
 
 // CPreviewDlg dialog
 
-struct CommentedItem {
+struct CommentedItem
+{
 	idStr Name;
 	idStr Path;
 	idStr Comments;
@@ -42,14 +43,15 @@ class CPreviewDlg : public CDialog
 {
 public:
 	enum {MODELS, GUIS, SOUNDS, MATERIALS, SCRIPTS, SOUNDPARENT, WAVES, PARTICLES, MODELPARENT, GUIPARENT, COMMENTED, SKINS};
-	CPreviewDlg(CWnd* pParent = NULL);   // standard constructor
+	CPreviewDlg( CWnd* pParent = NULL ); // standard constructor
 	virtual ~CPreviewDlg();
-	void SetMode( int mode, const char *preSelect = NULL );
-	void RebuildTree( const char *data );
-	void SetDisablePreview( bool b ) {
+	void SetMode( int mode, const char* preSelect = NULL );
+	void RebuildTree( const char* data );
+	void SetDisablePreview( bool b )
+	{
 		disablePreview = b;
 	}
-	
+
 	idStr mediaName;
 	int returnCode;
 
@@ -58,7 +60,7 @@ public:
 // Dialog Data
 	enum { IDD = IDD_DIALOG_PREVIEW };
 private:
-	DECLARE_DYNAMIC(CPreviewDlg)
+	DECLARE_DYNAMIC( CPreviewDlg )
 
 	CTreeCtrl treeMedia;
 	CEdit editInfo;
@@ -77,19 +79,19 @@ private:
 	bool disablePreview;
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	void BuildTree();
-	void AddStrList(const char *root, const idStrList &list, int type);
-	void AddSounds(bool rootItems);
-	void AddMaterials(bool rootItems);
-	void AddParticles(bool rootItems);
+	void AddStrList( const char* root, const idStrList& list, int type );
+	void AddSounds( bool rootItems );
+	void AddMaterials( bool rootItems );
+	void AddParticles( bool rootItems );
 	void AddSkins( bool rootItems );
-	
+
 	DECLARE_MESSAGE_MAP()
 
 public:
-	afx_msg void OnTvnSelchangedTreeMedia(NMHDR *pNMHDR, LRESULT *pResult);
-	virtual BOOL Create(LPCTSTR lpszTemplateName, CWnd* pParentWnd = NULL);
+	afx_msg void OnTvnSelchangedTreeMedia( NMHDR* pNMHDR, LRESULT* pResult );
+	virtual BOOL Create( LPCTSTR lpszTemplateName, CWnd* pParentWnd = NULL );
 protected:
 	virtual void OnCancel();
 	virtual void OnOK();

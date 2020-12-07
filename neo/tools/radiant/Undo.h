@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,39 +27,39 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 //start operation
-void Undo_Start(char *operation);
+void Undo_Start( char* operation );
 //end operation
-void Undo_End(void);
+void Undo_End( void );
 //add brush to the undo
-void Undo_AddBrush(brush_t *pBrush);
+void Undo_AddBrush( brush_t* pBrush );
 //add a list with brushes to the undo
-void Undo_AddBrushList(brush_t *brushlist);
+void Undo_AddBrushList( brush_t* brushlist );
 //end a brush after the operation is performed
-void Undo_EndBrush(brush_t *pBrush);
+void Undo_EndBrush( brush_t* pBrush );
 //end a list with brushes after the operation is performed
-void Undo_EndBrushList(brush_t *brushlist);
+void Undo_EndBrushList( brush_t* brushlist );
 //add entity to undo
-void Undo_AddEntity(entity_t *entity);
+void Undo_AddEntity( entity_t* entity );
 //end an entity after the operation is performed
-void Undo_EndEntity(entity_t *entity);
+void Undo_EndEntity( entity_t* entity );
 //undo last operation
-void Undo_Undo(void);
+void Undo_Undo( void );
 //redo last undone operation
-void Undo_Redo(void);
+void Undo_Redo( void );
 //returns true if there is something to be undone available
-int  Undo_UndoAvailable(void);
+int  Undo_UndoAvailable( void );
 //returns true if there is something to redo available
-int  Undo_RedoAvailable(void);
+int  Undo_RedoAvailable( void );
 //clear the undo buffer
-void Undo_Clear(void);
+void Undo_Clear( void );
 //set maximum undo size (default 64)
-void Undo_SetMaxSize(int size);
+void Undo_SetMaxSize( int size );
 //get maximum undo size
-int  Undo_GetMaxSize(void);
+int  Undo_GetMaxSize( void );
 //set maximum undo memory in bytes (default 2 MB)
-void Undo_SetMaxMemorySize(int size);
+void Undo_SetMaxMemorySize( int size );
 //get maximum undo memory in bytes
-int  Undo_GetMaxMemorySize(void);
+int  Undo_GetMaxMemorySize( void );
 //returns the amount of memory used by undo
-int  Undo_MemorySize(void);
+int  Undo_MemorySize( void );
 

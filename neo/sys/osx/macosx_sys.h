@@ -8,15 +8,15 @@
 
 // sys
 
-const char *macosx_scanForLibraryDirectory(void);
+const char* macosx_scanForLibraryDirectory( void );
 
 // In macosx_input.m
-void Sys_InitInput(void);
-void Sys_ShutdownInput(void);
-CGDirectDisplayID Sys_DisplayToUse(void);
+void Sys_InitInput( void );
+void Sys_ShutdownInput( void );
+CGDirectDisplayID Sys_DisplayToUse( void );
 //extern void osxQuit();
-void SetProgramPath(char *path);
-void Sys_SetMouseInputRect(CGRect newRect);
+void SetProgramPath( char* path );
+void Sys_SetMouseInputRect( CGRect newRect );
 
 void Sys_AnnoyingBanner();
 
@@ -24,34 +24,35 @@ void Sys_AnnoyingBanner();
 bool Sys_Hide();
 bool Sys_Unhide();
 
-typedef struct {
-    CGDirectDisplayID     display;
-    CGTableCount          tableSize;
-    CGGammaValue	 *red;
-    CGGammaValue	 *blue;
-    CGGammaValue	 *green;
+typedef struct
+{
+	CGDirectDisplayID     display;
+	CGTableCount          tableSize;
+	CGGammaValue* 	red;
+	CGGammaValue* 	blue;
+	CGGammaValue* 	green;
 } glwgamma_t;
 
 typedef struct
 {
-    CGDirectDisplayID	display;
-    NSDictionary		*desktopMode;
-    NSDictionary		*gameMode;
+	CGDirectDisplayID	display;
+	NSDictionary*		desktopMode;
+	NSDictionary*		gameMode;
 
-    CGDisplayCount		displayCount;
-    glwgamma_t			*originalDisplayGammaTables;
-    glwgamma_t			inGameTable;
-    glwgamma_t			tempTable;
-    
-    NSOpenGLContext		*_ctx;
-    CGLContextObj		_cgl_ctx;
-    bool				_ctx_is_current;
-    NSWindow			*window;
-    
-    FILE				*log_fp;
-    
-    unsigned int		bufferSwapCount;
-    unsigned int		glPauseCount;
+	CGDisplayCount		displayCount;
+	glwgamma_t*			originalDisplayGammaTables;
+	glwgamma_t			inGameTable;
+	glwgamma_t			tempTable;
+
+	NSOpenGLContext*		_ctx;
+	CGLContextObj		_cgl_ctx;
+	bool				_ctx_is_current;
+	NSWindow*			window;
+
+	FILE*				log_fp;
+
+	unsigned int		bufferSwapCount;
+	unsigned int		glPauseCount;
 } glwstate_t;
 
 extern glwstate_t glw_state;

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-class idDrawVert {
+class idDrawVert
+{
 public:
 	idVec3			xyz;
 	idVec2			st;
@@ -48,12 +49,12 @@ public:
 	float			padding;
 #endif
 	float			operator[]( const int index ) const;
-	float &			operator[]( const int index );
+	float& 			operator[]( const int index );
 
 	void			Clear( void );
 
-	void			Lerp( const idDrawVert &a, const idDrawVert &b, const float f );
-	void			LerpAll( const idDrawVert &a, const idDrawVert &b, const float f );
+	void			Lerp( const idDrawVert& a, const idDrawVert& b, const float f );
+	void			LerpAll( const idDrawVert& a, const idDrawVert& b, const float f );
 
 	void			Normalize( void );
 
@@ -61,16 +62,19 @@ public:
 	dword			GetColor( void ) const;
 };
 
-ID_INLINE float idDrawVert::operator[]( const int index ) const {
+ID_INLINE float idDrawVert::operator[]( const int index ) const
+{
 	assert( index >= 0 && index < 5 );
-	return ((float *)(&xyz))[index];
+	return ( ( float* )( &xyz ) )[index];
 }
-ID_INLINE float	&idDrawVert::operator[]( const int index ) {
+ID_INLINE float&	idDrawVert::operator[]( const int index )
+{
 	assert( index >= 0 && index < 5 );
-	return ((float *)(&xyz))[index];
+	return ( ( float* )( &xyz ) )[index];
 }
 
-ID_INLINE void idDrawVert::Clear( void ) {
+ID_INLINE void idDrawVert::Clear( void )
+{
 	xyz.Zero();
 	st.Zero();
 	normal.Zero();
@@ -79,29 +83,33 @@ ID_INLINE void idDrawVert::Clear( void ) {
 	color[0] = color[1] = color[2] = color[3] = 0;
 }
 
-ID_INLINE void idDrawVert::Lerp( const idDrawVert &a, const idDrawVert &b, const float f ) {
+ID_INLINE void idDrawVert::Lerp( const idDrawVert& a, const idDrawVert& b, const float f )
+{
 	xyz = a.xyz + f * ( b.xyz - a.xyz );
 	st = a.st + f * ( b.st - a.st );
 }
 
-ID_INLINE void idDrawVert::LerpAll( const idDrawVert &a, const idDrawVert &b, const float f ) {
+ID_INLINE void idDrawVert::LerpAll( const idDrawVert& a, const idDrawVert& b, const float f )
+{
 	xyz = a.xyz + f * ( b.xyz - a.xyz );
 	st = a.st + f * ( b.st - a.st );
 	normal = a.normal + f * ( b.normal - a.normal );
 	tangents[0] = a.tangents[0] + f * ( b.tangents[0] - a.tangents[0] );
 	tangents[1] = a.tangents[1] + f * ( b.tangents[1] - a.tangents[1] );
-	color[0] = (byte)( a.color[0] + f * ( b.color[0] - a.color[0] ) );
-	color[1] = (byte)( a.color[1] + f * ( b.color[1] - a.color[1] ) );
-	color[2] = (byte)( a.color[2] + f * ( b.color[2] - a.color[2] ) );
-	color[3] = (byte)( a.color[3] + f * ( b.color[3] - a.color[3] ) );
+	color[0] = ( byte )( a.color[0] + f * ( b.color[0] - a.color[0] ) );
+	color[1] = ( byte )( a.color[1] + f * ( b.color[1] - a.color[1] ) );
+	color[2] = ( byte )( a.color[2] + f * ( b.color[2] - a.color[2] ) );
+	color[3] = ( byte )( a.color[3] + f * ( b.color[3] - a.color[3] ) );
 }
 
-ID_INLINE void idDrawVert::SetColor( dword color ) {
-	*reinterpret_cast<dword *>(this->color) = color;
+ID_INLINE void idDrawVert::SetColor( dword color )
+{
+	*reinterpret_cast<dword*>( this->color ) = color;
 }
 
-ID_INLINE dword idDrawVert::GetColor( void ) const {
-	return *reinterpret_cast<const dword *>(this->color);
+ID_INLINE dword idDrawVert::GetColor( void ) const
+{
+	return *reinterpret_cast<const dword*>( this->color );
 }
 
 #endif /* !__DRAWVERT_H__ */

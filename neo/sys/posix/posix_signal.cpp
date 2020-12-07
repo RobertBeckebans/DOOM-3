@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ If you have questions concerning this license or the applicable additional terms
 #include <string.h>
 #include <errno.h>
 
-const int siglist[] = {
+const int siglist[] =
+{
 	SIGHUP,
 	SIGQUIT,
 	SIGILL,
@@ -45,9 +46,10 @@ const int siglist[] = {
 	//	SIGTTIN,
 	//	SIGTTOU,
 	-1
-	};
+};
 
-const char *signames[] = {
+const char* signames[] =
+{
 	"SIGHUP",
 	"SIGQUIT",
 	"SIGILL",
@@ -69,18 +71,21 @@ static char fatalError[ 1024 ];
 Posix_ClearSigs
 ================
 */
-void Posix_ClearSigs( ) {
+void Posix_ClearSigs( )
+{
 	struct sigaction action;
 	int i;
-	
+
 	/* Set up the structure */
 	action.sa_handler = SIG_DFL;
 	sigemptyset( &action.sa_mask );
 	action.sa_flags = 0;
 
 	i = 0;
-	while ( siglist[ i ] != -1 ) {
-		if ( sigaction( siglist[ i ], &action, NULL ) != 0 ) {
+	while( siglist[ i ] != -1 )
+	{
+		if( sigaction( siglist[ i ], &action, NULL ) != 0 )
+		{
 			Sys_Printf( "Failed to reset %s handler: %s\n", signames[ i ], strerror( errno ) );
 		}
 		i++;
@@ -92,31 +97,34 @@ void Posix_ClearSigs( ) {
 sig_handler
 ================
 */
-static void sig_handler( int signum, siginfo_t *info, void *context ) {
+static void sig_handler( int signum, siginfo_t* info, void* context )
+{
 	static bool double_fault = false;
-	
-	if ( double_fault ) {
+
+	if( double_fault )
+	{
 		Sys_Printf( "double fault %s, bailing out\n", strsignal( signum ) );
 		Posix_Exit( signum );
 	}
-	
+
 	double_fault = true;
-	
+
 	// NOTE: see sigaction man page, could verbose the whole siginfo_t and print human readable si_code
-	Sys_Printf( "signal caught: %s\nsi_code %d\n", strsignal( signum ), info->si_code );	
-	
+	Sys_Printf( "signal caught: %s\nsi_code %d\n", strsignal( signum ), info->si_code );
+
 #ifndef ID_BT_STUB
 	Sys_Printf( "callstack:\n%s", Sys_GetCallStackCurStr( 30 ) );
 #endif
 
-	if ( fatalError[ 0 ] ) {
+	if( fatalError[ 0 ] )
+	{
 		Sys_Printf( "Was in fatal error shutdown: %s\n", fatalError );
 	}
-	
+
 	Sys_Printf( "Trying to exit gracefully..\n" );
-	
+
 	Posix_SetExit( signum );
-	
+
 	common->Quit();
 }
 
@@ -125,26 +133,32 @@ static void sig_handler( int signum, siginfo_t *info, void *context ) {
 Posix_InitSigs
 ================
 */
-void Posix_InitSigs( ) {
+void Posix_InitSigs( )
+{
 	struct sigaction action;
 	int i;
 
 	fatalError[0] = '\0';
-	
+
 	/* Set up the structure */
 	action.sa_sigaction = sig_handler;
 	sigemptyset( &action.sa_mask );
 	action.sa_flags = SA_SIGINFO | SA_NODEFER;
 
 	i = 0;
-	while ( siglist[ i ] != -1 ) {
-		if ( siglist[ i ] == SIGFPE ) {
+	while( siglist[ i ] != -1 )
+	{
+		if( siglist[ i ] == SIGFPE )
+		{
 			action.sa_sigaction = Sys_FPE_handler;
-			if ( sigaction( siglist[ i ], &action, NULL ) != 0 ) {
+			if( sigaction( siglist[ i ], &action, NULL ) != 0 )
+			{
 				Sys_Printf( "Failed to set SIGFPE handler: %s\n", strerror( errno ) );
 			}
 			action.sa_sigaction = sig_handler;
-		} else if ( sigaction( siglist[ i ], &action, NULL ) != 0 ) {
+		}
+		else if( sigaction( siglist[ i ], &action, NULL ) != 0 )
+		{
 			Sys_Printf( "Failed to set %s handler: %s\n", signames[ i ], strerror( errno ) );
 		}
 		i++;
@@ -153,7 +167,7 @@ void Posix_InitSigs( ) {
 	// if the process is backgrounded (running non interactively)
 	// then SIGTTIN or SIGTOU could be emitted, if not caught, turns into a SIGSTP
 	signal( SIGTTIN, SIG_IGN );
-	signal( SIGTTOU, SIG_IGN );	
+	signal( SIGTTOU, SIG_IGN );
 }
 
 /*
@@ -161,6 +175,7 @@ void Posix_InitSigs( ) {
 Sys_SetFatalError
 ==================
 */
-void Sys_SetFatalError( const char *error ) {
+void Sys_SetFatalError( const char* error )
+{
 	strncpy( fatalError, error, sizeof( fatalError ) );
 }

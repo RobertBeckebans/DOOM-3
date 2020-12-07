@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,10 +45,11 @@ const int MAX_CHALLENGES				= 1024;
 const int AUTHORIZE_TIMEOUT				= 5000;
 
 // states for the server's authorization process
-typedef enum {
+typedef enum
+{
 	CDK_WAIT = 0,	// we are waiting for a confirm/deny from auth
-					// this is subject to timeout if we don't hear from auth
-					// or a permanent wait if auth said so
+	// this is subject to timeout if we don't hear from auth
+	// or a permanent wait if auth said so
 	CDK_OK,
 	CDK_ONLYLAN,
 	CDK_PUREWAIT,
@@ -57,7 +58,8 @@ typedef enum {
 } authState_t;
 
 // states from the auth server, while the client is in CDK_WAIT
-typedef enum {
+typedef enum
+{
 	AUTH_NONE = 0,	// no reply yet
 	AUTH_OK,		// this client is good
 	AUTH_WAIT,		// wait - keep sending me srvAuth though
@@ -67,7 +69,8 @@ typedef enum {
 
 // message from auth to be forwarded back to the client
 // some are locally hardcoded to save space, auth has the possibility to send a custom reply
-typedef enum {
+typedef enum
+{
 	AUTH_REPLY_WAITING = 0,	// waiting on an initial reply from auth
 	AUTH_REPLY_UNKNOWN,		// client unknown to auth
 	AUTH_REPLY_DENIED,		// access denied
@@ -76,7 +79,8 @@ typedef enum {
 	AUTH_REPLY_MAXSTATES
 } authReplyMsg_t;
 
-typedef struct challenge_s {
+typedef struct challenge_s
+{
 	netadr_t			address;		// client address
 	int					clientId;		// client identification
 	int					challenge;		// challenge code
@@ -91,7 +95,8 @@ typedef struct challenge_s {
 	int					OS;
 } challenge_t;
 
-typedef enum {
+typedef enum
+{
 	SCS_FREE,			// can be reused for a new connection
 	SCS_ZOMBIE,			// client has been disconnected, but don't reuse connection for a couple seconds
 	SCS_PUREWAIT,		// client needs to update it's pure checksums before we can go further
@@ -99,7 +104,8 @@ typedef enum {
 	SCS_INGAME			// client is in the game
 } serverClientState_t;
 
-typedef struct serverClient_s {
+typedef struct serverClient_s
+{
 	int					OS;
 	int					clientId;
 	serverClientState_t	clientState;
@@ -128,9 +134,10 @@ typedef struct serverClient_s {
 } serverClient_t;
 
 
-class idAsyncServer {
+class idAsyncServer
+{
 public:
-						idAsyncServer();
+	idAsyncServer();
 
 	bool				InitPort( void );
 	void				ClosePort( void );
@@ -140,8 +147,14 @@ public:
 
 	int					GetPort( void ) const;
 	netadr_t			GetBoundAdr( void ) const;
-	bool				IsActive( void ) const { return active; }
-	int					GetDelay( void ) const { return gameTimeResidual; }
+	bool				IsActive( void ) const
+	{
+		return active;
+	}
+	int					GetDelay( void ) const
+	{
+		return gameTimeResidual;
+	}
 	int					GetOutgoingRate( void ) const;
 	int					GetIncomingRate( void ) const;
 	bool				IsClientInGame( int clientNum ) const;
@@ -156,24 +169,27 @@ public:
 	float				GetClientIncomingPacketLoss( int clientNum ) const;
 	int					GetNumClients( void ) const;
 	int					GetNumIdleClients( void ) const;
-	int					GetLocalClientNum( void ) const { return localClientNum; }
+	int					GetLocalClientNum( void ) const
+	{
+		return localClientNum;
+	}
 
 	void				RunFrame( void );
 	void				ProcessConnectionLessMessages( void );
-	void				RemoteConsoleOutput( const char *string );
-	void				SendReliableGameMessage( int clientNum, const idBitMsg &msg );
-	void				SendReliableGameMessageExcluding( int clientNum, const idBitMsg &msg );
-	void				LocalClientSendReliableMessage( const idBitMsg &msg );
+	void				RemoteConsoleOutput( const char* string );
+	void				SendReliableGameMessage( int clientNum, const idBitMsg& msg );
+	void				SendReliableGameMessageExcluding( int clientNum, const idBitMsg& msg );
+	void				LocalClientSendReliableMessage( const idBitMsg& msg );
 
 	void				MasterHeartbeat( bool force = false );
-	void				DropClient( int clientNum, const char *reason );
+	void				DropClient( int clientNum, const char* reason );
 
 	void				PacifierUpdate( void );
 
 	void				UpdateUI( int clientNum );
 
 	void				UpdateAsyncStatsAvg( void );
-	void				GetAsyncStatsAvgMsg( idStr &msg );
+	void				GetAsyncStatsAvgMsg( idStr& msg );
 
 	void				PrintLocalServerInfo( void );
 
@@ -197,7 +213,7 @@ private:
 	int					gameTimeResidual;			// left over time from previous frame
 
 	netadr_t			rconAddress;
-	
+
 	int					nextHeartbeatTime;
 	int					nextAsyncStatsTime;
 
@@ -216,7 +232,7 @@ private:
 	int					stats_max;
 	int					stats_max_index;
 
-	void				PrintOOB( const netadr_t to, int opcode, const char *string );
+	void				PrintOOB( const netadr_t to, int opcode, const char* string );
 	void				DuplicateUsercmds( int frame, int time );
 	void				ClearClient( int clientNum );
 	void				InitClient( int clientNum, int clientId, int clientRate );
@@ -224,36 +240,36 @@ private:
 	void				BeginLocalClient( void );
 	void				LocalClientInput( void );
 	void				CheckClientTimeouts( void );
-	void				SendPrintBroadcast( const char *string );
-	void				SendPrintToClient( int clientNum, const char *string );
-	void				SendUserInfoBroadcast( int userInfoNum, const idDict &info, bool sendToAll = false );
-	void				SendUserInfoToClient( int clientNum, int userInfoNum, const idDict &info );
-	void				SendSyncedCvarsBroadcast( const idDict &cvars );
-	void				SendSyncedCvarsToClient( int clientNum, const idDict &cvars );
+	void				SendPrintBroadcast( const char* string );
+	void				SendPrintToClient( int clientNum, const char* string );
+	void				SendUserInfoBroadcast( int userInfoNum, const idDict& info, bool sendToAll = false );
+	void				SendUserInfoToClient( int clientNum, int userInfoNum, const idDict& info );
+	void				SendSyncedCvarsBroadcast( const idDict& cvars );
+	void				SendSyncedCvarsToClient( int clientNum, const idDict& cvars );
 	void				SendApplySnapshotToClient( int clientNum, int sequence );
 	bool				SendEmptyToClient( int clientNum, bool force = false );
 	bool				SendPingToClient( int clientNum );
 	void				SendGameInitToClient( int clientNum );
 	bool				SendSnapshotToClient( int clientNum );
-	void				ProcessUnreliableClientMessage( int clientNum, const idBitMsg &msg );
+	void				ProcessUnreliableClientMessage( int clientNum, const idBitMsg& msg );
 	void				ProcessReliableClientMessages( int clientNum );
-	void				ProcessChallengeMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessConnectMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessRemoteConsoleMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessGetInfoMessage( const netadr_t from, const idBitMsg &msg );
-	bool				ConnectionlessMessage( const netadr_t from, const idBitMsg &msg );
-	bool				ProcessMessage( const netadr_t from, idBitMsg &msg );
-	void				ProcessAuthMessage( const idBitMsg &msg );
+	void				ProcessChallengeMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessConnectMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessRemoteConsoleMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessGetInfoMessage( const netadr_t from, const idBitMsg& msg );
+	bool				ConnectionlessMessage( const netadr_t from, const idBitMsg& msg );
+	bool				ProcessMessage( const netadr_t from, idBitMsg& msg );
+	void				ProcessAuthMessage( const idBitMsg& msg );
 	bool				SendPureServerMessage( const netadr_t to, int OS );										// returns false if no pure paks on the list
-	void				ProcessPureMessage( const netadr_t from, const idBitMsg &msg );
+	void				ProcessPureMessage( const netadr_t from, const idBitMsg& msg );
 	int					ValidateChallenge( const netadr_t from, int challenge, int clientId );	// returns -1 if validate failed
 	bool				SendReliablePureToClient( int clientNum );
-	void				ProcessReliablePure( int clientNum, const idBitMsg &msg );
-	bool				VerifyChecksumMessage( int clientNum, const netadr_t *from, const idBitMsg &msg, idStr &reply, int OS ); // if from is NULL, clientNum is used for error messages
-	void				SendReliableMessage( int clientNum, const idBitMsg &msg );				// checks for overflow and disconnects the faulty client
+	void				ProcessReliablePure( int clientNum, const idBitMsg& msg );
+	bool				VerifyChecksumMessage( int clientNum, const netadr_t* from, const idBitMsg& msg, idStr& reply, int OS ); // if from is NULL, clientNum is used for error messages
+	void				SendReliableMessage( int clientNum, const idBitMsg& msg );				// checks for overflow and disconnects the faulty client
 	int					UpdateTime( int clamp );
 	void				SendEnterGameToClient( int clientNum );
-	void				ProcessDownloadRequestMessage( const netadr_t from, const idBitMsg &msg );
+	void				ProcessDownloadRequestMessage( const netadr_t from, const idBitMsg& msg );
 };
 
 #endif /* !__ASYNCSERVER_H__ */

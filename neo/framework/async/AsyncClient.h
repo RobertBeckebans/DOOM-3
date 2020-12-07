@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,7 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-typedef enum {
+typedef enum
+{
 	CS_DISCONNECTED,
 	CS_PURERESTART,
 	CS_CHALLENGING,
@@ -46,19 +47,22 @@ typedef enum {
 	CS_INGAME
 } clientState_t;
 
-typedef enum {
+typedef enum
+{
 	AUTHKEY_BADKEY,
 	AUTHKEY_GUID
 } authKeyMsg_t;
 
-typedef enum {
+typedef enum
+{
 	AUTHKEY_BAD_INVALID,
 	AUTHKEY_BAD_BANNED,
 	AUTHKEY_BAD_INUSE,
 	AUTHKEY_BAD_MSG
 } authBadKeyStatus_t;
 
-typedef enum {
+typedef enum
+{
 	UPDATE_NONE,
 	UPDATE_SENT,
 	UPDATE_READY,
@@ -66,35 +70,46 @@ typedef enum {
 	UPDATE_DONE
 } clientUpdateState_t;
 
-typedef struct {
+typedef struct
+{
 	idStr	url;
 	idStr	filename;
 	int		size;
 	int		checksum;
 } pakDlEntry_t;
 
-class idAsyncClient {
+class idAsyncClient
+{
 public:
-						idAsyncClient();
+	idAsyncClient();
 
 	void				Shutdown( void );
 	bool				InitPort( void );
 	void				ClosePort( void );
 	void				ConnectToServer( const netadr_t adr );
-	void				ConnectToServer( const char *address );
+	void				ConnectToServer( const char* address );
 	void				Reconnect( void );
 	void				DisconnectFromServer( void );
 	void				GetServerInfo( const netadr_t adr );
-	void				GetServerInfo( const char *address );
+	void				GetServerInfo( const char* address );
 	void				GetLANServers( void );
 	void				GetNETServers( void );
 	void				ListServers( void );
 	void				ClearServers( void );
-	void				RemoteConsole( const char *command );
-	bool				IsPortInitialized() { return clientPort.GetPort() != 0; }
+	void				RemoteConsole( const char* command );
+	bool				IsPortInitialized()
+	{
+		return clientPort.GetPort() != 0;
+	}
 
-	bool				IsActive( void ) const { return active; }
-	int					GetLocalClientNum( void ) const { return clientNum; }
+	bool				IsActive( void ) const
+	{
+		return active;
+	}
+	int					GetLocalClientNum( void ) const
+	{
+		return clientNum;
+	}
 	int					GetPrediction( void ) const;
 	int					GetTimeSinceLastPacket( void ) const;
 	int					GetOutgoingRate( void ) const;
@@ -102,15 +117,18 @@ public:
 	float				GetOutgoingCompression( void ) const;
 	float				GetIncomingCompression( void ) const;
 	float				GetIncomingPacketLoss( void ) const;
-	int					GetPredictedFrames( void ) const { return lastFrameDelta; }
+	int					GetPredictedFrames( void ) const
+	{
+		return lastFrameDelta;
+	}
 
 	void				RunFrame( void );
-	void				SendReliableGameMessage( const idBitMsg &msg );
+	void				SendReliableGameMessage( const idBitMsg& msg );
 
 	void				SendVersionCheck( bool fromMenu = false );
 	// pass NULL for the keys you don't care to auth for
 	// returns false if internet link doesn't appear to be available
-	bool				SendAuthCheck( const char *cdkey, const char *xpkey );
+	bool				SendAuthCheck( const char* cdkey, const char* xpkey );
 
 	void				PacifierUpdate( void );
 
@@ -133,7 +151,7 @@ private:
 	int					serverId;					// server identification
 	int					serverChallenge;			// challenge from server
 	int					serverMessageSequence;		// sequence number of last server message
-	
+
 	netadr_t			lastRconAddress;			// last rcon address we emitted to
 	int					lastRconTime;				// when last rcon emitted
 
@@ -154,7 +172,7 @@ private:
 
 	usercmd_t			userCmds[MAX_USERCMD_BACKUP][MAX_ASYNC_CLIENTS];
 
-	idUserInterface *	guiNetMenu;
+	idUserInterface* 	guiNetMenu;
 
 	clientUpdateState_t updateState;
 	int					updateSentTime;
@@ -186,32 +204,32 @@ private:
 	void				SendEmptyToServer( bool force = false, bool mapLoad = false );
 	void				SendPingResponseToServer( int time );
 	void				SendUsercmdsToServer( void );
-	void				InitGame( int serverGameInitId, int serverGameFrame, int serverGameTime, const idDict &serverSI );
-	void				ProcessUnreliableServerMessage( const idBitMsg &msg );
+	void				InitGame( int serverGameInitId, int serverGameFrame, int serverGameTime, const idDict& serverSI );
+	void				ProcessUnreliableServerMessage( const idBitMsg& msg );
 	void				ProcessReliableServerMessages( void );
-	void				ProcessChallengeResponseMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessConnectResponseMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessDisconnectMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessInfoResponseMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessPrintMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessServersListMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessAuthKeyMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessVersionMessage( const netadr_t from, const idBitMsg &msg );
-	void				ConnectionlessMessage( const netadr_t from, const idBitMsg &msg );
-	void				ProcessMessage( const netadr_t from, idBitMsg &msg );
+	void				ProcessChallengeResponseMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessConnectResponseMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessDisconnectMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessInfoResponseMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessPrintMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessServersListMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessAuthKeyMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessVersionMessage( const netadr_t from, const idBitMsg& msg );
+	void				ConnectionlessMessage( const netadr_t from, const idBitMsg& msg );
+	void				ProcessMessage( const netadr_t from, idBitMsg& msg );
 	void				SetupConnection( void );
-	void				ProcessPureMessage( const netadr_t from, const idBitMsg &msg );
-	bool				ValidatePureServerChecksums( const netadr_t from, const idBitMsg &msg );
-	void				ProcessReliableMessagePure( const idBitMsg &msg );
-	static const char*	HandleGuiCommand( const char *cmd );
-	const char*			HandleGuiCommandInternal( const char *cmd );
+	void				ProcessPureMessage( const netadr_t from, const idBitMsg& msg );
+	bool				ValidatePureServerChecksums( const netadr_t from, const idBitMsg& msg );
+	void				ProcessReliableMessagePure( const idBitMsg& msg );
+	static const char*	HandleGuiCommand( const char* cmd );
+	const char*			HandleGuiCommandInternal( const char* cmd );
 	void				SendVersionDLUpdate( int state );
 	void				HandleDownloads( void );
 	void				Idle( void );
 	int					UpdateTime( int clamp );
-	void				ReadLocalizedServerString( const idBitMsg &msg, char* out, int maxLen );
+	void				ReadLocalizedServerString( const idBitMsg& msg, char* out, int maxLen );
 	bool				CheckTimeout( void );
-	void				ProcessDownloadInfoMessage( const netadr_t from, const idBitMsg &msg );
+	void				ProcessDownloadInfoMessage( const netadr_t from, const idBitMsg& msg );
 	int					GetDownloadRequest( const int checksums[ MAX_PURE_PAKS ], int count, int gamePakChecksum );
 };
 

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_FINDTEXTUREDLG_H__34B75D32_9F3A_11D1_B570_00AA00A410FC__INCLUDED_
 
 #if _MSC_VER >= 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER >= 1000
 // FindTextureDlg.h : header file
 //
@@ -41,12 +41,12 @@ class CFindTextureDlg : public CDialog
 {
 // Construction
 public:
-	static void setReplaceStr(const char* p);
-	static void setFindStr(const char* p);
+	static void setReplaceStr( const char* p );
+	static void setFindStr( const char* p );
 	static bool isOpen();
-  static void show();
-  static void updateTextures(const char* p);
-	CFindTextureDlg(CWnd* pParent = NULL);   // standard constructor
+	static void show();
+	static void updateTextures( const char* p );
+	CFindTextureDlg( CWnd* pParent = NULL ); // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CFindTextureDlg)
@@ -62,10 +62,10 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CFindTextureDlg)
-	public:
+public:
 	virtual BOOL DestroyWindow();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class CInspectorDialog : public CTabsDlg
 	//DECLARE_DYNAMIC(CInspectorDialog)w
 
 public:
-	CInspectorDialog(CWnd* pParent = NULL);   // standard constructor
+	CInspectorDialog( CWnd* pParent = NULL ); // standard constructor
 	virtual ~CInspectorDialog();
 
 // Dialog Data
@@ -53,25 +53,25 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	void AssignModel ();
+	void AssignModel();
 	CTabCtrl tabInspector;
 	//idGLConsoleWidget consoleWnd;
 	CConsoleDlg consoleWnd;
 	CNewTexWnd texWnd;
 	CDialogTextures mediaDlg;
 	CEntityDlg entityDlg;
-	void SetMode(int mode, bool updateTabs = true);
-	void UpdateEntitySel(eclass_t *ent);
+	void SetMode( int mode, bool updateTabs = true );
+	void UpdateEntitySel( eclass_t* ent );
 	void UpdateSelectedEntity();
 	void FillClassList();
-	bool GetSelectAllCriteria(idStr &key, idStr &val);
+	bool GetSelectAllCriteria( idStr& key, idStr& val );
 
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize( UINT nType, int cx, int cy );
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL PreTranslateMessage( MSG* pMsg );
 
-	void SetDockedTabs ( bool docked , int ID );	
+	void SetDockedTabs( bool docked , int ID );
 };
 
-extern CInspectorDialog *g_Inspectors;
+extern CInspectorDialog* g_Inspectors;

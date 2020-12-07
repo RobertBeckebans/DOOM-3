@@ -11,25 +11,25 @@
 #include <string.h>
 
 #ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
+	#include <sys/socket.h>
 #endif
 #ifdef HAVE_SYS_SELECT_H
-/* since so many tests use select(), we can just as well include it here */
-#include <sys/select.h>
+	/* since so many tests use select(), we can just as well include it here */
+	#include <sys/select.h>
 #endif
 #ifdef HAVE_UNISTD_H
-/* at least somewhat oldish FreeBSD systems need this for select() */
-#include <unistd.h>
+	/* at least somewhat oldish FreeBSD systems need this for select() */
+	#include <unistd.h>
 #endif
 
 #ifndef FALSE
-#define FALSE 0
+	#define FALSE 0
 #endif
 
 #ifndef TRUE
-#define TRUE 1
+	#define TRUE 1
 #endif
 
-extern char *arg2; /* set by first.c to the argv[2] or NULL */
-int test(char *URL); /* the actual test function provided by each individual
+extern char* arg2; /* set by first.c to the argv[2] or NULL */
+int test( char* URL ); /* the actual test function provided by each individual
                         libXXX.c file */

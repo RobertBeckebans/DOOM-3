@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ If you have questions concerning this license or the applicable additional terms
 // changed from 1 to 255 to not conflict with ARB2 program names
 static int	FPROG_FAST_PATH = 255;
 
-typedef struct {
+typedef struct
+{
 	GLint	numFragmentRegisters;	// 6
 	GLint	numFragmentConstants;	// 8
 	GLint	numPasses;				// 2
@@ -57,7 +58,8 @@ typedef struct {
 
 static atiFragmentShaderInfo_t	fsi;
 
-typedef struct {
+typedef struct
+{
 	// vertex shader invariants
 	int	lightPos;		// light position in object coordinates
 	int	viewerPos;		// viewer position in object coordinates
@@ -87,10 +89,12 @@ RB_R200_ARB_DrawInteraction
 
 ===================
 */
-static void RB_R200_ARB_DrawInteraction( const drawInteraction_t *din ) {
+static void RB_R200_ARB_DrawInteraction( const drawInteraction_t* din )
+{
 	// check for the case we can't handle in a single pass (we could calculate this at shader parse time to optimize)
-	if ( din->diffuseImage != globalImages->blackImage && din->specularImage != globalImages->blackImage
-		&& memcmp( din->specularMatrix, din->diffuseMatrix, sizeof( din->diffuseMatrix ) ) ) {
+	if( din->diffuseImage != globalImages->blackImage && din->specularImage != globalImages->blackImage
+			&& memcmp( din->specularMatrix, din->diffuseMatrix, sizeof( din->diffuseMatrix ) ) )
+	{
 //		common->Printf( "Note: Shader %s drawn as two pass on R200\n", din->surf->shader->getName() );
 
 		// draw the specular as a separate pass with a black diffuse map
@@ -120,27 +124,28 @@ static void RB_R200_ARB_DrawInteraction( const drawInteraction_t *din ) {
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_SPECULAR_MATRIX_S, din->diffuseMatrix[0].ToFloatPtr() );
 	qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_SPECULAR_MATRIX_T, din->diffuseMatrix[1].ToFloatPtr() );
 
-	const srfTriangles_t	*tri = din->surf->geo;
-	idDrawVert	*ac = (idDrawVert *)vertexCache.Position( tri->ambientCache );
-	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), (void *)&ac->xyz );
+	const srfTriangles_t*	tri = din->surf->geo;
+	idDrawVert*	ac = ( idDrawVert* )vertexCache.Position( tri->ambientCache );
+	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->xyz );
 
 	static const float zero[4] = { 0, 0, 0, 0 };
 	static const float one[4] = { 1, 1, 1, 1 };
 	static const float negOne[4] = { -1, -1, -1, -1 };
 
-	switch ( din->vertexColor ) {
-	case SVC_IGNORE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, zero );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
-		break;
-	case SVC_MODULATE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, one );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, zero );
-		break;
-	case SVC_INVERSE_MODULATE:
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, negOne );
-		qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
-		break;
+	switch( din->vertexColor )
+	{
+		case SVC_IGNORE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, zero );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
+			break;
+		case SVC_MODULATE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, one );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, zero );
+			break;
+		case SVC_INVERSE_MODULATE:
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_MODULATE, negOne );
+			qglProgramEnvParameter4fvARB( GL_VERTEX_PROGRAM_ARB, PP_COLOR_ADD, one );
+			break;
 	}
 
 
@@ -152,9 +157,12 @@ static void RB_R200_ARB_DrawInteraction( const drawInteraction_t *din ) {
 	// texture 5 = normalization cube map
 
 	GL_SelectTexture( 5 );
-	if ( din->ambientLight ) {
+	if( din->ambientLight )
+	{
 		globalImages->ambientNormalMap->Bind();
-	} else {
+	}
+	else
+	{
 		globalImages->normalCubeMapImage->Bind();
 	}
 
@@ -163,32 +171,35 @@ static void RB_R200_ARB_DrawInteraction( const drawInteraction_t *din ) {
 
 	GL_SelectTexture( 3 );
 	din->specularImage->Bind();
-	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), (void *)&ac->normal );
+	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->normal );
 
 	GL_SelectTexture( 2 );
 	din->diffuseImage->Bind();
-	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), (void *)&ac->tangents[1][0] );
+	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->tangents[1][0] );
 
 	GL_SelectTexture( 1 );
 	din->lightFalloffImage->Bind();
-	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), (void *)&ac->tangents[0][0] );
+	qglTexCoordPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->tangents[0][0] );
 
 	GL_SelectTexture( 0 );
 	din->lightImage->Bind();
-	qglTexCoordPointer( 2, GL_FLOAT, sizeof( idDrawVert ), (void *)&ac->st[0] );
+	qglTexCoordPointer( 2, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->st[0] );
 
 	qglSetFragmentShaderConstantATI( GL_CON_0_ATI, din->diffuseColor.ToFloatPtr() );
 	qglSetFragmentShaderConstantATI( GL_CON_1_ATI, din->specularColor.ToFloatPtr() );
 
-	if ( din->vertexColor != SVC_IGNORE ) {
-		qglColorPointer( 4, GL_UNSIGNED_BYTE, sizeof(idDrawVert), (void *)&ac->color );
+	if( din->vertexColor != SVC_IGNORE )
+	{
+		qglColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( idDrawVert ), ( void* )&ac->color );
 		qglEnableClientState( GL_COLOR_ARRAY );
 
 		RB_DrawElementsWithCounters( tri );
 
 		qglDisableClientState( GL_COLOR_ARRAY );
 		qglColor4f( 1, 1, 1, 1 );
-	} else {
+	}
+	else
+	{
 		RB_DrawElementsWithCounters( tri );
 	}
 }
@@ -198,8 +209,10 @@ static void RB_R200_ARB_DrawInteraction( const drawInteraction_t *din ) {
 RB_R200_ARB_CreateDrawInteractions
 ==================
 */
-static void RB_R200_ARB_CreateDrawInteractions( const drawSurf_t *surf ) {
-	if ( !surf ) {
+static void RB_R200_ARB_CreateDrawInteractions( const drawSurf_t* surf )
+{
+	if( !surf )
+	{
 		return;
 	}
 
@@ -207,16 +220,19 @@ static void RB_R200_ARB_CreateDrawInteractions( const drawSurf_t *surf ) {
 	backEnd.currentSpace = NULL;
 
 	// set the depth test
-	if ( surf->material->Coverage() == MC_TRANSLUCENT /* != C_PERFORATED */ ) {
+	if( surf->material->Coverage() == MC_TRANSLUCENT /* != C_PERFORATED */ )
+	{
 		GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ONE | GLS_DEPTHMASK | GLS_DEPTHFUNC_LESS );
-	} else {
+	}
+	else
+	{
 		// only draw on the alpha tested pixels that made it to the depth buffer
 		GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ONE | GLS_DEPTHMASK | GLS_DEPTHFUNC_EQUAL );
 	}
 
 	// start the vertex shader
 	qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, VPROG_R200_INTERACTION );
-	qglEnable(GL_VERTEX_PROGRAM_ARB);
+	qglEnable( GL_VERTEX_PROGRAM_ARB );
 
 	// start the fragment shader
 	qglBindFragmentShaderATI( FPROG_FAST_PATH );
@@ -235,7 +251,8 @@ static void RB_R200_ARB_CreateDrawInteractions( const drawSurf_t *surf ) {
 	GL_SelectTexture( 3 );
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
 
-	for ( ; surf ; surf=surf->nextOnLight ) {
+	for( ; surf ; surf = surf->nextOnLight )
+	{
 		RB_CreateSingleDrawInteractions( surf, RB_R200_ARB_DrawInteraction );
 	}
 
@@ -275,15 +292,19 @@ RB_R200_DrawInteractions
 
 ==================
 */
-void RB_R200_DrawInteractions( void ) {
+void RB_R200_DrawInteractions( void )
+{
 	qglEnable( GL_STENCIL_TEST );
 
-	for ( viewLight_t *vLight = backEnd.viewDef->viewLights ; vLight ; vLight = vLight->next ) {
+	for( viewLight_t* vLight = backEnd.viewDef->viewLights ; vLight ; vLight = vLight->next )
+	{
 		// do fogging later
-		if ( vLight->lightShader->IsFogLight() ) {
+		if( vLight->lightShader->IsFogLight() )
+		{
 			continue;
 		}
-		if ( vLight->lightShader->IsBlendLight() ) {
+		if( vLight->lightShader->IsBlendLight() )
+		{
 			continue;
 		}
 
@@ -292,23 +313,28 @@ void RB_R200_DrawInteractions( void ) {
 		RB_LogComment( "---------- RB_RenderViewLight 0x%p ----------\n", vLight );
 
 		// clear the stencil buffer if needed
-		if ( vLight->globalShadows || vLight->localShadows ) {
+		if( vLight->globalShadows || vLight->localShadows )
+		{
 			backEnd.currentScissor = vLight->scissorRect;
-			if ( r_useScissor.GetBool() ) {
-				qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1, 
-					backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
-					backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
-					backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
+			if( r_useScissor.GetBool() )
+			{
+				qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1,
+							backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
+							backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
+							backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
 			}
 			qglClear( GL_STENCIL_BUFFER_BIT );
-		} else {
+		}
+		else
+		{
 			// no shadows, so no need to read or write the stencil buffer
 			// we might in theory want to use GL_ALWAYS instead of disabling
 			// completely, to satisfy the invarience rules
 			qglStencilFunc( GL_ALWAYS, 128, 255 );
 		}
 
-		if ( r_useShadowVertexProgram.GetBool() ) {
+		if( r_useShadowVertexProgram.GetBool() )
+		{
 			qglEnable( GL_VERTEX_PROGRAM_ARB );
 			qglBindProgramARB( GL_VERTEX_PROGRAM_ARB, VPROG_STENCIL_SHADOW );
 			RB_StencilShadowPass( vLight->globalShadows );
@@ -322,7 +348,9 @@ void RB_R200_DrawInteractions( void ) {
 			RB_R200_ARB_CreateDrawInteractions( vLight->globalInteractions );
 
 			qglDisable( GL_VERTEX_PROGRAM_ARB );	// if there weren't any globalInteractions, it would have stayed on
-		} else {
+		}
+		else
+		{
 			RB_StencilShadowPass( vLight->globalShadows );
 			RB_R200_ARB_CreateDrawInteractions( vLight->localInteractions );
 
@@ -330,7 +358,8 @@ void RB_R200_DrawInteractions( void ) {
 			RB_R200_ARB_CreateDrawInteractions( vLight->globalInteractions );
 		}
 
-		if ( r_skipTranslucent.GetBool() ) {
+		if( r_skipTranslucent.GetBool() )
+		{
 			continue;
 		}
 
@@ -349,7 +378,8 @@ void RB_R200_DrawInteractions( void ) {
 R_BuildSurfaceFragmentProgram
 =================
 */
-static void R_BuildSurfaceFragmentProgram( int programNum ) {
+static void R_BuildSurfaceFragmentProgram( int programNum )
+{
 	qglBindFragmentShaderATI( programNum );
 
 	qglBeginFragmentShaderATI();
@@ -378,25 +408,26 @@ static void R_BuildSurfaceFragmentProgram( int programNum ) {
 	qglSampleMapATI( GL_REG_5_ATI, GL_TEXTURE5_ARB, GL_SWIZZLE_STR_ATI );
 
 	// move the alpha component to the red channel to support rxgb normal map compression
-	if ( globalImages->image_useNormalCompression.GetInteger() == 2 ) {
+	if( globalImages->image_useNormalCompression.GetInteger() == 2 )
+	{
 		qglColorFragmentOp1ATI( GL_MOV_ATI, GL_REG_4_ATI, GL_RED_BIT_ATI, GL_NONE,
-			GL_REG_4_ATI, GL_ALPHA, GL_NONE );
+								GL_REG_4_ATI, GL_ALPHA, GL_NONE );
 	}
 
 	// light projection * light falloff
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_1_ATI, GL_NONE, GL_NONE );
+							GL_REG_0_ATI, GL_NONE, GL_NONE,
+							GL_REG_1_ATI, GL_NONE, GL_NONE );
 
 	// vectorToLight dot bumpMap
 	qglColorFragmentOp2ATI( GL_DOT3_ATI, GL_REG_1_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_4_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI,
-		GL_REG_5_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI );
+							GL_REG_4_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI,
+							GL_REG_5_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI );
 
 	// bump * light
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_1_ATI, GL_NONE, GL_NONE );
+							GL_REG_0_ATI, GL_NONE, GL_NONE,
+							GL_REG_1_ATI, GL_NONE, GL_NONE );
 
 	//-------------------
 
@@ -414,58 +445,58 @@ static void R_BuildSurfaceFragmentProgram( int programNum ) {
 
 	// normalize the specular halfangle
 	qglSampleMapATI( GL_REG_5_ATI, GL_TEXTURE4_ARB, GL_SWIZZLE_STR_ATI );
-	
+
 	// R1 = halfangle dot surfaceNormal
 	qglColorFragmentOp2ATI( GL_DOT3_ATI, GL_REG_1_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_4_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI,
-		GL_REG_5_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI );
+							GL_REG_4_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI,
+							GL_REG_5_ATI, GL_NONE, GL_2X_BIT_ATI | GL_BIAS_BIT_ATI );
 
 	// R1 = 4 * ( R1 - 0.75 )
 	// subtract 0.75 and quadruple to tighten the specular spot
 	float data[4] = { 0.75, 0.75,  0.75,  0.75 };
 	qglSetFragmentShaderConstantATI( GL_CON_5_ATI, data );
 	qglColorFragmentOp2ATI( GL_SUB_ATI, GL_REG_1_ATI, GL_NONE, GL_4X_BIT_ATI | GL_SATURATE_BIT_ATI,
-		GL_REG_1_ATI, GL_NONE, GL_NONE,
-		GL_CON_5_ATI, GL_NONE, GL_NONE );
+							GL_REG_1_ATI, GL_NONE, GL_NONE,
+							GL_CON_5_ATI, GL_NONE, GL_NONE );
 
 	// R1 = R1 * R1
 	// sqare the stretched specular result
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_1_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_1_ATI, GL_NONE, GL_NONE,
-		GL_REG_1_ATI, GL_NONE, GL_NONE );
+							GL_REG_1_ATI, GL_NONE, GL_NONE,
+							GL_REG_1_ATI, GL_NONE, GL_NONE );
 
 	// R1 = R1 * R3
 	// R1 = specular power * specular texture * 2
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_1_ATI, GL_NONE, GL_2X_BIT_ATI | GL_SATURATE_BIT_ATI,
-		GL_REG_1_ATI, GL_NONE, GL_NONE,
-		GL_REG_3_ATI, GL_NONE, GL_NONE );
+							GL_REG_1_ATI, GL_NONE, GL_NONE,
+							GL_REG_3_ATI, GL_NONE, GL_NONE );
 
 	// R2 = R2 * CONST0
 	// down modulate the diffuse map
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_2_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_2_ATI, GL_NONE, GL_NONE,
-		GL_CON_0_ATI, GL_NONE, GL_NONE );
+							GL_REG_2_ATI, GL_NONE, GL_NONE,
+							GL_CON_0_ATI, GL_NONE, GL_NONE );
 
 	// R2 = R2 + R1 * CONST1
 	// diffuse + specular * specular color
 	qglColorFragmentOp3ATI( GL_MAD_ATI, GL_REG_2_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_1_ATI, GL_NONE, GL_NONE,
-		GL_CON_1_ATI, GL_NONE, GL_NONE,
-		GL_REG_2_ATI, GL_NONE, GL_NONE );
+							GL_REG_1_ATI, GL_NONE, GL_NONE,
+							GL_CON_1_ATI, GL_NONE, GL_NONE,
+							GL_REG_2_ATI, GL_NONE, GL_NONE );
 
 	// out = reflectance * incoming light
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_0_ATI, GL_NONE, GL_SATURATE_BIT_ATI,
-		GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_2_ATI, GL_NONE, GL_NONE );
+							GL_REG_0_ATI, GL_NONE, GL_NONE,
+							GL_REG_2_ATI, GL_NONE, GL_NONE );
 
 	// out * vertex color
 	qglColorFragmentOp2ATI( GL_MUL_ATI, GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_REG_0_ATI, GL_NONE, GL_NONE,
-		GL_PRIMARY_COLOR_ARB, GL_NONE, GL_NONE );
+							GL_REG_0_ATI, GL_NONE, GL_NONE,
+							GL_PRIMARY_COLOR_ARB, GL_NONE, GL_NONE );
 
 	// out alpha = 0 to allow blending optimization
 	qglAlphaFragmentOp1ATI( GL_MOV_ATI, GL_REG_0_ATI, GL_NONE,
-		GL_ZERO, GL_NONE, GL_NONE );
+							GL_ZERO, GL_NONE, GL_NONE );
 
 	qglEndFragmentShaderATI();
 
@@ -477,12 +508,14 @@ static void R_BuildSurfaceFragmentProgram( int programNum ) {
 R_R200_Init
 =================
 */
-void R_R200_Init( void ) {
+void R_R200_Init( void )
+{
 	glConfig.allowR200Path = false;
 
 	common->Printf( "----------- R200_Init -----------\n" );
 
-	if ( !glConfig.atiFragmentShaderAvailable || !glConfig.ARBVertexProgramAvailable || !glConfig.ARBVertexBufferObjectAvailable ) {
+	if( !glConfig.atiFragmentShaderAvailable || !glConfig.ARBVertexProgramAvailable || !glConfig.ARBVertexBufferObjectAvailable )
+	{
 		common->Printf( "Not available.\n" );
 		return;
 	}

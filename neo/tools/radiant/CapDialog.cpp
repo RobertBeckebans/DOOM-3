@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,17 +34,17 @@ If you have questions concerning this license or the applicable additional terms
 #include "CapDialog.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CCapDialog dialog
 
 
-CCapDialog::CCapDialog(CWnd* pParent /*=NULL*/)
-	: CDialog(CCapDialog::IDD, pParent)
+CCapDialog::CCapDialog( CWnd* pParent /*=NULL*/ )
+	: CDialog( CCapDialog::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CCapDialog)
 	m_nCap = 0;
@@ -52,18 +52,18 @@ CCapDialog::CCapDialog(CWnd* pParent /*=NULL*/)
 }
 
 
-void CCapDialog::DoDataExchange(CDataExchange* pDX)
+void CCapDialog::DoDataExchange( CDataExchange* pDX )
 {
-	CDialog::DoDataExchange(pDX);
+	CDialog::DoDataExchange( pDX );
 	//{{AFX_DATA_MAP(CCapDialog)
-	DDX_Radio(pDX, IDC_RADIO_CAP, m_nCap);
+	DDX_Radio( pDX, IDC_RADIO_CAP, m_nCap );
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(CCapDialog, CDialog)
+BEGIN_MESSAGE_MAP( CCapDialog, CDialog )
 	//{{AFX_MSG_MAP(CCapDialog)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

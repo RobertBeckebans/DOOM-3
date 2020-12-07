@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #define AFX_ROTATEDLG_H__D4B79152_7A7E_11D1_B541_00AA00A410FC__INCLUDED_
 
 #if _MSC_VER >= 1000
-#pragma once
+	#pragma once
 #endif // _MSC_VER >= 1000
 // RotateDlg.h : header file
 //
@@ -41,7 +41,7 @@ class CRotateDlg : public CDialog
 {
 // Construction
 public:
-	CRotateDlg(CWnd* pParent = NULL);   // standard constructor
+	CRotateDlg( CWnd* pParent = NULL ); // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CRotateDlg)
@@ -58,8 +58,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRotateDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -71,9 +71,9 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnApply();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnDeltaposSpin1(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin2(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnDeltaposSpin3(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDeltaposSpin1( NMHDR* pNMHDR, LRESULT* pResult );
+	afx_msg void OnDeltaposSpin2( NMHDR* pNMHDR, LRESULT* pResult );
+	afx_msg void OnDeltaposSpin3( NMHDR* pNMHDR, LRESULT* pResult );
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

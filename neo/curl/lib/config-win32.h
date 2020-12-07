@@ -5,7 +5,7 @@
    System headers sometimes define this.
    We just want to avoid a redefinition error message.  */
 #ifndef _ALL_SOURCE
-/* #undef _ALL_SOURCE */
+	/* #undef _ALL_SOURCE */
 #endif
 
 /* Define to empty if the keyword does not work.  */
@@ -28,12 +28,12 @@
 
 /* Define this to 'int' if socklen_t is not an available typedefed type */
 #if !defined(ENABLE_IPV6) && ((_MSC_VER < 1300) || !defined(USE_SSLEAY))
-#define socklen_t int
+	#define socklen_t int
 #endif
 
 /* The size of a `curl_off_t', as computed by sizeof. */
 #ifdef SIZEOF_CURL_OFF_T
-#undef SIZEOF_CURL_OFF_T
+	#undef SIZEOF_CURL_OFF_T
 #endif
 
 #define SIZEOF_CURL_OFF_T 8
@@ -100,7 +100,7 @@
 
 /* Define if you have the strtoll function.  */
 #ifdef MINGW32
-#define HAVE_STRTOLL 1
+	#define HAVE_STRTOLL 1
 #endif
 
 /* Define if you have the tcgetattr function.  */
@@ -225,7 +225,7 @@
  *************************************************/
 #if defined(MINGW32) || defined(__WATCOMC__) /* Borland and MS don't have this */
 
-/* Define if you have the <unistd.h> header file.  */
-#define HAVE_UNISTD_H 1
+	/* Define if you have the <unistd.h> header file.  */
+	#define HAVE_UNISTD_H 1
 
 #endif

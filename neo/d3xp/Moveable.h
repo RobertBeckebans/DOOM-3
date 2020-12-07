@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,17 +40,18 @@ If you have questions concerning this license or the applicable additional terms
 extern const idEventDef EV_BecomeNonSolid;
 extern const idEventDef EV_IsAtRest;
 
-class idMoveable : public idEntity {
+class idMoveable : public idEntity
+{
 public:
 	CLASS_PROTOTYPE( idMoveable );
 
-							idMoveable( void );
-							~idMoveable( void );
+	idMoveable( void );
+	~idMoveable( void );
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	virtual void			Think( void );
 
@@ -59,13 +60,13 @@ public:
 
 	bool					AllowStep( void ) const;
 	void					EnableDamage( bool enable, float duration );
-	virtual bool			Collide( const trace_t &collision, const idVec3 &velocity );
-	virtual void			Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
-	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
-	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
+	virtual bool			Collide( const trace_t& collision, const idVec3& velocity );
+	virtual void			Killed( idEntity* inflictor, idEntity* attacker, int damage, const idVec3& dir, int location );
+	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
+	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
 
 #ifdef _D3XP
-	void					SetAttacker( idEntity *ent );
+	void					SetAttacker( idEntity* ent );
 #endif
 
 protected:
@@ -74,13 +75,13 @@ protected:
 	idStr					damage;					// if > 0 apply damage to hit entities
 #ifdef _D3XP
 	idStr					monsterDamage;
-	idEntity				*attacker;
+	idEntity*				attacker;
 #endif
 	idStr					fxCollide;				// fx system to start when collides with something
 	int						nextCollideFxTime;		// next time it is ok to spawn collision fx
 	float					minDamageVelocity;		// minimum velocity before moveable applies damage
 	float					maxDamageVelocity;		// velocity at which the maximum damage is applied
-	idCurve_Spline<idVec3> *initialSpline;			// initial spline path the moveable follows
+	idCurve_Spline<idVec3>* initialSpline;			// initial spline path the moveable follows
 	idVec3					initialSplineDir;		// initial relative direction along the spline path
 	bool					explode;				// entity explodes when health drops down to or below zero
 	bool					unbindOnDeath;			// unbind from master when health drops down to or below zero
@@ -89,12 +90,12 @@ protected:
 	int						nextDamageTime;			// next time the movable can hurt the player
 	int						nextSoundTime;			// next time the moveable can make a sound
 
-	const idMaterial *		GetRenderModelMaterial( void ) const;
+	const idMaterial* 		GetRenderModelMaterial( void ) const;
 	void					BecomeNonSolid( void );
 	void					InitInitialSpline( int startTime );
 	bool					FollowInitialSplinePath( void );
 
-	void					Event_Activate( idEntity *activator );
+	void					Event_Activate( idEntity* activator );
 	void					Event_BecomeNonSolid( void );
 	void					Event_SetOwnerFromSpawnArgs( void );
 	void					Event_IsAtRest( void );
@@ -111,20 +112,21 @@ protected:
 ===============================================================================
 */
 
-class idBarrel : public idMoveable {
+class idBarrel : public idMoveable
+{
 
 public:
 	CLASS_PROTOTYPE( idBarrel );
-							idBarrel();
+	idBarrel();
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 	void					BarrelThink( void );
 	virtual void			Think( void );
-	virtual bool			GetPhysicsToVisualTransform( idVec3 &origin, idMat3 &axis );
+	virtual bool			GetPhysicsToVisualTransform( idVec3& origin, idMat3& axis );
 	virtual void			ClientPredictionThink( void );
 
 private:
@@ -147,17 +149,18 @@ private:
 ===============================================================================
 */
 
-class idExplodingBarrel : public idBarrel {
+class idExplodingBarrel : public idBarrel
+{
 public:
 	CLASS_PROTOTYPE( idExplodingBarrel );
 
-							idExplodingBarrel();
-							~idExplodingBarrel();
+	idExplodingBarrel();
+	~idExplodingBarrel();
 
 	void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+	void					Save( idSaveGame* savefile ) const;
+	void					Restore( idRestoreGame* savefile );
 
 #ifdef _D3XP
 	bool					IsStable( void );
@@ -167,21 +170,23 @@ public:
 #endif
 
 	virtual void			Think( void );
-	virtual void			Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
-								const char *damageDefName, const float damageScale, const int location );
-	virtual void			Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
+	virtual void			Damage( idEntity* inflictor, idEntity* attacker, const idVec3& dir,
+									const char* damageDefName, const float damageScale, const int location );
+	virtual void			Killed( idEntity* inflictor, idEntity* attacker, int damage, const idVec3& dir, int location );
 
-	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
-	virtual void			ReadFromSnapshot( const idBitMsgDelta &msg );
-	virtual bool			ClientReceiveEvent( int event, int time, const idBitMsg &msg );
+	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
+	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
+	virtual bool			ClientReceiveEvent( int event, int time, const idBitMsg& msg );
 
-	enum {
+	enum
+	{
 		EVENT_EXPLODE = idEntity::EVENT_MAXEVENTS,
 		EVENT_MAXEVENTS
 	};
 
 private:
-	typedef enum {
+	typedef enum
+	{
 		NORMAL = 0,
 		BURNING,
 		BURNEXPIRED,
@@ -202,11 +207,11 @@ private:
 	bool					isStable;
 #endif
 
-	void					AddParticles( const char *name, bool burn );
-	void					AddLight( const char *name , bool burn );
+	void					AddParticles( const char* name, bool burn );
+	void					AddLight( const char* name , bool burn );
 	void					ExplodingEffects( void );
 
-	void					Event_Activate( idEntity *activator );
+	void					Event_Activate( idEntity* activator );
 	void					Event_Respawn();
 	void					Event_Explode();
 	void					Event_TriggerTargets();

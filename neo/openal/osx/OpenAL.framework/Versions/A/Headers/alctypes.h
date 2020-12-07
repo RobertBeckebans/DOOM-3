@@ -88,15 +88,15 @@ typedef int ALCenum;
 #define	ALC_REFRESH								 0x1008
 #define ALC_SYNC								 0x1009
 
-/** 
+/**
  * The device argument does not name a valid dvice.
  */
 #define ALC_INVALID_DEVICE                       0xA001
 
-/** 
+/**
  * The context argument does not name a valid context.
  */
-#define ALC_INVALID_CONTEXT                      0xA002  
+#define ALC_INVALID_CONTEXT                      0xA002
 
 /**
  * A function was called at inappropriate time,
@@ -106,7 +106,7 @@ typedef int ALCenum;
  */
 #define ALC_INVALID_ENUM						 0xA003
 
-/** 
+/**
  * Illegal value passed as an argument to an AL call.
  * Applies to parameter values, but not to enumerations.
  */
@@ -129,11 +129,11 @@ typedef int ALCenum;
 #define ALC_CONVERT_DATA_UPON_LOADING         		0xF001
 
 /**
- * Render Quality.  
+ * Render Quality.
  */
 #define ALC_SPATIAL_RENDERING_QUALITY               0xF002
-	#define ALC_SPATIAL_RENDERING_QUALITY_HIGH      'rqhi'
-	#define ALC_SPATIAL_RENDERING_QUALITY_LOW       'rdlo'
+#define ALC_SPATIAL_RENDERING_QUALITY_HIGH      'rqhi'
+#define ALC_SPATIAL_RENDERING_QUALITY_LOW       'rdlo'
 
 /**
  * Mixer Output Rate.
@@ -149,12 +149,12 @@ typedef int ALCenum;
 #define ALC_MIXER_MAXIMUM_BUSSES                    0xF004
 
 /**
- * Render Channels.  
+ * Render Channels.
  * Allows a user to force OpenAL to render to stereo, regardless of the audio hardware being used
  */
 #define ALC_RENDER_CHANNEL_COUNT                    0xF005
-	#define ALC_RENDER_CHANNEL_COUNT_STEREO         'rcst'
-	#define ALC_RENDER_CHANNEL_COUNT_MULTICHANNEL   'rcmc'
+#define ALC_RENDER_CHANNEL_COUNT_STEREO         'rcst'
+#define ALC_RENDER_CHANNEL_COUNT_MULTICHANNEL   'rcmc'
 
 
 #ifdef __cplusplus

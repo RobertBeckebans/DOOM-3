@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,19 +42,34 @@ void Sys_ShutdownInput( void ) { }
 
 void Sys_GrabMouseCursor( bool ) { }
 
-int Sys_PollMouseInputEvents( void ) { return 0; }
+int Sys_PollMouseInputEvents( void )
+{
+	return 0;
+}
 
 void Sys_EndMouseInputEvents( void ) { }
 
-int Sys_ReturnMouseInputEvent( const int n, int &action, int &value ) { return 0; }
+int Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
+{
+	return 0;
+}
 
-int Sys_PollKeyboardInputEvents( void ) { return 0; }
+int Sys_PollKeyboardInputEvents( void )
+{
+	return 0;
+}
 
 void Sys_EndKeyboardInputEvents( void ) { }
 
-int Sys_ReturnKeyboardInputEvent( const int n, int &action, bool &state ) { return 0; }
+int Sys_ReturnKeyboardInputEvent( const int n, int& action, bool& state )
+{
+	return 0;
+}
 
-unsigned char Sys_MapCharForKey( int key ) { return (unsigned char)key; }
+unsigned char Sys_MapCharForKey( int key )
+{
+	return ( unsigned char )key;
+}
 
 /*
 ================
@@ -62,7 +77,8 @@ Sys_GetVideoRam
 returns in megabytes
 ================
 */
-int Sys_GetVideoRam( void ) {
+int Sys_GetVideoRam( void )
+{
 	return 64;
 }
 
@@ -74,11 +90,14 @@ GL
 
 void GLimp_EnableLogging( bool enable ) { }
 
-bool GLimp_Init( glimpParms_t a ) { return true; }
+bool GLimp_Init( glimpParms_t a )
+{
+	return true;
+}
 
-void GLimp_SetGamma( unsigned short red[256], 
-				    unsigned short green[256],
-					unsigned short blue[256] ) { }
+void GLimp_SetGamma( unsigned short red[256],
+					 unsigned short green[256],
+					 unsigned short blue[256] ) { }
 
 void GLimp_Shutdown( void ) { }
 
@@ -88,5 +107,8 @@ void GLimp_DeactivateContext( void ) { }
 
 void GLimp_ActivateContext( void ) { }
 
-bool GLimp_SetScreenParms( glimpParms_t parms ) { return true; }
+bool GLimp_SetScreenParms( glimpParms_t parms )
+{
+	return true;
+}
 
