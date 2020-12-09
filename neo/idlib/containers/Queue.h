@@ -43,10 +43,10 @@ template< class type, int nextOffset >
 class idQueueTemplate
 {
 public:
-	idQueueTemplate( void );
+	idQueueTemplate();
 
 	void					Add( type* element );
-	type* 					Get( void );
+	type* 					Get();
 
 private:
 	type* 					first;
@@ -56,7 +56,7 @@ private:
 #define QUEUE_NEXT_PTR( element )		(*((type**)(((byte*)element)+nextOffset)))
 
 template< class type, int nextOffset >
-idQueueTemplate<type, nextOffset>::idQueueTemplate( void )
+idQueueTemplate<type, nextOffset>::idQueueTemplate()
 {
 	first = last = NULL;
 }
@@ -77,7 +77,7 @@ void idQueueTemplate<type, nextOffset>::Add( type* element )
 }
 
 template< class type, int nextOffset >
-type* idQueueTemplate<type, nextOffset>::Get( void )
+type* idQueueTemplate<type, nextOffset>::Get()
 {
 	type* element;
 

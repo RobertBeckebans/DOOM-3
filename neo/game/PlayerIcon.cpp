@@ -123,7 +123,7 @@ void idPlayerIcon::Draw( idPlayer* player, const idVec3& origin )
 idPlayerIcon::FreeIcon
 ===============
 */
-void idPlayerIcon::FreeIcon( void )
+void idPlayerIcon::FreeIcon()
 {
 	if( iconHandle != - 1 )
 	{

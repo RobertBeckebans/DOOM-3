@@ -155,9 +155,9 @@ public:
 	// NOTE: the ptr is expected to point at a valid C string: ptr[length] == '\0'
 	int				LoadMemory( const char* ptr, int length, const char* name, int startLine = 1 );
 	// free the script
-	void			FreeSource( void );
+	void			FreeSource();
 	// returns true if a script is loaded
-	int				IsLoaded( void )
+	int				IsLoaded()
 	{
 		return idLexer::loaded;
 	};
@@ -180,7 +180,7 @@ public:
 	// skip tokens until the given token string is read
 	int				SkipUntilString( const char* string );
 	// skip the rest of the current line
-	int				SkipRestOfLine( void );
+	int				SkipRestOfLine();
 	// skip the braced section
 	int				SkipBracedSection( bool parseFirstBrace = true );
 	// unread the given token
@@ -192,9 +192,9 @@ public:
 	const char*		ReadRestOfLine( idStr& out );
 
 	// read a signed integer
-	int				ParseInt( void );
+	int				ParseInt();
 	// read a boolean
-	bool			ParseBool( void );
+	bool			ParseBool();
 	// read a floating point number.  If errorFlag is NULL, a non-numeric token will
 	// issue an Error().  If it isn't NULL, it will issue a Warning() and set *errorFlag = true
 	float			ParseFloat( bool* errorFlag = NULL );
@@ -211,9 +211,9 @@ public:
 	// retrieves the white space characters before the last read token
 	int				GetLastWhiteSpace( idStr& whiteSpace ) const;
 	// returns start index into text buffer of last white space
-	int				GetLastWhiteSpaceStart( void ) const;
+	int				GetLastWhiteSpaceStart() const;
 	// returns end index into text buffer of last white space
-	int				GetLastWhiteSpaceEnd( void ) const;
+	int				GetLastWhiteSpaceEnd() const;
 	// set an array with punctuations, NULL restores default C/C++ set, see default_punctuations for an example
 	void			SetPunctuations( const punctuation_t* p );
 	// returns a pointer to the punctuation with the given id
@@ -223,25 +223,25 @@ public:
 	// set lexer flags
 	void			SetFlags( int flags );
 	// get lexer flags
-	int				GetFlags( void );
+	int				GetFlags();
 	// reset the lexer
-	void			Reset( void );
+	void			Reset();
 	// returns true if at the end of the file
-	int				EndOfFile( void );
+	int				EndOfFile();
 	// returns the current filename
-	const char* 	GetFileName( void );
+	const char* 	GetFileName();
 	// get offset in script
-	const int		GetFileOffset( void );
+	const int		GetFileOffset();
 	// get file time
-	const ID_TIME_T	GetFileTime( void );
+	const ID_TIME_T	GetFileTime();
 	// returns the current line number
-	const int		GetLineNum( void );
+	const int		GetLineNum();
 	// print an error message
 	void			Error( const char* str, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	// print a warning message
 	void			Warning( const char* str, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	// returns true if Error() was called with LEXFL_NOFATALERRORS or LEXFL_NOERRORS set
-	bool			HadError( void ) const;
+	bool			HadError() const;
 
 	// set the base folder to load files from
 	static void		SetBaseFolder( const char* path );
@@ -273,7 +273,7 @@ private:
 
 private:
 	void			CreatePunctuationTable( const punctuation_t* punctuations );
-	int				ReadWhiteSpace( void );
+	int				ReadWhiteSpace();
 	int				ReadEscapeCharacter( char* ch );
 	int				ReadString( idToken* token, int quote );
 	int				ReadName( idToken* token );
@@ -281,25 +281,25 @@ private:
 	int				ReadPunctuation( idToken* token );
 	int				ReadPrimitive( idToken* token );
 	int				CheckString( const char* str ) const;
-	int				NumLinesCrossed( void );
+	int				NumLinesCrossed();
 };
 
-ID_INLINE const char* idLexer::GetFileName( void )
+ID_INLINE const char* idLexer::GetFileName()
 {
 	return idLexer::filename;
 }
 
-ID_INLINE const int idLexer::GetFileOffset( void )
+ID_INLINE const int idLexer::GetFileOffset()
 {
 	return idLexer::script_p - idLexer::buffer;
 }
 
-ID_INLINE const ID_TIME_T idLexer::GetFileTime( void )
+ID_INLINE const ID_TIME_T idLexer::GetFileTime()
 {
 	return idLexer::fileTime;
 }
 
-ID_INLINE const int idLexer::GetLineNum( void )
+ID_INLINE const int idLexer::GetLineNum()
 {
 	return idLexer::line;
 }
@@ -309,7 +309,7 @@ ID_INLINE void idLexer::SetFlags( int flags )
 	idLexer::flags = flags;
 }
 
-ID_INLINE int idLexer::GetFlags( void )
+ID_INLINE int idLexer::GetFlags()
 {
 	return idLexer::flags;
 }

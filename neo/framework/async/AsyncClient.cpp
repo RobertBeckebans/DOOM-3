@@ -43,7 +43,7 @@ const int PREDICTION_FAST_ADJUST		= 4;
 idAsyncClient::idAsyncClient
 ==================
 */
-idAsyncClient::idAsyncClient( void )
+idAsyncClient::idAsyncClient()
 {
 	guiNetMenu = NULL;
 	updateState = UPDATE_NONE;
@@ -55,7 +55,7 @@ idAsyncClient::idAsyncClient( void )
 idAsyncClient::Clear
 ==================
 */
-void idAsyncClient::Clear( void )
+void idAsyncClient::Clear()
 {
 	active = false;
 	realTime = 0;
@@ -98,7 +98,7 @@ void idAsyncClient::Clear( void )
 idAsyncClient::Shutdown
 ==================
 */
-void idAsyncClient::Shutdown( void )
+void idAsyncClient::Shutdown()
 {
 	guiNetMenu = NULL;
 	updateMSG.Clear();
@@ -114,7 +114,7 @@ void idAsyncClient::Shutdown( void )
 idAsyncClient::InitPort
 ==================
 */
-bool idAsyncClient::InitPort( void )
+bool idAsyncClient::InitPort()
 {
 	// if this is the first time we connect to a server, open the UDP port
 	if( !clientPort.GetPort() )
@@ -136,7 +136,7 @@ bool idAsyncClient::InitPort( void )
 idAsyncClient::ClosePort
 ==================
 */
-void idAsyncClient::ClosePort( void )
+void idAsyncClient::ClosePort()
 {
 	clientPort.Close();
 }
@@ -146,7 +146,7 @@ void idAsyncClient::ClosePort( void )
 idAsyncClient::ClearPendingPackets
 ==================
 */
-void idAsyncClient::ClearPendingPackets( void )
+void idAsyncClient::ClearPendingPackets()
 {
 	int			size;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -237,7 +237,7 @@ void idAsyncClient::ConnectToServer( const netadr_t adr )
 idAsyncClient::Reconnect
 ==================
 */
-void idAsyncClient::Reconnect( void )
+void idAsyncClient::Reconnect()
 {
 	ConnectToServer( serverAddress );
 }
@@ -285,7 +285,7 @@ void idAsyncClient::ConnectToServer( const char* address )
 idAsyncClient::DisconnectFromServer
 ==================
 */
-void idAsyncClient::DisconnectFromServer( void )
+void idAsyncClient::DisconnectFromServer()
 {
 	idBitMsg	msg;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -389,7 +389,7 @@ void idAsyncClient::GetServerInfo( const char* address )
 idAsyncClient::GetLANServers
 ==================
 */
-void idAsyncClient::GetLANServers( void )
+void idAsyncClient::GetLANServers()
 {
 	int			i;
 	idBitMsg	msg;
@@ -423,7 +423,7 @@ void idAsyncClient::GetLANServers( void )
 idAsyncClient::GetNETServers
 ==================
 */
-void idAsyncClient::GetNETServers( void )
+void idAsyncClient::GetNETServers()
 {
 	idBitMsg	msg;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -456,7 +456,7 @@ void idAsyncClient::GetNETServers( void )
 idAsyncClient::ListServers
 ==================
 */
-void idAsyncClient::ListServers( void )
+void idAsyncClient::ListServers()
 {
 	int i;
 
@@ -471,7 +471,7 @@ void idAsyncClient::ListServers( void )
 idAsyncClient::ClearServers
 ==================
 */
-void idAsyncClient::ClearServers( void )
+void idAsyncClient::ClearServers()
 {
 	serverList.Clear();
 }
@@ -523,7 +523,7 @@ void idAsyncClient::RemoteConsole( const char* command )
 idAsyncClient::GetPrediction
 ==================
 */
-int idAsyncClient::GetPrediction( void ) const
+int idAsyncClient::GetPrediction() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -540,7 +540,7 @@ int idAsyncClient::GetPrediction( void ) const
 idAsyncClient::GetTimeSinceLastPacket
 ==================
 */
-int idAsyncClient::GetTimeSinceLastPacket( void ) const
+int idAsyncClient::GetTimeSinceLastPacket() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -557,7 +557,7 @@ int idAsyncClient::GetTimeSinceLastPacket( void ) const
 idAsyncClient::GetOutgoingRate
 ==================
 */
-int idAsyncClient::GetOutgoingRate( void ) const
+int idAsyncClient::GetOutgoingRate() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -574,7 +574,7 @@ int idAsyncClient::GetOutgoingRate( void ) const
 idAsyncClient::GetIncomingRate
 ==================
 */
-int idAsyncClient::GetIncomingRate( void ) const
+int idAsyncClient::GetIncomingRate() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -591,7 +591,7 @@ int idAsyncClient::GetIncomingRate( void ) const
 idAsyncClient::GetOutgoingCompression
 ==================
 */
-float idAsyncClient::GetOutgoingCompression( void ) const
+float idAsyncClient::GetOutgoingCompression() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -608,7 +608,7 @@ float idAsyncClient::GetOutgoingCompression( void ) const
 idAsyncClient::GetIncomingCompression
 ==================
 */
-float idAsyncClient::GetIncomingCompression( void ) const
+float idAsyncClient::GetIncomingCompression() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -625,7 +625,7 @@ float idAsyncClient::GetIncomingCompression( void ) const
 idAsyncClient::GetIncomingPacketLoss
 ==================
 */
-float idAsyncClient::GetIncomingPacketLoss( void ) const
+float idAsyncClient::GetIncomingPacketLoss() const
 {
 	if( clientState < CS_CONNECTED )
 	{
@@ -661,7 +661,7 @@ void idAsyncClient::DuplicateUsercmds( int frame, int time )
 idAsyncClient::SendUserInfoToServer
 ==================
 */
-void idAsyncClient::SendUserInfoToServer( void )
+void idAsyncClient::SendUserInfoToServer()
 {
 	idBitMsg	msg;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -762,7 +762,7 @@ void idAsyncClient::SendPingResponseToServer( int time )
 idAsyncClient::SendUsercmdsToServer
 ==================
 */
-void idAsyncClient::SendUsercmdsToServer( void )
+void idAsyncClient::SendUsercmdsToServer()
 {
 	int			i, numUsercmds, index;
 	idBitMsg	msg;
@@ -1071,7 +1071,7 @@ void idAsyncClient::ReadLocalizedServerString( const idBitMsg& msg, char* out, i
 idAsyncClient::ProcessReliableServerMessages
 ==================
 */
-void idAsyncClient::ProcessReliableServerMessages( void )
+void idAsyncClient::ProcessReliableServerMessages()
 {
 	idBitMsg	msg;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -1899,7 +1899,7 @@ void idAsyncClient::ProcessMessage( const netadr_t from, idBitMsg& msg )
 idAsyncClient::SetupConnection
 ==================
 */
-void idAsyncClient::SetupConnection( void )
+void idAsyncClient::SetupConnection()
 {
 	idBitMsg	msg;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -2004,7 +2004,7 @@ void idAsyncClient::SendReliableGameMessage( const idBitMsg& msg )
 idAsyncClient::Idle
 ==================
 */
-void idAsyncClient::Idle( void )
+void idAsyncClient::Idle()
 {
 	// also need to read mouse for the connecting guis
 	usercmdGen->GetDirectUsercmd();
@@ -2033,7 +2033,7 @@ int idAsyncClient::UpdateTime( int clamp )
 idAsyncClient::RunFrame
 ==================
 */
-void idAsyncClient::RunFrame( void )
+void idAsyncClient::RunFrame()
 {
 	int			msec, size;
 	bool		newPacket;
@@ -2177,7 +2177,7 @@ void idAsyncClient::RunFrame( void )
 idAsyncClient::PacifierUpdate
 ==================
 */
-void idAsyncClient::PacifierUpdate( void )
+void idAsyncClient::PacifierUpdate()
 {
 	if( !IsActive() )
 	{
@@ -2247,7 +2247,7 @@ void idAsyncClient::SendVersionDLUpdate( int state )
 idAsyncClient::HandleDownloads
 ==================
 */
-void idAsyncClient::HandleDownloads( void )
+void idAsyncClient::HandleDownloads()
 {
 
 	if( updateState == UPDATE_SENT && clientTime > updateSentTime + 2000 )
@@ -2506,7 +2506,7 @@ bool idAsyncClient::SendAuthCheck( const char* cdkey, const char* xpkey )
 idAsyncClient::CheckTimeout
 ===============
 */
-bool idAsyncClient::CheckTimeout( void )
+bool idAsyncClient::CheckTimeout()
 {
 	if( lastPacketTime > 0 && ( lastPacketTime + idAsyncNetwork::clientServerTimeout.GetInteger() * 1000 < clientTime ) )
 	{

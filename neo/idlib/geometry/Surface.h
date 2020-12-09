@@ -50,41 +50,41 @@ typedef struct surfaceEdge_s
 class idSurface
 {
 public:
-	idSurface( void );
+	idSurface();
 	explicit idSurface( const idSurface& surf );
 	explicit idSurface( const idDrawVert* verts, const int numVerts, const int* indexes, const int numIndexes );
-	~idSurface( void );
+	~idSurface();
 
 	const idDrawVert& 		operator[]( const int index ) const;
 	idDrawVert& 			operator[]( const int index );
 	idSurface& 				operator+=( const idSurface& surf );
 
-	int						GetNumIndexes( void ) const
+	int						GetNumIndexes() const
 	{
 		return indexes.Num();
 	}
-	const int* 				GetIndexes( void ) const
+	const int* 				GetIndexes() const
 	{
 		return indexes.Ptr();
 	}
-	int						GetNumVertices( void ) const
+	int						GetNumVertices() const
 	{
 		return verts.Num();
 	}
-	const idDrawVert* 		GetVertices( void ) const
+	const idDrawVert* 		GetVertices() const
 	{
 		return verts.Ptr();
 	}
-	const int* 				GetEdgeIndexes( void ) const
+	const int* 				GetEdgeIndexes() const
 	{
 		return edgeIndexes.Ptr();
 	}
-	const surfaceEdge_t* 	GetEdges( void ) const
+	const surfaceEdge_t* 	GetEdges() const
 	{
 		return edges.Ptr();
 	}
 
-	void					Clear( void );
+	void					Clear();
 	void					SwapTriangles( idSurface& surf );
 	void					TranslateSelf( const idVec3& translation );
 	void					RotateSelf( const idMat3& rotation );
@@ -98,9 +98,9 @@ public:
 	bool					ClipInPlace( const idPlane& plane, const float epsilon = ON_EPSILON, const bool keepOn = false );
 
 	// returns true if each triangle can be reached from any other triangle by a traversal
-	bool					IsConnected( void ) const;
+	bool					IsConnected() const;
 	// returns true if the surface is closed
-	bool					IsClosed( void ) const;
+	bool					IsClosed() const;
 	// returns true if the surface is a convex hull
 	bool					IsPolytope( const float epsilon = 0.1f ) const;
 
@@ -119,7 +119,7 @@ protected:
 	idList<int>				edgeIndexes;	// 3 references to edges for each triangle, may be negative for reversed edge
 
 protected:
-	void					GenerateEdgeIndexes( void );
+	void					GenerateEdgeIndexes();
 	int						FindEdge( int v1, int v2 ) const;
 };
 
@@ -128,7 +128,7 @@ protected:
 idSurface::idSurface
 ====================
 */
-ID_INLINE idSurface::idSurface( void )
+ID_INLINE idSurface::idSurface()
 {
 }
 
@@ -165,7 +165,7 @@ ID_INLINE idSurface::idSurface( const idSurface& surf )
 idSurface::~idSurface
 ====================
 */
-ID_INLINE idSurface::~idSurface( void )
+ID_INLINE idSurface::~idSurface()
 {
 }
 
@@ -214,7 +214,7 @@ ID_INLINE idSurface& idSurface::operator+=( const idSurface& surf )
 idSurface::Clear
 =================
 */
-ID_INLINE void idSurface::Clear( void )
+ID_INLINE void idSurface::Clear()
 {
 	verts.Clear();
 	indexes.Clear();

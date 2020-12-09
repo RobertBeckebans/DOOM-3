@@ -285,7 +285,7 @@ bool idMapPatch::Write( idFile* fp, int primitiveNum, const idVec3& origin ) con
 idMapPatch::GetGeometryCRC
 ===============
 */
-unsigned int idMapPatch::GetGeometryCRC( void ) const
+unsigned int idMapPatch::GetGeometryCRC() const
 {
 	int i, j;
 	unsigned int crc;
@@ -591,7 +591,7 @@ bool idMapBrush::Write( idFile* fp, int primitiveNum, const idVec3& origin ) con
 idMapBrush::GetGeometryCRC
 ===============
 */
-unsigned int idMapBrush::GetGeometryCRC( void ) const
+unsigned int idMapBrush::GetGeometryCRC() const
 {
 	int i, j;
 	idMapBrushSide* mapSide;
@@ -797,7 +797,7 @@ void idMapEntity::RemovePrimitiveData()
 idMapEntity::GetGeometryCRC
 ===============
 */
-unsigned int idMapEntity::GetGeometryCRC( void ) const
+unsigned int idMapEntity::GetGeometryCRC() const
 {
 	int i;
 	unsigned int crc;
@@ -1005,7 +1005,7 @@ bool idMapFile::Write( const char* fileName, const char* ext, bool fromBasePath 
 idMapFile::SetGeometryCRC
 ===============
 */
-void idMapFile::SetGeometryCRC( void )
+void idMapFile::SetGeometryCRC()
 {
 	int i;
 

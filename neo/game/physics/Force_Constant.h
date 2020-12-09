@@ -43,8 +43,8 @@ class idForce_Constant : public idForce
 public:
 	CLASS_PROTOTYPE( idForce_Constant );
 
-	idForce_Constant( void );
-	virtual				~idForce_Constant( void );
+	idForce_Constant();
+	virtual				~idForce_Constant();
 
 
 	void				Save( idSaveGame* savefile ) const;

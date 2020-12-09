@@ -197,7 +197,7 @@ void idAASLocal::DrawArea( int areaNum ) const
 idAASLocal::DefaultSearchBounds
 ============
 */
-const idBounds& idAASLocal::DefaultSearchBounds( void ) const
+const idBounds& idAASLocal::DefaultSearchBounds() const
 {
 	return file->GetSettings().boundingBoxes[0];
 }

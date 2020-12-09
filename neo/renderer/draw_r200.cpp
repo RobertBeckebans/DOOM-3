@@ -292,7 +292,7 @@ RB_R200_DrawInteractions
 
 ==================
 */
-void RB_R200_DrawInteractions( void )
+void RB_R200_DrawInteractions()
 {
 	qglEnable( GL_STENCIL_TEST );
 
@@ -508,7 +508,7 @@ static void R_BuildSurfaceFragmentProgram( int programNum )
 R_R200_Init
 =================
 */
-void R_R200_Init( void )
+void R_R200_Init()
 {
 	glConfig.allowR200Path = false;
 

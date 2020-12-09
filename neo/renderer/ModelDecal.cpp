@@ -46,7 +46,7 @@ If you have questions concerning this license or the applicable additional terms
 idRenderModelDecal::idRenderModelDecal
 ==================
 */
-idRenderModelDecal::idRenderModelDecal( void )
+idRenderModelDecal::idRenderModelDecal()
 {
 	memset( &tri, 0, sizeof( tri ) );
 	tri.verts = verts;
@@ -60,7 +60,7 @@ idRenderModelDecal::idRenderModelDecal( void )
 idRenderModelDecal::~idRenderModelDecal
 ==================
 */
-idRenderModelDecal::~idRenderModelDecal( void )
+idRenderModelDecal::~idRenderModelDecal()
 {
 }
 
@@ -69,7 +69,7 @@ idRenderModelDecal::~idRenderModelDecal( void )
 idRenderModelDecal::idRenderModelDecal
 ==================
 */
-idRenderModelDecal* idRenderModelDecal::Alloc( void )
+idRenderModelDecal* idRenderModelDecal::Alloc()
 {
 	return new idRenderModelDecal;
 }

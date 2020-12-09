@@ -116,7 +116,7 @@ typedef struct
 
 // Function typedefs
 
-typedef int	( *LPEAXAC3QUERYNUMBEROFDEVICES )( void );
+typedef int	( *LPEAXAC3QUERYNUMBEROFDEVICES )();
 typedef HRESULT( *LPEAXAC3QUERYFILE )( char*, LPAC3FILEINFO, int );
 typedef HRESULT( *LPEAXAC3QUERYMEMORY )( char*, int, LPAC3FILEINFO, int );
 typedef int	( *LPEAXAC3QUERYNOOFFRAMESREQFORPLAYBACK )( AC3STREAM );

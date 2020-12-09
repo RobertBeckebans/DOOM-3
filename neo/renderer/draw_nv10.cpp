@@ -664,7 +664,7 @@ static void RB_RenderViewLight( viewLight_t* vLight )
 RB_NV10_DrawInteractions
 ==================
 */
-void RB_NV10_DrawInteractions( void )
+void RB_NV10_DrawInteractions()
 {
 	qglEnable( GL_STENCIL_TEST );
 
@@ -681,7 +681,7 @@ R_NV10_Init
 
 ==================
 */
-void R_NV10_Init( void )
+void R_NV10_Init()
 {
 	glConfig.allowNV10Path = false;
 

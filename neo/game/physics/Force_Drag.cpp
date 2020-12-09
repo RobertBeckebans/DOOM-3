@@ -39,7 +39,7 @@ END_CLASS
 idForce_Drag::idForce_Drag
 ================
 */
-idForce_Drag::idForce_Drag( void )
+idForce_Drag::idForce_Drag()
 {
 	damping			= 0.5f;
 	dragPosition	= vec3_zero;
@@ -54,7 +54,7 @@ idForce_Drag::idForce_Drag( void )
 idForce_Drag::~idForce_Drag
 ================
 */
-idForce_Drag::~idForce_Drag( void )
+idForce_Drag::~idForce_Drag()
 {
 }
 
@@ -98,7 +98,7 @@ void idForce_Drag::SetDragPosition( const idVec3& pos )
 idForce_Drag::GetDragPosition
 ================
 */
-const idVec3& idForce_Drag::GetDragPosition( void ) const
+const idVec3& idForce_Drag::GetDragPosition() const
 {
 	return this->dragPosition;
 }
@@ -108,7 +108,7 @@ const idVec3& idForce_Drag::GetDragPosition( void ) const
 idForce_Drag::GetDraggedPosition
 ================
 */
-const idVec3 idForce_Drag::GetDraggedPosition( void ) const
+const idVec3 idForce_Drag::GetDraggedPosition() const
 {
 	return ( physics->GetOrigin( id ) + p * physics->GetAxis( id ) );
 }

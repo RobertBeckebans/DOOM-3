@@ -43,7 +43,7 @@ If you have questions concerning this license or the applicable additional terms
 class idAASFileManagerLocal : public idAASFileManager
 {
 public:
-	virtual						~idAASFileManagerLocal( void ) {}
+	virtual						~idAASFileManagerLocal() {}
 
 	virtual idAASFile* 			LoadAAS( const char* fileName, unsigned int mapFileCRC );
 	virtual void				FreeAAS( idAASFile* file );

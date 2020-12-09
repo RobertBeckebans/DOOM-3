@@ -288,7 +288,7 @@ DIRECT INPUT KEYBOARD CONTROL
 ============================================================
 */
 
-bool IN_StartupKeyboard( void )
+bool IN_StartupKeyboard()
 {
 	HRESULT hr;
 	bool    bExclusive;
@@ -513,7 +513,7 @@ int IN_DIMapKey( int key )
 IN_DeactivateKeyboard
 ==========================
 */
-void IN_DeactivateKeyboard( void )
+void IN_DeactivateKeyboard()
 {
 	if( !win32.g_pKeyboard )
 	{
@@ -536,7 +536,7 @@ IN_InitDirectInput
 ========================
 */
 
-void IN_InitDirectInput( void )
+void IN_InitDirectInput()
 {
 	HRESULT		hr;
 
@@ -562,7 +562,7 @@ void IN_InitDirectInput( void )
 IN_InitDIMouse
 ========================
 */
-bool IN_InitDIMouse( void )
+bool IN_InitDIMouse()
 {
 	HRESULT		hr;
 
@@ -640,7 +640,7 @@ bool IN_InitDIMouse( void )
 IN_ActivateMouse
 ==========================
 */
-void IN_ActivateMouse( void )
+void IN_ActivateMouse()
 {
 	int i;
 	HRESULT hr;
@@ -675,7 +675,7 @@ void IN_ActivateMouse( void )
 IN_DeactivateMouse
 ==========================
 */
-void IN_DeactivateMouse( void )
+void IN_DeactivateMouse()
 {
 	int i;
 
@@ -701,7 +701,7 @@ void IN_DeactivateMouse( void )
 IN_DeactivateMouseIfWindowed
 ==========================
 */
-void IN_DeactivateMouseIfWindowed( void )
+void IN_DeactivateMouseIfWindowed()
 {
 	if( !win32.cdsFullscreen )
 	{
@@ -723,7 +723,7 @@ void IN_DeactivateMouseIfWindowed( void )
 Sys_ShutdownInput
 ===========
 */
-void Sys_ShutdownInput( void )
+void Sys_ShutdownInput()
 {
 	IN_DeactivateMouse();
 	IN_DeactivateKeyboard();
@@ -751,7 +751,7 @@ void Sys_ShutdownInput( void )
 Sys_InitInput
 ===========
 */
-void Sys_InitInput( void )
+void Sys_InitInput()
 {
 	common->Printf( "\n------- Input Initialization -------\n" );
 	IN_InitDirectInput();
@@ -775,7 +775,7 @@ void Sys_InitInput( void )
 Sys_InitScanTable
 ===========
 */
-void Sys_InitScanTable( void )
+void Sys_InitScanTable()
 {
 	idStr lang = cvarSystem->GetCVarString( "sys_lang" );
 	if( lang.Length() == 0 )
@@ -817,7 +817,7 @@ void Sys_InitScanTable( void )
 Sys_GetScanTable
 ==================
 */
-const unsigned char* Sys_GetScanTable( void )
+const unsigned char* Sys_GetScanTable()
 {
 	return keyScanTable;
 }
@@ -839,7 +839,7 @@ IN_Frame
 Called every frame, even if not generating commands
 ==================
 */
-void IN_Frame( void )
+void IN_Frame()
 {
 	bool	shouldGrab = true;
 
@@ -915,7 +915,7 @@ static byte toggleFetch[2][ 256 ];
 Sys_PollKeyboardInputEvents
 ====================
 */
-int Sys_PollKeyboardInputEvents( void )
+int Sys_PollKeyboardInputEvents()
 {
 	DWORD              dwElements;
 	HRESULT            hr;
@@ -972,7 +972,7 @@ Fake events by getting the entire device state
 and checking transitions
 ====================
 */
-int Sys_PollKeyboardInputEvents( void )
+int Sys_PollKeyboardInputEvents()
 {
 	HRESULT            hr;
 
@@ -1048,7 +1048,7 @@ int Sys_ReturnKeyboardInputEvent( const int n, int& ch, bool& state )
 }
 
 
-void Sys_EndKeyboardInputEvents( void )
+void Sys_EndKeyboardInputEvents()
 {
 }
 
@@ -1092,7 +1092,7 @@ void Sys_QueMouseEvents( int dwElements )
 
 //=====================================================================================
 
-int Sys_PollMouseInputEvents( void )
+int Sys_PollMouseInputEvents()
 {
 	DWORD				dwElements;
 	HRESULT				hr;
@@ -1160,7 +1160,7 @@ int Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
 	return 0;
 }
 
-void Sys_EndMouseInputEvents( void ) { }
+void Sys_EndMouseInputEvents() { }
 
 unsigned char Sys_MapCharForKey( int key )
 {

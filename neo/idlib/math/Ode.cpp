@@ -53,7 +53,7 @@ idODE_Euler::idODE_Euler( const int dim, deriveFunction_t dr, const void* ud )
 idODE_Euler::~idODE_Euler
 =============
 */
-idODE_Euler::~idODE_Euler( void )
+idODE_Euler::~idODE_Euler()
 {
 	delete[] derivatives;
 }
@@ -102,7 +102,7 @@ idODE_Midpoint::idODE_Midpoint( const int dim, deriveFunction_t dr, const void* 
 idODE_Midpoint::~idODE_Midpoint
 =============
 */
-idODE_Midpoint::~idODE_Midpoint( void )
+idODE_Midpoint::~idODE_Midpoint()
 {
 	delete tmpState;
 	delete derivatives;
@@ -164,7 +164,7 @@ idODE_RK4::idODE_RK4( const int dim, deriveFunction_t dr, const void* ud )
 idODE_RK4::~idODE_RK4
 =============
 */
-idODE_RK4::~idODE_RK4( void )
+idODE_RK4::~idODE_RK4()
 {
 	delete tmpState;
 	delete d1;
@@ -244,7 +244,7 @@ idODE_RK4Adaptive::idODE_RK4Adaptive( const int dim, deriveFunction_t dr, const 
 idODE_RK4Adaptive::~idODE_RK4Adaptive
 =============
 */
-idODE_RK4Adaptive::~idODE_RK4Adaptive( void )
+idODE_RK4Adaptive::~idODE_RK4Adaptive()
 {
 	delete tmpState;
 	delete d1;

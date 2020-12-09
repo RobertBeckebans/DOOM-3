@@ -148,7 +148,7 @@ idStrList::Size
 ================
 */
 template<>
-ID_INLINE size_t idStrList::Size( void ) const
+ID_INLINE size_t idStrList::Size() const
 {
 	size_t s;
 	int i;

@@ -53,7 +53,7 @@ const int PREVIEW_Y = 31;
 const int PREVIEW_WIDTH = 398;
 const int PREVIEW_HEIGHT = 298;
 
-void RandomizeStack( void )
+void RandomizeStack()
 {
 	// attempt to force uninitialized stack memory bugs
 	int		bytes = 4000000;
@@ -220,7 +220,7 @@ static void Sess_WritePrecache_f( const idCmdArgs& args )
 idSessionLocal::MaybeWaitOnCDKey
 ===============
 */
-bool idSessionLocal::MaybeWaitOnCDKey( void )
+bool idSessionLocal::MaybeWaitOnCDKey()
 {
 	if( authEmitTimeout > 0 )
 	{
@@ -589,7 +589,7 @@ void idSessionLocal::ShowLoadingGui()
 idSessionLocal::ClearWipe
 ================
 */
-void idSessionLocal::ClearWipe( void )
+void idSessionLocal::ClearWipe()
 {
 	wipeHold = false;
 	wipeStopTic = 0;
@@ -3413,7 +3413,7 @@ void idSessionLocal::TimeHitch( int msec )
 idSessionLocal::ReadCDKey
 =================
 */
-void idSessionLocal::ReadCDKey( void )
+void idSessionLocal::ReadCDKey()
 {
 	idStr filename;
 	idFile* f;
@@ -3459,7 +3459,7 @@ void idSessionLocal::ReadCDKey( void )
 idSessionLocal::WriteCDKey
 ================
 */
-void idSessionLocal::WriteCDKey( void )
+void idSessionLocal::WriteCDKey()
 {
 	idStr filename;
 	idFile* f;
@@ -3546,7 +3546,7 @@ idSessionLocal::EmitGameAuth
 we toggled some key state to CDKEY_CHECKING. send a standalone auth packet to validate
 ===============
 */
-void idSessionLocal::EmitGameAuth( void )
+void idSessionLocal::EmitGameAuth()
 {
 	// make sure the auth reply is empty, we use it to indicate an auth reply
 	authMsg.Empty();
@@ -3751,7 +3751,7 @@ bool idSessionLocal::CDKeysAreValid( bool strict )
 idSessionLocal::WaitingForGameAuth
 ===============
 */
-bool idSessionLocal::WaitingForGameAuth( void )
+bool idSessionLocal::WaitingForGameAuth()
 {
 	return authEmitTimeout != 0;
 }
@@ -3814,7 +3814,7 @@ const char* idSessionLocal::GetCurrentMapName()
 idSessionLocal::GetSaveGameVersion
 ===============
 */
-int idSessionLocal::GetSaveGameVersion( void )
+int idSessionLocal::GetSaveGameVersion()
 {
 	return savegameVersion;
 }
@@ -3824,7 +3824,7 @@ int idSessionLocal::GetSaveGameVersion( void )
 idSessionLocal::GetAuthMsg
 ===============
 */
-const char* idSessionLocal::GetAuthMsg( void )
+const char* idSessionLocal::GetAuthMsg()
 {
 	return authMsg.c_str();
 }

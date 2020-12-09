@@ -53,14 +53,14 @@ public:
 
 	rvGEItemPropsImagePage( idDict* dictValues );
 
-	virtual bool	Init( void );
-	virtual bool	SetActive( void );
-	virtual bool	KillActive( void );
+	virtual bool	Init();
+	virtual bool	SetActive();
+	virtual bool	KillActive();
 	virtual int		HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
 
 protected:
 
-	void			UpdateCheckedStates( void );
+	void			UpdateCheckedStates();
 
 	idDict*		mDict;
 };
@@ -77,7 +77,7 @@ rvGEItemPropsImagePage::Init
 Subclass the custom controls on the page
 ================
 */
-bool rvGEItemPropsImagePage::Init( void )
+bool rvGEItemPropsImagePage::Init()
 {
 	NumberEdit_Attach( GetDlgItem( mPage, IDC_GUIED_ITEMMATSCALEX ) );
 	NumberEdit_Attach( GetDlgItem( mPage, IDC_GUIED_ITEMMATSCALEY ) );
@@ -93,7 +93,7 @@ rvGEItemPropsImagePage::UpdateCheckedStates
 Updates the enabled state of all the controls that are linked to a checkbox
 ================
 */
-void rvGEItemPropsImagePage::UpdateCheckedStates( void )
+void rvGEItemPropsImagePage::UpdateCheckedStates()
 {
 	char temp[64];
 	bool state;
@@ -209,7 +209,7 @@ Initializes the text properties page by copying data from the attached
 window into the controls
 ================
 */
-bool rvGEItemPropsImagePage::SetActive( void )
+bool rvGEItemPropsImagePage::SetActive()
 {
 	gApp.GetOptions().SetLastOptionsPage( RVITEMPROPS_IMAGE );
 
@@ -249,7 +249,7 @@ rvGEItemPropsImagePage::KillActive
 Applys the settings currently stored in the property page back into the attached window
 ================
 */
-bool rvGEItemPropsImagePage::KillActive( void )
+bool rvGEItemPropsImagePage::KillActive()
 {
 	char	temp[1024];
 	bool	matcolor = false;
@@ -378,14 +378,14 @@ public:
 
 	rvGEItemPropsTextPage( idDict* dictValues );
 
-	virtual bool	Init( void );
-	virtual bool	SetActive( void );
-	virtual bool	KillActive( void );
+	virtual bool	Init();
+	virtual bool	SetActive();
+	virtual bool	KillActive();
 	virtual int		HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
 
 protected:
 
-	void			UpdateCheckedStates( void );
+	void			UpdateCheckedStates();
 
 	idDict*		mDict;
 };
@@ -402,7 +402,7 @@ rvGEItemPropsTextPage::Init
 Subclass the custom controls on the page
 ================
 */
-bool rvGEItemPropsTextPage::Init( void )
+bool rvGEItemPropsTextPage::Init()
 {
 	NumberEdit_Attach( GetDlgItem( mPage, IDC_GUIED_ITEMTEXTSCALE ) );
 	NumberEdit_Attach( GetDlgItem( mPage, IDC_GUIED_ITEMTEXTALIGNX ) );
@@ -441,7 +441,7 @@ rvGEItemPropsTextPage::UpdateCheckedStates
 Updates the enabled state of all the controls that are linked to a checkbox
 ================
 */
-void rvGEItemPropsTextPage::UpdateCheckedStates( void )
+void rvGEItemPropsTextPage::UpdateCheckedStates()
 {
 	bool	state;
 	idStr	result;
@@ -530,7 +530,7 @@ Initializes the text properties page by copying data from the attached
 window into the controls
 ================
 */
-bool rvGEItemPropsTextPage::SetActive( void )
+bool rvGEItemPropsTextPage::SetActive()
 {
 	gApp.GetOptions().SetLastOptionsPage( RVITEMPROPS_TEXT );
 
@@ -568,7 +568,7 @@ rvGEItemPropsTextPage::KillActive
 Applys the settings currently stored in the property page back into the attached window
 ================
 */
-bool rvGEItemPropsTextPage::KillActive( void )
+bool rvGEItemPropsTextPage::KillActive()
 {
 	idStr	s;
 	char	temp[1024];
@@ -668,8 +668,8 @@ public:
 
 	rvGEItemPropsKeysPage( idDict* dictValues, rvGEWindowWrapper* wrapper );
 
-	virtual bool	Init( void );
-	virtual bool	SetActive( void );
+	virtual bool	Init();
+	virtual bool	SetActive();
 	virtual int		HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
 
 protected:
@@ -916,7 +916,7 @@ Called when the advanced page is first initialized.  Setup the extended
 control styles and add the key/value columns
 ================
 */
-bool rvGEItemPropsKeysPage::Init( void )
+bool rvGEItemPropsKeysPage::Init()
 {
 	HWND	list;
 	RECT	rWindow;
@@ -953,7 +953,7 @@ Called when the advanced page is made active and will add an entry to
 the keys list view for each key in the properties dictionary
 ================
 */
-bool rvGEItemPropsKeysPage::SetActive( void )
+bool rvGEItemPropsKeysPage::SetActive()
 {
 	int		i;
 	HWND	list;
@@ -997,14 +997,14 @@ public:
 
 	rvGEItemPropsGeneralPage( idDict* dict, rvGEWindowWrapper::EWindowType type );
 
-	virtual bool	SetActive( void );
-	virtual	bool	KillActive( void );
-	virtual bool	Init( void );
+	virtual bool	SetActive();
+	virtual	bool	KillActive();
+	virtual bool	Init();
 	virtual int		HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam );
 
 protected:
 
-	void			UpdateCheckedStates( void );
+	void			UpdateCheckedStates();
 
 	idDict*	mDict;
 	idStr	mType;
@@ -1023,7 +1023,7 @@ rvGEItemPropsGeneralPage::UpdateCheckedStates
 Updates the enabled state of all the controls that are linked to a checkbox
 ================
 */
-void rvGEItemPropsGeneralPage::UpdateCheckedStates( void )
+void rvGEItemPropsGeneralPage::UpdateCheckedStates()
 {
 }
 
@@ -1057,7 +1057,7 @@ rvGEItemPropsGeneralPage::Init
 Subclass the custom controls on the page
 ================
 */
-bool rvGEItemPropsGeneralPage::Init( void )
+bool rvGEItemPropsGeneralPage::Init()
 {
 	MaskEdit_Attach( GetDlgItem( mPage, IDC_GUIED_ITEMNAME ), " \t\n\r" );
 
@@ -1072,7 +1072,7 @@ Initializes the general properties page by copying data from the attached
 window into the controls
 ================
 */
-bool rvGEItemPropsGeneralPage::SetActive( void )
+bool rvGEItemPropsGeneralPage::SetActive()
 {
 	bool  enable;
 	idStr result;
@@ -1116,7 +1116,7 @@ rvGEItemPropsGeneralPage::KillActive
 Applys the settings currently stored in the property page back into the attached window
 ================
 */
-bool rvGEItemPropsGeneralPage::KillActive( void )
+bool rvGEItemPropsGeneralPage::KillActive()
 {
 	char temp[1024];
 

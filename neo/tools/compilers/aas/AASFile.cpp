@@ -150,7 +150,7 @@ bool Reachability_Special_Read( idLexer& src, idReachability_Special* reach )
 idAASSettings::idAASSettings
 ============
 */
-idAASSettings::idAASSettings( void )
+idAASSettings::idAASSettings()
 {
 	numBoundingBoxes = 1;
 	boundingBoxes[0] = idBounds( idVec3( -16, -16, 0 ), idVec3( 16, 16, 72 ) );
@@ -697,7 +697,7 @@ bool idAASSettings::ValidEntity( const char* classname ) const
 idAASFileLocal::idAASFileLocal
 ================
 */
-idAASFileLocal::idAASFileLocal( void )
+idAASFileLocal::idAASFileLocal()
 {
 	planeList.SetGranularity( AAS_PLANE_GRANULARITY );
 	vertices.SetGranularity( AAS_VERTEX_GRANULARITY );
@@ -717,7 +717,7 @@ idAASFileLocal::idAASFileLocal( void )
 idAASFileLocal::~idAASFileLocal
 ================
 */
-idAASFileLocal::~idAASFileLocal( void )
+idAASFileLocal::~idAASFileLocal()
 {
 	int i;
 	idReachability* reach, *next;
@@ -737,7 +737,7 @@ idAASFileLocal::~idAASFileLocal( void )
 idAASFileLocal::Clear
 ================
 */
-void idAASFileLocal::Clear( void )
+void idAASFileLocal::Clear()
 {
 	planeList.Clear();
 	vertices.Clear();
@@ -1112,7 +1112,7 @@ bool idAASFileLocal::ParseReachabilities( idLexer& src, int areaNum )
 idAASFileLocal::LinkReversedReachability
 ================
 */
-void idAASFileLocal::LinkReversedReachability( void )
+void idAASFileLocal::LinkReversedReachability()
 {
 	int i;
 	idReachability* reach;
@@ -1275,7 +1275,7 @@ bool idAASFileLocal::ParseClusters( idLexer& src )
 idAASFileLocal::FinishAreas
 ================
 */
-void idAASFileLocal::FinishAreas( void )
+void idAASFileLocal::FinishAreas()
 {
 	int i;
 
@@ -1454,7 +1454,7 @@ bool idAASFileLocal::Load( const idStr& fileName, unsigned int mapFileCRC )
 idAASFileLocal::MemorySize
 ================
 */
-int idAASFileLocal::MemorySize( void ) const
+int idAASFileLocal::MemorySize() const
 {
 	int size;
 
@@ -1479,7 +1479,7 @@ int idAASFileLocal::MemorySize( void ) const
 idAASFileLocal::PrintInfo
 ================
 */
-void idAASFileLocal::PrintInfo( void ) const
+void idAASFileLocal::PrintInfo() const
 {
 	common->Printf( "%6d KB file size\n", MemorySize() >> 10 );
 	common->Printf( "%6d areas\n", areas.Num() );
@@ -1492,7 +1492,7 @@ void idAASFileLocal::PrintInfo( void ) const
 idAASFileLocal::NumReachabilities
 ================
 */
-int idAASFileLocal::NumReachabilities( void ) const
+int idAASFileLocal::NumReachabilities() const
 {
 	int i, num;
 	idReachability* reach;
@@ -1513,7 +1513,7 @@ int idAASFileLocal::NumReachabilities( void ) const
 idAASFileLocal::ReportRoutingEfficiency
 ================
 */
-void idAASFileLocal::ReportRoutingEfficiency( void ) const
+void idAASFileLocal::ReportRoutingEfficiency() const
 {
 	int numReachableAreas, total, i, n;
 
@@ -1537,7 +1537,7 @@ void idAASFileLocal::ReportRoutingEfficiency( void ) const
 idAASFileLocal::DeleteReachabilities
 ================
 */
-void idAASFileLocal::DeleteReachabilities( void )
+void idAASFileLocal::DeleteReachabilities()
 {
 	int i;
 	idReachability* reach, *nextReach;
@@ -1559,7 +1559,7 @@ void idAASFileLocal::DeleteReachabilities( void )
 idAASFileLocal::DeleteClusters
 ================
 */
-void idAASFileLocal::DeleteClusters( void )
+void idAASFileLocal::DeleteClusters()
 {
 	aasPortal_t portal;
 	aasCluster_t cluster;

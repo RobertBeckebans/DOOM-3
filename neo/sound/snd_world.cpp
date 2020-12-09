@@ -693,7 +693,7 @@ void idSoundWorldLocal::AVIUpdate()
 idSoundWorldLocal::AVIClose
 ===================
 */
-void idSoundWorldLocal::AVIClose( void )
+void idSoundWorldLocal::AVIClose()
 {
 	int i;
 
@@ -1591,7 +1591,7 @@ void idSoundWorldLocal::StopAllSounds()
 idSoundWorldLocal::Pause
 ===============
 */
-void idSoundWorldLocal::Pause( void )
+void idSoundWorldLocal::Pause()
 {
 	if( pause44kHz >= 0 )
 	{
@@ -1607,7 +1607,7 @@ void idSoundWorldLocal::Pause( void )
 idSoundWorldLocal::UnPause
 ===============
 */
-void idSoundWorldLocal::UnPause( void )
+void idSoundWorldLocal::UnPause()
 {
 	int offset44kHz;
 
@@ -1628,7 +1628,7 @@ void idSoundWorldLocal::UnPause( void )
 idSoundWorldLocal::IsPaused
 ===============
 */
-bool idSoundWorldLocal::IsPaused( void )
+bool idSoundWorldLocal::IsPaused()
 {
 	return ( pause44kHz >= 0 );
 }

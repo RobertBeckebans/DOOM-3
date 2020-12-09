@@ -155,7 +155,7 @@ void DialogAFConstraint::DoDataExchange( CDataExchange* pDX )
 DialogAFConstraint::InitConstraintList
 ================
 */
-void DialogAFConstraint::InitConstraintList( void )
+void DialogAFConstraint::InitConstraintList()
 {
 	CString str;
 
@@ -181,7 +181,7 @@ void DialogAFConstraint::InitConstraintList( void )
 DialogAFConstraint::InitConstraintTypeDlg
 ================
 */
-void DialogAFConstraint::InitConstraintTypeDlg( void )
+void DialogAFConstraint::InitConstraintTypeDlg()
 {
 	CString str;
 	RECT rect;
@@ -240,7 +240,7 @@ void DialogAFConstraint::InitConstraintTypeDlg( void )
 DialogAFConstraint::InitBodyLists
 ================
 */
-void DialogAFConstraint::InitBodyLists( void )
+void DialogAFConstraint::InitBodyLists()
 {
 	m_comboBody1List.ResetContent();
 	m_comboBody2List.ResetContent();
@@ -262,7 +262,7 @@ void DialogAFConstraint::InitBodyLists( void )
 DialogAFConstraint::InitNewRenameDeleteButtons
 ================
 */
-void DialogAFConstraint::InitNewRenameDeleteButtons( void )
+void DialogAFConstraint::InitNewRenameDeleteButtons()
 {
 	if( file && file->bodies.Num() >= 1 )
 	{
@@ -309,7 +309,7 @@ void DialogAFConstraint::LoadFile( idDeclAF* af )
 DialogAFConstraint::SaveFile
 ================
 */
-void DialogAFConstraint::SaveFile( void )
+void DialogAFConstraint::SaveFile()
 {
 	SaveConstraint();
 }
@@ -367,7 +367,7 @@ void DialogAFConstraint::LoadConstraint( const char* name )
 DialogAFConstraint::SaveConstraint
 ================
 */
-void DialogAFConstraint::SaveConstraint( void )
+void DialogAFConstraint::SaveConstraint()
 {
 	int s1, s2;
 	CString str;
@@ -399,7 +399,7 @@ void DialogAFConstraint::SaveConstraint( void )
 DialogAFConstraint::UpdateFile
 ================
 */
-void DialogAFConstraint::UpdateFile( void )
+void DialogAFConstraint::UpdateFile()
 {
 	SaveConstraint();
 	if( file )

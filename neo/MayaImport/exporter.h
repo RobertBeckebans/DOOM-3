@@ -73,7 +73,7 @@ public:
 	{
 		Clear();
 	};
-	void				Clear( void )
+	void				Clear()
 	{
 		currentToken = 0;
 		tokens.Clear();
@@ -82,15 +82,15 @@ public:
 	int					SetTokens( const char* buffer );
 	const char*			NextToken( const char* errorstring = NULL );
 
-	bool				TokenAvailable( void )
+	bool				TokenAvailable()
 	{
 		return currentToken < tokens.Num();
 	};
-	int					Num( void )
+	int					Num()
 	{
 		return tokens.Num();
 	};
-	void				UnGetToken( void )
+	void				UnGetToken()
 	{
 		if( currentToken > 0 )
 		{
@@ -108,7 +108,7 @@ public:
 			return NULL;
 		}
 	};
-	const char*			CurrentToken( void )
+	const char*			CurrentToken()
 	{
 		return GetToken( currentToken );
 	};
@@ -422,7 +422,7 @@ public:
 	{
 		keep = true;
 	};
-	void						ShareVerts( void );
+	void						ShareVerts();
 	void						GetBounds( idBounds& bounds ) const;
 	void						Merge( idExportMesh* mesh );
 };
@@ -476,7 +476,7 @@ private:
 	idExportModel			model;
 	idExportOptions&			options;
 
-	void					FreeDagNodes( void );
+	void					FreeDagNodes();
 
 	float					TimeForFrame( int num ) const;
 	int						GetMayaFrameNum( int num ) const;
@@ -497,7 +497,7 @@ private:
 
 	idExportMesh*			CopyMesh( MFnSkinCluster& skinCluster, float scale );
 	void					CreateMesh( float scale );
-	void					CombineMeshes( void );
+	void					CombineMeshes();
 
 	void					GetAlignment( idStr& alignName, idMat3& align, float rotate, int startframe );
 
@@ -514,6 +514,6 @@ public:
 	idMayaExport( idExportOptions& exportOptions ) : options( exportOptions ) { };
 	~idMayaExport();
 
-	void					ConvertModel( void );
-	void					ConvertToMD3( void );
+	void					ConvertModel();
+	void					ConvertToMD3();
 };

@@ -57,8 +57,8 @@ typedef struct afTouch_s
 class idAF
 {
 public:
-	idAF( void );
-	~idAF( void );
+	idAF();
+	~idAF();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
@@ -68,37 +68,37 @@ public:
 		animator = a;
 	}
 	bool					Load( idEntity* ent, const char* fileName );
-	bool					IsLoaded( void ) const
+	bool					IsLoaded() const
 	{
 		return isLoaded && self != NULL;
 	}
-	const char* 			GetName( void ) const
+	const char* 			GetName() const
 	{
 		return name.c_str();
 	}
 	void					SetupPose( idEntity* ent, int time );
 	void					ChangePose( idEntity* ent, int time );
 	int						EntitiesTouchingAF( afTouch_t touchList[ MAX_GENTITIES ] ) const;
-	void					Start( void );
+	void					Start();
 	void					StartFromCurrentPose( int inheritVelocityTime );
-	void					Stop( void );
-	void					Rest( void );
-	bool					IsActive( void ) const
+	void					Stop();
+	void					Rest();
+	bool					IsActive() const
 	{
 		return isActive;
 	}
 	void					SetConstraintPosition( const char* name, const idVec3& pos );
 
-	idPhysics_AF* 			GetPhysics( void )
+	idPhysics_AF* 			GetPhysics()
 	{
 		return &physicsObj;
 	}
-	const idPhysics_AF* 	GetPhysics( void ) const
+	const idPhysics_AF* 	GetPhysics() const
 	{
 		return &physicsObj;
 	}
-	idBounds				GetBounds( void ) const;
-	bool					UpdateAnimation( void );
+	idBounds				GetBounds() const;
+	bool					UpdateAnimation();
 
 	void					GetPhysicsToVisualTransform( idVec3& origin, idMat3& axis ) const;
 	void					GetImpactInfo( idEntity* ent, int id, const idVec3& point, impactInfo_t* info );
@@ -109,8 +109,8 @@ public:
 	void					SaveState( idDict& args ) const;
 	void					LoadState( const idDict& args );
 
-	void					AddBindConstraints( void );
-	void					RemoveBindConstraints( void );
+	void					AddBindConstraints();
+	void					RemoveBindConstraints();
 
 protected:
 	idStr					name;				// name of the loaded .af file
@@ -135,7 +135,7 @@ protected:
 	bool					LoadBody( const idDeclAF_Body* fb, const idJointMat* joints );
 	bool					LoadConstraint( const idDeclAF_Constraint* fc );
 
-	bool					TestSolid( void ) const;
+	bool					TestSolid() const;
 };
 
 #endif /* !__GAME_AF_H__ */

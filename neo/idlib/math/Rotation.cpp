@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idRotation::ToAngles
 ============
 */
-idAngles idRotation::ToAngles( void ) const
+idAngles idRotation::ToAngles() const
 {
 	return ToMat3().ToAngles();
 }
@@ -45,7 +45,7 @@ idAngles idRotation::ToAngles( void ) const
 idRotation::ToQuat
 ============
 */
-idQuat idRotation::ToQuat( void ) const
+idQuat idRotation::ToQuat() const
 {
 	float a, s, c;
 
@@ -59,7 +59,7 @@ idQuat idRotation::ToQuat( void ) const
 idRotation::toMat3
 ============
 */
-const idMat3& idRotation::ToMat3( void ) const
+const idMat3& idRotation::ToMat3() const
 {
 	float wx, wy, wz;
 	float xx, yy, yz;
@@ -117,7 +117,7 @@ const idMat3& idRotation::ToMat3( void ) const
 idRotation::ToMat4
 ============
 */
-idMat4 idRotation::ToMat4( void ) const
+idMat4 idRotation::ToMat4() const
 {
 	return ToMat3().ToMat4();
 }
@@ -127,7 +127,7 @@ idMat4 idRotation::ToMat4( void ) const
 idRotation::ToAngularVelocity
 ============
 */
-idVec3 idRotation::ToAngularVelocity( void ) const
+idVec3 idRotation::ToAngularVelocity() const
 {
 	return vec * DEG2RAD( angle );
 }
@@ -137,7 +137,7 @@ idVec3 idRotation::ToAngularVelocity( void ) const
 idRotation::Normalize180
 ============
 */
-void idRotation::Normalize180( void )
+void idRotation::Normalize180()
 {
 	angle -= floor( angle / 360.0f ) * 360.0f;
 	if( angle > 180.0f )
@@ -155,7 +155,7 @@ void idRotation::Normalize180( void )
 idRotation::Normalize360
 ============
 */
-void idRotation::Normalize360( void )
+void idRotation::Normalize360()
 {
 	angle -= floor( angle / 360.0f ) * 360.0f;
 	if( angle > 360.0f )

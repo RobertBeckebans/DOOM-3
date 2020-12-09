@@ -489,7 +489,7 @@ static srfTriangles_t* R_CreateLightTris( const idRenderEntityLocal* ent,
 idInteraction::idInteraction
 ===============
 */
-idInteraction::idInteraction( void )
+idInteraction::idInteraction()
 {
 	numSurfaces				= 0;
 	surfaces				= NULL;
@@ -580,7 +580,7 @@ Frees the surfaces, but leaves the interaction linked in, so it
 will be regenerated automatically
 ===============
 */
-void idInteraction::FreeSurfaces( void )
+void idInteraction::FreeSurfaces()
 {
 	if( this->surfaces )
 	{
@@ -620,7 +620,7 @@ void idInteraction::FreeSurfaces( void )
 idInteraction::Unlink
 ===============
 */
-void idInteraction::Unlink( void )
+void idInteraction::Unlink()
 {
 
 	// unlink from the entity's list
@@ -669,7 +669,7 @@ idInteraction::UnlinkAndFree
 Removes links and puts it back on the free list.
 ===============
 */
-void idInteraction::UnlinkAndFree( void )
+void idInteraction::UnlinkAndFree()
 {
 
 	// clear the table pointer
@@ -707,7 +707,7 @@ idInteraction::MakeEmpty
 Makes the interaction empty and links it at the end of the entity's and light's interaction lists.
 ===============
 */
-void idInteraction::MakeEmpty( void )
+void idInteraction::MakeEmpty()
 {
 
 	// an empty interaction has no surfaces
@@ -747,7 +747,7 @@ void idInteraction::MakeEmpty( void )
 idInteraction::HasShadows
 ===============
 */
-ID_INLINE bool idInteraction::HasShadows( void ) const
+ID_INLINE bool idInteraction::HasShadows() const
 {
 	return ( !lightDef->parms.noShadows && !entityDef->parms.noShadow && lightDef->lightShader->LightCastsShadows() );
 }
@@ -760,7 +760,7 @@ Counts up the memory used by all the surfaceInteractions, which
 will be used to determine when we need to start purging old interactions.
 ===============
 */
-int idInteraction::MemoryUsed( void )
+int idInteraction::MemoryUsed()
 {
 	int		total = 0;
 
@@ -1176,7 +1176,7 @@ with this type of light, it can be skipped, but we might need to
 instantiate the dynamic model to find out
 ==================
 */
-void idInteraction::AddActiveInteraction( void )
+void idInteraction::AddActiveInteraction()
 {
 	viewLight_t* 	vLight;
 	viewEntity_t* 	vEntity;

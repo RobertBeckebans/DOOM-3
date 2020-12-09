@@ -116,7 +116,7 @@ class idCVar
 {
 public:
 	// Never use the default constructor.
-	idCVar( void )
+	idCVar()
 	{
 		assert( typeid( this ) != typeid( idCVar ) );
 	}
@@ -129,63 +129,63 @@ public:
 	idCVar( const char* name, const char* value, int flags, const char* description,
 			const char** valueStrings, argCompletion_t valueCompletion = NULL );
 
-	virtual					~idCVar( void ) {}
+	virtual					~idCVar() {}
 
-	const char* 			GetName( void ) const
+	const char* 			GetName() const
 	{
 		return internalVar->name;
 	}
-	int						GetFlags( void ) const
+	int						GetFlags() const
 	{
 		return internalVar->flags;
 	}
-	const char* 			GetDescription( void ) const
+	const char* 			GetDescription() const
 	{
 		return internalVar->description;
 	}
-	float					GetMinValue( void ) const
+	float					GetMinValue() const
 	{
 		return internalVar->valueMin;
 	}
-	float					GetMaxValue( void ) const
+	float					GetMaxValue() const
 	{
 		return internalVar->valueMax;
 	}
-	const char** 			GetValueStrings( void ) const
+	const char** 			GetValueStrings() const
 	{
 		return valueStrings;
 	}
-	argCompletion_t			GetValueCompletion( void ) const
+	argCompletion_t			GetValueCompletion() const
 	{
 		return valueCompletion;
 	}
 
-	bool					IsModified( void ) const
+	bool					IsModified() const
 	{
 		return ( internalVar->flags & CVAR_MODIFIED ) != 0;
 	}
-	void					SetModified( void )
+	void					SetModified()
 	{
 		internalVar->flags |= CVAR_MODIFIED;
 	}
-	void					ClearModified( void )
+	void					ClearModified()
 	{
 		internalVar->flags &= ~CVAR_MODIFIED;
 	}
 
-	const char* 			GetString( void ) const
+	const char* 			GetString() const
 	{
 		return internalVar->value;
 	}
-	bool					GetBool( void ) const
+	bool					GetBool() const
 	{
 		return ( internalVar->integerValue != 0 );
 	}
-	int						GetInteger( void ) const
+	int						GetInteger() const
 	{
 		return internalVar->integerValue;
 	}
-	float					GetFloat( void ) const
+	float					GetFloat() const
 	{
 		return internalVar->floatValue;
 	}
@@ -212,7 +212,7 @@ public:
 		internalVar = cvar;
 	}
 
-	static void				RegisterStaticVars( void );
+	static void				RegisterStaticVars();
 
 protected:
 	const char* 			name;					// name
@@ -274,11 +274,11 @@ ID_INLINE idCVar::idCVar( const char* name, const char* value, int flags, const 
 class idCVarSystem
 {
 public:
-	virtual					~idCVarSystem( void ) {}
+	virtual					~idCVarSystem() {}
 
-	virtual void			Init( void ) = 0;
-	virtual void			Shutdown( void ) = 0;
-	virtual bool			IsInitialized( void ) const = 0;
+	virtual void			Init() = 0;
+	virtual void			Shutdown() = 0;
+	virtual bool			IsInitialized() const = 0;
 
 	// Registers a CVar.
 	virtual void			Register( idCVar* cvar ) = 0;
@@ -309,7 +309,7 @@ public:
 
 	// Sets/gets/clears modified flags that tell what kind of CVars have changed.
 	virtual void			SetModifiedFlags( int flags ) = 0;
-	virtual int				GetModifiedFlags( void ) const = 0;
+	virtual int				GetModifiedFlags() const = 0;
 	virtual void			ClearModifiedFlags( int flags ) = 0;
 
 	// Resets variables with one of the given flags set.
@@ -368,7 +368,7 @@ ID_INLINE void idCVar::Init( const char* name, const char* value, int flags, con
 	}
 }
 
-ID_INLINE void idCVar::RegisterStaticVars( void )
+ID_INLINE void idCVar::RegisterStaticVars()
 {
 	if( staticVars != ( idCVar* )0xFFFFFFFF )
 	{

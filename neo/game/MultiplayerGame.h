@@ -103,16 +103,16 @@ public:
 
 	idMultiplayerGame();
 
-	void			Shutdown( void );
+	void			Shutdown();
 
 	// resets everything and prepares for a match
-	void			Reset( void );
+	void			Reset();
 
 	// setup local data for a new player
 	void			SpawnPlayer( int clientNum );
 
 	// checks rules and updates state of the mp game
-	void			Run( void );
+	void			Run();
 
 	// draws mp hud, scoredboard, etc..
 	bool			Draw( int clientNum );
@@ -125,10 +125,10 @@ public:
 
 	void			AddChatLine( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 
-	void			UpdateMainGui( void );
-	idUserInterface* StartMenu( void );
+	void			UpdateMainGui();
+	idUserInterface* StartMenu();
 	const char*		HandleGuiCommands( const char* menuCommand );
-	void			SetMenuSkin( void );
+	void			SetMenuSkin();
 
 	void			WriteToSnapshot( idBitMsgDelta& msg ) const;
 	void			ReadFromSnapshot( const idBitMsgDelta& msg );
@@ -146,7 +146,7 @@ public:
 		STATE_COUNT
 	} gameState_t;
 	static const char* GameStateStrings[ STATE_COUNT ];
-	idMultiplayerGame::gameState_t		GetGameState( void ) const;
+	idMultiplayerGame::gameState_t		GetGameState() const;
 
 	static const char* GlobalSoundStrings[ SND_COUNT ];
 	void			PlayGlobalSound( int to, snd_evt_t evt, const char* shader = NULL );
@@ -211,25 +211,25 @@ public:
 	void			ServerStartVote( int clientNum, vote_flags_t voteIndex, const char* voteValue );
 	void			ClientUpdateVote( vote_result_t result, int yesCount, int noCount );
 	void			CastVote( int clientNum, bool vote );
-	void			ExecuteVote( void );
+	void			ExecuteVote();
 
 	void			WantKilled( int clientNum );
 	int				NumActualClients( bool countSpectators, int* teamcount = NULL );
 	void			DropWeapon( int clientNum );
-	void			MapRestart( void );
+	void			MapRestart();
 	// called by idPlayer whenever it detects a team change (init or switch)
 	void			SwitchToTeam( int clientNum, int oldteam, int newteam );
-	bool			IsPureReady( void ) const;
+	bool			IsPureReady() const;
 	void			ProcessChatMessage( int clientNum, bool team, const char* name, const char* text, const char* sound );
 	void			ProcessVoiceChat( int clientNum, bool team, int index );
 
-	void			Precache( void );
+	void			Precache();
 
 	// throttle UI switch rates
-	void			ThrottleUserInfo( void );
-	void			ToggleSpectate( void );
-	void			ToggleReady( void );
-	void			ToggleTeam( void );
+	void			ThrottleUserInfo();
+	void			ToggleSpectate();
+	void			ToggleReady();
+	void			ToggleTeam();
 
 	void			ClearFrags( int clientNum );
 
@@ -323,50 +323,50 @@ private:
 	void			UpdateRankColor( idUserInterface* gui, const char* mask, int i, const idVec3& vec );
 	void			UpdateScoreboard( idUserInterface* scoreBoard, idPlayer* player );
 
-	void			ClearGuis( void );
+	void			ClearGuis();
 	void			DrawScoreBoard( idPlayer* player );
 	void			UpdateHud( idPlayer* player, idUserInterface* hud );
-	bool			Warmup( void );
-	void			CheckVote( void );
-	bool			AllPlayersReady( void );
-	idPlayer* 		FragLimitHit( void );
-	idPlayer* 		FragLeader( void );
-	bool			TimeLimitHit( void );
+	bool			Warmup();
+	void			CheckVote();
+	bool			AllPlayersReady();
+	idPlayer* 		FragLimitHit();
+	idPlayer* 		FragLeader();
+	bool			TimeLimitHit();
 	void			NewState( gameState_t news, idPlayer* player = NULL );
 	void			UpdateWinsLosses( idPlayer* winner );
 	// fill any empty tourney slots based on the current tourney ranks
-	void			FillTourneySlots( void );
-	void			CycleTourneyPlayers( void );
+	void			FillTourneySlots();
+	void			CycleTourneyPlayers();
 	// walk through the tourneyRank to build a wait list for the clients
-	void			UpdateTourneyLine( void );
-	const char* 	GameTime( void );
-	void			Clear( void );
-	bool			EnoughClientsToPlay( void );
-	void			ClearChatData( void );
-	void			DrawChat( void );
+	void			UpdateTourneyLine();
+	const char* 	GameTime();
+	void			Clear();
+	bool			EnoughClientsToPlay();
+	void			ClearChatData();
+	void			DrawChat();
 	// go through the clients, and see if they want to be respawned, and if the game allows it
 	// called during normal gameplay for death -> respawn cycles
 	// and for a spectator who want back in the game (see param)
 	void			CheckRespawns( idPlayer* spectator = NULL );
 	void			ForceReady();
 	// when clients disconnect or join spectate during game, check if we need to end the game
-	void			CheckAbortGame( void );
+	void			CheckAbortGame();
 	void			MessageMode( const idCmdArgs& args );
-	void			DisableMenu( void );
-	void			SetMapShot( void );
+	void			DisableMenu();
+	void			SetMapShot();
 	// scores in TDM
 	void			TeamScore( int entityNumber, int team, int delta );
 	void			VoiceChat( const idCmdArgs& args, bool team );
-	void			DumpTourneyLine( void );
-	void			SuddenRespawn( void );
+	void			DumpTourneyLine();
+	void			SuddenRespawn();
 };
 
-ID_INLINE idMultiplayerGame::gameState_t idMultiplayerGame::GetGameState( void ) const
+ID_INLINE idMultiplayerGame::gameState_t idMultiplayerGame::GetGameState() const
 {
 	return gameState;
 }
 
-ID_INLINE bool idMultiplayerGame::IsPureReady( void ) const
+ID_INLINE bool idMultiplayerGame::IsPureReady() const
 {
 	return pureReady;
 }

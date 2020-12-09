@@ -40,7 +40,7 @@ static idCVar s_alsa_lib( "s_alsa_lib", "libasound.so.2", CVAR_SYSTEM | CVAR_ARC
 idAudioHardwareALSA::DLOpen
 ===============
 */
-bool idAudioHardwareALSA::DLOpen( void )
+bool idAudioHardwareALSA::DLOpen()
 {
 	const char* version;
 
@@ -130,7 +130,7 @@ void idAudioHardwareALSA::InitFailed()
 idAudioHardwareALSA::Initialize
 =====================
 */
-bool idAudioHardwareALSA::Initialize( void )
+bool idAudioHardwareALSA::Initialize()
 {
 	int err;
 
@@ -303,7 +303,7 @@ short* idAudioHardwareALSA::GetMixBuffer()
 idAudioHardwareALSA::Flush
 ===============
 */
-bool idAudioHardwareALSA::Flush( void )
+bool idAudioHardwareALSA::Flush()
 {
 	int ret;
 	snd_pcm_state_t state;

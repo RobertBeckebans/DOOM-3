@@ -469,11 +469,11 @@ typedef enum
 
 extern "C" {
 
-	typedef void ( *CGerrorCallbackFunc )( void );
+	typedef void ( *CGerrorCallbackFunc )();
 
 
 
-	typedef  CGcontext( *PFNCGCREATECONTEXTPROC )( void );
+	typedef  CGcontext( *PFNCGCREATECONTEXTPROC )();
 	typedef  void ( *PFNCGDESTROYCONTEXTPROC )( CGcontext ctx );
 	typedef  CGbool( *PFNCGISCONTEXTPROC )( CGcontext ctx );
 	typedef  const char* ( *PFNCGGETLASTLISTINGPROC )( CGcontext ctx );
@@ -529,10 +529,10 @@ extern "C" {
 	typedef  CGresource( *PFNCGGETRESOURCEPROC )( const char* resource_string );
 	typedef  const char* ( *PFNCGGETPROFILESTRINGPROC )( CGprofile profile );
 	typedef  CGprofile( *PFNCGGETPROFILEPROC )( const char* profile_string );
-	typedef  CGerror( *PFNCGGETERRORPROC )( void );
+	typedef  CGerror( *PFNCGGETERRORPROC )();
 	typedef  const char* ( *PFNCGGETERRORSTRINGPROC )( CGerror error );
 	typedef  void ( *PFNCGSETERRORCALLBACKPROC )( CGerrorCallbackFunc func );
-	typedef  CGerrorCallbackFunc( *PFNCGGETERRORCALLBACKPROC )( void );
+	typedef  CGerrorCallbackFunc( *PFNCGGETERRORCALLBACKPROC )();
 
 
 	extern PFNCGCREATECONTEXTPROC cgCreateContext;

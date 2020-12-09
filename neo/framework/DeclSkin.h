@@ -46,11 +46,11 @@ typedef struct
 class idDeclSkin : public idDecl
 {
 public:
-	virtual size_t			Size( void ) const;
-	virtual bool			SetDefaultText( void );
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual bool			SetDefaultText();
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
+	virtual void			FreeData();
 
 	const idMaterial* 		RemapShaderBySkin( const idMaterial* shader ) const;
 

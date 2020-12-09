@@ -36,30 +36,30 @@ input
 ==========
 */
 
-void Sys_InitInput( void ) { }
+void Sys_InitInput() { }
 
-void Sys_ShutdownInput( void ) { }
+void Sys_ShutdownInput() { }
 
 void Sys_GrabMouseCursor( bool ) { }
 
-int Sys_PollMouseInputEvents( void )
+int Sys_PollMouseInputEvents()
 {
 	return 0;
 }
 
-void Sys_EndMouseInputEvents( void ) { }
+void Sys_EndMouseInputEvents() { }
 
 int Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
 {
 	return 0;
 }
 
-int Sys_PollKeyboardInputEvents( void )
+int Sys_PollKeyboardInputEvents()
 {
 	return 0;
 }
 
-void Sys_EndKeyboardInputEvents( void ) { }
+void Sys_EndKeyboardInputEvents() { }
 
 int Sys_ReturnKeyboardInputEvent( const int n, int& action, bool& state )
 {
@@ -77,7 +77,7 @@ Sys_GetVideoRam
 returns in megabytes
 ================
 */
-int Sys_GetVideoRam( void )
+int Sys_GetVideoRam()
 {
 	return 64;
 }
@@ -99,13 +99,13 @@ void GLimp_SetGamma( unsigned short red[256],
 					 unsigned short green[256],
 					 unsigned short blue[256] ) { }
 
-void GLimp_Shutdown( void ) { }
+void GLimp_Shutdown() { }
 
-void GLimp_SwapBuffers( void ) { }
+void GLimp_SwapBuffers() { }
 
-void GLimp_DeactivateContext( void ) { }
+void GLimp_DeactivateContext() { }
 
-void GLimp_ActivateContext( void ) { }
+void GLimp_ActivateContext() { }
 
 bool GLimp_SetScreenParms( glimpParms_t parms )
 {

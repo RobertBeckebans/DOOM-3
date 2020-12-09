@@ -42,20 +42,20 @@ class idSound : public idEntity
 public:
 	CLASS_PROTOTYPE( idSound );
 
-	idSound( void );
+	idSound();
 
 	void			Save( idSaveGame* savefile ) const;
 	void			Restore( idRestoreGame* savefile );
 
 	virtual void	UpdateChangeableSpawnArgs( const idDict* source );
 
-	void			Spawn( void );
+	void			Spawn();
 
 	void			ToggleOnOff( idEntity* other, idEntity* activator );
-	void			Think( void );
+	void			Think();
 	void			SetSound( const char* sound, int channel = SND_CHANNEL_ANY );
 
-	virtual void	ShowEditingDialog( void );
+	virtual void	ShowEditingDialog();
 
 private:
 	float			lastSoundVol;
@@ -68,9 +68,9 @@ private:
 	int				playingUntilTime;
 
 	void			Event_Trigger( idEntity* activator );
-	void			Event_Timer( void );
-	void			Event_On( void );
-	void			Event_Off( void );
+	void			Event_Timer();
+	void			Event_On();
+	void			Event_Off();
 	void			DoSound( bool play );
 };
 

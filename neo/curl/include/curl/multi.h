@@ -112,7 +112,7 @@ typedef struct CURLMsg CURLMsg;
  * Desc:    inititalize multi-style curl usage
  * Returns: a new CURLM handle to use in all 'curl_multi' functions.
  */
-CURLM* curl_multi_init( void );
+CURLM* curl_multi_init();
 
 /*
  * Name:    curl_multi_add_handle()

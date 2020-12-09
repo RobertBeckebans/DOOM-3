@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 idAASFileLocal::Optimize
 ================
 */
-void idAASFileLocal::Optimize( void )
+void idAASFileLocal::Optimize()
 {
 	int i, j, k, faceNum, edgeNum, areaFirstFace, faceFirstEdge;
 	aasArea_t* area;

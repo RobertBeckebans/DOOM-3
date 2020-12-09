@@ -3558,7 +3558,7 @@ GLAPI void APIENTRY glDetachObjectARB( GLhandleARB, GLhandleARB );
 GLAPI GLhandleARB APIENTRY glCreateShaderObjectARB( GLenum );
 GLAPI void APIENTRY glShaderSourceARB( GLhandleARB, GLsizei, const GLcharARB**, const GLint* );
 GLAPI void APIENTRY glCompileShaderARB( GLhandleARB );
-GLAPI GLhandleARB APIENTRY glCreateProgramObjectARB( void );
+GLAPI GLhandleARB APIENTRY glCreateProgramObjectARB();
 GLAPI void APIENTRY glAttachObjectARB( GLhandleARB, GLhandleARB );
 GLAPI void APIENTRY glLinkProgramARB( GLhandleARB );
 GLAPI void APIENTRY glUseProgramObjectARB( GLhandleARB );
@@ -3598,7 +3598,7 @@ typedef void ( APIENTRYP PFNGLDETACHOBJECTARBPROC )( GLhandleARB containerObj, G
 typedef GLhandleARB( APIENTRYP PFNGLCREATESHADEROBJECTARBPROC )( GLenum shaderType );
 typedef void ( APIENTRYP PFNGLSHADERSOURCEARBPROC )( GLhandleARB shaderObj, GLsizei count, const GLcharARB * *string, const GLint* length );
 typedef void ( APIENTRYP PFNGLCOMPILESHADERARBPROC )( GLhandleARB shaderObj );
-typedef GLhandleARB( APIENTRYP PFNGLCREATEPROGRAMOBJECTARBPROC )( void );
+typedef GLhandleARB( APIENTRYP PFNGLCREATEPROGRAMOBJECTARBPROC )();
 typedef void ( APIENTRYP PFNGLATTACHOBJECTARBPROC )( GLhandleARB containerObj, GLhandleARB obj );
 typedef void ( APIENTRYP PFNGLLINKPROGRAMARBPROC )( GLhandleARB programObj );
 typedef void ( APIENTRYP PFNGLUSEPROGRAMOBJECTARBPROC )( GLhandleARB programObj );
@@ -4034,18 +4034,18 @@ typedef void ( APIENTRYP PFNGLPOINTPARAMETERFVSGISPROC )( GLenum pname, const GL
 #ifndef GL_SGIX_instruments
 #define GL_SGIX_instruments 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI GLint APIENTRY glGetInstrumentsSGIX( void );
+GLAPI GLint APIENTRY glGetInstrumentsSGIX();
 GLAPI void APIENTRY glInstrumentsBufferSGIX( GLsizei, GLint* );
 GLAPI GLint APIENTRY glPollInstrumentsSGIX( GLint* );
 GLAPI void APIENTRY glReadInstrumentsSGIX( GLint );
-GLAPI void APIENTRY glStartInstrumentsSGIX( void );
+GLAPI void APIENTRY glStartInstrumentsSGIX();
 GLAPI void APIENTRY glStopInstrumentsSGIX( GLint );
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef GLint( APIENTRYP PFNGLGETINSTRUMENTSSGIXPROC )( void );
+typedef GLint( APIENTRYP PFNGLGETINSTRUMENTSSGIXPROC )();
 typedef void ( APIENTRYP PFNGLINSTRUMENTSBUFFERSGIXPROC )( GLsizei size, GLint* buffer );
 typedef GLint( APIENTRYP PFNGLPOLLINSTRUMENTSSGIXPROC )( GLint* marker_p );
 typedef void ( APIENTRYP PFNGLREADINSTRUMENTSSGIXPROC )( GLint marker );
-typedef void ( APIENTRYP PFNGLSTARTINSTRUMENTSSGIXPROC )( void );
+typedef void ( APIENTRYP PFNGLSTARTINSTRUMENTSSGIXPROC )();
 typedef void ( APIENTRYP PFNGLSTOPINSTRUMENTSSGIXPROC )( GLint marker );
 #endif
 
@@ -4064,9 +4064,9 @@ typedef void ( APIENTRYP PFNGLFRAMEZOOMSGIXPROC )( GLint factor );
 #ifndef GL_SGIX_tag_sample_buffer
 #define GL_SGIX_tag_sample_buffer 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glTagSampleBufferSGIX( void );
+GLAPI void APIENTRY glTagSampleBufferSGIX();
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLTAGSAMPLEBUFFERSGIXPROC )( void );
+typedef void ( APIENTRYP PFNGLTAGSAMPLEBUFFERSGIXPROC )();
 #endif
 
 #ifndef GL_SGIX_polynomial_ffd
@@ -4094,9 +4094,9 @@ typedef void ( APIENTRYP PFNGLREFERENCEPLANESGIXPROC )( const GLdouble* equation
 #ifndef GL_SGIX_flush_raster
 #define GL_SGIX_flush_raster 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glFlushRasterSGIX( void );
+GLAPI void APIENTRY glFlushRasterSGIX();
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLFLUSHRASTERSGIXPROC )( void );
+typedef void ( APIENTRYP PFNGLFLUSHRASTERSGIXPROC )();
 #endif
 
 #ifndef GL_SGIX_depth_texture
@@ -4245,10 +4245,10 @@ typedef void ( APIENTRYP PFNGLINDEXFUNCEXTPROC )( GLenum func, GLclampf ref );
 #define GL_EXT_compiled_vertex_array 1
 #ifdef GL_GLEXT_PROTOTYPES
 GLAPI void APIENTRY glLockArraysEXT( GLint, GLsizei );
-GLAPI void APIENTRY glUnlockArraysEXT( void );
+GLAPI void APIENTRY glUnlockArraysEXT();
 #endif /* GL_GLEXT_PROTOTYPES */
 typedef void ( APIENTRYP PFNGLLOCKARRAYSEXTPROC )( GLint first, GLsizei count );
-typedef void ( APIENTRYP PFNGLUNLOCKARRAYSEXTPROC )( void );
+typedef void ( APIENTRYP PFNGLUNLOCKARRAYSEXTPROC )();
 #endif
 
 #ifndef GL_EXT_cull_vertex
@@ -4568,9 +4568,9 @@ typedef void ( APIENTRYP PFNGLBINORMALPOINTEREXTPROC )( GLenum type, GLsizei str
 #ifndef GL_SUNX_constant_data
 #define GL_SUNX_constant_data 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glFinishTextureSUNX( void );
+GLAPI void APIENTRY glFinishTextureSUNX();
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLFINISHTEXTURESUNXPROC )( void );
+typedef void ( APIENTRYP PFNGLFINISHTEXTURESUNXPROC )();
 #endif
 
 #ifndef GL_SUN_global_alpha
@@ -4772,10 +4772,10 @@ typedef void ( APIENTRYP PFNGLVERTEXWEIGHTPOINTEREXTPROC )( GLsizei size, GLenum
 #ifndef GL_NV_vertex_array_range
 #define GL_NV_vertex_array_range 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glFlushVertexArrayRangeNV( void );
+GLAPI void APIENTRY glFlushVertexArrayRangeNV();
 GLAPI void APIENTRY glVertexArrayRangeNV( GLsizei, const GLvoid* );
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLFLUSHVERTEXARRAYRANGENVPROC )( void );
+typedef void ( APIENTRYP PFNGLFLUSHVERTEXARRAYRANGENVPROC )();
 typedef void ( APIENTRYP PFNGLVERTEXARRAYRANGENVPROC )( GLsizei length, const GLvoid* pointer );
 #endif
 
@@ -4830,9 +4830,9 @@ typedef void ( APIENTRYP PFNGLGETFINALCOMBINERINPUTPARAMETERIVNVPROC )( GLenum v
 #ifndef GL_MESA_resize_buffers
 #define GL_MESA_resize_buffers 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glResizeBuffersMESA( void );
+GLAPI void APIENTRY glResizeBuffersMESA();
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLRESIZEBUFFERSMESAPROC )( void );
+typedef void ( APIENTRYP PFNGLRESIZEBUFFERSMESAPROC )();
 #endif
 
 #ifndef GL_MESA_window_pos
@@ -5263,8 +5263,8 @@ typedef void ( APIENTRYP PFNGLGETTEXBUMPPARAMETERFVATIPROC )( GLenum pname, GLfl
 GLAPI GLuint APIENTRY glGenFragmentShadersATI( GLuint );
 GLAPI void APIENTRY glBindFragmentShaderATI( GLuint );
 GLAPI void APIENTRY glDeleteFragmentShaderATI( GLuint );
-GLAPI void APIENTRY glBeginFragmentShaderATI( void );
-GLAPI void APIENTRY glEndFragmentShaderATI( void );
+GLAPI void APIENTRY glBeginFragmentShaderATI();
+GLAPI void APIENTRY glEndFragmentShaderATI();
 GLAPI void APIENTRY glPassTexCoordATI( GLuint, GLuint, GLenum );
 GLAPI void APIENTRY glSampleMapATI( GLuint, GLuint, GLenum );
 GLAPI void APIENTRY glColorFragmentOp1ATI( GLenum, GLuint, GLuint, GLuint, GLuint, GLuint, GLuint );
@@ -5278,8 +5278,8 @@ GLAPI void APIENTRY glSetFragmentShaderConstantATI( GLuint, const GLfloat* );
 typedef GLuint( APIENTRYP PFNGLGENFRAGMENTSHADERSATIPROC )( GLuint range );
 typedef void ( APIENTRYP PFNGLBINDFRAGMENTSHADERATIPROC )( GLuint id );
 typedef void ( APIENTRYP PFNGLDELETEFRAGMENTSHADERATIPROC )( GLuint id );
-typedef void ( APIENTRYP PFNGLBEGINFRAGMENTSHADERATIPROC )( void );
-typedef void ( APIENTRYP PFNGLENDFRAGMENTSHADERATIPROC )( void );
+typedef void ( APIENTRYP PFNGLBEGINFRAGMENTSHADERATIPROC )();
+typedef void ( APIENTRYP PFNGLENDFRAGMENTSHADERATIPROC )();
 typedef void ( APIENTRYP PFNGLPASSTEXCOORDATIPROC )( GLuint dst, GLuint coord, GLenum swizzle );
 typedef void ( APIENTRYP PFNGLSAMPLEMAPATIPROC )( GLuint dst, GLuint interp, GLenum swizzle );
 typedef void ( APIENTRYP PFNGLCOLORFRAGMENTOP1ATIPROC )( GLenum op, GLuint dst, GLuint dstMask, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod );
@@ -5334,8 +5334,8 @@ typedef void ( APIENTRYP PFNGLGETVARIANTARRAYOBJECTIVATIPROC )( GLuint id, GLenu
 #ifndef GL_EXT_vertex_shader
 #define GL_EXT_vertex_shader 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glBeginVertexShaderEXT( void );
-GLAPI void APIENTRY glEndVertexShaderEXT( void );
+GLAPI void APIENTRY glBeginVertexShaderEXT();
+GLAPI void APIENTRY glEndVertexShaderEXT();
 GLAPI void APIENTRY glBindVertexShaderEXT( GLuint );
 GLAPI GLuint APIENTRY glGenVertexShadersEXT( GLuint );
 GLAPI void APIENTRY glDeleteVertexShaderEXT( GLuint );
@@ -5377,8 +5377,8 @@ GLAPI void APIENTRY glGetLocalConstantBooleanvEXT( GLuint, GLenum, GLboolean* );
 GLAPI void APIENTRY glGetLocalConstantIntegervEXT( GLuint, GLenum, GLint* );
 GLAPI void APIENTRY glGetLocalConstantFloatvEXT( GLuint, GLenum, GLfloat* );
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLBEGINVERTEXSHADEREXTPROC )( void );
-typedef void ( APIENTRYP PFNGLENDVERTEXSHADEREXTPROC )( void );
+typedef void ( APIENTRYP PFNGLBEGINVERTEXSHADEREXTPROC )();
+typedef void ( APIENTRYP PFNGLENDVERTEXSHADEREXTPROC )();
 typedef void ( APIENTRYP PFNGLBINDVERTEXSHADEREXTPROC )( GLuint id );
 typedef GLuint( APIENTRYP PFNGLGENVERTEXSHADERSEXTPROC )( GLuint range );
 typedef void ( APIENTRYP PFNGLDELETEVERTEXSHADEREXTPROC )( GLuint id );
@@ -5556,7 +5556,7 @@ GLAPI void APIENTRY glGenOcclusionQueriesNV( GLsizei, GLuint* );
 GLAPI void APIENTRY glDeleteOcclusionQueriesNV( GLsizei, const GLuint* );
 GLAPI GLboolean APIENTRY glIsOcclusionQueryNV( GLuint );
 GLAPI void APIENTRY glBeginOcclusionQueryNV( GLuint );
-GLAPI void APIENTRY glEndOcclusionQueryNV( void );
+GLAPI void APIENTRY glEndOcclusionQueryNV();
 GLAPI void APIENTRY glGetOcclusionQueryivNV( GLuint, GLenum, GLint* );
 GLAPI void APIENTRY glGetOcclusionQueryuivNV( GLuint, GLenum, GLuint* );
 #endif /* GL_GLEXT_PROTOTYPES */
@@ -5564,7 +5564,7 @@ typedef void ( APIENTRYP PFNGLGENOCCLUSIONQUERIESNVPROC )( GLsizei n, GLuint* id
 typedef void ( APIENTRYP PFNGLDELETEOCCLUSIONQUERIESNVPROC )( GLsizei n, const GLuint* ids );
 typedef GLboolean( APIENTRYP PFNGLISOCCLUSIONQUERYNVPROC )( GLuint id );
 typedef void ( APIENTRYP PFNGLBEGINOCCLUSIONQUERYNVPROC )( GLuint id );
-typedef void ( APIENTRYP PFNGLENDOCCLUSIONQUERYNVPROC )( void );
+typedef void ( APIENTRYP PFNGLENDOCCLUSIONQUERYNVPROC )();
 typedef void ( APIENTRYP PFNGLGETOCCLUSIONQUERYIVNVPROC )( GLuint id, GLenum pname, GLint* params );
 typedef void ( APIENTRYP PFNGLGETOCCLUSIONQUERYUIVNVPROC )( GLuint id, GLenum pname, GLuint* params );
 #endif
@@ -5829,10 +5829,10 @@ typedef void ( APIENTRYP PFNGLFLUSHPIXELDATARANGENVPROC )( GLenum target );
 #ifndef GL_NV_primitive_restart
 #define GL_NV_primitive_restart 1
 #ifdef GL_GLEXT_PROTOTYPES
-GLAPI void APIENTRY glPrimitiveRestartNV( void );
+GLAPI void APIENTRY glPrimitiveRestartNV();
 GLAPI void APIENTRY glPrimitiveRestartIndexNV( GLuint );
 #endif /* GL_GLEXT_PROTOTYPES */
-typedef void ( APIENTRYP PFNGLPRIMITIVERESTARTNVPROC )( void );
+typedef void ( APIENTRYP PFNGLPRIMITIVERESTARTNVPROC )();
 typedef void ( APIENTRYP PFNGLPRIMITIVERESTARTINDEXNVPROC )( GLuint index );
 #endif
 

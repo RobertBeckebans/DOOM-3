@@ -94,7 +94,7 @@ public:
 	// free the current source
 	void			FreeSource( bool keepDefines = false );
 	// returns true if a source is loaded
-	int				IsLoaded( void ) const
+	int				IsLoaded() const
 	{
 		return idParser::loaded;
 	}
@@ -117,7 +117,7 @@ public:
 	// skip tokens until the given token string is read
 	int				SkipUntilString( const char* string );
 	// skip the rest of the current line
-	int				SkipRestOfLine( void );
+	int				SkipRestOfLine();
 	// skip the braced section
 	int				SkipBracedSection( bool parseFirstBrace = true );
 	// parse a braced section into a string
@@ -131,11 +131,11 @@ public:
 	// read a token only if on the current line
 	int				ReadTokenOnLine( idToken* token );
 	// read a signed integer
-	int				ParseInt( void );
+	int				ParseInt();
 	// read a boolean
-	bool			ParseBool( void );
+	bool			ParseBool();
 	// read a floating point number
-	float			ParseFloat( void );
+	float			ParseFloat();
 	// parse matrices with floats
 	int				Parse1DMatrix( int x, float* m );
 	int				Parse2DMatrix( int y, int x, float* m );
@@ -143,13 +143,13 @@ public:
 	// get the white space before the last read token
 	int				GetLastWhiteSpace( idStr& whiteSpace ) const;
 	// Set a marker in the source file (there is only one marker)
-	void			SetMarker( void );
+	void			SetMarker();
 	// Get the string from the marker to the current position
 	void			GetStringFromMarker( idStr& out, bool clean = false );
 	// add a define to the source
 	int				AddDefine( const char* string );
 	// add builtin defines
-	void			AddBuiltinDefines( void );
+	void			AddBuiltinDefines();
 	// set the source include path
 	void			SetIncludePath( const char* path );
 	// set the punctuation set
@@ -161,15 +161,15 @@ public:
 	// set lexer flags
 	void			SetFlags( int flags );
 	// get lexer flags
-	int				GetFlags( void ) const;
+	int				GetFlags() const;
 	// returns the current filename
-	const char* 	GetFileName( void ) const;
+	const char* 	GetFileName() const;
 	// get current offset in current script
-	const int		GetFileOffset( void ) const;
+	const int		GetFileOffset() const;
 	// get file time for current script
-	const ID_TIME_T	GetFileTime( void ) const;
+	const ID_TIME_T	GetFileTime() const;
 	// returns the current line number
-	const int		GetLineNum( void ) const;
+	const int		GetLineNum() const;
 	// print an error message
 	void			Error( const char* str, ... ) const id_attribute( ( format( printf, 2, 3 ) ) );
 	// print a warning message
@@ -180,7 +180,7 @@ public:
 	// remove the given global define
 	static int		RemoveGlobalDefine( const char* name );
 	// remove all global defines
-	static void		RemoveAllGlobalDefines( void );
+	static void		RemoveAllGlobalDefines();
 	// set the base folder to load files from
 	static void		SetBaseFolder( const char* path );
 
@@ -214,7 +214,7 @@ private:
 	int				ExpandBuiltinDefine( idToken* deftoken, define_t* define, idToken** firsttoken, idToken** lasttoken );
 	int				ExpandDefine( idToken* deftoken, define_t* define, idToken** firsttoken, idToken** lasttoken );
 	int				ExpandDefineIntoSource( idToken* deftoken, define_t* define );
-	void			AddGlobalDefinesToSource( void );
+	void			AddGlobalDefinesToSource();
 	define_t* 		CopyDefine( define_t* define );
 	define_t* 		FindHashedDefine( define_t** definehash, const char* name );
 	int				FindDefineParm( define_t* define, const char* name );
@@ -223,34 +223,34 @@ private:
 	static void		FreeDefine( define_t* define );
 	static define_t* FindDefine( define_t* defines, const char* name );
 	static define_t* DefineFromString( const char* string );
-	define_t* 		CopyFirstDefine( void );
-	int				Directive_include( void );
-	int				Directive_undef( void );
+	define_t* 		CopyFirstDefine();
+	int				Directive_include();
+	int				Directive_undef();
 	int				Directive_if_def( int type );
-	int				Directive_ifdef( void );
-	int				Directive_ifndef( void );
-	int				Directive_else( void );
-	int				Directive_endif( void );
+	int				Directive_ifdef();
+	int				Directive_ifndef();
+	int				Directive_else();
+	int				Directive_endif();
 	int				EvaluateTokens( idToken* tokens, signed long int* intvalue, double* floatvalue, int integer );
 	int				Evaluate( signed long int* intvalue, double* floatvalue, int integer );
 	int				DollarEvaluate( signed long int* intvalue, double* floatvalue, int integer );
-	int				Directive_define( void );
-	int				Directive_elif( void );
-	int				Directive_if( void );
-	int				Directive_line( void );
-	int				Directive_error( void );
-	int				Directive_warning( void );
-	int				Directive_pragma( void );
-	void			UnreadSignToken( void );
-	int				Directive_eval( void );
-	int				Directive_evalfloat( void );
-	int				ReadDirective( void );
-	int				DollarDirective_evalint( void );
-	int				DollarDirective_evalfloat( void );
-	int				ReadDollarDirective( void );
+	int				Directive_define();
+	int				Directive_elif();
+	int				Directive_if();
+	int				Directive_line();
+	int				Directive_error();
+	int				Directive_warning();
+	int				Directive_pragma();
+	void			UnreadSignToken();
+	int				Directive_eval();
+	int				Directive_evalfloat();
+	int				ReadDirective();
+	int				DollarDirective_evalint();
+	int				DollarDirective_evalfloat();
+	int				ReadDollarDirective();
 };
 
-ID_INLINE const char* idParser::GetFileName( void ) const
+ID_INLINE const char* idParser::GetFileName() const
 {
 	if( idParser::scriptstack )
 	{
@@ -262,7 +262,7 @@ ID_INLINE const char* idParser::GetFileName( void ) const
 	}
 }
 
-ID_INLINE const int idParser::GetFileOffset( void ) const
+ID_INLINE const int idParser::GetFileOffset() const
 {
 	if( idParser::scriptstack )
 	{
@@ -274,7 +274,7 @@ ID_INLINE const int idParser::GetFileOffset( void ) const
 	}
 }
 
-ID_INLINE const ID_TIME_T idParser::GetFileTime( void ) const
+ID_INLINE const ID_TIME_T idParser::GetFileTime() const
 {
 	if( idParser::scriptstack )
 	{
@@ -286,7 +286,7 @@ ID_INLINE const ID_TIME_T idParser::GetFileTime( void ) const
 	}
 }
 
-ID_INLINE const int idParser::GetLineNum( void ) const
+ID_INLINE const int idParser::GetLineNum() const
 {
 	if( idParser::scriptstack )
 	{

@@ -25,8 +25,8 @@
 #include "urldata.h"
 CURLcode Curl_SSLConnect( struct connectdata* conn, int sockindex );
 
-void Curl_SSL_init( void );  /* Global SSL init */
-void Curl_SSL_cleanup( void ); /* Global SSL cleanup */
+void Curl_SSL_init();  /* Global SSL init */
+void Curl_SSL_cleanup(); /* Global SSL cleanup */
 
 /* init the SSL session ID cache */
 CURLcode Curl_SSL_InitSessions( struct SessionHandle*, long );

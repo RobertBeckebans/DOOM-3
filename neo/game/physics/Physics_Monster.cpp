@@ -240,7 +240,7 @@ monsterMoveResult_t idPhysics_Monster::StepMove( idVec3& start, idVec3& velocity
 idPhysics_Monster::Activate
 ================
 */
-void idPhysics_Monster::Activate( void )
+void idPhysics_Monster::Activate()
 {
 	current.atRest = -1;
 	self->BecomeActive( TH_PHYSICS );
@@ -251,7 +251,7 @@ void idPhysics_Monster::Activate( void )
 idPhysics_Monster::Rest
 ================
 */
-void idPhysics_Monster::Rest( void )
+void idPhysics_Monster::Rest()
 {
 	current.atRest = gameLocal.time;
 	current.velocity.Zero();
@@ -263,7 +263,7 @@ void idPhysics_Monster::Rest( void )
 idPhysics_Monster::PutToRest
 ================
 */
-void idPhysics_Monster::PutToRest( void )
+void idPhysics_Monster::PutToRest()
 {
 	Rest();
 }
@@ -273,7 +273,7 @@ void idPhysics_Monster::PutToRest( void )
 idPhysics_Monster::idPhysics_Monster
 ================
 */
-idPhysics_Monster::idPhysics_Monster( void )
+idPhysics_Monster::idPhysics_Monster()
 {
 
 	memset( &current, 0, sizeof( current ) );
@@ -398,7 +398,7 @@ void idPhysics_Monster::SetMaxStepHeight( const float newMaxStepHeight )
 idPhysics_Monster::GetMaxStepHeight
 ================
 */
-float idPhysics_Monster::GetMaxStepHeight( void ) const
+float idPhysics_Monster::GetMaxStepHeight() const
 {
 	return maxStepHeight;
 }
@@ -408,7 +408,7 @@ float idPhysics_Monster::GetMaxStepHeight( void ) const
 idPhysics_Monster::OnGround
 ================
 */
-bool idPhysics_Monster::OnGround( void ) const
+bool idPhysics_Monster::OnGround() const
 {
 	return current.onGround;
 }
@@ -418,7 +418,7 @@ bool idPhysics_Monster::OnGround( void ) const
 idPhysics_Monster::GetSlideMoveEntity
 ================
 */
-idEntity* idPhysics_Monster::GetSlideMoveEntity( void ) const
+idEntity* idPhysics_Monster::GetSlideMoveEntity() const
 {
 	return blockingEntity;
 }
@@ -428,7 +428,7 @@ idEntity* idPhysics_Monster::GetSlideMoveEntity( void ) const
 idPhysics_Monster::GetMoveResult
 ================
 */
-monsterMoveResult_t idPhysics_Monster::GetMoveResult( void ) const
+monsterMoveResult_t idPhysics_Monster::GetMoveResult() const
 {
 	return moveResult;
 }
@@ -468,7 +468,7 @@ void idPhysics_Monster::UseVelocityMove( bool force )
 idPhysics_Monster::EnableImpact
 ================
 */
-void idPhysics_Monster::EnableImpact( void )
+void idPhysics_Monster::EnableImpact()
 {
 	noImpact = false;
 }
@@ -478,7 +478,7 @@ void idPhysics_Monster::EnableImpact( void )
 idPhysics_Monster::DisableImpact
 ================
 */
-void idPhysics_Monster::DisableImpact( void )
+void idPhysics_Monster::DisableImpact()
 {
 	noImpact = true;
 }
@@ -619,7 +619,7 @@ void idPhysics_Monster::UpdateTime( int endTimeMSec )
 idPhysics_Monster::GetTime
 ================
 */
-int idPhysics_Monster::GetTime( void ) const
+int idPhysics_Monster::GetTime() const
 {
 	return gameLocal.time;
 }
@@ -657,7 +657,7 @@ void idPhysics_Monster::ApplyImpulse( const int id, const idVec3& point, const i
 idPhysics_Monster::IsAtRest
 ================
 */
-bool idPhysics_Monster::IsAtRest( void ) const
+bool idPhysics_Monster::IsAtRest() const
 {
 	return current.atRest >= 0;
 }
@@ -667,7 +667,7 @@ bool idPhysics_Monster::IsAtRest( void ) const
 idPhysics_Monster::GetRestStartTime
 ================
 */
-int idPhysics_Monster::GetRestStartTime( void ) const
+int idPhysics_Monster::GetRestStartTime() const
 {
 	return current.atRest;
 }
@@ -677,7 +677,7 @@ int idPhysics_Monster::GetRestStartTime( void ) const
 idPhysics_Monster::SaveState
 ================
 */
-void idPhysics_Monster::SaveState( void )
+void idPhysics_Monster::SaveState()
 {
 	saved = current;
 }
@@ -687,7 +687,7 @@ void idPhysics_Monster::SaveState( void )
 idPhysics_Monster::RestoreState
 ================
 */
-void idPhysics_Monster::RestoreState( void )
+void idPhysics_Monster::RestoreState()
 {
 	current = saved;
 

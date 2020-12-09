@@ -82,21 +82,21 @@ public:
 	int				flags;								// token flags, used for recursive defines
 
 public:
-	idToken( void );
+	idToken();
 	idToken( const idToken* token );
-	~idToken( void );
+	~idToken();
 
 	void			operator=( const idStr& text );
 	void			operator=( const char* text );
 
-	double			GetDoubleValue( void );				// double value of TT_NUMBER
-	float			GetFloatValue( void );				// float value of TT_NUMBER
-	unsigned long	GetUnsignedLongValue( void );		// unsigned long value of TT_NUMBER
-	int				GetIntValue( void );				// int value of TT_NUMBER
-	int				WhiteSpaceBeforeToken( void ) const;// returns length of whitespace before token
-	void			ClearTokenWhiteSpace( void );		// forget whitespace before token
+	double			GetDoubleValue();				// double value of TT_NUMBER
+	float			GetFloatValue();				// float value of TT_NUMBER
+	unsigned long	GetUnsignedLongValue();		// unsigned long value of TT_NUMBER
+	int				GetIntValue();				// int value of TT_NUMBER
+	int				WhiteSpaceBeforeToken() const;// returns length of whitespace before token
+	void			ClearTokenWhiteSpace();		// forget whitespace before token
 
-	void			NumberValue( void );				// calculate values for a TT_NUMBER
+	void			NumberValue();				// calculate values for a TT_NUMBER
 
 private:
 	unsigned long	intvalue;							// integer value
@@ -108,7 +108,7 @@ private:
 	void			AppendDirty( const char a );		// append character without adding trailing zero
 };
 
-ID_INLINE idToken::idToken( void )
+ID_INLINE idToken::idToken()
 {
 }
 
@@ -117,7 +117,7 @@ ID_INLINE idToken::idToken( const idToken* token )
 	*this = *token;
 }
 
-ID_INLINE idToken::~idToken( void )
+ID_INLINE idToken::~idToken()
 {
 }
 
@@ -131,7 +131,7 @@ ID_INLINE void idToken::operator=( const idStr& text )
 	*static_cast<idStr*>( this ) = text;
 }
 
-ID_INLINE double idToken::GetDoubleValue( void )
+ID_INLINE double idToken::GetDoubleValue()
 {
 	if( type != TT_NUMBER )
 	{
@@ -144,12 +144,12 @@ ID_INLINE double idToken::GetDoubleValue( void )
 	return floatvalue;
 }
 
-ID_INLINE float idToken::GetFloatValue( void )
+ID_INLINE float idToken::GetFloatValue()
 {
 	return ( float ) GetDoubleValue();
 }
 
-ID_INLINE unsigned long	idToken::GetUnsignedLongValue( void )
+ID_INLINE unsigned long	idToken::GetUnsignedLongValue()
 {
 	if( type != TT_NUMBER )
 	{
@@ -162,12 +162,12 @@ ID_INLINE unsigned long	idToken::GetUnsignedLongValue( void )
 	return intvalue;
 }
 
-ID_INLINE int idToken::GetIntValue( void )
+ID_INLINE int idToken::GetIntValue()
 {
 	return ( int ) GetUnsignedLongValue();
 }
 
-ID_INLINE int idToken::WhiteSpaceBeforeToken( void ) const
+ID_INLINE int idToken::WhiteSpaceBeforeToken() const
 {
 	return ( whiteSpaceEnd_p > whiteSpaceStart_p );
 }

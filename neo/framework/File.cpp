@@ -166,7 +166,7 @@ idFile
 idFile::GetName
 =================
 */
-const char* idFile::GetName( void )
+const char* idFile::GetName()
 {
 	return "";
 }
@@ -176,7 +176,7 @@ const char* idFile::GetName( void )
 idFile::GetFullPath
 =================
 */
-const char* idFile::GetFullPath( void )
+const char* idFile::GetFullPath()
 {
 	return "";
 }
@@ -208,7 +208,7 @@ int idFile::Write( const void* buffer, int len )
 idFile::Length
 =================
 */
-int idFile::Length( void )
+int idFile::Length()
 {
 	return 0;
 }
@@ -218,7 +218,7 @@ int idFile::Length( void )
 idFile::Timestamp
 =================
 */
-ID_TIME_T idFile::Timestamp( void )
+ID_TIME_T idFile::Timestamp()
 {
 	return 0;
 }
@@ -228,7 +228,7 @@ ID_TIME_T idFile::Timestamp( void )
 idFile::Tell
 =================
 */
-int idFile::Tell( void )
+int idFile::Tell()
 {
 	return 0;
 }
@@ -238,7 +238,7 @@ int idFile::Tell( void )
 idFile::ForceFlush
 =================
 */
-void idFile::ForceFlush( void )
+void idFile::ForceFlush()
 {
 }
 
@@ -247,7 +247,7 @@ void idFile::ForceFlush( void )
 idFile::Flush
 =================
 */
-void idFile::Flush( void )
+void idFile::Flush()
 {
 }
 
@@ -266,7 +266,7 @@ int idFile::Seek( long offset, fsOrigin_t origin )
 idFile::Rewind
 =================
 */
-void idFile::Rewind( void )
+void idFile::Rewind()
 {
 	Seek( 0, FS_SEEK_SET );
 }
@@ -671,7 +671,7 @@ idFile_Memory
 idFile_Memory::idFile_Memory
 =================
 */
-idFile_Memory::idFile_Memory( void )
+idFile_Memory::idFile_Memory()
 {
 	name = "*unknown*";
 	maxSize = 0;
@@ -743,7 +743,7 @@ idFile_Memory::idFile_Memory( const char* name, const char* data, int length )
 idFile_Memory::~idFile_Memory
 =================
 */
-idFile_Memory::~idFile_Memory( void )
+idFile_Memory::~idFile_Memory()
 {
 	if( filePtr && allocated > 0 && maxSize == 0 )
 	{
@@ -822,7 +822,7 @@ int idFile_Memory::Write( const void* buffer, int len )
 idFile_Memory::Length
 =================
 */
-int idFile_Memory::Length( void )
+int idFile_Memory::Length()
 {
 	return fileSize;
 }
@@ -832,7 +832,7 @@ int idFile_Memory::Length( void )
 idFile_Memory::Timestamp
 =================
 */
-ID_TIME_T idFile_Memory::Timestamp( void )
+ID_TIME_T idFile_Memory::Timestamp()
 {
 	return 0;
 }
@@ -842,7 +842,7 @@ ID_TIME_T idFile_Memory::Timestamp( void )
 idFile_Memory::Tell
 =================
 */
-int idFile_Memory::Tell( void )
+int idFile_Memory::Tell()
 {
 	return ( curPtr - filePtr );
 }
@@ -852,7 +852,7 @@ int idFile_Memory::Tell( void )
 idFile_Memory::ForceFlush
 =================
 */
-void idFile_Memory::ForceFlush( void )
+void idFile_Memory::ForceFlush()
 {
 }
 
@@ -861,7 +861,7 @@ void idFile_Memory::ForceFlush( void )
 idFile_Memory::Flush
 =================
 */
-void idFile_Memory::Flush( void )
+void idFile_Memory::Flush()
 {
 }
 
@@ -916,7 +916,7 @@ int idFile_Memory::Seek( long offset, fsOrigin_t origin )
 idFile_Memory::MakeReadOnly
 =================
 */
-void idFile_Memory::MakeReadOnly( void )
+void idFile_Memory::MakeReadOnly()
 {
 	mode = ( 1 << FS_READ );
 	Rewind();
@@ -999,7 +999,7 @@ idFile_BitMsg::idFile_BitMsg( const idBitMsg& msg )
 idFile_BitMsg::~idFile_BitMsg
 =================
 */
-idFile_BitMsg::~idFile_BitMsg( void )
+idFile_BitMsg::~idFile_BitMsg()
 {
 }
 
@@ -1043,7 +1043,7 @@ int idFile_BitMsg::Write( const void* buffer, int len )
 idFile_BitMsg::Length
 =================
 */
-int idFile_BitMsg::Length( void )
+int idFile_BitMsg::Length()
 {
 	return msg->GetSize();
 }
@@ -1053,7 +1053,7 @@ int idFile_BitMsg::Length( void )
 idFile_BitMsg::Timestamp
 =================
 */
-ID_TIME_T idFile_BitMsg::Timestamp( void )
+ID_TIME_T idFile_BitMsg::Timestamp()
 {
 	return 0;
 }
@@ -1063,7 +1063,7 @@ ID_TIME_T idFile_BitMsg::Timestamp( void )
 idFile_BitMsg::Tell
 =================
 */
-int idFile_BitMsg::Tell( void )
+int idFile_BitMsg::Tell()
 {
 	if( mode & FS_READ )
 	{
@@ -1080,7 +1080,7 @@ int idFile_BitMsg::Tell( void )
 idFile_BitMsg::ForceFlush
 =================
 */
-void idFile_BitMsg::ForceFlush( void )
+void idFile_BitMsg::ForceFlush()
 {
 }
 
@@ -1089,7 +1089,7 @@ void idFile_BitMsg::ForceFlush( void )
 idFile_BitMsg::Flush
 =================
 */
-void idFile_BitMsg::Flush( void )
+void idFile_BitMsg::Flush()
 {
 }
 
@@ -1119,7 +1119,7 @@ idFile_Permanent
 idFile_Permanent::idFile_Permanent
 =================
 */
-idFile_Permanent::idFile_Permanent( void )
+idFile_Permanent::idFile_Permanent()
 {
 	name = "invalid";
 	o = NULL;
@@ -1133,7 +1133,7 @@ idFile_Permanent::idFile_Permanent( void )
 idFile_Permanent::~idFile_Permanent
 =================
 */
-idFile_Permanent::~idFile_Permanent( void )
+idFile_Permanent::~idFile_Permanent()
 {
 	if( o )
 	{
@@ -1269,7 +1269,7 @@ int idFile_Permanent::Write( const void* buffer, int len )
 idFile_Permanent::ForceFlush
 =================
 */
-void idFile_Permanent::ForceFlush( void )
+void idFile_Permanent::ForceFlush()
 {
 	setvbuf( o, NULL, _IONBF, 0 );
 }
@@ -1279,7 +1279,7 @@ void idFile_Permanent::ForceFlush( void )
 idFile_Permanent::Flush
 =================
 */
-void idFile_Permanent::Flush( void )
+void idFile_Permanent::Flush()
 {
 	fflush( o );
 }
@@ -1289,7 +1289,7 @@ void idFile_Permanent::Flush( void )
 idFile_Permanent::Tell
 =================
 */
-int idFile_Permanent::Tell( void )
+int idFile_Permanent::Tell()
 {
 	return ftell( o );
 }
@@ -1299,7 +1299,7 @@ int idFile_Permanent::Tell( void )
 idFile_Permanent::Length
 ================
 */
-int idFile_Permanent::Length( void )
+int idFile_Permanent::Length()
 {
 	return fileSize;
 }
@@ -1309,7 +1309,7 @@ int idFile_Permanent::Length( void )
 idFile_Permanent::Timestamp
 ================
 */
-ID_TIME_T idFile_Permanent::Timestamp( void )
+ID_TIME_T idFile_Permanent::Timestamp()
 {
 	return Sys_FileTimeStamp( o );
 }
@@ -1367,7 +1367,7 @@ idFile_InZip
 idFile_InZip::idFile_InZip
 =================
 */
-idFile_InZip::idFile_InZip( void )
+idFile_InZip::idFile_InZip()
 {
 	name = "invalid";
 	zipFilePos = 0;
@@ -1380,7 +1380,7 @@ idFile_InZip::idFile_InZip( void )
 idFile_InZip::~idFile_InZip
 =================
 */
-idFile_InZip::~idFile_InZip( void )
+idFile_InZip::~idFile_InZip()
 {
 	unzCloseCurrentFile( z );
 	unzClose( z );
@@ -1416,7 +1416,7 @@ int idFile_InZip::Write( const void* buffer, int len )
 idFile_InZip::ForceFlush
 =================
 */
-void idFile_InZip::ForceFlush( void )
+void idFile_InZip::ForceFlush()
 {
 	common->FatalError( "idFile_InZip::ForceFlush: cannot flush the zipped file %s", name.c_str() );
 }
@@ -1426,7 +1426,7 @@ void idFile_InZip::ForceFlush( void )
 idFile_InZip::Flush
 =================
 */
-void idFile_InZip::Flush( void )
+void idFile_InZip::Flush()
 {
 	common->FatalError( "idFile_InZip::Flush: cannot flush the zipped file %s", name.c_str() );
 }
@@ -1436,7 +1436,7 @@ void idFile_InZip::Flush( void )
 idFile_InZip::Tell
 =================
 */
-int idFile_InZip::Tell( void )
+int idFile_InZip::Tell()
 {
 	return unztell( z );
 }
@@ -1446,7 +1446,7 @@ int idFile_InZip::Tell( void )
 idFile_InZip::Length
 ================
 */
-int idFile_InZip::Length( void )
+int idFile_InZip::Length()
 {
 	return fileSize;
 }
@@ -1456,7 +1456,7 @@ int idFile_InZip::Length( void )
 idFile_InZip::Timestamp
 ================
 */
-ID_TIME_T idFile_InZip::Timestamp( void )
+ID_TIME_T idFile_InZip::Timestamp()
 {
 	return 0;
 }

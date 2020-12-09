@@ -181,7 +181,7 @@ void idNetworkSystem::ClientSendReliableMessage( const idBitMsg& msg )
 idNetworkSystem::ClientGetPrediction
 ==================
 */
-int idNetworkSystem::ClientGetPrediction( void )
+int idNetworkSystem::ClientGetPrediction()
 {
 	if( idAsyncNetwork::client.IsActive() )
 	{
@@ -195,7 +195,7 @@ int idNetworkSystem::ClientGetPrediction( void )
 idNetworkSystem::ClientGetTimeSinceLastPacket
 ==================
 */
-int idNetworkSystem::ClientGetTimeSinceLastPacket( void )
+int idNetworkSystem::ClientGetTimeSinceLastPacket()
 {
 	if( idAsyncNetwork::client.IsActive() )
 	{
@@ -209,7 +209,7 @@ int idNetworkSystem::ClientGetTimeSinceLastPacket( void )
 idNetworkSystem::ClientGetOutgoingRate
 ==================
 */
-int idNetworkSystem::ClientGetOutgoingRate( void )
+int idNetworkSystem::ClientGetOutgoingRate()
 {
 	if( idAsyncNetwork::client.IsActive() )
 	{
@@ -223,7 +223,7 @@ int idNetworkSystem::ClientGetOutgoingRate( void )
 idNetworkSystem::ClientGetIncomingRate
 ==================
 */
-int idNetworkSystem::ClientGetIncomingRate( void )
+int idNetworkSystem::ClientGetIncomingRate()
 {
 	if( idAsyncNetwork::client.IsActive() )
 	{
@@ -237,7 +237,7 @@ int idNetworkSystem::ClientGetIncomingRate( void )
 idNetworkSystem::ClientGetIncomingPacketLoss
 ==================
 */
-float idNetworkSystem::ClientGetIncomingPacketLoss( void )
+float idNetworkSystem::ClientGetIncomingPacketLoss()
 {
 	if( idAsyncNetwork::client.IsActive() )
 	{

@@ -135,7 +135,7 @@ idEditField::~idEditField()
 idEditField::Clear
 ===============
 */
-void idEditField::Clear( void )
+void idEditField::Clear()
 {
 	buffer[0] = 0;
 	cursor = 0;
@@ -171,7 +171,7 @@ void idEditField::SetCursor( int c )
 idEditField::GetCursor
 ===============
 */
-int idEditField::GetCursor( void ) const
+int idEditField::GetCursor() const
 {
 	return cursor;
 }
@@ -181,7 +181,7 @@ int idEditField::GetCursor( void ) const
 idEditField::ClearAutoComplete
 ===============
 */
-void idEditField::ClearAutoComplete( void )
+void idEditField::ClearAutoComplete()
 {
 	if( autoComplete.length > 0 && autoComplete.length <= ( int ) strlen( buffer ) )
 	{
@@ -200,7 +200,7 @@ void idEditField::ClearAutoComplete( void )
 idEditField::GetAutoCompleteLength
 ===============
 */
-int idEditField::GetAutoCompleteLength( void ) const
+int idEditField::GetAutoCompleteLength() const
 {
 	return autoComplete.length;
 }
@@ -210,7 +210,7 @@ int idEditField::GetAutoCompleteLength( void ) const
 idEditField::AutoComplete
 ===============
 */
-void idEditField::AutoComplete( void )
+void idEditField::AutoComplete()
 {
 	char completionArgString[MAX_EDIT_LINE];
 	idCmdArgs args;
@@ -566,7 +566,7 @@ void idEditField::KeyDownEvent( int key )
 idEditField::Paste
 ===============
 */
-void idEditField::Paste( void )
+void idEditField::Paste()
 {
 	char*	cbd;
 	int		pasteLen, i;
@@ -593,7 +593,7 @@ void idEditField::Paste( void )
 idEditField::GetBuffer
 ===============
 */
-char* idEditField::GetBuffer( void )
+char* idEditField::GetBuffer()
 {
 	return buffer;
 }

@@ -34,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 idDeclPDA::Size
 =================
 */
-size_t idDeclPDA::Size( void ) const
+size_t idDeclPDA::Size() const
 {
 	return sizeof( idDeclPDA );
 }
@@ -44,7 +44,7 @@ size_t idDeclPDA::Size( void ) const
 idDeclPDA::Print
 ===============
 */
-void idDeclPDA::Print( void ) const
+void idDeclPDA::Print() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -54,7 +54,7 @@ void idDeclPDA::Print( void ) const
 idDeclPDA::List
 ===============
 */
-void idDeclPDA::List( void ) const
+void idDeclPDA::List() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -178,7 +178,7 @@ bool idDeclPDA::Parse( const char* text, const int textLength )
 idDeclPDA::DefaultDefinition
 ===================
 */
-const char* idDeclPDA::DefaultDefinition( void ) const
+const char* idDeclPDA::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -191,7 +191,7 @@ const char* idDeclPDA::DefaultDefinition( void ) const
 idDeclPDA::FreeData
 ===================
 */
-void idDeclPDA::FreeData( void )
+void idDeclPDA::FreeData()
 {
 	videos.Clear();
 	audios.Clear();
@@ -369,7 +369,7 @@ const idDeclEmail* idDeclPDA::GetEmailByIndex( int index ) const
 idDeclEmail::Size
 =================
 */
-size_t idDeclEmail::Size( void ) const
+size_t idDeclEmail::Size() const
 {
 	return sizeof( idDeclEmail );
 }
@@ -379,7 +379,7 @@ size_t idDeclEmail::Size( void ) const
 idDeclEmail::Print
 ===============
 */
-void idDeclEmail::Print( void ) const
+void idDeclEmail::Print() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -389,7 +389,7 @@ void idDeclEmail::Print( void ) const
 idDeclEmail::List
 ===============
 */
-void idDeclEmail::List( void ) const
+void idDeclEmail::List() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -487,7 +487,7 @@ bool idDeclEmail::Parse( const char* _text, const int textLength )
 idDeclEmail::DefaultDefinition
 ===================
 */
-const char* idDeclEmail::DefaultDefinition( void ) const
+const char* idDeclEmail::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -504,7 +504,7 @@ const char* idDeclEmail::DefaultDefinition( void ) const
 idDeclEmail::FreeData
 ===================
 */
-void idDeclEmail::FreeData( void )
+void idDeclEmail::FreeData()
 {
 }
 
@@ -513,7 +513,7 @@ void idDeclEmail::FreeData( void )
 idDeclVideo::Size
 =================
 */
-size_t idDeclVideo::Size( void ) const
+size_t idDeclVideo::Size() const
 {
 	return sizeof( idDeclVideo );
 }
@@ -523,7 +523,7 @@ size_t idDeclVideo::Size( void ) const
 idDeclVideo::Print
 ===============
 */
-void idDeclVideo::Print( void ) const
+void idDeclVideo::Print() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -533,7 +533,7 @@ void idDeclVideo::Print( void ) const
 idDeclVideo::List
 ===============
 */
-void idDeclVideo::List( void ) const
+void idDeclVideo::List() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -618,7 +618,7 @@ bool idDeclVideo::Parse( const char* text, const int textLength )
 idDeclVideo::DefaultDefinition
 ===================
 */
-const char* idDeclVideo::DefaultDefinition( void ) const
+const char* idDeclVideo::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -633,7 +633,7 @@ const char* idDeclVideo::DefaultDefinition( void ) const
 idDeclVideo::FreeData
 ===================
 */
-void idDeclVideo::FreeData( void )
+void idDeclVideo::FreeData()
 {
 }
 
@@ -642,7 +642,7 @@ void idDeclVideo::FreeData( void )
 idDeclAudio::Size
 =================
 */
-size_t idDeclAudio::Size( void ) const
+size_t idDeclAudio::Size() const
 {
 	return sizeof( idDeclAudio );
 }
@@ -652,7 +652,7 @@ size_t idDeclAudio::Size( void ) const
 idDeclAudio::Print
 ===============
 */
-void idDeclAudio::Print( void ) const
+void idDeclAudio::Print() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -662,7 +662,7 @@ void idDeclAudio::Print( void ) const
 idDeclAudio::List
 ===============
 */
-void idDeclAudio::List( void ) const
+void idDeclAudio::List() const
 {
 	common->Printf( "Implement me\n" );
 }
@@ -739,7 +739,7 @@ bool idDeclAudio::Parse( const char* text, const int textLength )
 idDeclAudio::DefaultDefinition
 ===================
 */
-const char* idDeclAudio::DefaultDefinition( void ) const
+const char* idDeclAudio::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -754,6 +754,6 @@ const char* idDeclAudio::DefaultDefinition( void ) const
 idDeclAudio::FreeData
 ===================
 */
-void idDeclAudio::FreeData( void )
+void idDeclAudio::FreeData()
 {
 }

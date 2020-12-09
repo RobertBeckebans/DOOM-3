@@ -73,17 +73,17 @@ public:
 	idStr					joint2;
 
 public:
-	idAFVector( void );
+	idAFVector();
 
 	bool					Parse( idLexer& src );
 	bool					Finish( const char* fileName, const getJointTransform_t GetJointTransform, const idJointMat* frame, void* model ) const;
 	bool					Write( idFile* f ) const;
 	const char* 			ToString( idStr& str, const int precision = 8 );
-	const idVec3& 			ToVec3( void ) const
+	const idVec3& 			ToVec3() const
 	{
 		return vec;
 	}
-	idVec3& 				ToVec3( void )
+	idVec3& 				ToVec3()
 	{
 		return vec;
 	}
@@ -155,17 +155,17 @@ class idDeclAF : public idDecl
 {
 	friend class idAFFileManager;
 public:
-	idDeclAF( void );
-	virtual					~idDeclAF( void );
+	idDeclAF();
+	virtual					~idDeclAF();
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
+	virtual void			FreeData();
 
 	virtual void			Finish( const getJointTransform_t GetJointTransform, const idJointMat* frame, void* model ) const;
 
-	bool					Save( void );
+	bool					Save();
 
 	void					NewBody( const char* name );
 	void					RenameBody( const char* oldName, const char* newName );
@@ -224,7 +224,7 @@ private:
 	bool					WriteConstraint( idFile* f, const idDeclAF_Constraint& c ) const;
 	bool					WriteSettings( idFile* f ) const;
 
-	bool					RebuildTextSource( void );
+	bool					RebuildTextSource();
 };
 
 #endif /* !__DECLAF_H__ */

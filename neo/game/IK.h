@@ -42,17 +42,17 @@ If you have questions concerning this license or the applicable additional terms
 class idIK
 {
 public:
-	idIK( void );
-	virtual					~idIK( void );
+	idIK();
+	virtual					~idIK();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
-	bool					IsInitialized( void ) const;
+	bool					IsInitialized() const;
 
 	virtual bool			Init( idEntity* self, const char* anim, const idVec3& modelOffset );
-	virtual void			Evaluate( void );
-	virtual void			ClearJointMods( void );
+	virtual void			Evaluate();
+	virtual void			ClearJointMods();
 
 	bool					SolveTwoBones( const idVec3& startPos, const idVec3& endPos, const idVec3& dir, float len0, float len1, idVec3& jointPos );
 	float					GetBoneAxis( const idVec3& startPos, const idVec3& endPos, const idVec3& dir, idMat3& axis );
@@ -79,18 +79,18 @@ class idIK_Walk : public idIK
 {
 public:
 
-	idIK_Walk( void );
-	virtual					~idIK_Walk( void );
+	idIK_Walk();
+	virtual					~idIK_Walk();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
 	virtual bool			Init( idEntity* self, const char* anim, const idVec3& modelOffset );
-	virtual void			Evaluate( void );
-	virtual void			ClearJointMods( void );
+	virtual void			Evaluate();
+	virtual void			ClearJointMods();
 
-	void					EnableAll( void );
-	void					DisableAll( void );
+	void					EnableAll();
+	void					DisableAll();
 	void					EnableLeg( int num );
 	void					DisableLeg( int num );
 
@@ -151,15 +151,15 @@ class idIK_Reach : public idIK
 {
 public:
 
-	idIK_Reach( void );
-	virtual					~idIK_Reach( void );
+	idIK_Reach();
+	virtual					~idIK_Reach();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
 	virtual bool			Init( idEntity* self, const char* anim, const idVec3& modelOffset );
-	virtual void			Evaluate( void );
-	virtual void			ClearJointMods( void );
+	virtual void			Evaluate();
+	virtual void			ClearJointMods();
 
 private:
 

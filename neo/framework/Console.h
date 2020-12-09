@@ -45,10 +45,10 @@ If you have questions concerning this license or the applicable additional terms
 class idConsole
 {
 public:
-	virtual			~idConsole( void ) {}
+	virtual			~idConsole() {}
 
-	virtual void	Init( void ) = 0;
-	virtual void	Shutdown( void ) = 0;
+	virtual void	Init() = 0;
+	virtual void	Shutdown() = 0;
 
 	// can't be combined with Init, because Init happens before renderer is started
 	virtual void	LoadGraphics() = 0;
@@ -56,13 +56,13 @@ public:
 	virtual bool	ProcessEvent( const struct sysEvent_s* event, bool forceAccept ) = 0;
 
 	// the system code can release the mouse pointer when the console is active
-	virtual bool	Active( void ) = 0;
+	virtual bool	Active() = 0;
 
 	// clear the timers on any recent prints that are displayed in the notify lines
-	virtual void	ClearNotifyLines( void ) = 0;
+	virtual void	ClearNotifyLines() = 0;
 
 	// some console commands, like timeDemo, will force the console closed before they start
-	virtual void	Close( void ) = 0;
+	virtual void	Close() = 0;
 
 	virtual void	Draw( bool forceFullScreen ) = 0;
 	virtual void	Print( const char* text ) = 0;

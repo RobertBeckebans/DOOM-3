@@ -88,8 +88,8 @@ public:
 class idTypeInfoGen
 {
 public:
-	idTypeInfoGen( void );
-	~idTypeInfoGen( void );
+	idTypeInfoGen();
+	~idTypeInfoGen();
 
 	void						AddDefine( const char* define );
 	void						CreateTypeInfo( const char* path );

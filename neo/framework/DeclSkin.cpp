@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idDeclSkin::Size
 =================
 */
-size_t idDeclSkin::Size( void ) const
+size_t idDeclSkin::Size() const
 {
 	return sizeof( idDeclSkin );
 }
@@ -45,7 +45,7 @@ size_t idDeclSkin::Size( void ) const
 idDeclSkin::FreeData
 ================
 */
-void idDeclSkin::FreeData( void )
+void idDeclSkin::FreeData()
 {
 	mappings.Clear();
 }
@@ -115,7 +115,7 @@ bool idDeclSkin::Parse( const char* text, const int textLength )
 idDeclSkin::SetDefaultText
 ================
 */
-bool idDeclSkin::SetDefaultText( void )
+bool idDeclSkin::SetDefaultText()
 {
 	// if there exists a material with the same name
 	if( declManager->FindType( DECL_MATERIAL, GetName(), false ) )
@@ -141,7 +141,7 @@ bool idDeclSkin::SetDefaultText( void )
 idDeclSkin::DefaultDefinition
 ================
 */
-const char* idDeclSkin::DefaultDefinition( void ) const
+const char* idDeclSkin::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -154,7 +154,7 @@ const char* idDeclSkin::DefaultDefinition( void ) const
 idDeclSkin::GetNumModelAssociations
 ================
 */
-const int idDeclSkin::GetNumModelAssociations( void ) const
+const int idDeclSkin::GetNumModelAssociations() const
 {
 	return associatedModels.Num();
 }

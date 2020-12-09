@@ -283,7 +283,7 @@ int idWaveFile::ReadOGG( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead )
 idWaveFile::CloseOGG
 ====================
 */
-int idWaveFile::CloseOGG( void )
+int idWaveFile::CloseOGG()
 {
 	OggVorbis_File* ov = ( OggVorbis_File* ) ogg;
 	if( ov != NULL )
@@ -313,11 +313,11 @@ class idSampleDecoderLocal : public idSampleDecoder
 {
 public:
 	virtual void			Decode( idSoundSample* sample, int sampleOffset44k, int sampleCount44k, float* dest );
-	virtual void			ClearDecoder( void );
-	virtual idSoundSample* 	GetSample( void ) const;
-	virtual int				GetLastDecodeTime( void ) const;
+	virtual void			ClearDecoder();
+	virtual idSoundSample* 	GetSample() const;
+	virtual int				GetLastDecodeTime() const;
 
-	void					Clear( void );
+	void					Clear();
 	int						DecodePCM( idSoundSample* sample, int sampleOffset44k, int sampleCount44k, float* dest );
 	int						DecodeOGG( idSoundSample* sample, int sampleOffset44k, int sampleCount44k, float* dest );
 
@@ -339,7 +339,7 @@ idBlockAlloc<idSampleDecoderLocal, 64>		sampleDecoderAllocator;
 idSampleDecoder::Init
 ====================
 */
-void idSampleDecoder::Init( void )
+void idSampleDecoder::Init()
 {
 	decoderMemoryAllocator.Init();
 	decoderMemoryAllocator.SetLockMemory( true );
@@ -351,7 +351,7 @@ void idSampleDecoder::Init( void )
 idSampleDecoder::Shutdown
 ====================
 */
-void idSampleDecoder::Shutdown( void )
+void idSampleDecoder::Shutdown()
 {
 	decoderMemoryAllocator.Shutdown();
 	sampleDecoderAllocator.Shutdown();
@@ -362,7 +362,7 @@ void idSampleDecoder::Shutdown( void )
 idSampleDecoder::Alloc
 ====================
 */
-idSampleDecoder* idSampleDecoder::Alloc( void )
+idSampleDecoder* idSampleDecoder::Alloc()
 {
 	idSampleDecoderLocal* decoder = sampleDecoderAllocator.Alloc();
 	decoder->Clear();
@@ -386,7 +386,7 @@ void idSampleDecoder::Free( idSampleDecoder* decoder )
 idSampleDecoder::GetNumUsedBlocks
 ====================
 */
-int idSampleDecoder::GetNumUsedBlocks( void )
+int idSampleDecoder::GetNumUsedBlocks()
 {
 	return decoderMemoryAllocator.GetNumUsedBlocks();
 }
@@ -396,7 +396,7 @@ int idSampleDecoder::GetNumUsedBlocks( void )
 idSampleDecoder::GetUsedBlockMemory
 ====================
 */
-int idSampleDecoder::GetUsedBlockMemory( void )
+int idSampleDecoder::GetUsedBlockMemory()
 {
 	return decoderMemoryAllocator.GetUsedBlockMemory();
 }
@@ -406,7 +406,7 @@ int idSampleDecoder::GetUsedBlockMemory( void )
 idSampleDecoderLocal::Clear
 ====================
 */
-void idSampleDecoderLocal::Clear( void )
+void idSampleDecoderLocal::Clear()
 {
 	failed = false;
 	lastFormat = WAVE_FORMAT_TAG_PCM;
@@ -420,7 +420,7 @@ void idSampleDecoderLocal::Clear( void )
 idSampleDecoderLocal::ClearDecoder
 ====================
 */
-void idSampleDecoderLocal::ClearDecoder( void )
+void idSampleDecoderLocal::ClearDecoder()
 {
 	Sys_EnterCriticalSection( CRITICAL_SECTION_ONE );
 
@@ -448,7 +448,7 @@ void idSampleDecoderLocal::ClearDecoder( void )
 idSampleDecoderLocal::GetSample
 ====================
 */
-idSoundSample* idSampleDecoderLocal::GetSample( void ) const
+idSoundSample* idSampleDecoderLocal::GetSample() const
 {
 	return lastSample;
 }
@@ -458,7 +458,7 @@ idSoundSample* idSampleDecoderLocal::GetSample( void ) const
 idSampleDecoderLocal::GetLastDecodeTime
 ====================
 */
-int idSampleDecoderLocal::GetLastDecodeTime( void ) const
+int idSampleDecoderLocal::GetLastDecodeTime() const
 {
 	return lastDecodeTime;
 }

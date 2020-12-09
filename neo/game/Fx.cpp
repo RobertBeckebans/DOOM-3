@@ -216,7 +216,7 @@ void idEntityFx::Setup( const char* fx )
 idEntityFx::EffectName
 ================
 */
-const char* idEntityFx::EffectName( void )
+const char* idEntityFx::EffectName()
 {
 	return fxEffect ? fxEffect->GetName() : NULL;
 }
@@ -226,7 +226,7 @@ const char* idEntityFx::EffectName( void )
 idEntityFx::Joint
 ================
 */
-const char* idEntityFx::Joint( void )
+const char* idEntityFx::Joint()
 {
 	return fxEffect ? fxEffect->joint.c_str() : NULL;
 }
@@ -236,7 +236,7 @@ const char* idEntityFx::Joint( void )
 idEntityFx::CleanUp
 ================
 */
-void idEntityFx::CleanUp( void )
+void idEntityFx::CleanUp()
 {
 	if( !fxEffect )
 	{
@@ -299,7 +299,7 @@ void idEntityFx::Start( int time )
 idEntityFx::Stop
 ================
 */
-void idEntityFx::Stop( void )
+void idEntityFx::Stop()
 {
 	CleanUp();
 	started = -1;
@@ -310,7 +310,7 @@ void idEntityFx::Stop( void )
 idEntityFx::Duration
 ================
 */
-const int idEntityFx::Duration( void )
+const int idEntityFx::Duration()
 {
 	int max = 0;
 
@@ -670,7 +670,7 @@ idEntityFx::~idEntityFx()
 idEntityFx::Spawn
 ================
 */
-void idEntityFx::Spawn( void )
+void idEntityFx::Spawn()
 {
 
 	if( g_skipFX.GetBool() )
@@ -702,7 +702,7 @@ idEntityFx::Think
   Clears any visual fx started when {item,mob,player} was spawned
 ================
 */
-void idEntityFx::Think( void )
+void idEntityFx::Think()
 {
 	if( g_skipFX.GetBool() )
 	{
@@ -725,7 +725,7 @@ idEntityFx::Event_ClearFx
   Clears any visual fx started when item(mob) was spawned
 ================
 */
-void idEntityFx::Event_ClearFx( void )
+void idEntityFx::Event_ClearFx()
 {
 
 	if( g_skipFX.GetBool() )
@@ -894,7 +894,7 @@ void idEntityFx::ReadFromSnapshot( const idBitMsgDelta& msg )
 idEntityFx::ClientPredictionThink
 =================
 */
-void idEntityFx::ClientPredictionThink( void )
+void idEntityFx::ClientPredictionThink()
 {
 	if( gameLocal.isNewFrame )
 	{

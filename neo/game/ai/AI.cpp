@@ -734,7 +734,7 @@ void idAI::Restore( idRestoreGame* savefile )
 idAI::Spawn
 =====================
 */
-void idAI::Spawn( void )
+void idAI::Spawn()
 {
 	const char*			jointname;
 	const idKeyValue*	kv;
@@ -1007,7 +1007,7 @@ void idAI::Spawn( void )
 idAI::InitMuzzleFlash
 ===================
 */
-void idAI::InitMuzzleFlash( void )
+void idAI::InitMuzzleFlash()
 {
 	const char*			shader;
 	idVec3				flashColor;
@@ -1080,7 +1080,7 @@ idAI::DormantBegin
 called when entity becomes dormant
 ================
 */
-void idAI::DormantBegin( void )
+void idAI::DormantBegin()
 {
 	// since dormant happens on a timer, we wont get to update particles to
 	// hidden through the think loop, but we need to hide them though.
@@ -1107,7 +1107,7 @@ idAI::DormantEnd
 called when entity wakes from being dormant
 ================
 */
-void idAI::DormantEnd( void )
+void idAI::DormantEnd()
 {
 	if( enemy.GetEntity() && !enemyNode.InList() )
 	{
@@ -1131,7 +1131,7 @@ void idAI::DormantEnd( void )
 idAI::Think
 =====================
 */
-void idAI::Think( void )
+void idAI::Think()
 {
 	// if we are completely closed off from the player, don't do anything at all
 	if( CheckDormant() )
@@ -1265,7 +1265,7 @@ void idAI::Think( void )
 idAI::LinkScriptVariables
 =====================
 */
-void idAI::LinkScriptVariables( void )
+void idAI::LinkScriptVariables()
 {
 	AI_TALK.LinkTo(	scriptObject, "AI_TALK" );
 	AI_DAMAGE.LinkTo(	scriptObject, "AI_DAMAGE" );
@@ -1292,7 +1292,7 @@ void idAI::LinkScriptVariables( void )
 idAI::UpdateAIScript
 =====================
 */
-void idAI::UpdateAIScript( void )
+void idAI::UpdateAIScript()
 {
 	UpdateScript();
 
@@ -1408,7 +1408,7 @@ bool ValidForBounds( const idAASSettings* settings, const idBounds& bounds )
 idAI::SetAAS
 =====================
 */
-void idAI::SetAAS( void )
+void idAI::SetAAS()
 {
 	idStr use_aas;
 
@@ -1440,7 +1440,7 @@ void idAI::SetAAS( void )
 idAI::DrawRoute
 =====================
 */
-void idAI::DrawRoute( void ) const
+void idAI::DrawRoute() const
 {
 	if( aas && move.toAreaNum && move.moveCommand != MOVE_NONE && move.moveCommand != MOVE_WANDER && move.moveCommand != MOVE_FACE_ENEMY && move.moveCommand != MOVE_FACE_ENTITY && move.moveCommand != MOVE_TO_POSITION_DIRECT )
 	{
@@ -1678,7 +1678,7 @@ idAI::FaceEnemy
 Continually face the enemy's last known position.  MoveDone is always true in this case.
 =====================
 */
-bool idAI::FaceEnemy( void )
+bool idAI::FaceEnemy()
 {
 	idActor* enemyEnt = enemy.GetEntity();
 	if( !enemyEnt )
@@ -1770,7 +1770,7 @@ bool idAI::DirectMoveToPosition( const idVec3& pos )
 idAI::MoveToEnemyHeight
 =====================
 */
-bool idAI::MoveToEnemyHeight( void )
+bool idAI::MoveToEnemyHeight()
 {
 	idActor*	enemyEnt = enemy.GetEntity();
 
@@ -1798,7 +1798,7 @@ bool idAI::MoveToEnemyHeight( void )
 idAI::MoveToEnemy
 =====================
 */
-bool idAI::MoveToEnemy( void )
+bool idAI::MoveToEnemy()
 {
 	int			areaNum;
 	aasPath_t	path;
@@ -2223,7 +2223,7 @@ bool idAI::SlideToPosition( const idVec3& pos, float time )
 idAI::WanderAround
 =====================
 */
-bool idAI::WanderAround( void )
+bool idAI::WanderAround()
 {
 	StopMove( MOVE_STATUS_DONE );
 
@@ -2250,7 +2250,7 @@ bool idAI::WanderAround( void )
 idAI::MoveDone
 =====================
 */
-bool idAI::MoveDone( void ) const
+bool idAI::MoveDone() const
 {
 	return ( move.moveCommand == MOVE_NONE );
 }
@@ -2617,7 +2617,7 @@ bool idAI::EntityCanSeePos( idActor* actor, const idVec3& actorOrigin, const idV
 idAI::BlockedFailSafe
 =====================
 */
-void idAI::BlockedFailSafe( void )
+void idAI::BlockedFailSafe()
 {
 	if( !ai_blockedFailSafe.GetBool() || blockedRadius < 0.0f )
 	{
@@ -2650,7 +2650,7 @@ void idAI::BlockedFailSafe( void )
 idAI::Turn
 =====================
 */
-void idAI::Turn( void )
+void idAI::Turn()
 {
 	float diff;
 	float diff2;
@@ -2739,7 +2739,7 @@ void idAI::Turn( void )
 idAI::FacingIdeal
 =====================
 */
-bool idAI::FacingIdeal( void )
+bool idAI::FacingIdeal()
 {
 	float diff;
 
@@ -2965,7 +2965,7 @@ void idAI::CheckObstacleAvoidance( const idVec3& goalPos, idVec3& newPos )
 idAI::DeadMove
 =====================
 */
-void idAI::DeadMove( void )
+void idAI::DeadMove()
 {
 	idVec3				delta;
 	monsterMoveResult_t	moveResult;
@@ -2986,7 +2986,7 @@ void idAI::DeadMove( void )
 idAI::AnimMove
 =====================
 */
-void idAI::AnimMove( void )
+void idAI::AnimMove()
 {
 	idVec3				goalPos;
 	idVec3				delta;
@@ -3133,7 +3133,7 @@ idVec3 Seek( idVec3& vel, const idVec3& org, const idVec3& goal, float predictio
 idAI::SlideMove
 =====================
 */
-void idAI::SlideMove( void )
+void idAI::SlideMove()
 {
 	idVec3				goalPos;
 	idVec3				delta;
@@ -3270,7 +3270,7 @@ void idAI::SlideMove( void )
 idAI::AdjustFlyingAngles
 =====================
 */
-void idAI::AdjustFlyingAngles( void )
+void idAI::AdjustFlyingAngles()
 {
 	idVec3	vel;
 	float 	speed;
@@ -3447,7 +3447,7 @@ void idAI::AdjustFlySpeed( idVec3& vel )
 idAI::FlyTurn
 =====================
 */
-void idAI::FlyTurn( void )
+void idAI::FlyTurn()
 {
 	if( move.moveCommand == MOVE_FACE_ENEMY )
 	{
@@ -3473,7 +3473,7 @@ void idAI::FlyTurn( void )
 idAI::FlyMove
 =====================
 */
-void idAI::FlyMove( void )
+void idAI::FlyMove()
 {
 	idVec3	goalPos;
 	idVec3	oldorigin;
@@ -3571,7 +3571,7 @@ void idAI::FlyMove( void )
 idAI::StaticMove
 =====================
 */
-void idAI::StaticMove( void )
+void idAI::StaticMove()
 {
 	idActor*	enemyEnt = enemy.GetEntity();
 
@@ -3911,7 +3911,7 @@ void idAI::Killed( idEntity* inflictor, idEntity* attacker, int damage, const id
 idAI::PlayCinematic
 =====================
 */
-void idAI::PlayCinematic( void )
+void idAI::PlayCinematic()
 {
 	const char* animname;
 
@@ -4062,7 +4062,7 @@ void idAI::Activate( idEntity* activator )
 idAI::EnemyDead
 =====================
 */
-void idAI::EnemyDead( void )
+void idAI::EnemyDead()
 {
 	ClearEnemy();
 	AI_ENEMY_DEAD = true;
@@ -4096,7 +4096,7 @@ void idAI::TalkTo( idActor* actor )
 idAI::GetEnemy
 =====================
 */
-idActor*	idAI::GetEnemy( void ) const
+idActor*	idAI::GetEnemy() const
 {
 	return enemy.GetEntity();
 }
@@ -4106,7 +4106,7 @@ idActor*	idAI::GetEnemy( void ) const
 idAI::GetTalkState
 =====================
 */
-talkState_t idAI::GetTalkState( void ) const
+talkState_t idAI::GetTalkState() const
 {
 	if( ( talk_state != TALK_NEVER ) && AI_DEAD )
 	{
@@ -4137,7 +4137,7 @@ void idAI::TouchedByFlashlight( idActor* flashlight_owner )
 idAI::ClearEnemy
 =====================
 */
-void idAI::ClearEnemy( void )
+void idAI::ClearEnemy()
 {
 	if( move.moveCommand == MOVE_TO_ENEMY )
 	{
@@ -4158,7 +4158,7 @@ void idAI::ClearEnemy( void )
 idAI::EnemyPositionValid
 =====================
 */
-bool idAI::EnemyPositionValid( void ) const
+bool idAI::EnemyPositionValid() const
 {
 	trace_t	tr;
 	idVec3	muzzle;
@@ -4189,7 +4189,7 @@ bool idAI::EnemyPositionValid( void ) const
 idAI::SetEnemyPosition
 =====================
 */
-void idAI::SetEnemyPosition( void )
+void idAI::SetEnemyPosition()
 {
 	idActor*		enemyEnt = enemy.GetEntity();
 	int			enemyAreaNum;
@@ -4309,7 +4309,7 @@ void idAI::SetEnemyPosition( void )
 idAI::UpdateEnemyPosition
 =====================
 */
-void idAI::UpdateEnemyPosition( void )
+void idAI::UpdateEnemyPosition()
 {
 	idActor* enemyEnt = enemy.GetEntity();
 	int				enemyAreaNum;
@@ -4505,7 +4505,7 @@ idAI::CalculateAttackOffsets
 calculate joint positions on attack frames so we can do proper "can hit" tests
 ===================
 */
-void idAI::CalculateAttackOffsets( void )
+void idAI::CalculateAttackOffsets()
 {
 	const idDeclModelDef*	modelDef;
 	int						num;
@@ -4559,7 +4559,7 @@ void idAI::CalculateAttackOffsets( void )
 idAI::CreateProjectileClipModel
 =====================
 */
-void idAI::CreateProjectileClipModel( void ) const
+void idAI::CreateProjectileClipModel() const
 {
 	if( projectileClipModel == NULL )
 	{
@@ -4641,7 +4641,7 @@ void idAI::BeginAttack( const char* name )
 idAI::EndAttack
 =====================
 */
-void idAI::EndAttack( void )
+void idAI::EndAttack()
 {
 	attack = "";
 }
@@ -4683,7 +4683,7 @@ idProjectile* idAI::CreateProjectile( const idVec3& pos, const idVec3& dir )
 idAI::RemoveProjectile
 =====================
 */
-void idAI::RemoveProjectile( void )
+void idAI::RemoveProjectile()
 {
 	if( projectile.GetEntity() )
 	{
@@ -4915,7 +4915,7 @@ void idAI::DirectDamage( const char* meleeDefName, idEntity* ent )
 idAI::TestMelee
 =====================
 */
-bool idAI::TestMelee( void ) const
+bool idAI::TestMelee() const
 {
 	trace_t trace;
 	idActor* enemyEnt = enemy.GetEntity();
@@ -5067,7 +5067,7 @@ bool idAI::AttackMelee( const char* meleeDefName )
 idAI::PushWithAF
 ================
 */
-void idAI::PushWithAF( void )
+void idAI::PushWithAF()
 {
 	int i, j;
 	afTouch_t touchList[ MAX_GENTITIES ];
@@ -5191,7 +5191,7 @@ void idAI::TriggerWeaponEffects( const idVec3& muzzle )
 idAI::UpdateMuzzleFlash
 ================
 */
-void idAI::UpdateMuzzleFlash( void )
+void idAI::UpdateMuzzleFlash()
 {
 	if( worldMuzzleFlashHandle != -1 )
 	{
@@ -5217,7 +5217,7 @@ void idAI::UpdateMuzzleFlash( void )
 idAI::Hide
 ================
 */
-void idAI::Hide( void )
+void idAI::Hide()
 {
 	idActor::Hide();
 	fl.takedamage = false;
@@ -5236,7 +5236,7 @@ void idAI::Hide( void )
 idAI::Show
 ================
 */
-void idAI::Show( void )
+void idAI::Show()
 {
 	idActor::Show();
 	if( spawnArgs.GetBool( "big_monster" ) )
@@ -5262,7 +5262,7 @@ void idAI::Show( void )
 idAI::SetChatSound
 =====================
 */
-void idAI::SetChatSound( void )
+void idAI::SetChatSound()
 {
 	const char* snd;
 
@@ -5307,7 +5307,7 @@ idAI::CanPlayChatterSounds
 Used for playing chatter sounds on monsters.
 ================
 */
-bool idAI::CanPlayChatterSounds( void ) const
+bool idAI::CanPlayChatterSounds() const
 {
 	if( AI_DEAD )
 	{
@@ -5337,7 +5337,7 @@ bool idAI::CanPlayChatterSounds( void ) const
 idAI::PlayChatter
 =====================
 */
-void idAI::PlayChatter( void )
+void idAI::PlayChatter()
 {
 	// check if it's time to play a chat sound
 	if( AI_DEAD || !chat_snd || ( chat_time > gameLocal.time ) )
@@ -5356,7 +5356,7 @@ void idAI::PlayChatter( void )
 idAI::UpdateParticles
 =====================
 */
-void idAI::UpdateParticles( void )
+void idAI::UpdateParticles()
 {
 	if( ( thinkFlags & TH_UPDATEPARTICLES ) && !IsHidden() )
 	{
@@ -5434,7 +5434,7 @@ void idAI::TriggerParticles( const char* jointName )
 idAI::UpdateAnimationControllers
 ================
 */
-bool idAI::UpdateAnimationControllers( void )
+bool idAI::UpdateAnimationControllers()
 {
 	idVec3		local;
 	idVec3		focusPos;
@@ -5676,7 +5676,7 @@ END_CLASS
 idCombatNode::idCombatNode
 =====================
 */
-idCombatNode::idCombatNode( void )
+idCombatNode::idCombatNode()
 {
 	min_dist = 0.0f;
 	max_dist = 0.0f;
@@ -5730,7 +5730,7 @@ void idCombatNode::Restore( idRestoreGame* savefile )
 idCombatNode::Spawn
 =====================
 */
-void idCombatNode::Spawn( void )
+void idCombatNode::Spawn()
 {
 	float fov;
 	float yaw;
@@ -5763,7 +5763,7 @@ void idCombatNode::Spawn( void )
 idCombatNode::IsDisabled
 =====================
 */
-bool idCombatNode::IsDisabled( void ) const
+bool idCombatNode::IsDisabled() const
 {
 	return disabled;
 }
@@ -5773,7 +5773,7 @@ bool idCombatNode::IsDisabled( void ) const
 idCombatNode::DrawDebugInfo
 =====================
 */
-void idCombatNode::DrawDebugInfo( void )
+void idCombatNode::DrawDebugInfo()
 {
 	idEntity*		ent;
 	idCombatNode*	node;
@@ -5889,7 +5889,7 @@ void idCombatNode::Event_Activate( idEntity* activator )
 idCombatNode::Event_MarkUsed
 =====================
 */
-void idCombatNode::Event_MarkUsed( void )
+void idCombatNode::Event_MarkUsed()
 {
 	if( spawnArgs.GetBool( "use_once" ) )
 	{

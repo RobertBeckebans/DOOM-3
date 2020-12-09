@@ -121,7 +121,7 @@ idVec3 idPlayer::colorBarTable[ 5 ] =
 idInventory::Clear
 ==============
 */
-void idInventory::Clear( void )
+void idInventory::Clear()
 {
 	maxHealth		= 0;
 	weapons			= 0;
@@ -207,7 +207,7 @@ void idInventory::GivePowerUp( idPlayer* player, int powerup, int msec )
 idInventory::ClearPowerUps
 ==============
 */
-void idInventory::ClearPowerUps( void )
+void idInventory::ClearPowerUps()
 {
 	int i;
 	for( i = 0; i < MAX_POWERUPS; i++ )
@@ -1046,7 +1046,7 @@ bool idInventory::UseAmmo( ammo_t type, int amount )
 idInventory::UpdateArmor
 ===============
 */
-void idInventory::UpdateArmor( void )
+void idInventory::UpdateArmor()
 {
 	if( deplete_armor != 0.0f && deplete_armor < armor )
 	{
@@ -1262,7 +1262,7 @@ idPlayer::LinkScriptVariables
 set up conditions for animation
 ==============
 */
-void idPlayer::LinkScriptVariables( void )
+void idPlayer::LinkScriptVariables()
 {
 	AI_FORWARD.LinkTo(	scriptObject, "AI_FORWARD" );
 	AI_BACKWARD.LinkTo(	scriptObject, "AI_BACKWARD" );
@@ -1290,7 +1290,7 @@ void idPlayer::LinkScriptVariables( void )
 idPlayer::SetupWeaponEntity
 ==============
 */
-void idPlayer::SetupWeaponEntity( void )
+void idPlayer::SetupWeaponEntity()
 {
 	int w;
 	const char* weap;
@@ -1323,7 +1323,7 @@ void idPlayer::SetupWeaponEntity( void )
 idPlayer::Init
 ==============
 */
-void idPlayer::Init( void )
+void idPlayer::Init()
 {
 	const char*			value;
 	const idKeyValue*	kv;
@@ -1558,7 +1558,7 @@ idPlayer::Spawn
 Prepare any resources used by the player.
 ==============
 */
-void idPlayer::Spawn( void )
+void idPlayer::Spawn()
 {
 	idStr		temp;
 	idBounds	bounds;
@@ -2259,7 +2259,7 @@ void idPlayer::Restore( idRestoreGame* savefile )
 idPlayer::PrepareForRestart
 ================
 */
-void idPlayer::PrepareForRestart( void )
+void idPlayer::PrepareForRestart()
 {
 	ClearPowerUps();
 	Spectate( true );
@@ -2277,7 +2277,7 @@ void idPlayer::PrepareForRestart( void )
 idPlayer::Restart
 ================
 */
-void idPlayer::Restart( void )
+void idPlayer::Restart()
 {
 	idActor::Restart();
 
@@ -2365,7 +2365,7 @@ idPlayer::SpawnFromSpawnSpot
 Chooses a spawn location and spawns the player
 ============
 */
-void idPlayer::SpawnFromSpawnSpot( void )
+void idPlayer::SpawnFromSpawnSpot()
 {
 	idVec3		spawn_origin;
 	idAngles	spawn_angles;
@@ -2505,7 +2505,7 @@ idPlayer::SavePersistantInfo
 Saves any inventory and player stats when changing levels.
 ===============
 */
-void idPlayer::SavePersistantInfo( void )
+void idPlayer::SavePersistantInfo()
 {
 	idDict& playerInfo = gameLocal.persistentPlayerInfo[entityNumber];
 
@@ -2522,7 +2522,7 @@ idPlayer::RestorePersistantInfo
 Restores any inventory and player stats when changing levels.
 ===============
 */
-void idPlayer::RestorePersistantInfo( void )
+void idPlayer::RestorePersistantInfo()
 {
 	if( gameLocal.isMultiplayer )
 	{
@@ -2544,7 +2544,7 @@ void idPlayer::RestorePersistantInfo( void )
 idPlayer::GetUserInfo
 ================
 */
-idDict* idPlayer::GetUserInfo( void )
+idDict* idPlayer::GetUserInfo()
 {
 	return &gameLocal.userInfo[ entityNumber ];
 }
@@ -2619,7 +2619,7 @@ void idPlayer::UpdateSkinSetup( bool restart )
 idPlayer::BalanceTDM
 ==============
 */
-bool idPlayer::BalanceTDM( void )
+bool idPlayer::BalanceTDM()
 {
 	int			i, balanceTeam, teamCount[2];
 	idEntity*	ent;
@@ -2930,7 +2930,7 @@ void idPlayer::DrawHUD( idUserInterface* _hud )
 idPlayer::EnterCinematic
 ===============
 */
-void idPlayer::EnterCinematic( void )
+void idPlayer::EnterCinematic()
 {
 	Hide();
 	StopAudioLog();
@@ -2977,7 +2977,7 @@ void idPlayer::EnterCinematic( void )
 idPlayer::ExitCinematic
 ===============
 */
-void idPlayer::ExitCinematic( void )
+void idPlayer::ExitCinematic()
 {
 	Show();
 
@@ -2995,7 +2995,7 @@ void idPlayer::ExitCinematic( void )
 idPlayer::UpdateConditions
 =====================
 */
-void idPlayer::UpdateConditions( void )
+void idPlayer::UpdateConditions()
 {
 	idVec3	velocity;
 	float	fallspeed;
@@ -3065,7 +3065,7 @@ void idPlayer::WeaponFireFeedback( const idDict* weaponDef )
 idPlayer::StopFiring
 ===============
 */
-void idPlayer::StopFiring( void )
+void idPlayer::StopFiring()
 {
 	AI_ATTACK_HELD	= false;
 	AI_WEAPON_FIRED = false;
@@ -3081,7 +3081,7 @@ void idPlayer::StopFiring( void )
 idPlayer::FireWeapon
 ===============
 */
-void idPlayer::FireWeapon( void )
+void idPlayer::FireWeapon()
 {
 	idMat3 axis;
 	idVec3 muzzle;
@@ -3141,7 +3141,7 @@ void idPlayer::FireWeapon( void )
 idPlayer::CacheWeapons
 ===============
 */
-void idPlayer::CacheWeapons( void )
+void idPlayer::CacheWeapons()
 {
 	idStr	weap;
 	int		w;
@@ -3535,7 +3535,7 @@ void idPlayer::ClearPowerup( int i )
 idPlayer::UpdatePowerUps
 ==============
 */
-void idPlayer::UpdatePowerUps( void )
+void idPlayer::UpdatePowerUps()
 {
 	int i;
 
@@ -3599,7 +3599,7 @@ void idPlayer::UpdatePowerUps( void )
 idPlayer::ClearPowerUps
 ===============
 */
-void idPlayer::ClearPowerUps( void )
+void idPlayer::ClearPowerUps()
 {
 	int i;
 	for( i = 0; i < MAX_POWERUPS; i++ )
@@ -3649,7 +3649,7 @@ bool idPlayer::GiveInventoryItem( idDict* item )
 idPlayer::UpdateObjectiveInfo
 ==============
  */
-void idPlayer::UpdateObjectiveInfo( void )
+void idPlayer::UpdateObjectiveInfo()
 {
 	if( objectiveSystem == NULL )
 	{
@@ -3936,7 +3936,7 @@ int idPlayer::SlotForWeapon( const char* weaponName )
 idPlayer::Reload
 ===============
 */
-void idPlayer::Reload( void )
+void idPlayer::Reload()
 {
 	if( gameLocal.isClient )
 	{
@@ -3959,7 +3959,7 @@ void idPlayer::Reload( void )
 idPlayer::NextBestWeapon
 ===============
 */
-void idPlayer::NextBestWeapon( void )
+void idPlayer::NextBestWeapon()
 {
 	const char* weap;
 	int w = MAX_WEAPONS;
@@ -3993,7 +3993,7 @@ void idPlayer::NextBestWeapon( void )
 idPlayer::NextWeapon
 ===============
 */
-void idPlayer::NextWeapon( void )
+void idPlayer::NextWeapon()
 {
 	const char* weap;
 	int w;
@@ -4054,7 +4054,7 @@ void idPlayer::NextWeapon( void )
 idPlayer::PrevWeapon
 ===============
 */
-void idPlayer::PrevWeapon( void )
+void idPlayer::PrevWeapon()
 {
 	const char* weap;
 	int w;
@@ -4323,7 +4323,7 @@ void idPlayer::StealWeapon( idPlayer* player )
 idPlayer::ActiveGui
 ===============
 */
-idUserInterface* idPlayer::ActiveGui( void )
+idUserInterface* idPlayer::ActiveGui()
 {
 	if( objectiveSystemOpen )
 	{
@@ -4338,7 +4338,7 @@ idUserInterface* idPlayer::ActiveGui( void )
 idPlayer::Weapon_Combat
 ===============
 */
-void idPlayer::Weapon_Combat( void )
+void idPlayer::Weapon_Combat()
 {
 	if( influenceActive || !weaponEnabled || gameLocal.inCinematic || privateCameraView )
 	{
@@ -4465,7 +4465,7 @@ void idPlayer::Weapon_Combat( void )
 idPlayer::Weapon_NPC
 ===============
 */
-void idPlayer::Weapon_NPC( void )
+void idPlayer::Weapon_NPC()
 {
 	if( idealWeapon != currentWeapon )
 	{
@@ -4486,7 +4486,7 @@ void idPlayer::Weapon_NPC( void )
 idPlayer::LowerWeapon
 ===============
 */
-void idPlayer::LowerWeapon( void )
+void idPlayer::LowerWeapon()
 {
 	if( weapon.GetEntity() && !weapon.GetEntity()->IsHidden() )
 	{
@@ -4499,7 +4499,7 @@ void idPlayer::LowerWeapon( void )
 idPlayer::RaiseWeapon
 ===============
 */
-void idPlayer::RaiseWeapon( void )
+void idPlayer::RaiseWeapon()
 {
 	if( weapon.GetEntity() && weapon.GetEntity()->IsHidden() )
 	{
@@ -4512,7 +4512,7 @@ void idPlayer::RaiseWeapon( void )
 idPlayer::WeaponLoweringCallback
 ===============
 */
-void idPlayer::WeaponLoweringCallback( void )
+void idPlayer::WeaponLoweringCallback()
 {
 	SetState( "LowerWeapon" );
 	UpdateScript();
@@ -4523,7 +4523,7 @@ void idPlayer::WeaponLoweringCallback( void )
 idPlayer::WeaponRisingCallback
 ===============
 */
-void idPlayer::WeaponRisingCallback( void )
+void idPlayer::WeaponRisingCallback()
 {
 	SetState( "RaiseWeapon" );
 	UpdateScript();
@@ -4534,7 +4534,7 @@ void idPlayer::WeaponRisingCallback( void )
 idPlayer::Weapon_GUI
 ===============
 */
-void idPlayer::Weapon_GUI( void )
+void idPlayer::Weapon_GUI()
 {
 
 	if( !objectiveSystemOpen )
@@ -4590,7 +4590,7 @@ void idPlayer::Weapon_GUI( void )
 idPlayer::UpdateWeapon
 ===============
 */
-void idPlayer::UpdateWeapon( void )
+void idPlayer::UpdateWeapon()
 {
 	if( health <= 0 )
 	{
@@ -4715,7 +4715,7 @@ void idPlayer::SpectateFreeFly( bool force )
 idPlayer::SpectateCycle
 ===============
 */
-void idPlayer::SpectateCycle( void )
+void idPlayer::SpectateCycle()
 {
 	idPlayer* player;
 
@@ -4740,7 +4740,7 @@ void idPlayer::SpectateCycle( void )
 idPlayer::UpdateSpectating
 ===============
 */
-void idPlayer::UpdateSpectating( void )
+void idPlayer::UpdateSpectating()
 {
 	assert( spectating );
 	assert( !gameLocal.isClient );
@@ -4938,7 +4938,7 @@ idPlayer::UpdateLocation
 Searches nearby locations
 ================
 */
-void idPlayer::UpdateLocation( void )
+void idPlayer::UpdateLocation()
 {
 	if( hud )
 	{
@@ -4961,7 +4961,7 @@ idPlayer::ClearFocus
 Clears the focus cursor
 ================
 */
-void idPlayer::ClearFocus( void )
+void idPlayer::ClearFocus()
 {
 	focusCharacter	= NULL;
 	focusGUIent		= NULL;
@@ -4978,7 +4978,7 @@ Searches nearby entities for interactive guis, possibly making one of them
 the focus and sending it a mouse move event
 ================
 */
-void idPlayer::UpdateFocus( void )
+void idPlayer::UpdateFocus()
 {
 	idClipModel* clipModelList[ MAX_GENTITIES ];
 	idClipModel* clip;
@@ -5606,7 +5606,7 @@ void idPlayer::SetViewAngles( const idAngles& angles )
 idPlayer::UpdateViewAngles
 ================
 */
-void idPlayer::UpdateViewAngles( void )
+void idPlayer::UpdateViewAngles()
 {
 	int i;
 	idAngles delta;
@@ -5742,7 +5742,7 @@ void idPlayer::AdjustHeartRate( int target, float timeInSecs, float delay, bool 
 idPlayer::GetBaseHeartRate
 ==============
 */
-int idPlayer::GetBaseHeartRate( void )
+int idPlayer::GetBaseHeartRate()
 {
 	int base = idMath::FtoiFast( ( BASE_HEARTRATE + LOWHEALTH_HEARTRATE_ADJ ) - ( ( float )health / 100.0f ) * LOWHEALTH_HEARTRATE_ADJ );
 	int rate = idMath::FtoiFast( base + ( ZEROSTAMINA_HEARTRATE - base ) * ( 1.0f - stamina / pm_stamina.GetFloat() ) );
@@ -5756,7 +5756,7 @@ int idPlayer::GetBaseHeartRate( void )
 idPlayer::SetCurrentHeartRate
 ==============
 */
-void idPlayer::SetCurrentHeartRate( void )
+void idPlayer::SetCurrentHeartRate()
 {
 
 	int base = idMath::FtoiFast( ( BASE_HEARTRATE + LOWHEALTH_HEARTRATE_ADJ ) - ( ( float ) health / 100.0f ) * LOWHEALTH_HEARTRATE_ADJ );
@@ -5822,7 +5822,7 @@ void idPlayer::SetCurrentHeartRate( void )
 idPlayer::UpdateAir
 ==============
 */
-void idPlayer::UpdateAir( void )
+void idPlayer::UpdateAir()
 {
 	if( health <= 0 )
 	{
@@ -5981,7 +5981,7 @@ int idPlayer::AddGuiPDAData( const declType_t dataType, const char* listName, co
 idPlayer::GetPDA
 ==============
  */
-const idDeclPDA* idPlayer::GetPDA( void ) const
+const idDeclPDA* idPlayer::GetPDA() const
 {
 	if( inventory.pdas.Num() )
 	{
@@ -6211,7 +6211,7 @@ void idPlayer::UpdatePDAInfo( bool updatePDASel )
 idPlayer::TogglePDA
 ==============
 */
-void idPlayer::TogglePDA( void )
+void idPlayer::TogglePDA()
 {
 	if( objectiveSystem == NULL )
 	{
@@ -6297,7 +6297,7 @@ void idPlayer::TogglePDA( void )
 idPlayer::ToggleScoreboard
 ==============
 */
-void idPlayer::ToggleScoreboard( void )
+void idPlayer::ToggleScoreboard()
 {
 	scoreBoardOpen ^= 1;
 }
@@ -6363,7 +6363,7 @@ void idPlayer::Spectate( bool spectate )
 idPlayer::SetClipModel
 ==============
 */
-void idPlayer::SetClipModel( void )
+void idPlayer::SetClipModel()
 {
 	idBounds bounds;
 
@@ -6398,7 +6398,7 @@ void idPlayer::SetClipModel( void )
 idPlayer::UseVehicle
 ==============
 */
-void idPlayer::UseVehicle( void )
+void idPlayer::UseVehicle()
 {
 	trace_t	trace;
 	idVec3 start, end;
@@ -6539,7 +6539,7 @@ void idPlayer::PerformImpulse( int impulse )
 	}
 }
 
-bool idPlayer::HandleESC( void )
+bool idPlayer::HandleESC()
 {
 	if( gameLocal.inCinematic )
 	{
@@ -6555,7 +6555,7 @@ bool idPlayer::HandleESC( void )
 	return false;
 }
 
-bool idPlayer::SkipCinematic( void )
+bool idPlayer::SkipCinematic()
 {
 	StartSound( "snd_skipcinematic", SND_CHANNEL_ANY, 0, false, NULL );
 	return gameLocal.SkipCinematic();
@@ -6566,7 +6566,7 @@ bool idPlayer::SkipCinematic( void )
 idPlayer::EvaluateControls
 ==============
 */
-void idPlayer::EvaluateControls( void )
+void idPlayer::EvaluateControls()
 {
 	// check for respawning
 	if( health <= 0 )
@@ -6608,7 +6608,7 @@ void idPlayer::EvaluateControls( void )
 idPlayer::AdjustSpeed
 ==============
 */
-void idPlayer::AdjustSpeed( void )
+void idPlayer::AdjustSpeed()
 {
 	float speed;
 	float rate;
@@ -6681,7 +6681,7 @@ void idPlayer::AdjustSpeed( void )
 idPlayer::AdjustBodyAngles
 ==============
 */
-void idPlayer::AdjustBodyAngles( void )
+void idPlayer::AdjustBodyAngles()
 {
 	idMat3	lookAxis;
 	idMat3	legsAxis;
@@ -6800,7 +6800,7 @@ void idPlayer::AdjustBodyAngles( void )
 idPlayer::InitAASLocation
 ==============
 */
-void idPlayer::InitAASLocation( void )
+void idPlayer::InitAASLocation()
 {
 	int		i;
 	int		num;
@@ -6836,7 +6836,7 @@ void idPlayer::InitAASLocation( void )
 idPlayer::SetAASLocation
 ==============
 */
-void idPlayer::SetAASLocation( void )
+void idPlayer::SetAASLocation()
 {
 	int		i;
 	int		areaNum;
@@ -6903,7 +6903,7 @@ void idPlayer::GetAASLocation( idAAS* aas, idVec3& pos, int& areaNum ) const
 idPlayer::Move
 ==============
 */
-void idPlayer::Move( void )
+void idPlayer::Move()
 {
 	float newEyeOffset;
 	idVec3 oldOrigin;
@@ -7066,7 +7066,7 @@ void idPlayer::Move( void )
 idPlayer::UpdateHud
 ==============
 */
-void idPlayer::UpdateHud( void )
+void idPlayer::UpdateHud()
 {
 	idPlayer* aimed;
 
@@ -7240,7 +7240,7 @@ idPlayer::Think
 Called every tic for each player
 ==============
 */
-void idPlayer::Think( void )
+void idPlayer::Think()
 {
 	renderEntity_t* headRenderEnt;
 
@@ -8135,7 +8135,7 @@ idPlayer::DefaultFov
 Returns the base FOV
 ====================
 */
-float idPlayer::DefaultFov( void ) const
+float idPlayer::DefaultFov() const
 {
 	float fov;
 
@@ -8206,7 +8206,7 @@ generate a rotational offset for the gun based on the view angle
 history in loggedViewAngles
 ==============
 */
-idAngles idPlayer::GunTurningOffset( void )
+idAngles idPlayer::GunTurningOffset()
 {
 	idAngles	a;
 
@@ -8271,7 +8271,7 @@ generate a positional offset for the gun based on the movement
 history in loggedAccelerations
 ==============
 */
-idVec3	idPlayer::GunAcceleratingOffset( void )
+idVec3	idPlayer::GunAcceleratingOffset()
 {
 	idVec3	ofs;
 
@@ -8462,7 +8462,7 @@ void idPlayer::OffsetThirdPersonView( float angle, float range, float height, bo
 idPlayer::GetEyePosition
 ===============
 */
-idVec3 idPlayer::GetEyePosition( void ) const
+idVec3 idPlayer::GetEyePosition() const
 {
 	idVec3 org;
 
@@ -8514,7 +8514,7 @@ void idPlayer::GetViewPos( idVec3& origin, idMat3& axis ) const
 idPlayer::CalculateFirstPersonView
 ===============
 */
-void idPlayer::CalculateFirstPersonView( void )
+void idPlayer::CalculateFirstPersonView()
 {
 	if( ( pm_modelView.GetInteger() == 1 ) || ( ( pm_modelView.GetInteger() == 2 ) && ( health <= 0 ) ) )
 	{
@@ -8550,7 +8550,7 @@ idPlayer::GetRenderView
 Returns the renderView that was calculated for this tic
 ==================
 */
-renderView_t* idPlayer::GetRenderView( void )
+renderView_t* idPlayer::GetRenderView()
 {
 	return renderView;
 }
@@ -8562,7 +8562,7 @@ idPlayer::CalculateRenderView
 create the renderView for the current tic
 ==================
 */
-void idPlayer::CalculateRenderView( void )
+void idPlayer::CalculateRenderView()
 {
 	int i;
 	float range;
@@ -8654,7 +8654,7 @@ void idPlayer::CalculateRenderView( void )
 idPlayer::AddAIKill
 =============
 */
-void idPlayer::AddAIKill( void )
+void idPlayer::AddAIKill()
 {
 	int max_souls;
 	int ammo_souls;
@@ -8858,7 +8858,7 @@ void idPlayer::SetInfluenceFov( float fov )
 idPlayer::OnLadder
 ================
 */
-bool idPlayer::OnLadder( void ) const
+bool idPlayer::OnLadder() const
 {
 	return physicsObj.OnLadder();
 }
@@ -8868,7 +8868,7 @@ bool idPlayer::OnLadder( void ) const
 idPlayer::Event_GetButtons
 ==================
 */
-void idPlayer::Event_GetButtons( void )
+void idPlayer::Event_GetButtons()
 {
 	idThread::ReturnInt( usercmd.buttons );
 }
@@ -8878,7 +8878,7 @@ void idPlayer::Event_GetButtons( void )
 idPlayer::Event_GetMove
 ==================
 */
-void idPlayer::Event_GetMove( void )
+void idPlayer::Event_GetMove()
 {
 	idVec3 move( usercmd.forwardmove, usercmd.rightmove, usercmd.upmove );
 	idThread::ReturnVector( move );
@@ -8889,7 +8889,7 @@ void idPlayer::Event_GetMove( void )
 idPlayer::Event_GetViewAngles
 ================
 */
-void idPlayer::Event_GetViewAngles( void )
+void idPlayer::Event_GetViewAngles()
 {
 	idThread::ReturnVector( idVec3( viewAngles[0], viewAngles[1], viewAngles[2] ) );
 }
@@ -8899,7 +8899,7 @@ void idPlayer::Event_GetViewAngles( void )
 idPlayer::Event_StopFxFov
 ==================
 */
-void idPlayer::Event_StopFxFov( void )
+void idPlayer::Event_StopFxFov()
 {
 	fxFov = false;
 }
@@ -8920,7 +8920,7 @@ void idPlayer::StartFxFov( float duration )
 idPlayer::Event_EnableWeapon
 ==================
 */
-void idPlayer::Event_EnableWeapon( void )
+void idPlayer::Event_EnableWeapon()
 {
 	hiddenWeapon = gameLocal.world->spawnArgs.GetBool( "no_Weapons" );
 	weaponEnabled = true;
@@ -8935,7 +8935,7 @@ void idPlayer::Event_EnableWeapon( void )
 idPlayer::Event_DisableWeapon
 ==================
 */
-void idPlayer::Event_DisableWeapon( void )
+void idPlayer::Event_DisableWeapon()
 {
 	hiddenWeapon = gameLocal.world->spawnArgs.GetBool( "no_Weapons" );
 	weaponEnabled = false;
@@ -8950,7 +8950,7 @@ void idPlayer::Event_DisableWeapon( void )
 idPlayer::Event_GetCurrentWeapon
 ==================
 */
-void idPlayer::Event_GetCurrentWeapon( void )
+void idPlayer::Event_GetCurrentWeapon()
 {
 	const char* weapon;
 
@@ -8970,7 +8970,7 @@ void idPlayer::Event_GetCurrentWeapon( void )
 idPlayer::Event_GetPreviousWeapon
 ==================
 */
-void idPlayer::Event_GetPreviousWeapon( void )
+void idPlayer::Event_GetPreviousWeapon()
 {
 	const char* weapon;
 
@@ -9040,7 +9040,7 @@ void idPlayer::Event_SelectWeapon( const char* weaponName )
 idPlayer::Event_GetWeaponEntity
 ==================
 */
-void idPlayer::Event_GetWeaponEntity( void )
+void idPlayer::Event_GetWeaponEntity()
 {
 	idThread::ReturnEntity( weapon.GetEntity() );
 }
@@ -9050,7 +9050,7 @@ void idPlayer::Event_GetWeaponEntity( void )
 idPlayer::Event_OpenPDA
 ==================
 */
-void idPlayer::Event_OpenPDA( void )
+void idPlayer::Event_OpenPDA()
 {
 	if( !gameLocal.isMultiplayer )
 	{
@@ -9063,7 +9063,7 @@ void idPlayer::Event_OpenPDA( void )
 idPlayer::Event_InPDA
 ==================
 */
-void idPlayer::Event_InPDA( void )
+void idPlayer::Event_InPDA()
 {
 	idThread::ReturnInt( objectiveSystemOpen );
 }
@@ -9083,7 +9083,7 @@ void idPlayer::TeleportDeath( int killer )
 idPlayer::Event_ExitTeleporter
 ==================
 */
-void idPlayer::Event_ExitTeleporter( void )
+void idPlayer::Event_ExitTeleporter()
 {
 	idEntity*	exitEnt;
 	float		pushVel;
@@ -9138,7 +9138,7 @@ void idPlayer::Event_ExitTeleporter( void )
 idPlayer::ClientPredictionThink
 ================
 */
-void idPlayer::ClientPredictionThink( void )
+void idPlayer::ClientPredictionThink()
 {
 	renderEntity_t* headRenderEnt;
 
@@ -9723,7 +9723,7 @@ bool idPlayer::ClientReceiveEvent( int event, int time, const idBitMsg& msg )
 idPlayer::Hide
 ================
 */
-void idPlayer::Hide( void )
+void idPlayer::Hide()
 {
 	idWeapon* weap;
 
@@ -9740,7 +9740,7 @@ void idPlayer::Hide( void )
 idPlayer::Show
 ================
 */
-void idPlayer::Show( void )
+void idPlayer::Show()
 {
 	idWeapon* weap;
 
@@ -9757,7 +9757,7 @@ void idPlayer::Show( void )
 idPlayer::StartAudioLog
 ===============
 */
-void idPlayer::StartAudioLog( void )
+void idPlayer::StartAudioLog()
 {
 	if( hud )
 	{
@@ -9770,7 +9770,7 @@ void idPlayer::StartAudioLog( void )
 idPlayer::StopAudioLog
 ===============
 */
-void idPlayer::StopAudioLog( void )
+void idPlayer::StopAudioLog()
 {
 	if( hud )
 	{
@@ -9804,7 +9804,7 @@ void idPlayer::ShowTip( const char* title, const char* tip, bool autoHide )
 idPlayer::HideTip
 ===============
 */
-void idPlayer::HideTip( void )
+void idPlayer::HideTip()
 {
 	hud->HandleNamedEvent( "tipWindowDown" );
 	tipUp = false;
@@ -9815,7 +9815,7 @@ void idPlayer::HideTip( void )
 idPlayer::Event_HideTip
 ===============
 */
-void idPlayer::Event_HideTip( void )
+void idPlayer::Event_HideTip()
 {
 	HideTip();
 }
@@ -9836,7 +9836,7 @@ void idPlayer::ShowObjective( const char* obj )
 idPlayer::HideObjective
 ===============
 */
-void idPlayer::HideObjective( void )
+void idPlayer::HideObjective()
 {
 	hud->HandleNamedEvent( "closeObjective" );
 	objectiveUp = false;
@@ -9847,7 +9847,7 @@ void idPlayer::HideObjective( void )
 idPlayer::Event_StopAudioLog
 ===============
 */
-void idPlayer::Event_StopAudioLog( void )
+void idPlayer::Event_StopAudioLog()
 {
 	StopAudioLog();
 }
@@ -9857,7 +9857,7 @@ void idPlayer::Event_StopAudioLog( void )
 idPlayer::SetSpectateOrigin
 ===============
 */
-void idPlayer::SetSpectateOrigin( void )
+void idPlayer::SetSpectateOrigin()
 {
 	idVec3 neworig;
 
@@ -9885,7 +9885,7 @@ void idPlayer::RemoveWeapon( const char* weap )
 idPlayer::CanShowWeaponViewmodel
 ===============
 */
-bool idPlayer::CanShowWeaponViewmodel( void ) const
+bool idPlayer::CanShowWeaponViewmodel() const
 {
 	return showWeaponViewModel;
 }
@@ -9911,7 +9911,7 @@ void idPlayer::SetLevelTrigger( const char* levelName, const char* triggerName )
 idPlayer::Event_LevelTrigger
 ===============
 */
-void idPlayer::Event_LevelTrigger( void )
+void idPlayer::Event_LevelTrigger()
 {
 	idStr mapName = gameLocal.GetMapName();
 	mapName.StripPath();
@@ -9934,7 +9934,7 @@ void idPlayer::Event_LevelTrigger( void )
 idPlayer::Event_Gibbed
 ===============
 */
-void idPlayer::Event_Gibbed( void )
+void idPlayer::Event_Gibbed()
 {
 }
 
@@ -9943,7 +9943,7 @@ void idPlayer::Event_Gibbed( void )
 idPlayer::Event_GetIdealWeapon
 ==================
 */
-void idPlayer::Event_GetIdealWeapon( void )
+void idPlayer::Event_GetIdealWeapon()
 {
 	const char* weapon;
 
@@ -9963,7 +9963,7 @@ void idPlayer::Event_GetIdealWeapon( void )
 idPlayer::UpdatePlayerIcons
 ===============
 */
-void idPlayer::UpdatePlayerIcons( void )
+void idPlayer::UpdatePlayerIcons()
 {
 	int time = networkSystem->ServerGetClientTimeSinceLastPacket( entityNumber );
 	if( time > cvarSystem->GetCVarInteger( "net_clientMaxPrediction" ) )
@@ -9981,7 +9981,7 @@ void idPlayer::UpdatePlayerIcons( void )
 idPlayer::DrawPlayerIcons
 ===============
 */
-void idPlayer::DrawPlayerIcons( void )
+void idPlayer::DrawPlayerIcons()
 {
 	if( !NeedsIcon() )
 	{
@@ -9996,7 +9996,7 @@ void idPlayer::DrawPlayerIcons( void )
 idPlayer::HidePlayerIcons
 ===============
 */
-void idPlayer::HidePlayerIcons( void )
+void idPlayer::HidePlayerIcons()
 {
 	playerIcon.FreeIcon();
 }
@@ -10006,7 +10006,7 @@ void idPlayer::HidePlayerIcons( void )
 idPlayer::NeedsIcon
 ==============
 */
-bool idPlayer::NeedsIcon( void )
+bool idPlayer::NeedsIcon()
 {
 	// local clients don't render their own icons... they're only info for other clients
 	return entityNumber != gameLocal.localClientNum && ( isLagged || isChatting );

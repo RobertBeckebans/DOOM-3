@@ -41,7 +41,7 @@ class idPlaneSet : public idList<idPlane>
 {
 public:
 
-	void					Clear( void )
+	void					Clear()
 	{
 		idList<idPlane>::Clear();
 		hash.Free();

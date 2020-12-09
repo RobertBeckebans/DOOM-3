@@ -108,16 +108,16 @@ typedef struct
 // system functions
 //
 // TTimo NOTE: WINAPI funcs can be accessed by plugins
-void    Sys_UpdateStatusBar( void );
+void    Sys_UpdateStatusBar();
 void    WINAPI Sys_UpdateWindows( int bits );
-void    Sys_Beep( void );
-double	Sys_DoubleTime( void );
+void    Sys_Beep();
+double	Sys_DoubleTime();
 void    Sys_GetCursorPos( int* x, int* y );
 void    Sys_SetCursorPos( int x, int y );
 void    Sys_SetTitle( const char* text );
-void    Sys_BeginWait( void );
+void    Sys_BeginWait();
 bool	Sys_Waiting();
-void    Sys_EndWait( void );
+void    Sys_EndWait();
 void    Sys_Status( const char* psz, int part = -1 );
 
 /*
@@ -208,13 +208,13 @@ typedef struct
 } QEGlobals_t;
 
 
-void Pointfile_Delete( void );
-void WINAPI Pointfile_Check( void );
-void Pointfile_Next( void );
-void Pointfile_Prev( void );
-void Pointfile_Clear( void );
-void Pointfile_Draw( void );
-void Pointfile_Load( void );
+void Pointfile_Delete();
+void WINAPI Pointfile_Check();
+void Pointfile_Next();
+void Pointfile_Prev();
+void Pointfile_Clear();
+void Pointfile_Draw();
+void Pointfile_Load();
 
 //
 // drag.c
@@ -228,19 +228,19 @@ extern bool g_moveOnly;
 //
 // csg.c
 //
-void CSG_MakeHollow( void );
-void CSG_Subtract( void );
-void CSG_Merge( void );
+void CSG_MakeHollow();
+void CSG_Subtract();
+void CSG_Merge();
 
 //
 // vertsel.c
 //
 
-void SetupVertexSelection( void );
+void SetupVertexSelection();
 void SelectEdgeByRay( idVec3 org, idVec3 dir );
 void SelectVertexByRay( idVec3 org, idVec3 dir );
 
-void ConnectEntities( void );
+void ConnectEntities();
 
 extern	int	update_bits;
 
@@ -254,10 +254,10 @@ extern HANDLE g_hBSPInput;
 
 char*	TranslateString( char* buf );
 
-void ProjectDialog( void );
+void ProjectDialog();
 
 void FillTextureMenu( CStringArray* pArray = NULL );
-void FillBSPMenu( void );
+void FillBSPMenu();
 
 BOOL CALLBACK Win_Dialog(
 	HWND hwndDlg,	// handle to dialog box
@@ -302,28 +302,28 @@ extern bool LoadRegistryInfo( const char* pszName, void* pvBuf, long* plSize );
 
 // win_dlg.c
 
-void DoGamma( void );
-void DoFind( void );
-void DoRotate( void );
+void DoGamma();
+void DoFind();
+void DoRotate();
 void DoSides( bool bCone = false, bool bSphere = false, bool bTorus = false );
-void DoAbout( void );
+void DoAbout();
 void DoSurface();
 
 /*
 ** QE function declarations
 */
-void	QE_CheckAutoSave( void );
-void	QE_CountBrushesAndUpdateStatusBar( void );
-void	WINAPI QE_CheckOpenGLForErrors( void );
+void	QE_CheckAutoSave();
+void	QE_CountBrushesAndUpdateStatusBar();
+void	WINAPI QE_CheckOpenGLForErrors();
 void	QE_ExpandBspString( char* bspaction, char* out, char* mapname, bool useTemps );
-void	QE_Init( void );
+void	QE_Init();
 bool	QE_KeyDown( int key, int nFlags = 0 );
 bool	QE_LoadProject( char* projectfile );
 bool	QE_SingleBrush( bool bQuiet = false, bool entityOK = false );
 
 
 // sys stuff
-void Sys_MarkMapModified( void );
+void Sys_MarkMapModified();
 
 /*
 ** QE Win32 function declarations
@@ -389,7 +389,7 @@ extern bool parsing_single;
 extern bool eclass_found;
 extern eclass_t* eclass_e;
 void Eclass_ScanFile( char* filename );
-void FillClassList( void );
+void FillClassList();
 
 extern bool g_bShowLightVolumes;
 extern bool g_bShowLightTextures;
@@ -425,7 +425,7 @@ extern qtexture_t*	current_texture;
 extern bool SaveWindowState( HWND hWnd, const char* pszName );
 extern void Map_Snapshot();
 extern void WXY_Print();
-extern void AddProp( void );
+extern void AddProp();
 extern int inspector_mode;
 extern bool g_bRotateMode;
 extern bool g_bClipMode;
@@ -467,7 +467,7 @@ extern bool WriteFileString( FILE* fp, char* string, ... );
 extern void MemFile_fprintf( CMemFile* pMemFile, const char* pText, ... );
 extern void SaveWindowPlacement( HWND hwnd, const char* pName );
 extern bool LoadWindowPlacement( HWND hwnd, const char* pName );
-extern bool ConfirmModified( void );
+extern bool ConfirmModified();
 extern void DoPatchInspector();
 void UpdatePatchInspector();
 extern int g_nSmartX;

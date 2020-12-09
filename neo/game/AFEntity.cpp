@@ -48,7 +48,7 @@ END_CLASS
 idMultiModelAF::Spawn
 ================
 */
-void idMultiModelAF::Spawn( void )
+void idMultiModelAF::Spawn()
 {
 	physicsObj.SetSelf( this );
 }
@@ -58,7 +58,7 @@ void idMultiModelAF::Spawn( void )
 idMultiModelAF::~idMultiModelAF
 ================
 */
-idMultiModelAF::~idMultiModelAF( void )
+idMultiModelAF::~idMultiModelAF()
 {
 	int i;
 
@@ -89,7 +89,7 @@ void idMultiModelAF::SetModelForId( int id, const idStr& modelName )
 idMultiModelAF::Present
 ================
 */
-void idMultiModelAF::Present( void )
+void idMultiModelAF::Present()
 {
 	int i;
 
@@ -130,7 +130,7 @@ void idMultiModelAF::Present( void )
 idMultiModelAF::Think
 ================
 */
-void idMultiModelAF::Think( void )
+void idMultiModelAF::Think()
 {
 	RunPhysics();
 	Present();
@@ -230,7 +230,7 @@ void idChain::BuildChain( const idStr& name, const idVec3& origin, float linkLen
 idChain::Spawn
 ================
 */
-void idChain::Spawn( void )
+void idChain::Spawn()
 {
 	int numLinks;
 	float length, linkLength, linkWidth, density;
@@ -270,7 +270,7 @@ END_CLASS
 idAFAttachment::idAFAttachment
 =====================
 */
-idAFAttachment::idAFAttachment( void )
+idAFAttachment::idAFAttachment()
 {
 	body			= NULL;
 	combatModel		= NULL;
@@ -283,7 +283,7 @@ idAFAttachment::idAFAttachment( void )
 idAFAttachment::~idAFAttachment
 =====================
 */
-idAFAttachment::~idAFAttachment( void )
+idAFAttachment::~idAFAttachment()
 {
 
 	StopSound( SND_CHANNEL_ANY, false );
@@ -297,7 +297,7 @@ idAFAttachment::~idAFAttachment( void )
 idAFAttachment::Spawn
 =====================
 */
-void idAFAttachment::Spawn( void )
+void idAFAttachment::Spawn()
 {
 	idleAnim = animator.GetAnim( "idle" );
 }
@@ -325,7 +325,7 @@ void idAFAttachment::SetBody( idEntity* bodyEnt, const char* model, jointHandle_
 idAFAttachment::ClearBody
 =====================
 */
-void idAFAttachment::ClearBody( void )
+void idAFAttachment::ClearBody()
 {
 	body = NULL;
 	attachJoint = INVALID_JOINT;
@@ -337,7 +337,7 @@ void idAFAttachment::ClearBody( void )
 idAFAttachment::GetBody
 =====================
 */
-idEntity* idAFAttachment::GetBody( void ) const
+idEntity* idAFAttachment::GetBody() const
 {
 	return body;
 }
@@ -378,7 +378,7 @@ void idAFAttachment::Restore( idRestoreGame* savefile )
 idAFAttachment::Hide
 ================
 */
-void idAFAttachment::Hide( void )
+void idAFAttachment::Hide()
 {
 	idEntity::Hide();
 	UnlinkCombat();
@@ -389,7 +389,7 @@ void idAFAttachment::Hide( void )
 idAFAttachment::Show
 ================
 */
-void idAFAttachment::Show( void )
+void idAFAttachment::Show()
 {
 	idEntity::Show();
 	LinkCombat();
@@ -496,7 +496,7 @@ void idAFAttachment::PlayIdleAnim( int blendTime )
 idAfAttachment::Think
 ================
 */
-void idAFAttachment::Think( void )
+void idAFAttachment::Think()
 {
 	idAnimatedEntity::Think();
 	if( thinkFlags & TH_UPDATEPARTICLES )
@@ -510,7 +510,7 @@ void idAFAttachment::Think( void )
 idAFAttachment::SetCombatModel
 ================
 */
-void idAFAttachment::SetCombatModel( void )
+void idAFAttachment::SetCombatModel()
 {
 	if( combatModel )
 	{
@@ -529,7 +529,7 @@ void idAFAttachment::SetCombatModel( void )
 idAFAttachment::GetCombatModel
 ================
 */
-idClipModel* idAFAttachment::GetCombatModel( void ) const
+idClipModel* idAFAttachment::GetCombatModel() const
 {
 	return combatModel;
 }
@@ -539,7 +539,7 @@ idClipModel* idAFAttachment::GetCombatModel( void ) const
 idAFAttachment::LinkCombat
 ================
 */
-void idAFAttachment::LinkCombat( void )
+void idAFAttachment::LinkCombat()
 {
 	if( fl.hidden )
 	{
@@ -557,7 +557,7 @@ void idAFAttachment::LinkCombat( void )
 idAFAttachment::UnlinkCombat
 ================
 */
-void idAFAttachment::UnlinkCombat( void )
+void idAFAttachment::UnlinkCombat()
 {
 	if( combatModel )
 	{
@@ -588,7 +588,7 @@ static const float BOUNCE_SOUND_MAX_VELOCITY	= 200.0f;
 idAFEntity_Base::idAFEntity_Base
 ================
 */
-idAFEntity_Base::idAFEntity_Base( void )
+idAFEntity_Base::idAFEntity_Base()
 {
 	combatModel = NULL;
 	combatModelContents = 0;
@@ -602,7 +602,7 @@ idAFEntity_Base::idAFEntity_Base( void )
 idAFEntity_Base::~idAFEntity_Base
 ================
 */
-idAFEntity_Base::~idAFEntity_Base( void )
+idAFEntity_Base::~idAFEntity_Base()
 {
 	delete combatModel;
 	combatModel = NULL;
@@ -645,7 +645,7 @@ void idAFEntity_Base::Restore( idRestoreGame* savefile )
 idAFEntity_Base::Spawn
 ================
 */
-void idAFEntity_Base::Spawn( void )
+void idAFEntity_Base::Spawn()
 {
 	spawnOrigin = GetPhysics()->GetOrigin();
 	spawnAxis = GetPhysics()->GetAxis();
@@ -657,7 +657,7 @@ void idAFEntity_Base::Spawn( void )
 idAFEntity_Base::LoadAF
 ================
 */
-bool idAFEntity_Base::LoadAF( void )
+bool idAFEntity_Base::LoadAF()
 {
 	idStr fileName;
 
@@ -691,7 +691,7 @@ bool idAFEntity_Base::LoadAF( void )
 idAFEntity_Base::Think
 ================
 */
-void idAFEntity_Base::Think( void )
+void idAFEntity_Base::Think()
 {
 	RunPhysics();
 	UpdateAnimation();
@@ -765,7 +765,7 @@ void idAFEntity_Base::LoadState( const idDict& args )
 idAFEntity_Base::AddBindConstraints
 ================
 */
-void idAFEntity_Base::AddBindConstraints( void )
+void idAFEntity_Base::AddBindConstraints()
 {
 	af.AddBindConstraints();
 }
@@ -775,7 +775,7 @@ void idAFEntity_Base::AddBindConstraints( void )
 idAFEntity_Base::RemoveBindConstraints
 ================
 */
-void idAFEntity_Base::RemoveBindConstraints( void )
+void idAFEntity_Base::RemoveBindConstraints()
 {
 	af.RemoveBindConstraints();
 }
@@ -879,7 +879,7 @@ bool idAFEntity_Base::GetPhysicsToVisualTransform( idVec3& origin, idMat3& axis 
 idAFEntity_Base::UpdateAnimationControllers
 ================
 */
-bool idAFEntity_Base::UpdateAnimationControllers( void )
+bool idAFEntity_Base::UpdateAnimationControllers()
 {
 	if( af.IsActive() )
 	{
@@ -896,7 +896,7 @@ bool idAFEntity_Base::UpdateAnimationControllers( void )
 idAFEntity_Base::SetCombatModel
 ================
 */
-void idAFEntity_Base::SetCombatModel( void )
+void idAFEntity_Base::SetCombatModel()
 {
 	if( combatModel )
 	{
@@ -914,7 +914,7 @@ void idAFEntity_Base::SetCombatModel( void )
 idAFEntity_Base::GetCombatModel
 ================
 */
-idClipModel* idAFEntity_Base::GetCombatModel( void ) const
+idClipModel* idAFEntity_Base::GetCombatModel() const
 {
 	return combatModel;
 }
@@ -946,7 +946,7 @@ void idAFEntity_Base::SetCombatContents( bool enable )
 idAFEntity_Base::LinkCombat
 ================
 */
-void idAFEntity_Base::LinkCombat( void )
+void idAFEntity_Base::LinkCombat()
 {
 	if( fl.hidden )
 	{
@@ -963,7 +963,7 @@ void idAFEntity_Base::LinkCombat( void )
 idAFEntity_Base::UnlinkCombat
 ================
 */
-void idAFEntity_Base::UnlinkCombat( void )
+void idAFEntity_Base::UnlinkCombat()
 {
 	if( combatModel )
 	{
@@ -976,7 +976,7 @@ void idAFEntity_Base::UnlinkCombat( void )
 idAFEntity_Base::FreeModelDef
 ================
 */
-void idAFEntity_Base::FreeModelDef( void )
+void idAFEntity_Base::FreeModelDef()
 {
 	UnlinkCombat();
 	idEntity::FreeModelDef();
@@ -987,7 +987,7 @@ void idAFEntity_Base::FreeModelDef( void )
 idAFEntity_Base::ShowEditingDialog
 ===============
 */
-void idAFEntity_Base::ShowEditingDialog( void )
+void idAFEntity_Base::ShowEditingDialog()
 {
 	common->InitTool( EDITOR_AF, &spawnArgs );
 }
@@ -1077,7 +1077,7 @@ END_CLASS
 idAFEntity_Gibbable::idAFEntity_Gibbable
 ================
 */
-idAFEntity_Gibbable::idAFEntity_Gibbable( void )
+idAFEntity_Gibbable::idAFEntity_Gibbable()
 {
 	skeletonModel = NULL;
 	skeletonModelDefHandle = -1;
@@ -1135,7 +1135,7 @@ void idAFEntity_Gibbable::Restore( idRestoreGame* savefile )
 idAFEntity_Gibbable::Spawn
 ================
 */
-void idAFEntity_Gibbable::Spawn( void )
+void idAFEntity_Gibbable::Spawn()
 {
 	InitSkeletonModel();
 
@@ -1147,7 +1147,7 @@ void idAFEntity_Gibbable::Spawn( void )
 idAFEntity_Gibbable::InitSkeletonModel
 ================
 */
-void idAFEntity_Gibbable::InitSkeletonModel( void )
+void idAFEntity_Gibbable::InitSkeletonModel()
 {
 	const char* modelName;
 	const idDeclModelDef* modelDef;
@@ -1185,7 +1185,7 @@ void idAFEntity_Gibbable::InitSkeletonModel( void )
 idAFEntity_Gibbable::Present
 ================
 */
-void idAFEntity_Gibbable::Present( void )
+void idAFEntity_Gibbable::Present()
 {
 	renderEntity_t skeleton;
 
@@ -1372,7 +1372,7 @@ END_CLASS
 idAFEntity_Generic::idAFEntity_Generic
 ================
 */
-idAFEntity_Generic::idAFEntity_Generic( void )
+idAFEntity_Generic::idAFEntity_Generic()
 {
 	keepRunningPhysics = false;
 }
@@ -1382,7 +1382,7 @@ idAFEntity_Generic::idAFEntity_Generic( void )
 idAFEntity_Generic::~idAFEntity_Generic
 ================
 */
-idAFEntity_Generic::~idAFEntity_Generic( void )
+idAFEntity_Generic::~idAFEntity_Generic()
 {
 }
 
@@ -1411,7 +1411,7 @@ void idAFEntity_Generic::Restore( idRestoreGame* savefile )
 idAFEntity_Generic::Think
 ================
 */
-void idAFEntity_Generic::Think( void )
+void idAFEntity_Generic::Think()
 {
 	idAFEntity_Base::Think();
 
@@ -1426,7 +1426,7 @@ void idAFEntity_Generic::Think( void )
 idAFEntity_Generic::Spawn
 ================
 */
-void idAFEntity_Generic::Spawn( void )
+void idAFEntity_Generic::Spawn()
 {
 	if( !LoadAF() )
 	{
@@ -1528,7 +1528,7 @@ idAFEntity_WithAttachedHead::~idAFEntity_WithAttachedHead()
 idAFEntity_WithAttachedHead::Spawn
 ================
 */
-void idAFEntity_WithAttachedHead::Spawn( void )
+void idAFEntity_WithAttachedHead::Spawn()
 {
 	SetupHead();
 
@@ -1582,7 +1582,7 @@ void idAFEntity_WithAttachedHead::Restore( idRestoreGame* savefile )
 idAFEntity_WithAttachedHead::SetupHead
 ================
 */
-void idAFEntity_WithAttachedHead::SetupHead( void )
+void idAFEntity_WithAttachedHead::SetupHead()
 {
 	idAFAttachment*		headEnt;
 	idStr				jointName;
@@ -1620,7 +1620,7 @@ void idAFEntity_WithAttachedHead::SetupHead( void )
 idAFEntity_WithAttachedHead::Think
 ================
 */
-void idAFEntity_WithAttachedHead::Think( void )
+void idAFEntity_WithAttachedHead::Think()
 {
 	idAFEntity_Base::Think();
 }
@@ -1630,7 +1630,7 @@ void idAFEntity_WithAttachedHead::Think( void )
 idAFEntity_WithAttachedHead::LinkCombat
 ================
 */
-void idAFEntity_WithAttachedHead::LinkCombat( void )
+void idAFEntity_WithAttachedHead::LinkCombat()
 {
 	idAFAttachment* headEnt;
 
@@ -1655,7 +1655,7 @@ void idAFEntity_WithAttachedHead::LinkCombat( void )
 idAFEntity_WithAttachedHead::UnlinkCombat
 ================
 */
-void idAFEntity_WithAttachedHead::UnlinkCombat( void )
+void idAFEntity_WithAttachedHead::UnlinkCombat()
 {
 	idAFAttachment* headEnt;
 
@@ -1675,7 +1675,7 @@ void idAFEntity_WithAttachedHead::UnlinkCombat( void )
 idAFEntity_WithAttachedHead::Hide
 ================
 */
-void idAFEntity_WithAttachedHead::Hide( void )
+void idAFEntity_WithAttachedHead::Hide()
 {
 	idAFEntity_Base::Hide();
 	if( head.GetEntity() )
@@ -1690,7 +1690,7 @@ void idAFEntity_WithAttachedHead::Hide( void )
 idAFEntity_WithAttachedHead::Show
 ================
 */
-void idAFEntity_WithAttachedHead::Show( void )
+void idAFEntity_WithAttachedHead::Show()
 {
 	idAFEntity_Base::Show();
 	if( head.GetEntity() )
@@ -1801,7 +1801,7 @@ END_CLASS
 idAFEntity_Vehicle::idAFEntity_Vehicle
 ================
 */
-idAFEntity_Vehicle::idAFEntity_Vehicle( void )
+idAFEntity_Vehicle::idAFEntity_Vehicle()
 {
 	player				= NULL;
 	eyesJoint			= INVALID_JOINT;
@@ -1817,7 +1817,7 @@ idAFEntity_Vehicle::idAFEntity_Vehicle( void )
 idAFEntity_Vehicle::Spawn
 ================
 */
-void idAFEntity_Vehicle::Spawn( void )
+void idAFEntity_Vehicle::Spawn()
 {
 	const char* eyesJointName = spawnArgs.GetString( "eyesJoint", "eyes" );
 	const char* steeringWheelJointName = spawnArgs.GetString( "steeringWheelJoint", "steeringWheel" );
@@ -1892,7 +1892,7 @@ void idAFEntity_Vehicle::Use( idPlayer* other )
 idAFEntity_Vehicle::GetSteerAngle
 ================
 */
-float idAFEntity_Vehicle::GetSteerAngle( void )
+float idAFEntity_Vehicle::GetSteerAngle()
 {
 	float idealSteerAngle, angleDelta;
 
@@ -1932,7 +1932,7 @@ END_CLASS
 idAFEntity_VehicleSimple::idAFEntity_VehicleSimple
 ================
 */
-idAFEntity_VehicleSimple::idAFEntity_VehicleSimple( void )
+idAFEntity_VehicleSimple::idAFEntity_VehicleSimple()
 {
 	int i;
 	for( i = 0; i < 4; i++ )
@@ -1946,7 +1946,7 @@ idAFEntity_VehicleSimple::idAFEntity_VehicleSimple( void )
 idAFEntity_VehicleSimple::~idAFEntity_VehicleSimple
 ================
 */
-idAFEntity_VehicleSimple::~idAFEntity_VehicleSimple( void )
+idAFEntity_VehicleSimple::~idAFEntity_VehicleSimple()
 {
 	delete wheelModel;
 	wheelModel = NULL;
@@ -1957,7 +1957,7 @@ idAFEntity_VehicleSimple::~idAFEntity_VehicleSimple( void )
 idAFEntity_VehicleSimple::Spawn
 ================
 */
-void idAFEntity_VehicleSimple::Spawn( void )
+void idAFEntity_VehicleSimple::Spawn()
 {
 	static const char* wheelJointKeys[] =
 	{
@@ -2013,7 +2013,7 @@ void idAFEntity_VehicleSimple::Spawn( void )
 idAFEntity_VehicleSimple::Think
 ================
 */
-void idAFEntity_VehicleSimple::Think( void )
+void idAFEntity_VehicleSimple::Think()
 {
 	int i;
 	float force = 0.0f, velocity = 0.0f, steerAngle = 0.0f;
@@ -2151,7 +2151,7 @@ END_CLASS
 idAFEntity_VehicleFourWheels::idAFEntity_VehicleFourWheels
 ================
 */
-idAFEntity_VehicleFourWheels::idAFEntity_VehicleFourWheels( void )
+idAFEntity_VehicleFourWheels::idAFEntity_VehicleFourWheels()
 {
 	int i;
 
@@ -2170,7 +2170,7 @@ idAFEntity_VehicleFourWheels::idAFEntity_VehicleFourWheels( void )
 idAFEntity_VehicleFourWheels::Spawn
 ================
 */
-void idAFEntity_VehicleFourWheels::Spawn( void )
+void idAFEntity_VehicleFourWheels::Spawn()
 {
 	int i;
 	static const char* wheelBodyKeys[] =
@@ -2242,7 +2242,7 @@ void idAFEntity_VehicleFourWheels::Spawn( void )
 idAFEntity_VehicleFourWheels::Think
 ================
 */
-void idAFEntity_VehicleFourWheels::Think( void )
+void idAFEntity_VehicleFourWheels::Think()
 {
 	int i;
 	float force = 0.0f, velocity = 0.0f, steerAngle = 0.0f;
@@ -2355,7 +2355,7 @@ END_CLASS
 idAFEntity_VehicleSixWheels::idAFEntity_VehicleSixWheels
 ================
 */
-idAFEntity_VehicleSixWheels::idAFEntity_VehicleSixWheels( void )
+idAFEntity_VehicleSixWheels::idAFEntity_VehicleSixWheels()
 {
 	int i;
 
@@ -2376,7 +2376,7 @@ idAFEntity_VehicleSixWheels::idAFEntity_VehicleSixWheels( void )
 idAFEntity_VehicleSixWheels::Spawn
 ================
 */
-void idAFEntity_VehicleSixWheels::Spawn( void )
+void idAFEntity_VehicleSixWheels::Spawn()
 {
 	int i;
 	static const char* wheelBodyKeys[] =
@@ -2454,7 +2454,7 @@ void idAFEntity_VehicleSixWheels::Spawn( void )
 idAFEntity_VehicleSixWheels::Think
 ================
 */
-void idAFEntity_VehicleSixWheels::Think( void )
+void idAFEntity_VehicleSixWheels::Think()
 {
 	int i;
 	float force = 0.0f, velocity = 0.0f, steerAngle = 0.0f;
@@ -2576,7 +2576,7 @@ END_CLASS
 idAFEntity_SteamPipe::idAFEntity_SteamPipe
 ================
 */
-idAFEntity_SteamPipe::idAFEntity_SteamPipe( void )
+idAFEntity_SteamPipe::idAFEntity_SteamPipe()
 {
 	steamBody			= 0;
 	steamForce			= 0.0f;
@@ -2590,7 +2590,7 @@ idAFEntity_SteamPipe::idAFEntity_SteamPipe( void )
 idAFEntity_SteamPipe::~idAFEntity_SteamPipe
 ================
 */
-idAFEntity_SteamPipe::~idAFEntity_SteamPipe( void )
+idAFEntity_SteamPipe::~idAFEntity_SteamPipe()
 {
 	if( steamModelDefHandle >= 0 )
 	{
@@ -2622,7 +2622,7 @@ void idAFEntity_SteamPipe::Restore( idRestoreGame* savefile )
 idAFEntity_SteamPipe::Spawn
 ================
 */
-void idAFEntity_SteamPipe::Spawn( void )
+void idAFEntity_SteamPipe::Spawn()
 {
 	idVec3 steamDir;
 	const char* steamBodyName;
@@ -2653,7 +2653,7 @@ void idAFEntity_SteamPipe::Spawn( void )
 idAFEntity_SteamPipe::InitSteamRenderEntity
 ================
 */
-void idAFEntity_SteamPipe::InitSteamRenderEntity( void )
+void idAFEntity_SteamPipe::InitSteamRenderEntity()
 {
 	const char*	temp;
 	const idDeclModelDef* modelDef;
@@ -2699,7 +2699,7 @@ void idAFEntity_SteamPipe::InitSteamRenderEntity( void )
 idAFEntity_SteamPipe::Think
 ================
 */
-void idAFEntity_SteamPipe::Think( void )
+void idAFEntity_SteamPipe::Think()
 {
 	idVec3 steamDir;
 
@@ -2750,7 +2750,7 @@ static const char* clawConstraintNames[] =
 idAFEntity_ClawFourFingers::idAFEntity_ClawFourFingers
 ================
 */
-idAFEntity_ClawFourFingers::idAFEntity_ClawFourFingers( void )
+idAFEntity_ClawFourFingers::idAFEntity_ClawFourFingers()
 {
 	fingers[0]	= NULL;
 	fingers[1]	= NULL;
@@ -2797,7 +2797,7 @@ void idAFEntity_ClawFourFingers::Restore( idRestoreGame* savefile )
 idAFEntity_ClawFourFingers::Spawn
 ================
 */
-void idAFEntity_ClawFourFingers::Spawn( void )
+void idAFEntity_ClawFourFingers::Spawn()
 {
 	int i;
 
@@ -2843,7 +2843,7 @@ void idAFEntity_ClawFourFingers::Event_SetFingerAngle( float angle )
 idAFEntity_ClawFourFingers::Event_StopFingers
 ================
 */
-void idAFEntity_ClawFourFingers::Event_StopFingers( void )
+void idAFEntity_ClawFourFingers::Event_StopFingers()
 {
 	int i;
 
@@ -2954,7 +2954,7 @@ void idGameEdit::AF_UpdateEntities( const char* fileName )
 idGameEdit::AF_UndoChanges
 ================
 */
-void idGameEdit::AF_UndoChanges( void )
+void idGameEdit::AF_UndoChanges()
 {
 	int i, c;
 	idEntity* ent;

@@ -42,7 +42,7 @@ rvOpenFileDialog::rvOpenFileDialog
 constructor
 ================
 */
-rvOpenFileDialog::rvOpenFileDialog( void )
+rvOpenFileDialog::rvOpenFileDialog()
 {
 	mWnd		= NULL;
 	mInstance	= NULL;
@@ -58,7 +58,7 @@ rvOpenFileDialog::~rvOpenFileDialog
 destructor
 ================
 */
-rvOpenFileDialog::~rvOpenFileDialog( void )
+rvOpenFileDialog::~rvOpenFileDialog()
 {
 	if( mImageList )
 	{
@@ -98,7 +98,7 @@ rvOpenFileDialog::UpdateLookIn
 Updates the lookin combo box with the current lookin state
 ================
 */
-void rvOpenFileDialog::UpdateLookIn( void )
+void rvOpenFileDialog::UpdateLookIn()
 {
 	COMBOBOXEXITEM	item;
 	idStr			file;
@@ -154,7 +154,7 @@ Updates the file list with the files that match the filter in the current
 look in directory
 ================
 */
-void rvOpenFileDialog::UpdateFileList( void )
+void rvOpenFileDialog::UpdateFileList()
 {
 	const char* basepath = mLookin;
 	idFileList* files;
@@ -214,7 +214,7 @@ Handles the pressing of the OK button but either opening a selected folder
 or closing the dialog with the resulting filename
 ================
 */
-void rvOpenFileDialog::HandleCommandOK( void )
+void rvOpenFileDialog::HandleCommandOK()
 {
 	char	temp[256];
 	LVITEM	item;
@@ -293,7 +293,7 @@ rvOpenFileDialog::HandleInitDialog
 Handles the init dialog message
 ================
 */
-void rvOpenFileDialog::HandleInitDialog( void )
+void rvOpenFileDialog::HandleInitDialog()
 {
 	// Cache the more used window handles
 	mWndFileList = GetDlgItem( mWnd, IDC_TOOLS_FILELIST );
@@ -343,7 +343,7 @@ rvOpenFileDialog::HandleLookInChange
 Handles a selection change within the lookin control
 ================
 */
-void rvOpenFileDialog::HandleLookInChange( void )
+void rvOpenFileDialog::HandleLookInChange()
 {
 	char	temp[256];
 	int		sel;

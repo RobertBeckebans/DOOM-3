@@ -196,16 +196,16 @@ typedef enum
 class idKeyInput
 {
 public:
-	static void			Init( void );
-	static void			Shutdown( void );
+	static void			Init();
+	static void			Shutdown();
 
 	static void			ArgCompletion_KeyName( const idCmdArgs& args, void( *callback )( const char* s ) );
 	static void			PreliminaryKeyEvent( int keyNum, bool down );
 	static bool			IsDown( int keyNum );
 	static int			GetUsercmdAction( int keyNum );
-	static bool			GetOverstrikeMode( void );
+	static bool			GetOverstrikeMode();
 	static void			SetOverstrikeMode( bool state );
-	static void			ClearStates( void );
+	static void			ClearStates();
 	static int			StringToKeyNum( const char* str );
 	static const char* 	KeyNumToString( int keyNum, bool localized );
 

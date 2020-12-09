@@ -39,9 +39,9 @@ class idRoutingCache
 
 public:
 	idRoutingCache( int size );
-	~idRoutingCache( void );
+	~idRoutingCache();
 
-	int							Size( void ) const;
+	int							Size() const;
 
 private:
 	int							type;					// portal or area cache
@@ -78,7 +78,7 @@ private:
 class idRoutingObstacle
 {
 	friend class idAASLocal;
-	idRoutingObstacle( void ) { }
+	idRoutingObstacle() { }
 
 private:
 	idBounds					bounds;					// obstacle bounds
@@ -89,13 +89,13 @@ private:
 class idAASLocal : public idAAS
 {
 public:
-	idAASLocal( void );
-	virtual						~idAASLocal( void );
+	idAASLocal();
+	virtual						~idAASLocal();
 	virtual bool				Init( const idStr& mapName, unsigned int mapFileCRC );
-	virtual void				Shutdown( void );
-	virtual void				Stats( void ) const;
+	virtual void				Shutdown();
+	virtual void				Stats() const;
 	virtual void				Test( const idVec3& origin );
-	virtual const idAASSettings* GetSettings( void ) const;
+	virtual const idAASSettings* GetSettings() const;
 	virtual int					PointAreaNum( const idVec3& origin ) const;
 	virtual int					PointReachableAreaNum( const idVec3& origin, const idBounds& searchBounds, const int areaFlags ) const;
 	virtual int					BoundsReachableAreaNum( const idBounds& bounds, const int areaFlags ) const;
@@ -112,7 +112,7 @@ public:
 	virtual bool				SetAreaState( const idBounds& bounds, const int areaContents, bool disabled );
 	virtual aasHandle_t			AddObstacle( const idBounds& bounds );
 	virtual void				RemoveObstacle( const aasHandle_t handle );
-	virtual void				RemoveAllObstacles( void );
+	virtual void				RemoveAllObstacles();
 	virtual int					TravelTimeToGoalArea( int areaNum, const idVec3& origin, int goalAreaNum, int travelFlags ) const;
 	virtual bool				RouteToGoalArea( int areaNum, const idVec3 origin, int goalAreaNum, int travelFlags, int& travelTime, idReachability** reach ) const;
 	virtual bool				WalkPathToGoal( aasPath_t& path, int areaNum, const idVec3& origin, int goalAreaNum, const idVec3& goalOrigin, int travelFlags ) const;
@@ -143,19 +143,19 @@ private:	// routing data
 	idList<idRoutingObstacle*>	obstacleList;			// list with obstacles
 
 private:	// routing
-	bool						SetupRouting( void );
-	void						ShutdownRouting( void );
+	bool						SetupRouting();
+	void						ShutdownRouting();
 	unsigned short				AreaTravelTime( int areaNum, const idVec3& start, const idVec3& end ) const;
-	void						CalculateAreaTravelTimes( void );
-	void						DeleteAreaTravelTimes( void );
-	void						SetupRoutingCache( void );
+	void						CalculateAreaTravelTimes();
+	void						DeleteAreaTravelTimes();
+	void						SetupRoutingCache();
 	void						DeleteClusterCache( int clusterNum );
-	void						DeletePortalCache( void );
-	void						ShutdownRoutingCache( void );
-	void						RoutingStats( void ) const;
+	void						DeletePortalCache();
+	void						ShutdownRoutingCache();
+	void						RoutingStats() const;
 	void						LinkCache( idRoutingCache* cache ) const;
 	void						UnlinkCache( idRoutingCache* cache ) const;
-	void						DeleteOldestCache( void ) const;
+	void						DeleteOldestCache() const;
 	idReachability* 			GetAreaReachability( int areaNum, int reachabilityNum ) const;
 	int							ClusterAreaNum( int clusterNum, int areaNum ) const;
 	void						UpdateAreaRoutingCache( idRoutingCache* areaCache ) const;
@@ -176,7 +176,7 @@ private:	// pathing
 	idVec3						SubSampleFlyPath( int areaNum, const idVec3& origin, const idVec3& start, const idVec3& end, int travelFlags, int& endAreaNum ) const;
 
 private:	// debug
-	const idBounds& 			DefaultSearchBounds( void ) const;
+	const idBounds& 			DefaultSearchBounds() const;
 	void						DrawCone( const idVec3& origin, const idVec3& dir, float radius, const idVec4& color ) const;
 	void						DrawArea( int areaNum ) const;
 	void						DrawFace( int faceNum, bool side ) const;

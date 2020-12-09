@@ -35,25 +35,25 @@ class roqParam
 {
 public:
 
-	const char*		RoqFilename( void );
-	const char*		RoqTempFilename( void );
-	const char*		GetNextImageFilename( void );
-	const char*		SoundFilename( void );
+	const char*		RoqFilename();
+	const char*		RoqTempFilename();
+	const char*		GetNextImageFilename();
+	const char*		SoundFilename();
 	void			InitFromFile( const char* fileName );
 	void			GetNthInputFileName( idStr& fileName, int n );
-	bool			MoreFrames( void );
-	bool			OutputVectors( void );
-	bool			Timecode( void );
-	bool			DeltaFrames( void );
-	bool			NoAlpha( void );
-	bool			SearchType( void );
-	bool			TwentyFourToThirty( void );
-	bool			HasSound( void );
-	int				NumberOfFrames( void );
-	int				NormalFrameSize( void );
-	int				FirstFrameSize( void );
-	int				JpegQuality( void );
-	bool			IsScaleable( void );
+	bool			MoreFrames();
+	bool			OutputVectors();
+	bool			Timecode();
+	bool			DeltaFrames();
+	bool			NoAlpha();
+	bool			SearchType();
+	bool			TwentyFourToThirty();
+	bool			HasSound();
+	int				NumberOfFrames();
+	int				NormalFrameSize();
+	int				FirstFrameSize();
+	int				JpegQuality();
+	bool			IsScaleable();
 
 	idStr			outputFilename;
 	int				numInputFiles;

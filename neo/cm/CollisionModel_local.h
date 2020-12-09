@@ -315,7 +315,7 @@ public:
 	// load collision models from a map file
 	void			LoadMap( const idMapFile* mapFile );
 	// frees all the collision models
-	void			FreeMap( void );
+	void			FreeMap();
 
 	// get clip handle for model
 	cmHandle_t		LoadModel( const char* modelName, const bool precache );
@@ -361,7 +361,7 @@ public:
 	// print model information, use -1 handle for accumulated model info
 	void			ModelInfo( cmHandle_t model );
 	// list all loaded models
-	void			ListModels( void );
+	void			ListModels();
 	// write a collision model file for the map entity
 	bool			WriteCollisionModelForMapEntity( const idMapEntity* mapEnt, const char* filename, const bool testTraceModel = true );
 
@@ -420,8 +420,8 @@ private:			// CollisionMap_trace.cpp
 	void			RecurseProcBSP_r( trace_t* results, int parentNodeNum, int nodeNum, float p1f, float p2f, const idVec3& p1, const idVec3& p2 );
 
 private:			// CollisionMap_load.cpp
-	void			Clear( void );
-	void			FreeTrmModelStructure( void );
+	void			Clear();
+	void			FreeTrmModelStructure();
 	// model deallocation
 	void			RemovePolygonReferences_r( cm_node_t* node, cm_polygon_t* p );
 	void			RemoveBrushReferences_r( cm_node_t* node, cm_brush_t* b );
@@ -453,7 +453,7 @@ private:			// CollisionMap_load.cpp
 	void			R_ChopWindingListWithTreeBrushes( cm_windingList_t* list, cm_node_t* node );
 	idFixedWinding* WindingOutsideBrushes( idFixedWinding* w, const idPlane& plane, int contents, int patch, cm_node_t* headNode );
 	// creation of axial BSP tree
-	cm_model_t* 	AllocModel( void );
+	cm_model_t* 	AllocModel();
 	cm_node_t* 		AllocNode( cm_model_t* model, int blockSize );
 	cm_polygonRef_t* AllocPolygonReference( cm_model_t* model, int blockSize );
 	cm_brushRef_t* 	AllocBrushReference( cm_model_t* model, int blockSize );
@@ -461,14 +461,14 @@ private:			// CollisionMap_load.cpp
 	cm_brush_t* 	AllocBrush( cm_model_t* model, int numPlanes );
 	void			AddPolygonToNode( cm_model_t* model, cm_node_t* node, cm_polygon_t* p );
 	void			AddBrushToNode( cm_model_t* model, cm_node_t* node, cm_brush_t* b );
-	void			SetupTrmModelStructure( void );
+	void			SetupTrmModelStructure();
 	void			R_FilterPolygonIntoTree( cm_model_t* model, cm_node_t* node, cm_polygonRef_t* pref, cm_polygon_t* p );
 	void			R_FilterBrushIntoTree( cm_model_t* model, cm_node_t* node, cm_brushRef_t* pref, cm_brush_t* b );
 	cm_node_t* 		R_CreateAxialBSPTree( cm_model_t* model, cm_node_t* node, const idBounds& bounds );
 	cm_node_t* 		CreateAxialBSPTree( cm_model_t* model, cm_node_t* node );
 	// creation of raw polygons
-	void			SetupHash( void );
-	void			ShutdownHash( void );
+	void			SetupHash();
+	void			ShutdownHash();
 	void			ClearHash( idBounds& bounds );
 	int				HashVec( const idVec3& vec );
 	int				GetVertex( cm_model_t* model, const idVec3& v, int* vertexNum );

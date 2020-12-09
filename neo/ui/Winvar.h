@@ -94,7 +94,7 @@ public:
 	virtual void WriteToSaveGame( idFile* savefile ) = 0;
 	virtual void ReadFromSaveGame( idFile* savefile ) = 0;
 
-	virtual float x( void ) const = 0;
+	virtual float x() const = 0;
 
 	void SetEval( bool b )
 	{
@@ -184,7 +184,7 @@ public:
 		savefile->Read( &data, sizeof( data ) );
 	}
 
-	virtual float x( void ) const
+	virtual float x() const
 	{
 		return data ? 1.0f : 0.0f;
 	};
@@ -316,7 +316,7 @@ public:
 	}
 
 	// return wether string is emtpy
-	virtual float x( void ) const
+	virtual float x() const
 	{
 		return data[0] ? 1.0f : 0.0f;
 	};
@@ -392,7 +392,7 @@ public:
 	}
 
 	// no suitable conversion
-	virtual float x( void ) const
+	virtual float x() const
 	{
 		assert( false );
 		return 0.0f;
@@ -466,7 +466,7 @@ public:
 		savefile->Read( &data, sizeof( data ) );
 	}
 
-	virtual float x( void ) const
+	virtual float x() const
 	{
 		return data;
 	};
@@ -1094,7 +1094,7 @@ class idMultiWinVar : public idList< idWinVar* >
 {
 public:
 	void Set( const char* val );
-	void Update( void );
+	void Update();
 	void SetGuiInfo( idDict* dict );
 };
 

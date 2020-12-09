@@ -60,7 +60,7 @@ public:
 	idEntityFx();
 	virtual					~idEntityFx();
 
-	void					Spawn( void );
+	void					Spawn();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
@@ -69,23 +69,23 @@ public:
 	void					Setup( const char* fx );
 	void					Run( int time );
 	void					Start( int time );
-	void					Stop( void );
-	const int				Duration( void );
-	const char* 			EffectName( void );
-	const char* 			Joint( void );
+	void					Stop();
+	const int				Duration();
+	const char* 			EffectName();
+	const char* 			Joint();
 	const bool				Done();
 
 	virtual void			WriteToSnapshot( idBitMsgDelta& msg ) const;
 	virtual void			ReadFromSnapshot( const idBitMsgDelta& msg );
-	virtual void			ClientPredictionThink( void );
+	virtual void			ClientPredictionThink();
 
 	static idEntityFx* 		StartFx( const char* fx, const idVec3* useOrigin, const idMat3* useAxis, idEntity* ent, bool bind );
 
 protected:
 	void					Event_Trigger( idEntity* activator );
-	void					Event_ClearFx( void );
+	void					Event_ClearFx();
 
-	void					CleanUp( void );
+	void					CleanUp();
 	void					CleanUpSingleAction( const idFXSingleAction& fxaction, idFXLocalAction& laction );
 	void					ApplyFade( const idFXSingleAction& fxaction, idFXLocalAction& laction, const int time, const int actualStart );
 

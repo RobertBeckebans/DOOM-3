@@ -181,7 +181,7 @@ idEventDef::idEventDef( const char* command, const char* formatspec, char return
 idEventDef::NumEventCommands
 ================
 */
-int	idEventDef::NumEventCommands( void )
+int	idEventDef::NumEventCommands()
 {
 	return numEventDefs;
 }
@@ -396,7 +396,7 @@ void idEvent::CopyArgs( const idEventDef* evdef, int numargs, va_list args, int 
 idEvent::Free
 ================
 */
-void idEvent::Free( void )
+void idEvent::Free()
 {
 	if( data )
 	{
@@ -485,7 +485,7 @@ void idEvent::CancelEvents( const idClass* obj, const idEventDef* evdef )
 idEvent::ClearEventList
 ================
 */
-void idEvent::ClearEventList( void )
+void idEvent::ClearEventList()
 {
 	int i;
 
@@ -509,7 +509,7 @@ void idEvent::ClearEventList( void )
 idEvent::ServiceEvents
 ================
 */
-void idEvent::ServiceEvents( void )
+void idEvent::ServiceEvents()
 {
 	idEvent*		event;
 	int			num;
@@ -619,7 +619,7 @@ void idEvent::ServiceEvents( void )
 idEvent::Init
 ================
 */
-void idEvent::Init( void )
+void idEvent::Init()
 {
 	gameLocal.Printf( "Initializing event system\n" );
 
@@ -656,7 +656,7 @@ void idEvent::Init( void )
 idEvent::Shutdown
 ================
 */
-void idEvent::Shutdown( void )
+void idEvent::Shutdown()
 {
 	gameLocal.Printf( "Shutdown event system\n" );
 
@@ -908,7 +908,7 @@ void idEvent::SaveTrace( idSaveGame* savefile, const trace_t& trace )
 CreateEventCallbackHandler
 ================
 */
-void CreateEventCallbackHandler( void )
+void CreateEventCallbackHandler()
 {
 	int num;
 	int count;

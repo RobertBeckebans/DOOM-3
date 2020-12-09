@@ -48,7 +48,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "rc/doom_resource.h"
 #include "../../renderer/tr_local.h"
 
-static void		GLW_InitExtensions( void );
+static void		GLW_InitExtensions();
 
 
 // WGL_ARB_extensions_string
@@ -137,7 +137,7 @@ PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
 // function declaration
 //
 bool QGL_Init( const char* dllname );
-void     QGL_Shutdown( void );
+void     QGL_Shutdown();
 
 
 
@@ -146,7 +146,7 @@ void     QGL_Shutdown( void );
 GLimp_GetOldGammaRamp
 ========================
 */
-static void GLimp_SaveGamma( void )
+static void GLimp_SaveGamma()
 {
 	HDC			hDC;
 	BOOL		success;
@@ -162,7 +162,7 @@ static void GLimp_SaveGamma( void )
 GLimp_RestoreGamma
 ========================
 */
-static void GLimp_RestoreGamma( void )
+static void GLimp_RestoreGamma()
 {
 	HDC hDC;
 	BOOL success;
@@ -329,7 +329,7 @@ void GLW_CheckWGLExtensions( HDC hDC )
 GLW_GetWGLExtensionsWithFakeWindow
 ==================
 */
-static void GLW_GetWGLExtensionsWithFakeWindow( void )
+static void GLW_GetWGLExtensionsWithFakeWindow()
 {
 	HWND	hWnd;
 	MSG		msg;
@@ -528,7 +528,7 @@ static bool GLW_InitDriver( glimpParms_t parms )
 GLW_CreateWindowClasses
 ====================
 */
-static void GLW_CreateWindowClasses( void )
+static void GLW_CreateWindowClasses()
 {
 	WNDCLASS wc;
 
@@ -1017,7 +1017,7 @@ This routine does all OS specific shutdown procedures for the OpenGL
 subsystem.
 ===================
 */
-void GLimp_Shutdown( void )
+void GLimp_Shutdown()
 {
 	const char* success[] = { "failed", "success" };
 	int retVal;
@@ -1085,7 +1085,7 @@ void GLimp_Shutdown( void )
 GLimp_SwapBuffers
 =====================
 */
-void GLimp_SwapBuffers( void )
+void GLimp_SwapBuffers()
 {
 	//
 	// wglSwapinterval is a windows-private extension,
@@ -1122,7 +1122,7 @@ GLimp_ActivateContext
 
 ===================
 */
-void GLimp_ActivateContext( void )
+void GLimp_ActivateContext()
 {
 	if( !qwglMakeCurrent( win32.hDC, win32.hGLRC ) )
 	{
@@ -1136,7 +1136,7 @@ GLimp_DeactivateContext
 
 ===================
 */
-void GLimp_DeactivateContext( void )
+void GLimp_DeactivateContext()
 {
 	qglFinish();
 	if( !qwglMakeCurrent( win32.hDC, NULL ) )
@@ -1159,7 +1159,7 @@ GLimp_RenderThreadWrapper
 
 ===================
 */
-static void GLimp_RenderThreadWrapper( void )
+static void GLimp_RenderThreadWrapper()
 {
 	win32.glimpRenderThread();
 
@@ -1174,7 +1174,7 @@ GLimp_SpawnRenderThread
 Returns false if the system only has a single processor
 =======================
 */
-bool GLimp_SpawnRenderThread( void ( *function )( void ) )
+bool GLimp_SpawnRenderThread( void ( *function )() )
 {
 	SYSTEM_INFO info;
 
@@ -1224,7 +1224,7 @@ GLimp_BackEndSleep
 
 ===================
 */
-void* GLimp_BackEndSleep( void )
+void* GLimp_BackEndSleep()
 {
 	void*	data;
 
@@ -1258,7 +1258,7 @@ GLimp_FrontEndSleep
 
 ===================
 */
-void GLimp_FrontEndSleep( void )
+void GLimp_FrontEndSleep()
 {
 #ifdef DEBUG_PRINTS
 	OutputDebugString( "-->GLimp_FrontEndSleep\n" );
@@ -1330,7 +1330,7 @@ Returns a function pointer for an OpenGL extension entry point
 */
 GLExtension_t GLimp_ExtensionPointer( const char* name )
 {
-	void	( *proc )( void );
+	void	( *proc )();
 
 	proc = ( GLExtension_t )qwglGetProcAddress( name );
 

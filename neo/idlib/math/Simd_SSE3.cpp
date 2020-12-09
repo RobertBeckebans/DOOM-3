@@ -49,7 +49,7 @@ If you have questions concerning this license or the applicable additional terms
 idSIMD_SSE3::GetName
 ============
 */
-const char* idSIMD_SSE3::GetName( void ) const
+const char* idSIMD_SSE3::GetName() const
 {
 	return "MMX & SSE & SSE2 & SSE3";
 }
@@ -262,7 +262,7 @@ float SSE3_Dot( const idVec4& v1, const idVec4& v2 )
 idSIMD_SSE3::GetName
 ============
 */
-const char* idSIMD_SSE3::GetName( void ) const
+const char* idSIMD_SSE3::GetName() const
 {
 	return "MMX & SSE & SSE2 & SSE3";
 }

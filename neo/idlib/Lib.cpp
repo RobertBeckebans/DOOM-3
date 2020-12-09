@@ -54,7 +54,7 @@ int				idLib::frameNumber	= 0;
 idLib::Init
 ================
 */
-void idLib::Init( void )
+void idLib::Init()
 {
 
 	assert( sizeof( bool ) == 1 );
@@ -89,7 +89,7 @@ void idLib::Init( void )
 idLib::ShutDown
 ================
 */
-void idLib::ShutDown( void )
+void idLib::ShutDown()
 {
 
 	// shut down the dictionary string pools
@@ -586,7 +586,7 @@ int IntForSixtetsBig( byte* in )
 Swap_Init
 ================
 */
-void Swap_Init( void )
+void Swap_Init()
 {
 	byte	swaptest[2] = {1, 0};
 
@@ -628,7 +628,7 @@ void Swap_Init( void )
 Swap_IsBigEndian
 ==========
 */
-bool Swap_IsBigEndian( void )
+bool Swap_IsBigEndian()
 {
 	byte	swaptest[2] = {1, 0};
 	return *( short* )swaptest != 1;

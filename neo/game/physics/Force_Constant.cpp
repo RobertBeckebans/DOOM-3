@@ -39,7 +39,7 @@ END_CLASS
 idForce_Constant::idForce_Constant
 ================
 */
-idForce_Constant::idForce_Constant( void )
+idForce_Constant::idForce_Constant()
 {
 	force		= vec3_zero;
 	physics		= NULL;
@@ -52,7 +52,7 @@ idForce_Constant::idForce_Constant( void )
 idForce_Constant::~idForce_Constant
 ================
 */
-idForce_Constant::~idForce_Constant( void )
+idForce_Constant::~idForce_Constant()
 {
 }
 

@@ -29,12 +29,12 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-void	RadiantInit( void )
+void	RadiantInit()
 {
 	common->Printf( "The level editor Radiant only runs on Win32\n" );
 }
-void	RadiantShutdown( void ) {}
-void	RadiantRun( void ) {}
+void	RadiantShutdown() {}
+void	RadiantRun() {}
 void	RadiantPrint( const char* text ) {}
 void	RadiantSync( const char* mapName, const idVec3& viewOrg, const idAngles& viewAngles ) {}
 
@@ -42,66 +42,66 @@ void	LightEditorInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Light Editor only runs on Win32\n" );
 }
-void	LightEditorShutdown( void ) {}
-void	LightEditorRun( void ) {}
+void	LightEditorShutdown() {}
+void	LightEditorRun() {}
 
 void	SoundEditorInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Sound Editor only runs on Win32\n" );
 }
-void	SoundEditorShutdown( void ) {}
-void	SoundEditorRun( void ) {}
+void	SoundEditorShutdown() {}
+void	SoundEditorRun() {}
 
 void	AFEditorInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Articulated Figure Editor only runs on Win32\n" );
 }
-void	AFEditorShutdown( void ) {}
-void	AFEditorRun( void ) {}
+void	AFEditorShutdown() {}
+void	AFEditorRun() {}
 
 void	ParticleEditorInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Particle Editor only runs on Win32\n" );
 }
-void	ParticleEditorShutdown( void ) {}
-void	ParticleEditorRun( void ) {}
+void	ParticleEditorShutdown() {}
+void	ParticleEditorRun() {}
 
 void	ScriptEditorInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Script Editor only runs on Win32\n" );
 }
-void	ScriptEditorShutdown( void ) {}
-void	ScriptEditorRun( void ) {}
+void	ScriptEditorShutdown() {}
+void	ScriptEditorRun() {}
 
 void	DeclBrowserInit( const idDict* spawnArgs )
 {
 	common->Printf( "The Declaration Browser only runs on Win32\n" );
 }
-void	DeclBrowserShutdown( void ) {}
-void	DeclBrowserRun( void ) {}
-void	DeclBrowserReloadDeclarations( void ) {}
+void	DeclBrowserShutdown() {}
+void	DeclBrowserRun() {}
+void	DeclBrowserReloadDeclarations() {}
 
-void	GUIEditorInit( void )
+void	GUIEditorInit()
 {
 	common->Printf( "The GUI Editor only runs on Win32\n" );
 }
-void	GUIEditorShutdown( void ) {}
-void	GUIEditorRun( void ) {}
+void	GUIEditorShutdown() {}
+void	GUIEditorRun() {}
 bool	GUIEditorHandleMessage( void* msg )
 {
 	return false;
 }
 
-void	DebuggerClientLaunch( void ) {}
+void	DebuggerClientLaunch() {}
 void	DebuggerClientInit( const char* cmdline )
 {
 	common->Printf( "The Script Debugger Client only runs on Win32\n" );
 }
-bool	DebuggerServerInit( void )
+bool	DebuggerServerInit()
 {
 	return false;
 }
-void	DebuggerServerShutdown( void ) {}
+void	DebuggerServerShutdown() {}
 void	DebuggerServerPrint( const char* text ) {}
 void	DebuggerServerCheckBreakpoint( idInterpreter* interpreter, idProgram* program, int instructionPointer ) {}
 

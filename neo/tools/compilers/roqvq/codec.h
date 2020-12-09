@@ -48,10 +48,10 @@ public:
 	codec();
 	~codec();
 
-	void	SparseEncode( void );
-	void	EncodeNothing( void );
-	void	IRGBtab( void );
-	void	InitImages( void );
+	void	SparseEncode();
+	void	EncodeNothing();
+	void	IRGBtab();
+	void	InitImages();
 	void	QuadX( int startX, int startY, int quadSize );
 	void	InitQStatus();
 	float	Snr( byte* old, byte* bnew, int size );
@@ -61,8 +61,8 @@ public:
 	void	VqData8( byte* cel, quadcel* pquad );
 	void	VqData4( byte* cel, quadcel* pquad );
 	void	VqData2( byte* cel, quadcel* pquad );
-	int		MotMeanY( void );
-	int		MotMeanX( void );
+	int		MotMeanY();
+	int		MotMeanX();
 	void	SetPreviousImage( const char* filename, NSBitmapImageRep* timage );
 	int		BestCodeword( unsigned char* tempvector, int dimension, VQDATA** codebook );
 private:

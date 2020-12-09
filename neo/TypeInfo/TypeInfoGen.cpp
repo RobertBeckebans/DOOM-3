@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 idTypeInfoGen::idTypeInfoGen
 ================
 */
-idTypeInfoGen::idTypeInfoGen( void )
+idTypeInfoGen::idTypeInfoGen()
 {
 }
 
@@ -46,7 +46,7 @@ idTypeInfoGen::idTypeInfoGen( void )
 idTypeInfoGen::~idTypeInfoGen
 ================
 */
-idTypeInfoGen::~idTypeInfoGen( void )
+idTypeInfoGen::~idTypeInfoGen()
 {
 	constants.DeleteContents( true );
 	enums.DeleteContents( true );

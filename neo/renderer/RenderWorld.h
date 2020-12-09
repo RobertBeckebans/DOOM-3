@@ -335,7 +335,7 @@ public:
 	//-------------- Portal Area Information -----------------
 
 	// returns the number of portals
-	virtual int				NumPortals( void ) const = 0;
+	virtual int				NumPortals() const = 0;
 
 	// returns 0 if no portal contacts the bounds
 	// This is used by the game to identify portals that are contained
@@ -354,7 +354,7 @@ public:
 
 	// returns the number of portal areas in a map, so game code can build information
 	// tables for the different areas
-	virtual	int				NumAreas( void ) const = 0;
+	virtual	int				NumAreas() const = 0;
 
 	// Will return -1 if the point is not in an area, otherwise
 	// it will return 0 <= value < NumAreas()

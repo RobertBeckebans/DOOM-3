@@ -59,23 +59,23 @@ class idBrittleFracture : public idEntity
 public:
 	CLASS_PROTOTYPE( idBrittleFracture );
 
-	idBrittleFracture( void );
-	virtual						~idBrittleFracture( void );
+	idBrittleFracture();
+	virtual						~idBrittleFracture();
 
 	void						Save( idSaveGame* savefile ) const;
 	void						Restore( idRestoreGame* savefile );
 
-	void						Spawn( void );
+	void						Spawn();
 
-	virtual void				Present( void );
-	virtual void				Think( void );
+	virtual void				Present();
+	virtual void				Think();
 	virtual void				ApplyImpulse( idEntity* ent, int id, const idVec3& point, const idVec3& impulse );
 	virtual void				AddForce( idEntity* ent, int id, const idVec3& point, const idVec3& force );
 	virtual void				AddDamageEffect( const trace_t& collision, const idVec3& velocity, const char* damageDefName );
 	virtual void				Killed( idEntity* inflictor, idEntity* attacker, int damage, const idVec3& dir, int location );
 
 	void						ProjectDecal( const idVec3& point, const idVec3& dir, const int time, const char* damageDefName );
-	bool						IsBroken( void ) const;
+	bool						IsBroken() const;
 
 	enum
 	{
@@ -84,7 +84,7 @@ public:
 		EVENT_MAXEVENTS
 	};
 
-	virtual void				ClientPredictionThink( void );
+	virtual void				ClientPredictionThink();
 	virtual bool				ClientReceiveEvent( int event, int time, const idBitMsg& msg );
 
 private:
@@ -121,10 +121,10 @@ private:
 	void						DropShard( shard_t* shard, const idVec3& point, const idVec3& dir, const float impulse, const int time );
 	void						Shatter( const idVec3& point, const idVec3& impulse, const int time );
 	void						DropFloatingIslands( const idVec3& point, const idVec3& impulse, const int time );
-	void						Break( void );
+	void						Break();
 	void						Fracture_r( idFixedWinding& w );
 	void						CreateFractures( const idRenderModel* renderModel );
-	void						FindNeighbours( void );
+	void						FindNeighbours();
 
 	void						Event_Activate( idEntity* activator );
 	void						Event_Touch( idEntity* other, trace_t* trace );

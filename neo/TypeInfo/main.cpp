@@ -36,7 +36,7 @@ idSession* 			session = NULL;
 idDeclManager* 		declManager = NULL;
 idEventLoop* 		eventLoop = NULL;
 
-int idEventLoop::JournalLevel( void ) const
+int idEventLoop::JournalLevel() const
 {
 	return 0;
 }
@@ -61,25 +61,25 @@ int idEventLoop::JournalLevel( void ) const
 class idCommonLocal : public idCommon
 {
 public:
-	idCommonLocal( void ) {}
+	idCommonLocal() {}
 
 	virtual void			Init( int argc, const char** argv, const char* cmdline ) {}
-	virtual void			Shutdown( void ) {}
-	virtual void			Quit( void ) {}
-	virtual bool			IsInitialized( void ) const
+	virtual void			Shutdown() {}
+	virtual void			Quit() {}
+	virtual bool			IsInitialized() const
 	{
 		return true;
 	}
-	virtual void			Frame( void ) {}
+	virtual void			Frame() {}
 	virtual void			GUIFrame( bool execCmd, bool network ) {}
-	virtual void			Async( void ) {}
+	virtual void			Async() {}
 	virtual void			StartupVariable( const char* match, bool once ) {}
 	virtual void			InitTool( const toolFlag_t tool, const idDict* dict ) {}
 	virtual void			ActivateTool( bool active ) {}
 	virtual void			WriteConfigToFile( const char* filename ) {}
 	virtual void			WriteFlaggedCVarsToFile( const char* filename, int flags, const char* setCmd ) {}
 	virtual void			BeginRedirect( char* buffer, int buffersize, void ( *flush )( const char* ) ) {}
-	virtual void			EndRedirect( void ) {}
+	virtual void			EndRedirect() {}
 	virtual void			SetRefreshOnPrint( bool set ) {}
 	virtual void			Printf( const char* fmt, ... )
 	{
@@ -101,7 +101,7 @@ public:
 	{
 		/*STDIO_PRINT( "WARNING: ", "\n" );*/
 	}
-	virtual void			PrintWarnings( void ) {}
+	virtual void			PrintWarnings() {}
 	virtual void			ClearWarnings( const char* reason ) {}
 	virtual void			Error( const char* fmt, ... )
 	{
@@ -159,7 +159,7 @@ ID_TIME_T			Sys_FileTimeStamp( FILE* fp )
 #include <io.h>
 #include <direct.h>
 
-const char* Sys_Cwd( void )
+const char* Sys_Cwd()
 {
 	static char cwd[1024];
 
@@ -175,22 +175,22 @@ const char* Sys_Cwd( void )
 	return cwd;
 }
 
-const char* Sys_DefaultCDPath( void )
+const char* Sys_DefaultCDPath()
 {
 	return "";
 }
 
-const char* Sys_DefaultBasePath( void )
+const char* Sys_DefaultBasePath()
 {
 	return Sys_Cwd();
 }
 
-const char* Sys_DefaultSavePath( void )
+const char* Sys_DefaultSavePath()
 {
 	return cvarSystem->GetCVarString( "fs_basepath" );
 }
 
-const char* Sys_EXEPath( void )
+const char* Sys_EXEPath()
 {
 	return "";
 }
@@ -245,15 +245,15 @@ int Sys_ListFiles( const char* directory, const char* extension, idStrList& list
 
 #else
 
-const char* 	Sys_DefaultCDPath( void )
+const char* 	Sys_DefaultCDPath()
 {
 	return "";
 }
-const char* 	Sys_DefaultBasePath( void )
+const char* 	Sys_DefaultBasePath()
 {
 	return "";
 }
-const char* 	Sys_DefaultSavePath( void )
+const char* 	Sys_DefaultSavePath()
 {
 	return "";
 }
@@ -284,27 +284,27 @@ idSysLocal stub
 void			idSysLocal::DebugPrintf( const char* fmt, ... ) {}
 void			idSysLocal::DebugVPrintf( const char* fmt, va_list arg ) {}
 
-double			idSysLocal::GetClockTicks( void )
+double			idSysLocal::GetClockTicks()
 {
 	return 0.0;
 }
-double			idSysLocal::ClockTicksPerSecond( void )
+double			idSysLocal::ClockTicksPerSecond()
 {
 	return 1.0;
 }
-cpuid_t			idSysLocal::GetProcessorId( void )
+cpuid_t			idSysLocal::GetProcessorId()
 {
 	return ( cpuid_t )0;
 }
-const char* 	idSysLocal::GetProcessorString( void )
+const char* 	idSysLocal::GetProcessorString()
 {
 	return "";
 }
-const char* 	idSysLocal::FPU_GetState( void )
+const char* 	idSysLocal::FPU_GetState()
 {
 	return "";
 }
-bool			idSysLocal::FPU_StackIsEmpty( void )
+bool			idSysLocal::FPU_StackIsEmpty()
 {
 	return true;
 }
@@ -332,7 +332,7 @@ const char* 	idSysLocal::GetCallStackCurStr( int depth )
 {
 	return "";
 }
-void			idSysLocal::ShutdownSymbols( void ) {}
+void			idSysLocal::ShutdownSymbols() {}
 
 int				idSysLocal::DLL_Load( const char* dllName )
 {

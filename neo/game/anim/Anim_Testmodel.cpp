@@ -100,7 +100,7 @@ void idTestModel::Restore( idRestoreGame* savefile )
 idTestModel::Spawn
 ================
 */
-void idTestModel::Spawn( void )
+void idTestModel::Spawn()
 {
 	idVec3				size;
 	idBounds			bounds;
@@ -248,7 +248,7 @@ idTestModel::~idTestModel()
 idTestModel::Event_Footstep
 ===============
 */
-void idTestModel::Event_Footstep( void )
+void idTestModel::Event_Footstep()
 {
 	StartSound( "snd_footstep", SND_CHANNEL_BODY, 0, false, NULL );
 }
@@ -261,7 +261,7 @@ Called during idEntity::Spawn to see if it should construct the script object or
 Overridden by subclasses that need to spawn the script object themselves.
 ================
 */
-bool idTestModel::ShouldConstructScriptObjectAtSpawn( void ) const
+bool idTestModel::ShouldConstructScriptObjectAtSpawn() const
 {
 	return false;
 }
@@ -271,7 +271,7 @@ bool idTestModel::ShouldConstructScriptObjectAtSpawn( void ) const
 idTestModel::Think
 ================
 */
-void idTestModel::Think( void )
+void idTestModel::Think()
 {
 	idVec3 pos;
 	idMat3 axis;

@@ -54,36 +54,36 @@ public:
 
 	bool			Create( HINSTANCE hInstance );
 
-	static bool		Activate( void );
+	static bool		Activate();
 
 	void			ProcessNetMessage( msg_t* msg );
 
 	void			Printf( const char* format, ... );
 
-	HWND			GetWindow( void );
+	HWND			GetWindow();
 
 	void			AddWatch( const char* name, bool update = true );
 
-	HINSTANCE		GetInstance( void );
+	HINSTANCE		GetInstance();
 
 protected:
 
 	bool					FindPrev( const char* text = NULL );
 	bool					FindNext( const char* text = NULL );
 
-	void					UpdateWatch( void );
-	void					UpdateWindowMenu( void );
-	void					UpdateScript( void );
-	void					UpdateToolbar( void );
-	void					UpdateTitle( void );
-	void					UpdateCallstack( void );
-	void					UpdateRecentFiles( void );
+	void					UpdateWatch();
+	void					UpdateWindowMenu();
+	void					UpdateScript();
+	void					UpdateToolbar();
+	void					UpdateTitle();
+	void					UpdateCallstack();
+	void					UpdateRecentFiles();
 	bool					OpenScript( const char* filename, int lineNumber = -1 );
 	void					EnableWindows( bool state );
 
 	int						GetSelectedText( idStr& text );
 
-	void					ToggleBreakpoint( void );
+	void					ToggleBreakpoint();
 
 	HWND							mWnd;
 	HWND							mWndScript;
@@ -132,9 +132,9 @@ protected:
 
 private:
 
-	bool		RegisterClass( void );
-	void		CreateToolbar( void );
-	bool		InitRecentFiles( void );
+	bool		RegisterClass();
+	void		CreateToolbar();
+	bool		InitRecentFiles();
 
 	int			HandleInitMenu( WPARAM wParam, LPARAM lParam );
 	int			HandleCommand( WPARAM wParam, LPARAM lParam );
@@ -155,7 +155,7 @@ private:
 rvDebuggerWindow::GetWindow
 ================
 */
-ID_INLINE HWND rvDebuggerWindow::GetWindow( void )
+ID_INLINE HWND rvDebuggerWindow::GetWindow()
 {
 	return mWnd;
 }
@@ -165,7 +165,7 @@ ID_INLINE HWND rvDebuggerWindow::GetWindow( void )
 rvDebuggerWindow::UpdateToolbar
 ================
 */
-ID_INLINE void rvDebuggerWindow::UpdateToolbar( void )
+ID_INLINE void rvDebuggerWindow::UpdateToolbar()
 {
 	HandleInitMenu( ( WPARAM )GetMenu( mWnd ), 0 );
 }
@@ -175,7 +175,7 @@ ID_INLINE void rvDebuggerWindow::UpdateToolbar( void )
 rvDebuggerWindow::GetInstance
 ================
 */
-ID_INLINE HINSTANCE rvDebuggerWindow::GetInstance( void )
+ID_INLINE HINSTANCE rvDebuggerWindow::GetInstance()
 {
 	return mInstance;
 }

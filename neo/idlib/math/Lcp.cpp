@@ -66,7 +66,7 @@ private:
 	bool			padded;				// set to true if the rows of the initial matrix are 16 byte padded
 
 private:
-	bool			FactorClamped( void );
+	bool			FactorClamped();
 	void			SolveClamped( idVecX& x, const float* b );
 	void			Swap( int i, int j );
 	void			AddClamped( int r );
@@ -83,7 +83,7 @@ private:
 idLCP_Square::FactorClamped
 ============
 */
-bool idLCP_Square::FactorClamped( void )
+bool idLCP_Square::FactorClamped()
 {
 	int i, j, k;
 	float s, d;
@@ -958,7 +958,7 @@ private:
 	bool			padded;				// set to true if the rows of the initial matrix are 16 byte padded
 
 private:
-	bool			FactorClamped( void );
+	bool			FactorClamped();
 	void			SolveClamped( idVecX& x, const float* b );
 	void			Swap( int i, int j );
 	void			AddClamped( int r, bool useSolveCache );
@@ -975,7 +975,7 @@ private:
 idLCP_Symmetric::FactorClamped
 ============
 */
-bool idLCP_Symmetric::FactorClamped( void )
+bool idLCP_Symmetric::FactorClamped()
 {
 
 	clampedChangeStart = 0;
@@ -1864,7 +1864,7 @@ bool idLCP_Symmetric::Solve( const idMatX& o_m, idVecX& o_x, const idVecX& o_b, 
 idLCP::AllocSquare
 ============
 */
-idLCP* idLCP::AllocSquare( void )
+idLCP* idLCP::AllocSquare()
 {
 	idLCP* lcp = new idLCP_Square;
 	lcp->SetMaxIterations( 32 );
@@ -1876,7 +1876,7 @@ idLCP* idLCP::AllocSquare( void )
 idLCP::AllocSymmetric
 ============
 */
-idLCP* idLCP::AllocSymmetric( void )
+idLCP* idLCP::AllocSymmetric()
 {
 	idLCP* lcp = new idLCP_Symmetric;
 	lcp->SetMaxIterations( 32 );
@@ -1888,7 +1888,7 @@ idLCP* idLCP::AllocSymmetric( void )
 idLCP::~idLCP
 ============
 */
-idLCP::~idLCP( void )
+idLCP::~idLCP()
 {
 }
 
@@ -1907,7 +1907,7 @@ void idLCP::SetMaxIterations( int max )
 idLCP::GetMaxIterations
 ============
 */
-int idLCP::GetMaxIterations( void )
+int idLCP::GetMaxIterations()
 {
 	return maxIterations;
 }

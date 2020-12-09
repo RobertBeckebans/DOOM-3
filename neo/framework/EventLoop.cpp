@@ -40,7 +40,7 @@ idEventLoop* eventLoop = &eventLoopLocal;
 idEventLoop::idEventLoop
 =================
 */
-idEventLoop::idEventLoop( void )
+idEventLoop::idEventLoop()
 {
 	com_journalFile = NULL;
 	com_journalDataFile = NULL;
@@ -52,7 +52,7 @@ idEventLoop::idEventLoop( void )
 idEventLoop::~idEventLoop
 =================
 */
-idEventLoop::~idEventLoop( void )
+idEventLoop::~idEventLoop()
 {
 }
 
@@ -61,7 +61,7 @@ idEventLoop::~idEventLoop( void )
 idEventLoop::GetRealEvent
 =================
 */
-sysEvent_t	idEventLoop::GetRealEvent( void )
+sysEvent_t	idEventLoop::GetRealEvent()
 {
 	int			r;
 	sysEvent_t	ev;
@@ -152,7 +152,7 @@ void idEventLoop::PushEvent( sysEvent_t* event )
 idEventLoop::GetEvent
 =================
 */
-sysEvent_t idEventLoop::GetEvent( void )
+sysEvent_t idEventLoop::GetEvent()
 {
 	if( com_pushedEventsHead > com_pushedEventsTail )
 	{
@@ -229,7 +229,7 @@ int idEventLoop::RunEventLoop( bool commandExecution )
 idEventLoop::Init
 =============
 */
-void idEventLoop::Init( void )
+void idEventLoop::Init()
 {
 
 	initialTimeOffset = Sys_Milliseconds();
@@ -263,7 +263,7 @@ void idEventLoop::Init( void )
 idEventLoop::Shutdown
 =============
 */
-void idEventLoop::Shutdown( void )
+void idEventLoop::Shutdown()
 {
 	if( com_journalFile )
 	{
@@ -284,7 +284,7 @@ idEventLoop::Milliseconds
 Can be used for profiling, but will be journaled accurately
 ================
 */
-int idEventLoop::Milliseconds( void )
+int idEventLoop::Milliseconds()
 {
 #if 1	// FIXME!
 	return Sys_Milliseconds() - initialTimeOffset;
@@ -312,7 +312,7 @@ int idEventLoop::Milliseconds( void )
 idEventLoop::JournalLevel
 ================
 */
-int idEventLoop::JournalLevel( void ) const
+int idEventLoop::JournalLevel() const
 {
 	return com_journal.GetInteger();
 }

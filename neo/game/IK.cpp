@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 idIK::idIK
 ================
 */
-idIK::idIK( void )
+idIK::idIK()
 {
 	ik_activate = false;
 	initialized = false;
@@ -59,7 +59,7 @@ idIK::idIK( void )
 idIK::~idIK
 ================
 */
-idIK::~idIK( void )
+idIK::~idIK()
 {
 }
 
@@ -119,7 +119,7 @@ void idIK::Restore( idRestoreGame* savefile )
 idIK::IsInitialized
 ================
 */
-bool idIK::IsInitialized( void ) const
+bool idIK::IsInitialized() const
 {
 	return initialized && ik_enable.GetBool();
 }
@@ -178,7 +178,7 @@ bool idIK::Init( idEntity* self, const char* anim, const idVec3& modelOffset )
 idIK::Evaluate
 ================
 */
-void idIK::Evaluate( void )
+void idIK::Evaluate()
 {
 }
 
@@ -187,7 +187,7 @@ void idIK::Evaluate( void )
 idIK::ClearJointMods
 ================
 */
-void idIK::ClearJointMods( void )
+void idIK::ClearJointMods()
 {
 	ik_activate = false;
 }
@@ -650,7 +650,7 @@ bool idIK_Walk::Init( idEntity* self, const char* anim, const idVec3& modelOffse
 idIK_Walk::Evaluate
 ================
 */
-void idIK_Walk::Evaluate( void )
+void idIK_Walk::Evaluate()
 {
 	int i, newPivotFoot;
 	float modelHeight, jointHeight, lowestHeight, floorHeights[MAX_LEGS];
@@ -895,7 +895,7 @@ void idIK_Walk::Evaluate( void )
 idIK_Walk::ClearJointMods
 ================
 */
-void idIK_Walk::ClearJointMods( void )
+void idIK_Walk::ClearJointMods()
 {
 	int i;
 
@@ -921,7 +921,7 @@ void idIK_Walk::ClearJointMods( void )
 idIK_Walk::EnableAll
 ================
 */
-void idIK_Walk::EnableAll( void )
+void idIK_Walk::EnableAll()
 {
 	enabledLegs = ( 1 << numLegs ) - 1;
 	oldHeightsValid = false;
@@ -932,7 +932,7 @@ void idIK_Walk::EnableAll( void )
 idIK_Walk::DisableAll
 ================
 */
-void idIK_Walk::DisableAll( void )
+void idIK_Walk::DisableAll()
 {
 	enabledLegs = 0;
 	oldHeightsValid = false;
@@ -1231,7 +1231,7 @@ bool idIK_Reach::Init( idEntity* self, const char* anim, const idVec3& modelOffs
 idIK_Reach::Evaluate
 ================
 */
-void idIK_Reach::Evaluate( void )
+void idIK_Reach::Evaluate()
 {
 	int i;
 	idVec3 modelOrigin, shoulderOrigin, elbowOrigin, handOrigin, shoulderDir, elbowDir;
@@ -1297,7 +1297,7 @@ void idIK_Reach::Evaluate( void )
 idIK_Reach::ClearJointMods
 ================
 */
-void idIK_Reach::ClearJointMods( void )
+void idIK_Reach::ClearJointMods()
 {
 	int i;
 

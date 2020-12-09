@@ -40,13 +40,13 @@ If you have questions concerning this license or the applicable additional terms
 class idBase64
 {
 public:
-	idBase64( void );
+	idBase64();
 	idBase64( const idStr& s );
-	~idBase64( void );
+	~idBase64();
 
 	void		Encode( const byte* from, int size );
 	void		Encode( const idStr& src );
-	int			DecodeLength( void ) const; // minimum size in bytes of destination buffer for decoding
+	int			DecodeLength() const; // minimum size in bytes of destination buffer for decoding
 	int			Decode( byte* to ) const; // does not append a \0 - needs a DecodeLength() bytes buffer
 	void		Decode( idStr& dest ) const; // decodes the binary content to an idStr (a bit dodgy, \0 and other non-ascii are possible in the decoded content)
 	void		Decode( idFile* dest ) const;
@@ -60,12 +60,12 @@ private:
 	int			len;
 	int			alloced;
 
-	void		Init( void );
-	void		Release( void );
+	void		Init();
+	void		Release();
 	void		EnsureAlloced( int size );
 };
 
-ID_INLINE idBase64::idBase64( void )
+ID_INLINE idBase64::idBase64()
 {
 	Init();
 }
@@ -76,24 +76,24 @@ ID_INLINE idBase64::idBase64( const idStr& s )
 	*this = s;
 }
 
-ID_INLINE idBase64::~idBase64( void )
+ID_INLINE idBase64::~idBase64()
 {
 	Release();
 }
 
-ID_INLINE const char* idBase64::c_str( void ) const
+ID_INLINE const char* idBase64::c_str() const
 {
 	return ( const char* )data;
 }
 
-ID_INLINE void idBase64::Init( void )
+ID_INLINE void idBase64::Init()
 {
 	len = 0;
 	alloced = 0;
 	data = NULL;
 }
 
-ID_INLINE void idBase64::Release( void )
+ID_INLINE void idBase64::Release()
 {
 	if( data )
 	{

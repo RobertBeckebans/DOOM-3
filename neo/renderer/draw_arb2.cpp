@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 
 CGcontext cg_context;
 
-static void cg_error_callback( void )
+static void cg_error_callback()
 {
 	CGerror i = cgGetError();
 	common->Printf( "Cg error (%d): %s\n", i, cgGetErrorString( i ) );
@@ -257,7 +257,7 @@ void RB_ARB2_CreateDrawInteractions( const drawSurf_t* surf )
 RB_ARB2_DrawInteractions
 ==================
 */
-void RB_ARB2_DrawInteractions( void )
+void RB_ARB2_DrawInteractions()
 {
 	viewLight_t*		vLight;
 	const idMaterial*	lightShader;
@@ -574,7 +574,7 @@ R_ARB2_Init
 
 ==================
 */
-void R_ARB2_Init( void )
+void R_ARB2_Init()
 {
 	glConfig.allowARB2Path = false;
 

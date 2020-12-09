@@ -245,15 +245,15 @@ typedef unsigned long address_t;
 template<class type> class idList;		// for Sys_ListFiles
 
 
-void			Sys_Init( void );
-void			Sys_Shutdown( void );
+void			Sys_Init();
+void			Sys_Shutdown();
 void			Sys_Error( const char* error, ... );
-void			Sys_Quit( void );
+void			Sys_Quit();
 
-bool			Sys_AlreadyRunning( void );
+bool			Sys_AlreadyRunning();
 
 // note that this isn't journaled...
-char* 			Sys_GetClipboardData( void );
+char* 			Sys_GetClipboardData();
 void			Sys_SetClipboardData( const char* string );
 
 // will go to the various text consoles
@@ -273,24 +273,24 @@ void			Sys_Sleep( int msec );
 
 // Sys_Milliseconds should only be used for profiling purposes,
 // any game related timing information should come from event timestamps
-int				Sys_Milliseconds( void );
+int				Sys_Milliseconds();
 
 // for accurate performance testing
-double			Sys_GetClockTicks( void );
-double			Sys_ClockTicksPerSecond( void );
+double			Sys_GetClockTicks();
+double			Sys_ClockTicksPerSecond();
 
 // returns a selection of the CPUID_* flags
-cpuid_t			Sys_GetProcessorId( void );
-const char* 	Sys_GetProcessorString( void );
+cpuid_t			Sys_GetProcessorId();
+const char* 	Sys_GetProcessorString();
 
 // returns true if the FPU stack is empty
-bool			Sys_FPU_StackIsEmpty( void );
+bool			Sys_FPU_StackIsEmpty();
 
 // empties the FPU stack
-void			Sys_FPU_ClearStack( void );
+void			Sys_FPU_ClearStack();
 
 // returns the FPU state as a string
-const char* 	Sys_FPU_GetState( void );
+const char* 	Sys_FPU_GetState();
 
 // enables the given FPU exceptions
 void			Sys_FPU_EnableExceptions( int exceptions );
@@ -308,10 +308,10 @@ void			Sys_FPU_SetFTZ( bool enable );
 void			Sys_FPU_SetDAZ( bool enable );
 
 // returns amount of system ram
-int				Sys_GetSystemRam( void );
+int				Sys_GetSystemRam();
 
 // returns amount of video ram
-int				Sys_GetVideoRam( void );
+int				Sys_GetVideoRam();
 
 // returns amount of drive space in path
 int				Sys_GetDriveFreeSpace( const char* path );
@@ -332,7 +332,7 @@ void			Sys_GetCallStack( address_t* callStack, const int callStackSize );
 const char* 	Sys_GetCallStackStr( const address_t* callStack, const int callStackSize );
 const char* 	Sys_GetCallStackCurStr( int depth );
 const char* 	Sys_GetCallStackCurAddressStr( int depth );
-void			Sys_ShutdownSymbols( void );
+void			Sys_ShutdownSymbols();
 
 // DLL loading, the path should be a fully qualified OS path to the DLL file to be loaded
 int				Sys_DLL_Load( const char* dllName );
@@ -340,16 +340,16 @@ void* 			Sys_DLL_GetProcAddress( int dllHandle, const char* procName );
 void			Sys_DLL_Unload( int dllHandle );
 
 // event generation
-void			Sys_GenerateEvents( void );
-sysEvent_t		Sys_GetEvent( void );
-void			Sys_ClearEvents( void );
+void			Sys_GenerateEvents();
+sysEvent_t		Sys_GetEvent();
+void			Sys_ClearEvents();
 
 // input is tied to windows, so it needs to be started up and shut down whenever
 // the main window is recreated
-void			Sys_InitInput( void );
-void			Sys_ShutdownInput( void );
-void			Sys_InitScanTable( void );
-const unsigned char* Sys_GetScanTable( void );
+void			Sys_InitInput();
+void			Sys_ShutdownInput();
+void			Sys_InitScanTable();
+const unsigned char* Sys_GetScanTable();
 unsigned char	Sys_GetConsoleKey( bool shifted );
 // map a scancode key to a char
 // does nothing on win32, as SE_KEY == SE_CHAR there
@@ -357,14 +357,14 @@ unsigned char	Sys_GetConsoleKey( bool shifted );
 unsigned char	Sys_MapCharForKey( int key );
 
 // keyboard input polling
-int				Sys_PollKeyboardInputEvents( void );
+int				Sys_PollKeyboardInputEvents();
 int				Sys_ReturnKeyboardInputEvent( const int n, int& ch, bool& state );
-void			Sys_EndKeyboardInputEvents( void );
+void			Sys_EndKeyboardInputEvents();
 
 // mouse input polling
-int				Sys_PollMouseInputEvents( void );
+int				Sys_PollMouseInputEvents();
 int				Sys_ReturnMouseInputEvent( const int n, int& action, int& value );
-void			Sys_EndMouseInputEvents( void );
+void			Sys_EndMouseInputEvents();
 
 // when the console is down, or the game is about to perform a lengthy
 // operation like map loading, the system can release the mouse cursor
@@ -372,7 +372,7 @@ void			Sys_EndMouseInputEvents( void );
 void			Sys_GrabMouseCursor( bool grabIt );
 
 void			Sys_ShowWindow( bool show );
-bool			Sys_IsWindowVisible( void );
+bool			Sys_IsWindowVisible();
 void			Sys_ShowConsole( int visLevel, bool quitOnClose );
 
 
@@ -380,10 +380,10 @@ void			Sys_Mkdir( const char* path );
 ID_TIME_T			Sys_FileTimeStamp( FILE* fp );
 // NOTE: do we need to guarantee the same output on all platforms?
 const char* 	Sys_TimeStampToStr( ID_TIME_T timeStamp );
-const char* 	Sys_DefaultCDPath( void );
-const char* 	Sys_DefaultBasePath( void );
-const char* 	Sys_DefaultSavePath( void );
-const char* 	Sys_EXEPath( void );
+const char* 	Sys_DefaultCDPath();
+const char* 	Sys_DefaultBasePath();
+const char* 	Sys_DefaultSavePath();
+const char* 	Sys_EXEPath();
 
 // use fs_debug to verbose Sys_ListFiles
 // returns -1 if directory was not found (the list is cleared)
@@ -393,7 +393,7 @@ int				Sys_ListFiles( const char* directory, const char* extension, idList<class
 void			Sys_SetFatalError( const char* error );
 
 // display perference dialog
-void			Sys_DoPreferences( void );
+void			Sys_DoPreferences();
 
 /*
 ==============================================================
@@ -428,11 +428,11 @@ public:
 
 	// if the InitForPort fails, the idPort.port field will remain 0
 	bool		InitForPort( int portNumber );
-	int			GetPort( void ) const
+	int			GetPort() const
 	{
 		return bound_to.port;
 	}
-	netadr_t	GetAdr( void ) const
+	netadr_t	GetAdr() const
 	{
 		return bound_to;
 	}
@@ -484,8 +484,8 @@ const char* 	Sys_NetAdrToString( const netadr_t a );
 bool			Sys_IsLANAddress( const netadr_t a );
 bool			Sys_CompareNetAdrBase( const netadr_t a, const netadr_t b );
 
-void			Sys_InitNetworking( void );
-void			Sys_ShutdownNetworking( void );
+void			Sys_InitNetworking();
+void			Sys_ShutdownNetworking();
 
 
 /*
@@ -563,12 +563,12 @@ public:
 	virtual void			DebugPrintf( const char* fmt, ... )id_attribute( ( format( printf, 2, 3 ) ) ) = 0;
 	virtual void			DebugVPrintf( const char* fmt, va_list arg ) = 0;
 
-	virtual double			GetClockTicks( void ) = 0;
-	virtual double			ClockTicksPerSecond( void ) = 0;
-	virtual cpuid_t			GetProcessorId( void ) = 0;
-	virtual const char* 	GetProcessorString( void ) = 0;
-	virtual const char* 	FPU_GetState( void ) = 0;
-	virtual bool			FPU_StackIsEmpty( void ) = 0;
+	virtual double			GetClockTicks() = 0;
+	virtual double			ClockTicksPerSecond() = 0;
+	virtual cpuid_t			GetProcessorId() = 0;
+	virtual const char* 	GetProcessorString() = 0;
+	virtual const char* 	FPU_GetState() = 0;
+	virtual bool			FPU_StackIsEmpty() = 0;
 	virtual void			FPU_SetFTZ( bool enable ) = 0;
 	virtual void			FPU_SetDAZ( bool enable ) = 0;
 
@@ -580,7 +580,7 @@ public:
 	virtual void			GetCallStack( address_t* callStack, const int callStackSize ) = 0;
 	virtual const char* 	GetCallStackStr( const address_t* callStack, const int callStackSize ) = 0;
 	virtual const char* 	GetCallStackCurStr( int depth ) = 0;
-	virtual void			ShutdownSymbols( void ) = 0;
+	virtual void			ShutdownSymbols() = 0;
 
 	virtual int				DLL_Load( const char* dllName ) = 0;
 	virtual void* 			DLL_GetProcAddress( int dllHandle, const char* procName ) = 0;
@@ -596,7 +596,7 @@ public:
 
 extern idSys* 				sys;
 
-bool Sys_LoadOpenAL( void );
-void Sys_FreeOpenAL( void );
+bool Sys_LoadOpenAL();
+void Sys_FreeOpenAL();
 
 #endif /* !__SYS_PUBLIC__ */

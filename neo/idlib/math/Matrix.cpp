@@ -44,7 +44,7 @@ idMat2 mat2_identity( idVec2( 1, 0 ), idVec2( 0, 1 ) );
 idMat2::InverseSelf
 ============
 */
-bool idMat2::InverseSelf( void )
+bool idMat2::InverseSelf()
 {
 	// 2+4 = 6 multiplications
 	//		 1 division
@@ -73,7 +73,7 @@ bool idMat2::InverseSelf( void )
 idMat2::InverseFastSelf
 ============
 */
-bool idMat2::InverseFastSelf( void )
+bool idMat2::InverseFastSelf()
 {
 #if 1
 	// 2+4 = 6 multiplications
@@ -149,7 +149,7 @@ idMat3 mat3_identity( idVec3( 1, 0, 0 ), idVec3( 0, 1, 0 ), idVec3( 0, 0, 1 ) );
 idMat3::ToAngles
 ============
 */
-idAngles idMat3::ToAngles( void ) const
+idAngles idMat3::ToAngles() const
 {
 	idAngles	angles;
 	double		theta;
@@ -191,7 +191,7 @@ idAngles idMat3::ToAngles( void ) const
 idMat3::ToQuat
 ============
 */
-idQuat idMat3::ToQuat( void ) const
+idQuat idMat3::ToQuat() const
 {
 	idQuat		q;
 	float		trace;
@@ -248,7 +248,7 @@ idQuat idMat3::ToQuat( void ) const
 idMat3::ToCQuat
 ============
 */
-idCQuat idMat3::ToCQuat( void ) const
+idCQuat idMat3::ToCQuat() const
 {
 	idQuat q = ToQuat();
 	if( q.w < 0.0f )
@@ -263,7 +263,7 @@ idCQuat idMat3::ToCQuat( void ) const
 idMat3::ToRotation
 ============
 */
-idRotation idMat3::ToRotation( void ) const
+idRotation idMat3::ToRotation() const
 {
 	idRotation	r;
 	float		trace;
@@ -335,7 +335,7 @@ idRotation idMat3::ToRotation( void ) const
 idMat3::ToAngularVelocity
 =================
 */
-idVec3 idMat3::ToAngularVelocity( void ) const
+idVec3 idMat3::ToAngularVelocity() const
 {
 	idRotation rotation = ToRotation();
 	return rotation.GetVec() * DEG2RAD( rotation.GetAngle() );
@@ -346,7 +346,7 @@ idVec3 idMat3::ToAngularVelocity( void ) const
 idMat3::Determinant
 ============
 */
-float idMat3::Determinant( void ) const
+float idMat3::Determinant() const
 {
 
 	float det2_12_01 = mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0];
@@ -361,7 +361,7 @@ float idMat3::Determinant( void ) const
 idMat3::InverseSelf
 ============
 */
-bool idMat3::InverseSelf( void )
+bool idMat3::InverseSelf()
 {
 	// 18+3+9 = 30 multiplications
 	//			 1 division
@@ -408,7 +408,7 @@ bool idMat3::InverseSelf( void )
 idMat3::InverseFastSelf
 ============
 */
-bool idMat3::InverseFastSelf( void )
+bool idMat3::InverseFastSelf()
 {
 #if 1
 	// 18+3+9 = 30 multiplications
@@ -668,7 +668,7 @@ idMat4 mat4_identity( idVec4( 1, 0, 0, 0 ), idVec4( 0, 1, 0, 0 ), idVec4( 0, 0, 
 idMat4::Transpose
 ============
 */
-idMat4 idMat4::Transpose( void ) const
+idMat4 idMat4::Transpose() const
 {
 	idMat4	transpose;
 	int		i, j;
@@ -688,7 +688,7 @@ idMat4 idMat4::Transpose( void ) const
 idMat4::TransposeSelf
 ============
 */
-idMat4& idMat4::TransposeSelf( void )
+idMat4& idMat4::TransposeSelf()
 {
 	float	temp;
 	int		i, j;
@@ -710,7 +710,7 @@ idMat4& idMat4::TransposeSelf( void )
 idMat4::Determinant
 ============
 */
-float idMat4::Determinant( void ) const
+float idMat4::Determinant() const
 {
 
 	// 2x2 sub-determinants
@@ -735,7 +735,7 @@ float idMat4::Determinant( void ) const
 idMat4::InverseSelf
 ============
 */
-bool idMat4::InverseSelf( void )
+bool idMat4::InverseSelf()
 {
 	// 84+4+16 = 104 multiplications
 	//			   1 division
@@ -823,7 +823,7 @@ bool idMat4::InverseSelf( void )
 idMat4::InverseFastSelf
 ============
 */
-bool idMat4::InverseFastSelf( void )
+bool idMat4::InverseFastSelf()
 {
 #if 0
 	// 84+4+16 = 104 multiplications
@@ -1117,7 +1117,7 @@ idMat5 mat5_identity( idVec5( 1, 0, 0, 0, 0 ), idVec5( 0, 1, 0, 0, 0 ), idVec5( 
 idMat5::Transpose
 ============
 */
-idMat5 idMat5::Transpose( void ) const
+idMat5 idMat5::Transpose() const
 {
 	idMat5	transpose;
 	int		i, j;
@@ -1137,7 +1137,7 @@ idMat5 idMat5::Transpose( void ) const
 idMat5::TransposeSelf
 ============
 */
-idMat5& idMat5::TransposeSelf( void )
+idMat5& idMat5::TransposeSelf()
 {
 	float	temp;
 	int		i, j;
@@ -1159,7 +1159,7 @@ idMat5& idMat5::TransposeSelf( void )
 idMat5::Determinant
 ============
 */
-float idMat5::Determinant( void ) const
+float idMat5::Determinant() const
 {
 
 	// 2x2 sub-determinants required to calculate 5x5 determinant
@@ -1202,7 +1202,7 @@ float idMat5::Determinant( void ) const
 idMat5::InverseSelf
 ============
 */
-bool idMat5::InverseSelf( void )
+bool idMat5::InverseSelf()
 {
 	// 280+5+25 = 310 multiplications
 	//				1 division
@@ -1363,7 +1363,7 @@ bool idMat5::InverseSelf( void )
 idMat5::InverseFastSelf
 ============
 */
-bool idMat5::InverseFastSelf( void )
+bool idMat5::InverseFastSelf()
 {
 #if 0
 	// 280+5+25 = 310 multiplications
@@ -1824,7 +1824,7 @@ idMat6 mat6_identity( idVec6( 1, 0, 0, 0, 0, 0 ), idVec6( 0, 1, 0, 0, 0, 0 ), id
 idMat6::Transpose
 ============
 */
-idMat6 idMat6::Transpose( void ) const
+idMat6 idMat6::Transpose() const
 {
 	idMat6	transpose;
 	int		i, j;
@@ -1844,7 +1844,7 @@ idMat6 idMat6::Transpose( void ) const
 idMat6::TransposeSelf
 ============
 */
-idMat6& idMat6::TransposeSelf( void )
+idMat6& idMat6::TransposeSelf()
 {
 	float	temp;
 	int		i, j;
@@ -1866,7 +1866,7 @@ idMat6& idMat6::TransposeSelf( void )
 idMat6::Determinant
 ============
 */
-float idMat6::Determinant( void ) const
+float idMat6::Determinant() const
 {
 
 	// 2x2 sub-determinants required to calculate 6x6 determinant
@@ -1943,7 +1943,7 @@ float idMat6::Determinant( void ) const
 idMat6::InverseSelf
 ============
 */
-bool idMat6::InverseSelf( void )
+bool idMat6::InverseSelf()
 {
 	// 810+6+36 = 852 multiplications
 	//				1 division
@@ -2262,7 +2262,7 @@ bool idMat6::InverseSelf( void )
 idMat6::InverseFastSelf
 ============
 */
-bool idMat6::InverseFastSelf( void )
+bool idMat6::InverseFastSelf()
 {
 #if 0
 	// 810+6+36 = 852 multiplications
@@ -3547,7 +3547,7 @@ idMatX::LowerTriangularInverse
   in-place inversion of the lower triangular matrix
 ============
 */
-bool idMatX::LowerTriangularInverse( void )
+bool idMatX::LowerTriangularInverse()
 {
 	int i, j, k;
 	double d, sum;
@@ -3581,7 +3581,7 @@ idMatX::UpperTriangularInverse
   in-place inversion of the upper triangular matrix
 ============
 */
-bool idMatX::UpperTriangularInverse( void )
+bool idMatX::UpperTriangularInverse()
 {
 	int i, j, k;
 	double d, sum;
@@ -3814,7 +3814,7 @@ idMatX::Inverse_GaussJordan
   in-place inversion using Gauss-Jordan elimination
 ============
 */
-bool idMatX::Inverse_GaussJordan( void )
+bool idMatX::Inverse_GaussJordan()
 {
 	int i, j, k, r, c;
 	float d, max;
@@ -5769,7 +5769,7 @@ idMatX::Cholesky_Factor
   The initial matrix has to be symmetric positive definite.
 ============
 */
-bool idMatX::Cholesky_Factor( void )
+bool idMatX::Cholesky_Factor()
 {
 	int i, j, k;
 	float* invSqrt;
@@ -6279,7 +6279,7 @@ idMatX::LDLT_Factor
   The initial matrix has to be symmetric.
 ============
 */
-bool idMatX::LDLT_Factor( void )
+bool idMatX::LDLT_Factor()
 {
 	int i, j, k;
 	float* v;
@@ -6850,7 +6850,7 @@ void idMatX::LDLT_MultiplyFactors( idMatX& m ) const
 idMatX::TriDiagonal_ClearTriangles
 ============
 */
-void idMatX::TriDiagonal_ClearTriangles( void )
+void idMatX::TriDiagonal_ClearTriangles()
 {
 	int i, j;
 
@@ -7919,7 +7919,7 @@ void idMatX::Eigen_SortDecreasing( idVecX& eigenValues )
 idMatX::DeterminantGeneric
 ============
 */
-float idMatX::DeterminantGeneric( void ) const
+float idMatX::DeterminantGeneric() const
 {
 	int* index;
 	float det;
@@ -7942,7 +7942,7 @@ float idMatX::DeterminantGeneric( void ) const
 idMatX::InverseSelfGeneric
 ============
 */
-bool idMatX::InverseSelfGeneric( void )
+bool idMatX::InverseSelfGeneric()
 {
 	int i, j, *index;
 	idMatX tmp;
@@ -7980,7 +7980,7 @@ bool idMatX::InverseSelfGeneric( void )
 idMatX::Test
 ============
 */
-void idMatX::Test( void )
+void idMatX::Test()
 {
 	idMatX original, m1, m2, m3, q1, q2, r1, r2;
 	idVecX v, w, u, c, d;

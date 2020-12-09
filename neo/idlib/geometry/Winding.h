@@ -41,13 +41,13 @@ class idWinding
 {
 
 public:
-	idWinding( void );
+	idWinding();
 	explicit idWinding( const int n );								// allocate for n points
 	explicit idWinding( const idVec3* verts, const int n );			// winding from points
 	explicit idWinding( const idVec3& normal, const float dist );	// base winding for plane
 	explicit idWinding( const idPlane& plane );						// base winding for plane
 	explicit idWinding( const idWinding& winding );
-	virtual			~idWinding( void );
+	virtual			~idWinding();
 
 	idWinding& 		operator=( const idWinding& winding );
 	const idVec5& 	operator[]( const int index ) const;
@@ -60,9 +60,9 @@ public:
 	void			AddPoint( const idVec5& v );
 
 	// number of points on winding
-	int				GetNumPoints( void ) const;
+	int				GetNumPoints() const;
 	void			SetNumPoints( int n );
-	virtual void	Clear( void );
+	virtual void	Clear();
 
 	// huge winding for plane, the points go counter clockwise when facing the front of the plane
 	void			BaseForPlane( const idVec3& normal, const float dist );
@@ -79,9 +79,9 @@ public:
 	bool			ClipInPlace( const idPlane& plane, const float epsilon = ON_EPSILON, const bool keepOn = false );
 
 	// returns a copy of the winding
-	idWinding* 		Copy( void ) const;
-	idWinding* 		Reverse( void ) const;
-	void			ReverseSelf( void );
+	idWinding* 		Copy() const;
+	idWinding* 		Reverse() const;
+	void			ReverseSelf();
 	void			RemoveEqualPoints( const float epsilon = ON_EPSILON );
 	void			RemoveColinearPoints( const idVec3& normal, const float epsilon = ON_EPSILON );
 	void			RemovePoint( int point );
@@ -97,16 +97,16 @@ public:
 	// check whether the winding is valid or not
 	bool			Check( bool print = true ) const;
 
-	float			GetArea( void ) const;
-	idVec3			GetCenter( void ) const;
+	float			GetArea() const;
+	idVec3			GetCenter() const;
 	float			GetRadius( const idVec3& center ) const;
 	void			GetPlane( idVec3& normal, float& dist ) const;
 	void			GetPlane( idPlane& plane ) const;
 	void			GetBounds( idBounds& bounds ) const;
 
-	bool			IsTiny( void ) const;
-	bool			IsHuge( void ) const;	// base winding for a plane is typically huge
-	void			Print( void ) const;
+	bool			IsTiny() const;
+	bool			IsHuge() const;	// base winding for a plane is typically huge
+	void			Print() const;
 
 	float			PlaneDistance( const idPlane& plane ) const;
 	int				PlaneSide( const idPlane& plane, const float epsilon = ON_EPSILON ) const;
@@ -130,7 +130,7 @@ protected:
 	virtual bool	ReAllocate( int n, bool keep = false );
 };
 
-ID_INLINE idWinding::idWinding( void )
+ID_INLINE idWinding::idWinding()
 {
 	numPoints = allocedSize = 0;
 	p = NULL;
@@ -191,7 +191,7 @@ ID_INLINE idWinding::idWinding( const idWinding& winding )
 	numPoints = winding.GetNumPoints();
 }
 
-ID_INLINE idWinding::~idWinding( void )
+ID_INLINE idWinding::~idWinding()
 {
 	delete[] p;
 	p = NULL;
@@ -258,7 +258,7 @@ ID_INLINE void idWinding::AddPoint( const idVec5& v )
 	numPoints++;
 }
 
-ID_INLINE int idWinding::GetNumPoints( void ) const
+ID_INLINE int idWinding::GetNumPoints() const
 {
 	return numPoints;
 }
@@ -272,7 +272,7 @@ ID_INLINE void idWinding::SetNumPoints( int n )
 	numPoints = n;
 }
 
-ID_INLINE void idWinding::Clear( void )
+ID_INLINE void idWinding::Clear()
 {
 	numPoints = 0;
 	delete[] p;
@@ -312,18 +312,18 @@ class idFixedWinding : public idWinding
 {
 
 public:
-	idFixedWinding( void );
+	idFixedWinding();
 	explicit idFixedWinding( const int n );
 	explicit idFixedWinding( const idVec3* verts, const int n );
 	explicit idFixedWinding( const idVec3& normal, const float dist );
 	explicit idFixedWinding( const idPlane& plane );
 	explicit idFixedWinding( const idWinding& winding );
 	explicit idFixedWinding( const idFixedWinding& winding );
-	virtual			~idFixedWinding( void );
+	virtual			~idFixedWinding();
 
 	idFixedWinding& operator=( const idWinding& winding );
 
-	virtual void	Clear( void );
+	virtual void	Clear();
 
 	// splits the winding in a back and front part, 'this' becomes the front part
 	// returns a SIDE_?
@@ -335,7 +335,7 @@ protected:
 	virtual bool	ReAllocate( int n, bool keep = false );
 };
 
-ID_INLINE idFixedWinding::idFixedWinding( void )
+ID_INLINE idFixedWinding::idFixedWinding()
 {
 	numPoints = 0;
 	p = data;
@@ -421,7 +421,7 @@ ID_INLINE idFixedWinding::idFixedWinding( const idFixedWinding& winding )
 	numPoints = winding.GetNumPoints();
 }
 
-ID_INLINE idFixedWinding::~idFixedWinding( void )
+ID_INLINE idFixedWinding::~idFixedWinding()
 {
 	p = NULL;	// otherwise it tries to free the fixed buffer
 }
@@ -443,7 +443,7 @@ ID_INLINE idFixedWinding& idFixedWinding::operator=( const idWinding& winding )
 	return *this;
 }
 
-ID_INLINE void idFixedWinding::Clear( void )
+ID_INLINE void idFixedWinding::Clear()
 {
 	numPoints = 0;
 }

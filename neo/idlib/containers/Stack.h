@@ -43,10 +43,10 @@ template< class type, int nextOffset >
 class idStackTemplate
 {
 public:
-	idStackTemplate( void );
+	idStackTemplate();
 
 	void					Add( type* element );
-	type* 					Get( void );
+	type* 					Get();
 
 private:
 	type* 					top;
@@ -56,7 +56,7 @@ private:
 #define STACK_NEXT_PTR( element )		(*(type**)(((byte*)element)+nextOffset))
 
 template< class type, int nextOffset >
-idStackTemplate<type, nextOffset>::idStackTemplate( void )
+idStackTemplate<type, nextOffset>::idStackTemplate()
 {
 	top = bottom = NULL;
 }
@@ -73,7 +73,7 @@ void idStackTemplate<type, nextOffset>::Add( type* element )
 }
 
 template< class type, int nextOffset >
-type* idStackTemplate<type, nextOffset>::Get( void )
+type* idStackTemplate<type, nextOffset>::Get()
 {
 	type* element;
 

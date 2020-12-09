@@ -47,7 +47,7 @@ If you have questions concerning this license or the applicable additional terms
 idSIMD_3DNow::GetName
 ============
 */
-const char* idSIMD_3DNow::GetName( void ) const
+const char* idSIMD_3DNow::GetName() const
 {
 	return "MMX & 3DNow!";
 }

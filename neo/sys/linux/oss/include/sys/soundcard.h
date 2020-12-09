@@ -1436,7 +1436,7 @@ typedef struct oss_audioinfo
  */
 #define SEQ_DECLAREBUF()		SEQ_USE_EXTBUF()
 
-void seqbuf_dump( void );	/* This function must be provided by programs */
+void seqbuf_dump();	/* This function must be provided by programs */
 
 EXTERNC int OSS_init( int seqfd, int buflen );
 EXTERNC void OSS_seqbuf_dump( int fd, unsigned char* buf, int buflen );

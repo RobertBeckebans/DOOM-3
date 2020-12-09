@@ -61,7 +61,7 @@ static const float BOUNCE_SOUND_MAX_VELOCITY	= 200.0f;
 idMoveable::idMoveable
 ================
 */
-idMoveable::idMoveable( void )
+idMoveable::idMoveable()
 {
 	minDamageVelocity	= 100.0f;
 	maxDamageVelocity	= 200.0f;
@@ -81,7 +81,7 @@ idMoveable::idMoveable( void )
 idMoveable::~idMoveable
 ================
 */
-idMoveable::~idMoveable( void )
+idMoveable::~idMoveable()
 {
 	delete initialSpline;
 	initialSpline = NULL;
@@ -92,7 +92,7 @@ idMoveable::~idMoveable( void )
 idMoveable::Spawn
 ================
 */
-void idMoveable::Spawn( void )
+void idMoveable::Spawn()
 {
 	idTraceModel trm;
 	float density, friction, bouncyness, mass;
@@ -261,7 +261,7 @@ void idMoveable::Restore( idRestoreGame* savefile )
 idMoveable::Hide
 ================
 */
-void idMoveable::Hide( void )
+void idMoveable::Hide()
 {
 	idEntity::Hide();
 	physicsObj.SetContents( 0 );
@@ -272,7 +272,7 @@ void idMoveable::Hide( void )
 idMoveable::Show
 ================
 */
-void idMoveable::Show( void )
+void idMoveable::Show()
 {
 	idEntity::Show();
 	if( !spawnArgs.GetBool( "nonsolid" ) )
@@ -367,7 +367,7 @@ void idMoveable::Killed( idEntity* inflictor, idEntity* attacker, int damage, co
 idMoveable::AllowStep
 ================
 */
-bool idMoveable::AllowStep( void ) const
+bool idMoveable::AllowStep() const
 {
 	return allowStep;
 }
@@ -377,7 +377,7 @@ bool idMoveable::AllowStep( void ) const
 idMoveable::BecomeNonSolid
 ================
 */
-void idMoveable::BecomeNonSolid( void )
+void idMoveable::BecomeNonSolid()
 {
 	// set CONTENTS_RENDERMODEL so bullets still collide with the moveable
 	physicsObj.SetContents( CONTENTS_CORPSE | CONTENTS_RENDERMODEL );
@@ -426,7 +426,7 @@ void idMoveable::InitInitialSpline( int startTime )
 idMoveable::FollowInitialSplinePath
 ================
 */
-bool idMoveable::FollowInitialSplinePath( void )
+bool idMoveable::FollowInitialSplinePath()
 {
 	if( initialSpline != NULL )
 	{
@@ -458,7 +458,7 @@ bool idMoveable::FollowInitialSplinePath( void )
 idMoveable::Think
 ================
 */
-void idMoveable::Think( void )
+void idMoveable::Think()
 {
 	if( thinkFlags & TH_THINK )
 	{
@@ -475,7 +475,7 @@ void idMoveable::Think( void )
 idMoveable::GetRenderModelMaterial
 ================
 */
-const idMaterial* idMoveable::GetRenderModelMaterial( void ) const
+const idMaterial* idMoveable::GetRenderModelMaterial() const
 {
 	if( renderEntity.customShader )
 	{
@@ -517,7 +517,7 @@ void idMoveable::ReadFromSnapshot( const idBitMsgDelta& msg )
 idMoveable::Event_BecomeNonSolid
 ================
 */
-void idMoveable::Event_BecomeNonSolid( void )
+void idMoveable::Event_BecomeNonSolid()
 {
 	BecomeNonSolid();
 }
@@ -572,7 +572,7 @@ void idMoveable::Event_Activate( idEntity* activator )
 idMoveable::Event_SetOwnerFromSpawnArgs
 ================
 */
-void idMoveable::Event_SetOwnerFromSpawnArgs( void )
+void idMoveable::Event_SetOwnerFromSpawnArgs()
 {
 	idStr owner;
 
@@ -587,7 +587,7 @@ void idMoveable::Event_SetOwnerFromSpawnArgs( void )
 idMoveable::Event_IsAtRest
 ================
 */
-void idMoveable::Event_IsAtRest( void )
+void idMoveable::Event_IsAtRest()
 {
 	idThread::ReturnInt( physicsObj.IsAtRest() );
 }
@@ -665,7 +665,7 @@ void idBarrel::Restore( idRestoreGame* savefile )
 idBarrel::BarrelThink
 ================
 */
-void idBarrel::BarrelThink( void )
+void idBarrel::BarrelThink()
 {
 	bool wasAtRest, onGround;
 	float movedDistance, rotatedDistance, angle;
@@ -745,7 +745,7 @@ void idBarrel::BarrelThink( void )
 idBarrel::Think
 ================
 */
-void idBarrel::Think( void )
+void idBarrel::Think()
 {
 	if( thinkFlags & TH_THINK )
 	{
@@ -775,7 +775,7 @@ bool idBarrel::GetPhysicsToVisualTransform( idVec3& origin, idMat3& axis )
 idBarrel::Spawn
 ================
 */
-void idBarrel::Spawn( void )
+void idBarrel::Spawn()
 {
 	const idBounds& bounds = GetPhysics()->GetBounds();
 
@@ -797,7 +797,7 @@ void idBarrel::Spawn( void )
 idBarrel::ClientPredictionThink
 ================
 */
-void idBarrel::ClientPredictionThink( void )
+void idBarrel::ClientPredictionThink()
 {
 	Think();
 }
@@ -905,7 +905,7 @@ void idExplodingBarrel::Restore( idRestoreGame* savefile )
 idExplodingBarrel::Spawn
 ================
 */
-void idExplodingBarrel::Spawn( void )
+void idExplodingBarrel::Spawn()
 {
 	health = spawnArgs.GetInt( "health", "5" );
 	fl.takedamage = true;
@@ -926,7 +926,7 @@ void idExplodingBarrel::Spawn( void )
 idExplodingBarrel::Think
 ================
 */
-void idExplodingBarrel::Think( void )
+void idExplodingBarrel::Think()
 {
 	idBarrel::BarrelThink();
 
@@ -1047,7 +1047,7 @@ void idExplodingBarrel::AddLight( const char* name, bool burn )
 idExplodingBarrel::ExplodingEffects
 ================
 */
-void idExplodingBarrel::ExplodingEffects( void )
+void idExplodingBarrel::ExplodingEffects()
 {
 	const char* temp;
 

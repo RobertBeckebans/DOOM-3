@@ -35,23 +35,23 @@ class rvDebuggerScript
 {
 public:
 
-	rvDebuggerScript( void );
-	~rvDebuggerScript( void );
+	rvDebuggerScript();
+	~rvDebuggerScript();
 
 	bool	Load( const char* filename );
-	bool	Reload( void );
+	bool	Reload();
 
-	const char*		GetFilename( void );
-	const char*		GetContents( void );
+	const char*		GetFilename();
+	const char*		GetContents();
 
-	idProgram&		GetProgram( void );
+	idProgram&		GetProgram();
 
 	bool			IsLineCode( int linenumber );
 	bool			IsFileModified( bool updateTime = false );
 
 protected:
 
-	void			Unload( void );
+	void			Unload();
 
 	idProgram*				mProgram;
 	idUserInterfaceLocal*	mInterface;
@@ -60,17 +60,17 @@ protected:
 	ID_TIME_T					mModifiedTime;
 };
 
-ID_INLINE const char* rvDebuggerScript::GetFilename( void )
+ID_INLINE const char* rvDebuggerScript::GetFilename()
 {
 	return mFilename;
 }
 
-ID_INLINE const char* rvDebuggerScript::GetContents( void )
+ID_INLINE const char* rvDebuggerScript::GetContents()
 {
 	return mContents ? mContents : "";
 }
 
-ID_INLINE idProgram& rvDebuggerScript::GetProgram( void )
+ID_INLINE idProgram& rvDebuggerScript::GetProgram()
 {
 	return *mProgram;
 }

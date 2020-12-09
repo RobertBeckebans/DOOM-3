@@ -38,7 +38,7 @@ static const char* smokeParticle_SnapshotName = "_SmokeParticle_Snapshot_";
 idSmokeParticles::idSmokeParticles
 ================
 */
-idSmokeParticles::idSmokeParticles( void )
+idSmokeParticles::idSmokeParticles()
 {
 	initialized = false;
 	memset( &renderEntity, 0, sizeof( renderEntity ) );
@@ -54,7 +54,7 @@ idSmokeParticles::idSmokeParticles( void )
 idSmokeParticles::Init
 ================
 */
-void idSmokeParticles::Init( void )
+void idSmokeParticles::Init()
 {
 	if( initialized )
 	{
@@ -105,7 +105,7 @@ void idSmokeParticles::Init( void )
 idSmokeParticles::Shutdown
 ================
 */
-void idSmokeParticles::Shutdown( void )
+void idSmokeParticles::Shutdown()
 {
 	// make sure the render entity is freed before the model is freed
 	if( renderEntityHandle != -1 )
@@ -126,7 +126,7 @@ void idSmokeParticles::Shutdown( void )
 idSmokeParticles::FreeSmokes
 ================
 */
-void idSmokeParticles::FreeSmokes( void )
+void idSmokeParticles::FreeSmokes()
 {
 	for( int activeStageNum = 0; activeStageNum < activeStages.Num(); activeStageNum++ )
 	{

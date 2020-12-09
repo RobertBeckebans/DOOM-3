@@ -41,7 +41,7 @@ If you have questions concerning this license or the applicable additional terms
 class idPolynomial
 {
 public:
-	idPolynomial( void );
+	idPolynomial();
 	explicit idPolynomial( int d );
 	explicit idPolynomial( float a, float b );
 	explicit idPolynomial( float a, float b, float c );
@@ -69,15 +69,15 @@ public:
 	bool			operator==(	const idPolynomial& p ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idPolynomial& p ) const;					// exact compare, no epsilon
 
-	void			Zero( void );
+	void			Zero();
 	void			Zero( int d );
 
-	int				GetDimension( void ) const;									// get the degree of the polynomial
-	int				GetDegree( void ) const;									// get the degree of the polynomial
+	int				GetDimension() const;									// get the degree of the polynomial
+	int				GetDegree() const;									// get the degree of the polynomial
 	float			GetValue( const float x ) const;							// evaluate the polynomial with the given real value
 	idComplex		GetValue( const idComplex& x ) const;						// evaluate the polynomial with the given complex value
-	idPolynomial	GetDerivative( void ) const;								// get the first derivative of the polynomial
-	idPolynomial	GetAntiDerivative( void ) const;							// get the anti derivative of the polynomial
+	idPolynomial	GetDerivative() const;								// get the first derivative of the polynomial
+	idPolynomial	GetAntiDerivative() const;							// get the anti derivative of the polynomial
 
 	int				GetRoots( idComplex* roots ) const;							// get all roots
 	int				GetRoots( float* roots ) const;								// get the real roots
@@ -87,11 +87,11 @@ public:
 	static int		GetRoots3( float a, float b, float c, float d, float* roots );
 	static int		GetRoots4( float a, float b, float c, float d, float e, float* roots );
 
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 
-	static void		Test( void );
+	static void		Test();
 
 private:
 	int				degree;
@@ -102,7 +102,7 @@ private:
 	int				Laguer( const idComplex* coef, const int degree, idComplex& r ) const;
 };
 
-ID_INLINE idPolynomial::idPolynomial( void )
+ID_INLINE idPolynomial::idPolynomial()
 {
 	degree = -1;
 	allocated = 0;
@@ -471,7 +471,7 @@ ID_INLINE bool idPolynomial::operator!=( const idPolynomial& p ) const
 	return !Compare( p );
 }
 
-ID_INLINE void idPolynomial::Zero( void )
+ID_INLINE void idPolynomial::Zero()
 {
 	degree = 0;
 }
@@ -485,12 +485,12 @@ ID_INLINE void idPolynomial::Zero( int d )
 	}
 }
 
-ID_INLINE int idPolynomial::GetDimension( void ) const
+ID_INLINE int idPolynomial::GetDimension() const
 {
 	return degree;
 }
 
-ID_INLINE int idPolynomial::GetDegree( void ) const
+ID_INLINE int idPolynomial::GetDegree() const
 {
 	return degree;
 }
@@ -521,7 +521,7 @@ ID_INLINE idComplex idPolynomial::GetValue( const idComplex& x ) const
 	return y;
 }
 
-ID_INLINE idPolynomial idPolynomial::GetDerivative( void ) const
+ID_INLINE idPolynomial idPolynomial::GetDerivative() const
 {
 	idPolynomial n;
 
@@ -537,7 +537,7 @@ ID_INLINE idPolynomial idPolynomial::GetDerivative( void ) const
 	return n;
 }
 
-ID_INLINE idPolynomial idPolynomial::GetAntiDerivative( void ) const
+ID_INLINE idPolynomial idPolynomial::GetAntiDerivative() const
 {
 	idPolynomial n;
 
@@ -734,12 +734,12 @@ ID_INLINE int idPolynomial::GetRoots4( float a, float b, float c, float d, float
 	}
 }
 
-ID_INLINE const float* idPolynomial::ToFloatPtr( void ) const
+ID_INLINE const float* idPolynomial::ToFloatPtr() const
 {
 	return coefficient;
 }
 
-ID_INLINE float* idPolynomial::ToFloatPtr( void )
+ID_INLINE float* idPolynomial::ToFloatPtr()
 {
 	return coefficient;
 }

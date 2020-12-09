@@ -302,10 +302,10 @@ public:
 	virtual idRenderModel* 		InstantiateDynamicModel( const struct renderEntity_s* ent, const struct viewDef_s* view, idRenderModel* cachedModel ) = 0;
 
 	// Returns the number of joints or 0 if the model is not an MD5
-	virtual int					NumJoints( void ) const = 0;
+	virtual int					NumJoints() const = 0;
 
 	// Returns the MD5 joints or NULL if the model is not an MD5
-	virtual const idMD5Joint* 	GetJoints( void ) const = 0;
+	virtual const idMD5Joint* 	GetJoints() const = 0;
 
 	// Returns the handle for the joint with the given name.
 	virtual jointHandle_t		GetJointHandle( const char* name ) const = 0;
@@ -314,7 +314,7 @@ public:
 	virtual const char* 		GetJointName( jointHandle_t handle ) const = 0;
 
 	// Returns the default animation pose or NULL if the model is not an MD5.
-	virtual const idJointQuat* 	GetDefaultPose( void ) const = 0;
+	virtual const idJointQuat* 	GetDefaultPose() const = 0;
 
 	// Returns number of the joint nearest to the given triangle.
 	virtual int					NearestJoint( int surfaceNum, int a, int c, int b ) const = 0;

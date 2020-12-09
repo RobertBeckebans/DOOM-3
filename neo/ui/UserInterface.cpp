@@ -191,7 +191,7 @@ bool idUserInterfaceManagerLocal::CheckGui( const char* qpath ) const
 	return false;
 }
 
-idUserInterface* idUserInterfaceManagerLocal::Alloc( void ) const
+idUserInterface* idUserInterfaceManagerLocal::Alloc() const
 {
 	return new idUserInterfaceLocal();
 }
@@ -260,7 +260,7 @@ idUserInterface* idUserInterfaceManagerLocal::FindDemoGui( const char* qpath )
 	return NULL;
 }
 
-idListGUI* 	idUserInterfaceManagerLocal::AllocListGUI( void ) const
+idListGUI* 	idUserInterfaceManagerLocal::AllocListGUI() const
 {
 	return new idListGUILocal();
 }
@@ -737,7 +737,7 @@ void idUserInterfaceLocal::RecurseSetKeyBindingNames( idWindow* window )
 idUserInterfaceLocal::SetKeyBindingNames
 ==============
 */
-void idUserInterfaceLocal::SetKeyBindingNames( void )
+void idUserInterfaceLocal::SetKeyBindingNames()
 {
 	if( !desktop )
 	{

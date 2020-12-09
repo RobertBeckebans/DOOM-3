@@ -36,7 +36,7 @@ idBounds bounds_zero( vec3_zero, vec3_zero );
 idBounds::GetRadius
 ============
 */
-float idBounds::GetRadius( void ) const
+float idBounds::GetRadius() const
 {
 	int		i;
 	float	total, b0, b1;

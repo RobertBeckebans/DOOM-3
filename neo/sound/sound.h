@@ -79,15 +79,15 @@ const int		SOUND_MAX_CLASSES		= 4;
 class idSoundShader : public idDecl
 {
 public:
-	idSoundShader( void );
-	virtual					~idSoundShader( void );
+	idSoundShader();
+	virtual					~idSoundShader();
 
-	virtual size_t			Size( void ) const;
-	virtual bool			SetDefaultText( void );
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual bool			SetDefaultText();
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
-	virtual void			List( void ) const;
+	virtual void			FreeData();
+	virtual void			List() const;
 
 	virtual const char* 	GetDescription() const;
 
@@ -106,7 +106,7 @@ public:
 	virtual int				GetNumSounds() const;
 	virtual const char* 	GetSound( int index ) const;
 
-	virtual bool			CheckShakesAndOgg( void ) const;
+	virtual bool			CheckShakesAndOgg() const;
 
 private:
 	friend class idSoundWorldLocal;
@@ -130,7 +130,7 @@ private:
 	int						numEntries;
 
 private:
-	void					Init( void );
+	void					Init();
 	bool					ParseShader( idLexer& src );
 };
 
@@ -152,7 +152,7 @@ typedef int s_channelType;	// the game uses its own series of enums, and we don'
 class idSoundEmitter
 {
 public:
-	virtual					~idSoundEmitter( void ) {}
+	virtual					~idSoundEmitter() {}
 
 	// a non-immediate free will let all currently playing sounds complete
 	// soundEmitters are not actually deleted, they are just marked as
@@ -175,15 +175,15 @@ public:
 	// returns true if there are any sounds playing from this emitter.  There is some conservative
 	// slop at the end to remove inconsistent race conditions with the sound thread updates.
 	// FIXME: network game: on a dedicated server, this will always be false
-	virtual bool			CurrentlyPlaying( void ) const = 0;
+	virtual bool			CurrentlyPlaying() const = 0;
 
 	// returns a 0.0 to 1.0 value based on the current sound amplitude, allowing
 	// graphic effects to be modified in time with the audio.
 	// just samples the raw wav file, it doesn't account for volume overrides in the
-	virtual	float			CurrentAmplitude( void ) = 0;
+	virtual	float			CurrentAmplitude() = 0;
 
 	// for save games.  Index will always be > 0
-	virtual	int				Index( void ) const = 0;
+	virtual	int				Index() const = 0;
 };
 
 /*
@@ -200,14 +200,14 @@ option existing simultaniously with a live game.
 class idSoundWorld
 {
 public:
-	virtual					~idSoundWorld( void ) {}
+	virtual					~idSoundWorld() {}
 
 	// call at each map start
-	virtual void			ClearAllSoundEmitters( void ) = 0;
-	virtual void			StopAllSounds( void ) = 0;
+	virtual void			ClearAllSoundEmitters() = 0;
+	virtual void			StopAllSounds() = 0;
 
 	// get a new emitter that can play sounds in this world
-	virtual idSoundEmitter* AllocSoundEmitter( void ) = 0;
+	virtual idSoundEmitter* AllocSoundEmitter() = 0;
 
 	// for load games, index 0 will return NULL
 	virtual idSoundEmitter* EmitterForIndex( int index ) = 0;
@@ -236,9 +236,9 @@ public:
 	virtual void			ProcessDemoCommand( idDemoFile* demo ) = 0;
 
 	// pause and unpause the sound world
-	virtual void			Pause( void ) = 0;
-	virtual void			UnPause( void ) = 0;
-	virtual bool			IsPaused( void ) = 0;
+	virtual void			Pause() = 0;
+	virtual void			UnPause() = 0;
+	virtual bool			IsPaused() = 0;
 
 	// Write the sound output to multiple wav files.  Note that this does not use the
 	// work done by AsyncUpdate, it mixes explicitly in the foreground every PlaceOrigin(),
@@ -250,7 +250,7 @@ public:
 	// If only two channel mixing is enabled, the left and right .raw files will also be
 	// combined into a stereo .wav file.
 	virtual void			AVIOpen( const char* path, const char* name ) = 0;
-	virtual void			AVIClose( void ) = 0;
+	virtual void			AVIClose() = 0;
 
 	// SaveGame / demo Support
 	virtual void			WriteToSaveGame( idFile* savefile ) = 0;
@@ -288,22 +288,22 @@ typedef struct
 class idSoundSystem
 {
 public:
-	virtual					~idSoundSystem( void ) {}
+	virtual					~idSoundSystem() {}
 
 	// all non-hardware initialization
-	virtual void			Init( void ) = 0;
+	virtual void			Init() = 0;
 
 	// shutdown routine
-	virtual	void			Shutdown( void ) = 0;
+	virtual	void			Shutdown() = 0;
 
 	// call ClearBuffer if there is a chance that the AsyncUpdate won't get called
 	// for 20+ msec, which would cause a stuttering repeat of the current
 	// buffer contents
-	virtual void			ClearBuffer( void ) = 0;
+	virtual void			ClearBuffer() = 0;
 
 	// sound is attached to the window, and must be recreated when the window is changed
-	virtual bool			InitHW( void ) = 0;
-	virtual bool			ShutdownHW( void ) = 0;
+	virtual bool			InitHW() = 0;
+	virtual bool			ShutdownHW() = 0;
 
 	// asyn loop, called at 60Hz
 	virtual int				AsyncUpdate( int time ) = 0;
@@ -330,11 +330,11 @@ public:
 
 	// some tools, like the sound dialog, may be used in both the game and the editor
 	// This can return NULL, so check!
-	virtual idSoundWorld* 	GetPlayingSoundWorld( void ) = 0;
+	virtual idSoundWorld* 	GetPlayingSoundWorld() = 0;
 
 	// Mark all soundSamples as currently unused,
 	// but don't free anything.
-	virtual	void			BeginLevelLoad( void ) = 0;
+	virtual	void			BeginLevelLoad() = 0;
 
 	// Free all soundSamples marked as unused
 	// We might want to defer the loading of new sounds to this point,
@@ -348,7 +348,7 @@ public:
 	virtual void			PrintMemInfo( MemInfo_t* mi ) = 0;
 
 	// is EAX support present - -1: disabled at compile time, 0: no suitable hardware, 1: ok, 2: failed to load OpenAL DLL
-	virtual int				IsEAXAvailable( void ) = 0;
+	virtual int				IsEAXAvailable() = 0;
 };
 
 extern idSoundSystem*	soundSystem;

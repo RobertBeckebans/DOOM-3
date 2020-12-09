@@ -43,12 +43,12 @@ public:
 	virtual void			DebugPrintf( const char* fmt, ... )id_attribute( ( format( printf, 2, 3 ) ) );
 	virtual void			DebugVPrintf( const char* fmt, va_list arg );
 
-	virtual double			GetClockTicks( void );
-	virtual double			ClockTicksPerSecond( void );
-	virtual cpuid_t			GetProcessorId( void );
-	virtual const char* 	GetProcessorString( void );
-	virtual const char* 	FPU_GetState( void );
-	virtual bool			FPU_StackIsEmpty( void );
+	virtual double			GetClockTicks();
+	virtual double			ClockTicksPerSecond();
+	virtual cpuid_t			GetProcessorId();
+	virtual const char* 	GetProcessorString();
+	virtual const char* 	FPU_GetState();
+	virtual bool			FPU_StackIsEmpty();
 	virtual void			FPU_SetFTZ( bool enable );
 	virtual void			FPU_SetDAZ( bool enable );
 
@@ -57,7 +57,7 @@ public:
 	virtual void			GetCallStack( address_t* callStack, const int callStackSize );
 	virtual const char* 	GetCallStackStr( const address_t* callStack, const int callStackSize );
 	virtual const char* 	GetCallStackCurStr( int depth );
-	virtual void			ShutdownSymbols( void );
+	virtual void			ShutdownSymbols();
 
 	virtual bool			LockMemory( void* ptr, int bytes );
 	virtual bool			UnlockMemory( void* ptr, int bytes );

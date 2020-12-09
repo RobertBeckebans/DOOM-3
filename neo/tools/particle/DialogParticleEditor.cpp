@@ -188,7 +188,7 @@ void ParticleEditorInit( const idDict* spawnArgs )
 ParticleEditorRun
 ================
 */
-void ParticleEditorRun( void )
+void ParticleEditorRun()
 {
 #if _MSC_VER >= 1300
 	MSG* msg = AfxGetCurrentMessage();			// TODO Robert fix me!!
@@ -210,7 +210,7 @@ void ParticleEditorRun( void )
 ParticleEditorShutdown
 ================
 */
-void ParticleEditorShutdown( void )
+void ParticleEditorShutdown()
 {
 	delete g_ParticleDialog;
 	g_ParticleDialog = NULL;

@@ -43,7 +43,7 @@ This should initialize all GL state that any part of the entire program
 may touch, including the editor.
 ======================
 */
-void RB_SetDefaultGLState( void )
+void RB_SetDefaultGLState()
 {
 	int		i;
 
@@ -253,7 +253,7 @@ Clears the state delta bits, so the next GL_State
 will set every item
 =================
 */
-void GL_ClearStateDelta( void )
+void GL_ClearStateDelta()
 {
 	backEnd.glState.forceGlState = true;
 }
@@ -474,7 +474,7 @@ RB_SetGL2D
 This is not used by the normal game paths, just by some tools
 =============
 */
-void RB_SetGL2D( void )
+void RB_SetGL2D()
 {
 	// set 2D virtual screen size
 	qglViewport( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
@@ -552,7 +552,7 @@ Draw all the images to the screen, on top of whatever
 was there.  This is used to test for texture thrashing.
 ===============
 */
-void RB_ShowImages( void )
+void RB_ShowImages()
 {
 	int		i;
 	idImage*	image;

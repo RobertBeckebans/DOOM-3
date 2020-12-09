@@ -44,14 +44,14 @@ If you have questions concerning this license or the applicable additional terms
 class idHashIndex
 {
 public:
-	idHashIndex( void );
+	idHashIndex();
 	idHashIndex( const int initialHashSize, const int initialIndexSize );
-	~idHashIndex( void );
+	~idHashIndex();
 
 	// returns total size of allocated memory
-	size_t			Allocated( void ) const;
+	size_t			Allocated() const;
 	// returns total size of allocated memory including size of hash index type
-	size_t			Size( void ) const;
+	size_t			Size() const;
 
 	idHashIndex& 	operator=( const idHashIndex& other );
 	// add an index to the hash, assumes the index has not yet been added to the hash
@@ -67,21 +67,21 @@ public:
 	// remove an entry from the index and remove it from the hash, decreasing all indexes >= index
 	void			RemoveIndex( const int key, const int index );
 	// clear the hash
-	void			Clear( void );
+	void			Clear();
 	// clear and resize
 	void			Clear( const int newHashSize, const int newIndexSize );
 	// free allocated memory
-	void			Free( void );
+	void			Free();
 	// get size of hash table
-	int				GetHashSize( void ) const;
+	int				GetHashSize() const;
 	// get size of the index
-	int				GetIndexSize( void ) const;
+	int				GetIndexSize() const;
 	// set granularity
 	void			SetGranularity( const int newGranularity );
 	// force resizing the index, current hash table stays intact
 	void			ResizeIndex( const int newIndexSize );
 	// returns number in the range [0-100] representing the spread over the hash table
-	int				GetSpread( void ) const;
+	int				GetSpread() const;
 	// returns a key for a string
 	int				GenerateKey( const char* string, bool caseSensitive = true ) const;
 	// returns a key for a vector
@@ -109,7 +109,7 @@ private:
 idHashIndex::idHashIndex
 ================
 */
-ID_INLINE idHashIndex::idHashIndex( void )
+ID_INLINE idHashIndex::idHashIndex()
 {
 	Init( DEFAULT_HASH_SIZE, DEFAULT_HASH_SIZE );
 }
@@ -129,7 +129,7 @@ ID_INLINE idHashIndex::idHashIndex( const int initialHashSize, const int initial
 idHashIndex::~idHashIndex
 ================
 */
-ID_INLINE idHashIndex::~idHashIndex( void )
+ID_INLINE idHashIndex::~idHashIndex()
 {
 	Free();
 }
@@ -139,7 +139,7 @@ ID_INLINE idHashIndex::~idHashIndex( void )
 idHashIndex::Allocated
 ================
 */
-ID_INLINE size_t idHashIndex::Allocated( void ) const
+ID_INLINE size_t idHashIndex::Allocated() const
 {
 	return hashSize * sizeof( int ) + indexSize * sizeof( int );
 }
@@ -149,7 +149,7 @@ ID_INLINE size_t idHashIndex::Allocated( void ) const
 idHashIndex::Size
 ================
 */
-ID_INLINE size_t idHashIndex::Size( void ) const
+ID_INLINE size_t idHashIndex::Size() const
 {
 	return sizeof( *this ) + Allocated();
 }
@@ -368,7 +368,7 @@ ID_INLINE void idHashIndex::RemoveIndex( const int key, const int index )
 idHashIndex::Clear
 ================
 */
-ID_INLINE void idHashIndex::Clear( void )
+ID_INLINE void idHashIndex::Clear()
 {
 	// only clear the hash table because clearing the indexChain is not really needed
 	if( hash != INVALID_INDEX )
@@ -394,7 +394,7 @@ ID_INLINE void idHashIndex::Clear( const int newHashSize, const int newIndexSize
 idHashIndex::GetHashSize
 ================
 */
-ID_INLINE int idHashIndex::GetHashSize( void ) const
+ID_INLINE int idHashIndex::GetHashSize() const
 {
 	return hashSize;
 }
@@ -404,7 +404,7 @@ ID_INLINE int idHashIndex::GetHashSize( void ) const
 idHashIndex::GetIndexSize
 ================
 */
-ID_INLINE int idHashIndex::GetIndexSize( void ) const
+ID_INLINE int idHashIndex::GetIndexSize() const
 {
 	return indexSize;
 }

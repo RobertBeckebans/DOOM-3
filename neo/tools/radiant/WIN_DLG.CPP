@@ -294,7 +294,7 @@ BOOL CALLBACK GammaDlgProc(
 
 
 
-void DoGamma( void )
+void DoGamma()
 {
 	if( DialogBox( g_qeglobals.d_hInstance, ( char* )IDD_GAMMA, g_pParentWnd->GetSafeHwnd(), GammaDlgProc ) )
 	{
@@ -450,7 +450,7 @@ BOOL CALLBACK FindBrushDlgProc(
 
 
 
-void DoFind( void )
+void DoFind()
 {
 	DialogBox( g_qeglobals.d_hInstance, ( char* )IDD_FINDBRUSH, g_pParentWnd->GetSafeHwnd(), FindBrushDlgProc );
 }
@@ -522,7 +522,7 @@ BOOL CALLBACK RotateDlgProc(
 
 
 
-void DoRotate( void )
+void DoRotate()
 {
 	DialogBox( g_qeglobals.d_hInstance, ( char* )IDD_ROTATE, g_pParentWnd->GetSafeHwnd(), RotateDlgProc );
 }
@@ -659,7 +659,7 @@ BOOL CALLBACK AboutDlgProc( HWND hwndDlg,
 	return FALSE;
 }
 
-void DoAbout( void )
+void DoAbout()
 {
 	DialogBox( g_qeglobals.d_hInstance, ( char* ) IDD_ABOUT, g_pParentWnd->GetSafeHwnd(), AboutDlgProc );
 }

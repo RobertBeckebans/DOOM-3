@@ -104,8 +104,8 @@ void glEdgeFlagPointer( GLsizei stride, const GLvoid* pointer ) {};
 void glEdgeFlagv( const GLboolean* flag ) {};
 void glEnable( GLenum cap ) {};
 void glEnableClientState( GLenum array ) {};
-void glEnd( void ) {};
-void glEndList( void ) {};
+void glEnd() {};
+void glEndList() {};
 void glEvalCoord1d( GLdouble u ) {};
 void glEvalCoord1dv( const GLdouble* u ) {};
 void glEvalCoord1f( GLfloat u ) {};
@@ -119,8 +119,8 @@ void glEvalMesh2( GLenum mode, GLint i1, GLint i2, GLint j1, GLint j2 ) {};
 void glEvalPoint1( GLint i ) {};
 void glEvalPoint2( GLint i, GLint j ) {};
 void glFeedbackBuffer( GLsizei size, GLenum type, GLfloat* buffer ) {};
-void glFinish( void ) {};
-void glFlush( void ) {};
+void glFinish() {};
+void glFlush() {};
 void glFogf( GLenum pname, GLfloat param ) {};
 void glFogfv( GLenum pname, const GLfloat* params ) {};
 void glFogi( GLenum pname, GLint param ) {};
@@ -135,7 +135,7 @@ void glGenTextures( GLsizei n, GLuint* textures ) {};
 void glGetBooleanv( GLenum pname, GLboolean* params ) {};
 void glGetClipPlane( GLenum plane, GLdouble* equation ) {};
 void glGetDoublev( GLenum pname, GLdouble* params ) {};
-GLenum glGetError( void )
+GLenum glGetError()
 {
 	return 0;
 };
@@ -199,7 +199,7 @@ void glIndexs( GLshort c ) {};
 void glIndexsv( const GLshort* c ) {};
 void glIndexub( GLubyte c ) {};
 void glIndexubv( const GLubyte* c ) {};
-void glInitNames( void ) {};
+void glInitNames() {};
 void glInterleavedArrays( GLenum format, GLsizei stride, const GLvoid* pointer ) {};
 GLboolean glIsEnabled( GLenum cap ) {};
 GLboolean glIsList( GLuint list ) {};
@@ -215,7 +215,7 @@ void glLightiv( GLenum light, GLenum pname, const GLint* params ) {};
 void glLineStipple( GLint factor, GLushort pattern ) {};
 void glLineWidth( GLfloat width ) {};
 void glListBase( GLuint base ) {};
-void glLoadIdentity( void ) {};
+void glLoadIdentity() {};
 void glLoadMatrixd( const GLdouble* m ) {};
 void glLoadMatrixf( const GLfloat* m ) {};
 void glLoadName( GLuint name ) {};
@@ -261,14 +261,14 @@ void glPointSize( GLfloat size ) {};
 void glPolygonMode( GLenum face, GLenum mode ) {};
 void glPolygonOffset( GLfloat factor, GLfloat units ) {};
 void glPolygonStipple( const GLubyte* mask ) {};
-void glPopAttrib( void ) {};
-void glPopClientAttrib( void ) {};
-void glPopMatrix( void ) {};
-void glPopName( void ) {};
+void glPopAttrib() {};
+void glPopClientAttrib() {};
+void glPopMatrix() {};
+void glPopName() {};
 void glPrioritizeTextures( GLsizei n, const GLuint* textures, const GLclampf* priorities ) {};
 void glPushAttrib( GLbitfield mask ) {};
 void glPushClientAttrib( GLbitfield mask ) {};
-void glPushMatrix( void ) {};
+void glPushMatrix() {};
 void glPushName( GLuint name ) {};
 void glRasterPos2d( GLdouble x, GLdouble y ) {};
 void glRasterPos2dv( const GLdouble* v ) {};
@@ -405,7 +405,7 @@ bool GLimp_SpawnRenderThread( void ( *a )() )
 	return false;
 };
 
-static void StubFunction( void ) {};
+static void StubFunction() {};
 GLExtension_t GLimp_ExtensionPointer( const char* a )
 {
 	return StubFunction;

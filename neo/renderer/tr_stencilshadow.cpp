@@ -648,7 +648,7 @@ the frustum.
 Only done for simple projected lights, not point lights.
 ==================
 */
-static void R_AddClipSilEdges( void )
+static void R_AddClipSilEdges()
 {
 	int		v1, v2;
 	int		v1_back, v2_back;

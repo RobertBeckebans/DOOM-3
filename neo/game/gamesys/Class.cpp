@@ -62,8 +62,8 @@ initialized in any order, the constructor must handle the case that subclasses
 are initialized before superclasses.
 ================
 */
-idTypeInfo::idTypeInfo( const char* classname, const char* superclass, idEventFunc<idClass>* eventCallbacks, idClass * ( *CreateInstance )( void ),
-						void ( idClass::*Spawn )( void ), void ( idClass::*Save )( idSaveGame* savefile ) const, void ( idClass::*Restore )( idRestoreGame* savefile ) )
+idTypeInfo::idTypeInfo( const char* classname, const char* superclass, idEventFunc<idClass>* eventCallbacks, idClass * ( *CreateInstance )(),
+						void ( idClass::*Spawn )(), void ( idClass::*Save )( idSaveGame* savefile ) const, void ( idClass::*Restore )( idRestoreGame* savefile ) )
 {
 
 	idTypeInfo* type;
@@ -128,7 +128,7 @@ Initializes the event callback table for the class.  Creates a
 table for fast lookups of event functions.  Should only be called once.
 ================
 */
-void idTypeInfo::Init( void )
+void idTypeInfo::Init()
 {
 	idTypeInfo*				c;
 	idEventFunc<idClass>*	def;
@@ -271,7 +271,7 @@ int		idClass::numobjects		= 0;
 idClass::CallSpawn
 ================
 */
-void idClass::CallSpawn( void )
+void idClass::CallSpawn()
 {
 	idTypeInfo* type;
 
@@ -309,7 +309,7 @@ classSpawnFunc_t idClass::CallSpawnFunc( idTypeInfo* cls )
 idClass::FindUninitializedMemory
 ================
 */
-void idClass::FindUninitializedMemory( void )
+void idClass::FindUninitializedMemory()
 {
 #ifdef ID_DEBUG_UNINITIALIZED_MEMORY
 	unsigned long* ptr = ( ( unsigned long* )this ) - 1;
@@ -332,7 +332,7 @@ void idClass::FindUninitializedMemory( void )
 idClass::Spawn
 ================
 */
-void idClass::Spawn( void )
+void idClass::Spawn()
 {
 }
 
@@ -410,7 +410,7 @@ their event callback table for the associated class.  This should only be called
 once during the execution of the program or DLL.
 ================
 */
-void idClass::Init( void )
+void idClass::Init()
 {
 	idTypeInfo*	c;
 	int			num;
@@ -464,7 +464,7 @@ void idClass::Init( void )
 idClass::Shutdown
 ================
 */
-void idClass::Shutdown( void )
+void idClass::Shutdown()
 {
 	idTypeInfo*	c;
 
@@ -659,7 +659,7 @@ idClass::GetClassname
 Returns the text classname of the object.
 ================
 */
-const char* idClass::GetClassname( void ) const
+const char* idClass::GetClassname() const
 {
 	idTypeInfo* type;
 
@@ -674,7 +674,7 @@ idClass::GetSuperclass
 Returns the text classname of the superclass.
 ================
 */
-const char* idClass::GetSuperclass( void ) const
+const char* idClass::GetSuperclass() const
 {
 	idTypeInfo* cls;
 
@@ -1154,7 +1154,7 @@ bool idClass::ProcessEventArgPtr( const idEventDef* ev, int* data )
 idClass::Event_Remove
 ================
 */
-void idClass::Event_Remove( void )
+void idClass::Event_Remove()
 {
 	delete this;
 }
@@ -1164,7 +1164,7 @@ void idClass::Event_Remove( void )
 idClass::Event_SafeRemove
 ================
 */
-void idClass::Event_SafeRemove( void )
+void idClass::Event_SafeRemove()
 {
 	// Forces the remove to be done at a safe time
 	PostEventMS( &EV_Remove, 0 );

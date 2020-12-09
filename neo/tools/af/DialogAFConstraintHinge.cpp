@@ -121,7 +121,7 @@ void DialogAFConstraintHinge::DoDataExchange( CDataExchange* pDX )
 DialogAFConstraintHinge::InitJointLists
 ================
 */
-void DialogAFConstraintHinge::InitJointLists( void )
+void DialogAFConstraintHinge::InitJointLists()
 {
 	m_comboAnchorJoint.ResetContent();
 	m_comboAxisJoint1.ResetContent();
@@ -165,7 +165,7 @@ void DialogAFConstraintHinge::LoadFile( idDeclAF* af )
 DialogAFConstraintHinge::SaveFile
 ================
 */
-void DialogAFConstraintHinge::SaveFile( void )
+void DialogAFConstraintHinge::SaveFile()
 {
 	SaveConstraint();
 }
@@ -237,7 +237,7 @@ void DialogAFConstraintHinge::LoadConstraint( idDeclAF_Constraint* c )
 DialogAFConstraintHinge::SaveConstraint
 ================
 */
-void DialogAFConstraintHinge::SaveConstraint( void )
+void DialogAFConstraintHinge::SaveConstraint()
 {
 	int s1, s2;
 	CString str;
@@ -281,7 +281,7 @@ void DialogAFConstraintHinge::SaveConstraint( void )
 DialogAFConstraintHinge::UpdateFile
 ================
 */
-void DialogAFConstraintHinge::UpdateFile( void )
+void DialogAFConstraintHinge::UpdateFile()
 {
 	SaveConstraint();
 	if( file )

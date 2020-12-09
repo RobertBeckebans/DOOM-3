@@ -56,17 +56,17 @@ public:
 	idEditField();
 	~idEditField();
 
-	void			Clear( void );
+	void			Clear();
 	void			SetWidthInChars( int w );
 	void			SetCursor( int c );
-	int				GetCursor( void ) const;
-	void			ClearAutoComplete( void );
-	int				GetAutoCompleteLength( void ) const;
-	void			AutoComplete( void );
+	int				GetCursor() const;
+	void			ClearAutoComplete();
+	int				GetAutoCompleteLength() const;
+	void			AutoComplete();
 	void			CharEvent( int c );
 	void			KeyDownEvent( int key );
-	void			Paste( void );
-	char* 			GetBuffer( void );
+	void			Paste();
+	char* 			GetBuffer();
 	void			Draw( int x, int y, int width, bool showCursor, const idMaterial* material );
 	void			SetBuffer( const char* buffer );
 

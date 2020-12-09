@@ -88,7 +88,7 @@ void idVec2::Lerp( const idVec2& v1, const idVec2& v2, const float l )
 idVec3::ToYaw
 =============
 */
-float idVec3::ToYaw( void ) const
+float idVec3::ToYaw() const
 {
 	float yaw;
 
@@ -113,7 +113,7 @@ float idVec3::ToYaw( void ) const
 idVec3::ToPitch
 =============
 */
-float idVec3::ToPitch( void ) const
+float idVec3::ToPitch() const
 {
 	float	forward;
 	float	pitch;
@@ -147,7 +147,7 @@ float idVec3::ToPitch( void ) const
 idVec3::ToAngles
 =============
 */
-idAngles idVec3::ToAngles( void ) const
+idAngles idVec3::ToAngles() const
 {
 	float forward;
 	float yaw;
@@ -189,7 +189,7 @@ idAngles idVec3::ToAngles( void ) const
 idVec3::ToPolar
 =============
 */
-idPolar3 idVec3::ToPolar( void ) const
+idPolar3 idVec3::ToPolar() const
 {
 	float forward;
 	float yaw;
@@ -230,7 +230,7 @@ idPolar3 idVec3::ToPolar( void ) const
 idVec3::ToMat3
 =============
 */
-idMat3 idVec3::ToMat3( void ) const
+idMat3 idVec3::ToMat3() const
 {
 	idMat3	mat;
 	float	d;

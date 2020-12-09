@@ -36,7 +36,7 @@ idPlane plane_origin( 0.0f, 0.0f, 0.0f, 0.0f );
 idPlane::Type
 ================
 */
-int idPlane::Type( void ) const
+int idPlane::Type() const
 {
 	if( Normal()[0] == 0.0f )
 	{

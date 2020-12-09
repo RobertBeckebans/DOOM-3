@@ -54,7 +54,7 @@ dword		idMath::iSqrt[SQRT_TABLE_SIZE];		// inverse square root lookup table
 idMath::Init
 ===============
 */
-void idMath::Init( void )
+void idMath::Init()
 {
 	union _flint fi, fo;
 

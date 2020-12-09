@@ -43,8 +43,8 @@ class idForce_Spring : public idForce
 public:
 	CLASS_PROTOTYPE( idForce_Spring );
 
-	idForce_Spring( void );
-	virtual				~idForce_Spring( void );
+	idForce_Spring();
+	virtual				~idForce_Spring();
 	// initialize the spring
 	void				InitSpring( float Kstretch, float Kcompress, float damping, float restLength );
 	// set the entities and positions on these entities the spring is attached to

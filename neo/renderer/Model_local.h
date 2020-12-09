@@ -75,11 +75,11 @@ public:
 	virtual bool				IsDefaultModel() const;
 	virtual bool				IsReloadable() const;
 	virtual idRenderModel* 		InstantiateDynamicModel( const struct renderEntity_s* ent, const struct viewDef_s* view, idRenderModel* cachedModel );
-	virtual int					NumJoints( void ) const;
-	virtual const idMD5Joint* 	GetJoints( void ) const;
+	virtual int					NumJoints() const;
+	virtual const idMD5Joint* 	GetJoints() const;
 	virtual jointHandle_t		GetJointHandle( const char* name ) const;
 	virtual const char* 		GetJointName( jointHandle_t handle ) const;
-	virtual const idJointQuat* 	GetDefaultPose( void ) const;
+	virtual const idJointQuat* 	GetDefaultPose() const;
 	virtual int					NearestJoint( int surfaceNum, int a, int b, int c ) const;
 	virtual idBounds			Bounds( const struct renderEntity_s* ent ) const;
 	virtual void				ReadFromDemoFile( class idDemoFile* f );
@@ -100,7 +100,7 @@ public:
 	struct aseModel_s* 			ConvertLWOToASE( const struct st_lwObject* obj, const char* fileName );
 
 	bool						DeleteSurfaceWithId( int id );
-	void						DeleteSurfacesWithNegativeId( void );
+	void						DeleteSurfacesWithNegativeId();
 	bool						FindSurfaceWithId( int id, int& surfaceNum );
 
 public:
@@ -148,9 +148,9 @@ public:
 	void						UpdateSurface( const struct renderEntity_s* ent, const idJointMat* joints, modelSurface_t* surf );
 	idBounds					CalcBounds( const idJointMat* joints );
 	int							NearestJoint( int a, int b, int c ) const;
-	int							NumVerts( void ) const;
-	int							NumTris( void ) const;
-	int							NumWeights( void ) const;
+	int							NumVerts() const;
+	int							NumTris() const;
+	int							NumWeights() const;
 
 private:
 	idList<idVec2>				texCoords;			// texture coordinates
@@ -179,11 +179,11 @@ public:
 	virtual void				LoadModel();
 	virtual int					Memory() const;
 	virtual idRenderModel* 		InstantiateDynamicModel( const struct renderEntity_s* ent, const struct viewDef_s* view, idRenderModel* cachedModel );
-	virtual int					NumJoints( void ) const;
-	virtual const idMD5Joint* 	GetJoints( void ) const;
+	virtual int					NumJoints() const;
+	virtual const idMD5Joint* 	GetJoints() const;
 	virtual jointHandle_t		GetJointHandle( const char* name ) const;
 	virtual const char* 		GetJointName( jointHandle_t handle ) const;
-	virtual const idJointQuat* 	GetDefaultPose( void ) const;
+	virtual const idJointQuat* 	GetDefaultPose() const;
 	virtual int					NearestJoint( int surfaceNum, int a, int b, int c ) const;
 
 private:
@@ -249,7 +249,7 @@ public:
 private:
 	modelSurface_t				GenerateSurface( float lerp );
 	void						WaterDrop( int x, int y, float* page );
-	void						Update( void );
+	void						Update();
 
 	int							verts_x;
 	int							verts_y;

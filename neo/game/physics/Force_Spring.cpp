@@ -39,7 +39,7 @@ END_CLASS
 idForce_Spring::idForce_Spring
 ================
 */
-idForce_Spring::idForce_Spring( void )
+idForce_Spring::idForce_Spring()
 {
 	Kstretch		= 100.0f;
 	Kcompress		= 100.0f;
@@ -58,7 +58,7 @@ idForce_Spring::idForce_Spring( void )
 idForce_Spring::~idForce_Spring
 ================
 */
-idForce_Spring::~idForce_Spring( void )
+idForce_Spring::~idForce_Spring()
 {
 }
 

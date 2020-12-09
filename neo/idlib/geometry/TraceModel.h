@@ -99,7 +99,7 @@ public:
 	bool				isConvex;		// true when model is convex
 
 public:
-	idTraceModel( void );
+	idTraceModel();
 	// axial bounding box
 	idTraceModel( const idBounds& boxBounds );
 	// cylinder approximation
@@ -128,7 +128,7 @@ public:
 	void				SetupPolygon( const idVec3* v, const int count );
 	void				SetupPolygon( const idWinding& w );
 	// generate edge normals
-	int					GenerateEdgeNormals( void );
+	int					GenerateEdgeNormals();
 	// translate the trm
 	void				Translate( const idVec3& translation );
 	// rotate the trm
@@ -148,10 +148,10 @@ public:
 	void				GetMassProperties( const float density, float& mass, idVec3& centerOfMass, idMat3& inertiaTensor ) const;
 
 private:
-	void				InitBox( void );
-	void				InitOctahedron( void );
-	void				InitDodecahedron( void );
-	void				InitBone( void );
+	void				InitBox();
+	void				InitOctahedron();
+	void				InitDodecahedron();
+	void				InitBone();
 
 	void				ProjectionIntegrals( int polyNum, int a, int b, struct projectionIntegrals_s& integrals ) const;
 	void				PolygonIntegrals( int polyNum, int a, int b, int c, struct polygonIntegrals_s& integrals ) const;
@@ -161,7 +161,7 @@ private:
 };
 
 
-ID_INLINE idTraceModel::idTraceModel( void )
+ID_INLINE idTraceModel::idTraceModel()
 {
 	type = TRM_INVALID;
 	numVerts = numEdges = numPolys = 0;

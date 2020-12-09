@@ -68,7 +68,7 @@ const char* authReplyStr[] =
 idAsyncServer::idAsyncServer
 ==================
 */
-idAsyncServer::idAsyncServer( void )
+idAsyncServer::idAsyncServer()
 {
 	int i;
 
@@ -106,7 +106,7 @@ idAsyncServer::idAsyncServer( void )
 idAsyncServer::InitPort
 ==================
 */
-bool idAsyncServer::InitPort( void )
+bool idAsyncServer::InitPort()
 {
 	int lastPort;
 
@@ -147,7 +147,7 @@ bool idAsyncServer::InitPort( void )
 idAsyncServer::ClosePort
 ==================
 */
-void idAsyncServer::ClosePort( void )
+void idAsyncServer::ClosePort()
 {
 	int i;
 
@@ -163,7 +163,7 @@ void idAsyncServer::ClosePort( void )
 idAsyncServer::Spawn
 ==================
 */
-void idAsyncServer::Spawn( void )
+void idAsyncServer::Spawn()
 {
 	int			i, size;
 	byte		msgBuf[MAX_MESSAGE_SIZE];
@@ -221,7 +221,7 @@ void idAsyncServer::Spawn( void )
 idAsyncServer::Kill
 ==================
 */
-void idAsyncServer::Kill( void )
+void idAsyncServer::Kill()
 {
 	int i, j;
 
@@ -270,7 +270,7 @@ void idAsyncServer::Kill( void )
 idAsyncServer::ExecuteMapChange
 ==================
 */
-void idAsyncServer::ExecuteMapChange( void )
+void idAsyncServer::ExecuteMapChange()
 {
 	int			i;
 	idBitMsg	msg;
@@ -430,7 +430,7 @@ void idAsyncServer::ExecuteMapChange( void )
 idAsyncServer::GetPort
 ==================
 */
-int idAsyncServer::GetPort( void ) const
+int idAsyncServer::GetPort() const
 {
 	return serverPort.GetPort();
 }
@@ -440,7 +440,7 @@ int idAsyncServer::GetPort( void ) const
 idAsyncServer::GetBoundAdr
 ===============
 */
-netadr_t idAsyncServer::GetBoundAdr( void ) const
+netadr_t idAsyncServer::GetBoundAdr() const
 {
 	return serverPort.GetAdr();
 }
@@ -450,7 +450,7 @@ netadr_t idAsyncServer::GetBoundAdr( void ) const
 idAsyncServer::GetOutgoingRate
 ==================
 */
-int idAsyncServer::GetOutgoingRate( void ) const
+int idAsyncServer::GetOutgoingRate() const
 {
 	int i, rate;
 
@@ -472,7 +472,7 @@ int idAsyncServer::GetOutgoingRate( void ) const
 idAsyncServer::GetIncomingRate
 ==================
 */
-int idAsyncServer::GetIncomingRate( void ) const
+int idAsyncServer::GetIncomingRate() const
 {
 	int i, rate;
 
@@ -675,7 +675,7 @@ float idAsyncServer::GetClientIncomingPacketLoss( int clientNum ) const
 idAsyncServer::GetNumClients
 ==================
 */
-int idAsyncServer::GetNumClients( void ) const
+int idAsyncServer::GetNumClients() const
 {
 	int ret = 0;
 	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ )
@@ -693,7 +693,7 @@ int idAsyncServer::GetNumClients( void ) const
 idAsyncServer::GetNumIdleClients
 ==================
 */
-int idAsyncServer::GetNumIdleClients( void ) const
+int idAsyncServer::GetNumIdleClients() const
 {
 	int ret = 0;
 	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ )
@@ -832,7 +832,7 @@ void idAsyncServer::InitLocalClient( int clientNum )
 idAsyncServer::BeginLocalClient
 ==================
 */
-void idAsyncServer::BeginLocalClient( void )
+void idAsyncServer::BeginLocalClient()
 {
 	game->SetLocalClient( localClientNum );
 	game->SetUserInfo( localClientNum, sessLocal.mapSpawnData.userInfo[localClientNum], false, false );
@@ -844,7 +844,7 @@ void idAsyncServer::BeginLocalClient( void )
 idAsyncServer::LocalClientInput
 ==================
 */
-void idAsyncServer::LocalClientInput( void )
+void idAsyncServer::LocalClientInput()
 {
 	int index;
 
@@ -933,7 +933,7 @@ void idAsyncServer::SendReliableMessage( int clientNum, const idBitMsg& msg )
 idAsyncServer::CheckClientTimeouts
 ==================
 */
-void idAsyncServer::CheckClientTimeouts( void )
+void idAsyncServer::CheckClientTimeouts()
 {
 	int i, zombieTimeout, clientTimeout;
 
@@ -2413,7 +2413,7 @@ idAsyncServer::PrintLocalServerInfo
 see (client) "getInfo" -> (server) "infoResponse" -> (client)ProcessGetInfoMessage
 ===============
 */
-void idAsyncServer::PrintLocalServerInfo( void )
+void idAsyncServer::PrintLocalServerInfo()
 {
 	int i;
 
@@ -2672,7 +2672,7 @@ void idAsyncServer::LocalClientSendReliableMessage( const idBitMsg& msg )
 idAsyncServer::ProcessConnectionLessMessages
 ==================
 */
-void idAsyncServer::ProcessConnectionLessMessages( void )
+void idAsyncServer::ProcessConnectionLessMessages()
 {
 	int			size, id;
 	idBitMsg	msg;
@@ -2718,7 +2718,7 @@ int idAsyncServer::UpdateTime( int clamp )
 idAsyncServer::RunFrame
 ==================
 */
-void idAsyncServer::RunFrame( void )
+void idAsyncServer::RunFrame()
 {
 	int			i, msec, size;
 	bool		newPacket;
@@ -2923,7 +2923,7 @@ void idAsyncServer::RunFrame( void )
 idAsyncServer::PacifierUpdate
 ==================
 */
-void idAsyncServer::PacifierUpdate( void )
+void idAsyncServer::PacifierUpdate()
 {
 	int i;
 
@@ -3028,7 +3028,7 @@ void idAsyncServer::SendEnterGameToClient( int clientNum )
 idAsyncServer::UpdateAsyncStatsAvg
 ===============
 */
-void idAsyncServer::UpdateAsyncStatsAvg( void )
+void idAsyncServer::UpdateAsyncStatsAvg()
 {
 	stats_average_sum -= stats_outrate[ stats_current ];
 	stats_outrate[ stats_current ] = idAsyncNetwork::server.GetOutgoingRate();

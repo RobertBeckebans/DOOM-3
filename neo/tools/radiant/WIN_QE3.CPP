@@ -44,7 +44,7 @@ int		update_bits;
  =======================================================================================================================
  =======================================================================================================================
  */
-void Sys_MarkMapModified( void )
+void Sys_MarkMapModified()
 {
 	idStr title;
 
@@ -74,7 +74,7 @@ void Sys_SetTitle( const char* text )
  */
 HCURSOR waitcursor;
 
-void Sys_BeginWait( void )
+void Sys_BeginWait()
 {
 	waitcursor = SetCursor( LoadCursor( NULL, IDC_WAIT ) );
 }
@@ -84,7 +84,7 @@ bool Sys_Waiting()
 	return ( waitcursor != NULL );
 }
 
-void Sys_EndWait( void )
+void Sys_EndWait()
 {
 	if( waitcursor )
 	{
@@ -119,7 +119,7 @@ void Sys_SetCursorPos( int x, int y )
  =======================================================================================================================
  =======================================================================================================================
  */
-void Sys_Beep( void )
+void Sys_Beep()
 {
 	MessageBeep( MB_ICONASTERISK );
 }
@@ -158,7 +158,7 @@ char* TranslateString( char* buf )
  =======================================================================================================================
  =======================================================================================================================
  */
-double Sys_DoubleTime( void )
+double Sys_DoubleTime()
 {
 	return clock() / 1000.0;
 }
@@ -327,7 +327,7 @@ void Warning( char* error, ... )
     FILE DIALOGS
  =======================================================================================================================
  */
-bool ConfirmModified( void )
+bool ConfirmModified()
 {
 	if( !mapModified )
 	{
@@ -358,7 +358,7 @@ static HANDLE		hf;						/* file handle */
  =======================================================================================================================
  =======================================================================================================================
  */
-void OpenDialog( void )
+void OpenDialog()
 {
 	/* Obtain the system directory name and store it in szDirName. */
 	strcpy( szDirName, ValueForKey( g_qeglobals.d_project_entity, "mapspath" ) );
@@ -411,7 +411,7 @@ void OpenDialog( void )
  =======================================================================================================================
  =======================================================================================================================
  */
-void ProjectDialog( void )
+void ProjectDialog()
 {
 	/* Obtain the system directory name and store it in szDirName. */
 	strcpy( szDirName, ValueForKey( g_qeglobals.d_project_entity, "basepath" ) );
@@ -515,7 +515,7 @@ const char*	bsp_commands[256];
  =======================================================================================================================
  =======================================================================================================================
  */
-void FillBSPMenu( void )
+void FillBSPMenu()
 {
 	HMENU		hmenu;
 	int			i;

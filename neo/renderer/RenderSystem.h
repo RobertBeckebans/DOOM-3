@@ -168,31 +168,31 @@ public:
 
 	// set up cvars and basic data structures, but don't
 	// init OpenGL, so it can also be used for dedicated servers
-	virtual void			Init( void ) = 0;
+	virtual void			Init() = 0;
 
 	// only called before quitting
-	virtual void			Shutdown( void ) = 0;
+	virtual void			Shutdown() = 0;
 
-	virtual void			InitOpenGL( void ) = 0;
+	virtual void			InitOpenGL() = 0;
 
-	virtual void			ShutdownOpenGL( void ) = 0;
+	virtual void			ShutdownOpenGL() = 0;
 
-	virtual bool			IsOpenGLRunning( void ) const = 0;
+	virtual bool			IsOpenGLRunning() const = 0;
 
-	virtual bool			IsFullScreen( void ) const = 0;
-	virtual int				GetScreenWidth( void ) const = 0;
-	virtual int				GetScreenHeight( void ) const = 0;
+	virtual bool			IsFullScreen() const = 0;
+	virtual int				GetScreenWidth() const = 0;
+	virtual int				GetScreenHeight() const = 0;
 
 	// allocate a renderWorld to be used for drawing
-	virtual idRenderWorld* 	AllocRenderWorld( void ) = 0;
+	virtual idRenderWorld* 	AllocRenderWorld() = 0;
 	virtual	void			FreeRenderWorld( idRenderWorld* rw ) = 0;
 
 	// All data that will be used in a level should be
 	// registered before rendering any frames to prevent disk hits,
 	// but they can still be registered at a later time
 	// if necessary.
-	virtual void			BeginLevelLoad( void ) = 0;
-	virtual void			EndLevelLoad( void ) = 0;
+	virtual void			BeginLevelLoad() = 0;
+	virtual void			EndLevelLoad() = 0;
 
 	// font support
 	virtual bool			RegisterFont( const char* fontName, fontInfoEx_t& font ) = 0;

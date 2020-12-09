@@ -45,7 +45,7 @@ public:
 	~CWaitDlg();
 	void SetText( const char* msg, bool append = false );
 	void AllowCancel( bool enable );
-	bool CancelPressed( void );
+	bool CancelPressed();
 
 // Dialog Data
 	//{{AFX_DATA(CWaitDlg)

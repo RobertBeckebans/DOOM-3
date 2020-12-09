@@ -39,7 +39,7 @@ END_CLASS
 idPhysics_Base::idPhysics_Base
 ================
 */
-idPhysics_Base::idPhysics_Base( void )
+idPhysics_Base::idPhysics_Base()
 {
 	self = NULL;
 	clipMask = 0;
@@ -52,7 +52,7 @@ idPhysics_Base::idPhysics_Base( void )
 idPhysics_Base::~idPhysics_Base
 ================
 */
-idPhysics_Base::~idPhysics_Base( void )
+idPhysics_Base::~idPhysics_Base()
 {
 	if( self && self->GetPhysics() == this )
 	{
@@ -153,7 +153,7 @@ idClipModel* idPhysics_Base::GetClipModel( int id ) const
 idPhysics_Base::GetNumClipModels
 ================
 */
-int idPhysics_Base::GetNumClipModels( void ) const
+int idPhysics_Base::GetNumClipModels() const
 {
 	return 0;
 }
@@ -260,7 +260,7 @@ void idPhysics_Base::UpdateTime( int endTimeMSec )
 idPhysics_Base::GetTime
 ================
 */
-int idPhysics_Base::GetTime( void ) const
+int idPhysics_Base::GetTime() const
 {
 	return 0;
 }
@@ -298,7 +298,7 @@ void idPhysics_Base::AddForce( const int id, const idVec3& point, const idVec3& 
 idPhysics_Base::Activate
 ================
 */
-void idPhysics_Base::Activate( void )
+void idPhysics_Base::Activate()
 {
 }
 
@@ -307,7 +307,7 @@ void idPhysics_Base::Activate( void )
 idPhysics_Base::PutToRest
 ================
 */
-void idPhysics_Base::PutToRest( void )
+void idPhysics_Base::PutToRest()
 {
 }
 
@@ -316,7 +316,7 @@ void idPhysics_Base::PutToRest( void )
 idPhysics_Base::IsAtRest
 ================
 */
-bool idPhysics_Base::IsAtRest( void ) const
+bool idPhysics_Base::IsAtRest() const
 {
 	return true;
 }
@@ -326,7 +326,7 @@ bool idPhysics_Base::IsAtRest( void ) const
 idPhysics_Base::GetRestStartTime
 ================
 */
-int idPhysics_Base::GetRestStartTime( void ) const
+int idPhysics_Base::GetRestStartTime() const
 {
 	return 0;
 }
@@ -336,7 +336,7 @@ int idPhysics_Base::GetRestStartTime( void ) const
 idPhysics_Base::IsPushable
 ================
 */
-bool idPhysics_Base::IsPushable( void ) const
+bool idPhysics_Base::IsPushable() const
 {
 	return true;
 }
@@ -346,7 +346,7 @@ bool idPhysics_Base::IsPushable( void ) const
 idPhysics_Base::SaveState
 ================
 */
-void idPhysics_Base::SaveState( void )
+void idPhysics_Base::SaveState()
 {
 }
 
@@ -355,7 +355,7 @@ void idPhysics_Base::SaveState( void )
 idPhysics_Base::RestoreState
 ================
 */
-void idPhysics_Base::RestoreState( void )
+void idPhysics_Base::RestoreState()
 {
 }
 
@@ -470,7 +470,7 @@ void idPhysics_Base::SetGravity( const idVec3& newGravity )
 idPhysics_Base::GetGravity
 ================
 */
-const idVec3& idPhysics_Base::GetGravity( void ) const
+const idVec3& idPhysics_Base::GetGravity() const
 {
 	return gravityVector;
 }
@@ -480,7 +480,7 @@ const idVec3& idPhysics_Base::GetGravity( void ) const
 idPhysics_Base::GetGravityNormal
 ================
 */
-const idVec3& idPhysics_Base::GetGravityNormal( void ) const
+const idVec3& idPhysics_Base::GetGravityNormal() const
 {
 	return gravityNormal;
 }
@@ -520,7 +520,7 @@ int idPhysics_Base::ClipContents( const idClipModel* model ) const
 idPhysics_Base::DisableClip
 ================
 */
-void idPhysics_Base::DisableClip( void )
+void idPhysics_Base::DisableClip()
 {
 }
 
@@ -529,7 +529,7 @@ void idPhysics_Base::DisableClip( void )
 idPhysics_Base::EnableClip
 ================
 */
-void idPhysics_Base::EnableClip( void )
+void idPhysics_Base::EnableClip()
 {
 }
 
@@ -538,7 +538,7 @@ void idPhysics_Base::EnableClip( void )
 idPhysics_Base::UnlinkClip
 ================
 */
-void idPhysics_Base::UnlinkClip( void )
+void idPhysics_Base::UnlinkClip()
 {
 }
 
@@ -547,7 +547,7 @@ void idPhysics_Base::UnlinkClip( void )
 idPhysics_Base::LinkClip
 ================
 */
-void idPhysics_Base::LinkClip( void )
+void idPhysics_Base::LinkClip()
 {
 }
 
@@ -556,7 +556,7 @@ void idPhysics_Base::LinkClip( void )
 idPhysics_Base::EvaluateContacts
 ================
 */
-bool idPhysics_Base::EvaluateContacts( void )
+bool idPhysics_Base::EvaluateContacts()
 {
 	return false;
 }
@@ -566,7 +566,7 @@ bool idPhysics_Base::EvaluateContacts( void )
 idPhysics_Base::GetNumContacts
 ================
 */
-int idPhysics_Base::GetNumContacts( void ) const
+int idPhysics_Base::GetNumContacts() const
 {
 	return contacts.Num();
 }
@@ -586,7 +586,7 @@ const contactInfo_t& idPhysics_Base::GetContact( int num ) const
 idPhysics_Base::ClearContacts
 ================
 */
-void idPhysics_Base::ClearContacts( void )
+void idPhysics_Base::ClearContacts()
 {
 	int i;
 	idEntity* ent;
@@ -662,7 +662,7 @@ void idPhysics_Base::RemoveContactEntity( idEntity* e )
 idPhysics_Base::HasGroundContacts
 ================
 */
-bool idPhysics_Base::HasGroundContacts( void ) const
+bool idPhysics_Base::HasGroundContacts() const
 {
 	int i;
 
@@ -757,7 +757,7 @@ void idPhysics_Base::SetMaster( idEntity* master, const bool orientated )
 idPhysics_Base::GetBlockingInfo
 ================
 */
-const trace_t* idPhysics_Base::GetBlockingInfo( void ) const
+const trace_t* idPhysics_Base::GetBlockingInfo() const
 {
 	return NULL;
 }
@@ -767,7 +767,7 @@ const trace_t* idPhysics_Base::GetBlockingInfo( void ) const
 idPhysics_Base::GetBlockingEntity
 ================
 */
-idEntity* idPhysics_Base::GetBlockingEntity( void ) const
+idEntity* idPhysics_Base::GetBlockingEntity() const
 {
 	return NULL;
 }
@@ -777,7 +777,7 @@ idEntity* idPhysics_Base::GetBlockingEntity( void ) const
 idPhysics_Base::GetLinearEndTime
 ================
 */
-int idPhysics_Base::GetLinearEndTime( void ) const
+int idPhysics_Base::GetLinearEndTime() const
 {
 	return 0;
 }
@@ -787,7 +787,7 @@ int idPhysics_Base::GetLinearEndTime( void ) const
 idPhysics_Base::GetAngularEndTime
 ================
 */
-int idPhysics_Base::GetAngularEndTime( void ) const
+int idPhysics_Base::GetAngularEndTime() const
 {
 	return 0;
 }
@@ -817,7 +817,7 @@ void idPhysics_Base::AddGroundContacts( const idClipModel* clipModel )
 idPhysics_Base::AddContactEntitiesForContacts
 ================
 */
-void idPhysics_Base::AddContactEntitiesForContacts( void )
+void idPhysics_Base::AddContactEntitiesForContacts()
 {
 	int i;
 	idEntity* ent;
@@ -837,7 +837,7 @@ void idPhysics_Base::AddContactEntitiesForContacts( void )
 idPhysics_Base::ActivateContactEntities
 ================
 */
-void idPhysics_Base::ActivateContactEntities( void )
+void idPhysics_Base::ActivateContactEntities()
 {
 	int i;
 	idEntity* ent;
@@ -861,7 +861,7 @@ void idPhysics_Base::ActivateContactEntities( void )
 idPhysics_Base::IsOutsideWorld
 ================
 */
-bool idPhysics_Base::IsOutsideWorld( void ) const
+bool idPhysics_Base::IsOutsideWorld() const
 {
 	if( !gameLocal.clip.GetWorldBounds().Expand( 128.0f ).IntersectsBounds( GetAbsBounds() ) )
 	{

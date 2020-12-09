@@ -305,7 +305,7 @@ This can go away once everything uses fragment programs so the enable states don
 need tracking
 ====================
 */
-void idMegaTexture::Unbind( void )
+void idMegaTexture::Unbind()
 {
 	for( int i = 0 ; i < numLevels ; i++ )
 	{

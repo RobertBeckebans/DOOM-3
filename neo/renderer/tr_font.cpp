@@ -266,7 +266,7 @@ static byte*	fdFile;
 readInt
 ============
 */
-int readInt( void )
+int readInt()
 {
 	int i = fdFile[fdOffset] + ( fdFile[fdOffset + 1] << 8 ) + ( fdFile[fdOffset + 2] << 16 ) + ( fdFile[fdOffset + 3] << 24 );
 	fdOffset += 4;
@@ -284,7 +284,7 @@ typedef union
 readFloat
 ============
 */
-float readFloat( void )
+float readFloat()
 {
 	poor	me;
 #ifdef __ppc__
@@ -594,7 +594,7 @@ bool idRenderSystemLocal::RegisterFont( const char* fontName, fontInfoEx_t& font
 R_InitFreeType
 ============
 */
-void R_InitFreeType( void )
+void R_InitFreeType()
 {
 #ifdef BUILD_FREETYPE
 	if( FT_Init_FreeType( &ftLibrary ) )
@@ -610,7 +610,7 @@ void R_InitFreeType( void )
 R_DoneFreeType
 ============
 */
-void R_DoneFreeType( void )
+void R_DoneFreeType()
 {
 #ifdef BUILD_FREETYPE
 	if( ftLibrary )

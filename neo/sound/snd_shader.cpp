@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 idSoundShader::Init
 ===============
 */
-void idSoundShader::Init( void )
+void idSoundShader::Init()
 {
 	desc = "<no description>";
 	errorDuringParse = false;
@@ -53,7 +53,7 @@ void idSoundShader::Init( void )
 idSoundShader::idSoundShader
 ===============
 */
-idSoundShader::idSoundShader( void )
+idSoundShader::idSoundShader()
 {
 	Init();
 }
@@ -63,7 +63,7 @@ idSoundShader::idSoundShader( void )
 idSoundShader::~idSoundShader
 ===============
 */
-idSoundShader::~idSoundShader( void )
+idSoundShader::~idSoundShader()
 {
 }
 
@@ -72,7 +72,7 @@ idSoundShader::~idSoundShader( void )
 idSoundShader::Size
 =================
 */
-size_t idSoundShader::Size( void ) const
+size_t idSoundShader::Size() const
 {
 	return sizeof( idSoundShader );
 }
@@ -93,7 +93,7 @@ void idSoundShader::FreeData()
 idSoundShader::SetDefaultText
 ===================
 */
-bool idSoundShader::SetDefaultText( void )
+bool idSoundShader::SetDefaultText()
 {
 	idStr wavname;
 
@@ -441,7 +441,7 @@ bool idSoundShader::ParseShader( idLexer& src )
 idSoundShader::CheckShakesAndOgg
 ===============
 */
-bool idSoundShader::CheckShakesAndOgg( void ) const
+bool idSoundShader::CheckShakesAndOgg() const
 {
 	int i;
 	bool ret = false;
@@ -506,7 +506,7 @@ void idSoundShader::List() const
 idSoundShader::GetAltSound
 ===============
 */
-const idSoundShader* idSoundShader::GetAltSound( void ) const
+const idSoundShader* idSoundShader::GetAltSound() const
 {
 	return altSound;
 }

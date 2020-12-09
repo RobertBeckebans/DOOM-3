@@ -78,10 +78,10 @@ public:
 	virtual						~idGame() {}
 
 	// Initialize the game for the first time.
-	virtual void				Init( void ) = 0;
+	virtual void				Init() = 0;
 
 	// Shut down the entire game.
-	virtual void				Shutdown( void ) = 0;
+	virtual void				Shutdown() = 0;
 
 	// Set the local client number. Distinguishes listen ( == 0 ) / dedicated ( == -1 )
 	virtual void				SetLocalClient( int clientNum ) = 0;
@@ -95,7 +95,7 @@ public:
 	virtual const idDict* 		GetUserInfo( int clientNum ) = 0;
 
 	// The game gets a chance to alter userinfo before they are emitted to server.
-	virtual void				ThrottleUserInfo( void ) = 0;
+	virtual void				ThrottleUserInfo() = 0;
 
 	// Sets the serverinfo at map loads and when it changes.
 	virtual void				SetServerInfo( const idDict& serverInfo ) = 0;
@@ -116,7 +116,7 @@ public:
 	virtual void				SaveGame( idFile* saveGameFile ) = 0;
 
 	// Shut down the current map.
-	virtual void				MapShutdown( void ) = 0;
+	virtual void				MapShutdown() = 0;
 
 	// Caches media referenced from in key/value pairs in the given dictionary.
 	virtual void				CacheDictionaryMedia( const idDict* dict ) = 0;
@@ -237,7 +237,7 @@ class idMD5Anim;
 class idGameEdit
 {
 public:
-	virtual						~idGameEdit( void ) {}
+	virtual						~idGameEdit() {}
 
 	// These are the canonical idDict to parameter parsing routines used by both the game and tools.
 	virtual void				ParseSpawnArgsToRenderLight( const idDict* args, renderLight_t* renderLight );
@@ -261,12 +261,12 @@ public:
 	// Articulated Figure calls for AF editor and Radiant.
 	virtual bool				AF_SpawnEntity( const char* fileName );
 	virtual void				AF_UpdateEntities( const char* fileName );
-	virtual void				AF_UndoChanges( void );
+	virtual void				AF_UndoChanges();
 	virtual idRenderModel* 		AF_CreateMesh( const idDict& args, idVec3& meshOrigin, idMat3& meshAxis, bool& poseIsSet );
 
 
 	// Entity selection.
-	virtual void				ClearEntitySelection( void );
+	virtual void				ClearEntitySelection();
 	virtual int					GetSelectedEntities( idEntity* list[], int max );
 	virtual void				AddSelectedEntity( idEntity* ent );
 

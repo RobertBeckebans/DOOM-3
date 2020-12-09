@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 idPush::InitSavingPushedEntityPositions
 ============
 */
-void idPush::InitSavingPushedEntityPositions( void )
+void idPush::InitSavingPushedEntityPositions()
 {
 	numPushed = 0;
 }
@@ -87,7 +87,7 @@ void idPush::SaveEntityPosition( idEntity* ent )
 idPush::RestorePushedEntityPositions
 ============
 */
-void idPush::RestorePushedEntityPositions( void )
+void idPush::RestorePushedEntityPositions()
 {
 	int i;
 

@@ -176,7 +176,7 @@ void idInterpreter::Restore( idRestoreGame* savefile )
 idInterpreter::Reset
 ================
 */
-void idInterpreter::Reset( void )
+void idInterpreter::Reset()
 {
 	callStackDepth = 0;
 	localstackUsed = 0;
@@ -369,7 +369,7 @@ bool idInterpreter::GetRegisterValue( const char* name, idStr& out, int scopeDep
 idInterpreter::GetCallstackDepth
 ================
 */
-int idInterpreter::GetCallstackDepth( void ) const
+int idInterpreter::GetCallstackDepth() const
 {
 	return callStackDepth;
 }
@@ -379,7 +379,7 @@ int idInterpreter::GetCallstackDepth( void ) const
 idInterpreter::GetCallstack
 ================
 */
-const prstack_t* idInterpreter::GetCallstack( void ) const
+const prstack_t* idInterpreter::GetCallstack() const
 {
 	return &callStack[ 0 ];
 }
@@ -389,7 +389,7 @@ const prstack_t* idInterpreter::GetCallstack( void ) const
 idInterpreter::GetCurrentFunction
 ================
 */
-const function_t* idInterpreter::GetCurrentFunction( void ) const
+const function_t* idInterpreter::GetCurrentFunction() const
 {
 	return currentFunction;
 }
@@ -399,7 +399,7 @@ const function_t* idInterpreter::GetCurrentFunction( void ) const
 idInterpreter::GetThread
 ================
 */
-idThread* idInterpreter::GetThread( void ) const
+idThread* idInterpreter::GetThread() const
 {
 	return thread;
 }
@@ -420,7 +420,7 @@ void idInterpreter::SetThread( idThread* pThread )
 idInterpreter::CurrentLine
 ================
 */
-int idInterpreter::CurrentLine( void ) const
+int idInterpreter::CurrentLine() const
 {
 	if( instructionPointer < 0 )
 	{
@@ -434,7 +434,7 @@ int idInterpreter::CurrentLine( void ) const
 idInterpreter::CurrentFile
 ================
 */
-const char* idInterpreter::CurrentFile( void ) const
+const char* idInterpreter::CurrentFile() const
 {
 	if( instructionPointer < 0 )
 	{
@@ -448,7 +448,7 @@ const char* idInterpreter::CurrentFile( void ) const
 idInterpreter::StackTrace
 ============
 */
-void idInterpreter::StackTrace( void ) const
+void idInterpreter::StackTrace() const
 {
 	const function_t*	f;
 	int 				i;
@@ -550,7 +550,7 @@ void idInterpreter::Warning( char* fmt, ... ) const
 idInterpreter::DisplayInfo
 ================
 */
-void idInterpreter::DisplayInfo( void ) const
+void idInterpreter::DisplayInfo() const
 {
 	const function_t* f;
 	int i;
@@ -975,7 +975,7 @@ void idInterpreter::EndMultiFrameEvent( idEntity* ent, const idEventDef* event )
 idInterpreter::MultiFrameEventInProgress
 ================
 */
-bool idInterpreter::MultiFrameEventInProgress( void ) const
+bool idInterpreter::MultiFrameEventInProgress() const
 {
 	return multiFrameEvent != NULL;
 }
@@ -1073,7 +1073,7 @@ void idInterpreter::CallSysEvent( const function_t* func, int argsize )
 idInterpreter::Execute
 ====================
 */
-bool idInterpreter::Execute( void )
+bool idInterpreter::Execute()
 {
 	varEval_t	var_a;
 	varEval_t	var_b;

@@ -62,30 +62,30 @@ extern	PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
 
 void	Sys_QueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void* ptr );
 
-void	Sys_CreateConsole( void );
-void	Sys_DestroyConsole( void );
+void	Sys_CreateConsole();
+void	Sys_DestroyConsole();
 
-char*	Sys_ConsoleInput( void );
-char*	Sys_GetCurrentUser( void );
+char*	Sys_ConsoleInput();
+char*	Sys_GetCurrentUser();
 
 void	Win_SetErrorText( const char* text );
 
-cpuid_t	Sys_GetCPUId( void );
+cpuid_t	Sys_GetCPUId();
 
 int		MapKey( int key );
 
 
 // Input subsystem
 
-void	IN_Init( void );
-void	IN_Shutdown( void );
+void	IN_Init();
+void	IN_Shutdown();
 // add additional non keyboard / non mouse movement on top of the keyboard move cmd
 
-void	IN_DeactivateMouseIfWindowed( void );
-void	IN_DeactivateMouse( void );
-void	IN_ActivateMouse( void );
+void	IN_DeactivateMouseIfWindowed();
+void	IN_DeactivateMouse();
+void	IN_ActivateMouse();
 
-void	IN_Frame( void );
+void	IN_Frame();
 
 int		IN_DIMapKey( int key );
 
@@ -164,7 +164,7 @@ typedef struct
 	HANDLE			renderActiveEvent;
 	HANDLE			renderThreadHandle;
 	unsigned long	renderThreadId;
-	void	( *glimpRenderThread )( void );
+	void	( *glimpRenderThread )();
 	void*			smpData;
 	int				wglErrors;
 	// SMP acceleration vars

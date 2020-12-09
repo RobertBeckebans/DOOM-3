@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idDeclFX::Size
 =================
 */
-size_t idDeclFX::Size( void ) const
+size_t idDeclFX::Size() const
 {
 	return sizeof( idDeclFX );
 }
@@ -45,7 +45,7 @@ size_t idDeclFX::Size( void ) const
 idDeclFX::Print
 ===============
 */
-void idDeclFX::Print( void ) const
+void idDeclFX::Print() const
 {
 	const idDeclFX* list = this;
 
@@ -93,7 +93,7 @@ void idDeclFX::Print( void ) const
 idDeclFX::List
 ===============
 */
-void idDeclFX::List( void ) const
+void idDeclFX::List() const
 {
 	common->Printf( "%s, %d stages\n", GetName(), events.Num() );
 }
@@ -502,7 +502,7 @@ bool idDeclFX::Parse( const char* text, const int textLength )
 idDeclFX::DefaultDefinition
 ===================
 */
-const char* idDeclFX::DefaultDefinition( void ) const
+const char* idDeclFX::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -518,7 +518,7 @@ const char* idDeclFX::DefaultDefinition( void ) const
 idDeclFX::FreeData
 ===================
 */
-void idDeclFX::FreeData( void )
+void idDeclFX::FreeData()
 {
 	events.Clear();
 }

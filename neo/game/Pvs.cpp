@@ -73,7 +73,7 @@ typedef struct pvsStack_s
 idPVS::idPVS
 ================
 */
-idPVS::idPVS( void )
+idPVS::idPVS()
 {
 	int i;
 
@@ -100,7 +100,7 @@ idPVS::idPVS( void )
 idPVS::~idPVS
 ================
 */
-idPVS::~idPVS( void )
+idPVS::~idPVS()
 {
 	Shutdown();
 }
@@ -110,7 +110,7 @@ idPVS::~idPVS( void )
 idPVS::GetPortalCount
 ================
 */
-int idPVS::GetPortalCount( void ) const
+int idPVS::GetPortalCount() const
 {
 	int i, na, np;
 
@@ -128,7 +128,7 @@ int idPVS::GetPortalCount( void ) const
 idPVS::CreatePVSData
 ================
 */
-void idPVS::CreatePVSData( void )
+void idPVS::CreatePVSData()
 {
 	int i, j, n, cp;
 	exitPortal_t portal;
@@ -190,7 +190,7 @@ void idPVS::CreatePVSData( void )
 idPVS::DestroyPVSData
 ================
 */
-void idPVS::DestroyPVSData( void )
+void idPVS::DestroyPVSData()
 {
 	int i;
 
@@ -258,7 +258,7 @@ void idPVS::FloodFrontPortalPVS_r( pvsPortal_t* portal, int areaNum ) const
 idPVS::FrontPortalPVS
 ================
 */
-void idPVS::FrontPortalPVS( void ) const
+void idPVS::FrontPortalPVS() const
 {
 	int i, j, k, n, p, side1, side2, areaSide;
 	pvsPortal_t* p1, *p2;
@@ -458,7 +458,7 @@ pvsStack_t* idPVS::FloodPassagePVS_r( pvsPortal_t* source, const pvsPortal_t* po
 idPVS::PassagePVS
 ===============
 */
-void idPVS::PassagePVS( void ) const
+void idPVS::PassagePVS() const
 {
 	int i;
 	pvsPortal_t* source;
@@ -640,7 +640,7 @@ idPVS::CreatePassages
 */
 #define MAX_PASSAGE_BOUNDS		128
 
-void idPVS::CreatePassages( void ) const
+void idPVS::CreatePassages() const
 {
 	int i, j, l, n, numBounds, front, passageMemory, byteNum, bitNum;
 	int sides[MAX_PASSAGE_BOUNDS];
@@ -782,7 +782,7 @@ void idPVS::CreatePassages( void ) const
 idPVS::DestroyPassages
 ================
 */
-void idPVS::DestroyPassages( void ) const
+void idPVS::DestroyPassages() const
 {
 	int i, j;
 	pvsPortal_t* p;
@@ -808,7 +808,7 @@ void idPVS::DestroyPassages( void ) const
 idPVS::CopyPortalPVSToMightSee
 ================
 */
-void idPVS::CopyPortalPVSToMightSee( void ) const
+void idPVS::CopyPortalPVSToMightSee() const
 {
 	int i;
 	pvsPortal_t* p;
@@ -825,7 +825,7 @@ void idPVS::CopyPortalPVSToMightSee( void ) const
 idPVS::AreaPVSFromPortalPVS
 ================
 */
-int idPVS::AreaPVSFromPortalPVS( void ) const
+int idPVS::AreaPVSFromPortalPVS() const
 {
 	int i, j, k, areaNum, totalVisibleAreas;
 	long* p1, *p2;
@@ -901,7 +901,7 @@ int idPVS::AreaPVSFromPortalPVS( void ) const
 idPVS::Init
 ================
 */
-void idPVS::Init( void )
+void idPVS::Init()
 {
 	int totalVisibleAreas;
 
@@ -971,7 +971,7 @@ void idPVS::Init( void )
 idPVS::Shutdown
 ================
 */
-void idPVS::Shutdown( void )
+void idPVS::Shutdown()
 {
 	if( connectedAreas )
 	{

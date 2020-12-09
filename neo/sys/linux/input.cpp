@@ -89,7 +89,7 @@ void IN_Clear_f( const idCmdArgs& args )
 Sys_InitInput
 =================
 */
-void Sys_InitInput( void )
+void Sys_InitInput()
 {
 	int major_in_out, minor_in_out, opcode_rtrn, event_rtrn, error_rtrn;
 	bool ret;
@@ -147,7 +147,7 @@ static Cursor Sys_XCreateNullCursor( Display* display, Window root )
 	return cursor;
 }
 
-static void Sys_XInstallGrabs( void )
+static void Sys_XInstallGrabs()
 {
 	assert( dpy );
 
@@ -206,7 +206,7 @@ static void Sys_XInstallGrabs( void )
 	mouse_active = true;
 }
 
-void Sys_XUninstallGrabs( void )
+void Sys_XUninstallGrabs()
 {
 	assert( dpy );
 
@@ -301,7 +301,7 @@ void Sys_GrabMouseCursor( bool grabIt )
  *  same timestamp on press/release event pairs
  *  for key repeats.
  */
-static bool Sys_XPendingInput( void )
+static bool Sys_XPendingInput()
 {
 	// Flush the display connection
 	//  and look to see if events are queued
@@ -614,7 +614,7 @@ void Posix_PollInput()
 Sys_ShutdownInput
 =================
 */
-void Sys_ShutdownInput( void ) { }
+void Sys_ShutdownInput() { }
 
 /*
 ===============

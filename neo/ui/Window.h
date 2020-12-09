@@ -150,7 +150,7 @@ public:
 		mEvent = new idGuiScriptList;
 		mName  = name;
 	}
-	~rvNamedEvent( void )
+	~rvNamedEvent()
 	{
 		delete mEvent;
 	}
@@ -215,7 +215,7 @@ public:
 
 	void SetDC( idDeviceContext* d );
 
-	idDeviceContext*	GetDC( void )
+	idDeviceContext*	GetDC()
 	{
 		return dc;
 	}
@@ -360,7 +360,7 @@ public:
 
 	idWindow*	FindChildByPoint( float x, float y, idWindow* below = NULL );
 	int			GetChildIndex( idWindow* window );
-	int			GetChildCount( void );
+	int			GetChildCount();
 	idWindow*	GetChild( int index );
 	void		RemoveChild( idWindow* win );
 	bool		InsertChild( idWindow* win, idWindow* before );
@@ -375,7 +375,7 @@ protected:
 	friend		class rvGEWindowWrapper;
 
 	idWindow*	FindChildByPoint( float x, float y, idWindow** below );
-	void		SetDefaults( void );
+	void		SetDefaults();
 
 	friend class idSimpleWindow;
 	friend class idUserInterfaceLocal;

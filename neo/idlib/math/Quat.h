@@ -53,7 +53,7 @@ public:
 	float			z;
 	float			w;
 
-	idQuat( void );
+	idQuat();
 	idQuat( float x, float y, float z, float w );
 
 	void 			Set( float x, float y, float z, float w );
@@ -80,27 +80,27 @@ public:
 	bool			operator==(	const idQuat& a ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idQuat& a ) const;					// exact compare, no epsilon
 
-	idQuat			Inverse( void ) const;
-	float			Length( void ) const;
-	idQuat& 		Normalize( void );
+	idQuat			Inverse() const;
+	float			Length() const;
+	idQuat& 		Normalize();
 
-	float			CalcW( void ) const;
-	int				GetDimension( void ) const;
+	float			CalcW() const;
+	int				GetDimension() const;
 
-	idAngles		ToAngles( void ) const;
-	idRotation		ToRotation( void ) const;
-	idMat3			ToMat3( void ) const;
-	idMat4			ToMat4( void ) const;
-	idCQuat			ToCQuat( void ) const;
-	idVec3			ToAngularVelocity( void ) const;
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	idAngles		ToAngles() const;
+	idRotation		ToRotation() const;
+	idMat3			ToMat3() const;
+	idMat4			ToMat4() const;
+	idCQuat			ToCQuat() const;
+	idVec3			ToAngularVelocity() const;
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 
 	idQuat& 		Slerp( const idQuat& from, const idQuat& to, float t );
 };
 
-ID_INLINE idQuat::idQuat( void )
+ID_INLINE idQuat::idQuat()
 {
 }
 
@@ -278,12 +278,12 @@ ID_INLINE void idQuat::Set( float x, float y, float z, float w )
 	this->w = w;
 }
 
-ID_INLINE idQuat idQuat::Inverse( void ) const
+ID_INLINE idQuat idQuat::Inverse() const
 {
 	return idQuat( -x, -y, -z, w );
 }
 
-ID_INLINE float idQuat::Length( void ) const
+ID_INLINE float idQuat::Length() const
 {
 	float len;
 
@@ -291,7 +291,7 @@ ID_INLINE float idQuat::Length( void ) const
 	return idMath::Sqrt( len );
 }
 
-ID_INLINE idQuat& idQuat::Normalize( void )
+ID_INLINE idQuat& idQuat::Normalize()
 {
 	float len;
 	float ilength;
@@ -308,23 +308,23 @@ ID_INLINE idQuat& idQuat::Normalize( void )
 	return *this;
 }
 
-ID_INLINE float idQuat::CalcW( void ) const
+ID_INLINE float idQuat::CalcW() const
 {
 	// take the absolute value because floating point rounding may cause the dot of x,y,z to be larger than 1
 	return sqrt( fabs( 1.0f - ( x * x + y * y + z * z ) ) );
 }
 
-ID_INLINE int idQuat::GetDimension( void ) const
+ID_INLINE int idQuat::GetDimension() const
 {
 	return 4;
 }
 
-ID_INLINE const float* idQuat::ToFloatPtr( void ) const
+ID_INLINE const float* idQuat::ToFloatPtr() const
 {
 	return &x;
 }
 
-ID_INLINE float* idQuat::ToFloatPtr( void )
+ID_INLINE float* idQuat::ToFloatPtr()
 {
 	return &x;
 }
@@ -345,7 +345,7 @@ public:
 	float			y;
 	float			z;
 
-	idCQuat( void );
+	idCQuat();
 	idCQuat( float x, float y, float z );
 
 	void 			Set( float x, float y, float z );
@@ -358,19 +358,19 @@ public:
 	bool			operator==(	const idCQuat& a ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idCQuat& a ) const;					// exact compare, no epsilon
 
-	int				GetDimension( void ) const;
+	int				GetDimension() const;
 
-	idAngles		ToAngles( void ) const;
-	idRotation		ToRotation( void ) const;
-	idMat3			ToMat3( void ) const;
-	idMat4			ToMat4( void ) const;
-	idQuat			ToQuat( void ) const;
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	idAngles		ToAngles() const;
+	idRotation		ToRotation() const;
+	idMat3			ToMat3() const;
+	idMat4			ToMat4() const;
+	idQuat			ToQuat() const;
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 };
 
-ID_INLINE idCQuat::idCQuat( void )
+ID_INLINE idCQuat::idCQuat()
 {
 }
 
@@ -432,23 +432,23 @@ ID_INLINE bool idCQuat::operator!=( const idCQuat& a ) const
 	return !Compare( a );
 }
 
-ID_INLINE int idCQuat::GetDimension( void ) const
+ID_INLINE int idCQuat::GetDimension() const
 {
 	return 3;
 }
 
-ID_INLINE idQuat idCQuat::ToQuat( void ) const
+ID_INLINE idQuat idCQuat::ToQuat() const
 {
 	// take the absolute value because floating point rounding may cause the dot of x,y,z to be larger than 1
 	return idQuat( x, y, z, sqrt( fabs( 1.0f - ( x * x + y * y + z * z ) ) ) );
 }
 
-ID_INLINE const float* idCQuat::ToFloatPtr( void ) const
+ID_INLINE const float* idCQuat::ToFloatPtr() const
 {
 	return &x;
 }
 
-ID_INLINE float* idCQuat::ToFloatPtr( void )
+ID_INLINE float* idCQuat::ToFloatPtr()
 {
 	return &x;
 }

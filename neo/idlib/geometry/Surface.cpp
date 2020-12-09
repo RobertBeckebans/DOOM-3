@@ -682,7 +682,7 @@ bool idSurface::ClipInPlace( const idPlane& plane, const float epsilon, const bo
 idSurface::IsConnected
 =============
 */
-bool idSurface::IsConnected( void ) const
+bool idSurface::IsConnected() const
 {
 	int i, j, numIslands, numTris;
 	int queueStart, queueEnd;
@@ -747,7 +747,7 @@ bool idSurface::IsConnected( void ) const
 idSurface::IsClosed
 =================
 */
-bool idSurface::IsClosed( void ) const
+bool idSurface::IsClosed() const
 {
 	for( int i = 0; i < edges.Num(); i++ )
 	{
@@ -962,7 +962,7 @@ idSurface::GenerateEdgeIndexes
   Assumes each edge is shared by at most two triangles.
 =================
 */
-void idSurface::GenerateEdgeIndexes( void )
+void idSurface::GenerateEdgeIndexes()
 {
 	int i, j, i0, i1, i2, s, v0, v1, edgeNum;
 	int* index, *vertexEdges, *edgeChain;

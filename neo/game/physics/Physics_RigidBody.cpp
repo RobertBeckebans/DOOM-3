@@ -287,7 +287,7 @@ idPhysics_RigidBody::TestIfAtRest
   Does not catch all cases where the body is at rest but is generally good enough.
 ================
 */
-bool idPhysics_RigidBody::TestIfAtRest( void ) const
+bool idPhysics_RigidBody::TestIfAtRest() const
 {
 	int i;
 	float gv;
@@ -384,7 +384,7 @@ idPhysics_RigidBody::DropToFloorAndRest
   Drops the object straight down to the floor and verifies if the object is at rest on the floor.
 ================
 */
-void idPhysics_RigidBody::DropToFloorAndRest( void )
+void idPhysics_RigidBody::DropToFloorAndRest()
 {
 	idVec3 down;
 	trace_t tr;
@@ -437,7 +437,7 @@ void idPhysics_RigidBody::DropToFloorAndRest( void )
 idPhysics_RigidBody::DebugDraw
 ================
 */
-void idPhysics_RigidBody::DebugDraw( void )
+void idPhysics_RigidBody::DebugDraw()
 {
 
 	if( rb_showBodies.GetBool() || ( rb_showActive.GetBool() && current.atRest < 0 ) )
@@ -471,7 +471,7 @@ void idPhysics_RigidBody::DebugDraw( void )
 idPhysics_RigidBody::idPhysics_RigidBody
 ================
 */
-idPhysics_RigidBody::idPhysics_RigidBody( void )
+idPhysics_RigidBody::idPhysics_RigidBody()
 {
 
 	// set default rigid body properties
@@ -519,7 +519,7 @@ idPhysics_RigidBody::idPhysics_RigidBody( void )
 idPhysics_RigidBody::~idPhysics_RigidBody
 ================
 */
-idPhysics_RigidBody::~idPhysics_RigidBody( void )
+idPhysics_RigidBody::~idPhysics_RigidBody()
 {
 	if( clipModel )
 	{
@@ -711,7 +711,7 @@ idClipModel* idPhysics_RigidBody::GetClipModel( int id ) const
 idPhysics_RigidBody::GetNumClipModels
 ================
 */
-int idPhysics_RigidBody::GetNumClipModels( void ) const
+int idPhysics_RigidBody::GetNumClipModels() const
 {
 	return 1;
 }
@@ -777,7 +777,7 @@ void idPhysics_RigidBody::SetBouncyness( const float b )
 idPhysics_RigidBody::Rest
 ================
 */
-void idPhysics_RigidBody::Rest( void )
+void idPhysics_RigidBody::Rest()
 {
 	current.atRest = gameLocal.time;
 	current.i.linearMomentum.Zero();
@@ -790,7 +790,7 @@ void idPhysics_RigidBody::Rest( void )
 idPhysics_RigidBody::DropToFloor
 ================
 */
-void idPhysics_RigidBody::DropToFloor( void )
+void idPhysics_RigidBody::DropToFloor()
 {
 	dropToFloor = true;
 	testSolid = true;
@@ -801,7 +801,7 @@ void idPhysics_RigidBody::DropToFloor( void )
 idPhysics_RigidBody::NoContact
 ================
 */
-void idPhysics_RigidBody::NoContact( void )
+void idPhysics_RigidBody::NoContact()
 {
 	noContact = true;
 }
@@ -811,7 +811,7 @@ void idPhysics_RigidBody::NoContact( void )
 idPhysics_RigidBody::Activate
 ================
 */
-void idPhysics_RigidBody::Activate( void )
+void idPhysics_RigidBody::Activate()
 {
 	current.atRest = -1;
 	self->BecomeActive( TH_PHYSICS );
@@ -824,7 +824,7 @@ idPhysics_RigidBody::PutToRest
   put to rest untill something collides with this physics object
 ================
 */
-void idPhysics_RigidBody::PutToRest( void )
+void idPhysics_RigidBody::PutToRest()
 {
 	Rest();
 }
@@ -834,7 +834,7 @@ void idPhysics_RigidBody::PutToRest( void )
 idPhysics_RigidBody::EnableImpact
 ================
 */
-void idPhysics_RigidBody::EnableImpact( void )
+void idPhysics_RigidBody::EnableImpact()
 {
 	noImpact = false;
 }
@@ -844,7 +844,7 @@ void idPhysics_RigidBody::EnableImpact( void )
 idPhysics_RigidBody::DisableImpact
 ================
 */
-void idPhysics_RigidBody::DisableImpact( void )
+void idPhysics_RigidBody::DisableImpact()
 {
 	noImpact = true;
 }
@@ -1100,7 +1100,7 @@ void idPhysics_RigidBody::UpdateTime( int endTimeMSec )
 idPhysics_RigidBody::GetTime
 ================
 */
-int idPhysics_RigidBody::GetTime( void ) const
+int idPhysics_RigidBody::GetTime() const
 {
 	return gameLocal.time;
 }
@@ -1162,7 +1162,7 @@ void idPhysics_RigidBody::AddForce( const int id, const idVec3& point, const idV
 idPhysics_RigidBody::IsAtRest
 ================
 */
-bool idPhysics_RigidBody::IsAtRest( void ) const
+bool idPhysics_RigidBody::IsAtRest() const
 {
 	return current.atRest >= 0;
 }
@@ -1172,7 +1172,7 @@ bool idPhysics_RigidBody::IsAtRest( void ) const
 idPhysics_RigidBody::GetRestStartTime
 ================
 */
-int idPhysics_RigidBody::GetRestStartTime( void ) const
+int idPhysics_RigidBody::GetRestStartTime() const
 {
 	return current.atRest;
 }
@@ -1182,7 +1182,7 @@ int idPhysics_RigidBody::GetRestStartTime( void ) const
 idPhysics_RigidBody::IsPushable
 ================
 */
-bool idPhysics_RigidBody::IsPushable( void ) const
+bool idPhysics_RigidBody::IsPushable() const
 {
 	return ( !noImpact && !hasMaster );
 }
@@ -1192,7 +1192,7 @@ bool idPhysics_RigidBody::IsPushable( void ) const
 idPhysics_RigidBody::SaveState
 ================
 */
-void idPhysics_RigidBody::SaveState( void )
+void idPhysics_RigidBody::SaveState()
 {
 	saved = current;
 }
@@ -1202,7 +1202,7 @@ void idPhysics_RigidBody::SaveState( void )
 idPhysics_RigidBody::RestoreState
 ================
 */
-void idPhysics_RigidBody::RestoreState( void )
+void idPhysics_RigidBody::RestoreState()
 {
 	current = saved;
 
@@ -1441,7 +1441,7 @@ int idPhysics_RigidBody::ClipContents( const idClipModel* model ) const
 idPhysics_RigidBody::DisableClip
 ================
 */
-void idPhysics_RigidBody::DisableClip( void )
+void idPhysics_RigidBody::DisableClip()
 {
 	clipModel->Disable();
 }
@@ -1451,7 +1451,7 @@ void idPhysics_RigidBody::DisableClip( void )
 idPhysics_RigidBody::EnableClip
 ================
 */
-void idPhysics_RigidBody::EnableClip( void )
+void idPhysics_RigidBody::EnableClip()
 {
 	clipModel->Enable();
 }
@@ -1461,7 +1461,7 @@ void idPhysics_RigidBody::EnableClip( void )
 idPhysics_RigidBody::UnlinkClip
 ================
 */
-void idPhysics_RigidBody::UnlinkClip( void )
+void idPhysics_RigidBody::UnlinkClip()
 {
 	clipModel->Unlink();
 }
@@ -1471,7 +1471,7 @@ void idPhysics_RigidBody::UnlinkClip( void )
 idPhysics_RigidBody::LinkClip
 ================
 */
-void idPhysics_RigidBody::LinkClip( void )
+void idPhysics_RigidBody::LinkClip()
 {
 	clipModel->Link( gameLocal.clip, self, clipModel->GetId(), current.i.position, current.i.orientation );
 }
@@ -1481,7 +1481,7 @@ void idPhysics_RigidBody::LinkClip( void )
 idPhysics_RigidBody::EvaluateContacts
 ================
 */
-bool idPhysics_RigidBody::EvaluateContacts( void )
+bool idPhysics_RigidBody::EvaluateContacts()
 {
 	idVec6 dir;
 	int num;

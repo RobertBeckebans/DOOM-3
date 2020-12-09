@@ -62,11 +62,11 @@ public:
 							  idVec3& newOrigin, idMat3& newAxis );
 
 	// initialize saving the positions of entities being pushed
-	void			InitSavingPushedEntityPositions( void );
+	void			InitSavingPushedEntityPositions();
 	// move all pushed entities back to their previous position
-	void			RestorePushedEntityPositions( void );
+	void			RestorePushedEntityPositions();
 	// returns the number of pushed entities
-	int				GetNumPushedEntities( void ) const
+	int				GetNumPushedEntities() const
 	{
 		return numPushed;
 	}

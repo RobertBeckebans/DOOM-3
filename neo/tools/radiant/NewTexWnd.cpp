@@ -746,11 +746,11 @@ const idMaterial* Texture_LoadLight( const char* name )
 }
 
 
-void Texture_ClearInuse( void )
+void Texture_ClearInuse()
 {
 }
 
-void Texture_ShowAll( void )
+void Texture_ShowAll()
 {
 	int count = declManager->GetNumDecls( DECL_MATERIAL );
 	for( int i = 0; i < count; i++ )
@@ -794,7 +794,7 @@ const idMaterial* Texture_ForName( const char* name )
 	return mat;
 }
 
-void Texture_ShowInuse( void )
+void Texture_ShowInuse()
 {
 	Texture_HideAll();
 

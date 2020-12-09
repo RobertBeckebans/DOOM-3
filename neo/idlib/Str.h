@@ -118,7 +118,7 @@ class idStr
 {
 
 public:
-	idStr( void );
+	idStr();
 	idStr( const idStr& text );
 	idStr( const idStr& text, int start, int end );
 	idStr( const char* text );
@@ -128,12 +128,12 @@ public:
 	explicit idStr( const int i );
 	explicit idStr( const unsigned u );
 	explicit idStr( const float f );
-	~idStr( void );
+	~idStr();
 
-	size_t				Size( void ) const;
-	const char* 		c_str( void ) const;
-	operator			const char* ( void ) const;
-	operator			const char* ( void );
+	size_t				Size() const;
+	const char* 		c_str() const;
+	operator			const char* () const;
+	operator			const char* ();
 
 	char				operator[]( int index ) const;
 	char& 				operator[]( int index );
@@ -187,25 +187,25 @@ public:
 	int					IcmpnPath( const char* text, int n ) const;
 	int					IcmpPrefixPath( const char* text ) const;
 
-	int					Length( void ) const;
-	int					Allocated( void ) const;
-	void				Empty( void );
-	bool				IsEmpty( void ) const;
-	void				Clear( void );
+	int					Length() const;
+	int					Allocated() const;
+	void				Empty();
+	bool				IsEmpty() const;
+	void				Clear();
 	void				Append( const char a );
 	void				Append( const idStr& text );
 	void				Append( const char* text );
 	void				Append( const char* text, int len );
 	void				Insert( const char a, int index );
 	void				Insert( const char* text, int index );
-	void				ToLower( void );
-	void				ToUpper( void );
-	bool				IsNumeric( void ) const;
-	bool				IsColor( void ) const;
-	bool				HasLower( void ) const;
-	bool				HasUpper( void ) const;
-	int					LengthWithoutColors( void ) const;
-	idStr& 				RemoveColors( void );
+	void				ToLower();
+	void				ToUpper();
+	bool				IsNumeric() const;
+	bool				IsColor() const;
+	bool				HasLower() const;
+	bool				HasUpper() const;
+	int					LengthWithoutColors() const;
+	idStr& 				RemoveColors();
 	void				CapLength( int );
 	void				Fill( const char ch, int newlen );
 
@@ -227,21 +227,21 @@ public:
 	bool				StripTrailingOnce( const char* string );		// strip string from end just once if it occurs
 	void				Strip( const char c );							// strip char from front and end as many times as the char occurs
 	void				Strip( const char* string );					// strip string from front and end as many times as the string occurs
-	void				StripTrailingWhitespace( void );				// strip trailing white space characters
-	idStr& 				StripQuotes( void );							// strip quotes around string
+	void				StripTrailingWhitespace();				// strip trailing white space characters
+	idStr& 				StripQuotes();							// strip quotes around string
 	void				Replace( const char* old, const char* nw );
 
 	// file name methods
-	int					FileNameHash( void ) const;						// hash key for the filename (skips extension)
-	idStr& 				BackSlashesToSlashes( void );					// convert slashes
+	int					FileNameHash() const;						// hash key for the filename (skips extension)
+	idStr& 				BackSlashesToSlashes();					// convert slashes
 	idStr& 				SetFileExtension( const char* extension );		// set the given file extension
-	idStr& 				StripFileExtension( void );						// remove any file extension
-	idStr& 				StripAbsoluteFileExtension( void );				// remove any file extension looking from front (useful if there are multiple .'s)
+	idStr& 				StripFileExtension();						// remove any file extension
+	idStr& 				StripAbsoluteFileExtension();				// remove any file extension looking from front (useful if there are multiple .'s)
 	idStr& 				DefaultFileExtension( const char* extension );	// if there's no file extension use the default
 	idStr& 				DefaultPath( const char* basepath );			// if there's no path use the default
 	void				AppendPath( const char* text );					// append a partial path
-	idStr& 				StripFilename( void );							// remove the filename from a path
-	idStr& 				StripPath( void );								// remove the path from the filename
+	idStr& 				StripFilename();							// remove the filename from a path
+	idStr& 				StripPath();								// remove the path from the filename
 	void				ExtractFilePath( idStr& dest ) const;			// copy the file path to another string
 	void				ExtractFileName( idStr& dest ) const;			// copy the filename to another string
 	void				ExtractFileBase( idStr& dest ) const;			// copy the filename minus the extension to another string
@@ -299,16 +299,16 @@ public:
 	friend int			vsprintf( idStr& dest, const char* fmt, va_list ap );
 
 	void				ReAllocate( int amount, bool keepold );				// reallocate string data buffer
-	void				FreeData( void );									// free allocated string memory
+	void				FreeData();									// free allocated string memory
 
 	// format value in the given measurement with the best unit, returns the best unit
 	int					BestUnit( const char* format, float value, Measure_t measure );
 	// format value in the requested unit and measurement
 	void				SetUnit( const char* format, float value, int unit, Measure_t measure );
 
-	static void			InitMemory( void );
-	static void			ShutdownMemory( void );
-	static void			PurgeMemory( void );
+	static void			InitMemory();
+	static void			ShutdownMemory();
+	static void			PurgeMemory();
 	static void			ShowMemoryUsage_f( const idCmdArgs& args );
 
 	int					DynamicMemoryUsed() const;
@@ -320,7 +320,7 @@ protected:
 	int					alloced;
 	char				baseBuffer[ STR_ALLOC_BASE ];
 
-	void				Init( void );										// initialize string using base buffer
+	void				Init();										// initialize string using base buffer
 	void				EnsureAlloced( int amount, bool keepold = true );	// ensure string data buffer is large anough
 };
 
@@ -335,7 +335,7 @@ ID_INLINE void idStr::EnsureAlloced( int amount, bool keepold )
 	}
 }
 
-ID_INLINE void idStr::Init( void )
+ID_INLINE void idStr::Init()
 {
 	len = 0;
 	alloced = STR_ALLOC_BASE;
@@ -346,7 +346,7 @@ ID_INLINE void idStr::Init( void )
 #endif
 }
 
-ID_INLINE idStr::idStr( void )
+ID_INLINE idStr::idStr()
 {
 	Init();
 }
@@ -510,27 +510,27 @@ ID_INLINE idStr::idStr( const float f )
 	len = l;
 }
 
-ID_INLINE idStr::~idStr( void )
+ID_INLINE idStr::~idStr()
 {
 	FreeData();
 }
 
-ID_INLINE size_t idStr::Size( void ) const
+ID_INLINE size_t idStr::Size() const
 {
 	return sizeof( *this ) + Allocated();
 }
 
-ID_INLINE const char* idStr::c_str( void ) const
+ID_INLINE const char* idStr::c_str() const
 {
 	return data;
 }
 
-ID_INLINE idStr::operator const char* ( void )
+ID_INLINE idStr::operator const char* ()
 {
 	return c_str();
 }
 
-ID_INLINE idStr::operator const char* ( void ) const
+ID_INLINE idStr::operator const char* () const
 {
 	return c_str();
 }
@@ -772,12 +772,12 @@ ID_INLINE int idStr::IcmpPrefixPath( const char* text ) const
 	return idStr::IcmpnPath( data, text, strlen( text ) );
 }
 
-ID_INLINE int idStr::Length( void ) const
+ID_INLINE int idStr::Length() const
 {
 	return len;
 }
 
-ID_INLINE int idStr::Allocated( void ) const
+ID_INLINE int idStr::Allocated() const
 {
 	if( data != baseBuffer )
 	{
@@ -789,19 +789,19 @@ ID_INLINE int idStr::Allocated( void ) const
 	}
 }
 
-ID_INLINE void idStr::Empty( void )
+ID_INLINE void idStr::Empty()
 {
 	EnsureAlloced( 1 );
 	data[ 0 ] = '\0';
 	len = 0;
 }
 
-ID_INLINE bool idStr::IsEmpty( void ) const
+ID_INLINE bool idStr::IsEmpty() const
 {
 	return ( idStr::Cmp( data, "" ) == 0 );
 }
 
-ID_INLINE void idStr::Clear( void )
+ID_INLINE void idStr::Clear()
 {
 	FreeData();
 	Init();
@@ -915,7 +915,7 @@ ID_INLINE void idStr::Insert( const char* text, int index )
 	len += l;
 }
 
-ID_INLINE void idStr::ToLower( void )
+ID_INLINE void idStr::ToLower()
 {
 	for( int i = 0; data[i]; i++ )
 	{
@@ -926,7 +926,7 @@ ID_INLINE void idStr::ToLower( void )
 	}
 }
 
-ID_INLINE void idStr::ToUpper( void )
+ID_INLINE void idStr::ToUpper()
 {
 	for( int i = 0; data[i]; i++ )
 	{
@@ -937,34 +937,34 @@ ID_INLINE void idStr::ToUpper( void )
 	}
 }
 
-ID_INLINE bool idStr::IsNumeric( void ) const
+ID_INLINE bool idStr::IsNumeric() const
 {
 	return idStr::IsNumeric( data );
 }
 
-ID_INLINE bool idStr::IsColor( void ) const
+ID_INLINE bool idStr::IsColor() const
 {
 	return idStr::IsColor( data );
 }
 
-ID_INLINE bool idStr::HasLower( void ) const
+ID_INLINE bool idStr::HasLower() const
 {
 	return idStr::HasLower( data );
 }
 
-ID_INLINE bool idStr::HasUpper( void ) const
+ID_INLINE bool idStr::HasUpper() const
 {
 	return idStr::HasUpper( data );
 }
 
-ID_INLINE idStr& idStr::RemoveColors( void )
+ID_INLINE idStr& idStr::RemoveColors()
 {
 	idStr::RemoveColors( data );
 	len = Length( data );
 	return *this;
 }
 
-ID_INLINE int idStr::LengthWithoutColors( void ) const
+ID_INLINE int idStr::LengthWithoutColors() const
 {
 	return idStr::LengthWithoutColors( data );
 }

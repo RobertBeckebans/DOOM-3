@@ -293,7 +293,7 @@ int Sys_AllocHook( int nAllocType, void *pvData, size_t nSize, int nBlockUse, lo
 Sys_DebugMemory_f
 ==================
 */
-void Sys_DebugMemory_f( void ) {
+void Sys_DebugMemory_f() {
   	common->Printf( "Total allocation %8dk in %d blocks\n", debug_total_alloc / 1024, debug_total_alloc_count );
   	common->Printf( "Current allocation %8dk in %d blocks\n", debug_current_alloc / 1024, debug_current_alloc_count );
 }
@@ -303,7 +303,7 @@ void Sys_DebugMemory_f( void ) {
 Sys_MemFrame
 ==================
 */
-void Sys_MemFrame( void ) {
+void Sys_MemFrame() {
 	if( sys_showMallocs.GetInteger() ) {
 		common->Printf("Frame: %8dk in %5d blocks\n", debug_frame_alloc / 1024, debug_frame_alloc_count );
 	}
@@ -372,7 +372,7 @@ void Sys_Error( const char *error, ... ) {
 Sys_Quit
 ==============
 */
-void Sys_Quit( void ) {
+void Sys_Quit() {
 	timeEndPeriod( 1 );
 	Sys_ShutdownInput();
 	Sys_DestroyConsole();
@@ -458,7 +458,7 @@ void Sys_ShowWindow( bool show ) {
 Sys_IsWindowVisible
 ==============
 */
-bool Sys_IsWindowVisible( void ) {
+bool Sys_IsWindowVisible() {
 	return ( ::IsWindowVisible( win32.hWnd ) != 0 );
 }
 
@@ -487,7 +487,7 @@ ID_TIME_T Sys_FileTimeStamp( FILE *fp ) {
 Sys_Cwd
 ==============
 */
-const char *Sys_Cwd( void ) {
+const char *Sys_Cwd() {
 	static char cwd[MAX_OSPATH];
 
 	_getcwd( cwd, sizeof( cwd ) - 1 );
@@ -501,7 +501,7 @@ const char *Sys_Cwd( void ) {
 Sys_DefaultCDPath
 ==============
 */
-const char *Sys_DefaultCDPath( void ) {
+const char *Sys_DefaultCDPath() {
 	return "";
 }
 
@@ -510,7 +510,7 @@ const char *Sys_DefaultCDPath( void ) {
 Sys_DefaultBasePath
 ==============
 */
-const char *Sys_DefaultBasePath( void ) {
+const char *Sys_DefaultBasePath() {
 	return Sys_Cwd();
 }
 
@@ -519,7 +519,7 @@ const char *Sys_DefaultBasePath( void ) {
 Sys_DefaultSavePath
 ==============
 */
-const char *Sys_DefaultSavePath( void ) {
+const char *Sys_DefaultSavePath() {
 	return cvarSystem->GetCVarString( "fs_basepath" );
 }
 
@@ -528,7 +528,7 @@ const char *Sys_DefaultSavePath( void ) {
 Sys_EXEPath
 ==============
 */
-const char *Sys_EXEPath( void ) {
+const char *Sys_EXEPath() {
 	static char exe[ MAX_OSPATH ];
 	GetModuleFileName( NULL, exe, sizeof( exe ) - 1 );
 	return exe;
@@ -584,7 +584,7 @@ int Sys_ListFiles( const char *directory, const char *extension, idStrList &list
 Sys_GetClipboardData
 ================
 */
-char *Sys_GetClipboardData( void ) {
+char *Sys_GetClipboardData() {
 	char *data = NULL;
 	char *cliptext;
 
@@ -758,7 +758,7 @@ Sys_PumpEvents
 This allows windows to be moved during renderbump
 =============
 */
-void Sys_PumpEvents( void ) {
+void Sys_PumpEvents() {
     MSG msg;
 
 	// pump the message loop
@@ -791,7 +791,7 @@ void Sys_PumpEvents( void ) {
 Sys_GenerateEvents
 ================
 */
-void Sys_GenerateEvents( void ) {
+void Sys_GenerateEvents() {
 	static int entered = false;
 	char *s;
 
@@ -826,7 +826,7 @@ void Sys_GenerateEvents( void ) {
 Sys_ClearEvents
 ================
 */
-void Sys_ClearEvents( void ) {
+void Sys_ClearEvents() {
 	eventHead = eventTail = 0;
 }
 
@@ -835,7 +835,7 @@ void Sys_ClearEvents( void ) {
 Sys_GetEvent
 ================
 */
-sysEvent_t Sys_GetEvent( void ) {
+sysEvent_t Sys_GetEvent() {
 	sysEvent_t	ev;
 
 	// return if we have data
@@ -909,7 +909,7 @@ Sys_StartAsyncThread
 Start the thread that will call idCommon::Async()
 ==============
 */
-void Sys_StartAsyncThread( void ) {
+void Sys_StartAsyncThread() {
 	// create an auto-reset event that happens 60 times a second
 	hTimer = CreateWaitableTimer( NULL, false, NULL );
 	if ( !hTimer ) {
@@ -939,7 +939,7 @@ Sys_AlreadyRunning
 returns true if there is a copy of D3 running already
 ================
 */
-bool Sys_AlreadyRunning( void ) {
+bool Sys_AlreadyRunning() {
 #ifndef DEBUG
 	if ( !win32.win_allowMultipleInstances.GetBool() ) {
 		HANDLE hMutexOneInstance = ::CreateMutex( NULL, FALSE, "DOOM3" );
@@ -961,7 +961,7 @@ The cvar system must already be setup
 #define OSR2_BUILD_NUMBER 1111
 #define WIN98_BUILD_NUMBER 1998
 
-void Sys_Init( void ) {
+void Sys_Init() {
 
 	CoInitialize( NULL );
 
@@ -1125,7 +1125,7 @@ void Sys_Init( void ) {
 Sys_Shutdown
 ================
 */
-void Sys_Shutdown( void ) {
+void Sys_Shutdown() {
 	CoUninitialize();
 }
 
@@ -1134,7 +1134,7 @@ void Sys_Shutdown( void ) {
 Sys_GetProcessorId
 ================
 */
-cpuid_t Sys_GetProcessorId( void ) {
+cpuid_t Sys_GetProcessorId() {
     return win32.cpuid;
 }
 
@@ -1143,7 +1143,7 @@ cpuid_t Sys_GetProcessorId( void ) {
 Sys_GetProcessorString
 ================
 */
-const char *Sys_GetProcessorString( void ) {
+const char *Sys_GetProcessorString() {
 	return win32.sys_cpustring.GetString();
 }
 
@@ -1157,7 +1157,7 @@ const char *Sys_GetProcessorString( void ) {
 Win_Frame
 ====================
 */
-void Win_Frame( void ) {
+void Win_Frame() {
 	// if "viewlog" has been modified, show or hide the log console
 	if ( win32.win_viewlog.IsModified() ) {
 		if ( !com_skipRenderer.GetBool() && idAsyncNetwork::serverDedicated.GetInteger() != 1 ) {
@@ -1168,14 +1168,14 @@ void Win_Frame( void ) {
 }
 
 extern "C" { void _chkstk( int size ); };
-void clrstk( void );
+void clrstk();
 
 /*
 ====================
 TestChkStk
 ====================
 */
-void TestChkStk( void ) {
+void TestChkStk() {
 	int		buffer[0x1000];
 
 	buffer[0] = 1;
@@ -1186,7 +1186,7 @@ void TestChkStk( void ) {
 HackChkStk
 ====================
 */
-void HackChkStk( void ) {
+void HackChkStk() {
 	DWORD	old;
 	VirtualProtect( _chkstk, 6, PAGE_EXECUTE_READWRITE, &old );
 	*(byte *)_chkstk = 0xe9;
@@ -1513,7 +1513,7 @@ I tried to get the run time to call this at every function entry, but
 ====================
 */
 static int	parmBytes;
-__declspec( naked ) void clrstk( void ) {
+__declspec( naked ) void clrstk() {
 	// eax = bytes to add to stack
 	__asm {
 		mov		[parmBytes],eax
@@ -1611,5 +1611,5 @@ void Sys_SetFatalError( const char *error ) {
 Sys_DoPreferences
 ==================
 */
-void Sys_DoPreferences( void ) {
+void Sys_DoPreferences() {
 }

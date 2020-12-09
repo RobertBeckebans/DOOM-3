@@ -156,7 +156,7 @@ void idSysLocal::StartProcess( const char* exeName, bool quit )
 Sys_Quit
 ================
 */
-void Sys_Quit( void )
+void Sys_Quit()
 {
 	Posix_Exit( EXIT_SUCCESS );
 }
@@ -176,7 +176,7 @@ unsigned long sys_timeBase = 0;
      0x7fffffff ms - ~24 days
 		 or is it 48 days? the specs say int, but maybe it's casted from unsigned int?
 */
-int Sys_Milliseconds( void )
+int Sys_Milliseconds()
 {
 	int curtime;
 	struct timeval tp;
@@ -337,7 +337,7 @@ void Posix_QueEvent( sysEventType_t type, int value, int value2,
 Sys_GetEvent
 ================
 */
-sysEvent_t Sys_GetEvent( void )
+sysEvent_t Sys_GetEvent()
 {
 	static sysEvent_t ev;
 
@@ -358,7 +358,7 @@ sysEvent_t Sys_GetEvent( void )
 Sys_ClearEvents
 ================
 */
-void Sys_ClearEvents( void )
+void Sys_ClearEvents()
 {
 	eventHead = eventTail = 0;
 }
@@ -368,7 +368,7 @@ void Sys_ClearEvents( void )
 Posix_Cwd
 ================
 */
-const char* Posix_Cwd( void )
+const char* Posix_Cwd()
 {
 	static char cwd[MAX_OSPATH];
 
@@ -404,14 +404,14 @@ Sys_Init
 Posix_EarlyInit/Posix_LateInit is better
 =================
 */
-void Sys_Init( void ) { }
+void Sys_Init() { }
 
 /*
 =================
 Posix_Shutdown
 =================
 */
-void Posix_Shutdown( void )
+void Posix_Shutdown()
 {
 	for( int i = 0; i < COMMAND_HISTORY; i++ )
 	{
@@ -471,7 +471,7 @@ void Sys_ShowConsole( int visLevel, bool quitOnClose ) { }
 // ---------------------------------------------------------------------------
 
 // only relevant when specified on command line
-const char* Sys_DefaultCDPath( void )
+const char* Sys_DefaultCDPath()
 {
 	return "";
 }
@@ -504,7 +504,7 @@ void Sys_Sleep( int msec )
 	}
 }
 
-char* Sys_GetClipboardData( void )
+char* Sys_GetClipboardData()
 {
 	Sys_Printf( "TODO: Sys_GetClipboardData\n" );
 	return NULL;
@@ -522,16 +522,16 @@ void Sys_FlushCacheMemory( void* base, int bytes )
 //  Sys_Printf("Sys_FlushCacheMemory stub\n");
 }
 
-bool Sys_FPU_StackIsEmpty( void )
+bool Sys_FPU_StackIsEmpty()
 {
 	return true;
 }
 
-void Sys_FPU_ClearStack( void )
+void Sys_FPU_ClearStack()
 {
 }
 
-const char* Sys_FPU_GetState( void )
+const char* Sys_FPU_GetState()
 {
 	return "";
 }
@@ -588,7 +588,7 @@ Sys_AlreadyRunning
 return true if there is a copy of D3 running already
 ================
 */
-bool Sys_AlreadyRunning( void )
+bool Sys_AlreadyRunning()
 {
 	return false;
 }
@@ -598,7 +598,7 @@ bool Sys_AlreadyRunning( void )
 Posix_EarlyInit
 ===============
 */
-void Posix_EarlyInit( void )
+void Posix_EarlyInit()
 {
 	memset( &asyncThread, 0, sizeof( asyncThread ) );
 	exit_spawn[0] = '\0';
@@ -613,7 +613,7 @@ void Posix_EarlyInit( void )
 Posix_LateInit
 ===============
 */
-void Posix_LateInit( void )
+void Posix_LateInit()
 {
 	Posix_InitConsoleInput();
 	com_pid.SetInteger( getpid() );
@@ -630,7 +630,7 @@ void Posix_LateInit( void )
 Posix_InitConsoleInput
 ===============
 */
-void Posix_InitConsoleInput( void )
+void Posix_InitConsoleInput()
 {
 	struct termios tc;
 
@@ -805,7 +805,7 @@ Checks for a complete line of text typed in at the console.
 Return NULL if a complete line is not ready.
 ================
 */
-char* Posix_ConsoleInput( void )
+char* Posix_ConsoleInput()
 {
 	if( tty_enabled )
 	{
@@ -1112,7 +1112,7 @@ called during frame loops, pacifier updates etc.
 this is only for console input polling and misc mouse grab tasks
 the actual mouse and keyboard input is in the Sys_Poll logic
 */
-void Sys_GenerateEvents( void )
+void Sys_GenerateEvents()
 {
 	char* s;
 	if( ( s = Posix_ConsoleInput() ) )
@@ -1192,4 +1192,4 @@ void Sys_Error( const char* error, ... )
 Sys_FreeOpenAL
 ===============
 */
-void Sys_FreeOpenAL( void ) { }
+void Sys_FreeOpenAL() { }

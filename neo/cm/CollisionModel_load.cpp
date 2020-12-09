@@ -187,7 +187,7 @@ Free map
 idCollisionModelManagerLocal::Clear
 ================
 */
-void idCollisionModelManagerLocal::Clear( void )
+void idCollisionModelManagerLocal::Clear()
 {
 	mapName.Clear();
 	mapFileTime = 0;
@@ -451,7 +451,7 @@ void idCollisionModelManagerLocal::FreeModel( cm_model_t* model )
 idCollisionModelManagerLocal::FreeMap
 ================
 */
-void idCollisionModelManagerLocal::FreeMap( void )
+void idCollisionModelManagerLocal::FreeMap()
 {
 	int i;
 
@@ -484,7 +484,7 @@ void idCollisionModelManagerLocal::FreeMap( void )
 idCollisionModelManagerLocal::FreeTrmModelStructure
 ================
 */
-void idCollisionModelManagerLocal::FreeTrmModelStructure( void )
+void idCollisionModelManagerLocal::FreeTrmModelStructure()
 {
 	int i;
 
@@ -604,7 +604,7 @@ Trace model to general collision model
 idCollisionModelManagerLocal::AllocModel
 ================
 */
-cm_model_t* idCollisionModelManagerLocal::AllocModel( void )
+cm_model_t* idCollisionModelManagerLocal::AllocModel()
 {
 	cm_model_t* model;
 
@@ -819,7 +819,7 @@ void idCollisionModelManagerLocal::AddBrushToNode( cm_model_t* model, cm_node_t*
 idCollisionModelManagerLocal::SetupTrmModelStructure
 ================
 */
-void idCollisionModelManagerLocal::SetupTrmModelStructure( void )
+void idCollisionModelManagerLocal::SetupTrmModelStructure()
 {
 	int i;
 	cm_node_t* node;
@@ -2525,7 +2525,7 @@ Raw polygon and brush data
 idCollisionModelManagerLocal::SetupHash
 ================
 */
-void idCollisionModelManagerLocal::SetupHash( void )
+void idCollisionModelManagerLocal::SetupHash()
 {
 	if( !cm_vertexHash )
 	{
@@ -2555,7 +2555,7 @@ void idCollisionModelManagerLocal::SetupHash( void )
 idCollisionModelManagerLocal::ShutdownHash
 ================
 */
-void idCollisionModelManagerLocal::ShutdownHash( void )
+void idCollisionModelManagerLocal::ShutdownHash()
 {
 	delete cm_vertexHash;
 	cm_vertexHash = NULL;
@@ -3765,7 +3765,7 @@ void idCollisionModelManagerLocal::ModelInfo( cmHandle_t model )
 idCollisionModelManagerLocal::ListModels
 ================
 */
-void idCollisionModelManagerLocal::ListModels( void )
+void idCollisionModelManagerLocal::ListModels()
 {
 	int i, totalMemory;
 

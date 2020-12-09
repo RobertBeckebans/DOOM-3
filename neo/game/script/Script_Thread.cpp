@@ -202,7 +202,7 @@ trace_t				idThread::trace;
 idThread::CurrentThread
 ================
 */
-idThread* idThread::CurrentThread( void )
+idThread* idThread::CurrentThread()
 {
 	return currentThread;
 }
@@ -212,7 +212,7 @@ idThread* idThread::CurrentThread( void )
 idThread::CurrentThreadNum
 ================
 */
-int idThread::CurrentThreadNum( void )
+int idThread::CurrentThreadNum()
 {
 	if( currentThread )
 	{
@@ -373,7 +373,7 @@ idThread::~idThread()
 idThread::ManualDelete
 ================
 */
-void idThread::ManualDelete( void )
+void idThread::ManualDelete()
 {
 	interpreter.terminateOnExit = false;
 }
@@ -434,7 +434,7 @@ void idThread::Restore( idRestoreGame* savefile )
 idThread::Init
 ================
 */
-void idThread::Init( void )
+void idThread::Init()
 {
 	// create a unique threadNum
 	do
@@ -488,7 +488,7 @@ idThread* idThread::GetThread( int num )
 idThread::DisplayInfo
 ================
 */
-void idThread::DisplayInfo( void )
+void idThread::DisplayInfo()
 {
 	gameLocal.Printf(
 		"%12i: '%s'\n"
@@ -559,7 +559,7 @@ void idThread::ListThreads_f( const idCmdArgs& args )
 idThread::Restart
 ================
 */
-void idThread::Restart( void )
+void idThread::Restart()
 {
 	int	i;
 	int	n;
@@ -599,7 +599,7 @@ void idThread::DelayedStart( int delay )
 idThread::Start
 ================
 */
-bool idThread::Start( void )
+bool idThread::Start()
 {
 	bool result;
 
@@ -645,7 +645,7 @@ void idThread::ObjectMoveDone( int threadnum, idEntity* obj )
 idThread::End
 ================
 */
-void idThread::End( void )
+void idThread::End()
 {
 	// Tell thread to die.  It will exit on its own.
 	Pause();
@@ -710,7 +710,7 @@ void idThread::KillThread( int num )
 idThread::Execute
 ================
 */
-bool idThread::Execute( void )
+bool idThread::Execute()
 {
 	idThread*	oldThread;
 	bool		done;
@@ -758,7 +758,7 @@ idThread::IsWaiting
 Checks if thread is still waiting for some event to occur.
 ================
 */
-bool idThread::IsWaiting( void )
+bool idThread::IsWaiting()
 {
 	if( waitingForThread || ( waitingFor != ENTITYNUM_NONE ) )
 	{
@@ -805,7 +805,7 @@ void idThread::CallFunction( idEntity* self, const function_t* func, bool clearS
 idThread::ClearWaitFor
 ================
 */
-void idThread::ClearWaitFor( void )
+void idThread::ClearWaitFor()
 {
 	waitingFor			= ENTITYNUM_NONE;
 	waitingForThread	= NULL;
@@ -959,7 +959,7 @@ void idThread::ReturnEntity( idEntity* ent )
 idThread::Event_Execute
 ================
 */
-void idThread::Event_Execute( void )
+void idThread::Event_Execute()
 {
 	Execute();
 }
@@ -969,7 +969,7 @@ void idThread::Event_Execute( void )
 idThread::Pause
 ================
 */
-void idThread::Pause( void )
+void idThread::Pause()
 {
 	ClearWaitFor();
 	interpreter.doneProcessing = true;
@@ -1001,7 +1001,7 @@ void idThread::WaitSec( float time )
 idThread::WaitFrame
 ================
 */
-void idThread::WaitFrame( void )
+void idThread::WaitFrame()
 {
 	Pause();
 
@@ -1037,7 +1037,7 @@ void idThread::Event_TerminateThread( int num )
 idThread::Event_Pause
 ================
 */
-void idThread::Event_Pause( void )
+void idThread::Event_Pause()
 {
 	Pause();
 }
@@ -1057,7 +1057,7 @@ void idThread::Event_Wait( float time )
 idThread::Event_WaitFrame
 ================
 */
-void idThread::Event_WaitFrame( void )
+void idThread::Event_WaitFrame()
 {
 	WaitFrame();
 }
@@ -1198,7 +1198,7 @@ void idThread::Event_Random( float range ) const
 idThread::Event_GetTime
 ================
 */
-void idThread::Event_GetTime( void )
+void idThread::Event_GetTime()
 {
 	ReturnFloat( MS2SEC( gameLocal.realClientTime ) );
 }
@@ -1320,7 +1320,7 @@ void idThread::Event_SpawnVector( const char* key, idVec3& defaultvalue )
 idThread::Event_ClearPersistantArgs
 ================
 */
-void idThread::Event_ClearPersistantArgs( void )
+void idThread::Event_ClearPersistantArgs()
 {
 	gameLocal.persistentLevelInfo.Clear();
 }
@@ -1573,7 +1573,7 @@ void idThread::Event_SetCamera( idEntity* ent )
 idThread::Event_FirstPerson
 ================
 */
-void idThread::Event_FirstPerson( void )
+void idThread::Event_FirstPerson()
 {
 	gameLocal.SetCamera( NULL );
 }
@@ -1612,7 +1612,7 @@ void idThread::Event_TracePoint( const idVec3& start, const idVec3& end, int con
 idThread::Event_GetTraceFraction
 ================
 */
-void idThread::Event_GetTraceFraction( void )
+void idThread::Event_GetTraceFraction()
 {
 	ReturnFloat( trace.fraction );
 }
@@ -1622,7 +1622,7 @@ void idThread::Event_GetTraceFraction( void )
 idThread::Event_GetTraceEndPos
 ================
 */
-void idThread::Event_GetTraceEndPos( void )
+void idThread::Event_GetTraceEndPos()
 {
 	ReturnVector( trace.endpos );
 }
@@ -1632,7 +1632,7 @@ void idThread::Event_GetTraceEndPos( void )
 idThread::Event_GetTraceNormal
 ================
 */
-void idThread::Event_GetTraceNormal( void )
+void idThread::Event_GetTraceNormal()
 {
 	if( trace.fraction < 1.0f )
 	{
@@ -1649,7 +1649,7 @@ void idThread::Event_GetTraceNormal( void )
 idThread::Event_GetTraceEntity
 ================
 */
-void idThread::Event_GetTraceEntity( void )
+void idThread::Event_GetTraceEntity()
 {
 	if( trace.fraction < 1.0f )
 	{
@@ -1666,7 +1666,7 @@ void idThread::Event_GetTraceEntity( void )
 idThread::Event_GetTraceJoint
 ================
 */
-void idThread::Event_GetTraceJoint( void )
+void idThread::Event_GetTraceJoint()
 {
 	if( trace.fraction < 1.0f && trace.c.id < 0 )
 	{
@@ -1685,7 +1685,7 @@ void idThread::Event_GetTraceJoint( void )
 idThread::Event_GetTraceBody
 ================
 */
-void idThread::Event_GetTraceBody( void )
+void idThread::Event_GetTraceBody()
 {
 	if( trace.fraction < 1.0f && trace.c.id < 0 )
 	{
@@ -1954,7 +1954,7 @@ void idThread::Event_RadiusDamage( const idVec3& origin, idEntity* inflictor, id
 idThread::Event_IsClient
 ================
 */
-void idThread::Event_IsClient( void )
+void idThread::Event_IsClient()
 {
 	idThread::ReturnFloat( gameLocal.isClient );
 }
@@ -1964,7 +1964,7 @@ void idThread::Event_IsClient( void )
 idThread::Event_IsMultiplayer
 ================
 */
-void idThread::Event_IsMultiplayer( void )
+void idThread::Event_IsMultiplayer()
 {
 	idThread::ReturnFloat( gameLocal.isMultiplayer );
 }
@@ -1974,7 +1974,7 @@ void idThread::Event_IsMultiplayer( void )
 idThread::Event_GetFrameTime
 ================
 */
-void idThread::Event_GetFrameTime( void )
+void idThread::Event_GetFrameTime()
 {
 	idThread::ReturnFloat( MS2SEC( gameLocal.msec ) );
 }
@@ -1984,7 +1984,7 @@ void idThread::Event_GetFrameTime( void )
 idThread::Event_GetTicsPerSecond
 ================
 */
-void idThread::Event_GetTicsPerSecond( void )
+void idThread::Event_GetTicsPerSecond()
 {
 	idThread::ReturnFloat( USERCMD_HZ );
 }
@@ -2054,7 +2054,7 @@ void idThread::Event_DrawText( const char* text, const idVec3& origin, float sca
 idThread::Event_InfluenceActive
 ================
 */
-void idThread::Event_InfluenceActive( void )
+void idThread::Event_InfluenceActive()
 {
 	idPlayer* player;
 

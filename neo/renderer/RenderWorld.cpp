@@ -891,7 +891,7 @@ void idRenderWorldLocal::RenderScene( const renderView_t* renderView )
 NumAreas
 ===================
 */
-int idRenderWorldLocal::NumAreas( void ) const
+int idRenderWorldLocal::NumAreas() const
 {
 	return numPortalAreas;
 }

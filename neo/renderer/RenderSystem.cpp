@@ -42,7 +42,7 @@ This prints both front and back end counters, so it should
 only be called when the back end thread is idle.
 =====================
 */
-static void R_PerformanceCounters( void )
+static void R_PerformanceCounters()
 {
 	if( r_showPrimitives.GetInteger() != 0 )
 	{
@@ -139,7 +139,7 @@ R_IssueRenderCommands
 Called by R_EndFrame each frame
 ====================
 */
-static void R_IssueRenderCommands( void )
+static void R_IssueRenderCommands()
 {
 	if( frameData->cmdHead->commandId == RC_NOP
 			&& !frameData->cmdHead->next )
@@ -194,7 +194,7 @@ Called after every buffer submission
 and by R_ToggleSmpFrame
 ====================
 */
-void R_ClearCommandChain( void )
+void R_ClearCommandChain()
 {
 	// clear the command chain
 	frameData->cmdHead = frameData->cmdTail = ( emptyCommand_t* )R_FrameAlloc( sizeof( *frameData->cmdHead ) );
@@ -295,7 +295,7 @@ R_CheckCvars
 See if some cvars that we watch have changed
 =============
 */
-static void R_CheckCvars( void )
+static void R_CheckCvars()
 {
 	globalImages->CheckCvars();
 
@@ -316,7 +316,7 @@ static void R_CheckCvars( void )
 idRenderSystemLocal::idRenderSystemLocal
 =============
 */
-idRenderSystemLocal::idRenderSystemLocal( void )
+idRenderSystemLocal::idRenderSystemLocal()
 {
 	Clear();
 }
@@ -326,7 +326,7 @@ idRenderSystemLocal::idRenderSystemLocal( void )
 idRenderSystemLocal::~idRenderSystemLocal
 =============
 */
-idRenderSystemLocal::~idRenderSystemLocal( void )
+idRenderSystemLocal::~idRenderSystemLocal()
 {
 }
 

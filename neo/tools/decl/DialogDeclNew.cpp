@@ -100,7 +100,7 @@ void DialogDeclNew::DoDataExchange( CDataExchange* pDX )
 DialogDeclNew::InitTypeList
 ================
 */
-void DialogDeclNew::InitTypeList( void )
+void DialogDeclNew::InitTypeList()
 {
 	int i;
 

@@ -33,7 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 
 roq*		theRoQ;				// current roq file
 
-roq::roq( void )
+roq::roq()
 {
 	image = 0;
 	quietMode = false;
@@ -43,7 +43,7 @@ roq::roq( void )
 	dataStuff = false;
 }
 
-roq::~roq( void )
+roq::~roq()
 {
 	if( image )
 	{
@@ -61,57 +61,57 @@ void roq::EncodeQuietly( bool which )
 	quietMode = which;
 }
 
-bool roq::IsQuiet( void )
+bool roq::IsQuiet()
 {
 	return quietMode;
 }
 
-bool roq::IsLastFrame( void )
+bool roq::IsLastFrame()
 {
 	return lastFrame;
 }
 
-bool roq::Scaleable( void )
+bool roq::Scaleable()
 {
 	return paramFile->IsScaleable();
 }
 
-bool roq::ParamNoAlpha( void )
+bool roq::ParamNoAlpha()
 {
 	return paramFile->NoAlpha();
 }
 
-bool roq::MakingVideo( void )
+bool roq::MakingVideo()
 {
 	return true;	//paramFile->timecode];
 }
 
-bool roq::SearchType( void )
+bool roq::SearchType()
 {
 	return	paramFile->SearchType();
 }
 
-bool roq::HasSound( void )
+bool roq::HasSound()
 {
 	return	paramFile->HasSound();
 }
 
-int roq::PreviousFrameSize( void )
+int roq::PreviousFrameSize()
 {
 	return	previousSize;
 }
 
-int roq::FirstFrameSize( void )
+int roq::FirstFrameSize()
 {
 	return paramFile->FirstFrameSize();
 }
 
-int roq::NormalFrameSize( void )
+int roq::NormalFrameSize()
 {
 	return	paramFile->NormalFrameSize();
 }
 
-const char* roq::CurrentFilename( void )
+const char* roq::CurrentFilename()
 {
 	return currentFile.c_str();
 }
@@ -433,7 +433,7 @@ void roq::JPEGDest( j_compress_ptr cinfo, byte* outfile, int size )
 	dest->size = size;
 }
 
-void roq::WriteLossless( void )
+void roq::WriteLossless()
 {
 
 	word direct;
@@ -534,7 +534,7 @@ void roq::WriteLossless( void )
 		 * more than one scanline at a time if that's more convenient.
 		 */
 		row_pointer[0] = &pixbuf[( ( cinfo.image_height - 1 ) * row_stride ) - cinfo.next_scanline * row_stride];
-		( void ) JPEGWriteScanlines( &cinfo, row_pointer, 1 );
+		JPEGWriteScanlines( &cinfo, row_pointer, 1 );
 	}
 
 	/* Step 6: Finish compression */
@@ -593,7 +593,7 @@ void roq::InitRoQFile( const char* RoQFilename )
 	roqOutfile = RoQFilename;
 }
 
-void roq::InitRoQPatterns( void )
+void roq::InitRoQPatterns()
 {
 	uint j;
 	word direct;
@@ -623,13 +623,13 @@ void roq::InitRoQPatterns( void )
 	Write16Word( &direct, RoQFile );
 }
 
-void roq::CloseRoQFile( void )
+void roq::CloseRoQFile()
 {
 	common->Printf( "closeRoQFile: closing RoQ file\n" );
 	fileSystem->CloseFile( RoQFile );
 }
 
-void roq::WriteHangFrame( void )
+void roq::WriteHangFrame()
 {
 	uint j;
 	word direct;
@@ -937,12 +937,12 @@ void roq::MarkQuadx( int xat, int yat, int size, float cerror, int choice )
 {
 }
 
-NSBitmapImageRep* roq::CurrentImage( void )
+NSBitmapImageRep* roq::CurrentImage()
 {
 	return	image;
 }
 
-int roq::NumberOfFrames( void )
+int roq::NumberOfFrames()
 {
 	return numberOfFrames;
 }

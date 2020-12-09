@@ -454,7 +454,7 @@ int idMD5Mesh::NearestJoint( int a, int b, int c ) const
 idMD5Mesh::NumVerts
 ====================
 */
-int idMD5Mesh::NumVerts( void ) const
+int idMD5Mesh::NumVerts() const
 {
 	return texCoords.Num();
 }
@@ -464,7 +464,7 @@ int idMD5Mesh::NumVerts( void ) const
 idMD5Mesh::NumTris
 ====================
 */
-int	idMD5Mesh::NumTris( void ) const
+int	idMD5Mesh::NumTris() const
 {
 	return numTris;
 }
@@ -474,7 +474,7 @@ int	idMD5Mesh::NumTris( void ) const
 idMD5Mesh::NumWeights
 ====================
 */
-int	idMD5Mesh::NumWeights( void ) const
+int	idMD5Mesh::NumWeights() const
 {
 	return numWeights;
 }
@@ -922,7 +922,7 @@ dynamicModel_t idRenderModelMD5::IsDynamicModel() const
 idRenderModelMD5::NumJoints
 ====================
 */
-int idRenderModelMD5::NumJoints( void ) const
+int idRenderModelMD5::NumJoints() const
 {
 	return joints.Num();
 }
@@ -932,7 +932,7 @@ int idRenderModelMD5::NumJoints( void ) const
 idRenderModelMD5::GetJoints
 ====================
 */
-const idMD5Joint* idRenderModelMD5::GetJoints( void ) const
+const idMD5Joint* idRenderModelMD5::GetJoints() const
 {
 	return joints.Ptr();
 }
@@ -942,7 +942,7 @@ const idMD5Joint* idRenderModelMD5::GetJoints( void ) const
 idRenderModelMD5::GetDefaultPose
 ====================
 */
-const idJointQuat* idRenderModelMD5::GetDefaultPose( void ) const
+const idJointQuat* idRenderModelMD5::GetDefaultPose() const
 {
 	return defaultPose.Ptr();
 }

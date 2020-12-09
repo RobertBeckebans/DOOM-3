@@ -716,7 +716,7 @@ static void WriteOutputEntity( int entityNum )
 WriteOutputFile
 ====================
 */
-void WriteOutputFile( void )
+void WriteOutputFile()
 {
 	int				i;
 	uEntity_t*		entity;

@@ -214,7 +214,7 @@ void DialogAFBody::DoDataExchange( CDataExchange* pDX )
 DialogAFBody::InitBodyList
 ================
 */
-void DialogAFBody::InitBodyList( void )
+void DialogAFBody::InitBodyList()
 {
 	CString str;
 
@@ -242,7 +242,7 @@ DialogAFBody::InitJointLists
   initialize the joint lists for bone collision models
 ================
 */
-void DialogAFBody::InitJointLists( void )
+void DialogAFBody::InitJointLists()
 {
 	idStrList joints;
 
@@ -281,7 +281,7 @@ void DialogAFBody::InitJointLists( void )
 DialogAFBody::InitCollisionModelType
 ================
 */
-void DialogAFBody::InitCollisionModelType( void )
+void DialogAFBody::InitCollisionModelType()
 {
 	int showBone, showOther;
 	bool enableOther;
@@ -361,7 +361,7 @@ void DialogAFBody::InitCollisionModelType( void )
 DialogAFBody::InitModifiedJointList
 ================
 */
-void DialogAFBody::InitModifiedJointList( void )
+void DialogAFBody::InitModifiedJointList()
 {
 	int i, j, numJoints;
 	CString str;
@@ -446,7 +446,7 @@ void DialogAFBody::InitModifiedJointList( void )
 DialogAFBody::InitNewRenameDeleteButtons
 ================
 */
-void DialogAFBody::InitNewRenameDeleteButtons( void )
+void DialogAFBody::InitNewRenameDeleteButtons()
 {
 	if( file && numJoints > file->bodies.Num() )
 	{
@@ -488,7 +488,7 @@ void DialogAFBody::LoadFile( idDeclAF* af )
 DialogAFBody::SaveFile
 ================
 */
-void DialogAFBody::SaveFile( void )
+void DialogAFBody::SaveFile()
 {
 	SaveBody();
 }
@@ -642,7 +642,7 @@ void DialogAFBody::LoadBody( const char* name )
 DialogAFBody::SaveBody
 ================
 */
-void DialogAFBody::SaveBody( void )
+void DialogAFBody::SaveBody()
 {
 	int s1, s2;
 	CString str;
@@ -759,7 +759,7 @@ void DialogAFBody::SaveBody( void )
 DialogAFBody::UpdateFile
 ================
 */
-void DialogAFBody::UpdateFile( void )
+void DialogAFBody::UpdateFile()
 {
 	SaveBody();
 	if( file )

@@ -74,10 +74,10 @@ typedef void ( *argCompletion_t )( const idCmdArgs& args, void( *callback )( con
 class idCmdSystem
 {
 public:
-	virtual				~idCmdSystem( void ) {}
+	virtual				~idCmdSystem() {}
 
-	virtual void		Init( void ) = 0;
-	virtual void		Shutdown( void ) = 0;
+	virtual void		Init() = 0;
+	virtual void		Shutdown() = 0;
 
 	// Registers a command and the function to call for it.
 	virtual void		AddCommand( const char* cmdName, cmdFunction_t function, int flags, const char* description, argCompletion_t argCompletion = NULL ) = 0;
@@ -95,7 +95,7 @@ public:
 	// Pulls off \n \r or ; terminated lines of text from the command buffer and
 	// executes the commands. Stops when the buffer is empty.
 	// Normally called once per frame, but may be explicitly invoked.
-	virtual void		ExecuteCommandBuffer( void ) = 0;
+	virtual void		ExecuteCommandBuffer() = 0;
 
 	// Base for path/file auto-completion.
 	virtual void		ArgCompletion_FolderExtension( const idCmdArgs& args, void( *callback )( const char* s ), const char* folder, bool stripFolder, ... ) = 0;
@@ -107,7 +107,7 @@ public:
 
 	// Setup a reloadEngine to happen on next command run, and give a command to execute after reload
 	virtual void		SetupReloadEngine( const idCmdArgs& args ) = 0;
-	virtual bool		PostReloadEngine( void ) = 0;
+	virtual bool		PostReloadEngine() = 0;
 
 	// Default argument completion functions.
 	static void			ArgCompletion_Boolean( const idCmdArgs& args, void( *callback )( const char* s ) );

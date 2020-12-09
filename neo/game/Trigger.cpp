@@ -53,7 +53,7 @@ END_CLASS
 idTrigger::DrawDebugInfo
 ================
 */
-void idTrigger::DrawDebugInfo( void )
+void idTrigger::DrawDebugInfo()
 {
 	idMat3		axis = gameLocal.GetLocalPlayer()->viewAngles.ToMat3();
 	idVec3		up = axis[ 2 ] * 5.0f;
@@ -133,7 +133,7 @@ void idTrigger::DrawDebugInfo( void )
 idTrigger::Enable
 ================
 */
-void idTrigger::Enable( void )
+void idTrigger::Enable()
 {
 	GetPhysics()->SetContents( CONTENTS_TRIGGER );
 	GetPhysics()->EnableClip();
@@ -144,7 +144,7 @@ void idTrigger::Enable( void )
 idTrigger::Disable
 ================
 */
-void idTrigger::Disable( void )
+void idTrigger::Disable()
 {
 	// we may be relinked if we're bound to another object, so clear the contents as well
 	GetPhysics()->SetContents( 0 );
@@ -156,7 +156,7 @@ void idTrigger::Disable( void )
 idTrigger::CallScript
 ================
 */
-void idTrigger::CallScript( void ) const
+void idTrigger::CallScript() const
 {
 	idThread* thread;
 
@@ -172,7 +172,7 @@ void idTrigger::CallScript( void ) const
 idTrigger::GetScriptFunction
 ================
 */
-const function_t* idTrigger::GetScriptFunction( void ) const
+const function_t* idTrigger::GetScriptFunction() const
 {
 	return scriptFunction;
 }
@@ -222,7 +222,7 @@ void idTrigger::Restore( idRestoreGame* savefile )
 idTrigger::Event_Enable
 ================
 */
-void idTrigger::Event_Enable( void )
+void idTrigger::Event_Enable()
 {
 	Enable();
 }
@@ -232,7 +232,7 @@ void idTrigger::Event_Enable( void )
 idTrigger::Event_Disable
 ================
 */
-void idTrigger::Event_Disable( void )
+void idTrigger::Event_Disable()
 {
 	Disable();
 }
@@ -252,7 +252,7 @@ idTrigger::idTrigger()
 idTrigger::Spawn
 ================
 */
-void idTrigger::Spawn( void )
+void idTrigger::Spawn()
 {
 	GetPhysics()->SetContents( CONTENTS_TRIGGER );
 
@@ -294,7 +294,7 @@ END_CLASS
 idTrigger_Multi::idTrigger_Multi
 ================
 */
-idTrigger_Multi::idTrigger_Multi( void )
+idTrigger_Multi::idTrigger_Multi()
 {
 	wait = 0.0f;
 	random = 0.0f;
@@ -360,7 +360,7 @@ so, the basic time between firing is a random time between
 (wait - random) and (wait + random)
 ================
 */
-void idTrigger_Multi::Spawn( void )
+void idTrigger_Multi::Spawn()
 {
 	spawnArgs.GetFloat( "wait", "0.5", wait );
 	spawnArgs.GetFloat( "random", "0", random );
@@ -608,7 +608,7 @@ END_CLASS
 idTrigger_EntityName::idTrigger_EntityName
 ================
 */
-idTrigger_EntityName::idTrigger_EntityName( void )
+idTrigger_EntityName::idTrigger_EntityName()
 {
 	wait = 0.0f;
 	random = 0.0f;
@@ -655,7 +655,7 @@ void idTrigger_EntityName::Restore( idRestoreGame* savefile )
 idTrigger_EntityName::Spawn
 ================
 */
-void idTrigger_EntityName::Spawn( void )
+void idTrigger_EntityName::Spawn()
 {
 	spawnArgs.GetFloat( "wait", "0.5", wait );
 	spawnArgs.GetFloat( "random", "0", random );
@@ -823,7 +823,7 @@ END_CLASS
 idTrigger_Timer::idTrigger_Timer
 ================
 */
-idTrigger_Timer::idTrigger_Timer( void )
+idTrigger_Timer::idTrigger_Timer()
 {
 	random = 0.0f;
 	wait = 0.0f;
@@ -869,7 +869,7 @@ Repeatedly fires its targets.
 Can be turned on or off by using.
 ================
 */
-void idTrigger_Timer::Spawn( void )
+void idTrigger_Timer::Spawn()
 {
 	spawnArgs.GetFloat( "random", "1", random );
 	spawnArgs.GetFloat( "wait", "1", wait );
@@ -895,7 +895,7 @@ void idTrigger_Timer::Spawn( void )
 idTrigger_Timer::Enable
 ================
 */
-void idTrigger_Timer::Enable( void )
+void idTrigger_Timer::Enable()
 {
 	// if off, turn it on
 	if( !on )
@@ -910,7 +910,7 @@ void idTrigger_Timer::Enable( void )
 idTrigger_Timer::Disable
 ================
 */
-void idTrigger_Timer::Disable( void )
+void idTrigger_Timer::Disable()
 {
 	// if on, turn it off
 	if( on )
@@ -925,7 +925,7 @@ void idTrigger_Timer::Disable( void )
 idTrigger_Timer::Event_Timer
 ================
 */
-void idTrigger_Timer::Event_Timer( void )
+void idTrigger_Timer::Event_Timer()
 {
 	ActivateTargets( this );
 
@@ -983,7 +983,7 @@ END_CLASS
 idTrigger_Count::idTrigger_Count
 ================
 */
-idTrigger_Count::idTrigger_Count( void )
+idTrigger_Count::idTrigger_Count()
 {
 	goal = 0;
 	count = 0;
@@ -1019,7 +1019,7 @@ void idTrigger_Count::Restore( idRestoreGame* savefile )
 idTrigger_Count::Spawn
 ================
 */
-void idTrigger_Count::Spawn( void )
+void idTrigger_Count::Spawn()
 {
 	spawnArgs.GetInt( "count", "1", goal );
 	spawnArgs.GetFloat( "delay", "0", delay );
@@ -1086,7 +1086,7 @@ END_CLASS
 idTrigger_Hurt::idTrigger_Hurt
 ================
 */
-idTrigger_Hurt::idTrigger_Hurt( void )
+idTrigger_Hurt::idTrigger_Hurt()
 {
 	on = false;
 	delay = 0.0f;
@@ -1125,7 +1125,7 @@ idTrigger_Hurt::Spawn
 	Can be turned on or off by using.
 ================
 */
-void idTrigger_Hurt::Spawn( void )
+void idTrigger_Hurt::Spawn()
 {
 	spawnArgs.GetBool( "on", "1", on );
 	spawnArgs.GetFloat( "delay", "1.0", delay );
@@ -1216,7 +1216,7 @@ END_CLASS
 idTrigger_Touch::idTrigger_Touch
 ================
 */
-idTrigger_Touch::idTrigger_Touch( void )
+idTrigger_Touch::idTrigger_Touch()
 {
 	clipModel = NULL;
 }
@@ -1226,7 +1226,7 @@ idTrigger_Touch::idTrigger_Touch( void )
 idTrigger_Touch::Spawn
 ================
 */
-void idTrigger_Touch::Spawn( void )
+void idTrigger_Touch::Spawn()
 {
 	// get the clip model
 	clipModel = new idClipModel( GetPhysics()->GetClipModel() );
@@ -1265,7 +1265,7 @@ void idTrigger_Touch::Restore( idRestoreGame* savefile )
 idTrigger_Touch::TouchEntities
 ================
 */
-void idTrigger_Touch::TouchEntities( void )
+void idTrigger_Touch::TouchEntities()
 {
 	int numClipModels, i;
 	idBounds bounds;
@@ -1314,7 +1314,7 @@ void idTrigger_Touch::TouchEntities( void )
 idTrigger_Touch::Think
 ================
 */
-void idTrigger_Touch::Think( void )
+void idTrigger_Touch::Think()
 {
 	if( thinkFlags & TH_THINK )
 	{
@@ -1345,7 +1345,7 @@ void idTrigger_Touch::Event_Trigger( idEntity* activator )
 idTrigger_Touch::Enable
 ================
 */
-void idTrigger_Touch::Enable( void )
+void idTrigger_Touch::Enable()
 {
 	BecomeActive( TH_THINK );
 }
@@ -1355,7 +1355,7 @@ void idTrigger_Touch::Enable( void )
 idTrigger_Touch::Disable
 ================
 */
-void idTrigger_Touch::Disable( void )
+void idTrigger_Touch::Disable()
 {
 	BecomeInactive( TH_THINK );
 }

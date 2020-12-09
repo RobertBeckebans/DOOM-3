@@ -517,7 +517,7 @@ rvGENavigator::Update
 Updates the contents of the navigator window from the current workspace
 ================
 */
-void rvGENavigator::Update( void )
+void rvGENavigator::Update()
 {
 	// Clear the list first
 	ListView_DeleteAllItems( mTree );
@@ -542,7 +542,7 @@ rvGENavigator::UpdateSelection
 Updates the currently selected items
 ================
 */
-void rvGENavigator::UpdateSelections( void )
+void rvGENavigator::UpdateSelections()
 {
 	int count = ListView_GetItemCount( mTree );
 	int i;
@@ -575,7 +575,7 @@ rvGENavigator::Refresh
 Repaints the navigator window
 ================
 */
-void rvGENavigator::Refresh( void )
+void rvGENavigator::Refresh()
 {
 	InvalidateRect( mTree, NULL, FALSE );
 //	UpdateWindow ( mTree );

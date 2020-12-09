@@ -662,7 +662,7 @@ int lwGetGradient( idFile* fp, int rsz, lwTexture* tex );
 lwTexture* lwGetTexture( idFile* fp, int bloksz, unsigned int type );
 lwPlugin* lwGetShader( idFile* fp, int bloksz );
 lwSurface* lwGetSurface( idFile* fp, int cksize );
-lwSurface* lwDefaultSurface( void );
+lwSurface* lwDefaultSurface();
 
 /* lwob.c */
 
@@ -687,7 +687,7 @@ void normalize( float v[] );
 /* lwio.c */
 
 void  set_flen( int i );
-int   get_flen( void );
+int   get_flen();
 void* getbytes( idFile* fp, int size );
 void  skipbytes( idFile* fp, int n );
 int   getI1( idFile* fp );

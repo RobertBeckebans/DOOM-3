@@ -43,10 +43,10 @@ public:
 	idSaveGame( idFile* savefile );
 	~idSaveGame();
 
-	void					Close( void );
+	void					Close();
 
 	void					AddObject( const idClass* obj );
-	void					WriteObjectList( void );
+	void					WriteObjectList();
 
 	void					Write( const void* buffer, int len );
 	void					WriteInt( const int value );
@@ -85,7 +85,7 @@ public:
 	void					WriteTrace( const trace_t& trace );
 	void					WriteTraceModel( const idTraceModel& trace );
 	void					WriteClipModel( const class idClipModel* clipModel );
-	void					WriteSoundCommands( void );
+	void					WriteSoundCommands();
 
 	void					WriteBuildNumber( const int value );
 
@@ -103,9 +103,9 @@ public:
 	idRestoreGame( idFile* savefile );
 	~idRestoreGame();
 
-	void					CreateObjects( void );
-	void					RestoreObjects( void );
-	void					DeleteObjects( void );
+	void					CreateObjects();
+	void					RestoreObjects();
+	void					DeleteObjects();
 
 	void					Error( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 
@@ -146,12 +146,12 @@ public:
 	void					ReadTrace( trace_t& trace );
 	void					ReadTraceModel( idTraceModel& trace );
 	void					ReadClipModel( idClipModel*& clipModel );
-	void					ReadSoundCommands( void );
+	void					ReadSoundCommands();
 
-	void					ReadBuildNumber( void );
+	void					ReadBuildNumber();
 
 	//						Used to retrieve the saved game buildNumber from within class Restore methods
-	int						GetBuildNumber( void );
+	int						GetBuildNumber();
 
 private:
 	int						buildNumber;

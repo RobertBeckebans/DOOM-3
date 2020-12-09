@@ -153,13 +153,13 @@ class idAsyncNetwork
 public:
 	idAsyncNetwork();
 
-	static void				Init( void );
-	static void				Shutdown( void );
-	static bool				IsActive( void )
+	static void				Init();
+	static void				Shutdown();
+	static bool				IsActive()
 	{
 		return ( server.IsActive() || client.IsActive() );
 	}
-	static void				RunFrame( void );
+	static void				RunFrame();
 
 	static void				WriteUserCmdDelta( idBitMsg& msg, const usercmd_t& cmd, const usercmd_t* base );
 	static void				ReadUserCmdDelta( const idBitMsg& msg, usercmd_t& cmd, const usercmd_t* base );
@@ -170,7 +170,7 @@ public:
 	// returns true if the corresponding master is set to something (and could be resolved)
 	static bool				GetMasterAddress( int index, netadr_t& adr );
 	// get the hardcoded idnet master, equivalent to GetMasterAddress( 0, .. )
-	static netadr_t			GetMasterAddress( void );
+	static netadr_t			GetMasterAddress();
 
 	static void				GetNETServers( );
 

@@ -54,7 +54,7 @@ END_CLASS
 idWorldspawn::Spawn
 ================
 */
-void idWorldspawn::Spawn( void )
+void idWorldspawn::Spawn()
 {
 	idStr				scriptname;
 	idThread*			thread;
@@ -149,7 +149,7 @@ idWorldspawn::~idWorldspawn()
 idWorldspawn::Event_Remove
 ================
 */
-void idWorldspawn::Event_Remove( void )
+void idWorldspawn::Event_Remove()
 {
 	gameLocal.Error( "Tried to remove world" );
 }

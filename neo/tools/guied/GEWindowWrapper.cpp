@@ -113,7 +113,7 @@ Updates the gui editor's representation of the window rectangle from the
 windows rectangle
 ================
 */
-void rvGEWindowWrapper::UpdateRect( void )
+void rvGEWindowWrapper::UpdateRect()
 {
 	idVec4 rect;
 	idWinRectangle* winrect;
@@ -153,7 +153,7 @@ Calculates the screen rectangle from the client rectangle by running through
 the parent windows and adding their offsets
 ================
 */
-void rvGEWindowWrapper::CalcScreenRect( void )
+void rvGEWindowWrapper::CalcScreenRect()
 {
 	idWindow* parent;
 
@@ -311,7 +311,7 @@ Updates the windows real state with wrappers internal state.  Visibility is
 handled specially
 ================
 */
-void rvGEWindowWrapper::UpdateWindowState( void )
+void rvGEWindowWrapper::UpdateWindowState()
 {
 	idStr realVisible;
 	bool tempVisible;
@@ -458,7 +458,7 @@ rvGEWindowWrapper::GetChildCount
 Returns the number of children the window being wrapped has
 ================
 */
-int rvGEWindowWrapper::GetChildCount( void )
+int rvGEWindowWrapper::GetChildCount()
 {
 	if( !CanHaveChildren() )
 	{
@@ -504,7 +504,7 @@ rvGEWindowWrapper::CanHaveChildren
 Returns true if the window is allowed to have child windows
 ================
 */
-bool rvGEWindowWrapper::CanHaveChildren( void )
+bool rvGEWindowWrapper::CanHaveChildren()
 {
 	if( mType == WT_HTML || mType == WT_LIST )
 	{
@@ -521,7 +521,7 @@ rvGEWindowWrapper::GetDepth
 Returns the depth of the wrapped window
 ================
 */
-int rvGEWindowWrapper::GetDepth( void )
+int rvGEWindowWrapper::GetDepth()
 {
 	idWindow* parent;
 	int depth;
@@ -539,7 +539,7 @@ rvGEWindowWrapper::Expand
 Expand the window in the navigator and all of its parents too
 ================
 */
-bool rvGEWindowWrapper::Expand( void )
+bool rvGEWindowWrapper::Expand()
 {
 	bool result;
 
@@ -569,7 +569,7 @@ rvGEWindowWrapper::Collapse
 Returns the depth of the wrapped window
 ================
 */
-bool rvGEWindowWrapper::Collapse( void )
+bool rvGEWindowWrapper::Collapse()
 {
 	bool result;
 
@@ -600,7 +600,7 @@ After a the windwo wrapper is attached to a window and the window is parsed
 the finish method is called to finish up any last details
 ================
 */
-void rvGEWindowWrapper::Finish( void )
+void rvGEWindowWrapper::Finish()
 {
 	mOldVisible = ( ( bool ) * dynamic_cast< idWinBool*>( mWindow->GetWinVarByName( "visible" ) ) );
 	mHidden = mOldVisible ? false : true;

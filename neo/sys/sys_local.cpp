@@ -55,32 +55,32 @@ void idSysLocal::DebugVPrintf( const char* fmt, va_list arg )
 	Sys_DebugVPrintf( fmt, arg );
 }
 
-double idSysLocal::GetClockTicks( void )
+double idSysLocal::GetClockTicks()
 {
 	return Sys_GetClockTicks();
 }
 
-double idSysLocal::ClockTicksPerSecond( void )
+double idSysLocal::ClockTicksPerSecond()
 {
 	return Sys_ClockTicksPerSecond();
 }
 
-cpuid_t idSysLocal::GetProcessorId( void )
+cpuid_t idSysLocal::GetProcessorId()
 {
 	return Sys_GetProcessorId();
 }
 
-const char* idSysLocal::GetProcessorString( void )
+const char* idSysLocal::GetProcessorString()
 {
 	return Sys_GetProcessorString();
 }
 
-const char* idSysLocal::FPU_GetState( void )
+const char* idSysLocal::FPU_GetState()
 {
 	return Sys_FPU_GetState();
 }
 
-bool idSysLocal::FPU_StackIsEmpty( void )
+bool idSysLocal::FPU_StackIsEmpty()
 {
 	return Sys_FPU_StackIsEmpty();
 }
@@ -120,7 +120,7 @@ const char* idSysLocal::GetCallStackCurStr( int depth )
 	return Sys_GetCallStackCurStr( depth );
 }
 
-void idSysLocal::ShutdownSymbols( void )
+void idSysLocal::ShutdownSymbols()
 {
 	Sys_ShutdownSymbols();
 }

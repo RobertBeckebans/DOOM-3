@@ -152,7 +152,7 @@ void RB_SimpleSurfaceSetup( const drawSurf_t* drawSurf )
 RB_SimpleWorldSetup
 ================
 */
-void RB_SimpleWorldSetup( void )
+void RB_SimpleWorldSetup()
 {
 	backEnd.currentSpace = &backEnd.viewDef->worldSpace;
 	qglLoadMatrixf( backEnd.viewDef->worldSpace.modelViewMatrix );
@@ -174,7 +174,7 @@ glColorMask, and the enabled state of depth buffering and
 stenciling will matter.
 =================
 */
-void RB_PolygonClear( void )
+void RB_PolygonClear()
 {
 	qglPushMatrix();
 	qglPushAttrib( GL_ALL_ATTRIB_BITS );
@@ -198,7 +198,7 @@ void RB_PolygonClear( void )
 RB_ShowDestinationAlpha
 ====================
 */
-void RB_ShowDestinationAlpha( void )
+void RB_ShowDestinationAlpha()
 {
 	GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ZERO | GLS_DEPTHMASK | GLS_DEPTHFUNC_ALWAYS );
 	qglColor3f( 1, 1, 1 );
@@ -212,7 +212,7 @@ RB_ScanStencilBuffer
 Debugging tool to see what values are in the stencil buffer
 ===================
 */
-void RB_ScanStencilBuffer( void )
+void RB_ScanStencilBuffer()
 {
 	int		counts[256];
 	int		i;
@@ -249,7 +249,7 @@ RB_CountStencilBuffer
 Print an overdraw count based on stencil index values
 ===================
 */
-void RB_CountStencilBuffer( void )
+void RB_CountStencilBuffer()
 {
 	int		count;
 	int		i;
@@ -280,7 +280,7 @@ stencil buffer.  Stencil of 0 = black, 1 = red, 2 = green,
 3 = blue, ..., 7+ = white
 ===================
 */
-static void R_ColorByStencilBuffer( void )
+static void R_ColorByStencilBuffer()
 {
 	int		i;
 	static float	colors[8][3] =
@@ -319,7 +319,7 @@ static void R_ColorByStencilBuffer( void )
 RB_ShowOverdraw
 ==================
 */
-void RB_ShowOverdraw( void )
+void RB_ShowOverdraw()
 {
 	const idMaterial* 	material;
 	int					i;
@@ -409,7 +409,7 @@ The greatest of the rgb values at each pixel will be used, with
 the resulting color shading from red at 0 to green at 128 to blue at 255
 ===================
 */
-void RB_ShowIntensity( void )
+void RB_ShowIntensity()
 {
 	byte*	colorReadback;
 	int		i, j, c;
@@ -474,7 +474,7 @@ RB_ShowDepthBuffer
 Draw the depth buffer as colors
 ===================
 */
-void RB_ShowDepthBuffer( void )
+void RB_ShowDepthBuffer()
 {
 	void*	depthReadback;
 
@@ -525,7 +525,7 @@ This is a debugging tool that will draw each surface with a color
 based on how many lights are effecting it
 =================
 */
-void RB_ShowLightCount( void )
+void RB_ShowLightCount()
 {
 	int		i;
 	const drawSurf_t*	surf;
@@ -595,7 +595,7 @@ Blacks out all edges, then adds color for each edge that a shadow
 plane extends from, allowing you to see doubled edges
 =================
 */
-void RB_ShowSilhouette( void )
+void RB_ShowSilhouette()
 {
 	int		i;
 	const drawSurf_t*	surf;
@@ -689,7 +689,7 @@ This is a debugging tool that will draw only the shadow volumes
 and count up the total fill usage
 =================
 */
-static void RB_ShowShadowCount( void )
+static void RB_ShowShadowCount()
 {
 	int		i;
 	const drawSurf_t*	surf;
@@ -1733,7 +1733,7 @@ r_showLights 2	: also draw planes of each volume
 r_showLights 3	: also draw edges of each volume
 ==============
 */
-void RB_ShowLights( void )
+void RB_ShowLights()
 {
 	const idRenderLightLocal*	light;
 	int					count;
@@ -1816,7 +1816,7 @@ RB_ShowPortals
 Debugging tool, won't work correctly with SMP or when mirrors are present
 =====================
 */
-void RB_ShowPortals( void )
+void RB_ShowPortals()
 {
 	if( !r_showPortals.GetBool() )
 	{
@@ -2049,7 +2049,7 @@ static void RB_DrawText( const char* text, const idVec3& origin, float scale, co
 RB_ShowDebugText
 ================
 */
-void RB_ShowDebugText( void )
+void RB_ShowDebugText()
 {
 	int			i;
 	int			width;
@@ -2172,7 +2172,7 @@ void RB_AddDebugLine( const idVec4& color, const idVec3& start, const idVec3& en
 RB_ShowDebugLines
 ================
 */
-void RB_ShowDebugLines( void )
+void RB_ShowDebugLines()
 {
 	int			i;
 	int			width;
@@ -2306,7 +2306,7 @@ void RB_AddDebugPolygon( const idVec4& color, const idWinding& winding, const in
 RB_ShowDebugPolygons
 ================
 */
-void RB_ShowDebugPolygons( void )
+void RB_ShowDebugPolygons()
 {
 	int				i, j;
 	debugPolygon_t*	poly;
@@ -2381,7 +2381,7 @@ RB_TestGamma
 #define	G_HEIGHT	512
 #define	BAR_HEIGHT	64
 
-void RB_TestGamma( void )
+void RB_TestGamma()
 {
 	byte	image[G_HEIGHT][G_WIDTH][4];
 	int		i, j;
@@ -2493,7 +2493,7 @@ void RB_TestGamma( void )
 RB_TestGammaBias
 ==================
 */
-static void RB_TestGammaBias( void )
+static void RB_TestGammaBias()
 {
 	byte	image[G_HEIGHT][G_WIDTH][4];
 
@@ -2553,7 +2553,7 @@ RB_TestImage
 Display a single image over most of the screen
 ================
 */
-void RB_TestImage( void )
+void RB_TestImage()
 {
 	idImage*	image;
 	int		max;
@@ -2683,7 +2683,7 @@ void RB_RenderDebugTools( drawSurf_t** drawSurfs, int numDrawSurfs )
 RB_ShutdownDebugTools
 =================
 */
-void RB_ShutdownDebugTools( void )
+void RB_ShutdownDebugTools()
 {
 	for( int i = 0; i < MAX_DEBUG_POLYGONS; i++ )
 	{

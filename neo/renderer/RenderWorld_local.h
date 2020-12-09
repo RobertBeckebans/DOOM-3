@@ -108,7 +108,7 @@ public:
 	virtual void			SetRenderView( const renderView_t* renderView );
 	virtual	void			RenderScene( const renderView_t* renderView );
 
-	virtual	int				NumAreas( void ) const;
+	virtual	int				NumAreas() const;
 	virtual int				PointInArea( const idVec3& point ) const;
 	virtual int				BoundsInAreas( const idBounds& bounds, int* areas, int maxAreas ) const;
 	virtual	int				NumPortalsInArea( int areaNum );
@@ -187,7 +187,7 @@ public:
 	void					FreeWorld();
 	void					ClearWorld();
 	void					FreeDefs();
-	void					TouchWorldModels( void );
+	void					TouchWorldModels();
 	void					AddWorldModelEntities();
 	void					ClearPortalStates();
 	virtual	bool			InitFromMap( const char* mapName );
@@ -209,10 +209,10 @@ public:
 	void					AddAreaLightRefs( int areaNum, const struct portalStack_s* ps );
 	void					AddAreaRefs( int areaNum, const struct portalStack_s* ps );
 	void					BuildConnectedAreas_r( int areaNum );
-	void					BuildConnectedAreas( void );
-	void					FindViewLightsAndEntities( void );
+	void					BuildConnectedAreas();
+	void					FindViewLightsAndEntities();
 
-	int						NumPortals( void ) const;
+	int						NumPortals() const;
 	qhandle_t				FindPortal( const idBounds& b ) const;
 	void					SetPortalState( qhandle_t portal, int blockingBits );
 	int						GetPortalState( qhandle_t portal );

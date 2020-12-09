@@ -143,7 +143,7 @@ void idAnimState::Init( idActor* owner, idAnimator* _animator, int animchannel )
 idAnimState::Shutdown
 =====================
 */
-void idAnimState::Shutdown( void )
+void idAnimState::Shutdown()
 {
 	delete thread;
 	thread = NULL;
@@ -226,7 +226,7 @@ void idAnimState::CycleAnim( int anim )
 idAnimState::BecomeIdle
 =====================
 */
-void idAnimState::BecomeIdle( void )
+void idAnimState::BecomeIdle()
 {
 	idleAnim = true;
 }
@@ -236,7 +236,7 @@ void idAnimState::BecomeIdle( void )
 idAnimState::Disabled
 =====================
 */
-bool idAnimState::Disabled( void ) const
+bool idAnimState::Disabled() const
 {
 	return disabled;
 }
@@ -271,7 +271,7 @@ bool idAnimState::AnimDone( int blendFrames ) const
 idAnimState::IsIdle
 =====================
 */
-bool idAnimState::IsIdle( void ) const
+bool idAnimState::IsIdle() const
 {
 	return disabled || idleAnim;
 }
@@ -281,7 +281,7 @@ bool idAnimState::IsIdle( void ) const
 idAnimState::GetAnimFlags
 =====================
 */
-animFlags_t idAnimState::GetAnimFlags( void ) const
+animFlags_t idAnimState::GetAnimFlags() const
 {
 	animFlags_t flags;
 
@@ -318,7 +318,7 @@ void idAnimState::Enable( int blendFrames )
 idAnimState::Disable
 =====================
 */
-void idAnimState::Disable( void )
+void idAnimState::Disable()
 {
 	disabled = true;
 	idleAnim = false;
@@ -329,7 +329,7 @@ void idAnimState::Disable( void )
 idAnimState::UpdateState
 =====================
 */
-bool idAnimState::UpdateState( void )
+bool idAnimState::UpdateState()
 {
 	if( disabled )
 	{
@@ -446,7 +446,7 @@ END_CLASS
 idActor::idActor
 =====================
 */
-idActor::idActor( void )
+idActor::idActor()
 {
 	viewAxis.Identity();
 
@@ -497,7 +497,7 @@ idActor::idActor( void )
 idActor::~idActor
 =====================
 */
-idActor::~idActor( void )
+idActor::~idActor()
 {
 	int i;
 	idEntity* ent;
@@ -534,7 +534,7 @@ idActor::~idActor( void )
 idActor::Spawn
 =====================
 */
-void idActor::Spawn( void )
+void idActor::Spawn()
 {
 	idEntity*		ent;
 	idStr			jointName;
@@ -693,7 +693,7 @@ void idActor::Spawn( void )
 idActor::FinishSetup
 ================
 */
-void idActor::FinishSetup( void )
+void idActor::FinishSetup()
 {
 	const char*	scriptObjectName;
 
@@ -716,7 +716,7 @@ void idActor::FinishSetup( void )
 idActor::SetupHead
 ================
 */
-void idActor::SetupHead( void )
+void idActor::SetupHead()
 {
 	idAFAttachment*		headEnt;
 	idStr				jointName;
@@ -784,7 +784,7 @@ void idActor::SetupHead( void )
 idActor::CopyJointsFromBodyToHead
 ================
 */
-void idActor::CopyJointsFromBodyToHead( void )
+void idActor::CopyJointsFromBodyToHead()
 {
 	idEntity*	headEnt = head.GetEntity();
 	idAnimator*	headAnimator;
@@ -825,7 +825,7 @@ void idActor::CopyJointsFromBodyToHead( void )
 idActor::Restart
 ================
 */
-void idActor::Restart( void )
+void idActor::Restart()
 {
 	assert( !head.GetEntity() );
 	SetupHead();
@@ -1080,7 +1080,7 @@ void idActor::Restore( idRestoreGame* savefile )
 idActor::Hide
 ================
 */
-void idActor::Hide( void )
+void idActor::Hide()
 {
 	idEntity* ent;
 	idEntity* next;
@@ -1111,7 +1111,7 @@ void idActor::Hide( void )
 idActor::Show
 ================
 */
-void idActor::Show( void )
+void idActor::Show()
 {
 	idEntity* ent;
 	idEntity* next;
@@ -1141,7 +1141,7 @@ void idActor::Show( void )
 idActor::GetDefaultSurfaceType
 ==============
 */
-int	idActor::GetDefaultSurfaceType( void ) const
+int	idActor::GetDefaultSurfaceType() const
 {
 	return SURFTYPE_FLESH;
 }
@@ -1176,7 +1176,7 @@ void idActor::ProjectOverlay( const idVec3& origin, const idVec3& dir, float siz
 idActor::LoadAF
 ================
 */
-bool idActor::LoadAF( void )
+bool idActor::LoadAF()
 {
 	idStr fileName;
 
@@ -1193,7 +1193,7 @@ bool idActor::LoadAF( void )
 idActor::SetupBody
 =====================
 */
-void idActor::SetupBody( void )
+void idActor::SetupBody()
 {
 	const char* jointname;
 
@@ -1276,7 +1276,7 @@ void idActor::SetupBody( void )
 idActor::CheckBlink
 =====================
 */
-void idActor::CheckBlink( void )
+void idActor::CheckBlink()
 {
 	// check if it's time to blink
 	if( !blink_anim || ( health <= 0 ) || !allowEyeFocus || ( blink_time > gameLocal.time ) )
@@ -1347,7 +1347,7 @@ bool idActor::GetPhysicsToSoundTransform( idVec3& origin, idMat3& axis )
 idActor::ShutdownThreads
 ================
 */
-void idActor::ShutdownThreads( void )
+void idActor::ShutdownThreads()
 {
 	headAnim.Shutdown();
 	torsoAnim.Shutdown();
@@ -1370,7 +1370,7 @@ Called during idEntity::Spawn to see if it should construct the script object or
 Overridden by subclasses that need to spawn the script object themselves.
 ================
 */
-bool idActor::ShouldConstructScriptObjectAtSpawn( void ) const
+bool idActor::ShouldConstructScriptObjectAtSpawn() const
 {
 	return false;
 }
@@ -1383,7 +1383,7 @@ Called during idEntity::Spawn.  Calls the constructor on the script object.
 Can be overridden by subclasses when a thread doesn't need to be allocated.
 ================
 */
-idThread* idActor::ConstructScriptObject( void )
+idThread* idActor::ConstructScriptObject()
 {
 	const function_t* constructor;
 
@@ -1480,7 +1480,7 @@ void idActor::SetState( const char* statename )
 idActor::UpdateScript
 =====================
 */
-void idActor::UpdateScript( void )
+void idActor::UpdateScript()
 {
 	int	i;
 
@@ -1552,7 +1552,7 @@ void idActor::SetEyeHeight( float height )
 idActor::EyeHeight
 =====================
 */
-float idActor::EyeHeight( void ) const
+float idActor::EyeHeight() const
 {
 	return eyeOffset.z;
 }
@@ -1562,7 +1562,7 @@ float idActor::EyeHeight( void ) const
 idActor::EyeOffset
 =====================
 */
-idVec3 idActor::EyeOffset( void ) const
+idVec3 idActor::EyeOffset() const
 {
 	return GetPhysics()->GetGravityNormal() * -eyeOffset.z;
 }
@@ -1572,7 +1572,7 @@ idVec3 idActor::EyeOffset( void ) const
 idActor::GetEyePosition
 =====================
 */
-idVec3 idActor::GetEyePosition( void ) const
+idVec3 idActor::GetEyePosition() const
 {
 	return GetPhysics()->GetOrigin() + ( GetPhysics()->GetGravityNormal() * -eyeOffset.z );
 }
@@ -1713,7 +1713,7 @@ renderView_t* idActor::GetRenderView()
 idActor::SetCombatModel
 ================
 */
-void idActor::SetCombatModel( void )
+void idActor::SetCombatModel()
 {
 	idAFAttachment* headEnt;
 
@@ -1742,7 +1742,7 @@ void idActor::SetCombatModel( void )
 idActor::GetCombatModel
 ================
 */
-idClipModel* idActor::GetCombatModel( void ) const
+idClipModel* idActor::GetCombatModel() const
 {
 	return combatModel;
 }
@@ -1752,7 +1752,7 @@ idClipModel* idActor::GetCombatModel( void ) const
 idActor::LinkCombat
 ================
 */
-void idActor::LinkCombat( void )
+void idActor::LinkCombat()
 {
 	idAFAttachment* headEnt;
 
@@ -1777,7 +1777,7 @@ void idActor::LinkCombat( void )
 idActor::UnlinkCombat
 ================
 */
-void idActor::UnlinkCombat( void )
+void idActor::UnlinkCombat()
 {
 	idAFAttachment* headEnt;
 
@@ -1797,7 +1797,7 @@ void idActor::UnlinkCombat( void )
 idActor::StartRagdoll
 ================
 */
-bool idActor::StartRagdoll( void )
+bool idActor::StartRagdoll()
 {
 	float slomoStart, slomoEnd;
 	float jointFrictionDent, jointFrictionDentStart, jointFrictionDentEnd;
@@ -1857,7 +1857,7 @@ bool idActor::StartRagdoll( void )
 idActor::StopRagdoll
 ================
 */
-void idActor::StopRagdoll( void )
+void idActor::StopRagdoll()
 {
 	if( af.IsActive() )
 	{
@@ -1870,7 +1870,7 @@ void idActor::StopRagdoll( void )
 idActor::UpdateAnimationControllers
 ================
 */
-bool idActor::UpdateAnimationControllers( void )
+bool idActor::UpdateAnimationControllers()
 {
 
 	if( af.IsActive() )
@@ -1896,7 +1896,7 @@ bool idActor::UpdateAnimationControllers( void )
 idActor::RemoveAttachments
 ================
 */
-void idActor::RemoveAttachments( void )
+void idActor::RemoveAttachments()
 {
 	int i;
 	idEntity* ent;
@@ -1975,7 +1975,7 @@ void idActor::Teleport( const idVec3& origin, const idAngles& angles, idEntity* 
 idActor::GetDeltaViewAngles
 ================
 */
-const idAngles& idActor::GetDeltaViewAngles( void ) const
+const idAngles& idActor::GetDeltaViewAngles() const
 {
 	return deltaViewAngles;
 }
@@ -1995,7 +1995,7 @@ void idActor::SetDeltaViewAngles( const idAngles& delta )
 idActor::HasEnemies
 ================
 */
-bool idActor::HasEnemies( void ) const
+bool idActor::HasEnemies() const
 {
 	idActor* ent;
 
@@ -2071,7 +2071,7 @@ idActor* idActor::EnemyWithMostHealth()
 idActor::OnLadder
 ================
 */
-bool idActor::OnLadder( void ) const
+bool idActor::OnLadder() const
 {
 	return false;
 }
@@ -2225,7 +2225,7 @@ bool idActor::InAnimState( int channel, const char* statename ) const
 idActor::WaitState
 =====================
 */
-const char* idActor::WaitState( void ) const
+const char* idActor::WaitState() const
 {
 	if( waitState.Length() )
 	{
@@ -2252,7 +2252,7 @@ void idActor::SetWaitState( const char* _waitstate )
 idActor::UpdateAnimState
 =====================
 */
-void idActor::UpdateAnimState( void )
+void idActor::UpdateAnimState()
 {
 	headAnim.UpdateState();
 	torsoAnim.UpdateState();
@@ -2497,7 +2497,7 @@ void idActor::Damage( idEntity* inflictor, idEntity* attacker, const idVec3& dir
 idActor::ClearPain
 =====================
 */
-void idActor::ClearPain( void )
+void idActor::ClearPain()
 {
 	pain_debounce_time = 0;
 }
@@ -2627,7 +2627,7 @@ idActor::SetupDamageGroups
 FIXME: only store group names once and store an index for each joint
 =====================
 */
-void idActor::SetupDamageGroups( void )
+void idActor::SetupDamageGroups()
 {
 	int						i;
 	const idKeyValue*		arg;
@@ -2720,7 +2720,7 @@ const char* idActor::GetDamageGroup( int location )
 idActor::Event_EnableEyeFocus
 =====================
 */
-void idActor::PlayFootStepSound( void )
+void idActor::PlayFootStepSound()
 {
 	const char* sound = NULL;
 	const idMaterial* material;
@@ -2751,7 +2751,7 @@ void idActor::PlayFootStepSound( void )
 idActor::Event_EnableEyeFocus
 =====================
 */
-void idActor::Event_EnableEyeFocus( void )
+void idActor::Event_EnableEyeFocus()
 {
 	allowEyeFocus = true;
 	blink_time = gameLocal.time + blink_min + gameLocal.random.RandomFloat() * ( blink_max - blink_min );
@@ -2762,7 +2762,7 @@ void idActor::Event_EnableEyeFocus( void )
 idActor::Event_DisableEyeFocus
 =====================
 */
-void idActor::Event_DisableEyeFocus( void )
+void idActor::Event_DisableEyeFocus()
 {
 	allowEyeFocus = false;
 
@@ -2782,7 +2782,7 @@ void idActor::Event_DisableEyeFocus( void )
 idActor::Event_Footstep
 ===============
 */
-void idActor::Event_Footstep( void )
+void idActor::Event_Footstep()
 {
 	PlayFootStepSound();
 }
@@ -2792,7 +2792,7 @@ void idActor::Event_Footstep( void )
 idActor::Event_EnableWalkIK
 =====================
 */
-void idActor::Event_EnableWalkIK( void )
+void idActor::Event_EnableWalkIK()
 {
 	walkIK.EnableAll();
 }
@@ -2802,7 +2802,7 @@ void idActor::Event_EnableWalkIK( void )
 idActor::Event_DisableWalkIK
 =====================
 */
-void idActor::Event_DisableWalkIK( void )
+void idActor::Event_DisableWalkIK()
 {
 	walkIK.DisableAll();
 }
@@ -2842,7 +2842,7 @@ void idActor::Event_PreventPain( float duration )
 idActor::Event_DisablePain
 ===============
 */
-void idActor::Event_DisablePain( void )
+void idActor::Event_DisablePain()
 {
 	allowPain = false;
 }
@@ -2852,7 +2852,7 @@ void idActor::Event_DisablePain( void )
 idActor::Event_EnablePain
 ===============
 */
-void idActor::Event_EnablePain( void )
+void idActor::Event_EnablePain()
 {
 	allowPain = true;
 }
@@ -2862,7 +2862,7 @@ void idActor::Event_EnablePain( void )
 idActor::Event_GetPainAnim
 =====================
 */
-void idActor::Event_GetPainAnim( void )
+void idActor::Event_GetPainAnim()
 {
 	if( !painAnim.Length() )
 	{
@@ -3625,7 +3625,7 @@ void idActor::Event_AnimDistance( int channel, const char* animname )
 idActor::Event_HasEnemies
 ================
 */
-void idActor::Event_HasEnemies( void )
+void idActor::Event_HasEnemies()
 {
 	bool hasEnemy;
 
@@ -3735,7 +3735,7 @@ void idActor::Event_SetState( const char* name )
 idActor::Event_GetState
 =====================
 */
-void idActor::Event_GetState( void )
+void idActor::Event_GetState()
 {
 	if( state )
 	{
@@ -3752,7 +3752,7 @@ void idActor::Event_GetState( void )
 idActor::Event_GetHead
 =====================
 */
-void idActor::Event_GetHead( void )
+void idActor::Event_GetHead()
 {
 	idThread::ReturnEntity( head.GetEntity() );
 }

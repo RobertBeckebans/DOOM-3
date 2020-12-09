@@ -122,7 +122,7 @@ const char* Brush_Name( brush_t* b )
 Brush_Alloc
 ================
 */
-brush_t* Brush_Alloc( void )
+brush_t* Brush_Alloc()
 {
 	brush_t* b = new brush_t;
 	b->prev = b->next = NULL;
@@ -266,7 +266,7 @@ float ShadeForNormal( idVec3 normal )
 Face_Alloc
 ================
 */
-face_t* Face_Alloc( void )
+face_t* Face_Alloc()
 {
 	brushprimit_texdef_t	bp;
 

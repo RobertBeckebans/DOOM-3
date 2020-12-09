@@ -217,7 +217,7 @@ const char* idPolynomial::ToString( int precision ) const
 idPolynomial::Test
 =============
 */
-void idPolynomial::Test( void )
+void idPolynomial::Test()
 {
 	int i, num;
 	float roots[4], value;

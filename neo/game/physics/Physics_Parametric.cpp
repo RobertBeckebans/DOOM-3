@@ -40,7 +40,7 @@ END_CLASS
 idPhysics_Parametric::Activate
 ================
 */
-void idPhysics_Parametric::Activate( void )
+void idPhysics_Parametric::Activate()
 {
 	current.atRest = -1;
 	self->BecomeActive( TH_PHYSICS );
@@ -51,7 +51,7 @@ void idPhysics_Parametric::Activate( void )
 idPhysics_Parametric::TestIfAtRest
 ================
 */
-bool idPhysics_Parametric::TestIfAtRest( void ) const
+bool idPhysics_Parametric::TestIfAtRest() const
 {
 
 	if( ( current.linearExtrapolation.GetExtrapolationType() & ~EXTRAPOLATION_NOSTOP ) == EXTRAPOLATION_NONE &&
@@ -96,7 +96,7 @@ bool idPhysics_Parametric::TestIfAtRest( void ) const
 idPhysics_Parametric::Rest
 ================
 */
-void idPhysics_Parametric::Rest( void )
+void idPhysics_Parametric::Rest()
 {
 	current.atRest = gameLocal.time;
 	self->BecomeInactive( TH_PHYSICS );
@@ -107,7 +107,7 @@ void idPhysics_Parametric::Rest( void )
 idPhysics_Parametric::idPhysics_Parametric
 ================
 */
-idPhysics_Parametric::idPhysics_Parametric( void )
+idPhysics_Parametric::idPhysics_Parametric()
 {
 
 	current.time = gameLocal.time;
@@ -142,7 +142,7 @@ idPhysics_Parametric::idPhysics_Parametric( void )
 idPhysics_Parametric::~idPhysics_Parametric
 ================
 */
-idPhysics_Parametric::~idPhysics_Parametric( void )
+idPhysics_Parametric::~idPhysics_Parametric()
 {
 	if( clipModel != NULL )
 	{
@@ -340,7 +340,7 @@ void idPhysics_Parametric::SetPusher( int flags )
 idPhysics_Parametric::IsPusher
 ================
 */
-bool idPhysics_Parametric::IsPusher( void ) const
+bool idPhysics_Parametric::IsPusher() const
 {
 	return isPusher;
 }
@@ -376,7 +376,7 @@ void idPhysics_Parametric::SetAngularExtrapolation( extrapolation_t type, int ti
 idPhysics_Parametric::GetLinearExtrapolationType
 ================
 */
-extrapolation_t idPhysics_Parametric::GetLinearExtrapolationType( void ) const
+extrapolation_t idPhysics_Parametric::GetLinearExtrapolationType() const
 {
 	return current.linearExtrapolation.GetExtrapolationType();
 }
@@ -386,7 +386,7 @@ extrapolation_t idPhysics_Parametric::GetLinearExtrapolationType( void ) const
 idPhysics_Parametric::GetAngularExtrapolationType
 ================
 */
-extrapolation_t idPhysics_Parametric::GetAngularExtrapolationType( void ) const
+extrapolation_t idPhysics_Parametric::GetAngularExtrapolationType() const
 {
 	return current.angularExtrapolation.GetExtrapolationType();
 }
@@ -446,7 +446,7 @@ void idPhysics_Parametric::SetSpline( idCurve_Spline<idVec3>* spline, int accelT
 idPhysics_Parametric::GetSpline
 ================
 */
-idCurve_Spline<idVec3>* idPhysics_Parametric::GetSpline( void ) const
+idCurve_Spline<idVec3>* idPhysics_Parametric::GetSpline() const
 {
 	return current.spline;
 }
@@ -456,7 +456,7 @@ idCurve_Spline<idVec3>* idPhysics_Parametric::GetSpline( void ) const
 idPhysics_Parametric::GetSplineAcceleration
 ================
 */
-int idPhysics_Parametric::GetSplineAcceleration( void ) const
+int idPhysics_Parametric::GetSplineAcceleration() const
 {
 	return current.splineInterpolate.GetAcceleration();
 }
@@ -466,7 +466,7 @@ int idPhysics_Parametric::GetSplineAcceleration( void ) const
 idPhysics_Parametric::GetSplineDeceleration
 ================
 */
-int idPhysics_Parametric::GetSplineDeceleration( void ) const
+int idPhysics_Parametric::GetSplineDeceleration() const
 {
 	return current.splineInterpolate.GetDeceleration();
 }
@@ -476,7 +476,7 @@ int idPhysics_Parametric::GetSplineDeceleration( void ) const
 idPhysics_Parametric::UsingSplineAngles
 ================
 */
-bool idPhysics_Parametric::UsingSplineAngles( void ) const
+bool idPhysics_Parametric::UsingSplineAngles() const
 {
 	return current.useSplineAngles;
 }
@@ -535,7 +535,7 @@ idClipModel* idPhysics_Parametric::GetClipModel( int id ) const
 idPhysics_Parametric::GetNumClipModels
 ================
 */
-int idPhysics_Parametric::GetNumClipModels( void ) const
+int idPhysics_Parametric::GetNumClipModels() const
 {
 	return ( clipModel != NULL );
 }
@@ -747,7 +747,7 @@ void idPhysics_Parametric::UpdateTime( int endTimeMSec )
 idPhysics_Parametric::GetTime
 ================
 */
-int idPhysics_Parametric::GetTime( void ) const
+int idPhysics_Parametric::GetTime() const
 {
 	return current.time;
 }
@@ -757,7 +757,7 @@ int idPhysics_Parametric::GetTime( void ) const
 idPhysics_Parametric::IsAtRest
 ================
 */
-bool idPhysics_Parametric::IsAtRest( void ) const
+bool idPhysics_Parametric::IsAtRest() const
 {
 	return current.atRest >= 0;
 }
@@ -767,7 +767,7 @@ bool idPhysics_Parametric::IsAtRest( void ) const
 idPhysics_Parametric::GetRestStartTime
 ================
 */
-int idPhysics_Parametric::GetRestStartTime( void ) const
+int idPhysics_Parametric::GetRestStartTime() const
 {
 	return current.atRest;
 }
@@ -777,7 +777,7 @@ int idPhysics_Parametric::GetRestStartTime( void ) const
 idPhysics_Parametric::IsPushable
 ================
 */
-bool idPhysics_Parametric::IsPushable( void ) const
+bool idPhysics_Parametric::IsPushable() const
 {
 	return false;
 }
@@ -787,7 +787,7 @@ bool idPhysics_Parametric::IsPushable( void ) const
 idPhysics_Parametric::SaveState
 ================
 */
-void idPhysics_Parametric::SaveState( void )
+void idPhysics_Parametric::SaveState()
 {
 	saved = current;
 }
@@ -797,7 +797,7 @@ void idPhysics_Parametric::SaveState( void )
 idPhysics_Parametric::RestoreState
 ================
 */
-void idPhysics_Parametric::RestoreState( void )
+void idPhysics_Parametric::RestoreState()
 {
 
 	current = saved;
@@ -985,7 +985,7 @@ const idVec3& idPhysics_Parametric::GetAngularVelocity( int id ) const
 idPhysics_Parametric::DisableClip
 ================
 */
-void idPhysics_Parametric::DisableClip( void )
+void idPhysics_Parametric::DisableClip()
 {
 	if( clipModel )
 	{
@@ -998,7 +998,7 @@ void idPhysics_Parametric::DisableClip( void )
 idPhysics_Parametric::EnableClip
 ================
 */
-void idPhysics_Parametric::EnableClip( void )
+void idPhysics_Parametric::EnableClip()
 {
 	if( clipModel )
 	{
@@ -1011,7 +1011,7 @@ void idPhysics_Parametric::EnableClip( void )
 idPhysics_Parametric::UnlinkClip
 ================
 */
-void idPhysics_Parametric::UnlinkClip( void )
+void idPhysics_Parametric::UnlinkClip()
 {
 	if( clipModel )
 	{
@@ -1024,7 +1024,7 @@ void idPhysics_Parametric::UnlinkClip( void )
 idPhysics_Parametric::LinkClip
 ================
 */
-void idPhysics_Parametric::LinkClip( void )
+void idPhysics_Parametric::LinkClip()
 {
 	if( clipModel )
 	{
@@ -1037,7 +1037,7 @@ void idPhysics_Parametric::LinkClip( void )
 idPhysics_Parametric::GetBlockingInfo
 ================
 */
-const trace_t* idPhysics_Parametric::GetBlockingInfo( void ) const
+const trace_t* idPhysics_Parametric::GetBlockingInfo() const
 {
 	return ( isBlocked ? &pushResults : NULL );
 }
@@ -1047,7 +1047,7 @@ const trace_t* idPhysics_Parametric::GetBlockingInfo( void ) const
 idPhysics_Parametric::GetBlockingEntity
 ================
 */
-idEntity* idPhysics_Parametric::GetBlockingEntity( void ) const
+idEntity* idPhysics_Parametric::GetBlockingEntity() const
 {
 	if( isBlocked )
 	{
@@ -1108,7 +1108,7 @@ void idPhysics_Parametric::SetMaster( idEntity* master, const bool orientated )
 idPhysics_Parametric::GetLinearEndTime
 ================
 */
-int idPhysics_Parametric::GetLinearEndTime( void ) const
+int idPhysics_Parametric::GetLinearEndTime() const
 {
 	if( current.spline != NULL )
 	{
@@ -1136,7 +1136,7 @@ int idPhysics_Parametric::GetLinearEndTime( void ) const
 idPhysics_Parametric::GetAngularEndTime
 ================
 */
-int idPhysics_Parametric::GetAngularEndTime( void ) const
+int idPhysics_Parametric::GetAngularEndTime() const
 {
 	if( current.angularInterpolation.GetDuration() != 0 )
 	{

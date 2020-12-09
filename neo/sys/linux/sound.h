@@ -63,7 +63,7 @@ public:
 	}
 	virtual		~idAudioHardwareOSS();
 
-	bool		Initialize( void );
+	bool		Initialize();
 
 	// Linux driver doesn't support memory map API
 	bool		Lock( void** pDSLockedBuffer, ulong* dwDSLockedBufferSize )
@@ -105,7 +105,7 @@ private:
 
 #define id_snd_pcm_hw_params_alloca(ptr) do { assert(ptr); *ptr = (snd_pcm_hw_params_t *) alloca(id_snd_pcm_hw_params_sizeof()); memset(*ptr, 0, id_snd_pcm_hw_params_sizeof()); } while (0)
 
-typedef const char* ( *pfn_snd_asoundlib_version )( void );
+typedef const char* ( *pfn_snd_asoundlib_version )();
 typedef snd_pcm_sframes_t ( *pfn_snd_pcm_avail_update )( snd_pcm_t* pcm );
 typedef int ( *pfn_snd_pcm_close )( snd_pcm_t* pcm );
 typedef const char* ( *pfn_snd_strerror )( int errnum );
@@ -117,7 +117,7 @@ typedef int ( *pfn_snd_pcm_hw_params_set_buffer_size_min )( snd_pcm_t* pcm, snd_
 typedef	int ( *pfn_snd_pcm_hw_params_set_channels )( snd_pcm_t* pcm, snd_pcm_hw_params_t* params, unsigned int val );
 typedef int ( *pfn_snd_pcm_hw_params_set_format )( snd_pcm_t* pcm, snd_pcm_hw_params_t* params, snd_pcm_format_t format );
 typedef int ( *pfn_snd_pcm_hw_params_set_rate )( snd_pcm_t* pcm, snd_pcm_hw_params_t* params, unsigned int val, int dir );
-typedef size_t ( *pfn_snd_pcm_hw_params_sizeof )( void );
+typedef size_t ( *pfn_snd_pcm_hw_params_sizeof )();
 typedef int ( *pfn_snd_pcm_open )( snd_pcm_t** pcmp, const char* name, snd_pcm_stream_t stream, int mode );
 typedef int ( *pfn_snd_pcm_prepare )( snd_pcm_t* pcm );
 typedef snd_pcm_state_t ( *pfn_snd_pcm_state )( snd_pcm_t* pcm );
@@ -156,7 +156,7 @@ public:
 	// dlopen the lib ( check minimum version )
 	bool				DLOpen();
 
-	bool				Initialize( void );
+	bool				Initialize();
 
 
 	// Linux driver doesn't support memory map API
@@ -176,12 +176,12 @@ public:
 	bool				Flush();
 	void				Write( bool flushing );
 
-	int					GetNumberOfSpeakers( void )
+	int					GetNumberOfSpeakers()
 	{
 		return m_channels;
 	}
-	int					GetMixBufferSize( void );
-	short*				GetMixBuffer( void );
+	int					GetMixBufferSize();
+	short*				GetMixBuffer();
 
 private:
 	void				Release();

@@ -42,7 +42,7 @@ If you have questions concerning this license or the applicable additional terms
 	#include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-void InitAfx( void );
+void InitAfx();
 
 // tool tips
 typedef struct toolTip_s

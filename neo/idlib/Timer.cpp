@@ -37,7 +37,7 @@ double idTimer::base = -1.0;
 idTimer::InitBaseClockTicks
 =================
 */
-void idTimer::InitBaseClockTicks( void ) const
+void idTimer::InitBaseClockTicks() const
 {
 	idTimer timer;
 	double ct, b;

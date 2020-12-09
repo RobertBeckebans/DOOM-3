@@ -60,17 +60,17 @@ public:
 
 	void				SetPlayerEntity( class idPlayer* playerEnt );
 
-	void				ClearEffects( void );
+	void				ClearEffects();
 
 	void				DamageImpulse( idVec3 localKickDir, const idDict* damageDef );
 
 	void				WeaponFireFeedback( const idDict* weaponDef );
 
-	idAngles			AngleOffset( void ) const;			// returns the current kick angle
+	idAngles			AngleOffset() const;			// returns the current kick angle
 
-	idMat3				ShakeAxis( void ) const;			// returns the current shake angle
+	idMat3				ShakeAxis() const;			// returns the current shake angle
 
-	void				CalculateShake( void );
+	void				CalculateShake();
 
 	// this may involve rendering to a texture and displaying
 	// that with a warp model or in double vision mode

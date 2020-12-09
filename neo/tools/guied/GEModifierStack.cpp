@@ -42,7 +42,7 @@ rvGEModifierStack::~rvGEModifierStack( )
 	Reset( );
 }
 
-void rvGEModifierStack::Reset( void )
+void rvGEModifierStack::Reset()
 {
 	int i;
 
@@ -105,7 +105,7 @@ bool rvGEModifierStack::Append( rvGEModifier* modifier )
 	return true;
 }
 
-bool rvGEModifierStack::Undo( void )
+bool rvGEModifierStack::Undo()
 {
 	if( mCurrentModifier < 0 )
 	{
@@ -121,7 +121,7 @@ bool rvGEModifierStack::Undo( void )
 	return true;
 }
 
-bool rvGEModifierStack::Redo( void )
+bool rvGEModifierStack::Redo()
 {
 	if( mCurrentModifier + 1 < mModifiers.Num( ) )
 	{

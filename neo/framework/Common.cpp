@@ -50,7 +50,7 @@ typedef enum
 
 struct version_s
 {
-	version_s( void )
+	version_s()
 	{
 		sprintf( string, "%s.%d%s %s %s %s", ENGINE_VERSION, BUILD_NUMBER, BUILD_DEBUG, BUILD_STRING, __DATE__, __TIME__ );
 	}
@@ -119,33 +119,33 @@ bool			com_editorActive;		//  true if an editor has focus
 class idCommonLocal : public idCommon
 {
 public:
-	idCommonLocal( void );
+	idCommonLocal();
 
 	virtual void				Init( int argc, const char** argv, const char* cmdline );
-	virtual void				Shutdown( void );
-	virtual void				Quit( void );
-	virtual bool				IsInitialized( void ) const;
-	virtual void				Frame( void );
+	virtual void				Shutdown();
+	virtual void				Quit();
+	virtual bool				IsInitialized() const;
+	virtual void				Frame();
 	virtual void				GUIFrame( bool execCmd, bool network );
-	virtual void				Async( void );
+	virtual void				Async();
 	virtual void				StartupVariable( const char* match, bool once );
 	virtual void				InitTool( const toolFlag_t tool, const idDict* dict );
 	virtual void				ActivateTool( bool active );
 	virtual void				WriteConfigToFile( const char* filename );
 	virtual void				WriteFlaggedCVarsToFile( const char* filename, int flags, const char* setCmd );
 	virtual void				BeginRedirect( char* buffer, int buffersize, void ( *flush )( const char* ) );
-	virtual void				EndRedirect( void );
+	virtual void				EndRedirect();
 	virtual void				SetRefreshOnPrint( bool set );
 	virtual void				Printf( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	virtual void				VPrintf( const char* fmt, va_list arg );
 	virtual void				DPrintf( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	virtual void				Warning( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	virtual void				DWarning( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
-	virtual void				PrintWarnings( void );
+	virtual void				PrintWarnings();
 	virtual void				ClearWarnings( const char* reason );
 	virtual void				Error( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	virtual void				FatalError( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
-	virtual const idLangDict* 	GetLanguageDict( void );
+	virtual const idLangDict* 	GetLanguageDict();
 
 	virtual const char* 		KeysFromBinding( const char* bind );
 	virtual const char* 		BindingFromKey( const char* key );
@@ -153,32 +153,32 @@ public:
 	virtual int					ButtonState( int key );
 	virtual int					KeyState( int key );
 
-	void						InitGame( void );
+	void						InitGame();
 	void						ShutdownGame( bool reloading );
 
 	// localization
-	void						InitLanguageDict( void );
+	void						InitLanguageDict();
 	void						LocalizeGui( const char* fileName, idLangDict& langDict );
 	void						LocalizeMapData( const char* fileName, idLangDict& langDict );
 	void						LocalizeSpecificMapData( const char* fileName, idLangDict& langDict, const idLangDict& replaceArgs );
 
-	void						SetMachineSpec( void );
+	void						SetMachineSpec();
 
 private:
-	void						InitCommands( void );
-	void						InitRenderSystem( void );
-	void						InitSIMD( void );
-	bool						AddStartupCommands( void );
+	void						InitCommands();
+	void						InitRenderSystem();
+	void						InitSIMD();
+	bool						AddStartupCommands();
 	void						ParseCommandLine( int argc, const char** argv );
-	void						ClearCommandLine( void );
-	bool						SafeMode( void );
-	void						CheckToolMode( void );
-	void						CloseLogFile( void );
-	void						WriteConfiguration( void );
-	void						DumpWarnings( void );
-	void						SingleAsyncTic( void );
-	void						LoadGameDLL( void );
-	void						UnloadGameDLL( void );
+	void						ClearCommandLine();
+	bool						SafeMode();
+	void						CheckToolMode();
+	void						CloseLogFile();
+	void						WriteConfiguration();
+	void						DumpWarnings();
+	void						SingleAsyncTic();
+	void						LoadGameDLL();
+	void						UnloadGameDLL();
 	void						PrintLoadingMessage( const char* msg );
 	void						FilterLangList( idStrList* list, idStr lang );
 
@@ -217,7 +217,7 @@ idCommon* 		common = &commonLocal;
 idCommonLocal::idCommonLocal
 ==================
 */
-idCommonLocal::idCommonLocal( void )
+idCommonLocal::idCommonLocal()
 {
 	com_fullyInitialized = false;
 	com_refreshOnPrint = false;
@@ -262,7 +262,7 @@ void idCommonLocal::BeginRedirect( char* buffer, int buffersize, void ( *flush )
 idCommonLocal::EndRedirect
 ==================
 */
-void idCommonLocal::EndRedirect( void )
+void idCommonLocal::EndRedirect()
 {
 	if( rd_flush && rd_buffer[ 0 ] )
 	{
@@ -299,7 +299,7 @@ BOOL CALLBACK EnumWindowsProc( HWND hwnd, LPARAM lParam )
 FindEditor
 ==================
 */
-bool FindEditor( void )
+bool FindEditor()
 {
 	com_hwndMsg = NULL;
 	EnumWindows( EnumWindowsProc, 0 );
@@ -313,7 +313,7 @@ bool FindEditor( void )
 idCommonLocal::CloseLogFile
 ==================
 */
-void idCommonLocal::CloseLogFile( void )
+void idCommonLocal::CloseLogFile()
 {
 	if( logFile )
 	{
@@ -592,7 +592,7 @@ void idCommonLocal::Warning( const char* fmt, ... )
 idCommonLocal::PrintWarnings
 ==================
 */
-void idCommonLocal::PrintWarnings( void )
+void idCommonLocal::PrintWarnings()
 {
 	int i;
 
@@ -639,7 +639,7 @@ void idCommonLocal::ClearWarnings( const char* reason )
 idCommonLocal::DumpWarnings
 ==================
 */
-void idCommonLocal::DumpWarnings( void )
+void idCommonLocal::DumpWarnings()
 {
 	int			i;
 	idFile*		warningFile;
@@ -857,7 +857,7 @@ void idCommonLocal::FatalError( const char* fmt, ... )
 idCommonLocal::Quit
 ==================
 */
-void idCommonLocal::Quit( void )
+void idCommonLocal::Quit()
 {
 
 #ifdef ID_ALLOW_TOOLS
@@ -934,7 +934,7 @@ void idCommonLocal::ParseCommandLine( int argc, const char** argv )
 idCommonLocal::ClearCommandLine
 ==================
 */
-void idCommonLocal::ClearCommandLine( void )
+void idCommonLocal::ClearCommandLine()
 {
 	com_numConsoleLines = 0;
 }
@@ -947,7 +947,7 @@ Check for "safe" on the command line, which will
 skip loading of config file (DoomConfig.cfg)
 ==================
 */
-bool idCommonLocal::SafeMode( void )
+bool idCommonLocal::SafeMode()
 {
 	int			i;
 
@@ -971,7 +971,7 @@ Check for "renderbump", "dmap", or "editor" on the command line,
 and force fullscreen off in those cases
 ==================
 */
-void idCommonLocal::CheckToolMode( void )
+void idCommonLocal::CheckToolMode()
 {
 	int			i;
 
@@ -1067,7 +1067,7 @@ Returns true if any late commands were added, which
 will keep the demoloop from immediately starting
 ==================
 */
-bool idCommonLocal::AddStartupCommands( void )
+bool idCommonLocal::AddStartupCommands()
 {
 	int		i;
 	bool	added;
@@ -1199,7 +1199,7 @@ idCommonLocal::WriteConfiguration
 Writes key bindings and archived cvars to config file if modified
 ===============
 */
-void idCommonLocal::WriteConfiguration( void )
+void idCommonLocal::WriteConfiguration()
 {
 	// if we are quiting without fully initializing, make sure
 	// we don't write out anything
@@ -1777,7 +1777,7 @@ void Com_ReloadEngine_f( const idCmdArgs& args )
 idCommonLocal::GetLanguageDict
 ===============
 */
-const idLangDict* idCommonLocal::GetLanguageDict( void )
+const idLangDict* idCommonLocal::GetLanguageDict()
 {
 	return &languageDict;
 }
@@ -1809,7 +1809,7 @@ void idCommonLocal::FilterLangList( idStrList* list, idStr lang )
 idCommonLocal::InitLanguageDict
 ===============
 */
-void idCommonLocal::InitLanguageDict( void )
+void idCommonLocal::InitLanguageDict()
 {
 	idStr fileName;
 	languageDict.Clear();
@@ -2655,7 +2655,7 @@ void Com_Help_f( const idCmdArgs& args )
 idCommonLocal::InitCommands
 =================
 */
-void idCommonLocal::InitCommands( void )
+void idCommonLocal::InitCommands()
 {
 	cmdSystem->AddCommand( "error", Com_Error_f, CMD_FL_SYSTEM | CMD_FL_CHEAT, "causes an error" );
 	cmdSystem->AddCommand( "crash", Com_Crash_f, CMD_FL_SYSTEM | CMD_FL_CHEAT, "causes a crash" );
@@ -2729,7 +2729,7 @@ void idCommonLocal::InitCommands( void )
 idCommonLocal::InitRenderSystem
 =================
 */
-void idCommonLocal::InitRenderSystem( void )
+void idCommonLocal::InitRenderSystem()
 {
 	if( com_skipRenderer.GetBool() )
 	{
@@ -2763,7 +2763,7 @@ void idCommonLocal::PrintLoadingMessage( const char* msg )
 idCommonLocal::InitSIMD
 =================
 */
-void idCommonLocal::InitSIMD( void )
+void idCommonLocal::InitSIMD()
 {
 	idSIMD::InitProcessor( "doom", com_forceGenericSIMD.GetBool() );
 	com_forceGenericSIMD.ClearModified();
@@ -2774,7 +2774,7 @@ void idCommonLocal::InitSIMD( void )
 idCommonLocal::Frame
 =================
 */
-void idCommonLocal::Frame( void )
+void idCommonLocal::Frame()
 {
 	try
 	{
@@ -2895,7 +2895,7 @@ asyncStats_t	com_asyncStats[MAX_ASYNC_STATS];		// indexed by com_ticNumber
 int prevAsyncMsec;
 int	lastTicMsec;
 
-void idCommonLocal::SingleAsyncTic( void )
+void idCommonLocal::SingleAsyncTic()
 {
 	// main thread code can prevent this from happening while modifying
 	// critical data structures
@@ -2935,7 +2935,7 @@ void idCommonLocal::SingleAsyncTic( void )
 idCommonLocal::Async
 =================
 */
-void idCommonLocal::Async( void )
+void idCommonLocal::Async()
 {
 	if( com_shuttingDown )
 	{
@@ -2989,7 +2989,7 @@ void idCommonLocal::Async( void )
 idCommonLocal::LoadGameDLL
 =================
 */
-void idCommonLocal::LoadGameDLL( void )
+void idCommonLocal::LoadGameDLL()
 {
 #ifdef __DOOM_DLL__
 	char			dllPath[ MAX_OSPATH ];
@@ -3064,7 +3064,7 @@ void idCommonLocal::LoadGameDLL( void )
 idCommonLocal::UnloadGameDLL
 =================
 */
-void idCommonLocal::UnloadGameDLL( void )
+void idCommonLocal::UnloadGameDLL()
 {
 
 	// shut down the game object
@@ -3091,7 +3091,7 @@ void idCommonLocal::UnloadGameDLL( void )
 idCommonLocal::IsInitialized
 =================
 */
-bool idCommonLocal::IsInitialized( void ) const
+bool idCommonLocal::IsInitialized() const
 {
 	return com_fullyInitialized;
 }
@@ -3101,7 +3101,7 @@ bool idCommonLocal::IsInitialized( void ) const
 idCommonLocal::SetMachineSpec
 =================
 */
-void idCommonLocal::SetMachineSpec( void )
+void idCommonLocal::SetMachineSpec()
 {
 	cpuid_t	cpu = Sys_GetProcessorId();
 	double ghz = Sys_ClockTicksPerSecond() * 0.000000001f;
@@ -3258,7 +3258,7 @@ void idCommonLocal::Init( int argc, const char** argv, const char* cmdline )
 idCommonLocal::Shutdown
 =================
 */
-void idCommonLocal::Shutdown( void )
+void idCommonLocal::Shutdown()
 {
 
 	com_shuttingDown = true;
@@ -3309,7 +3309,7 @@ void idCommonLocal::Shutdown( void )
 idCommonLocal::InitGame
 =================
 */
-void idCommonLocal::InitGame( void )
+void idCommonLocal::InitGame()
 {
 	// initialize the file system
 	fileSystem->Init();

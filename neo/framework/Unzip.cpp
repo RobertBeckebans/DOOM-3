@@ -236,7 +236,7 @@
 
 /* basic functions */
 
-const char* zlibVersion OF( ( void ) );
+const char* zlibVersion OF( () );
 /* The application can compare zlibVersion and ZLIB_VERSION for consistency.
    If the first character differs, the library code actually used is
    not compatible with the zlib.h header file used by the application.
@@ -948,7 +948,7 @@ int inflateInit2_ OF( ( z_streamp strm, int  windowBits,
 
 const char*    zError           OF( ( int err ) );
 int            inflateSyncPoint OF( ( z_streamp z ) );
-const uLong* get_crc_table    OF( ( void ) );
+const uLong* get_crc_table    OF( () );
 
 typedef unsigned char  uch;
 typedef unsigned short ush;
@@ -2524,7 +2524,7 @@ extern int unzGetGlobalComment( unzFile file, char* szComment, uLong uSizeBuf )
 
 static int crc_table_empty = 1;
 static uLong crc_table[256];
-static void make_crc_table OF( ( void ) );
+static void make_crc_table OF( () );
 
 /*
   Generate a table for a byte-wise 32-bit CRC calculation on the polynomial:

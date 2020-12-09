@@ -98,21 +98,21 @@ class idAFConstraint
 	friend class idAFTree;
 
 public:
-	idAFConstraint( void );
-	virtual					~idAFConstraint( void );
-	constraintType_t		GetType( void ) const
+	idAFConstraint();
+	virtual					~idAFConstraint();
+	constraintType_t		GetType() const
 	{
 		return type;
 	}
-	const idStr& 			GetName( void ) const
+	const idStr& 			GetName() const
 	{
 		return name;
 	}
-	idAFBody* 				GetBody1( void ) const
+	idAFBody* 				GetBody1() const
 	{
 		return body1;
 	}
-	idAFBody* 				GetBody2( void ) const
+	idAFBody* 				GetBody2() const
 	{
 		return body2;
 	}
@@ -120,10 +120,10 @@ public:
 	{
 		physics = p;
 	}
-	const idVecX& 			GetMultiplier( void );
+	const idVecX& 			GetMultiplier();
 	virtual void			SetBody1( idAFBody* body );
 	virtual void			SetBody2( idAFBody* body );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			GetForce( idAFBody* body, idVec6& force );
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
@@ -184,7 +184,7 @@ public:
 	}
 	virtual void			SetBody1( idAFBody* body );
 	virtual void			SetBody2( idAFBody* body );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			GetCenter( idVec3& center );
@@ -198,7 +198,7 @@ protected:
 protected:
 	virtual void			Evaluate( float invTimeStep );
 	virtual void			ApplyFriction( float invTimeStep );
-	void					InitOffset( void );
+	void					InitOffset();
 };
 
 // ball and socket or spherical joint which allows 3 degrees of freedom
@@ -208,10 +208,10 @@ class idAFConstraint_BallAndSocketJoint : public idAFConstraint
 
 public:
 	idAFConstraint_BallAndSocketJoint( const idStr& name, idAFBody* body1, idAFBody* body2 );
-	~idAFConstraint_BallAndSocketJoint( void );
+	~idAFConstraint_BallAndSocketJoint();
 	void					SetAnchor( const idVec3& worldPosition );
-	idVec3					GetAnchor( void ) const;
-	void					SetNoLimit( void );
+	idVec3					GetAnchor() const;
+	void					SetNoLimit();
 	void					SetConeLimit( const idVec3& coneAxis, const float coneAngle, const idVec3& body1Axis );
 	void					SetPyramidLimit( const idVec3& pyramidAxis, const idVec3& baseAxis,
 			const float angle1, const float angle2, const idVec3& body1Axis );
@@ -220,8 +220,8 @@ public:
 	{
 		friction = f;
 	}
-	float					GetFriction( void ) const;
-	virtual void			DebugDraw( void );
+	float					GetFriction() const;
+	virtual void			DebugDraw();
 	virtual void			GetForce( idAFBody* body, idVec6& force );
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
@@ -247,7 +247,7 @@ class idAFConstraint_BallAndSocketJointFriction : public idAFConstraint
 {
 
 public:
-	idAFConstraint_BallAndSocketJointFriction( void );
+	idAFConstraint_BallAndSocketJointFriction();
 	void					Setup( idAFConstraint_BallAndSocketJoint* cc );
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
 	virtual void			Translate( const idVec3& translation );
@@ -268,16 +268,16 @@ class idAFConstraint_UniversalJoint : public idAFConstraint
 
 public:
 	idAFConstraint_UniversalJoint( const idStr& name, idAFBody* body1, idAFBody* body2 );
-	~idAFConstraint_UniversalJoint( void );
+	~idAFConstraint_UniversalJoint();
 	void					SetAnchor( const idVec3& worldPosition );
-	idVec3					GetAnchor( void ) const;
+	idVec3					GetAnchor() const;
 	void					SetShafts( const idVec3& cardanShaft1, const idVec3& cardanShaft2 );
 	void					GetShafts( idVec3& cardanShaft1, idVec3& cardanShaft2 )
 	{
 		cardanShaft1 = shaft1;
 		cardanShaft2 = shaft2;
 	}
-	void					SetNoLimit( void );
+	void					SetNoLimit();
 	void					SetConeLimit( const idVec3& coneAxis, const float coneAngle );
 	void					SetPyramidLimit( const idVec3& pyramidAxis, const idVec3& baseAxis,
 			const float angle1, const float angle2 );
@@ -286,8 +286,8 @@ public:
 	{
 		friction = f;
 	}
-	float					GetFriction( void ) const;
-	virtual void			DebugDraw( void );
+	float					GetFriction() const;
+	virtual void			DebugDraw();
 	virtual void			GetForce( idAFBody* body, idVec6& force );
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
@@ -317,7 +317,7 @@ class idAFConstraint_UniversalJointFriction : public idAFConstraint
 {
 
 public:
-	idAFConstraint_UniversalJointFriction( void );
+	idAFConstraint_UniversalJointFriction();
 	void					Setup( idAFConstraint_UniversalJoint* cc );
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
 	virtual void			Translate( const idVec3& translation );
@@ -338,7 +338,7 @@ class idAFConstraint_CylindricalJoint : public idAFConstraint
 
 public:
 	idAFConstraint_CylindricalJoint( const idStr& name, idAFBody* body1, idAFBody* body2 );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 
@@ -356,28 +356,28 @@ class idAFConstraint_Hinge : public idAFConstraint
 
 public:
 	idAFConstraint_Hinge( const idStr& name, idAFBody* body1, idAFBody* body2 );
-	~idAFConstraint_Hinge( void );
+	~idAFConstraint_Hinge();
 	void					SetAnchor( const idVec3& worldPosition );
-	idVec3					GetAnchor( void ) const;
+	idVec3					GetAnchor() const;
 	void					SetAxis( const idVec3& axis );
 	void					GetAxis( idVec3& a1, idVec3& a2 ) const
 	{
 		a1 = axis1;
 		a2 = axis2;
 	}
-	idVec3					GetAxis( void ) const;
-	void					SetNoLimit( void );
+	idVec3					GetAxis() const;
+	void					SetNoLimit();
 	void					SetLimit( const idVec3& axis, const float angle, const idVec3& body1Axis );
 	void					SetLimitEpsilon( const float e );
-	float					GetAngle( void ) const;
+	float					GetAngle() const;
 	void					SetSteerAngle( const float degrees );
 	void					SetSteerSpeed( const float speed );
 	void					SetFriction( const float f )
 	{
 		friction = f;
 	}
-	float					GetFriction( void ) const;
-	virtual void			DebugDraw( void );
+	float					GetFriction() const;
+	virtual void			DebugDraw();
 	virtual void			GetForce( idAFBody* body, idVec6& force );
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
@@ -406,7 +406,7 @@ class idAFConstraint_HingeFriction : public idAFConstraint
 {
 
 public:
-	idAFConstraint_HingeFriction( void );
+	idAFConstraint_HingeFriction();
 	void					Setup( idAFConstraint_Hinge* cc );
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
 	virtual void			Translate( const idVec3& translation );
@@ -425,7 +425,7 @@ class idAFConstraint_HingeSteering : public idAFConstraint
 {
 
 public:
-	idAFConstraint_HingeSteering( void );
+	idAFConstraint_HingeSteering();
 	void					Setup( idAFConstraint_Hinge* cc );
 	void					SetSteerAngle( const float degrees )
 	{
@@ -465,7 +465,7 @@ class idAFConstraint_Slider : public idAFConstraint
 public:
 	idAFConstraint_Slider( const idStr& name, idAFBody* body1, idAFBody* body2 );
 	void					SetAxis( const idVec3& ax );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			GetCenter( idVec3& center );
@@ -489,7 +489,7 @@ class idAFConstraint_Line : public idAFConstraint
 
 public:
 	idAFConstraint_Line( const idStr& name, idAFBody* body1, idAFBody* body2 );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 
@@ -508,7 +508,7 @@ class idAFConstraint_Plane : public idAFConstraint
 public:
 	idAFConstraint_Plane( const idStr& name, idAFBody* body1, idAFBody* body2 );
 	void					SetPlane( const idVec3& normal, const idVec3& anchor );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			Save( idSaveGame* saveFile ) const;
@@ -534,7 +534,7 @@ public:
 	void					SetAnchor( const idVec3& worldAnchor1, const idVec3& worldAnchor2 );
 	void					SetSpring( const float stretch, const float compress, const float damping, const float restLength );
 	void					SetLimit( const float minLength, const float maxLength );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			GetCenter( idVec3& center );
@@ -561,14 +561,14 @@ class idAFConstraint_Contact : public idAFConstraint
 {
 
 public:
-	idAFConstraint_Contact( void );
-	~idAFConstraint_Contact( void );
+	idAFConstraint_Contact();
+	~idAFConstraint_Contact();
 	void					Setup( idAFBody* b1, idAFBody* b2, contactInfo_t& c );
-	const contactInfo_t& 	GetContact( void ) const
+	const contactInfo_t& 	GetContact() const
 	{
 		return contact;
 	}
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			GetCenter( idVec3& center );
@@ -587,10 +587,10 @@ class idAFConstraint_ContactFriction : public idAFConstraint
 {
 
 public:
-	idAFConstraint_ContactFriction( void );
+	idAFConstraint_ContactFriction();
 	void					Setup( idAFConstraint_Contact* cc );
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 
@@ -607,7 +607,7 @@ class idAFConstraint_ConeLimit : public idAFConstraint
 {
 
 public:
-	idAFConstraint_ConeLimit( void );
+	idAFConstraint_ConeLimit();
 	void					Setup( idAFBody* b1, idAFBody* b2, const idVec3& coneAnchor, const idVec3& coneAxis,
 								   const float coneAngle, const idVec3& body1Axis );
 	void					SetAnchor( const idVec3& coneAnchor );
@@ -617,7 +617,7 @@ public:
 		epsilon = _e;
 	}
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			Save( idSaveGame* saveFile ) const;
@@ -642,7 +642,7 @@ class idAFConstraint_PyramidLimit : public idAFConstraint
 {
 
 public:
-	idAFConstraint_PyramidLimit( void );
+	idAFConstraint_PyramidLimit();
 	void					Setup( idAFBody* b1, idAFBody* b2, const idVec3& pyramidAnchor,
 								   const idVec3& pyramidAxis, const idVec3& baseAxis,
 								   const float pyramidAngle1, const float pyramidAngle2, const idVec3& body1Axis );
@@ -653,7 +653,7 @@ public:
 		epsilon = e;
 	}
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 	virtual void			Save( idSaveGame* saveFile ) const;
@@ -678,7 +678,7 @@ class idAFConstraint_Suspension : public idAFConstraint
 {
 
 public:
-	idAFConstraint_Suspension( void );
+	idAFConstraint_Suspension();
 
 	void					Setup( const char* name, idAFBody* body, const idVec3& origin, const idMat3& axis, idClipModel* clipModel );
 	void					SetSuspension( const float up, const float down, const float k, const float d, const float f );
@@ -703,9 +703,9 @@ public:
 	{
 		epsilon = e;
 	}
-	const idVec3			GetWheelOrigin( void ) const;
+	const idVec3			GetWheelOrigin() const;
 
-	virtual void			DebugDraw( void );
+	virtual void			DebugDraw();
 	virtual void			Translate( const idVec3& translation );
 	virtual void			Rotate( const idRotation& rotation );
 
@@ -754,38 +754,38 @@ class idAFBody
 	friend class idAFTree;
 
 public:
-	idAFBody( void );
+	idAFBody();
 	idAFBody( const idStr& name, idClipModel* clipModel, float density );
-	~idAFBody( void );
+	~idAFBody();
 
-	void					Init( void );
-	const idStr& 			GetName( void ) const
+	void					Init();
+	const idStr& 			GetName() const
 	{
 		return name;
 	}
-	const idVec3& 			GetWorldOrigin( void ) const
+	const idVec3& 			GetWorldOrigin() const
 	{
 		return current->worldOrigin;
 	}
-	const idMat3& 			GetWorldAxis( void ) const
+	const idMat3& 			GetWorldAxis() const
 	{
 		return current->worldAxis;
 	}
-	const idVec3& 			GetLinearVelocity( void ) const
+	const idVec3& 			GetLinearVelocity() const
 	{
 		return current->spatialVelocity.SubVec3( 0 );
 	}
-	const idVec3& 			GetAngularVelocity( void ) const
+	const idVec3& 			GetAngularVelocity() const
 	{
 		return current->spatialVelocity.SubVec3( 1 );
 	}
 	idVec3					GetPointVelocity( const idVec3& point ) const;
-	const idVec3& 			GetCenterOfMass( void ) const
+	const idVec3& 			GetCenterOfMass() const
 	{
 		return centerOfMass;
 	}
 	void					SetClipModel( idClipModel* clipModel );
-	idClipModel* 			GetClipModel( void ) const
+	idClipModel* 			GetClipModel() const
 	{
 		return clipModel;
 	}
@@ -794,7 +794,7 @@ public:
 		clipMask = mask;
 		fl.clipMaskSet = true;
 	}
-	int						GetClipMask( void ) const
+	int						GetClipMask() const
 	{
 		return clipMask;
 	}
@@ -819,21 +819,21 @@ public:
 		current->spatialVelocity.SubVec3( 1 ) = angular;
 	}
 	void					SetFriction( float linear, float angular, float contact );
-	float					GetContactFriction( void ) const
+	float					GetContactFriction() const
 	{
 		return contactFriction;
 	}
 	void					SetBouncyness( float bounce );
-	float					GetBouncyness( void ) const
+	float					GetBouncyness() const
 	{
 		return bouncyness;
 	}
 	void					SetDensity( float density, const idMat3& inertiaScale = mat3_identity );
-	float					GetInverseMass( void ) const
+	float					GetInverseMass() const
 	{
 		return invMass;
 	}
-	idMat3					GetInverseWorldInertia( void ) const
+	idMat3					GetInverseWorldInertia() const
 	{
 		return current->worldAxis.Transpose() * inverseInertiaTensor * current->worldAxis;
 	}
@@ -847,7 +847,7 @@ public:
 	{
 		contactMotorVelocity = vel;
 	}
-	float					GetContactMotorVelocity( void ) const
+	float					GetContactMotorVelocity() const
 	{
 		return contactMotorVelocity;
 	}
@@ -855,7 +855,7 @@ public:
 	{
 		contactMotorForce = force;
 	}
-	float					GetContactMotorForce( void ) const
+	float					GetContactMotorForce() const
 	{
 		return contactMotorForce;
 	}
@@ -941,12 +941,12 @@ class idAFTree
 	friend class idPhysics_AF;
 
 public:
-	void					Factor( void ) const;
+	void					Factor() const;
 	void					Solve( int auxiliaryIndex = 0 ) const;
 	void					Response( const idAFConstraint* constraint, int row, int auxiliaryIndex ) const;
 	void					CalculateForces( float timeStep ) const;
-	void					SetMaxSubTreeAuxiliaryIndex( void );
-	void					SortBodies( void );
+	void					SetMaxSubTreeAuxiliaryIndex();
+	void					SortBodies();
 	void					SortBodies_r( idList<idAFBody*>& sortedList, idAFBody* body );
 	void					DebugDraw( const idVec4& color ) const;
 
@@ -983,8 +983,8 @@ class idPhysics_AF : public idPhysics_Base
 public:
 	CLASS_PROTOTYPE( idPhysics_AF );
 
-	idPhysics_AF( void );
-	~idPhysics_AF( void );
+	idPhysics_AF();
+	~idPhysics_AF();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
@@ -1001,12 +1001,12 @@ public:
 	int						GetConstraintId( idAFConstraint* constraint ) const;
 	int						GetConstraintId( const char* constraintName ) const;
 	// number of bodies and constraints
-	int						GetNumBodies( void ) const;
-	int						GetNumConstraints( void ) const;
+	int						GetNumBodies() const;
+	int						GetNumConstraints() const;
 	// retrieve body or constraint
 	idAFBody* 				GetBody( const char* bodyName ) const;
 	idAFBody* 				GetBody( const int id ) const;
-	idAFBody* 				GetMasterBody( void ) const
+	idAFBody* 				GetMasterBody() const
 	{
 		return masterBody;
 	}
@@ -1042,7 +1042,7 @@ public:
 	// set joint friction dent
 	void					SetJointFrictionDent( const float dent, const float start, const float end );
 	// get the current joint friction scale
-	float					GetJointFrictionScale( void ) const;
+	float					GetJointFrictionScale() const;
 	// set the contact friction scale
 	void					SetContactFrictionScale( const float scale )
 	{
@@ -1051,7 +1051,7 @@ public:
 	// set contact friction dent
 	void					SetContactFrictionDent( const float dent, const float start, const float end );
 	// get the current contact friction scale
-	float					GetContactFrictionScale( void ) const;
+	float					GetContactFrictionScale() const;
 	// enable or disable collision detection
 	void					SetCollision( const bool enable )
 	{
@@ -1068,13 +1068,13 @@ public:
 		comeToRest = enable;
 	}
 	// call when structure of articulated figure changes
-	void					SetChanged( void )
+	void					SetChanged()
 	{
 		changedAF = true;
 	}
 	// enable/disable activation by impact
-	void					EnableImpact( void );
-	void					DisableImpact( void );
+	void					EnableImpact();
+	void					DisableImpact();
 	// lock of unlock the world constraints
 	void					LockWorldConstraints( const bool lock )
 	{
@@ -1086,12 +1086,12 @@ public:
 		forcePushable = enable;
 	}
 	// update the clip model positions
-	void					UpdateClipModels( void );
+	void					UpdateClipModels();
 
 public:	// common physics interface
 	void					SetClipModel( idClipModel* model, float density, int id = 0, bool freeOld = true );
 	idClipModel* 			GetClipModel( int id = 0 ) const;
-	int						GetNumClipModels( void ) const;
+	int						GetNumClipModels() const;
 
 	void					SetMass( float mass, int id = -1 );
 	float					GetMass( int id = -1 ) const;
@@ -1104,19 +1104,19 @@ public:	// common physics interface
 
 	bool					Evaluate( int timeStepMSec, int endTimeMSec );
 	void					UpdateTime( int endTimeMSec );
-	int						GetTime( void ) const;
+	int						GetTime() const;
 
 	void					GetImpactInfo( const int id, const idVec3& point, impactInfo_t* info ) const;
 	void					ApplyImpulse( const int id, const idVec3& point, const idVec3& impulse );
 	void					AddForce( const int id, const idVec3& point, const idVec3& force );
-	bool					IsAtRest( void ) const;
-	int						GetRestStartTime( void ) const;
-	void					Activate( void );
-	void					PutToRest( void );
-	bool					IsPushable( void ) const;
+	bool					IsAtRest() const;
+	int						GetRestStartTime() const;
+	void					Activate();
+	void					PutToRest();
+	bool					IsPushable() const;
 
-	void					SaveState( void );
-	void					RestoreState( void );
+	void					SaveState();
+	void					RestoreState();
 
 	void					SetOrigin( const idVec3& newOrigin, int id = -1 );
 	void					SetAxis( const idMat3& newAxis, int id = -1 );
@@ -1137,13 +1137,13 @@ public:	// common physics interface
 	void					ClipRotation( trace_t& results, const idRotation& rotation, const idClipModel* model ) const;
 	int						ClipContents( const idClipModel* model ) const;
 
-	void					DisableClip( void );
-	void					EnableClip( void );
+	void					DisableClip();
+	void					EnableClip();
 
-	void					UnlinkClip( void );
-	void					LinkClip( void );
+	void					UnlinkClip();
+	void					LinkClip();
 
-	bool					EvaluateContacts( void );
+	bool					EvaluateContacts();
 
 	void					SetPushed( int deltaTime );
 	const idVec3& 			GetPushedLinearVelocity( const int id = 0 ) const;
@@ -1216,31 +1216,31 @@ private:
 	idLCP* 					lcp;							// linear complementarity problem solver
 
 private:
-	void					BuildTrees( void );
+	void					BuildTrees();
 	bool					IsClosedLoop( const idAFBody* body1, const idAFBody* body2 ) const;
-	void					PrimaryFactor( void );
+	void					PrimaryFactor();
 	void					EvaluateBodies( float timeStep );
 	void					EvaluateConstraints( float timeStep );
-	void					AddFrameConstraints( void );
-	void					RemoveFrameConstraints( void );
+	void					AddFrameConstraints();
+	void					RemoveFrameConstraints();
 	void					ApplyFriction( float timeStep, float endTimeMSec );
 	void					PrimaryForces( float timeStep );
 	void					AuxiliaryForces( float timeStep );
-	void					VerifyContactConstraints( void );
-	void					SetupContactConstraints( void );
-	void					ApplyContactForces( void );
+	void					VerifyContactConstraints();
+	void					SetupContactConstraints();
+	void					ApplyContactForces();
 	void					Evolve( float timeStep );
 	idEntity* 				SetupCollisionForBody( idAFBody* body ) const;
 	bool					CollisionImpulse( float timeStep, idAFBody* body, trace_t& collision );
 	bool					ApplyCollisions( float timeStep );
 	void					CheckForCollisions( float timeStep );
-	void					ClearExternalForce( void );
-	void					AddGravity( void );
-	void					SwapStates( void );
+	void					ClearExternalForce();
+	void					AddGravity();
+	void					SwapStates();
 	bool					TestIfAtRest( float timeStep );
-	void					Rest( void );
+	void					Rest();
 	void					AddPushVelocity( const idVec6& pushVelocity );
-	void					DebugDraw( void );
+	void					DebugDraw();
 };
 
 #endif /* !__PHYSICS_AF_H__ */

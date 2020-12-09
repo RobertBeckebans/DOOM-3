@@ -29,11 +29,11 @@ If you have questions concerning this license or the applicable additional terms
 #include "../idlib/precompiled.h"
 #pragma hdrstop
 
-void R_Exp_Init( void )
+void R_Exp_Init()
 {
 	common->Printf( "---------- R_Exp_Init -----------\n" );
 	common->Printf( "Disabled at compile time.\n" );
 	common->Printf( "---------------------------------\n" );
 }
 
-void RB_Exp_DrawInteractions( void ) { }
+void RB_Exp_DrawInteractions() { }

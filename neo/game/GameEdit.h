@@ -43,12 +43,12 @@ class idCursor3D : public idEntity
 public:
 	CLASS_PROTOTYPE( idCursor3D );
 
-	idCursor3D( void );
-	~idCursor3D( void );
+	idCursor3D();
+	~idCursor3D();
 
-	void					Spawn( void );
-	void					Present( void );
-	void					Think( void );
+	void					Spawn();
+	void					Present();
+	void					Think();
 
 	idForce_Drag			drag;
 	idVec3					draggedPosition;
@@ -66,19 +66,19 @@ public:
 class idDragEntity
 {
 public:
-	idDragEntity( void );
-	~idDragEntity( void );
+	idDragEntity();
+	~idDragEntity();
 
 	void					Clear();
 	void					Update( idPlayer* player );
 	void					SetSelected( idEntity* ent );
-	idEntity* 				GetSelected( void ) const
+	idEntity* 				GetSelected() const
 	{
 		return selected.GetEntity();
 	}
-	void					DeleteSelected( void );
-	void					BindSelected( void );
-	void					UnbindSelected( void );
+	void					DeleteSelected();
+	void					BindSelected();
+	void					UnbindSelected();
 
 private:
 	idEntityPtr<idEntity>	dragEnt;			// entity being dragged
@@ -90,7 +90,7 @@ private:
 	idCursor3D* 			cursor;				// cursor entity
 	idEntityPtr<idEntity>	selected;			// last dragged entity
 
-	void					StopDrag( void );
+	void					StopDrag();
 };
 
 
@@ -110,12 +110,12 @@ typedef struct selectedTypeInfo_s
 class idEditEntities
 {
 public:
-	idEditEntities( void );
+	idEditEntities();
 	bool					SelectEntity( const idVec3& origin, const idVec3& dir, const idEntity* skip );
 	void					AddSelectedEntity( idEntity* ent );
 	void					RemoveSelectedEntity( idEntity* ent );
-	void					ClearSelectedEntities( void );
-	void					DisplayEntities( void );
+	void					ClearSelectedEntities();
+	void					DisplayEntities();
 	bool					EntityIsSelectable( idEntity* ent, idVec4* color = NULL, idStr* text = NULL );
 private:
 	int						nextSelectTime;

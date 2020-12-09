@@ -178,7 +178,7 @@ void idListGUILocal::Clear()
 idListGUILocal::IsConfigured
 ====================
 */
-bool idListGUILocal::IsConfigured( void ) const
+bool idListGUILocal::IsConfigured() const
 {
 	return m_pGUI != NULL;
 }
@@ -199,7 +199,7 @@ void idListGUILocal::SetStateChanges( bool enable )
 idListGUILocal::Shutdown
 ====================
 */
-void idListGUILocal::Shutdown( void )
+void idListGUILocal::Shutdown()
 {
 	m_pGUI = NULL;
 	m_name.Clear();

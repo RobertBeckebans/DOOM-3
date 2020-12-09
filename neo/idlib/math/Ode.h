@@ -50,7 +50,7 @@ class idODE
 {
 
 public:
-	virtual				~idODE( void ) {}
+	virtual				~idODE() {}
 
 	virtual float		Evaluate( const float* state, float* newState, float t0, float t1 ) = 0;
 
@@ -71,7 +71,7 @@ class idODE_Euler : public idODE
 
 public:
 	idODE_Euler( const int dim, const deriveFunction_t dr, const void* ud );
-	virtual				~idODE_Euler( void );
+	virtual				~idODE_Euler();
 
 	virtual float		Evaluate( const float* state, float* newState, float t0, float t1 );
 
@@ -90,7 +90,7 @@ class idODE_Midpoint : public idODE
 
 public:
 	idODE_Midpoint( const int dim, const deriveFunction_t dr, const void* ud );
-	virtual				~idODE_Midpoint( void );
+	virtual				~idODE_Midpoint();
 
 	virtual float		Evaluate( const float* state, float* newState, float t0, float t1 );
 
@@ -110,7 +110,7 @@ class idODE_RK4 : public idODE
 
 public:
 	idODE_RK4( const int dim, const deriveFunction_t dr, const void* ud );
-	virtual				~idODE_RK4( void );
+	virtual				~idODE_RK4();
 
 	virtual float		Evaluate( const float* state, float* newState, float t0, float t1 );
 
@@ -133,7 +133,7 @@ class idODE_RK4Adaptive : public idODE
 
 public:
 	idODE_RK4Adaptive( const int dim, const deriveFunction_t dr, const void* ud );
-	virtual				~idODE_RK4Adaptive( void );
+	virtual				~idODE_RK4Adaptive();
 
 	virtual float		Evaluate( const float* state, float* newState, float t0, float t1 );
 	void				SetMaxError( const float err );

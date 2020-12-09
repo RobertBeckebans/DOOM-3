@@ -73,7 +73,7 @@ net_interface	netint[MAX_INTERFACES];
 NET_ErrorString
 ====================
 */
-char* NET_ErrorString( void )
+char* NET_ErrorString()
 {
 	int		code;
 
@@ -767,7 +767,7 @@ void Net_SendUDPPacket( int netSocket, int length, const void* data, const netad
 Sys_InitNetworking
 ====================
 */
-void Sys_InitNetworking( void )
+void Sys_InitNetworking()
 {
 	int		r;
 
@@ -870,7 +870,7 @@ void Sys_InitNetworking( void )
 Sys_ShutdownNetworking
 ====================
 */
-void Sys_ShutdownNetworking( void )
+void Sys_ShutdownNetworking()
 {
 	if( !winsockInitialized )
 	{
@@ -1019,8 +1019,8 @@ typedef struct udpMsg_s
 class idUDPLag
 {
 public:
-	idUDPLag( void );
-	~idUDPLag( void );
+	idUDPLag();
+	~idUDPLag();
 
 	udpMsg_t* 			sendFirst;
 	udpMsg_t* 			sendLast;
@@ -1029,12 +1029,12 @@ public:
 	idBlockAlloc<udpMsg_t, 64> udpMsgAllocator;
 };
 
-idUDPLag::idUDPLag( void )
+idUDPLag::idUDPLag()
 {
 	sendFirst = sendLast = recieveFirst = recieveLast = NULL;
 }
 
-idUDPLag::~idUDPLag( void )
+idUDPLag::~idUDPLag()
 {
 	udpMsgAllocator.Shutdown();
 }

@@ -212,7 +212,7 @@ void BOEntity::Draw( idDeviceContext* dc )
 * BOBrick
 ****************************************************************************
 */
-BOBrick::BOBrick( void )
+BOBrick::BOBrick()
 {
 	ent = NULL;
 	x = y = width = height = 0;
@@ -239,7 +239,7 @@ BOBrick::BOBrick( BOEntity* _ent, float _x, float _y, float _width, float _heigh
 	ent->game->entities.Append( ent );
 }
 
-BOBrick::~BOBrick( void )
+BOBrick::~BOBrick()
 {
 }
 
@@ -933,7 +933,7 @@ void idGameBustOutWindow::UpdateScore()
 idGameBustOutWindow::ClearBoard
 =============================
 */
-void idGameBustOutWindow::ClearBoard( void )
+void idGameBustOutWindow::ClearBoard()
 {
 	int i, j;
 
@@ -959,7 +959,7 @@ void idGameBustOutWindow::ClearBoard( void )
 idGameBustOutWindow::ClearPowerups
 =============================
 */
-void idGameBustOutWindow::ClearPowerups( void )
+void idGameBustOutWindow::ClearPowerups()
 {
 	while( powerUps.Num() )
 	{
@@ -973,7 +973,7 @@ void idGameBustOutWindow::ClearPowerups( void )
 idGameBustOutWindow::ClearBalls
 =============================
 */
-void idGameBustOutWindow::ClearBalls( void )
+void idGameBustOutWindow::ClearBalls()
 {
 	while( balls.Num() )
 	{
@@ -989,7 +989,7 @@ void idGameBustOutWindow::ClearBalls( void )
 idGameBustOutWindow::LoadBoardFiles
 =============================
 */
-void idGameBustOutWindow::LoadBoardFiles( void )
+void idGameBustOutWindow::LoadBoardFiles()
 {
 	int i;
 	int w, h;
@@ -1038,7 +1038,7 @@ void idGameBustOutWindow::LoadBoardFiles( void )
 idGameBustOutWindow::SetCurrentBoard
 =============================
 */
-void idGameBustOutWindow::SetCurrentBoard( void )
+void idGameBustOutWindow::SetCurrentBoard()
 {
 	int i, j;
 	int realLevel = ( ( currentLevel - 1 ) % numLevels );
@@ -1103,7 +1103,7 @@ void idGameBustOutWindow::SetCurrentBoard( void )
 idGameBustOutWindow::CreateNewBall
 =============================
 */
-BOEntity* idGameBustOutWindow::CreateNewBall( void )
+BOEntity* idGameBustOutWindow::CreateNewBall()
 {
 	BOEntity* ball;
 
@@ -1165,7 +1165,7 @@ BOEntity* idGameBustOutWindow::CreatePowerup( BOBrick* brick )
 idGameBustOutWindow::UpdatePowerups
 =============================
 */
-void idGameBustOutWindow::UpdatePowerups( void )
+void idGameBustOutWindow::UpdatePowerups()
 {
 	idVec2 pos;
 
@@ -1238,7 +1238,7 @@ void idGameBustOutWindow::UpdatePowerups( void )
 idGameBustOutWindow::UpdatePaddle
 =============================
 */
-void idGameBustOutWindow::UpdatePaddle( void )
+void idGameBustOutWindow::UpdatePaddle()
 {
 	idVec2 cursorPos;
 	float  oldPos = paddle->x;
@@ -1270,7 +1270,7 @@ void idGameBustOutWindow::UpdatePaddle( void )
 idGameBustOutWindow::UpdateBall
 =============================
 */
-void idGameBustOutWindow::UpdateBall( void )
+void idGameBustOutWindow::UpdateBall()
 {
 	int ballnum, i, j;
 	bool playSoundBounce = false;

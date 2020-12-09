@@ -36,7 +36,7 @@ LONG WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 static bool s_alttab_disabled;
 
-static void WIN_DisableAltTab( void )
+static void WIN_DisableAltTab()
 {
 	if( s_alttab_disabled || win32.win_allowAltTab.GetBool() )
 	{
@@ -55,7 +55,7 @@ static void WIN_DisableAltTab( void )
 	s_alttab_disabled = true;
 }
 
-static void WIN_EnableAltTab( void )
+static void WIN_EnableAltTab()
 {
 	if( !s_alttab_disabled || win32.win_allowAltTab.GetBool() )
 	{

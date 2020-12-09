@@ -40,8 +40,8 @@ If you have questions concerning this license or the applicable additional terms
 class idSurface_SweptSpline : public idSurface
 {
 public:
-	idSurface_SweptSpline( void );
-	~idSurface_SweptSpline( void );
+	idSurface_SweptSpline();
+	~idSurface_SweptSpline();
 
 	void					SetSpline( idCurve_Spline<idVec4>* spline );
 	void					SetSweptSpline( idCurve_Spline<idVec4>* sweptSpline );
@@ -49,7 +49,7 @@ public:
 
 	void					Tessellate( const int splineSubdivisions, const int sweptSplineSubdivisions );
 
-	void					Clear( void );
+	void					Clear();
 
 protected:
 	idCurve_Spline<idVec4>* spline;
@@ -63,7 +63,7 @@ protected:
 idSurface_SweptSpline::idSurface_SweptSpline
 ====================
 */
-ID_INLINE idSurface_SweptSpline::idSurface_SweptSpline( void )
+ID_INLINE idSurface_SweptSpline::idSurface_SweptSpline()
 {
 	spline = NULL;
 	sweptSpline = NULL;
@@ -74,7 +74,7 @@ ID_INLINE idSurface_SweptSpline::idSurface_SweptSpline( void )
 idSurface_SweptSpline::~idSurface_SweptSpline
 ====================
 */
-ID_INLINE idSurface_SweptSpline::~idSurface_SweptSpline( void )
+ID_INLINE idSurface_SweptSpline::~idSurface_SweptSpline()
 {
 	delete spline;
 	delete sweptSpline;
@@ -85,7 +85,7 @@ ID_INLINE idSurface_SweptSpline::~idSurface_SweptSpline( void )
 idSurface_SweptSpline::Clear
 ====================
 */
-ID_INLINE void idSurface_SweptSpline::Clear( void )
+ID_INLINE void idSurface_SweptSpline::Clear()
 {
 	idSurface::Clear();
 	delete spline;

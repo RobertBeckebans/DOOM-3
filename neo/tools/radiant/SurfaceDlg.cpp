@@ -308,7 +308,7 @@ void UpdateSurfaceDialog()
 
 bool ByeByeSurfaceDialog();
 
-void DoSurface( void )
+void DoSurface()
 {
 
 	g_bNewFace = ( g_PrefsDlg.m_bFace != FALSE );

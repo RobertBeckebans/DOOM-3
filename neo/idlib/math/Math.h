@@ -134,7 +134,7 @@ class idMath
 {
 public:
 
-	static void					Init( void );
+	static void					Init();
 
 	static float				RSqrt( float x );			// reciprocal square root, returns huge number when x == 0.0
 

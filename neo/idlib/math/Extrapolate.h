@@ -66,15 +66,15 @@ public:
 		startTime = time;
 		currentTime = -1;
 	}
-	float				GetStartTime( void ) const
+	float				GetStartTime() const
 	{
 		return startTime;
 	}
-	float				GetEndTime( void ) const
+	float				GetEndTime() const
 	{
 		return ( !( extrapolationType & EXTRAPOLATION_NOSTOP ) && duration > 0 ) ? startTime + duration : 0;
 	}
-	float				GetDuration( void ) const
+	float				GetDuration() const
 	{
 		return duration;
 	}
@@ -83,19 +83,19 @@ public:
 		startValue = value;
 		currentTime = -1;
 	}
-	const type& 		GetStartValue( void ) const
+	const type& 		GetStartValue() const
 	{
 		return startValue;
 	}
-	const type& 		GetBaseSpeed( void ) const
+	const type& 		GetBaseSpeed() const
 	{
 		return baseSpeed;
 	}
-	const type& 		GetSpeed( void ) const
+	const type& 		GetSpeed() const
 	{
 		return speed;
 	}
-	extrapolation_t		GetExtrapolationType( void ) const
+	extrapolation_t		GetExtrapolationType() const
 	{
 		return extrapolationType;
 	}

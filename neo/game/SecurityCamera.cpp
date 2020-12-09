@@ -122,7 +122,7 @@ void idSecurityCamera::Restore( idRestoreGame* savefile )
 idSecurityCamera::Spawn
 ================
 */
-void idSecurityCamera::Spawn( void )
+void idSecurityCamera::Spawn()
 {
 	idStr	str;
 
@@ -192,7 +192,7 @@ void idSecurityCamera::Spawn( void )
 idSecurityCamera::Event_AddLight
 ================
 */
-void idSecurityCamera::Event_AddLight( void )
+void idSecurityCamera::Event_AddLight()
 {
 	idDict	args;
 	idVec3	right, up, target, temp;
@@ -234,7 +234,7 @@ void idSecurityCamera::Event_AddLight( void )
 idSecurityCamera::DrawFov
 ================
 */
-void idSecurityCamera::DrawFov( void )
+void idSecurityCamera::DrawFov()
 {
 	int i;
 	float radius, a, s, c, halfRadius;
@@ -296,7 +296,7 @@ renderView_t* idSecurityCamera::GetRenderView()
 idSecurityCamera::CanSeePlayer
 ================
 */
-bool idSecurityCamera::CanSeePlayer( void )
+bool idSecurityCamera::CanSeePlayer()
 {
 	int i;
 	float dist;
@@ -372,7 +372,7 @@ void idSecurityCamera::SetAlertMode( int alert )
 idSecurityCamera::Think
 ================
 */
-void idSecurityCamera::Think( void )
+void idSecurityCamera::Think()
 {
 	float pct;
 	float travel;
@@ -460,7 +460,7 @@ void idSecurityCamera::Think( void )
 idSecurityCamera::GetAxis
 ================
 */
-const idVec3 idSecurityCamera::GetAxis( void ) const
+const idVec3 idSecurityCamera::GetAxis() const
 {
 	return ( flipAxis ) ? -GetPhysics()->GetAxis()[modelAxis] : GetPhysics()->GetAxis()[modelAxis];
 };
@@ -470,7 +470,7 @@ const idVec3 idSecurityCamera::GetAxis( void ) const
 idSecurityCamera::SweepSpeed
 ================
 */
-float idSecurityCamera::SweepSpeed( void ) const
+float idSecurityCamera::SweepSpeed() const
 {
 	return spawnArgs.GetFloat( "sweepSpeed", "5" );
 }
@@ -480,7 +480,7 @@ float idSecurityCamera::SweepSpeed( void ) const
 idSecurityCamera::StartSweep
 ================
 */
-void idSecurityCamera::StartSweep( void )
+void idSecurityCamera::StartSweep()
 {
 	int speed;
 
@@ -497,7 +497,7 @@ void idSecurityCamera::StartSweep( void )
 idSecurityCamera::Event_ContinueSweep
 ================
 */
-void idSecurityCamera::Event_ContinueSweep( void )
+void idSecurityCamera::Event_ContinueSweep()
 {
 	float pct = ( stopSweeping - sweepStart ) / ( sweepEnd - sweepStart );
 	float f = gameLocal.time - ( sweepEnd - sweepStart ) * pct;
@@ -517,7 +517,7 @@ void idSecurityCamera::Event_ContinueSweep( void )
 idSecurityCamera::Event_Alert
 ================
 */
-void idSecurityCamera::Event_Alert( void )
+void idSecurityCamera::Event_Alert()
 {
 	float	wait;
 
@@ -536,7 +536,7 @@ void idSecurityCamera::Event_Alert( void )
 idSecurityCamera::Event_ReverseSweep
 ================
 */
-void idSecurityCamera::Event_ReverseSweep( void )
+void idSecurityCamera::Event_ReverseSweep()
 {
 	angle = GetPhysics()->GetAxis().ToAngles().yaw;
 	negativeSweep = !negativeSweep;
@@ -548,7 +548,7 @@ void idSecurityCamera::Event_ReverseSweep( void )
 idSecurityCamera::Event_Pause
 ================
 */
-void idSecurityCamera::Event_Pause( void )
+void idSecurityCamera::Event_Pause()
 {
 	float	sweepWait;
 
@@ -611,7 +611,7 @@ idSecurityCamera::Present
 Present is called to allow entities to generate refEntities, lights, etc for the renderer.
 ================
 */
-void idSecurityCamera::Present( void )
+void idSecurityCamera::Present()
 {
 	// don't present to the renderer if the entity hasn't changed
 	if( !( thinkFlags & TH_UPDATEVISUALS ) )

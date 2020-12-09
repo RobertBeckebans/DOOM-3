@@ -60,8 +60,8 @@ public:
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	idForce_Field( void );
-	virtual				~idForce_Field( void );
+	idForce_Field();
+	virtual				~idForce_Field();
 	// uniform constant force
 	void				Uniform( const idVec3& force );
 	// explosion from clip model origin

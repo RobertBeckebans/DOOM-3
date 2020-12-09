@@ -557,7 +557,7 @@ idRenderModel* idRenderModelStatic::InstantiateDynamicModel( const struct render
 idRenderModelStatic::NumJoints
 ================
 */
-int idRenderModelStatic::NumJoints( void ) const
+int idRenderModelStatic::NumJoints() const
 {
 	return 0;
 }
@@ -567,7 +567,7 @@ int idRenderModelStatic::NumJoints( void ) const
 idRenderModelStatic::GetJoints
 ================
 */
-const idMD5Joint* idRenderModelStatic::GetJoints( void ) const
+const idMD5Joint* idRenderModelStatic::GetJoints() const
 {
 	return NULL;
 }
@@ -597,7 +597,7 @@ const char* idRenderModelStatic::GetJointName( jointHandle_t handle ) const
 idRenderModelStatic::GetDefaultPose
 ================
 */
-const idJointQuat* idRenderModelStatic::GetDefaultPose( void ) const
+const idJointQuat* idRenderModelStatic::GetDefaultPose() const
 {
 	return NULL;
 }
@@ -2456,7 +2456,7 @@ idRenderModelStatic::FreeVertexCache
 We are about to restart the vertex cache, so dump everything
 ==============
 */
-void idRenderModelStatic::FreeVertexCache( void )
+void idRenderModelStatic::FreeVertexCache()
 {
 	for( int j = 0 ; j < surfaces.Num() ; j++ )
 	{
@@ -2582,7 +2582,7 @@ void idRenderModelStatic::WriteToDemoFile( class idDemoFile* f )
 idRenderModelStatic::IsLoaded
 ================
 */
-bool idRenderModelStatic::IsLoaded( void )
+bool idRenderModelStatic::IsLoaded()
 {
 	return !purged;
 }
@@ -2602,7 +2602,7 @@ void idRenderModelStatic::SetLevelLoadReferenced( bool referenced )
 idRenderModelStatic::IsLevelLoadReferenced
 ================
 */
-bool idRenderModelStatic::IsLevelLoadReferenced( void )
+bool idRenderModelStatic::IsLevelLoadReferenced()
 {
 	return levelLoadReferenced;
 }
@@ -2612,7 +2612,7 @@ bool idRenderModelStatic::IsLevelLoadReferenced( void )
 idRenderModelStatic::TouchData
 =================
 */
-void idRenderModelStatic::TouchData( void )
+void idRenderModelStatic::TouchData()
 {
 	for( int i = 0 ; i < surfaces.Num() ; i++ )
 	{
@@ -2650,7 +2650,7 @@ bool idRenderModelStatic::DeleteSurfaceWithId( int id )
 idRenderModelStatic::DeleteSurfacesWithNegativeId
 =================
 */
-void idRenderModelStatic::DeleteSurfacesWithNegativeId( void )
+void idRenderModelStatic::DeleteSurfacesWithNegativeId()
 {
 	int i;
 

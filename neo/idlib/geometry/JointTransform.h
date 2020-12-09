@@ -79,11 +79,11 @@ public:
 	bool			operator==(	const idJointMat& a ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idJointMat& a ) const;					// exact compare, no epsilon
 
-	idMat3			ToMat3( void ) const;
-	idVec3			ToVec3( void ) const;
-	idJointQuat		ToJointQuat( void ) const;
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	idMat3			ToMat3() const;
+	idVec3			ToVec3() const;
+	idJointQuat		ToJointQuat() const;
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 
 private:
 	float			mat[3 * 4];
@@ -240,24 +240,24 @@ ID_INLINE bool idJointMat::operator!=( const idJointMat& a ) const
 	return !Compare( a );
 }
 
-ID_INLINE idMat3 idJointMat::ToMat3( void ) const
+ID_INLINE idMat3 idJointMat::ToMat3() const
 {
 	return idMat3(	mat[0 * 4 + 0], mat[1 * 4 + 0], mat[2 * 4 + 0],
 					mat[0 * 4 + 1], mat[1 * 4 + 1], mat[2 * 4 + 1],
 					mat[0 * 4 + 2], mat[1 * 4 + 2], mat[2 * 4 + 2] );
 }
 
-ID_INLINE idVec3 idJointMat::ToVec3( void ) const
+ID_INLINE idVec3 idJointMat::ToVec3() const
 {
 	return idVec3( mat[0 * 4 + 3], mat[1 * 4 + 3], mat[2 * 4 + 3] );
 }
 
-ID_INLINE const float* idJointMat::ToFloatPtr( void ) const
+ID_INLINE const float* idJointMat::ToFloatPtr() const
 {
 	return mat;
 }
 
-ID_INLINE float* idJointMat::ToFloatPtr( void )
+ID_INLINE float* idJointMat::ToFloatPtr()
 {
 	return mat;
 }

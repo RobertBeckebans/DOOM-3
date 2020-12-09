@@ -352,7 +352,7 @@ idSoundSample::~idSoundSample()
 idSoundSample::LengthIn44kHzSamples
 ===================
 */
-int idSoundSample::LengthIn44kHzSamples( void ) const
+int idSoundSample::LengthIn44kHzSamples() const
 {
 	// objectSize is samples
 	if( objectInfo.nSamplesPerSec == 11025 )
@@ -374,7 +374,7 @@ int idSoundSample::LengthIn44kHzSamples( void ) const
 idSoundSample::MakeDefault
 ===================
 */
-void idSoundSample::MakeDefault( void )
+void idSoundSample::MakeDefault()
 {
 	int		i;
 	float	v;
@@ -430,7 +430,7 @@ void idSoundSample::MakeDefault( void )
 idSoundSample::CheckForDownSample
 ===================
 */
-void idSoundSample::CheckForDownSample( void )
+void idSoundSample::CheckForDownSample()
 {
 	if( !idSoundSystemLocal::s_force22kHz.GetBool() )
 	{
@@ -471,7 +471,7 @@ void idSoundSample::CheckForDownSample( void )
 idSoundSample::GetNewTimeStamp
 ===================
 */
-ID_TIME_T idSoundSample::GetNewTimeStamp( void ) const
+ID_TIME_T idSoundSample::GetNewTimeStamp() const
 {
 	ID_TIME_T timestamp;
 
@@ -492,7 +492,7 @@ idSoundSample::Load
 Loads based on name, possibly doing a MakeDefault if necessary
 ===================
 */
-void idSoundSample::Load( void )
+void idSoundSample::Load()
 {
 	defaultSound = false;
 	purged = false;

@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idJointMat::ToJointQuat
 =============
 */
-idJointQuat idJointMat::ToJointQuat( void ) const
+idJointQuat idJointMat::ToJointQuat() const
 {
 	idJointQuat	jq;
 	float		trace;

@@ -30,6 +30,6 @@ If you have questions concerning this license or the applicable additional terms
 #define PICKMONITOR_H
 
 OSStatus PickMonitor( DisplayIDType* inOutDisplayID, WindowRef parentWindow );
-Boolean	CanUserPickMonitor( void );
+Boolean	CanUserPickMonitor();
 
 #endif // PICKMONITOR_H

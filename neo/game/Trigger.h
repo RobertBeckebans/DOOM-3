@@ -45,24 +45,24 @@ class idTrigger : public idEntity
 public:
 	CLASS_PROTOTYPE( idTrigger );
 
-	static void			DrawDebugInfo( void );
+	static void			DrawDebugInfo();
 
 	idTrigger();
-	void				Spawn( void );
+	void				Spawn();
 
-	const function_t* 	GetScriptFunction( void ) const;
+	const function_t* 	GetScriptFunction() const;
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	virtual void		Enable( void );
-	virtual void		Disable( void );
+	virtual void		Enable();
+	virtual void		Disable();
 
 protected:
-	void				CallScript( void ) const;
+	void				CallScript() const;
 
-	void				Event_Enable( void );
-	void				Event_Disable( void );
+	void				Event_Enable();
+	void				Event_Disable();
 
 	const function_t* 	scriptFunction;
 };
@@ -81,9 +81,9 @@ class idTrigger_Multi : public idTrigger
 public:
 	CLASS_PROTOTYPE( idTrigger_Multi );
 
-	idTrigger_Multi( void );
+	idTrigger_Multi();
 
-	void				Spawn( void );
+	void				Spawn();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
@@ -122,12 +122,12 @@ class idTrigger_EntityName : public idTrigger
 public:
 	CLASS_PROTOTYPE( idTrigger_EntityName );
 
-	idTrigger_EntityName( void );
+	idTrigger_EntityName();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	float				wait;
@@ -157,15 +157,15 @@ class idTrigger_Timer : public idTrigger
 public:
 	CLASS_PROTOTYPE( idTrigger_Timer );
 
-	idTrigger_Timer( void );
+	idTrigger_Timer();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Spawn( void );
+	void				Spawn();
 
-	virtual void		Enable( void );
-	virtual void		Disable( void );
+	virtual void		Enable();
+	virtual void		Disable();
 
 private:
 	float				random;
@@ -175,7 +175,7 @@ private:
 	idStr				onName;
 	idStr				offName;
 
-	void				Event_Timer( void );
+	void				Event_Timer();
 	void				Event_Use( idEntity* activator );
 };
 
@@ -193,12 +193,12 @@ class idTrigger_Count : public idTrigger
 public:
 	CLASS_PROTOTYPE( idTrigger_Count );
 
-	idTrigger_Count( void );
+	idTrigger_Count();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	int					goal;
@@ -223,12 +223,12 @@ class idTrigger_Hurt : public idTrigger
 public:
 	CLASS_PROTOTYPE( idTrigger_Hurt );
 
-	idTrigger_Hurt( void );
+	idTrigger_Hurt();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	bool				on;
@@ -273,18 +273,18 @@ public:
 
 	CLASS_PROTOTYPE( idTrigger_Touch );
 
-	idTrigger_Touch( void );
+	idTrigger_Touch();
 
-	void				Spawn( void );
-	virtual void		Think( void );
+	void				Spawn();
+	virtual void		Think();
 
 	void				Save( idSaveGame* savefile );
 	void				Restore( idRestoreGame* savefile );
 
-	virtual void		Enable( void );
-	virtual void		Disable( void );
+	virtual void		Enable();
+	virtual void		Disable();
 
-	void				TouchEntities( void );
+	void				TouchEntities();
 
 private:
 	idClipModel* 		clipModel;

@@ -72,8 +72,8 @@ public:
 
 	CLASS_PROTOTYPE( idPhysics_RigidBody );
 
-	idPhysics_RigidBody( void );
-	~idPhysics_RigidBody( void );
+	idPhysics_RigidBody();
+	~idPhysics_RigidBody();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
@@ -82,17 +82,17 @@ public:
 	void					SetFriction( const float linear, const float angular, const float contact );
 	void					SetBouncyness( const float b );
 	// same as above but drop to the floor first
-	void					DropToFloor( void );
+	void					DropToFloor();
 	// no contact determination and contact friction
-	void					NoContact( void );
+	void					NoContact();
 	// enable/disable activation by impact
-	void					EnableImpact( void );
-	void					DisableImpact( void );
+	void					EnableImpact();
+	void					DisableImpact();
 
 public:	// common physics interface
 	void					SetClipModel( idClipModel* model, float density, int id = 0, bool freeOld = true );
 	idClipModel* 			GetClipModel( int id = 0 ) const;
-	int						GetNumClipModels( void ) const;
+	int						GetNumClipModels() const;
 
 	void					SetMass( float mass, int id = -1 );
 	float					GetMass( int id = -1 ) const;
@@ -105,19 +105,19 @@ public:	// common physics interface
 
 	bool					Evaluate( int timeStepMSec, int endTimeMSec );
 	void					UpdateTime( int endTimeMSec );
-	int						GetTime( void ) const;
+	int						GetTime() const;
 
 	void					GetImpactInfo( const int id, const idVec3& point, impactInfo_t* info ) const;
 	void					ApplyImpulse( const int id, const idVec3& point, const idVec3& impulse );
 	void					AddForce( const int id, const idVec3& point, const idVec3& force );
-	void					Activate( void );
-	void					PutToRest( void );
-	bool					IsAtRest( void ) const;
-	int						GetRestStartTime( void ) const;
-	bool					IsPushable( void ) const;
+	void					Activate();
+	void					PutToRest();
+	bool					IsAtRest() const;
+	int						GetRestStartTime() const;
+	bool					IsPushable() const;
 
-	void					SaveState( void );
-	void					RestoreState( void );
+	void					SaveState();
+	void					RestoreState();
 
 	void					SetOrigin( const idVec3& newOrigin, int id = -1 );
 	void					SetAxis( const idMat3& newAxis, int id = -1 );
@@ -138,13 +138,13 @@ public:	// common physics interface
 	void					ClipRotation( trace_t& results, const idRotation& rotation, const idClipModel* model ) const;
 	int						ClipContents( const idClipModel* model ) const;
 
-	void					DisableClip( void );
-	void					EnableClip( void );
+	void					DisableClip();
+	void					EnableClip();
 
-	void					UnlinkClip( void );
-	void					LinkClip( void );
+	void					UnlinkClip();
+	void					LinkClip();
 
-	bool					EvaluateContacts( void );
+	bool					EvaluateContacts();
 
 	void					SetPushed( int deltaTime );
 	const idVec3& 			GetPushedLinearVelocity( const int id = 0 ) const;
@@ -190,10 +190,10 @@ private:
 	bool					CheckForCollisions( const float deltaTime, rigidBodyPState_t& next, trace_t& collision );
 	bool					CollisionImpulse( const trace_t& collision, idVec3& impulse );
 	void					ContactFriction( float deltaTime );
-	void					DropToFloorAndRest( void );
-	bool					TestIfAtRest( void ) const;
-	void					Rest( void );
-	void					DebugDraw( void );
+	void					DropToFloorAndRest();
+	bool					TestIfAtRest() const;
+	void					Rest();
+	void					DebugDraw();
 };
 
 #endif /* !__PHYSICS_RIGIDBODY_H__ */

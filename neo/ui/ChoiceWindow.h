@@ -63,7 +63,7 @@ private:
 	// force == true overrides liveUpdate 0
 	void				UpdateVars( bool read, bool force = false );
 
-	void				UpdateChoicesAndVals( void );
+	void				UpdateChoicesAndVals();
 
 	int					currentChoice;
 	int					choiceType;

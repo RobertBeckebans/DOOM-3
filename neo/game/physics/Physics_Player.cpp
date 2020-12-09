@@ -484,7 +484,7 @@ idPhysics_Player::Friction
 Handles both ground friction and water friction
 ==================
 */
-void idPhysics_Player::Friction( void )
+void idPhysics_Player::Friction()
 {
 	idVec3	vel;
 	float	speed, newspeed, control;
@@ -561,7 +561,7 @@ idPhysics_Player::WaterJumpMove
 Flying out of the water
 ===================
 */
-void idPhysics_Player::WaterJumpMove( void )
+void idPhysics_Player::WaterJumpMove()
 {
 
 	// waterjump has no control, but falls
@@ -583,7 +583,7 @@ void idPhysics_Player::WaterJumpMove( void )
 idPhysics_Player::WaterMove
 ===================
 */
-void idPhysics_Player::WaterMove( void )
+void idPhysics_Player::WaterMove()
 {
 	idVec3	wishvel;
 	float	wishspeed;
@@ -641,7 +641,7 @@ void idPhysics_Player::WaterMove( void )
 idPhysics_Player::FlyMove
 ===================
 */
-void idPhysics_Player::FlyMove( void )
+void idPhysics_Player::FlyMove()
 {
 	idVec3	wishvel;
 	float	wishspeed;
@@ -676,7 +676,7 @@ void idPhysics_Player::FlyMove( void )
 idPhysics_Player::AirMove
 ===================
 */
-void idPhysics_Player::AirMove( void )
+void idPhysics_Player::AirMove()
 {
 	idVec3		wishvel;
 	idVec3		wishdir;
@@ -718,7 +718,7 @@ void idPhysics_Player::AirMove( void )
 idPhysics_Player::WalkMove
 ===================
 */
-void idPhysics_Player::WalkMove( void )
+void idPhysics_Player::WalkMove()
 {
 	idVec3		wishvel;
 	idVec3		wishdir;
@@ -836,7 +836,7 @@ void idPhysics_Player::WalkMove( void )
 idPhysics_Player::DeadMove
 ==============
 */
-void idPhysics_Player::DeadMove( void )
+void idPhysics_Player::DeadMove()
 {
 	float	forward;
 
@@ -864,7 +864,7 @@ void idPhysics_Player::DeadMove( void )
 idPhysics_Player::NoclipMove
 ===============
 */
-void idPhysics_Player::NoclipMove( void )
+void idPhysics_Player::NoclipMove()
 {
 	float		speed, drop, friction, newspeed, stopspeed;
 	float		scale, wishspeed;
@@ -915,7 +915,7 @@ void idPhysics_Player::NoclipMove( void )
 idPhysics_Player::SpectatorMove
 ===============
 */
-void idPhysics_Player::SpectatorMove( void )
+void idPhysics_Player::SpectatorMove()
 {
 	idVec3	wishvel;
 	float	wishspeed;
@@ -953,7 +953,7 @@ void idPhysics_Player::SpectatorMove( void )
 idPhysics_Player::LadderMove
 ============
 */
-void idPhysics_Player::LadderMove( void )
+void idPhysics_Player::LadderMove()
 {
 	idVec3	wishdir, wishvel, right;
 	float	wishspeed, scale;
@@ -1076,7 +1076,7 @@ void idPhysics_Player::CorrectAllSolid( trace_t& trace, int contents )
 idPhysics_Player::CheckGround
 =============
 */
-void idPhysics_Player::CheckGround( void )
+void idPhysics_Player::CheckGround()
 {
 	int i, contents;
 	idVec3 point;
@@ -1204,7 +1204,7 @@ idPhysics_Player::CheckDuck
 Sets clip model size
 ==============
 */
-void idPhysics_Player::CheckDuck( void )
+void idPhysics_Player::CheckDuck()
 {
 	trace_t	trace;
 	idVec3 end;
@@ -1270,7 +1270,7 @@ void idPhysics_Player::CheckDuck( void )
 idPhysics_Player::CheckLadder
 ================
 */
-void idPhysics_Player::CheckLadder( void )
+void idPhysics_Player::CheckLadder()
 {
 	idVec3		forward, start, end;
 	trace_t		trace;
@@ -1339,7 +1339,7 @@ void idPhysics_Player::CheckLadder( void )
 idPhysics_Player::CheckJump
 =============
 */
-bool idPhysics_Player::CheckJump( void )
+bool idPhysics_Player::CheckJump()
 {
 	idVec3 addVelocity;
 
@@ -1377,7 +1377,7 @@ bool idPhysics_Player::CheckJump( void )
 idPhysics_Player::CheckWaterJump
 =============
 */
-bool idPhysics_Player::CheckWaterJump( void )
+bool idPhysics_Player::CheckWaterJump()
 {
 	idVec3	spot;
 	int		cont;
@@ -1425,7 +1425,7 @@ bool idPhysics_Player::CheckWaterJump( void )
 idPhysics_Player::SetWaterLevel
 =============
 */
-void idPhysics_Player::SetWaterLevel( void )
+void idPhysics_Player::SetWaterLevel()
 {
 	idVec3		point;
 	idBounds	bounds;
@@ -1472,7 +1472,7 @@ void idPhysics_Player::SetWaterLevel( void )
 idPhysics_Player::DropTimers
 ================
 */
-void idPhysics_Player::DropTimers( void )
+void idPhysics_Player::DropTimers()
 {
 	// drop misc timing counter
 	if( current.movementTime )
@@ -1622,7 +1622,7 @@ void idPhysics_Player::MovePlayer( int msec )
 idPhysics_Player::GetWaterLevel
 ================
 */
-waterLevel_t idPhysics_Player::GetWaterLevel( void ) const
+waterLevel_t idPhysics_Player::GetWaterLevel() const
 {
 	return waterLevel;
 }
@@ -1632,7 +1632,7 @@ waterLevel_t idPhysics_Player::GetWaterLevel( void ) const
 idPhysics_Player::GetWaterType
 ================
 */
-int idPhysics_Player::GetWaterType( void ) const
+int idPhysics_Player::GetWaterType() const
 {
 	return waterType;
 }
@@ -1642,7 +1642,7 @@ int idPhysics_Player::GetWaterType( void ) const
 idPhysics_Player::HasJumped
 ================
 */
-bool idPhysics_Player::HasJumped( void ) const
+bool idPhysics_Player::HasJumped() const
 {
 	return ( ( current.movementFlags & PMF_JUMPED ) != 0 );
 }
@@ -1652,7 +1652,7 @@ bool idPhysics_Player::HasJumped( void ) const
 idPhysics_Player::HasSteppedUp
 ================
 */
-bool idPhysics_Player::HasSteppedUp( void ) const
+bool idPhysics_Player::HasSteppedUp() const
 {
 	return ( ( current.movementFlags & ( PMF_STEPPED_UP | PMF_STEPPED_DOWN ) ) != 0 );
 }
@@ -1662,7 +1662,7 @@ bool idPhysics_Player::HasSteppedUp( void ) const
 idPhysics_Player::GetStepUp
 ================
 */
-float idPhysics_Player::GetStepUp( void ) const
+float idPhysics_Player::GetStepUp() const
 {
 	return current.stepUp;
 }
@@ -1672,7 +1672,7 @@ float idPhysics_Player::GetStepUp( void ) const
 idPhysics_Player::IsCrouching
 ================
 */
-bool idPhysics_Player::IsCrouching( void ) const
+bool idPhysics_Player::IsCrouching() const
 {
 	return ( ( current.movementFlags & PMF_DUCKED ) != 0 );
 }
@@ -1682,7 +1682,7 @@ bool idPhysics_Player::IsCrouching( void ) const
 idPhysics_Player::OnLadder
 ================
 */
-bool idPhysics_Player::OnLadder( void ) const
+bool idPhysics_Player::OnLadder() const
 {
 	return ladder;
 }
@@ -1692,7 +1692,7 @@ bool idPhysics_Player::OnLadder( void ) const
 idPhysics_Player::idPhysics_Player
 ================
 */
-idPhysics_Player::idPhysics_Player( void )
+idPhysics_Player::idPhysics_Player()
 {
 	debugLevel = false;
 	clipModel = NULL;
@@ -1867,7 +1867,7 @@ void idPhysics_Player::SetMaxStepHeight( const float newMaxStepHeight )
 idPhysics_Player::GetMaxStepHeight
 ================
 */
-float idPhysics_Player::GetMaxStepHeight( void ) const
+float idPhysics_Player::GetMaxStepHeight() const
 {
 	return maxStepHeight;
 }
@@ -1974,7 +1974,7 @@ void idPhysics_Player::UpdateTime( int endTimeMSec )
 idPhysics_Player::GetTime
 ================
 */
-int idPhysics_Player::GetTime( void ) const
+int idPhysics_Player::GetTime() const
 {
 	return gameLocal.time;
 }
@@ -2010,7 +2010,7 @@ void idPhysics_Player::ApplyImpulse( const int id, const idVec3& point, const id
 idPhysics_Player::IsAtRest
 ================
 */
-bool idPhysics_Player::IsAtRest( void ) const
+bool idPhysics_Player::IsAtRest() const
 {
 	return false;
 }
@@ -2020,7 +2020,7 @@ bool idPhysics_Player::IsAtRest( void ) const
 idPhysics_Player::GetRestStartTime
 ================
 */
-int idPhysics_Player::GetRestStartTime( void ) const
+int idPhysics_Player::GetRestStartTime() const
 {
 	return -1;
 }
@@ -2030,7 +2030,7 @@ int idPhysics_Player::GetRestStartTime( void ) const
 idPhysics_Player::SaveState
 ================
 */
-void idPhysics_Player::SaveState( void )
+void idPhysics_Player::SaveState()
 {
 	saved = current;
 }
@@ -2040,7 +2040,7 @@ void idPhysics_Player::SaveState( void )
 idPhysics_Player::RestoreState
 ================
 */
-void idPhysics_Player::RestoreState( void )
+void idPhysics_Player::RestoreState()
 {
 	current = saved;
 
@@ -2078,7 +2078,7 @@ void idPhysics_Player::SetOrigin( const idVec3& newOrigin, int id )
 idPhysics_Player::GetOrigin
 ================
 */
-const idVec3& idPhysics_Player::PlayerGetOrigin( void ) const
+const idVec3& idPhysics_Player::PlayerGetOrigin() const
 {
 	return current.origin;
 }
@@ -2189,7 +2189,7 @@ const idVec3& idPhysics_Player::GetPushedLinearVelocity( const int id ) const
 idPhysics_Player::ClearPushedVelocity
 ================
 */
-void idPhysics_Player::ClearPushedVelocity( void )
+void idPhysics_Player::ClearPushedVelocity()
 {
 	current.pushVelocity.Zero();
 }

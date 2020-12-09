@@ -149,7 +149,7 @@ private:
 	int					DrawText( float x, float y, float scale, idVec4 color, const char* text, float adjust, int limit, int style, int cursor = -1 );
 	void				PaintChar( float x, float y, float width, float height, float scale, float	s, float	t, float	s2, float t2, const idMaterial* hShader );
 	void				SetFontByScale( float scale );
-	void				Clear( void );
+	void				Clear();
 
 	const idMaterial*	cursorImages[CURSOR_COUNT];
 	const idMaterial*	scrollBarImages[SCROLLBAR_COUNT];

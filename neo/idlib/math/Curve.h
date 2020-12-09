@@ -41,8 +41,8 @@ template< class type >
 class idCurve
 {
 public:
-	idCurve( void );
-	virtual				~idCurve( void );
+	idCurve();
+	virtual				~idCurve();
 
 	virtual int			AddValue( const float time, const type& value );
 	virtual void		RemoveIndex( const int index )
@@ -51,7 +51,7 @@ public:
 		times.RemoveIndex( index );
 		changed = true;
 	}
-	virtual void		Clear( void )
+	virtual void		Clear()
 	{
 		values.Clear();
 		times.Clear();
@@ -65,7 +65,7 @@ public:
 
 	virtual bool		IsDone( const float time ) const;
 
-	int					GetNumValues( void ) const
+	int					GetNumValues() const
 	{
 		return values.Num();
 	}
@@ -118,7 +118,7 @@ idCurve::idCurve
 ====================
 */
 template< class type >
-ID_INLINE idCurve<type>::idCurve( void )
+ID_INLINE idCurve<type>::idCurve()
 {
 	currentIndex = -1;
 	changed = false;
@@ -130,7 +130,7 @@ idCurve::~idCurve
 ====================
 */
 template< class type >
-ID_INLINE idCurve<type>::~idCurve( void )
+ID_INLINE idCurve<type>::~idCurve()
 {
 }
 
@@ -574,7 +574,7 @@ template< class type >
 class idCurve_Bezier : public idCurve<type>
 {
 public:
-	idCurve_Bezier( void );
+	idCurve_Bezier();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -592,7 +592,7 @@ idCurve_Bezier::idCurve_Bezier
 ====================
 */
 template< class type >
-ID_INLINE idCurve_Bezier<type>::idCurve_Bezier( void )
+ID_INLINE idCurve_Bezier<type>::idCurve_Bezier()
 {
 }
 
@@ -780,7 +780,7 @@ class idCurve_QuadraticBezier : public idCurve<type>
 {
 
 public:
-	idCurve_QuadraticBezier( void );
+	idCurve_QuadraticBezier();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -798,7 +798,7 @@ idCurve_QuadraticBezier::idCurve_QuadraticBezier
 ====================
 */
 template< class type >
-ID_INLINE idCurve_QuadraticBezier<type>::idCurve_QuadraticBezier( void )
+ID_INLINE idCurve_QuadraticBezier<type>::idCurve_QuadraticBezier()
 {
 }
 
@@ -917,7 +917,7 @@ class idCurve_CubicBezier : public idCurve<type>
 {
 
 public:
-	idCurve_CubicBezier( void );
+	idCurve_CubicBezier();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -935,7 +935,7 @@ idCurve_CubicBezier::idCurve_CubicBezier
 ====================
 */
 template< class type >
-ID_INLINE idCurve_CubicBezier<type>::idCurve_CubicBezier( void )
+ID_INLINE idCurve_CubicBezier<type>::idCurve_CubicBezier()
 {
 }
 
@@ -1060,7 +1060,7 @@ class idCurve_Spline : public idCurve<type>
 public:
 	enum				boundary_t { BT_FREE, BT_CLAMPED, BT_CLOSED };
 
-	idCurve_Spline( void );
+	idCurve_Spline();
 
 	virtual bool		IsDone( const float time ) const;
 
@@ -1069,7 +1069,7 @@ public:
 		boundaryType = bt;
 		this->changed = true;
 	}
-	virtual boundary_t	GetBoundaryType( void ) const
+	virtual boundary_t	GetBoundaryType() const
 	{
 		return boundaryType;
 	}
@@ -1079,7 +1079,7 @@ public:
 		closeTime = t;
 		this->changed = true;
 	}
-	virtual float		GetCloseTime( void )
+	virtual float		GetCloseTime()
 	{
 		return boundaryType == BT_CLOSED ? closeTime : 0.0f;
 	}
@@ -1099,7 +1099,7 @@ idCurve_Spline::idCurve_Spline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_Spline<type>::idCurve_Spline( void )
+ID_INLINE idCurve_Spline<type>::idCurve_Spline()
 {
 	boundaryType = BT_FREE;
 	closeTime = 0.0f;
@@ -1228,9 +1228,9 @@ template< class type >
 class idCurve_NaturalCubicSpline : public idCurve_Spline<type>
 {
 public:
-	idCurve_NaturalCubicSpline( void );
+	idCurve_NaturalCubicSpline();
 
-	virtual void		Clear( void )
+	virtual void		Clear()
 	{
 		idCurve_Spline<type>::Clear();
 		this->values.Clear();
@@ -1248,10 +1248,10 @@ protected:
 	mutable idList<type>c;
 	mutable idList<type>d;
 
-	void				Setup( void ) const;
-	void				SetupFree( void ) const;
-	void				SetupClamped( void ) const;
-	void				SetupClosed( void ) const;
+	void				Setup() const;
+	void				SetupFree() const;
+	void				SetupClamped() const;
+	void				SetupClosed() const;
 };
 
 /*
@@ -1260,7 +1260,7 @@ idCurve_NaturalCubicSpline::idCurve_NaturalCubicSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_NaturalCubicSpline<type>::idCurve_NaturalCubicSpline( void )
+ID_INLINE idCurve_NaturalCubicSpline<type>::idCurve_NaturalCubicSpline()
 {
 }
 
@@ -1321,7 +1321,7 @@ idCurve_NaturalCubicSpline::Setup
 ====================
 */
 template< class type >
-ID_INLINE void idCurve_NaturalCubicSpline<type>::Setup( void ) const
+ID_INLINE void idCurve_NaturalCubicSpline<type>::Setup() const
 {
 	if( this->changed )
 	{
@@ -1347,7 +1347,7 @@ idCurve_NaturalCubicSpline::SetupFree
 ====================
 */
 template< class type >
-ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupFree( void ) const
+ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupFree() const
 {
 	int i;
 	float inv;
@@ -1413,7 +1413,7 @@ idCurve_NaturalCubicSpline::SetupClamped
 ====================
 */
 template< class type >
-ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupClamped( void ) const
+ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupClamped() const
 {
 	int i;
 	float inv;
@@ -1487,7 +1487,7 @@ idCurve_NaturalCubicSpline::SetupClosed
 ====================
 */
 template< class type >
-ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupClosed( void ) const
+ID_INLINE void idCurve_NaturalCubicSpline<type>::SetupClosed() const
 {
 	int i, j;
 	float c0, c1;
@@ -1571,7 +1571,7 @@ class idCurve_CatmullRomSpline : public idCurve_Spline<type>
 {
 
 public:
-	idCurve_CatmullRomSpline( void );
+	idCurve_CatmullRomSpline();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -1589,7 +1589,7 @@ idCurve_CatmullRomSpline::idCurve_CatmullRomSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_CatmullRomSpline<type>::idCurve_CatmullRomSpline( void )
+ID_INLINE idCurve_CatmullRomSpline<type>::idCurve_CatmullRomSpline()
 {
 }
 
@@ -1756,7 +1756,7 @@ class idCurve_KochanekBartelsSpline : public idCurve_Spline<type>
 {
 
 public:
-	idCurve_KochanekBartelsSpline( void );
+	idCurve_KochanekBartelsSpline();
 
 	virtual int			AddValue( const float time, const type& value );
 	virtual int			AddValue( const float time, const type& value, const float tension, const float continuity, const float bias );
@@ -1768,7 +1768,7 @@ public:
 		continuity.RemoveIndex( index );
 		bias.RemoveIndex( index );
 	}
-	virtual void		Clear( void )
+	virtual void		Clear()
 	{
 		this->values.Clear();
 		this->times.Clear();
@@ -1800,7 +1800,7 @@ idCurve_KochanekBartelsSpline::idCurve_KochanekBartelsSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_KochanekBartelsSpline<type>::idCurve_KochanekBartelsSpline( void )
+ID_INLINE idCurve_KochanekBartelsSpline<type>::idCurve_KochanekBartelsSpline()
 {
 }
 
@@ -2045,9 +2045,9 @@ class idCurve_BSpline : public idCurve_Spline<type>
 {
 
 public:
-	idCurve_BSpline( void );
+	idCurve_BSpline();
 
-	virtual int			GetOrder( void ) const
+	virtual int			GetOrder() const
 	{
 		return order;
 	}
@@ -2075,7 +2075,7 @@ idCurve_BSpline::idCurve_NaturalCubicSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_BSpline<type>::idCurve_BSpline( void )
+ID_INLINE idCurve_BSpline<type>::idCurve_BSpline()
 {
 	order = 4;	// default to cubic
 }
@@ -2251,7 +2251,7 @@ class idCurve_UniformCubicBSpline : public idCurve_BSpline<type>
 {
 
 public:
-	idCurve_UniformCubicBSpline( void );
+	idCurve_UniformCubicBSpline();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -2269,7 +2269,7 @@ idCurve_UniformCubicBSpline::idCurve_UniformCubicBSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_UniformCubicBSpline<type>::idCurve_UniformCubicBSpline( void )
+ID_INLINE idCurve_UniformCubicBSpline<type>::idCurve_UniformCubicBSpline()
 {
 	this->order = 4;	// always cubic
 }
@@ -2434,7 +2434,7 @@ class idCurve_NonUniformBSpline : public idCurve_BSpline<type>
 {
 
 public:
-	idCurve_NonUniformBSpline( void );
+	idCurve_NonUniformBSpline();
 
 	virtual type		GetCurrentValue( const float time ) const;
 	virtual type		GetCurrentFirstDerivative( const float time ) const;
@@ -2452,7 +2452,7 @@ idCurve_NonUniformBSpline::idCurve_NonUniformBSpline
 ====================
 */
 template< class type >
-ID_INLINE idCurve_NonUniformBSpline<type>::idCurve_NonUniformBSpline( void )
+ID_INLINE idCurve_NonUniformBSpline<type>::idCurve_NonUniformBSpline()
 {
 }
 
@@ -2638,7 +2638,7 @@ class idCurve_NURBS : public idCurve_NonUniformBSpline<type>
 {
 
 public:
-	idCurve_NURBS( void );
+	idCurve_NURBS();
 
 	virtual int			AddValue( const float time, const type& value );
 	virtual int			AddValue( const float time, const type& value, const float weight );
@@ -2648,7 +2648,7 @@ public:
 		this->times.RemoveIndex( index );
 		weights.RemoveIndex( index );
 	}
-	virtual void		Clear( void )
+	virtual void		Clear()
 	{
 		this->values.Clear();
 		this->times.Clear();
@@ -2672,7 +2672,7 @@ idCurve_NURBS::idCurve_NURBS
 ====================
 */
 template< class type >
-ID_INLINE idCurve_NURBS<type>::idCurve_NURBS( void )
+ID_INLINE idCurve_NURBS<type>::idCurve_NURBS()
 {
 }
 

@@ -101,7 +101,7 @@ rvDebuggerApp::ProcessWindowMessages
 Process windows messages
 ================
 */
-bool rvDebuggerApp::ProcessWindowMessages( void )
+bool rvDebuggerApp::ProcessWindowMessages()
 {
 	MSG	msg;
 
@@ -146,7 +146,7 @@ rvDebuggerApp::Run
 Main Loop for the debugger application
 ================
 */
-int rvDebuggerApp::Run( void )
+int rvDebuggerApp::Run()
 {
 	// Main message loop:
 	while( ProcessWindowMessages( ) )

@@ -47,7 +47,7 @@ static const char* brittleFracture_SnapshotName = "_BrittleFracture_Snapshot_";
 idBrittleFracture::idBrittleFracture
 ================
 */
-idBrittleFracture::idBrittleFracture( void )
+idBrittleFracture::idBrittleFracture()
 {
 	material = NULL;
 	decalMaterial = NULL;
@@ -77,7 +77,7 @@ idBrittleFracture::idBrittleFracture( void )
 idBrittleFracture::~idBrittleFracture
 ================
 */
-idBrittleFracture::~idBrittleFracture( void )
+idBrittleFracture::~idBrittleFracture()
 {
 	int i;
 
@@ -263,7 +263,7 @@ void idBrittleFracture::Restore( idRestoreGame* savefile )
 idBrittleFracture::Spawn
 ================
 */
-void idBrittleFracture::Spawn( void )
+void idBrittleFracture::Spawn()
 {
 
 	// get shard properties
@@ -602,7 +602,7 @@ void idBrittleFracture::Present()
 idBrittleFracture::Think
 ================
 */
-void idBrittleFracture::Think( void )
+void idBrittleFracture::Think()
 {
 	int i, startTime, endTime, droppedTime;
 	shard_t* shard;
@@ -1071,7 +1071,7 @@ void idBrittleFracture::DropFloatingIslands( const idVec3& point, const idVec3& 
 idBrittleFracture::Break
 ================
 */
-void idBrittleFracture::Break( void )
+void idBrittleFracture::Break()
 {
 	fl.takedamage = false;
 	physicsObj.SetContents( CONTENTS_RENDERMODEL | CONTENTS_TRIGGER );
@@ -1082,7 +1082,7 @@ void idBrittleFracture::Break( void )
 idBrittleFracture::IsBroken
 ================
 */
-bool idBrittleFracture::IsBroken( void ) const
+bool idBrittleFracture::IsBroken() const
 {
 	return ( fl.takedamage == false );
 }
@@ -1245,7 +1245,7 @@ void idBrittleFracture::CreateFractures( const idRenderModel* renderModel )
 idBrittleFracture::FindNeighbours
 ================
 */
-void idBrittleFracture::FindNeighbours( void )
+void idBrittleFracture::FindNeighbours()
 {
 	int i, j, k, l;
 	idVec3 p1, p2, dir;
@@ -1388,7 +1388,7 @@ void idBrittleFracture::Event_Touch( idEntity* other, trace_t* trace )
 idBrittleFracture::ClientPredictionThink
 ================
 */
-void idBrittleFracture::ClientPredictionThink( void )
+void idBrittleFracture::ClientPredictionThink()
 {
 	// only think forward because the state is not synced through snapshots
 	if( !gameLocal.isNewFrame )

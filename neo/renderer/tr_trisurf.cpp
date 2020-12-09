@@ -154,7 +154,7 @@ static idBlockAlloc < srfTriangles_t, 1 << 8 >				srfTrianglesAllocator;
 R_InitTriSurfData
 ===============
 */
-void R_InitTriSurfData( void )
+void R_InitTriSurfData()
 {
 	silEdges = ( silEdge_t* )R_StaticAlloc( MAX_SIL_EDGES * sizeof( silEdges[0] ) );
 
@@ -186,7 +186,7 @@ void R_InitTriSurfData( void )
 R_ShutdownTriSurfData
 ===============
 */
-void R_ShutdownTriSurfData( void )
+void R_ShutdownTriSurfData()
 {
 	R_StaticFree( silEdges );
 	silEdgeHash.Free();
@@ -579,7 +579,7 @@ void R_FreeStaticTriSurf( srfTriangles_t* tri )
 R_AllocStaticTriSurf
 ==============
 */
-srfTriangles_t* R_AllocStaticTriSurf( void )
+srfTriangles_t* R_AllocStaticTriSurf()
 {
 	srfTriangles_t* tris = srfTrianglesAllocator.Alloc();
 	memset( tris, 0, sizeof( srfTriangles_t ) );

@@ -35,14 +35,14 @@ If you have questions concerning this license or the applicable additional terms
 idEFXFile::idEFXFile
 ===============
 */
-idEFXFile::idEFXFile( void ) { }
+idEFXFile::idEFXFile() { }
 
 /*
 ===============
 idEFXFile::Clear
 ===============
 */
-void idEFXFile::Clear( void )
+void idEFXFile::Clear()
 {
 	effects.DeleteContents( true );
 }
@@ -52,7 +52,7 @@ void idEFXFile::Clear( void )
 idEFXFile::~idEFXFile
 ===============
 */
-idEFXFile::~idEFXFile( void )
+idEFXFile::~idEFXFile()
 {
 	Clear();
 }
@@ -300,7 +300,7 @@ bool idEFXFile::LoadFile( const char* filename, bool OSPath )
 idEFXFile::UnloadFile
 ===============
 */
-void idEFXFile::UnloadFile( void )
+void idEFXFile::UnloadFile()
 {
 	Clear();
 }

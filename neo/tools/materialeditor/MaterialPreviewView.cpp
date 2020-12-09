@@ -161,7 +161,7 @@ void MaterialPreviewView::OnLightAllowMoveChange( int lightId, bool move )
 	renderedView.setLightAllowMove( lightId, move );
 }
 
-void MaterialPreviewView::OnAddLight( void )
+void MaterialPreviewView::OnAddLight()
 {
 
 	renderedView.addLight();
@@ -225,7 +225,7 @@ idGLDrawableView::~idGLDrawableView()
 	delete worldModel;
 }
 
-void idGLDrawableView::ResetView( void )
+void idGLDrawableView::ResetView()
 {
 	idDict			spawnArgs;
 
@@ -405,7 +405,7 @@ void idGLDrawableView::mouseMove( float x, float y )
 	}
 }
 
-void idGLDrawableView::addLight( void )
+void idGLDrawableView::addLight()
 {
 	int				lightId;
 	idStr			str;
@@ -463,7 +463,7 @@ void idGLDrawableView::UpdateCamera( renderView_t* refdef )
 }
 
 
-void idGLDrawableView::UpdateModel( void )
+void idGLDrawableView::UpdateModel()
 {
 
 	switch( objectId )
@@ -512,7 +512,7 @@ void idGLDrawableView::UpdateModel( void )
 	world->UpdateEntityDef( modelDefHandle, &worldEntity );
 }
 
-void idGLDrawableView::UpdateLights( void )
+void idGLDrawableView::UpdateLights()
 {
 	int i;
 

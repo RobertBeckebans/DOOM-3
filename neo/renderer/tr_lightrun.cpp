@@ -837,7 +837,7 @@ ReloadModels and RegenerateWorld call this
 // FIXME: need to do this for all worlds
 ===================
 */
-void R_FreeDerivedData( void )
+void R_FreeDerivedData()
 {
 	int i, j;
 	idRenderWorldLocal* rw;
@@ -910,7 +910,7 @@ ReloadModels and RegenerateWorld call this
 // FIXME: need to do this for all worlds
 ===================
 */
-void R_ReCreateWorldReferences( void )
+void R_ReCreateWorldReferences()
 {
 	int i, j;
 	idRenderWorldLocal* rw;

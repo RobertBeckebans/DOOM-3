@@ -90,7 +90,7 @@ float idDeclTable::TableLookup( float index ) const
 idDeclTable::Size
 =================
 */
-size_t idDeclTable::Size( void ) const
+size_t idDeclTable::Size() const
 {
 	return sizeof( idDeclTable ) + values.Allocated();
 }
@@ -100,7 +100,7 @@ size_t idDeclTable::Size( void ) const
 idDeclTable::FreeData
 =================
 */
-void idDeclTable::FreeData( void )
+void idDeclTable::FreeData()
 {
 	snap = false;
 	clamp = false;
@@ -112,7 +112,7 @@ void idDeclTable::FreeData( void )
 idDeclTable::DefaultDefinition
 =================
 */
-const char* idDeclTable::DefaultDefinition( void ) const
+const char* idDeclTable::DefaultDefinition() const
 {
 	return "{ { 0 } }";
 }

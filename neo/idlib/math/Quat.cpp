@@ -34,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 idQuat::ToAngles
 =====================
 */
-idAngles idQuat::ToAngles( void ) const
+idAngles idQuat::ToAngles() const
 {
 	return ToMat3().ToAngles();
 }
@@ -44,7 +44,7 @@ idAngles idQuat::ToAngles( void ) const
 idQuat::ToRotation
 =====================
 */
-idRotation idQuat::ToRotation( void ) const
+idRotation idQuat::ToRotation() const
 {
 	idVec3 vec;
 	float angle;
@@ -72,7 +72,7 @@ idRotation idQuat::ToRotation( void ) const
 idQuat::ToMat3
 =====================
 */
-idMat3 idQuat::ToMat3( void ) const
+idMat3 idQuat::ToMat3() const
 {
 	idMat3	mat;
 	float	wx, wy, wz;
@@ -116,7 +116,7 @@ idMat3 idQuat::ToMat3( void ) const
 idQuat::ToMat4
 =====================
 */
-idMat4 idQuat::ToMat4( void ) const
+idMat4 idQuat::ToMat4() const
 {
 	return ToMat3().ToMat4();
 }
@@ -126,7 +126,7 @@ idMat4 idQuat::ToMat4( void ) const
 idQuat::ToCQuat
 =====================
 */
-idCQuat idQuat::ToCQuat( void ) const
+idCQuat idQuat::ToCQuat() const
 {
 	if( w < 0.0f )
 	{
@@ -140,7 +140,7 @@ idCQuat idQuat::ToCQuat( void ) const
 idQuat::ToAngularVelocity
 ============
 */
-idVec3 idQuat::ToAngularVelocity( void ) const
+idVec3 idQuat::ToAngularVelocity() const
 {
 	idVec3 vec;
 
@@ -232,7 +232,7 @@ idQuat& idQuat::Slerp( const idQuat& from, const idQuat& to, float t )
 idCQuat::ToAngles
 =============
 */
-idAngles idCQuat::ToAngles( void ) const
+idAngles idCQuat::ToAngles() const
 {
 	return ToQuat().ToAngles();
 }
@@ -242,7 +242,7 @@ idAngles idCQuat::ToAngles( void ) const
 idCQuat::ToRotation
 =============
 */
-idRotation idCQuat::ToRotation( void ) const
+idRotation idCQuat::ToRotation() const
 {
 	return ToQuat().ToRotation();
 }
@@ -252,7 +252,7 @@ idRotation idCQuat::ToRotation( void ) const
 idCQuat::ToMat3
 =============
 */
-idMat3 idCQuat::ToMat3( void ) const
+idMat3 idCQuat::ToMat3() const
 {
 	return ToQuat().ToMat3();
 }
@@ -262,7 +262,7 @@ idMat3 idCQuat::ToMat3( void ) const
 idCQuat::ToMat4
 =============
 */
-idMat4 idCQuat::ToMat4( void ) const
+idMat4 idCQuat::ToMat4() const
 {
 	return ToQuat().ToMat4();
 }

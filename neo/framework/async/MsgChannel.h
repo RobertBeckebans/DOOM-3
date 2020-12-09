@@ -62,13 +62,13 @@ public:
 
 	bool			Add( const byte* data, const int size );
 	bool			Get( byte* data, int& size );
-	int				GetTotalSize( void ) const;
-	int				GetSpaceLeft( void ) const;
-	int				GetFirst( void ) const
+	int				GetTotalSize() const;
+	int				GetSpaceLeft() const;
+	int				GetFirst() const
 	{
 		return first;
 	}
-	int				GetLast( void ) const
+	int				GetLast() const
 	{
 		return last;
 	}
@@ -82,11 +82,11 @@ private:
 	int				endIndex;		// index pointing to the first byte after the last message
 
 	void			WriteByte( byte b );
-	byte			ReadByte( void );
+	byte			ReadByte();
 	void			WriteShort( int s );
-	int				ReadShort( void );
+	int				ReadShort();
 	void			WriteLong( int l );
-	int				ReadLong( void );
+	int				ReadLong();
 	void			WriteData( const byte* data, const int size );
 	void			ReadData( byte* data, const int size );
 };
@@ -98,8 +98,8 @@ public:
 	idMsgChannel();
 
 	void			Init( const netadr_t adr, const int id );
-	void			Shutdown( void );
-	void			ResetRate( void );
+	void			Shutdown();
+	void			ResetRate();
 
 	// Sets the maximum outgoing rate.
 	void			SetMaxOutgoingRate( int rate )
@@ -108,43 +108,43 @@ public:
 	}
 
 	// Gets the maximum outgoing rate.
-	int				GetMaxOutgoingRate( void )
+	int				GetMaxOutgoingRate()
 	{
 		return maxRate;
 	}
 
 	// Returns the address of the entity at the other side of the channel.
-	netadr_t		GetRemoteAddress( void ) const
+	netadr_t		GetRemoteAddress() const
 	{
 		return remoteAddress;
 	}
 
 	// Returns the average outgoing rate over the last second.
-	int				GetOutgoingRate( void ) const
+	int				GetOutgoingRate() const
 	{
 		return outgoingRateBytes;
 	}
 
 	// Returns the average incoming rate over the last second.
-	int				GetIncomingRate( void ) const
+	int				GetIncomingRate() const
 	{
 		return incomingRateBytes;
 	}
 
 	// Returns the average outgoing compression ratio over the last second.
-	float			GetOutgoingCompression( void ) const
+	float			GetOutgoingCompression() const
 	{
 		return outgoingCompression;
 	}
 
 	// Returns the average incoming compression ratio over the last second.
-	float			GetIncomingCompression( void ) const
+	float			GetIncomingCompression() const
 	{
 		return incomingCompression;
 	}
 
 	// Returns the average incoming packet loss over the last 5 seconds.
-	float			GetIncomingPacketLoss( void ) const;
+	float			GetIncomingPacketLoss() const;
 
 	// Returns true if the channel is ready to send new data based on the maximum rate.
 	bool			ReadyToSend( const int time ) const;
@@ -156,7 +156,7 @@ public:
 	void			SendNextFragment( idPort& port, const int time );
 
 	// Returns true if there are unsent fragments left.
-	bool			UnsentFragmentsLeft( void ) const
+	bool			UnsentFragmentsLeft() const
 	{
 		return unsentFragments;
 	}
@@ -174,7 +174,7 @@ public:
 	bool			GetReliableMessage( idBitMsg& msg );
 
 	// Removes any pending outgoing or incoming reliable messages.
-	void			ClearReliableMessages( void );
+	void			ClearReliableMessages();
 
 private:
 	netadr_t		remoteAddress;	// address of remote host

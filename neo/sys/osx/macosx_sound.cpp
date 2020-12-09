@@ -55,20 +55,20 @@ public:
 	{
 		return false;
 	}
-	int		GetMixBufferSize( void )
+	int		GetMixBufferSize()
 	{
 		return 0;
 	}
 
-	int		GetNumberOfSpeakers( void );
+	int		GetNumberOfSpeakers();
 
 	// OSX driver doesn't support write API
-	bool	Flush( void )
+	bool	Flush()
 	{
 		return false;
 	}
 	void	Write( bool ) { }
-	short*	GetMixBuffer( void )
+	short*	GetMixBuffer()
 	{
 		return NULL;
 	}
@@ -77,10 +77,10 @@ private:
 	AudioDeviceID		selectedDevice;
 	bool				activeIOProc;
 
-	void				Reset( void );
-	void				InitFailed( void );
+	void				Reset();
+	void				InitFailed();
 	const char*			ExtractStatus( OSStatus status );
-	void				GetAvailableNominalSampleRates( void );
+	void				GetAvailableNominalSampleRates();
 
 	// AudioDevicePropertyListenerProc
 	static OSStatus		DeviceListener(	AudioDeviceID			inDevice,
@@ -448,7 +448,7 @@ bool idAudioHardwareOSX::Initialize( )
 idAudioHardwareOSX::GetAvailableNominalSampleRates
 ==========
 */
-void idAudioHardwareOSX::GetAvailableNominalSampleRates( void )
+void idAudioHardwareOSX::GetAvailableNominalSampleRates()
 {
 	UInt32				size;
 	OSStatus			status;
@@ -497,7 +497,7 @@ int	idAudioHardwareOSX::GetNumberOfSpeakers()
  Sys_LoadOpenAL
  ===============
  */
-bool Sys_LoadOpenAL( void )
+bool Sys_LoadOpenAL()
 {
 	OSErr	err;
 	long gestaltOSVersion;

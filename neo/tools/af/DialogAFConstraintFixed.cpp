@@ -85,7 +85,7 @@ void DialogAFConstraintFixed::DoDataExchange( CDataExchange* pDX )
 DialogAFConstraintFixed::InitJointLists
 ================
 */
-void DialogAFConstraintFixed::InitJointLists( void )
+void DialogAFConstraintFixed::InitJointLists()
 {
 }
 
@@ -106,7 +106,7 @@ void DialogAFConstraintFixed::LoadFile( idDeclAF* af )
 DialogAFConstraintFixed::SaveFile
 ================
 */
-void DialogAFConstraintFixed::SaveFile( void )
+void DialogAFConstraintFixed::SaveFile()
 {
 	SaveConstraint();
 }
@@ -130,7 +130,7 @@ void DialogAFConstraintFixed::LoadConstraint( idDeclAF_Constraint* c )
 DialogAFConstraintFixed::SaveConstraint
 ================
 */
-void DialogAFConstraintFixed::SaveConstraint( void )
+void DialogAFConstraintFixed::SaveConstraint()
 {
 
 	if( !file || !constraint )
@@ -147,7 +147,7 @@ void DialogAFConstraintFixed::SaveConstraint( void )
 DialogAFConstraintFixed::UpdateFile
 ================
 */
-void DialogAFConstraintFixed::UpdateFile( void )
+void DialogAFConstraintFixed::UpdateFile()
 {
 	SaveConstraint();
 	if( file )

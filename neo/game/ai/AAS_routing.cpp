@@ -65,7 +65,7 @@ idRoutingCache::idRoutingCache( int size )
 idRoutingCache::~idRoutingCache
 ============
 */
-idRoutingCache::~idRoutingCache( void )
+idRoutingCache::~idRoutingCache()
 {
 	delete [] reachabilities;
 	delete [] travelTimes;
@@ -76,7 +76,7 @@ idRoutingCache::~idRoutingCache( void )
 idRoutingCache::Size
 ============
 */
-int idRoutingCache::Size( void ) const
+int idRoutingCache::Size() const
 {
 	return sizeof( idRoutingCache ) + size * sizeof( reachabilities[0] ) + size * sizeof( travelTimes[0] );
 }
@@ -116,7 +116,7 @@ unsigned short idAASLocal::AreaTravelTime( int areaNum, const idVec3& start, con
 idAASLocal::CalculateAreaTravelTimes
 ============
 */
-void idAASLocal::CalculateAreaTravelTimes( void )
+void idAASLocal::CalculateAreaTravelTimes()
 {
 	int n, i, j, numReach, numRevReach, t, maxt;
 	byte* bytePtr;
@@ -197,7 +197,7 @@ void idAASLocal::CalculateAreaTravelTimes( void )
 idAASLocal::DeleteAreaTravelTimes
 ============
 */
-void idAASLocal::DeleteAreaTravelTimes( void )
+void idAASLocal::DeleteAreaTravelTimes()
 {
 	Mem_Free( areaTravelTimes );
 	areaTravelTimes = NULL;
@@ -209,7 +209,7 @@ void idAASLocal::DeleteAreaTravelTimes( void )
 idAASLocal::SetupRoutingCache
 ============
 */
-void idAASLocal::SetupRoutingCache( void )
+void idAASLocal::SetupRoutingCache()
 {
 	int i;
 	byte* bytePtr;
@@ -266,7 +266,7 @@ void idAASLocal::DeleteClusterCache( int clusterNum )
 idAASLocal::DeletePortalCache
 ============
 */
-void idAASLocal::DeletePortalCache( void )
+void idAASLocal::DeletePortalCache()
 {
 	int i;
 	idRoutingCache* cache;
@@ -287,7 +287,7 @@ void idAASLocal::DeletePortalCache( void )
 idAASLocal::ShutdownRoutingCache
 ============
 */
-void idAASLocal::ShutdownRoutingCache( void )
+void idAASLocal::ShutdownRoutingCache()
 {
 	int i;
 
@@ -320,7 +320,7 @@ void idAASLocal::ShutdownRoutingCache( void )
 idAASLocal::SetupRouting
 ============
 */
-bool idAASLocal::SetupRouting( void )
+bool idAASLocal::SetupRouting()
 {
 	CalculateAreaTravelTimes();
 	SetupRoutingCache();
@@ -332,7 +332,7 @@ bool idAASLocal::SetupRouting( void )
 idAASLocal::ShutdownRouting
 ============
 */
-void idAASLocal::ShutdownRouting( void )
+void idAASLocal::ShutdownRouting()
 {
 	DeleteAreaTravelTimes();
 	ShutdownRoutingCache();
@@ -343,7 +343,7 @@ void idAASLocal::ShutdownRouting( void )
 idAASLocal::RoutingStats
 ============
 */
-void idAASLocal::RoutingStats( void ) const
+void idAASLocal::RoutingStats() const
 {
 	idRoutingCache* cache;
 	int numAreaCache, numPortalCache;
@@ -656,7 +656,7 @@ void idAASLocal::RemoveObstacle( const aasHandle_t handle )
 idAASLocal::RemoveAllObstacles
 ============
 */
-void idAASLocal::RemoveAllObstacles( void )
+void idAASLocal::RemoveAllObstacles()
 {
 	int i;
 
@@ -740,7 +740,7 @@ void idAASLocal::UnlinkCache( idRoutingCache* cache ) const
 idAASLocal::DeleteOldestCache
 ============
 */
-void idAASLocal::DeleteOldestCache( void ) const
+void idAASLocal::DeleteOldestCache() const
 {
 	idRoutingCache* cache;
 

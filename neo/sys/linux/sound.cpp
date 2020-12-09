@@ -357,7 +357,7 @@ bool idAudioHardwareOSS::Initialize( )
 idAudioHardwareOSS::Flush
 ===============
 */
-bool idAudioHardwareOSS::Flush( void )
+bool idAudioHardwareOSS::Flush()
 {
 	audio_buf_info ospace;
 	if( ioctl( m_audio_fd, SNDCTL_DSP_GETOSPACE, &ospace ) == -1 )
@@ -443,7 +443,7 @@ void idAudioHardwareOSS::Write( bool flushing )
  Sys_LoadOpenAL
  -===============
  */
-bool Sys_LoadOpenAL( void )
+bool Sys_LoadOpenAL()
 {
 	return false;
 }

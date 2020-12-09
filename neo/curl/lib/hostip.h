@@ -31,9 +31,9 @@ struct hostent;
 struct SessionHandle;
 struct connectdata;
 
-void Curl_global_host_cache_init( void );
-void Curl_global_host_cache_dtor( void );
-curl_hash* Curl_global_host_cache_get( void );
+void Curl_global_host_cache_init();
+void Curl_global_host_cache_dtor();
+curl_hash* Curl_global_host_cache_get();
 
 #define Curl_global_host_cache_use(__p) ((__p)->set.global_dns_cache)
 

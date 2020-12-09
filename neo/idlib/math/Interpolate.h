@@ -67,23 +67,23 @@ public:
 		return ( time >= startTime + duration );
 	}
 
-	float				GetStartTime( void ) const
+	float				GetStartTime() const
 	{
 		return startTime;
 	}
-	float				GetEndTime( void ) const
+	float				GetEndTime() const
 	{
 		return startTime + duration;
 	}
-	float				GetDuration( void ) const
+	float				GetDuration() const
 	{
 		return duration;
 	}
-	const type& 		GetStartValue( void ) const
+	const type& 		GetStartValue() const
 	{
 		return startValue;
 	}
-	const type& 		GetEndValue( void ) const
+	const type& 		GetEndValue() const
 	{
 		return endValue;
 	}
@@ -196,31 +196,31 @@ public:
 		return ( time >= startTime + accelTime + linearTime + decelTime );
 	}
 
-	float				GetStartTime( void ) const
+	float				GetStartTime() const
 	{
 		return startTime;
 	}
-	float				GetEndTime( void ) const
+	float				GetEndTime() const
 	{
 		return startTime + accelTime + linearTime + decelTime;
 	}
-	float				GetDuration( void ) const
+	float				GetDuration() const
 	{
 		return accelTime + linearTime + decelTime;
 	}
-	float				GetAcceleration( void ) const
+	float				GetAcceleration() const
 	{
 		return accelTime;
 	}
-	float				GetDeceleration( void ) const
+	float				GetDeceleration() const
 	{
 		return decelTime;
 	}
-	const type& 		GetStartValue( void ) const
+	const type& 		GetStartValue() const
 	{
 		return startValue;
 	}
-	const type& 		GetEndValue( void ) const
+	const type& 		GetEndValue() const
 	{
 		return endValue;
 	}
@@ -234,7 +234,7 @@ private:
 	type				endValue;
 	mutable idExtrapolate<type> extrapolate;
 
-	void				Invalidate( void );
+	void				Invalidate();
 	void				SetPhase( float time ) const;
 };
 
@@ -300,7 +300,7 @@ idInterpolateAccelDecelLinear::Invalidate
 ====================
 */
 template< class type >
-ID_INLINE void idInterpolateAccelDecelLinear<type>::Invalidate( void )
+ID_INLINE void idInterpolateAccelDecelLinear<type>::Invalidate()
 {
 	extrapolate.Init( 0, 0, extrapolate.GetStartValue(), extrapolate.GetBaseSpeed(), extrapolate.GetSpeed(), EXTRAPOLATION_NONE );
 }
@@ -403,31 +403,31 @@ public:
 		return ( time >= startTime + accelTime + linearTime + decelTime );
 	}
 
-	float				GetStartTime( void ) const
+	float				GetStartTime() const
 	{
 		return startTime;
 	}
-	float				GetEndTime( void ) const
+	float				GetEndTime() const
 	{
 		return startTime + accelTime + linearTime + decelTime;
 	}
-	float				GetDuration( void ) const
+	float				GetDuration() const
 	{
 		return accelTime + linearTime + decelTime;
 	}
-	float				GetAcceleration( void ) const
+	float				GetAcceleration() const
 	{
 		return accelTime;
 	}
-	float				GetDeceleration( void ) const
+	float				GetDeceleration() const
 	{
 		return decelTime;
 	}
-	const type& 		GetStartValue( void ) const
+	const type& 		GetStartValue() const
 	{
 		return startValue;
 	}
-	const type& 		GetEndValue( void ) const
+	const type& 		GetEndValue() const
 	{
 		return endValue;
 	}
@@ -441,7 +441,7 @@ private:
 	type				endValue;
 	mutable idExtrapolate<type> extrapolate;
 
-	void				Invalidate( void );
+	void				Invalidate();
 	void				SetPhase( float time ) const;
 };
 
@@ -507,7 +507,7 @@ idInterpolateAccelDecelSine::Invalidate
 ====================
 */
 template< class type >
-ID_INLINE void idInterpolateAccelDecelSine<type>::Invalidate( void )
+ID_INLINE void idInterpolateAccelDecelSine<type>::Invalidate()
 {
 	extrapolate.Init( 0, 0, extrapolate.GetStartValue(), extrapolate.GetBaseSpeed(), extrapolate.GetSpeed(), EXTRAPOLATION_NONE );
 }

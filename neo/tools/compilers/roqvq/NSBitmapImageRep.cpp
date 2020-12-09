@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 
 void R_LoadImage( const char* name, byte** pic, int* width, int* height, ID_TIME_T* timestamp, bool makePowerOf2 );
 
-NSBitmapImageRep::NSBitmapImageRep( void )
+NSBitmapImageRep::NSBitmapImageRep()
 {
 	bmap = NULL;
 	width = 0;
@@ -65,32 +65,32 @@ NSBitmapImageRep::~NSBitmapImageRep()
 	bmap = NULL;
 }
 
-int NSBitmapImageRep::samplesPerPixel( void )
+int NSBitmapImageRep::samplesPerPixel()
 {
 	return 4;
 }
 
-int NSBitmapImageRep::pixelsWide( void )
+int NSBitmapImageRep::pixelsWide()
 {
 	return width;
 }
 
-int NSBitmapImageRep::pixelsHigh( void )
+int NSBitmapImageRep::pixelsHigh()
 {
 	return height;
 }
 
-byte* NSBitmapImageRep::bitmapData( void )
+byte* NSBitmapImageRep::bitmapData()
 {
 	return bmap;
 }
 
-bool NSBitmapImageRep::hasAlpha( void )
+bool NSBitmapImageRep::hasAlpha()
 {
 	return false;
 }
 
-bool NSBitmapImageRep::isPlanar( void )
+bool NSBitmapImageRep::isPlanar()
 {
 	return false;
 }

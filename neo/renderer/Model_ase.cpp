@@ -66,7 +66,7 @@ typedef struct
 static ase_t ase;
 
 
-static aseMesh_t* ASE_GetCurrentMesh( void )
+static aseMesh_t* ASE_GetCurrentMesh()
 {
 	return ase.currentMesh;
 }
@@ -153,7 +153,7 @@ static void ASE_ParseBracedBlock( void ( *parser )( const char* token ) )
 	}
 }
 
-static void ASE_SkipEnclosingBraces( void )
+static void ASE_SkipEnclosingBraces()
 {
 	int indent = 0;
 
@@ -178,7 +178,7 @@ static void ASE_SkipEnclosingBraces( void )
 	}
 }
 
-static void ASE_SkipRestOfLine( void )
+static void ASE_SkipRestOfLine()
 {
 	ASE_GetToken( true );
 }
@@ -796,7 +796,7 @@ static void ASE_KeyGEOMOBJECT( const char* token )
 
 }
 
-void ASE_ParseGeomObject( void )
+void ASE_ParseGeomObject()
 {
 	aseObject_t*	object;
 

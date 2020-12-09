@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 static idVec3	s_pointvecs[MAX_POINTFILE];
 static int		s_num_points, s_check_point;
 
-void Pointfile_Delete( void )
+void Pointfile_Delete()
 {
 	char	name[1024];
 
@@ -47,7 +47,7 @@ void Pointfile_Delete( void )
 }
 
 // advance camera to next point
-void Pointfile_Next( void )
+void Pointfile_Next()
 {
 	idVec3	dir;
 
@@ -68,7 +68,7 @@ void Pointfile_Next( void )
 }
 
 // advance camera to previous point
-void Pointfile_Prev( void )
+void Pointfile_Prev()
 {
 	idVec3	dir;
 
@@ -88,7 +88,7 @@ void Pointfile_Prev( void )
 	Sys_UpdateWindows( W_ALL );
 }
 
-void WINAPI Pointfile_Check( void )
+void WINAPI Pointfile_Check()
 {
 	char	name[1024];
 	FILE*	f;
@@ -141,7 +141,7 @@ void WINAPI Pointfile_Check( void )
 	//Pointfile_Next ();
 }
 
-void Pointfile_Draw( void )
+void Pointfile_Draw()
 {
 	int i;
 
@@ -158,7 +158,7 @@ void Pointfile_Draw( void )
 	qglLineWidth( 0.5 );
 }
 
-void Pointfile_Clear( void )
+void Pointfile_Clear()
 {
 	if( !g_qeglobals.d_pointfile_display_list )
 	{

@@ -43,11 +43,11 @@ public:
 	float				r;		// real part
 	float				i;		// imaginary part
 
-	idComplex( void );
+	idComplex();
 	idComplex( const float r, const float i );
 
 	void 				Set( const float r, const float i );
-	void				Zero( void );
+	void				Zero();
 
 	float				operator[]( int index ) const;
 	float& 				operator[]( int index );
@@ -85,21 +85,21 @@ public:
 	bool				operator==(	const idComplex& a ) const;						// exact compare, no epsilon
 	bool				operator!=(	const idComplex& a ) const;						// exact compare, no epsilon
 
-	idComplex			Reciprocal( void ) const;
-	idComplex			Sqrt( void ) const;
-	float				Abs( void ) const;
+	idComplex			Reciprocal() const;
+	idComplex			Sqrt() const;
+	float				Abs() const;
 
-	int					GetDimension( void ) const;
+	int					GetDimension() const;
 
-	const float* 		ToFloatPtr( void ) const;
-	float* 				ToFloatPtr( void );
+	const float* 		ToFloatPtr() const;
+	float* 				ToFloatPtr();
 	const char* 		ToString( int precision = 2 ) const;
 };
 
 extern idComplex complex_origin;
 #define complex_zero complex_origin
 
-ID_INLINE idComplex::idComplex( void )
+ID_INLINE idComplex::idComplex()
 {
 }
 
@@ -115,7 +115,7 @@ ID_INLINE void idComplex::Set( const float r, const float i )
 	this->i = i;
 }
 
-ID_INLINE void idComplex::Zero( void )
+ID_INLINE void idComplex::Zero()
 {
 	r = i = 0.0f;
 }
@@ -294,7 +294,7 @@ ID_INLINE idComplex operator-( const float a, const idComplex& b )
 	return idComplex( a - b.r, -b.i );
 }
 
-ID_INLINE idComplex idComplex::Reciprocal( void ) const
+ID_INLINE idComplex idComplex::Reciprocal() const
 {
 	float s, t;
 	if( idMath::Fabs( r ) >= idMath::Fabs( i ) )
@@ -311,7 +311,7 @@ ID_INLINE idComplex idComplex::Reciprocal( void ) const
 	}
 }
 
-ID_INLINE idComplex idComplex::Sqrt( void ) const
+ID_INLINE idComplex idComplex::Sqrt() const
 {
 	float x, y, w;
 
@@ -345,7 +345,7 @@ ID_INLINE idComplex idComplex::Sqrt( void ) const
 	}
 }
 
-ID_INLINE float idComplex::Abs( void ) const
+ID_INLINE float idComplex::Abs() const
 {
 	float x, y, t;
 	x = idMath::Fabs( r );
@@ -398,17 +398,17 @@ ID_INLINE bool idComplex::operator!=( const idComplex& a ) const
 	return !Compare( a );
 }
 
-ID_INLINE int idComplex::GetDimension( void ) const
+ID_INLINE int idComplex::GetDimension() const
 {
 	return 2;
 }
 
-ID_INLINE const float* idComplex::ToFloatPtr( void ) const
+ID_INLINE const float* idComplex::ToFloatPtr() const
 {
 	return &r;
 }
 
-ID_INLINE float* idComplex::ToFloatPtr( void )
+ID_INLINE float* idComplex::ToFloatPtr()
 {
 	return &r;
 }

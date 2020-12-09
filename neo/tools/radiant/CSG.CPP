@@ -38,7 +38,7 @@ const float PLANE_EPSILON = 0.0001f;
 CSG_MakeHollow
 =============
 */
-void CSG_MakeHollow( void )
+void CSG_MakeHollow()
 {
 	brush_t*		b, *front, *back, *next;
 	face_t*		f;
@@ -555,7 +555,7 @@ brush_t* Brush_Subtract( brush_t* a, brush_t* b )
 CSG_Subtract
 =============
 */
-void CSG_Subtract( void )
+void CSG_Subtract()
 {
 	brush_t*		b, *s, *fragments, *nextfragment, *frag, *next, *snext;
 	brush_t		fragmentlist;
@@ -697,7 +697,7 @@ void CSG_Subtract( void )
 CSG_Merge
 =============
 */
-void CSG_Merge( void )
+void CSG_Merge()
 {
 	brush_t* b, *next, *newlist, *newbrush;
 	struct entity_s*	owner;

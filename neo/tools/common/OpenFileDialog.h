@@ -34,11 +34,11 @@ class rvOpenFileDialog
 {
 public:
 
-	rvOpenFileDialog( void );
-	~rvOpenFileDialog( void );
+	rvOpenFileDialog();
+	~rvOpenFileDialog();
 
 	bool			DoModal( HWND parent );
-	const char*		GetFilename( void );
+	const char*		GetFilename();
 
 	void			SetFilter( const char* filter );
 	void			SetTitle( const char* title );
@@ -46,12 +46,12 @@ public:
 	void			SetInitialPath( const char* path );
 	void			SetFlags( int flags );
 
-	const char*		GetInitialPath( void );
+	const char*		GetInitialPath();
 
 protected:
 
-	void			UpdateFileList( void );
-	void			UpdateLookIn( void );
+	void			UpdateFileList();
+	void			UpdateLookIn();
 
 	HWND			mWnd;
 	HWND			mWndFileList;
@@ -72,14 +72,14 @@ protected:
 
 private:
 
-	void	HandleCommandOK( void );
-	void	HandleLookInChange( void );
-	void	HandleInitDialog( void );
+	void	HandleCommandOK();
+	void	HandleLookInChange();
+	void	HandleInitDialog();
 
 	static INT_PTR CALLBACK DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam );
 };
 
-ID_INLINE const char* rvOpenFileDialog::GetFilename( void )
+ID_INLINE const char* rvOpenFileDialog::GetFilename()
 {
 	return mFilename.c_str( );
 }
@@ -109,7 +109,7 @@ ID_INLINE void rvOpenFileDialog::SetFlags( int flags )
 	mFlags = flags;
 }
 
-ID_INLINE const char* rvOpenFileDialog::GetInitialPath( void )
+ID_INLINE const char* rvOpenFileDialog::GetInitialPath()
 {
 	return mLookin;
 }

@@ -80,16 +80,16 @@ typedef int aasHandle_t;
 class idAAS
 {
 public:
-	static idAAS* 				Alloc( void );
-	virtual						~idAAS( void ) = 0;
+	static idAAS* 				Alloc();
+	virtual						~idAAS() = 0;
 	// Initialize for the given map.
 	virtual bool				Init( const idStr& mapName, unsigned int mapFileCRC ) = 0;
 	// Print AAS stats.
-	virtual void				Stats( void ) const = 0;
+	virtual void				Stats() const = 0;
 	// Test from the given origin.
 	virtual void				Test( const idVec3& origin ) = 0;
 	// Get the AAS settings.
-	virtual const idAASSettings* GetSettings( void ) const = 0;
+	virtual const idAASSettings* GetSettings() const = 0;
 	// Returns the number of the area the origin is in.
 	virtual int					PointAreaNum( const idVec3& origin ) const = 0;
 	// Returns the number of the nearest reachable area for the given point.
@@ -123,7 +123,7 @@ public:
 	// Remove an obstacle from the routing system.
 	virtual void				RemoveObstacle( const aasHandle_t handle ) = 0;
 	// Remove all obstacles from the routing system.
-	virtual void				RemoveAllObstacles( void ) = 0;
+	virtual void				RemoveAllObstacles() = 0;
 	// Returns the travel time towards the goal area in 100th of a second.
 	virtual int					TravelTimeToGoalArea( int areaNum, const idVec3& origin, int goalAreaNum, int travelFlags ) const = 0;
 	// Get the travel time and first reachability to be used towards the goal, returns true if there is a path.

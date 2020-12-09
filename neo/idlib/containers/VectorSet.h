@@ -43,23 +43,23 @@ template< class type, int dimension >
 class idVectorSet : public idList<type>
 {
 public:
-	idVectorSet( void );
+	idVectorSet();
 	idVectorSet( const type& mins, const type& maxs, const int boxHashSize, const int initialSize );
 
 	// returns total size of allocated memory
-	size_t					Allocated( void ) const
+	size_t					Allocated() const
 	{
 		return idList<type>::Allocated() + hash.Allocated();
 	}
 	// returns total size of allocated memory including size of type
-	size_t					Size( void ) const
+	size_t					Size() const
 	{
 		return sizeof( *this ) + Allocated();
 	}
 
 	void					Init( const type& mins, const type& maxs, const int boxHashSize, const int initialSize );
 	void					ResizeIndex( const int newSize );
-	void					Clear( void );
+	void					Clear();
 
 	int						FindVector( const type& v, const float epsilon );
 
@@ -73,7 +73,7 @@ private:
 };
 
 template< class type, int dimension >
-ID_INLINE idVectorSet<type, dimension>::idVectorSet( void )
+ID_INLINE idVectorSet<type, dimension>::idVectorSet()
 {
 	hash.Clear( idMath::IPow( boxHashSize, dimension ), 128 );
 	boxHashSize = 16;
@@ -118,7 +118,7 @@ ID_INLINE void idVectorSet<type, dimension>::ResizeIndex( const int newSize )
 }
 
 template< class type, int dimension >
-ID_INLINE void idVectorSet<type, dimension>::Clear( void )
+ID_INLINE void idVectorSet<type, dimension>::Clear()
 {
 	idList<type>::Clear();
 	hash.Clear();
@@ -189,22 +189,22 @@ template< class type, int dimension >
 class idVectorSubset
 {
 public:
-	idVectorSubset( void );
+	idVectorSubset();
 	idVectorSubset( const type& mins, const type& maxs, const int boxHashSize, const int initialSize );
 
 	// returns total size of allocated memory
-	size_t					Allocated( void ) const
+	size_t					Allocated() const
 	{
 		return idList<type>::Allocated() + hash.Allocated();
 	}
 	// returns total size of allocated memory including size of type
-	size_t					Size( void ) const
+	size_t					Size() const
 	{
 		return sizeof( *this ) + Allocated();
 	}
 
 	void					Init( const type& mins, const type& maxs, const int boxHashSize, const int initialSize );
-	void					Clear( void );
+	void					Clear();
 
 	// returns either vectorNum or an index to a previously found vector
 	int						FindVector( const type* vectorList, const int vectorNum, const float epsilon );
@@ -219,7 +219,7 @@ private:
 };
 
 template< class type, int dimension >
-ID_INLINE idVectorSubset<type, dimension>::idVectorSubset( void )
+ID_INLINE idVectorSubset<type, dimension>::idVectorSubset()
 {
 	hash.Clear( idMath::IPow( boxHashSize, dimension ), 128 );
 	boxHashSize = 16;
@@ -254,7 +254,7 @@ ID_INLINE void idVectorSubset<type, dimension>::Init( const type& mins, const ty
 }
 
 template< class type, int dimension >
-ID_INLINE void idVectorSubset<type, dimension>::Clear( void )
+ID_INLINE void idVectorSubset<type, dimension>::Clear()
 {
 	idList<type>::Clear();
 	hash.Clear();

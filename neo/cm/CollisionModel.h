@@ -90,12 +90,12 @@ typedef int cmHandle_t;
 class idCollisionModelManager
 {
 public:
-	virtual					~idCollisionModelManager( void ) {}
+	virtual					~idCollisionModelManager() {}
 
 	// Loads collision models from a map file.
 	virtual void			LoadMap( const idMapFile* mapFile ) = 0;
 	// Frees all the collision models.
-	virtual void			FreeMap( void ) = 0;
+	virtual void			FreeMap() = 0;
 
 	// Gets the clip handle for a model.
 	virtual cmHandle_t		LoadModel( const char* modelName, const bool precache ) = 0;
@@ -142,7 +142,7 @@ public:
 	// Prints model information, use -1 handle for accumulated model info.
 	virtual void			ModelInfo( cmHandle_t model ) = 0;
 	// Lists all loaded models.
-	virtual void			ListModels( void ) = 0;
+	virtual void			ListModels() = 0;
 	// Writes a collision model file for the given map entity.
 	virtual bool			WriteCollisionModelForMapEntity( const idMapEntity* mapEnt, const char* filename, const bool testTraceModel = true ) = 0;
 };

@@ -195,14 +195,14 @@ typedef struct
 class idModelExport
 {
 private:
-	void					Reset( void );
+	void					Reset();
 	bool					ParseOptions( idLexer& lex );
 	int						ParseExportSection( idParser& parser );
 
-	static bool				CheckMayaInstall( void );
-	static void				LoadMayaDll( void );
+	static bool				CheckMayaInstall();
+	static void				LoadMayaDll();
 
-	bool					ConvertMayaToMD5( void );
+	bool					ConvertMayaToMD5();
 	static bool				initialized;
 
 public:
@@ -213,7 +213,7 @@ public:
 
 	idModelExport();
 
-	static void				Shutdown( void );
+	static void				Shutdown();
 
 	int						ExportDefFile( const char* filename );
 	bool					ExportModel( const char* model );
@@ -249,27 +249,27 @@ public:
 	idMD5Anim();
 	~idMD5Anim();
 
-	void					Free( void );
-	bool					Reload( void );
-	size_t					Allocated( void ) const;
-	size_t					Size( void ) const
+	void					Free();
+	bool					Reload();
+	size_t					Allocated() const;
+	size_t					Size() const
 	{
 		return sizeof( *this ) + Allocated();
 	};
 	bool					LoadAnim( const char* filename );
 
-	void					IncreaseRefs( void ) const;
-	void					DecreaseRefs( void ) const;
-	int						NumRefs( void ) const;
+	void					IncreaseRefs() const;
+	void					DecreaseRefs() const;
+	int						NumRefs() const;
 
 	void					CheckModelHierarchy( const idRenderModel* model ) const;
 	void					GetInterpolatedFrame( frameBlend_t& frame, idJointQuat* joints, const int* index, int numIndexes ) const;
 	void					GetSingleFrame( int framenum, idJointQuat* joints, const int* index, int numIndexes ) const;
-	int						Length( void ) const;
-	int						NumFrames( void ) const;
-	int						NumJoints( void ) const;
-	const idVec3&			TotalMovementDelta( void ) const;
-	const char*				Name( void ) const;
+	int						Length() const;
+	int						NumFrames() const;
+	int						NumJoints() const;
+	const idVec3&			TotalMovementDelta() const;
+	const char*				Name() const;
 
 	void					GetFrameBlend( int framenum, frameBlend_t& frame ) const;	// frame 1 is first frame
 	void					ConvertTimeToFrame( int time, int cyclecount, frameBlend_t& frame ) const;
@@ -305,25 +305,25 @@ public:
 	~idAnim();
 
 	void						SetAnim( const idDeclModelDef* modelDef, const char* sourcename, const char* animname, int num, const idMD5Anim* md5anims[ ANIM_MaxSyncedAnims ] );
-	const char*					Name( void ) const;
-	const char*					FullName( void ) const;
+	const char*					Name() const;
+	const char*					FullName() const;
 	const idMD5Anim*				MD5Anim( int num ) const;
-	const idDeclModelDef*		ModelDef( void ) const;
-	int							Length( void ) const;
-	int							NumFrames( void ) const;
-	int							NumAnims( void ) const;
-	const idVec3&				TotalMovementDelta( void ) const;
+	const idDeclModelDef*		ModelDef() const;
+	int							Length() const;
+	int							NumFrames() const;
+	int							NumAnims() const;
+	const idVec3&				TotalMovementDelta() const;
 	bool						GetOrigin( idVec3& offset, int animNum, int time, int cyclecount ) const;
 	bool						GetOriginRotation( idQuat& rotation, int animNum, int currentTime, int cyclecount ) const;
 	bool						GetBounds( idBounds& bounds, int animNum, int time, int cyclecount ) const;
 	const char*					AddFrameCommand( const class idDeclModelDef* modelDef, int framenum, idLexer& src, const idDict* def );
 	void						CallFrameCommands( idEntity* ent, int from, int to ) const;
-	bool						HasFrameCommands( void ) const;
+	bool						HasFrameCommands() const;
 
 	// returns first frame (zero based) that command occurs.  returns -1 if not found.
 	int							FindFrameForFrameCommand( frameCommandType_t framecommand, const frameCommand_t** command ) const;
 	void						SetAnimFlags( const animFlags_t& animflags );
-	const animFlags_t&			GetAnimFlags( void ) const;
+	const animFlags_t&			GetAnimFlags() const;
 };
 
 /*
@@ -340,36 +340,36 @@ public:
 	idDeclModelDef();
 	~idDeclModelDef();
 
-	virtual size_t				Size( void ) const;
-	virtual const char* 		DefaultDefinition( void ) const;
+	virtual size_t				Size() const;
+	virtual const char* 		DefaultDefinition() const;
 	virtual bool				Parse( const char* text, const int textLength );
-	virtual void				FreeData( void );
+	virtual void				FreeData();
 
-	void						Touch( void ) const;
+	void						Touch() const;
 
-	const idDeclSkin* 			GetDefaultSkin( void ) const;
-	const idJointQuat* 			GetDefaultPose( void ) const;
+	const idDeclSkin* 			GetDefaultSkin() const;
+	const idJointQuat* 			GetDefaultPose() const;
 	void						SetupJoints( int* numJoints, idJointMat** jointList, idBounds& frameBounds, bool removeOriginOffset ) const;
-	idRenderModel* 				ModelHandle( void ) const;
+	idRenderModel* 				ModelHandle() const;
 	void						GetJointList( const char* jointnames, idList<jointHandle_t>& jointList ) const;
 	const jointInfo_t* 			FindJoint( const char* name ) const;
 
-	int							NumAnims( void ) const;
+	int							NumAnims() const;
 	const idAnim* 				GetAnim( int index ) const;
 	int							GetSpecificAnim( const char* name ) const;
 	int							GetAnim( const char* name ) const;
 	bool						HasAnim( const char* name ) const;
-	const idDeclSkin* 			GetSkin( void ) const;
-	const char* 				GetModelName( void ) const;
-	const idList<jointInfo_t>& 	Joints( void ) const;
-	const int* 					JointParents( void ) const;
-	int							NumJoints( void ) const;
+	const idDeclSkin* 			GetSkin() const;
+	const char* 				GetModelName() const;
+	const idList<jointInfo_t>& 	Joints() const;
+	const int* 					JointParents() const;
+	int							NumJoints() const;
 	const jointInfo_t* 			GetJoint( int jointHandle ) const;
 	const char* 				GetJointName( int jointHandle ) const;
 	int							NumJointsOnChannel( int channel ) const;
 	const int* 					GetChannelJoints( int channel ) const;
 
-	const idVec3& 				GetVisualOffset( void ) const;
+	const idVec3& 				GetVisualOffset() const;
 
 private:
 	void						CopyDecl( const idDeclModelDef* decl );
@@ -431,32 +431,32 @@ public:
 	idAnimBlend();
 	void						Save( idSaveGame* savefile ) const;
 	void						Restore( idRestoreGame* savefile, const idDeclModelDef* modelDef );
-	const char*					AnimName( void ) const;
-	const char*					AnimFullName( void ) const;
+	const char*					AnimName() const;
+	const char*					AnimFullName() const;
 	float						GetWeight( int currenttime ) const;
-	float						GetFinalWeight( void ) const;
+	float						GetFinalWeight() const;
 	void						SetWeight( float newweight, int currenttime, int blendtime );
-	int							NumSyncedAnims( void ) const;
+	int							NumSyncedAnims() const;
 	bool						SetSyncedAnimWeight( int num, float weight );
 	void						Clear( int currentTime, int clearTime );
 	bool						IsDone( int currentTime ) const;
 	bool						FrameHasChanged( int currentTime ) const;
-	int							GetCycleCount( void ) const;
+	int							GetCycleCount() const;
 	void						SetCycleCount( int count );
 	void						SetPlaybackRate( int currentTime, float newRate );
-	float						GetPlaybackRate( void ) const;
+	float						GetPlaybackRate() const;
 	void						SetStartTime( int startTime );
-	int							GetStartTime( void ) const;
-	int							GetEndTime( void ) const;
+	int							GetStartTime() const;
+	int							GetEndTime() const;
 	int							GetFrameNumber( int currenttime ) const;
 	int							AnimTime( int currenttime ) const;
-	int							NumFrames( void ) const;
-	int							Length( void ) const;
-	int							PlayLength( void ) const;
+	int							NumFrames() const;
+	int							Length() const;
+	int							PlayLength() const;
 	void						AllowMovement( bool allow );
 	void						AllowFrameCommands( bool allow );
-	const idAnim*				Anim( void ) const;
-	int							AnimNum( void ) const;
+	const idAnim*				Anim() const;
+	int							AnimNum() const;
 };
 
 /*
@@ -477,14 +477,14 @@ typedef enum
 class idAFPoseJointMod
 {
 public:
-	idAFPoseJointMod( void );
+	idAFPoseJointMod();
 
 	AFJointModType_t			mod;
 	idMat3						axis;
 	idVec3						origin;
 };
 
-ID_INLINE idAFPoseJointMod::idAFPoseJointMod( void )
+ID_INLINE idAFPoseJointMod::idAFPoseJointMod()
 {
 	mod = AF_JOINTMOD_AXIS;
 	axis.Identity();
@@ -505,20 +505,20 @@ public:
 	idAnimator();
 	~idAnimator();
 
-	size_t						Allocated( void ) const;
-	size_t						Size( void ) const;
+	size_t						Allocated() const;
+	size_t						Size() const;
 
 	void						Save( idSaveGame* savefile ) const;					// archives object for save game file
 	void						Restore( idRestoreGame* savefile );					// unarchives object from save game file
 
 	void						SetEntity( idEntity* ent );
-	idEntity*					GetEntity( void ) const ;
+	idEntity*					GetEntity() const ;
 	void						RemoveOriginOffset( bool remove );
-	bool						RemoveOrigin( void ) const;
+	bool						RemoveOrigin() const;
 
 	void						GetJointList( const char* jointnames, idList<jointHandle_t>& jointList ) const;
 
-	int							NumAnims( void ) const;
+	int							NumAnims() const;
 	const idAnim*				GetAnim( int index ) const;
 	int							GetAnim( const char* name ) const;
 	bool						HasAnim( const char* name ) const;
@@ -527,16 +527,16 @@ public:
 	bool						IsAnimating( int currentTime ) const;
 
 	void						GetJoints( int* numJoints, idJointMat** jointsPtr );
-	int							NumJoints( void ) const;
+	int							NumJoints() const;
 	jointHandle_t				GetFirstChild( jointHandle_t jointnum ) const;
 	jointHandle_t				GetFirstChild( const char* name ) const;
 
 	idRenderModel*				SetModel( const char* modelname );
-	idRenderModel*				ModelHandle( void ) const;
-	const idDeclModelDef*		ModelDef( void ) const;
+	idRenderModel*				ModelHandle() const;
+	const idDeclModelDef*		ModelDef() const;
 
-	void						ForceUpdate( void );
-	void						ClearForceUpdate( void );
+	void						ForceUpdate();
+	void						ClearForceUpdate();
 	bool						CreateFrame( int animtime, bool force );
 	bool						FrameHasChanged( int animtime ) const;
 	void						GetDelta( int fromtime, int totime, idVec3& delta ) const;
@@ -557,14 +557,14 @@ public:
 	void						SetJointPos( jointHandle_t jointnum, jointModTransform_t transform_type, const idVec3& pos );
 	void						SetJointAxis( jointHandle_t jointnum, jointModTransform_t transform_type, const idMat3& mat );
 	void						ClearJoint( jointHandle_t jointnum );
-	void						ClearAllJoints( void );
+	void						ClearAllJoints();
 
-	void						InitAFPose( void );
+	void						InitAFPose();
 	void						SetAFPoseJointMod( const jointHandle_t jointNum, const AFJointModType_t mod, const idMat3& axis, const idVec3& origin );
 	void						FinishAFPose( int animnum, const idBounds& bounds, const int time );
 	void						SetAFPoseBlendWeight( float blendWeight );
 	bool						BlendAFPose( idJointQuat* blendFrame ) const;
-	void						ClearAFPose( void );
+	void						ClearAFPose();
 
 	void						ClearAllAnims( int currentTime, int cleartime );
 
@@ -583,7 +583,7 @@ public:
 	const idVec3&				TotalMovementDelta( int animnum ) const;
 
 private:
-	void						FreeData( void );
+	void						FreeData();
 	void						PushAnims( int channel, int currentTime, int blendTime );
 
 private:
@@ -626,15 +626,15 @@ public:
 
 	static bool					forceExport;
 
-	void						Shutdown( void );
+	void						Shutdown();
 	idMD5Anim* 					GetAnim( const char* name );
-	void						ReloadAnims( void );
-	void						ListAnims( void ) const;
+	void						ReloadAnims();
+	void						ListAnims() const;
 	int							JointIndex( const char* name );
 	const char* 				JointName( int index ) const;
 
-	void						ClearAnimsInUse( void );
-	void						FlushUnusedAnims( void );
+	void						ClearAnimsInUse();
+	void						FlushUnusedAnims();
 
 private:
 	idHashTable<idMD5Anim*>	animations;

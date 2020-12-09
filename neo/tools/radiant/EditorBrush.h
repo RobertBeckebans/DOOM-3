@@ -67,7 +67,7 @@ const char* Brush_Name( brush_t* b );
 void		Brush_RebuildBrush( brush_t* b, idVec3 vMins, idVec3 vMaxs, bool patch = true );
 void		Brush_GetBounds( brush_t* b, idBounds& bo );
 
-face_t* 	Face_Alloc( void );
+face_t* 	Face_Alloc();
 void		Face_Free( face_t* f );
 face_t* 	Face_Clone( face_t* f );
 void		Face_MakePlane( face_t* f );

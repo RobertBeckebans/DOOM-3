@@ -139,7 +139,7 @@ public:
 	idRectangle& operator=( const idVec4 v );
 	int operator==( const idRectangle& a ) const;
 	float& 	operator[]( const int index );
-	char* String( void ) const;
+	char* String() const;
 	const idVec4& ToVec4() const;
 
 };

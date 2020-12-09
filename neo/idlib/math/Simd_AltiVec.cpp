@@ -264,7 +264,7 @@ If you have questions concerning this license or the applicable additional terms
 idSIMD_AltiVec::GetName
 ============
 */
-const char* idSIMD_AltiVec::GetName( void ) const
+const char* idSIMD_AltiVec::GetName() const
 {
 	return "AltiVec";
 }

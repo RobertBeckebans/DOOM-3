@@ -39,7 +39,7 @@ END_CLASS
 idForce_Field::idForce_Field
 ================
 */
-idForce_Field::idForce_Field( void )
+idForce_Field::idForce_Field()
 {
 	type			= FORCEFIELD_UNIFORM;
 	applyType		= FORCEFIELD_APPLY_FORCE;
@@ -56,7 +56,7 @@ idForce_Field::idForce_Field( void )
 idForce_Field::~idForce_Field
 ================
 */
-idForce_Field::~idForce_Field( void )
+idForce_Field::~idForce_Field()
 {
 	if( this->clipModel )
 	{

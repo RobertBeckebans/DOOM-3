@@ -40,7 +40,7 @@ END_CLASS
 idPhysics::~idPhysics
 ================
 */
-idPhysics::~idPhysics( void )
+idPhysics::~idPhysics()
 {
 }
 

@@ -567,7 +567,7 @@ extern	frameData_t*	frameData;
 //=======================================================================
 
 void R_LockSurfaceScene( viewDef_t* parms );
-void R_ClearCommandChain( void );
+void R_ClearCommandChain();
 void R_AddDrawViewCmd( viewDef_t* parms );
 
 void R_ReloadGuis_f( const idCmdArgs& args );
@@ -720,18 +720,18 @@ class idRenderSystemLocal : public idRenderSystem
 {
 public:
 	// external functions
-	virtual void			Init( void );
-	virtual void			Shutdown( void );
-	virtual void			InitOpenGL( void );
-	virtual void			ShutdownOpenGL( void );
-	virtual bool			IsOpenGLRunning( void ) const;
-	virtual bool			IsFullScreen( void ) const;
-	virtual int				GetScreenWidth( void ) const;
-	virtual int				GetScreenHeight( void ) const;
-	virtual idRenderWorld* 	AllocRenderWorld( void );
+	virtual void			Init();
+	virtual void			Shutdown();
+	virtual void			InitOpenGL();
+	virtual void			ShutdownOpenGL();
+	virtual bool			IsOpenGLRunning() const;
+	virtual bool			IsFullScreen() const;
+	virtual int				GetScreenWidth() const;
+	virtual int				GetScreenHeight() const;
+	virtual idRenderWorld* 	AllocRenderWorld();
 	virtual void			FreeRenderWorld( idRenderWorld* rw );
-	virtual void			BeginLevelLoad( void );
-	virtual void			EndLevelLoad( void );
+	virtual void			BeginLevelLoad();
+	virtual void			EndLevelLoad();
 	virtual bool			RegisterFont( const char* fontName, fontInfoEx_t& font );
 	virtual void			SetColor( const idVec4& rgba );
 	virtual void			SetColor4( float r, float g, float b, float a );
@@ -762,10 +762,10 @@ public:
 
 public:
 	// internal functions
-	idRenderSystemLocal( void );
-	~idRenderSystemLocal( void );
+	idRenderSystemLocal();
+	~idRenderSystemLocal();
 
-	void					Clear( void );
+	void					Clear();
 	void					SetBackEndRenderer();			// sets tr.backEndRenderer based on cvars
 	void					RenderViewToViewport( const renderView_t* renderView, idScreenRect* viewport );
 
@@ -1024,8 +1024,8 @@ GL wrapper/helper functions
 */
 
 void	GL_SelectTexture( int unit );
-void	GL_CheckErrors( void );
-void	GL_ClearStateDelta( void );
+void	GL_CheckErrors();
+void	GL_ClearStateDelta();
 void	GL_State( int stateVector );
 void	GL_TexEnv( int env );
 void	GL_Cull( int cullType );
@@ -1074,15 +1074,15 @@ const int GLS_ATEST_BITS						= 0x70000000;
 
 const int GLS_DEFAULT							= GLS_DEPTHFUNC_ALWAYS;
 
-void R_Init( void );
-void R_InitOpenGL( void );
+void R_Init();
+void R_InitOpenGL();
 
-void R_DoneFreeType( void );
+void R_DoneFreeType();
 
-void R_SetColorMappings( void );
+void R_SetColorMappings();
 
 void R_ScreenShot_f( const idCmdArgs& args );
-void R_StencilShot( void );
+void R_StencilShot();
 
 bool R_CheckExtension( char* name );
 
@@ -1113,11 +1113,11 @@ bool		GLimp_Init( glimpParms_t parms );
 bool		GLimp_SetScreenParms( glimpParms_t parms );
 // will set up gl up with the new parms
 
-void		GLimp_Shutdown( void );
+void		GLimp_Shutdown();
 // Destroys the rendering context, closes the window, resets the resolution,
 // and resets the gamma ramps.
 
-void		GLimp_SwapBuffers( void );
+void		GLimp_SwapBuffers();
 // Calls the system specific swapbuffers routine, and may also perform
 // other system specific cvar checks that happen every frame.
 // This will not be called if 'r_drawBuffer GL_FRONT'
@@ -1130,16 +1130,16 @@ void		GLimp_SetGamma( unsigned short red[256],
 // of dacs with >8 bits of precision
 
 
-bool		GLimp_SpawnRenderThread( void ( *function )( void ) );
+bool		GLimp_SpawnRenderThread( void ( *function )() );
 // Returns false if the system only has a single processor
 
-void* 		GLimp_BackEndSleep( void );
-void		GLimp_FrontEndSleep( void );
+void* 		GLimp_BackEndSleep();
+void		GLimp_FrontEndSleep();
 void		GLimp_WakeBackEnd( void* data );
 // these functions implement the dual processor syncronization
 
-void		GLimp_ActivateContext( void );
-void		GLimp_DeactivateContext( void );
+void		GLimp_ActivateContext();
+void		GLimp_DeactivateContext();
 // These are used for managing SMP handoffs of the OpenGL context
 // between threads, and as a performance tunining aid.  Setting
 // 'r_skipRenderContext 1' will call GLimp_DeactivateContext() before
@@ -1233,12 +1233,12 @@ void R_ModulateLights_f( const idCmdArgs& args );
 void R_SetLightProject( idPlane lightProject[4], const idVec3 origin, const idVec3 targetPoint,
 						const idVec3 rightVector, const idVec3 upVector, const idVec3 start, const idVec3 stop );
 
-void R_AddLightSurfaces( void );
-void R_AddModelSurfaces( void );
-void R_RemoveUnecessaryViewLights( void );
+void R_AddLightSurfaces();
+void R_AddModelSurfaces();
+void R_RemoveUnecessaryViewLights();
 
-void R_FreeDerivedData( void );
-void R_ReCreateWorldReferences( void );
+void R_FreeDerivedData();
+void R_ReCreateWorldReferences();
 
 void R_CreateEntityRefs( idRenderEntityLocal* def );
 void R_CreateLightRefs( idRenderLightLocal* light );
@@ -1293,9 +1293,9 @@ const shaderStage_t* RB_SetLightTexture( const idRenderLightLocal* light );
 
 void RB_DrawView( const void* data );
 
-void RB_DetermineLightScale( void );
-void RB_STD_LightScale( void );
-void RB_BeginDrawingView( void );
+void RB_DetermineLightScale();
+void RB_STD_LightScale();
+void RB_BeginDrawingView();
 
 /*
 ============================================================
@@ -1312,8 +1312,8 @@ void RB_BindVariableStageImage( const textureStage_t* texture, const float* shad
 void RB_BindStageTexture( const float* shaderRegisters, const textureStage_t* texture, const drawSurf_t* surf );
 void RB_FinishStageTexture( const textureStage_t* texture, const drawSurf_t* surf );
 void RB_StencilShadowPass( const drawSurf_t* drawSurfs );
-void RB_STD_DrawView( void );
-void RB_STD_FogAllLights( void );
+void RB_STD_DrawView();
+void RB_STD_FogAllLights();
 void RB_BakeTextureMatrixIntoTexgen( idPlane lightProject[3], const float textureMatrix[16] );
 
 /*
@@ -1324,19 +1324,19 @@ DRAW_*
 ============================================================
 */
 
-void	RB_ARB_DrawInteractions( void );
+void	RB_ARB_DrawInteractions();
 
-void	R_R200_Init( void );
-void	RB_R200_DrawInteractions( void );
+void	R_R200_Init();
+void	RB_R200_DrawInteractions();
 
-void	R_NV10_Init( void );
-void	RB_NV10_DrawInteractions( void );
+void	R_NV10_Init();
+void	RB_NV10_DrawInteractions();
 
-void	R_NV20_Init( void );
-void	RB_NV20_DrawInteractions( void );
+void	R_NV20_Init();
+void	RB_NV20_DrawInteractions();
 
-void	R_ARB2_Init( void );
-void	RB_ARB2_DrawInteractions( void );
+void	R_ARB2_Init();
+void	RB_ARB2_DrawInteractions();
 void	R_ReloadARBPrograms_f( const idCmdArgs& args );
 int		R_FindARBProgram( GLenum target, const char* program );
 
@@ -1499,12 +1499,12 @@ TRISURF
 
 #define USE_TRI_DATA_ALLOCATOR
 
-void				R_InitTriSurfData( void );
-void				R_ShutdownTriSurfData( void );
+void				R_InitTriSurfData();
+void				R_ShutdownTriSurfData();
 void				R_PurgeTriSurfData( frameData_t* frame );
 void				R_ShowTriSurfMemory_f( const idCmdArgs& args );
 
-srfTriangles_t* 	R_AllocStaticTriSurf( void );
+srfTriangles_t* 	R_AllocStaticTriSurf();
 srfTriangles_t* 	R_CopyStaticTriSurf( const srfTriangles_t* tri );
 void				R_AllocStaticTriSurfVerts( srfTriangles_t* tri, int numVerts );
 void				R_AllocStaticTriSurfIndexes( srfTriangles_t* tri, int numIndexes );
@@ -1584,7 +1584,7 @@ SUBVIEW
 */
 
 bool	R_PreciseCullSurface( const drawSurf_t* drawSurf, idBounds& ndcBounds );
-bool	R_GenerateSubViews( void );
+bool	R_GenerateSubViews();
 
 /*
 ============================================================
@@ -1594,10 +1594,10 @@ SCENE GENERATION
 ============================================================
 */
 
-void R_InitFrameData( void );
-void R_ShutdownFrameData( void );
-int R_CountFrameData( void );
-void R_ToggleSmpFrame( void );
+void R_InitFrameData();
+void R_ShutdownFrameData();
+int R_CountFrameData();
+void R_ToggleSmpFrame();
 void* R_FrameAlloc( int bytes );
 void* R_ClearedFrameAlloc( int bytes );
 void R_FrameFree( void* data );
@@ -1625,12 +1625,12 @@ void RB_ClearDebugPolygons( int time );
 void RB_DrawBounds( const idBounds& bounds );
 void RB_ShowLights( drawSurf_t** drawSurfs, int numDrawSurfs );
 void RB_ShowLightCount( drawSurf_t** drawSurfs, int numDrawSurfs );
-void RB_PolygonClear( void );
-void RB_ScanStencilBuffer( void );
-void RB_ShowDestinationAlpha( void );
-void RB_ShowOverdraw( void );
+void RB_PolygonClear();
+void RB_ScanStencilBuffer();
+void RB_ShowDestinationAlpha();
+void RB_ShowOverdraw();
 void RB_RenderDebugTools( drawSurf_t** drawSurfs, int numDrawSurfs );
-void RB_ShutdownDebugTools( void );
+void RB_ShutdownDebugTools();
 
 /*
 =============================================================
@@ -1640,13 +1640,13 @@ TR_BACKEND
 =============================================================
 */
 
-void RB_SetDefaultGLState( void );
-void RB_SetGL2D( void );
+void RB_SetDefaultGLState();
+void RB_SetGL2D();
 
 // write a comment to the r_logFile if it is enabled
 void RB_LogComment( const char* comment, ... ) id_attribute( ( format( printf, 1, 2 ) ) );
 
-void RB_ShowImages( void );
+void RB_ShowImages();
 
 void RB_ExecuteBackEndCommands( const emptyCommand_t* cmds );
 

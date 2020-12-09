@@ -38,7 +38,7 @@ static unsigned short s_oldHardwareGamma[3][256];
 ** WG_GetOldGammaRamp
 **
 */
-void WG_GetOldGammaRamp( void )
+void WG_GetOldGammaRamp()
 {
 	HDC			hDC;
 
@@ -77,7 +77,7 @@ void WG_GetOldGammaRamp( void )
 	/*
 	** WG_RestoreGamma
 	*/
-	void WG_RestoreGamma( void )
+	void WG_RestoreGamma()
 	{
 		HDC hDC;
 

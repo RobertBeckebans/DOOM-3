@@ -42,7 +42,7 @@ If you have questions concerning this license or the applicable additional terms
 idAFVector::idAFVector
 ================
 */
-idAFVector::idAFVector( void )
+idAFVector::idAFVector()
 {
 	type = VEC_COORDS;
 	vec.Zero();
@@ -670,7 +670,7 @@ bool idDeclAF::WriteSettings( idFile* f ) const
 idDeclAF::RebuildTextSource
 ================
 */
-bool idDeclAF::RebuildTextSource( void )
+bool idDeclAF::RebuildTextSource()
 {
 	int i;
 	idFile_Memory f;
@@ -715,7 +715,7 @@ bool idDeclAF::RebuildTextSource( void )
 idDeclAF::Save
 ================
 */
-bool idDeclAF::Save( void )
+bool idDeclAF::Save()
 {
 	RebuildTextSource();
 	ReplaceSourceFileText();
@@ -880,7 +880,7 @@ const char* idDeclAF::JointModToString( declAFJointMod_t jointMod )
 idDeclAF::Size
 =================
 */
-size_t idDeclAF::Size( void ) const
+size_t idDeclAF::Size() const
 {
 	return sizeof( idDeclAF );
 }
@@ -1929,7 +1929,7 @@ bool idDeclAF::Parse( const char* text, const int textLength )
 idDeclAF::DefaultDefinition
 ================
 */
-const char* idDeclAF::DefaultDefinition( void ) const
+const char* idDeclAF::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -1968,7 +1968,7 @@ const char* idDeclAF::DefaultDefinition( void ) const
 idDeclAF::FreeData
 ================
 */
-void idDeclAF::FreeData( void )
+void idDeclAF::FreeData()
 {
 	modified = false;
 	defaultLinearFriction = 0.01f;
@@ -2161,7 +2161,7 @@ void idDeclAF::DeleteConstraint( const char* name )
 idDeclAF::idDeclAF
 ================
 */
-idDeclAF::idDeclAF( void )
+idDeclAF::idDeclAF()
 {
 	FreeData();
 }
@@ -2171,7 +2171,7 @@ idDeclAF::idDeclAF( void )
 idDeclAF::~idDeclAF
 ================
 */
-idDeclAF::~idDeclAF( void )
+idDeclAF::~idDeclAF()
 {
 	bodies.DeleteContents( true );
 	constraints.DeleteContents( true );

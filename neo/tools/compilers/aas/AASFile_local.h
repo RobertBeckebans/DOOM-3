@@ -43,8 +43,8 @@ class idAASFileLocal : public idAASFile
 	friend class idAASReach;
 	friend class idAASCluster;
 public:
-	idAASFileLocal( void );
-	virtual 					~idAASFileLocal( void );
+	idAASFileLocal();
+	virtual 					~idAASFileLocal();
 
 public:
 	virtual idVec3				EdgeCenter( int edgeNum ) const;
@@ -60,21 +60,21 @@ public:
 	virtual int					BoundsReachableAreaNum( const idBounds& bounds, const int areaFlags, const int excludeTravelFlags ) const;
 	virtual void				PushPointIntoAreaNum( int areaNum, idVec3& point ) const;
 	virtual bool				Trace( aasTrace_t& trace, const idVec3& start, const idVec3& end ) const;
-	virtual void				PrintInfo( void ) const;
+	virtual void				PrintInfo() const;
 
 public:
 	bool						Load( const idStr& fileName, unsigned int mapFileCRC );
 	bool						Write( const idStr& fileName, unsigned int mapFileCRC );
 
-	int							MemorySize( void ) const;
-	void						ReportRoutingEfficiency( void ) const;
-	void						Optimize( void );
-	void						LinkReversedReachability( void );
-	void						FinishAreas( void );
+	int							MemorySize() const;
+	void						ReportRoutingEfficiency() const;
+	void						Optimize();
+	void						LinkReversedReachability();
+	void						FinishAreas();
 
-	void						Clear( void );
-	void						DeleteReachabilities( void );
-	void						DeleteClusters( void );
+	void						Clear();
+	void						DeleteReachabilities();
+	void						DeleteClusters();
 
 private:
 	bool						ParseIndex( idLexer& src, idList<aasIndex_t>& indexes );
@@ -91,10 +91,10 @@ private:
 private:
 	int							BoundsReachableAreaNum_r( int nodeNum, const idBounds& bounds, const int areaFlags, const int excludeTravelFlags ) const;
 	void						MaxTreeDepth_r( int nodeNum, int& depth, int& maxDepth ) const;
-	int							MaxTreeDepth( void ) const;
+	int							MaxTreeDepth() const;
 	int							AreaContentsTravelFlags( int areaNum ) const;
 	idVec3						AreaReachableGoal( int areaNum ) const;
-	int							NumReachabilities( void ) const;
+	int							NumReachabilities() const;
 };
 
 #endif /* !__AASFILELOCAL_H__ */

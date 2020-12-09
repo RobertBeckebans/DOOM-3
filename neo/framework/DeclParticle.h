@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 class idParticleParm
 {
 public:
-	idParticleParm( void )
+	idParticleParm()
 	{
 		table = NULL;
 		from = to = 0.0f;
@@ -114,8 +114,8 @@ typedef struct
 class idParticleStage
 {
 public:
-	idParticleStage( void );
-	virtual					~idParticleStage( void ) {}
+	idParticleStage();
+	virtual					~idParticleStage() {}
 
 	void					Default();
 	virtual int				NumQuadsPerParticle() const;	// includes trails and cross faded animations
@@ -206,10 +206,10 @@ class idDeclParticle : public idDecl
 {
 public:
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
+	virtual void			FreeData();
 
 	bool					Save( const char* fileName = NULL );
 
@@ -218,7 +218,7 @@ public:
 	float					depthHack;
 
 private:
-	bool					RebuildTextSource( void );
+	bool					RebuildTextSource();
 	void					GetStageBounds( idParticleStage* stage );
 	idParticleStage* 		ParseParticleStage( idLexer& src );
 	void					ParseParms( idLexer& src, float* parms, int maxParms );

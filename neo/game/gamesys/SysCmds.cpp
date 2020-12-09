@@ -1449,7 +1449,7 @@ static void Cmd_ListDebugLines_f( const idCmdArgs& args )
 D_DrawDebugLines
 ==================
 */
-void D_DrawDebugLines( void )
+void D_DrawDebugLines()
 {
 	int i;
 	idVec3 forward, right, up, p1, p2;
@@ -2654,7 +2654,7 @@ Let the system know about all of our commands
 so it can perform tab completion
 =================
 */
-void idGameLocal::InitConsoleCommands( void )
+void idGameLocal::InitConsoleCommands()
 {
 	cmdSystem->AddCommand( "listTypeInfo",			ListTypeInfo_f,				CMD_FL_GAME,				"list type info" );
 	cmdSystem->AddCommand( "writeGameState",		WriteGameState_f,			CMD_FL_GAME,				"write game state" );
@@ -2764,7 +2764,7 @@ void idGameLocal::InitConsoleCommands( void )
 idGameLocal::ShutdownConsoleCommands
 =================
 */
-void idGameLocal::ShutdownConsoleCommands( void )
+void idGameLocal::ShutdownConsoleCommands()
 {
 	cmdSystem->RemoveFlaggedCommands( CMD_FL_GAME );
 }

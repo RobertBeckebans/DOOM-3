@@ -57,7 +57,7 @@ If you have questions concerning this license or the applicable additional terms
 idSIMD_Generic::GetName
 ============
 */
-const char* idSIMD_Generic::GetName( void ) const
+const char* idSIMD_Generic::GetName() const
 {
 	return "generic code";
 }

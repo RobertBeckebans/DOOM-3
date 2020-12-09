@@ -41,10 +41,10 @@ class idSIMD_MMX : public idSIMD_Generic
 {
 public:
 #if defined(MACOS_X) && defined(__i386__)
-	virtual const char* VPCALL GetName( void ) const;
+	virtual const char* VPCALL GetName() const;
 
 #elif defined(_WIN32)
-	virtual const char* VPCALL GetName( void ) const;
+	virtual const char* VPCALL GetName() const;
 
 	virtual void VPCALL Memcpy( void* dst,			const void* src,		const int count );
 	virtual void VPCALL Memset( void* dst,			const int val,			const int count );

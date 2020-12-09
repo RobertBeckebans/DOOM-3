@@ -41,14 +41,14 @@ class idSurface_Patch : public idSurface
 {
 
 public:
-	idSurface_Patch( void );
+	idSurface_Patch();
 	idSurface_Patch( int maxPatchWidth, int maxPatchHeight );
 	idSurface_Patch( const idSurface_Patch& patch );
-	~idSurface_Patch( void );
+	~idSurface_Patch();
 
 	void				SetSize( int patchWidth, int patchHeight );
-	int					GetWidth( void ) const;
-	int					GetHeight( void ) const;
+	int					GetWidth() const;
+	int					GetHeight() const;
 
 	// subdivide the patch mesh based on error
 	void				Subdivide( float maxHorizontalError, float maxVerticalError, float maxLength, bool genNormals = false );
@@ -64,21 +64,21 @@ protected:
 
 private:
 	// put the approximation points on the curve
-	void				PutOnCurve( void );
+	void				PutOnCurve();
 	// remove columns and rows with all points on one line
-	void				RemoveLinearColumnsRows( void );
+	void				RemoveLinearColumnsRows();
 	// resize verts buffer
 	void				ResizeExpanded( int height, int width );
 	// space points out over maxWidth * maxHeight buffer
-	void				Expand( void );
+	void				Expand();
 	// move all points to the start of the verts buffer
-	void				Collapse( void );
+	void				Collapse();
 	// project a point onto a vector to calculate maximum curve error
 	void				ProjectPointOntoVector( const idVec3& point, const idVec3& vStart, const idVec3& vEnd, idVec3& vProj );
 	// generate normals
-	void				GenerateNormals( void );
+	void				GenerateNormals();
 	// generate triangle indexes
-	void				GenerateIndexes( void );
+	void				GenerateIndexes();
 	// lerp point from two patch point
 	void				LerpVert( const idDrawVert& a, const idDrawVert& b, idDrawVert& out ) const;
 	// sample a single 3x3 patch
@@ -91,7 +91,7 @@ private:
 idSurface_Patch::idSurface_Patch
 =================
 */
-ID_INLINE idSurface_Patch::idSurface_Patch( void )
+ID_INLINE idSurface_Patch::idSurface_Patch()
 {
 	height = width = maxHeight = maxWidth = 0;
 	expanded = false;
@@ -135,7 +135,7 @@ ID_INLINE idSurface_Patch::~idSurface_Patch()
 idSurface_Patch::GetWidth
 =================
 */
-ID_INLINE int idSurface_Patch::GetWidth( void ) const
+ID_INLINE int idSurface_Patch::GetWidth() const
 {
 	return width;
 }
@@ -145,7 +145,7 @@ ID_INLINE int idSurface_Patch::GetWidth( void ) const
 idSurface_Patch::GetHeight
 =================
 */
-ID_INLINE int idSurface_Patch::GetHeight( void ) const
+ID_INLINE int idSurface_Patch::GetHeight() const
 {
 	return height;
 }

@@ -118,7 +118,7 @@ public:
 
 	void				GUIConfig( idUserInterface* pGUI, const char* name );
 	// update the GUI fields with information about the currently selected server
-	void				GUIUpdateSelected( void );
+	void				GUIUpdateSelected();
 
 	void				Shutdown( );
 

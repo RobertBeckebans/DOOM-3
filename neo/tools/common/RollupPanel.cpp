@@ -57,7 +57,7 @@ rvRollupPanel::rvRollupPanel
 constructor
 ================
 */
-rvRollupPanel::rvRollupPanel( void )
+rvRollupPanel::rvRollupPanel()
 {
 	mStartYPos  = 0;
 	mItemHeight = 0;
@@ -71,7 +71,7 @@ rvRollupPanel::~rvRollupPanel
 destructor
 ================
 */
-rvRollupPanel::~rvRollupPanel( void )
+rvRollupPanel::~rvRollupPanel()
 {
 	// destroy the items
 	for( ; mItems.Num(); )
@@ -511,7 +511,7 @@ rvRollupPanel::RecallLayout
 Update the layout of the control based on current states
 ================
 */
-void rvRollupPanel::RecallLayout( void )
+void rvRollupPanel::RecallLayout()
 {
 	int	 bottomPagePos;
 	RECT r;
@@ -1192,7 +1192,7 @@ rvRollupPanel::AutoSize
 Automatically set the width of the control based on the dialogs it contains
 ================
 */
-void rvRollupPanel::AutoSize( void )
+void rvRollupPanel::AutoSize()
 {
 	int i;
 	int width = 0;

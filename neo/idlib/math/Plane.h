@@ -71,7 +71,7 @@ class idMat3;
 class idPlane
 {
 public:
-	idPlane( void );
+	idPlane();
 	idPlane( float a, float b, float c, float d );
 	idPlane( const idVec3& normal, const float dist );
 
@@ -89,16 +89,16 @@ public:
 	bool			operator==(	const idPlane& p ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idPlane& p ) const;					// exact compare, no epsilon
 
-	void			Zero( void );							// zero plane
+	void			Zero();							// zero plane
 	void			SetNormal( const idVec3& normal );		// sets the normal
-	const idVec3& 	Normal( void ) const;					// reference to const normal
-	idVec3& 		Normal( void );							// reference to normal
+	const idVec3& 	Normal() const;					// reference to const normal
+	idVec3& 		Normal();							// reference to normal
 	float			Normalize( bool fixDegenerate = true );	// only normalizes the plane normal, does not adjust d
-	bool			FixDegenerateNormal( void );			// fix degenerate normal
+	bool			FixDegenerateNormal();			// fix degenerate normal
 	bool			FixDegeneracies( float distEpsilon );	// fix degenerate normal and dist
-	float			Dist( void ) const;						// returns: -d
+	float			Dist() const;						// returns: -d
 	void			SetDist( const float dist );			// sets: d = -dist
-	int				Type( void ) const;						// returns plane type
+	int				Type() const;						// returns plane type
 
 	bool			FromPoints( const idVec3& p1, const idVec3& p2, const idVec3& p3, bool fixDegenerate = true );
 	bool			FromVecs( const idVec3& dir1, const idVec3& dir2, const idVec3& p, bool fixDegenerate = true );
@@ -117,12 +117,12 @@ public:
 	bool			RayIntersection( const idVec3& start, const idVec3& dir, float& scale ) const;
 	bool			PlaneIntersection( const idPlane& plane, idVec3& start, idVec3& dir ) const;
 
-	int				GetDimension( void ) const;
+	int				GetDimension() const;
 
-	const idVec4& 	ToVec4( void ) const;
-	idVec4& 		ToVec4( void );
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	const idVec4& 	ToVec4() const;
+	idVec4& 		ToVec4();
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 
 private:
@@ -135,7 +135,7 @@ private:
 extern idPlane plane_origin;
 #define plane_zero plane_origin
 
-ID_INLINE idPlane::idPlane( void )
+ID_INLINE idPlane::idPlane()
 {
 }
 
@@ -248,7 +248,7 @@ ID_INLINE bool idPlane::operator!=( const idPlane& p ) const
 	return !Compare( p );
 }
 
-ID_INLINE void idPlane::Zero( void )
+ID_INLINE void idPlane::Zero()
 {
 	a = b = c = d = 0.0f;
 }
@@ -260,12 +260,12 @@ ID_INLINE void idPlane::SetNormal( const idVec3& normal )
 	c = normal.z;
 }
 
-ID_INLINE const idVec3& idPlane::Normal( void ) const
+ID_INLINE const idVec3& idPlane::Normal() const
 {
 	return *reinterpret_cast<const idVec3*>( &a );
 }
 
-ID_INLINE idVec3& idPlane::Normal( void )
+ID_INLINE idVec3& idPlane::Normal()
 {
 	return *reinterpret_cast<idVec3*>( &a );
 }
@@ -281,7 +281,7 @@ ID_INLINE float idPlane::Normalize( bool fixDegenerate )
 	return length;
 }
 
-ID_INLINE bool idPlane::FixDegenerateNormal( void )
+ID_INLINE bool idPlane::FixDegenerateNormal()
 {
 	return Normal().FixDegenerateNormal();
 }
@@ -300,7 +300,7 @@ ID_INLINE bool idPlane::FixDegeneracies( float distEpsilon )
 	return fixedNormal;
 }
 
-ID_INLINE float idPlane::Dist( void ) const
+ID_INLINE float idPlane::Dist() const
 {
 	return -d;
 }
@@ -422,27 +422,27 @@ ID_INLINE bool idPlane::RayIntersection( const idVec3& start, const idVec3& dir,
 	return true;
 }
 
-ID_INLINE int idPlane::GetDimension( void ) const
+ID_INLINE int idPlane::GetDimension() const
 {
 	return 4;
 }
 
-ID_INLINE const idVec4& idPlane::ToVec4( void ) const
+ID_INLINE const idVec4& idPlane::ToVec4() const
 {
 	return *reinterpret_cast<const idVec4*>( &a );
 }
 
-ID_INLINE idVec4& idPlane::ToVec4( void )
+ID_INLINE idVec4& idPlane::ToVec4()
 {
 	return *reinterpret_cast<idVec4*>( &a );
 }
 
-ID_INLINE const float* idPlane::ToFloatPtr( void ) const
+ID_INLINE const float* idPlane::ToFloatPtr() const
 {
 	return reinterpret_cast<const float*>( &a );
 }
 
-ID_INLINE float* idPlane::ToFloatPtr( void )
+ID_INLINE float* idPlane::ToFloatPtr()
 {
 	return reinterpret_cast<float*>( &a );
 }

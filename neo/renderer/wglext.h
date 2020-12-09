@@ -363,10 +363,10 @@ typedef BOOL ( WINAPI* PFNWGLCHOOSEPIXELFORMATARBPROC )( HDC hdc, const int* piA
 #define WGL_ARB_make_current_read 1
 #ifdef WGL_WGLEXT_PROTOTYPES
 extern BOOL WINAPI wglMakeContextCurrentARB( HDC, HDC, HGLRC );
-extern HDC WINAPI wglGetCurrentReadDCARB( void );
+extern HDC WINAPI wglGetCurrentReadDCARB();
 #endif /* WGL_WGLEXT_PROTOTYPES */
 typedef BOOL ( WINAPI* PFNWGLMAKECONTEXTCURRENTARBPROC )( HDC hDrawDC, HDC hReadDC, HGLRC hglrc );
-typedef HDC( WINAPI* PFNWGLGETCURRENTREADDCARBPROC )( void );
+typedef HDC( WINAPI* PFNWGLGETCURRENTREADDCARBPROC )();
 #endif
 
 #ifndef WGL_ARB_pbuffer
@@ -414,19 +414,19 @@ typedef VOID ( WINAPI* PFNWGLDESTROYDISPLAYCOLORTABLEEXTPROC )( GLushort id );
 #ifndef WGL_EXT_extensions_string
 #define WGL_EXT_extensions_string 1
 #ifdef WGL_WGLEXT_PROTOTYPES
-extern const char* WINAPI wglGetExtensionsStringEXT( void );
+extern const char* WINAPI wglGetExtensionsStringEXT();
 #endif /* WGL_WGLEXT_PROTOTYPES */
-typedef const char* ( WINAPI* PFNWGLGETEXTENSIONSSTRINGEXTPROC )( void );
+typedef const char* ( WINAPI* PFNWGLGETEXTENSIONSSTRINGEXTPROC )();
 #endif
 
 #ifndef WGL_EXT_make_current_read
 #define WGL_EXT_make_current_read 1
 #ifdef WGL_WGLEXT_PROTOTYPES
 extern BOOL WINAPI wglMakeContextCurrentEXT( HDC, HDC, HGLRC );
-extern HDC WINAPI wglGetCurrentReadDCEXT( void );
+extern HDC WINAPI wglGetCurrentReadDCEXT();
 #endif /* WGL_WGLEXT_PROTOTYPES */
 typedef BOOL ( WINAPI* PFNWGLMAKECONTEXTCURRENTEXTPROC )( HDC hDrawDC, HDC hReadDC, HGLRC hglrc );
-typedef HDC( WINAPI* PFNWGLGETCURRENTREADDCEXTPROC )( void );
+typedef HDC( WINAPI* PFNWGLGETCURRENTREADDCEXTPROC )();
 #endif
 
 #ifndef WGL_EXT_pbuffer
@@ -461,10 +461,10 @@ typedef BOOL ( WINAPI* PFNWGLCHOOSEPIXELFORMATEXTPROC )( HDC hdc, const int* piA
 #define WGL_EXT_swap_control 1
 #ifdef WGL_WGLEXT_PROTOTYPES
 extern BOOL WINAPI wglSwapIntervalEXT( int );
-extern int WINAPI wglGetSwapIntervalEXT( void );
+extern int WINAPI wglGetSwapIntervalEXT();
 #endif /* WGL_WGLEXT_PROTOTYPES */
 typedef BOOL ( WINAPI* PFNWGLSWAPINTERVALEXTPROC )( int interval );
-typedef int ( WINAPI* PFNWGLGETSWAPINTERVALEXTPROC )( void );
+typedef int ( WINAPI* PFNWGLGETSWAPINTERVALEXTPROC )();
 #endif
 
 #ifndef WGL_EXT_depth_float
@@ -578,13 +578,13 @@ typedef BOOL ( WINAPI* PFNWGLRELEASEIMAGEBUFFEREVENTSI3DPROC )( HDC hDC, const L
 #ifndef WGL_I3D_swap_frame_lock
 #define WGL_I3D_swap_frame_lock 1
 #ifdef WGL_WGLEXT_PROTOTYPES
-extern BOOL WINAPI wglEnableFrameLockI3D( void );
-extern BOOL WINAPI wglDisableFrameLockI3D( void );
+extern BOOL WINAPI wglEnableFrameLockI3D();
+extern BOOL WINAPI wglDisableFrameLockI3D();
 extern BOOL WINAPI wglIsEnabledFrameLockI3D( BOOL* );
 extern BOOL WINAPI wglQueryFrameLockMasterI3D( BOOL* );
 #endif /* WGL_WGLEXT_PROTOTYPES */
-typedef BOOL ( WINAPI* PFNWGLENABLEFRAMELOCKI3DPROC )( void );
-typedef BOOL ( WINAPI* PFNWGLDISABLEFRAMELOCKI3DPROC )( void );
+typedef BOOL ( WINAPI* PFNWGLENABLEFRAMELOCKI3DPROC )();
+typedef BOOL ( WINAPI* PFNWGLDISABLEFRAMELOCKI3DPROC )();
 typedef BOOL ( WINAPI* PFNWGLISENABLEDFRAMELOCKI3DPROC )( BOOL* pFlag );
 typedef BOOL ( WINAPI* PFNWGLQUERYFRAMELOCKMASTERI3DPROC )( BOOL* pFlag );
 #endif
@@ -593,13 +593,13 @@ typedef BOOL ( WINAPI* PFNWGLQUERYFRAMELOCKMASTERI3DPROC )( BOOL* pFlag );
 #define WGL_I3D_swap_frame_usage 1
 #ifdef WGL_WGLEXT_PROTOTYPES
 extern BOOL WINAPI wglGetFrameUsageI3D( float* );
-extern BOOL WINAPI wglBeginFrameTrackingI3D( void );
-extern BOOL WINAPI wglEndFrameTrackingI3D( void );
+extern BOOL WINAPI wglBeginFrameTrackingI3D();
+extern BOOL WINAPI wglEndFrameTrackingI3D();
 extern BOOL WINAPI wglQueryFrameTrackingI3D( DWORD*, DWORD*, float* );
 #endif /* WGL_WGLEXT_PROTOTYPES */
 typedef BOOL ( WINAPI* PFNWGLGETFRAMEUSAGEI3DPROC )( float* pUsage );
-typedef BOOL ( WINAPI* PFNWGLBEGINFRAMETRACKINGI3DPROC )( void );
-typedef BOOL ( WINAPI* PFNWGLENDFRAMETRACKINGI3DPROC )( void );
+typedef BOOL ( WINAPI* PFNWGLBEGINFRAMETRACKINGI3DPROC )();
+typedef BOOL ( WINAPI* PFNWGLENDFRAMETRACKINGI3DPROC )();
 typedef BOOL ( WINAPI* PFNWGLQUERYFRAMETRACKINGI3DPROC )( DWORD* pFrameCount, DWORD* pMissedFrames, float* pLastMissedUsage );
 #endif
 

@@ -51,15 +51,15 @@ typedef struct
 } memoryStats_t;
 
 
-void		Mem_Init( void );
-void		Mem_Shutdown( void );
+void		Mem_Init();
+void		Mem_Shutdown();
 void		Mem_EnableLeakTest( const char* name );
-void		Mem_ClearFrameStats( void );
+void		Mem_ClearFrameStats();
 void		Mem_GetFrameStats( memoryStats_t& allocs, memoryStats_t& frees );
 void		Mem_GetStats( memoryStats_t& stats );
 void		Mem_Dump_f( const class idCmdArgs& args );
 void		Mem_DumpCompressed_f( const class idCmdArgs& args );
-void		Mem_AllocDefragBlock( void );
+void		Mem_AllocDefragBlock();
 
 
 #ifndef ID_DEBUG_MEMORY
@@ -167,23 +167,23 @@ template<class type, int blockSize>
 class idBlockAlloc
 {
 public:
-	idBlockAlloc( void );
-	~idBlockAlloc( void );
+	idBlockAlloc();
+	~idBlockAlloc();
 
-	void					Shutdown( void );
+	void					Shutdown();
 
-	type* 					Alloc( void );
+	type* 					Alloc();
 	void					Free( type* element );
 
-	int						GetTotalCount( void ) const
+	int						GetTotalCount() const
 	{
 		return total;
 	}
-	int						GetAllocCount( void ) const
+	int						GetAllocCount() const
 	{
 		return active;
 	}
-	int						GetFreeCount( void ) const
+	int						GetFreeCount() const
 	{
 		return total - active;
 	}
@@ -207,7 +207,7 @@ private:
 };
 
 template<class type, int blockSize>
-idBlockAlloc<type, blockSize>::idBlockAlloc( void )
+idBlockAlloc<type, blockSize>::idBlockAlloc()
 {
 	blocks = NULL;
 	free = NULL;
@@ -215,13 +215,13 @@ idBlockAlloc<type, blockSize>::idBlockAlloc( void )
 }
 
 template<class type, int blockSize>
-idBlockAlloc<type, blockSize>::~idBlockAlloc( void )
+idBlockAlloc<type, blockSize>::~idBlockAlloc()
 {
 	Shutdown();
 }
 
 template<class type, int blockSize>
-type* idBlockAlloc<type, blockSize>::Alloc( void )
+type* idBlockAlloc<type, blockSize>::Alloc()
 {
 	if( !free )
 	{
@@ -252,7 +252,7 @@ void idBlockAlloc<type, blockSize>::Free( type* t )
 }
 
 template<class type, int blockSize>
-void idBlockAlloc<type, blockSize>::Shutdown( void )
+void idBlockAlloc<type, blockSize>::Shutdown()
 {
 	while( blocks )
 	{
@@ -281,45 +281,45 @@ template<class type, int baseBlockSize, int minBlockSize>
 class idDynamicAlloc
 {
 public:
-	idDynamicAlloc( void );
-	~idDynamicAlloc( void );
+	idDynamicAlloc();
+	~idDynamicAlloc();
 
-	void							Init( void );
-	void							Shutdown( void );
+	void							Init();
+	void							Shutdown();
 	void							SetFixedBlocks( int numBlocks ) {}
 	void							SetLockMemory( bool lock ) {}
-	void							FreeEmptyBaseBlocks( void ) {}
+	void							FreeEmptyBaseBlocks() {}
 
 	type* 							Alloc( const int num );
 	type* 							Resize( type* ptr, const int num );
 	void							Free( type* ptr );
 	const char* 					CheckMemory( const type* ptr ) const;
 
-	int								GetNumBaseBlocks( void ) const
+	int								GetNumBaseBlocks() const
 	{
 		return 0;
 	}
-	int								GetBaseBlockMemory( void ) const
+	int								GetBaseBlockMemory() const
 	{
 		return 0;
 	}
-	int								GetNumUsedBlocks( void ) const
+	int								GetNumUsedBlocks() const
 	{
 		return numUsedBlocks;
 	}
-	int								GetUsedBlockMemory( void ) const
+	int								GetUsedBlockMemory() const
 	{
 		return usedBlockMemory;
 	}
-	int								GetNumFreeBlocks( void ) const
+	int								GetNumFreeBlocks() const
 	{
 		return 0;
 	}
-	int								GetFreeBlockMemory( void ) const
+	int								GetFreeBlockMemory() const
 	{
 		return 0;
 	}
-	int								GetNumEmptyBaseBlocks( void ) const
+	int								GetNumEmptyBaseBlocks() const
 	{
 		return 0;
 	}
@@ -332,28 +332,28 @@ private:
 	int								numResizes;
 	int								numFrees;
 
-	void							Clear( void );
+	void							Clear();
 };
 
 template<class type, int baseBlockSize, int minBlockSize>
-idDynamicAlloc<type, baseBlockSize, minBlockSize>::idDynamicAlloc( void )
+idDynamicAlloc<type, baseBlockSize, minBlockSize>::idDynamicAlloc()
 {
 	Clear();
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-idDynamicAlloc<type, baseBlockSize, minBlockSize>::~idDynamicAlloc( void )
+idDynamicAlloc<type, baseBlockSize, minBlockSize>::~idDynamicAlloc()
 {
 	Shutdown();
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Init( void )
+void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Init()
 {
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Shutdown( void )
+void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Shutdown()
 {
 	Clear();
 }
@@ -410,7 +410,7 @@ const char* idDynamicAlloc<type, baseBlockSize, minBlockSize>::CheckMemory( cons
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Clear( void )
+void idDynamicAlloc<type, baseBlockSize, minBlockSize>::Clear()
 {
 	numUsedBlocks = 0;
 	usedBlockMemory = 0;
@@ -439,11 +439,11 @@ template<class type>
 class idDynamicBlock
 {
 public:
-	type* 							GetMemory( void ) const
+	type* 							GetMemory() const
 	{
 		return ( type* )( ( ( byte* ) this ) + sizeof( idDynamicBlock<type> ) );
 	}
-	int								GetSize( void ) const
+	int								GetSize() const
 	{
 		return abs( size );
 	}
@@ -451,7 +451,7 @@ public:
 	{
 		size = isBaseBlock ? -s : s;
 	}
-	bool							IsBaseBlock( void ) const
+	bool							IsBaseBlock() const
 	{
 		return ( size < 0 );
 	}
@@ -471,45 +471,45 @@ template<class type, int baseBlockSize, int minBlockSize>
 class idDynamicBlockAlloc
 {
 public:
-	idDynamicBlockAlloc( void );
-	~idDynamicBlockAlloc( void );
+	idDynamicBlockAlloc();
+	~idDynamicBlockAlloc();
 
-	void							Init( void );
-	void							Shutdown( void );
+	void							Init();
+	void							Shutdown();
 	void							SetFixedBlocks( int numBlocks );
 	void							SetLockMemory( bool lock );
-	void							FreeEmptyBaseBlocks( void );
+	void							FreeEmptyBaseBlocks();
 
 	type* 							Alloc( const int num );
 	type* 							Resize( type* ptr, const int num );
 	void							Free( type* ptr );
 	const char* 					CheckMemory( const type* ptr ) const;
 
-	int								GetNumBaseBlocks( void ) const
+	int								GetNumBaseBlocks() const
 	{
 		return numBaseBlocks;
 	}
-	int								GetBaseBlockMemory( void ) const
+	int								GetBaseBlockMemory() const
 	{
 		return baseBlockMemory;
 	}
-	int								GetNumUsedBlocks( void ) const
+	int								GetNumUsedBlocks() const
 	{
 		return numUsedBlocks;
 	}
-	int								GetUsedBlockMemory( void ) const
+	int								GetUsedBlockMemory() const
 	{
 		return usedBlockMemory;
 	}
-	int								GetNumFreeBlocks( void ) const
+	int								GetNumFreeBlocks() const
 	{
 		return numFreeBlocks;
 	}
-	int								GetFreeBlockMemory( void ) const
+	int								GetFreeBlockMemory() const
 	{
 		return freeBlockMemory;
 	}
-	int								GetNumEmptyBaseBlocks( void ) const;
+	int								GetNumEmptyBaseBlocks() const;
 
 private:
 	idDynamicBlock<type>* 			firstBlock;				// first block in list in order of increasing address
@@ -533,35 +533,35 @@ private:
 	int								numResizes;
 	int								numFrees;
 
-	void							Clear( void );
+	void							Clear();
 	idDynamicBlock<type>* 			AllocInternal( const int num );
 	idDynamicBlock<type>* 			ResizeInternal( idDynamicBlock<type>* block, const int num );
 	void							FreeInternal( idDynamicBlock<type>* block );
 	void							LinkFreeInternal( idDynamicBlock<type>* block );
 	void							UnlinkFreeInternal( idDynamicBlock<type>* block );
-	void							CheckMemory( void ) const;
+	void							CheckMemory() const;
 };
 
 template<class type, int baseBlockSize, int minBlockSize>
-idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::idDynamicBlockAlloc( void )
+idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::idDynamicBlockAlloc()
 {
 	Clear();
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::~idDynamicBlockAlloc( void )
+idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::~idDynamicBlockAlloc()
 {
 	Shutdown();
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Init( void )
+void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Init()
 {
 	freeTree.Init();
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Shutdown( void )
+void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Shutdown()
 {
 	idDynamicBlock<type>* block;
 
@@ -635,7 +635,7 @@ void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::SetLockMemory( bool
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::FreeEmptyBaseBlocks( void )
+void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::FreeEmptyBaseBlocks()
 {
 	idDynamicBlock<type>* block, *next;
 
@@ -678,7 +678,7 @@ void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::FreeEmptyBaseBlocks
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-int idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::GetNumEmptyBaseBlocks( void ) const
+int idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::GetNumEmptyBaseBlocks() const
 {
 	int numEmptyBaseBlocks;
 	idDynamicBlock<type>* block;
@@ -832,7 +832,7 @@ const char* idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::CheckMemory(
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Clear( void )
+void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::Clear()
 {
 	firstBlock = lastBlock = NULL;
 	allowAllocs = true;
@@ -1045,7 +1045,7 @@ ID_INLINE void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::UnlinkFre
 }
 
 template<class type, int baseBlockSize, int minBlockSize>
-void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::CheckMemory( void ) const
+void idDynamicBlockAlloc<type, baseBlockSize, minBlockSize>::CheckMemory() const
 {
 	idDynamicBlock<type>* block;
 

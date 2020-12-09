@@ -74,7 +74,7 @@ const int CustomParticleCount = sizeof( ParticleCustomDesc ) / sizeof( const Par
 idDeclParticle::Size
 =================
 */
-size_t idDeclParticle::Size( void ) const
+size_t idDeclParticle::Size() const
 {
 	return sizeof( idDeclParticle );
 }
@@ -585,7 +585,7 @@ bool idDeclParticle::Parse( const char* text, const int textLength )
 idDeclParticle::FreeData
 ================
 */
-void idDeclParticle::FreeData( void )
+void idDeclParticle::FreeData()
 {
 	stages.DeleteContents( true );
 }
@@ -595,7 +595,7 @@ void idDeclParticle::FreeData( void )
 idDeclParticle::DefaultDefinition
 ================
 */
-const char* idDeclParticle::DefaultDefinition( void ) const
+const char* idDeclParticle::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -743,7 +743,7 @@ void idDeclParticle::WriteStage( idFile* f, idParticleStage* stage )
 idDeclParticle::RebuildTextSource
 ================
 */
-bool idDeclParticle::RebuildTextSource( void )
+bool idDeclParticle::RebuildTextSource()
 {
 	idFile_Memory f;
 
@@ -827,7 +827,7 @@ idParticleStage
 idParticleStage::idParticleStage
 ================
 */
-idParticleStage::idParticleStage( void )
+idParticleStage::idParticleStage()
 {
 	material = NULL;
 	totalParticles = 0;

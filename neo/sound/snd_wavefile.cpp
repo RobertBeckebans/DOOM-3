@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 //       Then call Read() as needed.  Calling the destructor or Close()
 //       will close the file.
 //-----------------------------------------------------------------------------
-idWaveFile::idWaveFile( void )
+idWaveFile::idWaveFile()
 {
 	memset( &mpwfx, 0, sizeof( waveformatextensible_t ) );
 	mhmmio		= NULL;
@@ -53,7 +53,7 @@ idWaveFile::idWaveFile( void )
 // Name: idWaveFile::~idWaveFile()
 // Desc: Destructs the class
 //-----------------------------------------------------------------------------
-idWaveFile::~idWaveFile( void )
+idWaveFile::~idWaveFile()
 {
 	Close();
 
@@ -157,7 +157,7 @@ int idWaveFile::OpenFromMemory( short* pbData, int ulDataSize, waveformatextensi
 //       mhmmio must be valid before calling.  This function uses it to
 //       update mckRiff, and mpwfx.
 //-----------------------------------------------------------------------------
-int idWaveFile::ReadMMIO( void )
+int idWaveFile::ReadMMIO()
 {
 	mminfo_t		ckIn;           // chunk info. for general use.
 	pcmwaveformat_t pcmWaveFormat;  // Temp PCM structure to load in.
@@ -251,7 +251,7 @@ int idWaveFile::ReadMMIO( void )
 // Desc: Resets the internal mck pointer so reading starts from the
 //       beginning of the file again
 //-----------------------------------------------------------------------------
-int idWaveFile::ResetFile( void )
+int idWaveFile::ResetFile()
 {
 	if( mbIsReadingFromMemory )
 	{
@@ -363,7 +363,7 @@ int idWaveFile::Read( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead )
 // Name: idWaveFile::Close()
 // Desc: Closes the wave file
 //-----------------------------------------------------------------------------
-int idWaveFile::Close( void )
+int idWaveFile::Close()
 {
 	if( ogg != NULL )
 	{

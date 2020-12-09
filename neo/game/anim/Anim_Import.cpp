@@ -61,7 +61,7 @@ idModelExport::idModelExport()
 idModelExport::Shutdown
 ====================
 */
-void idModelExport::Shutdown( void )
+void idModelExport::Shutdown()
 {
 	if( Maya_Shutdown )
 	{
@@ -87,7 +87,7 @@ idModelExport::CheckMayaInstall
 Determines if Maya is installed on the user's machine
 =====================
 */
-bool idModelExport::CheckMayaInstall( void )
+bool idModelExport::CheckMayaInstall()
 {
 #ifndef _WIN32
 	return false;
@@ -134,7 +134,7 @@ idModelExport::LoadMayaDll
 Checks to see if we can load the Maya export dll
 =====================
 */
-void idModelExport::LoadMayaDll( void )
+void idModelExport::LoadMayaDll()
 {
 	exporterDLLEntry_t	dllEntry;
 	char				dllPath[ MAX_OSPATH ];
@@ -185,7 +185,7 @@ Checks if a Maya model should be converted to an MD5, and converts if if the tim
 version number has changed.
 =====================
 */
-bool idModelExport::ConvertMayaToMD5( void )
+bool idModelExport::ConvertMayaToMD5()
 {
 	ID_TIME_T
 	sourceTime;
@@ -292,7 +292,7 @@ bool idModelExport::ConvertMayaToMD5( void )
 idModelExport::Reset
 ====================
 */
-void idModelExport::Reset( void )
+void idModelExport::Reset()
 {
 	force		= false;
 	commandLine = "";

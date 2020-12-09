@@ -39,7 +39,7 @@ static unsigned long crctable[256];
    combinations of CRC register values and incoming bytes.
 */
 
-void make_crc_table( void )
+void make_crc_table()
 {
 	int i, j;
 	unsigned long c, poly;

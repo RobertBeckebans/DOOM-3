@@ -104,31 +104,31 @@ class idDeclBase
 {
 public:
 	virtual 				~idDeclBase() {};
-	virtual const char* 	GetName( void ) const = 0;
-	virtual declType_t		GetType( void ) const = 0;
-	virtual declState_t		GetState( void ) const = 0;
-	virtual bool			IsImplicit( void ) const = 0;
-	virtual bool			IsValid( void ) const = 0;
-	virtual void			Invalidate( void ) = 0;
-	virtual void			Reload( void ) = 0;
-	virtual void			EnsureNotPurged( void ) = 0;
-	virtual int				Index( void ) const = 0;
-	virtual int				GetLineNum( void ) const = 0;
-	virtual const char* 	GetFileName( void ) const = 0;
+	virtual const char* 	GetName() const = 0;
+	virtual declType_t		GetType() const = 0;
+	virtual declState_t		GetState() const = 0;
+	virtual bool			IsImplicit() const = 0;
+	virtual bool			IsValid() const = 0;
+	virtual void			Invalidate() = 0;
+	virtual void			Reload() = 0;
+	virtual void			EnsureNotPurged() = 0;
+	virtual int				Index() const = 0;
+	virtual int				GetLineNum() const = 0;
+	virtual const char* 	GetFileName() const = 0;
 	virtual void			GetText( char* text ) const = 0;
-	virtual int				GetTextLength( void ) const = 0;
+	virtual int				GetTextLength() const = 0;
 	virtual void			SetText( const char* text ) = 0;
-	virtual bool			ReplaceSourceFileText( void ) = 0;
-	virtual bool			SourceFileChanged( void ) const = 0;
-	virtual void			MakeDefault( void ) = 0;
-	virtual bool			EverReferenced( void ) const = 0;
-	virtual bool			SetDefaultText( void ) = 0;
-	virtual const char* 	DefaultDefinition( void ) const = 0;
+	virtual bool			ReplaceSourceFileText() = 0;
+	virtual bool			SourceFileChanged() const = 0;
+	virtual void			MakeDefault() = 0;
+	virtual bool			EverReferenced() const = 0;
+	virtual bool			SetDefaultText() = 0;
+	virtual const char* 	DefaultDefinition() const = 0;
 	virtual bool			Parse( const char* text, const int textLength ) = 0;
-	virtual void			FreeData( void ) = 0;
-	virtual size_t			Size( void ) const = 0;
-	virtual void			List( void ) const = 0;
-	virtual void			Print( void ) const = 0;
+	virtual void			FreeData() = 0;
+	virtual size_t			Size() const = 0;
+	virtual void			List() const = 0;
+	virtual void			Print() const = 0;
 };
 
 
@@ -137,32 +137,32 @@ class idDecl
 public:
 	// The constructor should initialize variables such that
 	// an immediate call to FreeData() does no harm.
-	idDecl( void )
+	idDecl()
 	{
 		base = NULL;
 	}
-	virtual 				~idDecl( void ) {};
+	virtual 				~idDecl() {};
 
 	// Returns the name of the decl.
-	const char* 			GetName( void ) const
+	const char* 			GetName() const
 	{
 		return base->GetName();
 	}
 
 	// Returns the decl type.
-	declType_t				GetType( void ) const
+	declType_t				GetType() const
 	{
 		return base->GetType();
 	}
 
 	// Returns the decl state which is usefull for finding out if a decl defaulted.
-	declState_t				GetState( void ) const
+	declState_t				GetState() const
 	{
 		return base->GetState();
 	}
 
 	// Returns true if the decl was defaulted or the text was created with a call to SetDefaultText.
-	bool					IsImplicit( void ) const
+	bool					IsImplicit() const
 	{
 		return base->IsImplicit();
 	}
@@ -170,39 +170,39 @@ public:
 	// The only way non-manager code can have an invalid decl is if the *ByIndex()
 	// call was used with forceParse = false to walk the lists to look at names
 	// without touching the media.
-	bool					IsValid( void ) const
+	bool					IsValid() const
 	{
 		return base->IsValid();
 	}
 
 	// Sets state back to unparsed.
 	// Used by decl editors to undo any changes to the decl.
-	void					Invalidate( void )
+	void					Invalidate()
 	{
 		base->Invalidate();
 	}
 
 	// if a pointer might possible be stale from a previous level,
 	// call this to have it re-parsed
-	void					EnsureNotPurged( void )
+	void					EnsureNotPurged()
 	{
 		base->EnsureNotPurged();
 	}
 
 	// Returns the index in the per-type list.
-	int						Index( void ) const
+	int						Index() const
 	{
 		return base->Index();
 	}
 
 	// Returns the line number the decl starts.
-	int						GetLineNum( void ) const
+	int						GetLineNum() const
 	{
 		return base->GetLineNum();
 	}
 
 	// Returns the name of the file in which the decl is defined.
-	const char* 			GetFileName( void ) const
+	const char* 			GetFileName() const
 	{
 		return base->GetFileName();
 	}
@@ -214,7 +214,7 @@ public:
 	}
 
 	// Returns the length of the decl text.
-	int						GetTextLength( void ) const
+	int						GetTextLength() const
 	{
 		return base->GetTextLength();
 	}
@@ -227,25 +227,25 @@ public:
 
 	// Saves out new text for the decl.
 	// Used by decl editors to replace the decl text in the source file.
-	bool					ReplaceSourceFileText( void )
+	bool					ReplaceSourceFileText()
 	{
 		return base->ReplaceSourceFileText();
 	}
 
 	// Returns true if the source file changed since it was loaded and parsed.
-	bool					SourceFileChanged( void ) const
+	bool					SourceFileChanged() const
 	{
 		return base->SourceFileChanged();
 	}
 
 	// Frees data and makes the decl a default.
-	void					MakeDefault( void )
+	void					MakeDefault()
 	{
 		base->MakeDefault();
 	}
 
 	// Returns true if the decl was ever referenced.
-	bool					EverReferenced( void ) const
+	bool					EverReferenced() const
 	{
 		return base->EverReferenced();
 	}
@@ -255,7 +255,7 @@ public:
 	// This may be overridden to provide a default definition based on the
 	// decl name. For instance materials may default to an implicit definition
 	// using a texture with the same name as the decl.
-	virtual bool			SetDefaultText( void )
+	virtual bool			SetDefaultText()
 	{
 		return base->SetDefaultText();
 	}
@@ -265,7 +265,7 @@ public:
 	// has an error while parsing, MakeDefault() will do a FreeData(), then a
 	// Parse() with DefaultDefinition(). The defaultDefintion should start with
 	// an open brace and end with a close brace.
-	virtual const char* 	DefaultDefinition( void ) const
+	virtual const char* 	DefaultDefinition() const
 	{
 		return base->DefaultDefinition();
 	}
@@ -284,13 +284,13 @@ public:
 	// any Parse(), so the constructor must have set sane values. The decl will be
 	// invalid after issuing this call, but it will always be immediately followed
 	// by a Parse()
-	virtual void			FreeData( void )
+	virtual void			FreeData()
 	{
 		base->FreeData();
 	}
 
 	// Returns the size of the decl in memory.
-	virtual size_t			Size( void ) const
+	virtual size_t			Size() const
 	{
 		return base->Size();
 	}
@@ -298,7 +298,7 @@ public:
 	// If this isn't overridden, it will just print the decl name.
 	// The manager will have printed 7 characters on the line already,
 	// containing the reference state and index number.
-	virtual void			List( void ) const
+	virtual void			List() const
 	{
 		base->List();
 	}
@@ -306,7 +306,7 @@ public:
 	// The print function will already have dumped the text source
 	// and common data, subclasses can override this to dump more
 	// explicit data.
-	virtual void			Print( void ) const
+	virtual void			Print() const
 	{
 		base->Print();
 	}
@@ -317,7 +317,7 @@ public:
 
 
 template< class type >
-ID_INLINE idDecl* idDeclAllocator( void )
+ID_INLINE idDecl* idDeclAllocator()
 {
 	return new type;
 }
@@ -330,26 +330,26 @@ class idSoundShader;
 class idDeclManager
 {
 public:
-	virtual					~idDeclManager( void ) {}
+	virtual					~idDeclManager() {}
 
-	virtual void			Init( void ) = 0;
-	virtual void			Shutdown( void ) = 0;
+	virtual void			Init() = 0;
+	virtual void			Shutdown() = 0;
 	virtual void			Reload( bool force ) = 0;
 
 	virtual void			BeginLevelLoad() = 0;
 	virtual void			EndLevelLoad() = 0;
 
 	// Registers a new decl type.
-	virtual void			RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )( void ) ) = 0;
+	virtual void			RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )() ) = 0;
 
 	// Registers a new folder with decl files.
 	virtual void			RegisterDeclFolder( const char* folder, const char* extension, declType_t defaultType ) = 0;
 
 	// Returns a checksum for all loaded decl text.
-	virtual int				GetChecksum( void ) const = 0;
+	virtual int				GetChecksum() const = 0;
 
 	// Returns the number of decl types.
-	virtual int				GetNumDeclTypes( void ) const = 0;
+	virtual int				GetNumDeclTypes() const = 0;
 
 	// Returns the type name for a decl type.
 	virtual const char* 	GetDeclNameFromType( declType_t type ) const = 0;

@@ -66,11 +66,11 @@ typedef enum
 class idPVS
 {
 public:
-	idPVS( void );
-	~idPVS( void );
+	idPVS();
+	~idPVS();
 	// setup for the current map
-	void				Init( void );
-	void				Shutdown( void );
+	void				Init();
+	void				Shutdown();
 	// get the area(s) the source is in
 	int					GetPVSArea( const idVec3& point ) const;		// returns the area number
 	int					GetPVSAreas( const idBounds& bounds, int* areas, int maxAreas ) const;	// returns number of areas
@@ -114,18 +114,18 @@ private:
 	struct pvsArea_s* 	pvsAreas;
 
 private:
-	int					GetPortalCount( void ) const;
-	void				CreatePVSData( void );
-	void				DestroyPVSData( void );
-	void				CopyPortalPVSToMightSee( void ) const;
+	int					GetPortalCount() const;
+	void				CreatePVSData();
+	void				DestroyPVSData();
+	void				CopyPortalPVSToMightSee() const;
 	void				FloodFrontPortalPVS_r( struct pvsPortal_s* portal, int areaNum ) const;
-	void				FrontPortalPVS( void ) const;
+	void				FrontPortalPVS() const;
 	struct pvsStack_s* 	FloodPassagePVS_r( struct pvsPortal_s* source, const struct pvsPortal_s* portal, struct pvsStack_s* prevStack ) const;
-	void				PassagePVS( void ) const;
+	void				PassagePVS() const;
 	void				AddPassageBoundaries( const idWinding& source, const idWinding& pass, bool flipClip, idPlane* bounds, int& numBounds, int maxBounds ) const;
-	void				CreatePassages( void ) const;
-	void				DestroyPassages( void ) const;
-	int					AreaPVSFromPortalPVS( void ) const;
+	void				CreatePassages() const;
+	void				DestroyPassages() const;
+	int					AreaPVSFromPortalPVS() const;
 	void				GetConnectedAreas( int srcArea, bool* connectedAreas ) const;
 	pvsHandle_t			AllocCurrentPVS( unsigned int h ) const;
 };

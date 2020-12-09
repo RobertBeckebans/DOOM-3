@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 rvDebuggerScript::rvDebuggerScript
 ================
 */
-rvDebuggerScript::rvDebuggerScript( void )
+rvDebuggerScript::rvDebuggerScript()
 {
 	mContents  = NULL;
 	mProgram   = NULL;
@@ -52,7 +52,7 @@ rvDebuggerScript::rvDebuggerScript( void )
 rvDebuggerScript::~rvDebuggerScript
 ================
 */
-rvDebuggerScript::~rvDebuggerScript( void )
+rvDebuggerScript::~rvDebuggerScript()
 {
 	Unload( );
 }
@@ -64,7 +64,7 @@ rvDebuggerScript::Unload
 Unload the script from memory
 ================
 */
-void rvDebuggerScript::Unload( void )
+void rvDebuggerScript::Unload()
 {
 	delete[] mContents;
 
@@ -182,7 +182,7 @@ rvDebuggerScript::Reload
 Reload the contents of the script
 ================
 */
-bool rvDebuggerScript::Reload( void )
+bool rvDebuggerScript::Reload()
 {
 	return Load( mFilename );
 }

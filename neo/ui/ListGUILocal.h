@@ -58,17 +58,17 @@ public:
 	// use the element count as index for the ids
 	void				Push( const idStr& s );
 	bool				Del( int id );
-	void				Clear( void );
-	int					Num( void )
+	void				Clear();
+	int					Num()
 	{
 		return idList<idStr>::Num();
 	}
 	int					GetSelection( char* s, int size, int sel = 0 ) const; // returns the id, not the list index (or -1)
 	void				SetSelection( int sel );
 	int					GetNumSelections();
-	bool				IsConfigured( void ) const;
+	bool				IsConfigured() const;
 	void				SetStateChanges( bool enable );
-	void				Shutdown( void );
+	void				Shutdown();
 
 private:
 	idUserInterface* 	m_pGUI;

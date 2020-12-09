@@ -971,7 +971,7 @@ Create any new interactions needed between the viewLights
 and the viewEntitys due to game movement
 =================
 */
-void R_AddLightSurfaces( void )
+void R_AddLightSurfaces()
 {
 	viewLight_t*		vLight;
 	idRenderLightLocal* light;
@@ -1653,7 +1653,7 @@ shadows are generated, since dynamic models will typically be lit by
 two or more lights.
 ===================
 */
-void R_AddModelSurfaces( void )
+void R_AddModelSurfaces()
 {
 	viewEntity_t*		vEntity;
 	idInteraction*		inter, *next;
@@ -1787,7 +1787,7 @@ void R_AddModelSurfaces( void )
 R_RemoveUnecessaryViewLights
 =====================
 */
-void R_RemoveUnecessaryViewLights( void )
+void R_RemoveUnecessaryViewLights()
 {
 	viewLight_t*		vLight;
 

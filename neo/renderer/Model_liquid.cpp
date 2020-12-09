@@ -248,7 +248,7 @@ void idRenderModelLiquid::IntersectBounds( const idBounds& bounds, float displac
 idRenderModelLiquid::Update
 ====================
 */
-void idRenderModelLiquid::Update( void )
+void idRenderModelLiquid::Update()
 {
 	int		x, y;
 	float*	p2;

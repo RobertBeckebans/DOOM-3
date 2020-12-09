@@ -54,7 +54,7 @@ public:
 	int				GetWinVarOffset( idWinVar* wv, drawWin_t* owner );
 	size_t			Size();
 
-	idWindow*		GetParent( void )
+	idWindow*		GetParent()
 	{
 		return mParent;
 	}

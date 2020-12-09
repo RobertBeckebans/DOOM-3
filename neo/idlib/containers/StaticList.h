@@ -45,30 +45,30 @@ public:
 
 	idStaticList();
 	idStaticList( const idStaticList<type, size>& other );
-	~idStaticList<type, size>( void );
+	~idStaticList<type, size>();
 
-	void				Clear( void );										// marks the list as empty.  does not deallocate or intialize data.
-	int					Num( void ) const;									// returns number of elements in list
-	int					Max( void ) const;									// returns the maximum number of elements in the list
+	void				Clear();										// marks the list as empty.  does not deallocate or intialize data.
+	int					Num() const;									// returns number of elements in list
+	int					Max() const;									// returns the maximum number of elements in the list
 	void				SetNum( int newnum );								// set number of elements in list
 
-	size_t				Allocated( void ) const;							// returns total size of allocated memory
-	size_t				Size( void ) const;									// returns total size of allocated memory including size of list type
-	size_t				MemoryUsed( void ) const;							// returns size of the used elements in the list
+	size_t				Allocated() const;							// returns total size of allocated memory
+	size_t				Size() const;									// returns total size of allocated memory including size of list type
+	size_t				MemoryUsed() const;							// returns size of the used elements in the list
 
 	const type& 		operator[]( int index ) const;
 	type& 				operator[]( int index );
 
-	type* 				Ptr( void );										// returns a pointer to the list
-	const type* 		Ptr( void ) const;									// returns a pointer to the list
-	type* 				Alloc( void );										// returns reference to a new data element at the end of the list.  returns NULL when full.
+	type* 				Ptr();										// returns a pointer to the list
+	const type* 		Ptr() const;									// returns a pointer to the list
+	type* 				Alloc();										// returns reference to a new data element at the end of the list.  returns NULL when full.
 	int					Append( const type& obj );							// append element
 	int					Append( const idStaticList<type, size>& other );		// append list
 	int					AddUnique( const type& obj );						// add unique element
 	int					Insert( const type& obj, int index );				// insert the element at the given index
 	int					FindIndex( const type& obj ) const;				// find the index for the given element
 	type* 				Find( type const& obj ) const;						// find pointer to the given element
-	int					FindNull( void ) const;								// find the index for the first NULL pointer in the list
+	int					FindNull() const;								// find the index for the first NULL pointer in the list
 	int					IndexOf( const type* obj ) const;					// returns the index for the pointer to an element in the list
 	bool				RemoveIndex( int index );							// remove the element at the given index
 	bool				Remove( const type& obj );							// remove the element
@@ -108,7 +108,7 @@ idStaticList<type,size>::~idStaticList<type,size>
 ================
 */
 template<class type, int size>
-ID_INLINE idStaticList<type, size>::~idStaticList( void )
+ID_INLINE idStaticList<type, size>::~idStaticList()
 {
 }
 
@@ -120,7 +120,7 @@ Sets the number of elements in the list to 0.  Assumes that type automatically h
 ================
 */
 template<class type, int size>
-ID_INLINE void idStaticList<type, size>::Clear( void )
+ID_INLINE void idStaticList<type, size>::Clear()
 {
 	num	= 0;
 }
@@ -166,7 +166,7 @@ Returns the number of elements currently contained in the list.
 ================
 */
 template<class type, int size>
-ID_INLINE int idStaticList<type, size>::Num( void ) const
+ID_INLINE int idStaticList<type, size>::Num() const
 {
 	return num;
 }
@@ -179,7 +179,7 @@ Returns the maximum number of elements in the list.
 ================
 */
 template<class type, int size>
-ID_INLINE int idStaticList<type, size>::Max( void ) const
+ID_INLINE int idStaticList<type, size>::Max() const
 {
 	return size;
 }
@@ -190,7 +190,7 @@ idStaticList<type>::Allocated
 ================
 */
 template<class type, int size>
-ID_INLINE size_t idStaticList<type, size>::Allocated( void ) const
+ID_INLINE size_t idStaticList<type, size>::Allocated() const
 {
 	return size * sizeof( type );
 }
@@ -201,7 +201,7 @@ idStaticList<type>::Size
 ================
 */
 template<class type, int size>
-ID_INLINE size_t idStaticList<type, size>::Size( void ) const
+ID_INLINE size_t idStaticList<type, size>::Size() const
 {
 	return sizeof( idStaticList<type, size> ) + Allocated();
 }
@@ -212,7 +212,7 @@ idStaticList<type,size>::Num
 ================
 */
 template<class type, int size>
-ID_INLINE size_t idStaticList<type, size>::MemoryUsed( void ) const
+ID_INLINE size_t idStaticList<type, size>::MemoryUsed() const
 {
 	return num * sizeof( list[ 0 ] );
 }
@@ -278,7 +278,7 @@ FIXME: Create an iterator template for this kind of thing.
 ================
 */
 template<class type, int size>
-ID_INLINE type* idStaticList<type, size>::Ptr( void )
+ID_INLINE type* idStaticList<type, size>::Ptr()
 {
 	return &list[ 0 ];
 }
@@ -295,7 +295,7 @@ FIXME: Create an iterator template for this kind of thing.
 ================
 */
 template<class type, int size>
-ID_INLINE const type* idStaticList<type, size>::Ptr( void ) const
+ID_INLINE const type* idStaticList<type, size>::Ptr() const
 {
 	return &list[ 0 ];
 }
@@ -308,7 +308,7 @@ Returns a pointer to a new data element at the end of the list.
 ================
 */
 template<class type, int size>
-ID_INLINE type* idStaticList<type, size>::Alloc( void )
+ID_INLINE type* idStaticList<type, size>::Alloc()
 {
 	if( num >= size )
 	{
@@ -487,7 +487,7 @@ on non-pointer lists will cause a compiler error.
 ================
 */
 template<class type, int size>
-ID_INLINE int idStaticList<type, size>::FindNull( void ) const
+ID_INLINE int idStaticList<type, size>::FindNull() const
 {
 	int i;
 

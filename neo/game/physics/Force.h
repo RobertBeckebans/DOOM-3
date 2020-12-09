@@ -48,10 +48,10 @@ class idForce : public idClass
 public:
 	CLASS_PROTOTYPE( idForce );
 
-	idForce( void );
-	virtual				~idForce( void );
+	idForce();
+	virtual				~idForce();
 	static void			DeletePhysics( const idPhysics* phys );
-	static void			ClearForceList( void );
+	static void			ClearForceList();
 
 public: // common force interface
 	// evalulate the force up to the given time

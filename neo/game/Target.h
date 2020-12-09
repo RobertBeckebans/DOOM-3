@@ -149,7 +149,7 @@ class idTarget_WaitForButton : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_WaitForButton );
 
-	void				Think( void );
+	void				Think();
 
 private:
 	void				Event_Activate( idEntity* activator );
@@ -221,12 +221,12 @@ class idTarget_FadeEntity : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_FadeEntity );
 
-	idTarget_FadeEntity( void );
+	idTarget_FadeEntity();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Think( void );
+	void				Think();
 
 private:
 	idVec4				fadeFrom;
@@ -283,7 +283,7 @@ class idTarget_Give : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_Give );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	void				Event_Activate( idEntity* activator );
@@ -303,7 +303,7 @@ class idTarget_GiveEmail : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_GiveEmail );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	void				Event_Activate( idEntity* activator );
@@ -322,7 +322,7 @@ class idTarget_SetModel : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_SetModel );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	void				Event_Activate( idEntity* activator );
@@ -342,12 +342,12 @@ class idTarget_SetInfluence : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_SetInfluence );
 
-	idTarget_SetInfluence( void );
+	idTarget_SetInfluence();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Spawn( void );
+	void				Spawn();
 
 private:
 	void				Event_Activate( idEntity* activator );
@@ -355,7 +355,7 @@ private:
 	void				Event_GatherEntities();
 	void				Event_Flash( float flash, int out );
 	void				Event_ClearFlash( float flash );
-	void				Think( void );
+	void				Think();
 
 	idList<int>			lightList;
 	idList<int>			guiList;
@@ -407,7 +407,7 @@ public:
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
 
-	void				Think( void );
+	void				Think();
 
 private:
 	idInterpolate<int>	fovSetting;
@@ -499,9 +499,9 @@ class idTarget_Tip : public idTarget
 public:
 	CLASS_PROTOTYPE( idTarget_Tip );
 
-	idTarget_Tip( void );
+	idTarget_Tip();
 
-	void				Spawn( void );
+	void				Spawn();
 
 	void				Save( idSaveGame* savefile ) const;
 	void				Restore( idRestoreGame* savefile );
@@ -510,8 +510,8 @@ private:
 	idVec3				playerPos;
 
 	void				Event_Activate( idEntity* activator );
-	void				Event_TipOff( void );
-	void				Event_GetPlayerPos( void );
+	void				Event_TipOff();
+	void				Event_GetPlayerPos();
 };
 
 /*

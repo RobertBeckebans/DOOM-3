@@ -224,7 +224,7 @@ void idDict::SetDefaults( const idDict* dict )
 idDict::Clear
 ================
 */
-void idDict::Clear( void )
+void idDict::Clear()
 {
 	int i;
 
@@ -265,7 +265,7 @@ int KeyCompare( const idKeyValue* a, const idKeyValue* b )
 idDict::Checksum
 ================
 */
-int	idDict::Checksum( void ) const
+int	idDict::Checksum() const
 {
 	unsigned long ret;
 	int i, n;
@@ -288,7 +288,7 @@ int	idDict::Checksum( void ) const
 idDict::Allocated
 ================
 */
-size_t idDict::Allocated( void ) const
+size_t idDict::Allocated() const
 {
 	int		i;
 	size_t	size;
@@ -706,7 +706,7 @@ void idDict::ReadFromFileHandle( idFile* f )
 idDict::Init
 ================
 */
-void idDict::Init( void )
+void idDict::Init()
 {
 	globalKeys.SetCaseSensitive( false );
 	globalValues.SetCaseSensitive( true );
@@ -717,7 +717,7 @@ void idDict::Init( void )
 idDict::Shutdown
 ================
 */
-void idDict::Shutdown( void )
+void idDict::Shutdown()
 {
 	globalKeys.Clear();
 	globalValues.Clear();

@@ -43,12 +43,12 @@ class idDeclEmail : public idDecl
 public:
 	idDeclEmail() {}
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
-	virtual void			Print( void ) const;
-	virtual void			List( void ) const;
+	virtual void			FreeData();
+	virtual void			Print() const;
+	virtual void			List() const;
 
 	const char* 			GetFrom() const
 	{
@@ -90,12 +90,12 @@ class idDeclVideo : public idDecl
 public:
 	idDeclVideo() {};
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
-	virtual void			Print( void ) const;
-	virtual void			List( void ) const;
+	virtual void			FreeData();
+	virtual void			Print() const;
+	virtual void			List() const;
 
 	const char* 			GetRoq() const
 	{
@@ -132,12 +132,12 @@ class idDeclAudio : public idDecl
 public:
 	idDeclAudio() {};
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
-	virtual void			Print( void ) const;
-	virtual void			List( void ) const;
+	virtual void			FreeData();
+	virtual void			Print() const;
+	virtual void			List() const;
 
 	const char* 			GetAudioName() const
 	{
@@ -172,12 +172,12 @@ public:
 		originalEmails = originalVideos = 0;
 	};
 
-	virtual size_t			Size( void ) const;
-	virtual const char* 	DefaultDefinition( void ) const;
+	virtual size_t			Size() const;
+	virtual const char* 	DefaultDefinition() const;
 	virtual bool			Parse( const char* text, const int textLength );
-	virtual void			FreeData( void );
-	virtual void			Print( void ) const;
-	virtual void			List( void ) const;
+	virtual void			FreeData();
+	virtual void			Print() const;
+	virtual void			List() const;
 
 	virtual void			AddVideo( const char* name, bool unique = true ) const;
 	virtual void			AddAudio( const char* name, bool unique = true ) const;

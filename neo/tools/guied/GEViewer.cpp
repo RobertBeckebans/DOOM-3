@@ -70,7 +70,7 @@ bool rvGEViewer::Create( HWND parent )
 	return true;
 }
 
-void rvGEViewer::Play( void )
+void rvGEViewer::Play()
 {
 	if( !mPaused )
 	{
@@ -88,7 +88,7 @@ void rvGEViewer::Play( void )
 	SendMessage( mToolbar, TB_SETBUTTONINFO, ID_GUIED_VIEWER_PLAY, ( LPARAM )&tbinfo );
 }
 
-void rvGEViewer::Pause( void )
+void rvGEViewer::Pause()
 {
 	if( mPaused )
 	{
@@ -106,7 +106,7 @@ void rvGEViewer::Pause( void )
 }
 
 
-bool rvGEViewer::Destroy( void )
+bool rvGEViewer::Destroy()
 {
 	gApp.GetOptions().SetWindowPlacement( "viewer", mWnd );
 
@@ -453,7 +453,7 @@ rvGEViewer::SetupPixelFormat
 Setup the pixel format for the opengl context
 ================
 */
-bool rvGEViewer::SetupPixelFormat( void )
+bool rvGEViewer::SetupPixelFormat()
 {
 	HDC	 hDC    = GetDC( mWnd );
 	bool result = true;
@@ -546,7 +546,7 @@ void rvGEViewer::Render( HDC dc )
 	qwglSwapBuffers( dc );
 }
 
-void rvGEViewer::RunFrame( void )
+void rvGEViewer::RunFrame()
 {
 	if( !mPaused )
 	{

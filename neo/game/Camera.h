@@ -43,10 +43,10 @@ class idCamera : public idEntity
 public:
 	ABSTRACT_PROTOTYPE( idCamera );
 
-	void					Spawn( void );
+	void					Spawn();
 	virtual void			GetViewParms( renderView_t* view ) = 0;
 	virtual renderView_t* 	GetRenderView();
-	virtual void			Stop( void ) {} ;
+	virtual void			Stop() {} ;
 };
 
 /*
@@ -69,7 +69,7 @@ public:
 
 	void					Spawn( );
 	virtual void			GetViewParms( renderView_t* view );
-	virtual void			Stop( void );
+	virtual void			Stop();
 
 protected:
 	void					Event_Activate( idEntity* activator );
@@ -109,7 +109,7 @@ public:
 	void					Save( idSaveGame* savefile ) const;				// archives object for save game file
 	void					Restore( idRestoreGame* savefile );				// unarchives object from save game file
 
-	void					Spawn( void );
+	void					Spawn();
 	virtual void			GetViewParms( renderView_t* view );
 
 private:
@@ -122,14 +122,14 @@ private:
 	idList<cameraFrame_t>	camera;
 	idEntityPtr<idEntity>	activator;
 
-	void					Start( void );
-	void					Stop( void );
-	void					Think( void );
+	void					Start();
+	void					Stop();
+	void					Think();
 
-	void					LoadAnim( void );
-	void					Event_Start( void );
-	void					Event_Stop( void );
-	void					Event_SetCallback( void );
+	void					LoadAnim();
+	void					Event_Start();
+	void					Event_Stop();
+	void					Event_SetCallback();
 	void					Event_Activate( idEntity* activator );
 };
 

@@ -112,7 +112,7 @@ public:
 	// if MSG_CDKEY and want, returns the cd key or NULL if aborted
 	// network tells wether one should still run the network loop in a wait dialog
 	virtual const char* MessageBox( msgBoxType_t type, const char* message, const char* title = NULL, bool wait = false, const char* fire_yes = NULL, const char* fire_no = NULL, bool network = false ) = 0;
-	virtual void	StopBox( void ) = 0;
+	virtual void	StopBox() = 0;
 	// monitor this download in a progress box to either abort or completion
 	virtual void	DownloadProgressBox( backgroundDownload_t* bgl, const char* title, int progress_start = 0, int progress_end = 100 ) = 0;
 
@@ -124,8 +124,8 @@ public:
 
 	// read and write the cd key data to files
 	// doesn't perform any validity checks
-	virtual void	ReadCDKey( void ) = 0;
-	virtual void	WriteCDKey( void ) = 0;
+	virtual void	ReadCDKey() = 0;
+	virtual void	WriteCDKey() = 0;
 
 	// returns NULL for if xp is true and xp key is not valid or not present
 	virtual const char* GetCDKey( bool xp ) = 0;
@@ -141,16 +141,16 @@ public:
 	virtual void	ClearCDKey( bool valid[ 2 ] ) = 0;
 
 	// configure gui variables for mainmenu.gui and cd key state
-	virtual void	SetCDKeyGuiVars( void ) = 0;
+	virtual void	SetCDKeyGuiVars() = 0;
 
-	virtual bool	WaitingForGameAuth( void ) = 0;
+	virtual bool	WaitingForGameAuth() = 0;
 
 	// got reply from master about the keys. if !valid, auth_msg given
 	virtual void	CDKeysAuthReply( bool valid, const char* auth_msg ) = 0;
 
-	virtual const char* GetCurrentMapName( void ) = 0;
+	virtual const char* GetCurrentMapName() = 0;
 
-	virtual int		GetSaveGameVersion( void ) = 0;
+	virtual int		GetSaveGameVersion() = 0;
 
 	// The render world and sound world used for this session.
 	idRenderWorld* 	rw;

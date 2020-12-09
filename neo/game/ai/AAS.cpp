@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 idAAS::Alloc
 ============
 */
-idAAS* idAAS::Alloc( void )
+idAAS* idAAS::Alloc()
 {
 	return new idAASLocal;
 }
@@ -46,7 +46,7 @@ idAAS* idAAS::Alloc( void )
 idAAS::idAAS
 ============
 */
-idAAS::~idAAS( void )
+idAAS::~idAAS()
 {
 }
 
@@ -55,7 +55,7 @@ idAAS::~idAAS( void )
 idAASLocal::idAASLocal
 ============
 */
-idAASLocal::idAASLocal( void )
+idAASLocal::idAASLocal()
 {
 	file = NULL;
 }
@@ -65,7 +65,7 @@ idAASLocal::idAASLocal( void )
 idAASLocal::~idAASLocal
 ============
 */
-idAASLocal::~idAASLocal( void )
+idAASLocal::~idAASLocal()
 {
 	Shutdown();
 }
@@ -102,7 +102,7 @@ bool idAASLocal::Init( const idStr& mapName, unsigned int mapFileCRC )
 idAASLocal::Shutdown
 ============
 */
-void idAASLocal::Shutdown( void )
+void idAASLocal::Shutdown()
 {
 	if( file )
 	{
@@ -118,7 +118,7 @@ void idAASLocal::Shutdown( void )
 idAASLocal::Stats
 ============
 */
-void idAASLocal::Stats( void ) const
+void idAASLocal::Stats() const
 {
 	if( !file )
 	{
@@ -134,7 +134,7 @@ void idAASLocal::Stats( void ) const
 idAASLocal::GetSettings
 ============
 */
-const idAASSettings* idAASLocal::GetSettings( void ) const
+const idAASSettings* idAASLocal::GetSettings() const
 {
 	if( !file )
 	{

@@ -74,7 +74,7 @@ void idHashIndex::Allocate( const int newHashSize, const int newIndexSize )
 idHashIndex::Free
 ================
 */
-void idHashIndex::Free( void )
+void idHashIndex::Free()
 {
 	if( hash != INVALID_INDEX )
 	{
@@ -132,7 +132,7 @@ void idHashIndex::ResizeIndex( const int newIndexSize )
 idHashIndex::GetSpread
 ================
 */
-int idHashIndex::GetSpread( void ) const
+int idHashIndex::GetSpread() const
 {
 	int i, index, totalItems, *numHashItems, average, error, e;
 

@@ -48,9 +48,9 @@ public:
 	void					Save( idSaveGame* savefile );
 	void					Restore( idRestoreGame* savefile );
 
-	void					Spawn( void );
+	void					Spawn();
 
-	virtual bool			ShouldConstructScriptObjectAtSpawn( void ) const;
+	virtual bool			ShouldConstructScriptObjectAtSpawn() const;
 
 	void					NextAnim( const idCmdArgs& args );
 	void					PrevAnim( const idCmdArgs& args );
@@ -88,9 +88,9 @@ private:
 
 	idList<copyJoints_t>	copyJoints;
 
-	virtual void			Think( void );
+	virtual void			Think();
 
-	void					Event_Footstep( void );
+	void					Event_Footstep();
 };
 
 #endif /* !__ANIM_TESTMODEL_H__*/

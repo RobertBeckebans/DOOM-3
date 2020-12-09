@@ -78,7 +78,7 @@ void idMultiWinVar::Set( const char* val )
 	}
 }
 
-void idMultiWinVar::Update( void )
+void idMultiWinVar::Update()
 {
 	for( int i = 0; i < Num(); i++ )
 	{

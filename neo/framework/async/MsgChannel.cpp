@@ -60,7 +60,7 @@ idCVar net_channelShowDrop( "net_channelShowDrop", "0", CVAR_SYSTEM | CVAR_BOOL,
 idMsgQueue::idMsgQueue
 ===============
 */
-idMsgQueue::idMsgQueue( void )
+idMsgQueue::idMsgQueue()
 {
 	Init( 0 );
 }
@@ -121,7 +121,7 @@ bool idMsgQueue::Get( byte* data, int& size )
 idMsgQueue::GetTotalSize
 ===============
 */
-int idMsgQueue::GetTotalSize( void ) const
+int idMsgQueue::GetTotalSize() const
 {
 	if( startIndex <= endIndex )
 	{
@@ -138,7 +138,7 @@ int idMsgQueue::GetTotalSize( void ) const
 idMsgQueue::GetSpaceLeft
 ===============
 */
-int idMsgQueue::GetSpaceLeft( void ) const
+int idMsgQueue::GetSpaceLeft() const
 {
 	if( startIndex <= endIndex )
 	{
@@ -184,7 +184,7 @@ void idMsgQueue::WriteByte( byte b )
 idMsgQueue::ReadByte
 ===============
 */
-byte idMsgQueue::ReadByte( void )
+byte idMsgQueue::ReadByte()
 {
 	byte b = buffer[startIndex];
 	startIndex = ( startIndex + 1 ) & ( MAX_MSG_QUEUE_SIZE - 1 );
@@ -207,7 +207,7 @@ void idMsgQueue::WriteShort( int s )
 idMsgQueue::ReadShort
 ===============
 */
-int idMsgQueue::ReadShort( void )
+int idMsgQueue::ReadShort()
 {
 	return ReadByte() | ( ReadByte() << 8 );
 }
@@ -230,7 +230,7 @@ void idMsgQueue::WriteLong( int l )
 idMsgQueue::ReadLong
 ===============
 */
-int idMsgQueue::ReadLong( void )
+int idMsgQueue::ReadLong()
 {
 	return ReadByte() | ( ReadByte() << 8 ) | ( ReadByte() << 16 ) | ( ReadByte() << 24 );
 }
@@ -322,7 +322,7 @@ void idMsgChannel::Init( const netadr_t adr, const int id )
 idMsgChannel::Shutdown
 ================
 */
-void idMsgChannel::Shutdown( void )
+void idMsgChannel::Shutdown()
 {
 	delete compressor;
 	compressor = NULL;
@@ -333,7 +333,7 @@ void idMsgChannel::Shutdown( void )
 idMsgChannel::ResetRate
 =================
 */
-void idMsgChannel::ResetRate( void )
+void idMsgChannel::ResetRate()
 {
 	lastSendTime = 0;
 	lastDataBytes = 0;
@@ -790,7 +790,7 @@ bool idMsgChannel::GetReliableMessage( idBitMsg& msg )
 idMsgChannel::ClearReliableMessages
 ================
 */
-void idMsgChannel::ClearReliableMessages( void )
+void idMsgChannel::ClearReliableMessages()
 {
 	reliableSend.Init( 1 );
 	reliableReceive.Init( 0 );
@@ -885,7 +885,7 @@ void idMsgChannel::UpdatePacketLoss( const int time, const int numReceived, cons
 idMsgChannel::GetIncomingPacketLoss
 =================
 */
-float idMsgChannel::GetIncomingPacketLoss( void ) const
+float idMsgChannel::GetIncomingPacketLoss() const
 {
 	if( incomingReceivedPackets == 0.0f && incomingDroppedPackets == 0.0f )
 	{

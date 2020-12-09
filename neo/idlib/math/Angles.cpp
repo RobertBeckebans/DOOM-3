@@ -41,7 +41,7 @@ idAngles::Normalize360
 returns angles normalized to the range [0 <= angle < 360]
 =================
 */
-idAngles& idAngles::Normalize360( void )
+idAngles& idAngles::Normalize360()
 {
 	int i;
 
@@ -72,7 +72,7 @@ idAngles::Normalize180
 returns angles normalized to the range [-180 < angle <= 180]
 =================
 */
-idAngles& idAngles::Normalize180( void )
+idAngles& idAngles::Normalize180()
 {
 	Normalize360();
 
@@ -127,7 +127,7 @@ void idAngles::ToVectors( idVec3* forward, idVec3* right, idVec3* up ) const
 idAngles::ToForward
 =================
 */
-idVec3 idAngles::ToForward( void ) const
+idVec3 idAngles::ToForward() const
 {
 	float sp, sy, cp, cy;
 
@@ -142,7 +142,7 @@ idVec3 idAngles::ToForward( void ) const
 idAngles::ToQuat
 =================
 */
-idQuat idAngles::ToQuat( void ) const
+idQuat idAngles::ToQuat() const
 {
 	float sx, cx, sy, cy, sz, cz;
 	float sxcy, cxcy, sxsy, cxsy;
@@ -164,7 +164,7 @@ idQuat idAngles::ToQuat( void ) const
 idAngles::ToRotation
 =================
 */
-idRotation idAngles::ToRotation( void ) const
+idRotation idAngles::ToRotation() const
 {
 	idVec3 vec;
 	float angle, w;
@@ -220,7 +220,7 @@ idRotation idAngles::ToRotation( void ) const
 idAngles::ToMat3
 =================
 */
-idMat3 idAngles::ToMat3( void ) const
+idMat3 idAngles::ToMat3() const
 {
 	idMat3 mat;
 	float sr, sp, sy, cr, cp, cy;
@@ -241,7 +241,7 @@ idMat3 idAngles::ToMat3( void ) const
 idAngles::ToMat4
 =================
 */
-idMat4 idAngles::ToMat4( void ) const
+idMat4 idAngles::ToMat4() const
 {
 	return ToMat3().ToMat4();
 }
@@ -251,7 +251,7 @@ idMat4 idAngles::ToMat4( void ) const
 idAngles::ToAngularVelocity
 =================
 */
-idVec3 idAngles::ToAngularVelocity( void ) const
+idVec3 idAngles::ToAngularVelocity() const
 {
 	idRotation rotation = idAngles::ToRotation();
 	return rotation.GetVec() * DEG2RAD( rotation.GetAngle() );

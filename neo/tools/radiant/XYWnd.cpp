@@ -744,7 +744,7 @@ static void WXY_InitPixelFormat( PIXELFORMATDESCRIPTOR* pPFD )
  =======================================================================================================================
  =======================================================================================================================
  */
-void WXY_Print( void )
+void WXY_Print()
 {
 	DOCINFO		di;
 
@@ -3527,7 +3527,7 @@ void CXYWnd::DrawCameraIcon()
  =======================================================================================================================
  =======================================================================================================================
  */
-void CXYWnd::DrawZIcon( void )
+void CXYWnd::DrawZIcon()
 {
 	if( m_nViewType == XY )
 	{
@@ -3753,7 +3753,7 @@ bool FilterBrush( brush_t* pb )
     the lines can be visible when neither end is. Called for both camera view and xy view.
  =======================================================================================================================
  */
-void DrawPathLines( void )
+void DrawPathLines()
 {
 	int			i, k;
 	idVec3		mid, mid1;
@@ -5070,7 +5070,7 @@ BOOL CXYWnd::OnMouseWheel( UINT nFlags, short zDelta, CPoint pt )
 //		PRECISION_CURSOR_SNAP
 //		PRECISION_CURSOR_FREE
 //---------------------------------------------------------------------------
-void CXYWnd::CyclePrecisionCrosshairMode( void )
+void CXYWnd::CyclePrecisionCrosshairMode()
 {
 	common->Printf( "TODO: Make DrawPrecisionCrosshair work..." );
 
@@ -5093,7 +5093,7 @@ void CXYWnd::CyclePrecisionCrosshairMode( void )
 // PRECISION_CROSSHAIR_SNAP		Crosshair snaps to grid size.  Force refresh of XY view.
 // PRECISION_CROSSHAIR_FREE		Crosshair does not snap to grid.  Force refresh of XY view.
 //---------------------------------------------------------------------------
-void CXYWnd::DrawPrecisionCrosshair( void )
+void CXYWnd::DrawPrecisionCrosshair()
 {
 	// FIXME: m_mouseX, m_mouseY, m_axisHoriz, m_axisVert, etc... are never set
 	return;

@@ -90,31 +90,31 @@ public:
 
 	void				SetThread( idThread* pThread );
 
-	void				StackTrace( void ) const;
+	void				StackTrace() const;
 
-	int					CurrentLine( void ) const;
-	const char*			CurrentFile( void ) const;
+	int					CurrentLine() const;
+	const char*			CurrentFile() const;
 
 	void				Error( char* fmt, ... ) const id_attribute( ( format( printf, 2, 3 ) ) );
 	void				Warning( char* fmt, ... ) const id_attribute( ( format( printf, 2, 3 ) ) );
-	void				DisplayInfo( void ) const;
+	void				DisplayInfo() const;
 
 	bool				BeginMultiFrameEvent( idEntity* ent, const idEventDef* event );
 	void				EndMultiFrameEvent( idEntity* ent, const idEventDef* event );
-	bool				MultiFrameEventInProgress( void ) const;
+	bool				MultiFrameEventInProgress() const;
 
 	void				ThreadCall( idInterpreter* source, const function_t* func, int args );
 	void				EnterFunction( const function_t* func, bool clearStack );
 	void				EnterObjectFunction( idEntity* self, const function_t* func, bool clearStack );
 
-	bool				Execute( void );
-	void				Reset( void );
+	bool				Execute();
+	void				Reset();
 
 	bool				GetRegisterValue( const char* name, idStr& out, int scopeDepth );
-	int					GetCallstackDepth( void ) const;
-	const prstack_t*		GetCallstack( void ) const;
-	const function_t*	GetCurrentFunction( void ) const;
-	idThread*			GetThread( void ) const;
+	int					GetCallstackDepth() const;
+	const prstack_t*		GetCallstack() const;
+	const function_t*	GetCurrentFunction() const;
+	idThread*			GetThread() const;
 
 };
 

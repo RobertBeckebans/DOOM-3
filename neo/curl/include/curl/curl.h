@@ -1016,7 +1016,7 @@ char* curl_getenv( const char* variable );
  *
  * Returns a static ascii string of the libcurl version.
  */
-char* curl_version( void );
+char* curl_version();
 
 /*
  * NAME curl_escape()
@@ -1068,7 +1068,7 @@ CURLcode curl_global_init( long flags );
  * curl_global_cleanup() should be invoked exactly once for each application
  * that uses libcurl
  */
-void curl_global_cleanup( void );
+void curl_global_cleanup();
 
 /* linked-list structure for the CURLOPT_QUOTE option (and other) */
 struct curl_slist
@@ -1231,7 +1231,7 @@ typedef enum
 	CURLSHOPT_LAST  /* never use */
 } CURLSHoption;
 
-CURLSH* curl_share_init( void );
+CURLSH* curl_share_init();
 CURLSHcode curl_share_setopt( CURLSH*, CURLSHoption option, ... );
 CURLSHcode curl_share_cleanup( CURLSH* );
 

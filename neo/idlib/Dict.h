@@ -50,20 +50,20 @@ class idKeyValue
 	friend class idDict;
 
 public:
-	const idStr& 		GetKey( void ) const
+	const idStr& 		GetKey() const
 	{
 		return *key;
 	}
-	const idStr& 		GetValue( void ) const
+	const idStr& 		GetValue() const
 	{
 		return *value;
 	}
 
-	size_t				Allocated( void ) const
+	size_t				Allocated() const
 	{
 		return key->Allocated() + value->Allocated();
 	}
-	size_t				Size( void ) const
+	size_t				Size() const
 	{
 		return sizeof( *this ) + key->Size() + value->Size();
 	}
@@ -81,9 +81,9 @@ private:
 class idDict
 {
 public:
-	idDict( void );
+	idDict();
 	idDict( const idDict& other );	// allow declaration with assignment
-	~idDict( void );
+	~idDict();
 
 	// set the granularity for the index
 	void				SetGranularity( int granularity );
@@ -100,12 +100,12 @@ public:
 	// copy key/value pairs from other dict not present in this dict
 	void				SetDefaults( const idDict* dict );
 	// clear dict freeing up memory
-	void				Clear( void );
+	void				Clear();
 	// print the dict
 	void				Print() const;
 
-	size_t				Allocated( void ) const;
-	size_t				Size( void ) const
+	size_t				Allocated() const;
+	size_t				Size() const
 	{
 		return sizeof( *this ) + Allocated();
 	}
@@ -142,7 +142,7 @@ public:
 	bool				GetAngles( const char* key, const char* defaultString, idAngles& out ) const;
 	bool				GetMatrix( const char* key, const char* defaultString, idMat3& out ) const;
 
-	int					GetNumKeyVals( void ) const;
+	int					GetNumKeyVals() const;
 	const idKeyValue* 	GetKeyVal( int index ) const;
 	// returns the key/value pair with the given key
 	// returns NULL if the key/value pair does not exist
@@ -162,10 +162,10 @@ public:
 	void				ReadFromFileHandle( idFile* f );
 
 	// returns a unique checksum for this dictionary's content
-	int					Checksum( void ) const;
+	int					Checksum() const;
 
-	static void			Init( void );
-	static void			Shutdown( void );
+	static void			Init();
+	static void			Shutdown();
 
 	static void			ShowMemoryUsage_f( const idCmdArgs& args );
 	static void			ListKeys_f( const idCmdArgs& args );
@@ -180,7 +180,7 @@ private:
 };
 
 
-ID_INLINE idDict::idDict( void )
+ID_INLINE idDict::idDict()
 {
 	args.SetGranularity( 16 );
 	argHash.SetGranularity( 16 );
@@ -192,7 +192,7 @@ ID_INLINE idDict::idDict( const idDict& other )
 	*this = other;
 }
 
-ID_INLINE idDict::~idDict( void )
+ID_INLINE idDict::~idDict()
 {
 	Clear();
 }
@@ -335,7 +335,7 @@ ID_INLINE idMat3 idDict::GetMatrix( const char* key, const char* defaultString )
 	return out;
 }
 
-ID_INLINE int idDict::GetNumKeyVals( void ) const
+ID_INLINE int idDict::GetNumKeyVals() const
 {
 	return args.Num();
 }

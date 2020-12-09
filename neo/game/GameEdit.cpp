@@ -48,7 +48,7 @@ END_CLASS
 idCursor3D::idCursor3D
 ===============
 */
-idCursor3D::idCursor3D( void )
+idCursor3D::idCursor3D()
 {
 	draggedPosition.Zero();
 }
@@ -58,7 +58,7 @@ idCursor3D::idCursor3D( void )
 idCursor3D::~idCursor3D
 ===============
 */
-idCursor3D::~idCursor3D( void )
+idCursor3D::~idCursor3D()
 {
 }
 
@@ -67,7 +67,7 @@ idCursor3D::~idCursor3D( void )
 idCursor3D::Spawn
 ===============
 */
-void idCursor3D::Spawn( void )
+void idCursor3D::Spawn()
 {
 }
 
@@ -76,7 +76,7 @@ void idCursor3D::Spawn( void )
 idCursor3D::Present
 ===============
 */
-void idCursor3D::Present( void )
+void idCursor3D::Present()
 {
 	// don't present to the renderer if the entity hasn't changed
 	if( !( thinkFlags & TH_UPDATEVISUALS ) )
@@ -96,7 +96,7 @@ void idCursor3D::Present( void )
 idCursor3D::Think
 ===============
 */
-void idCursor3D::Think( void )
+void idCursor3D::Think()
 {
 	if( thinkFlags & TH_THINK )
 	{
@@ -121,7 +121,7 @@ void idCursor3D::Think( void )
 idDragEntity::idDragEntity
 ==============
 */
-idDragEntity::idDragEntity( void )
+idDragEntity::idDragEntity()
 {
 	cursor = NULL;
 	Clear();
@@ -132,7 +132,7 @@ idDragEntity::idDragEntity( void )
 idDragEntity::~idDragEntity
 ==============
 */
-idDragEntity::~idDragEntity( void )
+idDragEntity::~idDragEntity()
 {
 	StopDrag();
 	selected = NULL;
@@ -162,7 +162,7 @@ void idDragEntity::Clear()
 idDragEntity::StopDrag
 ==============
 */
-void idDragEntity::StopDrag( void )
+void idDragEntity::StopDrag()
 {
 	dragEnt = NULL;
 	if( cursor )
@@ -343,7 +343,7 @@ void idDragEntity::SetSelected( idEntity* ent )
 idDragEntity::DeleteSelected
 ==============
 */
-void idDragEntity::DeleteSelected( void )
+void idDragEntity::DeleteSelected()
 {
 	delete selected.GetEntity();
 	selected = NULL;
@@ -355,7 +355,7 @@ void idDragEntity::DeleteSelected( void )
 idDragEntity::BindSelected
 ==============
 */
-void idDragEntity::BindSelected( void )
+void idDragEntity::BindSelected()
 {
 	int num, largestNum;
 	idLexer lexer;
@@ -417,7 +417,7 @@ void idDragEntity::BindSelected( void )
 idDragEntity::UnbindSelected
 ==============
 */
-void idDragEntity::UnbindSelected( void )
+void idDragEntity::UnbindSelected()
 {
 	const idKeyValue* kv;
 	idAFEntity_Base* af;
@@ -460,7 +460,7 @@ void idDragEntity::UnbindSelected( void )
 idEditEntities::idEditEntities
 ==============
 */
-idEditEntities::idEditEntities( void )
+idEditEntities::idEditEntities()
 {
 	selectableEntityClasses.Clear();
 	nextSelectTime = 0;
@@ -601,7 +601,7 @@ bool idEditEntities::EntityIsSelectable( idEntity* ent, idVec4* color, idStr* te
 idEditEntities::DisplayEntities
 =============
 */
-void idEditEntities::DisplayEntities( void )
+void idEditEntities::DisplayEntities()
 {
 	idEntity* ent;
 

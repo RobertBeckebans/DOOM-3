@@ -51,29 +51,29 @@ class idFileSystemLocal;
 class idFile
 {
 public:
-	virtual					~idFile( void ) {};
+	virtual					~idFile() {};
 	// Get the name of the file.
-	virtual const char* 	GetName( void );
+	virtual const char* 	GetName();
 	// Get the full file path.
-	virtual const char* 	GetFullPath( void );
+	virtual const char* 	GetFullPath();
 	// Read data from the file to the buffer.
 	virtual int				Read( void* buffer, int len );
 	// Write data from the buffer to the file.
 	virtual int				Write( const void* buffer, int len );
 	// Returns the length of the file.
-	virtual int				Length( void );
+	virtual int				Length();
 	// Return a time value for reload operations.
-	virtual ID_TIME_T			Timestamp( void );
+	virtual ID_TIME_T			Timestamp();
 	// Returns offset in file.
-	virtual int				Tell( void );
+	virtual int				Tell();
 	// Forces flush on files being writting to.
-	virtual void			ForceFlush( void );
+	virtual void			ForceFlush();
 	// Causes any buffered data to be written to the file.
-	virtual void			Flush( void );
+	virtual void			Flush();
 	// Seek on a file.
 	virtual int				Seek( long offset, fsOrigin_t origin );
 	// Go back to the beginning of the file.
-	virtual void			Rewind( void );
+	virtual void			Rewind();
 	// Like fprintf.
 	virtual int				Printf( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) );
 	// Like fprintf but with argument pointer
@@ -120,37 +120,37 @@ class idFile_Memory : public idFile
 	friend class			idFileSystemLocal;
 
 public:
-	idFile_Memory( void );	// file for writing without name
+	idFile_Memory();	// file for writing without name
 	idFile_Memory( const char* name );	// file for writing
 	idFile_Memory( const char* name, char* data, int length );	// file for writing
 	idFile_Memory( const char* name, const char* data, int length );	// file for reading
-	virtual					~idFile_Memory( void );
+	virtual					~idFile_Memory();
 
-	virtual const char* 	GetName( void )
+	virtual const char* 	GetName()
 	{
 		return name.c_str();
 	}
-	virtual const char* 	GetFullPath( void )
+	virtual const char* 	GetFullPath()
 	{
 		return name.c_str();
 	}
 	virtual int				Read( void* buffer, int len );
 	virtual int				Write( const void* buffer, int len );
-	virtual int				Length( void );
-	virtual ID_TIME_T			Timestamp( void );
-	virtual int				Tell( void );
-	virtual void			ForceFlush( void );
-	virtual void			Flush( void );
+	virtual int				Length();
+	virtual ID_TIME_T			Timestamp();
+	virtual int				Tell();
+	virtual void			ForceFlush();
+	virtual void			Flush();
 	virtual int				Seek( long offset, fsOrigin_t origin );
 
 	// changes memory file to read only
-	virtual void			MakeReadOnly( void );
+	virtual void			MakeReadOnly();
 	// clear the file
 	virtual void			Clear( bool freeMemory = true );
 	// set data for reading
 	void					SetData( const char* data, int length );
 	// returns const pointer to the memory buffer
-	const char* 			GetDataPtr( void ) const
+	const char* 			GetDataPtr() const
 	{
 		return filePtr;
 	}
@@ -180,23 +180,23 @@ class idFile_BitMsg : public idFile
 public:
 	idFile_BitMsg( idBitMsg& msg );
 	idFile_BitMsg( const idBitMsg& msg );
-	virtual					~idFile_BitMsg( void );
+	virtual					~idFile_BitMsg();
 
-	virtual const char* 	GetName( void )
+	virtual const char* 	GetName()
 	{
 		return name.c_str();
 	}
-	virtual const char* 	GetFullPath( void )
+	virtual const char* 	GetFullPath()
 	{
 		return name.c_str();
 	}
 	virtual int				Read( void* buffer, int len );
 	virtual int				Write( const void* buffer, int len );
-	virtual int				Length( void );
-	virtual ID_TIME_T			Timestamp( void );
-	virtual int				Tell( void );
-	virtual void			ForceFlush( void );
-	virtual void			Flush( void );
+	virtual int				Length();
+	virtual ID_TIME_T			Timestamp();
+	virtual int				Tell();
+	virtual void			ForceFlush();
+	virtual void			Flush();
 	virtual int				Seek( long offset, fsOrigin_t origin );
 
 private:
@@ -211,28 +211,28 @@ class idFile_Permanent : public idFile
 	friend class			idFileSystemLocal;
 
 public:
-	idFile_Permanent( void );
-	virtual					~idFile_Permanent( void );
+	idFile_Permanent();
+	virtual					~idFile_Permanent();
 
-	virtual const char* 	GetName( void )
+	virtual const char* 	GetName()
 	{
 		return name.c_str();
 	}
-	virtual const char* 	GetFullPath( void )
+	virtual const char* 	GetFullPath()
 	{
 		return fullPath.c_str();
 	}
 	virtual int				Read( void* buffer, int len );
 	virtual int				Write( const void* buffer, int len );
-	virtual int				Length( void );
-	virtual ID_TIME_T			Timestamp( void );
-	virtual int				Tell( void );
-	virtual void			ForceFlush( void );
-	virtual void			Flush( void );
+	virtual int				Length();
+	virtual ID_TIME_T			Timestamp();
+	virtual int				Tell();
+	virtual void			ForceFlush();
+	virtual void			Flush();
 	virtual int				Seek( long offset, fsOrigin_t origin );
 
 	// returns file pointer
-	FILE* 					GetFilePtr( void )
+	FILE* 					GetFilePtr()
 	{
 		return o;
 	}
@@ -252,24 +252,24 @@ class idFile_InZip : public idFile
 	friend class			idFileSystemLocal;
 
 public:
-	idFile_InZip( void );
-	virtual					~idFile_InZip( void );
+	idFile_InZip();
+	virtual					~idFile_InZip();
 
-	virtual const char* 	GetName( void )
+	virtual const char* 	GetName()
 	{
 		return name.c_str();
 	}
-	virtual const char* 	GetFullPath( void )
+	virtual const char* 	GetFullPath()
 	{
 		return fullPath.c_str();
 	}
 	virtual int				Read( void* buffer, int len );
 	virtual int				Write( const void* buffer, int len );
-	virtual int				Length( void );
-	virtual ID_TIME_T			Timestamp( void );
-	virtual int				Tell( void );
-	virtual void			ForceFlush( void );
-	virtual void			Flush( void );
+	virtual int				Length();
+	virtual ID_TIME_T			Timestamp();
+	virtual int				Tell();
+	virtual void			ForceFlush();
+	virtual void			Flush();
 	virtual int				Seek( long offset, fsOrigin_t origin );
 
 private:

@@ -39,7 +39,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #define	WIN_SIZE	1024
 
-void Draw_ClearWindow( void )
+void Draw_ClearWindow()
 {
 
 	if( !dmapGlobals.drawflag )
@@ -102,7 +102,7 @@ void Draw_ClearWindow( void )
 
 }
 
-void Draw_SetRed( void )
+void Draw_SetRed()
 {
 	if( !dmapGlobals.drawflag )
 	{
@@ -112,7 +112,7 @@ void Draw_SetRed( void )
 	glColor3f( 1, 0, 0 );
 }
 
-void Draw_SetGrey( void )
+void Draw_SetGrey()
 {
 	if( !dmapGlobals.drawflag )
 	{
@@ -122,7 +122,7 @@ void Draw_SetGrey( void )
 	glColor3f( 0.5f, 0.5f, 0.5f );
 }
 
-void Draw_SetBlack( void )
+void Draw_SetBlack()
 {
 	if( !dmapGlobals.drawflag )
 	{
@@ -240,7 +240,7 @@ void DrawLine( idVec3 v1, idVec3 v2, int color )
 bool	wins_init;
 int			draw_socket;
 
-void GLS_BeginScene( void )
+void GLS_BeginScene()
 {
 	WSADATA	winsockdata;
 	WORD	wVersionRequested;
@@ -313,13 +313,13 @@ void GLS_Triangle( const mapTri_t* tri, int code )
 	GLS_Winding( &w, code );
 }
 
-void GLS_EndScene( void )
+void GLS_EndScene()
 {
 	closesocket( draw_socket );
 	draw_socket = 0;
 }
 #else
-void Draw_ClearWindow( void )
+void Draw_ClearWindow()
 {
 }
 
@@ -335,11 +335,11 @@ void GLS_Winding( const idWinding* w, int code )
 {
 }
 
-void GLS_BeginScene( void )
+void GLS_BeginScene()
 {
 }
 
-void GLS_EndScene( void )
+void GLS_EndScene()
 {
 }
 

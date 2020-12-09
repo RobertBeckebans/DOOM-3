@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 usercmd_t::ByteSwap
 ================
 */
-void usercmd_t::ByteSwap( void )
+void usercmd_t::ByteSwap()
 {
 	angles[0] = LittleShort( angles[0] );
 	angles[1] = LittleShort( angles[1] );
@@ -279,7 +279,7 @@ public:
 	{
 		Clear();
 	};
-	void	Clear( void );
+	void	Clear();
 	void	SetKeyState( int keystate, bool toggle );
 };
 
@@ -288,7 +288,7 @@ public:
 buttonState_t::Clear
 ================
 */
-void buttonState_t::Clear( void )
+void buttonState_t::Clear()
 {
 	held = false;
 	on = 0;
@@ -325,27 +325,27 @@ const int MAX_CHAT_BUFFER = 127;
 class idUsercmdGenLocal : public idUsercmdGen
 {
 public:
-	idUsercmdGenLocal( void );
+	idUsercmdGenLocal();
 
-	void			Init( void );
+	void			Init();
 
-	void			InitForNewMap( void );
+	void			InitForNewMap();
 
-	void			Shutdown( void );
+	void			Shutdown();
 
-	void			Clear( void );
+	void			Clear();
 
-	void			ClearAngles( void );
+	void			ClearAngles();
 
 	usercmd_t		TicCmd( int ticNumber );
 
 	void			InhibitUsercmd( inhibit_t subsystem, bool inhibit );
 
-	void			UsercmdInterrupt( void );
+	void			UsercmdInterrupt();
 
 	int				CommandStringUsercmdData( const char* cmdString );
 
-	int				GetNumUserCommands( void );
+	int				GetNumUserCommands();
 
 	const char* 	GetUserCommandName( int index );
 
@@ -354,22 +354,22 @@ public:
 	int				ButtonState( int key );
 	int				KeyState( int key );
 
-	usercmd_t		GetDirectUsercmd( void );
+	usercmd_t		GetDirectUsercmd();
 
 private:
-	void			MakeCurrent( void );
-	void			InitCurrent( void );
+	void			MakeCurrent();
+	void			InitCurrent();
 
-	bool			Inhibited( void );
-	void			AdjustAngles( void );
-	void			KeyMove( void );
-	void			JoystickMove( void );
-	void			MouseMove( void );
-	void			CmdButtons( void );
+	bool			Inhibited();
+	void			AdjustAngles();
+	void			KeyMove();
+	void			JoystickMove();
+	void			MouseMove();
+	void			CmdButtons();
 
-	void			Mouse( void );
-	void			Keyboard( void );
-	void			Joystick( void );
+	void			Mouse();
+	void			Keyboard();
+	void			Joystick();
 
 	void			Key( int keyNum, bool down );
 
@@ -440,7 +440,7 @@ idUsercmdGen*	usercmdGen = &localUsercmdGen;
 idUsercmdGenLocal::idUsercmdGenLocal
 ================
 */
-idUsercmdGenLocal::idUsercmdGenLocal( void )
+idUsercmdGenLocal::idUsercmdGenLocal()
 {
 	lastCommandTime = 0;
 	initialized = false;
@@ -516,7 +516,7 @@ int	idUsercmdGenLocal::KeyState( int key )
 idUsercmdGenLocal::GetNumUserCommands
 ================
 */
-int idUsercmdGenLocal::GetNumUserCommands( void )
+int idUsercmdGenLocal::GetNumUserCommands()
 {
 	return NUM_USER_COMMANDS;
 }
@@ -542,7 +542,7 @@ idUsercmdGenLocal::Inhibited
 is user cmd generation inhibited
 ================
 */
-bool idUsercmdGenLocal::Inhibited( void )
+bool idUsercmdGenLocal::Inhibited()
 {
 	return ( inhibitCommands != 0 );
 }
@@ -554,7 +554,7 @@ idUsercmdGenLocal::AdjustAngles
 Moves the local angle positions
 ================
 */
-void idUsercmdGenLocal::AdjustAngles( void )
+void idUsercmdGenLocal::AdjustAngles()
 {
 	float	speed;
 
@@ -584,7 +584,7 @@ idUsercmdGenLocal::KeyMove
 Sets the usercmd_t based on key states
 ================
 */
-void idUsercmdGenLocal::KeyMove( void )
+void idUsercmdGenLocal::KeyMove()
 {
 	int		forward, side, up;
 
@@ -616,7 +616,7 @@ void idUsercmdGenLocal::KeyMove( void )
 idUsercmdGenLocal::MouseMove
 =================
 */
-void idUsercmdGenLocal::MouseMove( void )
+void idUsercmdGenLocal::MouseMove()
 {
 	float		mx, my, strafeMx, strafeMy;
 	static int	history[8][2];
@@ -728,7 +728,7 @@ void idUsercmdGenLocal::MouseMove( void )
 idUsercmdGenLocal::JoystickMove
 =================
 */
-void idUsercmdGenLocal::JoystickMove( void )
+void idUsercmdGenLocal::JoystickMove()
 {
 	float	anglespeed;
 
@@ -760,7 +760,7 @@ void idUsercmdGenLocal::JoystickMove( void )
 idUsercmdGenLocal::CmdButtons
 ==============
 */
-void idUsercmdGenLocal::CmdButtons( void )
+void idUsercmdGenLocal::CmdButtons()
 {
 	int		i;
 
@@ -814,7 +814,7 @@ idUsercmdGenLocal::InitCurrent
 inits the current command for this frame
 ================
 */
-void idUsercmdGenLocal::InitCurrent( void )
+void idUsercmdGenLocal::InitCurrent()
 {
 	memset( &cmd, 0, sizeof( cmd ) );
 	cmd.flags = flags;
@@ -830,7 +830,7 @@ idUsercmdGenLocal::MakeCurrent
 creates the current command for this frame
 ================
 */
-void idUsercmdGenLocal::MakeCurrent( void )
+void idUsercmdGenLocal::MakeCurrent()
 {
 	idVec3		oldAngles;
 	int		i;
@@ -915,7 +915,7 @@ int	idUsercmdGenLocal::CommandStringUsercmdData( const char* cmdString )
 idUsercmdGenLocal::Init
 ================
 */
-void idUsercmdGenLocal::Init( void )
+void idUsercmdGenLocal::Init()
 {
 	initialized = true;
 }
@@ -925,7 +925,7 @@ void idUsercmdGenLocal::Init( void )
 idUsercmdGenLocal::InitForNewMap
 ================
 */
-void idUsercmdGenLocal::InitForNewMap( void )
+void idUsercmdGenLocal::InitForNewMap()
 {
 	flags = 0;
 	impulse = 0;
@@ -944,7 +944,7 @@ void idUsercmdGenLocal::InitForNewMap( void )
 idUsercmdGenLocal::Shutdown
 ================
 */
-void idUsercmdGenLocal::Shutdown( void )
+void idUsercmdGenLocal::Shutdown()
 {
 	initialized = false;
 }
@@ -954,7 +954,7 @@ void idUsercmdGenLocal::Shutdown( void )
 idUsercmdGenLocal::Clear
 ================
 */
-void idUsercmdGenLocal::Clear( void )
+void idUsercmdGenLocal::Clear()
 {
 	// clears all key states
 	memset( buttonState, 0, sizeof( buttonState ) );
@@ -972,7 +972,7 @@ void idUsercmdGenLocal::Clear( void )
 idUsercmdGenLocal::ClearAngles
 ================
 */
-void idUsercmdGenLocal::ClearAngles( void )
+void idUsercmdGenLocal::ClearAngles()
 {
 	viewangles.Zero();
 }
@@ -1057,7 +1057,7 @@ void idUsercmdGenLocal::Key( int keyNum, bool down )
 idUsercmdGenLocal::Mouse
 ===================
 */
-void idUsercmdGenLocal::Mouse( void )
+void idUsercmdGenLocal::Mouse()
 {
 	int i, numEvents;
 
@@ -1116,7 +1116,7 @@ void idUsercmdGenLocal::Mouse( void )
 idUsercmdGenLocal::Keyboard
 ===============
 */
-void idUsercmdGenLocal::Keyboard( void )
+void idUsercmdGenLocal::Keyboard()
 {
 
 	int numEvents = Sys_PollKeyboardInputEvents();
@@ -1145,7 +1145,7 @@ void idUsercmdGenLocal::Keyboard( void )
 idUsercmdGenLocal::Joystick
 ===============
 */
-void idUsercmdGenLocal::Joystick( void )
+void idUsercmdGenLocal::Joystick()
 {
 	memset( joystickAxis, 0, sizeof( joystickAxis ) );
 }
@@ -1157,7 +1157,7 @@ idUsercmdGenLocal::UsercmdInterrupt
 Called asyncronously
 ================
 */
-void idUsercmdGenLocal::UsercmdInterrupt( void )
+void idUsercmdGenLocal::UsercmdInterrupt()
 {
 	// dedicated servers won't create usercmds
 	if( !initialized )
@@ -1204,7 +1204,7 @@ void idUsercmdGenLocal::MouseState( int* x, int* y, int* button, bool* down )
 idUsercmdGenLocal::GetDirectUsercmd
 ================
 */
-usercmd_t idUsercmdGenLocal::GetDirectUsercmd( void )
+usercmd_t idUsercmdGenLocal::GetDirectUsercmd()
 {
 
 	// initialize current usercmd

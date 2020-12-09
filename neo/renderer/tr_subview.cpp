@@ -589,7 +589,7 @@ view have been generated, because it may create a subview which
 would change tr.viewCount.
 ================
 */
-bool R_GenerateSubViews( void )
+bool R_GenerateSubViews()
 {
 	drawSurf_t*		drawSurf;
 	int				i;

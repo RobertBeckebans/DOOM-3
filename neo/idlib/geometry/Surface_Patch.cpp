@@ -57,7 +57,7 @@ idSurface_Patch::PutOnCurve
 Expects an expanded patch.
 =================
 */
-void idSurface_Patch::PutOnCurve( void )
+void idSurface_Patch::PutOnCurve()
 {
 	int i, j;
 	idDrawVert prev, next;
@@ -108,7 +108,7 @@ idSurface_Patch::RemoveLinearColumnsRows
 Expects an expanded patch.
 ================
 */
-void idSurface_Patch::RemoveLinearColumnsRows( void )
+void idSurface_Patch::RemoveLinearColumnsRows()
 {
 	int i, j, k;
 	float len, maxLength;
@@ -206,7 +206,7 @@ void idSurface_Patch::ResizeExpanded( int newHeight, int newWidth )
 idSurface_Patch::Collapse
 ================
 */
-void idSurface_Patch::Collapse( void )
+void idSurface_Patch::Collapse()
 {
 	int i, j;
 
@@ -233,7 +233,7 @@ void idSurface_Patch::Collapse( void )
 idSurface_Patch::Expand
 ================
 */
-void idSurface_Patch::Expand( void )
+void idSurface_Patch::Expand()
 {
 	int i, j;
 
@@ -282,7 +282,7 @@ Expects a Not expanded patch.
 */
 #define	COPLANAR_EPSILON	0.1f
 
-void idSurface_Patch::GenerateNormals( void )
+void idSurface_Patch::GenerateNormals()
 {
 	int			i, j, k, dist;
 	idVec3		norm;
@@ -462,7 +462,7 @@ void idSurface_Patch::GenerateNormals( void )
 idSurface_Patch::GenerateIndexes
 =================
 */
-void idSurface_Patch::GenerateIndexes( void )
+void idSurface_Patch::GenerateIndexes()
 {
 	int i, j, v1, v2, v3, v4, index;
 

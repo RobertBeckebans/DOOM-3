@@ -139,24 +139,24 @@ class idAsyncServer
 public:
 	idAsyncServer();
 
-	bool				InitPort( void );
-	void				ClosePort( void );
-	void				Spawn( void );
-	void				Kill( void );
-	void				ExecuteMapChange( void );
+	bool				InitPort();
+	void				ClosePort();
+	void				Spawn();
+	void				Kill();
+	void				ExecuteMapChange();
 
-	int					GetPort( void ) const;
-	netadr_t			GetBoundAdr( void ) const;
-	bool				IsActive( void ) const
+	int					GetPort() const;
+	netadr_t			GetBoundAdr() const;
+	bool				IsActive() const
 	{
 		return active;
 	}
-	int					GetDelay( void ) const
+	int					GetDelay() const
 	{
 		return gameTimeResidual;
 	}
-	int					GetOutgoingRate( void ) const;
-	int					GetIncomingRate( void ) const;
+	int					GetOutgoingRate() const;
+	int					GetIncomingRate() const;
 	bool				IsClientInGame( int clientNum ) const;
 	int					GetClientPing( int clientNum ) const;
 	int					GetClientPrediction( int clientNum ) const;
@@ -167,15 +167,15 @@ public:
 	float				GetClientOutgoingCompression( int clientNum ) const;
 	float				GetClientIncomingCompression( int clientNum ) const;
 	float				GetClientIncomingPacketLoss( int clientNum ) const;
-	int					GetNumClients( void ) const;
-	int					GetNumIdleClients( void ) const;
-	int					GetLocalClientNum( void ) const
+	int					GetNumClients() const;
+	int					GetNumIdleClients() const;
+	int					GetLocalClientNum() const
 	{
 		return localClientNum;
 	}
 
-	void				RunFrame( void );
-	void				ProcessConnectionLessMessages( void );
+	void				RunFrame();
+	void				ProcessConnectionLessMessages();
 	void				RemoteConsoleOutput( const char* string );
 	void				SendReliableGameMessage( int clientNum, const idBitMsg& msg );
 	void				SendReliableGameMessageExcluding( int clientNum, const idBitMsg& msg );
@@ -184,14 +184,14 @@ public:
 	void				MasterHeartbeat( bool force = false );
 	void				DropClient( int clientNum, const char* reason );
 
-	void				PacifierUpdate( void );
+	void				PacifierUpdate();
 
 	void				UpdateUI( int clientNum );
 
-	void				UpdateAsyncStatsAvg( void );
+	void				UpdateAsyncStatsAvg();
 	void				GetAsyncStatsAvgMsg( idStr& msg );
 
-	void				PrintLocalServerInfo( void );
+	void				PrintLocalServerInfo();
 
 private:
 	bool				active;						// true if server is active
@@ -237,9 +237,9 @@ private:
 	void				ClearClient( int clientNum );
 	void				InitClient( int clientNum, int clientId, int clientRate );
 	void				InitLocalClient( int clientNum );
-	void				BeginLocalClient( void );
-	void				LocalClientInput( void );
-	void				CheckClientTimeouts( void );
+	void				BeginLocalClient();
+	void				LocalClientInput();
+	void				CheckClientTimeouts();
 	void				SendPrintBroadcast( const char* string );
 	void				SendPrintToClient( int clientNum, const char* string );
 	void				SendUserInfoBroadcast( int userInfoNum, const idDict& info, bool sendToAll = false );

@@ -54,10 +54,10 @@ class function_t
 public:
 	function_t();
 
-	size_t				Allocated( void ) const;
+	size_t				Allocated() const;
 	void				SetName( const char* name );
-	const char*			Name( void ) const;
-	void				Clear( void );
+	const char*			Name() const;
+	void				Clear();
 
 private:
 	idStr 				name;
@@ -110,7 +110,7 @@ public:
 	idTypeDef( const idTypeDef& other );
 	idTypeDef( etype_t etype, idVarDef* edef, const char* ename, int esize, idTypeDef* aux );
 	void				operator=( const idTypeDef& other );
-	size_t				Allocated( void ) const;
+	size_t				Allocated() const;
 
 	bool				Inherits( const idTypeDef* basetype ) const;
 	bool				MatchesType( const idTypeDef& matchtype ) const;
@@ -119,27 +119,27 @@ public:
 	void				AddField( idTypeDef* fieldtype, const char* name );
 
 	void				SetName( const char* newname );
-	const char*			Name( void ) const;
+	const char*			Name() const;
 
-	etype_t				Type( void ) const;
-	int					Size( void ) const;
+	etype_t				Type() const;
+	int					Size() const;
 
-	idTypeDef*			SuperClass( void ) const;
+	idTypeDef*			SuperClass() const;
 
-	idTypeDef*			ReturnType( void ) const;
+	idTypeDef*			ReturnType() const;
 	void				SetReturnType( idTypeDef* type );
 
-	idTypeDef*			FieldType( void ) const;
+	idTypeDef*			FieldType() const;
 	void				SetFieldType( idTypeDef* type );
 
-	idTypeDef*			PointerType( void ) const;
+	idTypeDef*			PointerType() const;
 	void				SetPointerType( idTypeDef* type );
 
-	int					NumParameters( void ) const;
+	int					NumParameters() const;
 	idTypeDef*			GetParmType( int parmNumber ) const;
 	const char*			GetParmName( int parmNumber ) const;
 
-	int					NumFunctions( void ) const;
+	int					NumFunctions() const;
 	int					GetFunctionNumber( const function_t* func ) const;
 	const function_t*	GetFunction( int funcNumber ) const;
 	void				AddFunction( const function_t* func );
@@ -168,14 +168,14 @@ public:
 	void						Save( idSaveGame* savefile ) const;			// archives object for save game file
 	void						Restore( idRestoreGame* savefile );			// unarchives object from save game file
 
-	void						Free( void );
+	void						Free();
 	bool						SetType( const char* typeName );
-	void						ClearObject( void );
-	bool						HasObject( void ) const;
-	idTypeDef*					GetTypeDef( void ) const;
-	const char*					GetTypeName( void ) const;
-	const function_t*			GetConstructor( void ) const;
-	const function_t*			GetDestructor( void ) const;
+	void						ClearObject();
+	bool						HasObject() const;
+	idTypeDef*					GetTypeDef() const;
+	const char*					GetTypeName() const;
+	const function_t*			GetConstructor() const;
+	const function_t*			GetDestructor() const;
 	const function_t*			GetFunction( const char* name ) const;
 
 	byte*						GetVariable( const char* name, etype_t etype ) const;
@@ -199,8 +199,8 @@ private:
 
 public:
 	idScriptVariable();
-	bool				IsLinked( void ) const;
-	void				Unlink( void );
+	bool				IsLinked() const;
+	void				Unlink();
 	void				LinkTo( idScriptObject& obj, const char* name );
 	idScriptVariable&	operator=( const returnType& value );
 	operator returnType() const;
@@ -213,13 +213,13 @@ ID_INLINE idScriptVariable<type, etype, returnType>::idScriptVariable()
 }
 
 template<class type, etype_t etype, class returnType>
-ID_INLINE bool idScriptVariable<type, etype, returnType>::IsLinked( void ) const
+ID_INLINE bool idScriptVariable<type, etype, returnType>::IsLinked() const
 {
 	return ( data != NULL );
 }
 
 template<class type, etype_t etype, class returnType>
-ID_INLINE void idScriptVariable<type, etype, returnType>::Unlink( void )
+ID_INLINE void idScriptVariable<type, etype, returnType>::Unlink()
 {
 	data = NULL;
 }
@@ -348,18 +348,18 @@ public:
 	idVarDef( idTypeDef* typeptr = NULL );
 	~idVarDef();
 
-	const char* 			Name( void ) const;
-	const char* 			GlobalName( void ) const;
+	const char* 			Name() const;
+	const char* 			GlobalName() const;
 
 	void					SetTypeDef( idTypeDef* _type )
 	{
 		typeDef = _type;
 	}
-	idTypeDef* 				TypeDef( void ) const
+	idTypeDef* 				TypeDef() const
 	{
 		return typeDef;
 	}
-	etype_t					Type( void ) const
+	etype_t					Type() const
 	{
 		return ( typeDef != NULL ) ? typeDef->Type() : ev_void;
 	}
@@ -371,7 +371,7 @@ public:
 	void					SetValue( const eval_t& value, bool constant );
 	void					SetString( const char* string, bool constant );
 
-	idVarDef* 				Next( void ) const
+	idVarDef* 				Next() const
 	{
 		return next;    // next var def with same name
 	}
@@ -393,7 +393,7 @@ private:
 class idVarDefName
 {
 public:
-	idVarDefName( void )
+	idVarDefName()
 	{
 		defs = NULL;
 	}
@@ -403,11 +403,11 @@ public:
 		defs = NULL;
 	}
 
-	const char* 			Name( void ) const
+	const char* 			Name() const
 	{
 		return name;
 	}
-	idVarDef* 				GetDefs( void ) const
+	idVarDef* 				GetDefs() const
 	{
 		return defs;
 	}
@@ -504,7 +504,7 @@ private:
 	int											top_defs;
 	int											top_files;
 
-	void										CompileStats( void );
+	void										CompileStats();
 
 public:
 	idVarDef*									returnDef;
@@ -516,19 +516,19 @@ public:
 	// save games
 	void										Save( idSaveGame* savefile ) const;
 	bool										Restore( idRestoreGame* savefile );
-	int											CalculateChecksum( void ) const;		// Used to insure program code has not
+	int											CalculateChecksum() const;		// Used to insure program code has not
 	//    changed between savegames
 
 	void										Startup( const char* defaultScript );
-	void										Restart( void );
+	void										Restart();
 	bool										CompileText( const char* source, const char* text, bool console );
 	const function_t*							CompileFunction( const char* functionName, const char* text );
 	void										CompileFile( const char* filename );
-	void										BeginCompilation( void );
-	void										FinishCompilation( void );
+	void										BeginCompilation();
+	void										FinishCompilation();
 	void										DisassembleStatement( idFile* file, int instructionPointer ) const;
-	void										Disassemble( void ) const;
-	void										FreeData( void );
+	void										Disassemble() const;
+	void										FreeData();
 
 	const char*									GetFilename( int num );
 	int											GetFilenum( const char* name );
@@ -555,14 +555,14 @@ public:
 
 	void										SetEntity( const char* name, idEntity* ent );
 
-	statement_t*									AllocStatement( void );
+	statement_t*									AllocStatement();
 	statement_t&									GetStatement( int index );
-	int											NumStatements( void )
+	int											NumStatements()
 	{
 		return statements.Num();
 	}
 
-	int 										GetReturnedInteger( void );
+	int 										GetReturnedInteger();
 
 	void										ReturnFloat( float value );
 	void										ReturnInteger( int value );
@@ -570,7 +570,7 @@ public:
 	void										ReturnString( const char* string );
 	void										ReturnEntity( idEntity* ent );
 
-	int											NumFilenames( void )
+	int											NumFilenames()
 	{
 		return fileList.Num( );
 	}
@@ -611,7 +611,7 @@ ID_INLINE int idProgram::GetFunctionIndex( const function_t* func )
 idProgram::GetReturnedInteger
 ================
 */
-ID_INLINE int idProgram::GetReturnedInteger( void )
+ID_INLINE int idProgram::GetReturnedInteger()
 {
 	return *returnDef->value.intPtr;
 }

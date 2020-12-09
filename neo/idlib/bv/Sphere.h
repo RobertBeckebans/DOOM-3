@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 class idSphere
 {
 public:
-	idSphere( void );
+	idSphere();
 	explicit idSphere( const idVec3& point );
 	explicit idSphere( const idVec3& point, const float r );
 
@@ -56,14 +56,14 @@ public:
 	bool			operator==(	const idSphere& a ) const;						// exact compare, no epsilon
 	bool			operator!=(	const idSphere& a ) const;						// exact compare, no epsilon
 
-	void			Clear( void );									// inside out sphere
-	void			Zero( void );									// single point at origin
+	void			Clear();									// inside out sphere
+	void			Zero();									// single point at origin
 	void			SetOrigin( const idVec3& o );					// set origin of sphere
 	void			SetRadius( const float r );						// set square radius
 
-	const idVec3& 	GetOrigin( void ) const;						// returns origin of sphere
-	float			GetRadius( void ) const;						// returns sphere radius
-	bool			IsCleared( void ) const;						// returns true if sphere is inside out
+	const idVec3& 	GetOrigin() const;						// returns origin of sphere
+	float			GetRadius() const;						// returns sphere radius
+	bool			IsCleared() const;						// returns true if sphere is inside out
 
 	bool			AddPoint( const idVec3& p );					// add the point, returns true if the sphere expanded
 	bool			AddSphere( const idSphere& s );					// add the sphere, returns true if the sphere expanded
@@ -99,7 +99,7 @@ private:
 
 extern idSphere	sphere_zero;
 
-ID_INLINE idSphere::idSphere( void )
+ID_INLINE idSphere::idSphere()
 {
 }
 
@@ -156,13 +156,13 @@ ID_INLINE bool idSphere::operator!=( const idSphere& a ) const
 	return !Compare( a );
 }
 
-ID_INLINE void idSphere::Clear( void )
+ID_INLINE void idSphere::Clear()
 {
 	origin.Zero();
 	radius = -1.0f;
 }
 
-ID_INLINE void idSphere::Zero( void )
+ID_INLINE void idSphere::Zero()
 {
 	origin.Zero();
 	radius = 0.0f;
@@ -178,17 +178,17 @@ ID_INLINE void idSphere::SetRadius( const float r )
 	radius = r;
 }
 
-ID_INLINE const idVec3& idSphere::GetOrigin( void ) const
+ID_INLINE const idVec3& idSphere::GetOrigin() const
 {
 	return origin;
 }
 
-ID_INLINE float idSphere::GetRadius( void ) const
+ID_INLINE float idSphere::GetRadius() const
 {
 	return radius;
 }
 
-ID_INLINE bool idSphere::IsCleared( void ) const
+ID_INLINE bool idSphere::IsCleared() const
 {
 	return ( radius < 0.0f );
 }

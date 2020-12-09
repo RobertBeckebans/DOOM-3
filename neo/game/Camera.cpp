@@ -49,7 +49,7 @@ END_CLASS
 idCamera::Spawn
 =====================
 */
-void idCamera::Spawn( void )
+void idCamera::Spawn()
 {
 }
 
@@ -159,7 +159,7 @@ void idCameraView::Event_Activate( idEntity* activator )
 idCameraView::Stop
 =====================
 */
-void idCameraView::Stop( void )
+void idCameraView::Stop()
 {
 	if( g_debugCinematic.GetBool() )
 	{
@@ -190,7 +190,7 @@ void idCameraView::SetAttachment( idEntity** e, const char* p )
 idCameraView::Spawn
 =====================
 */
-void idCameraView::Spawn( void )
+void idCameraView::Spawn()
 {
 	// if no target specified use ourself
 	const char* cam = spawnArgs.GetString( "cameraTarget" );
@@ -331,7 +331,7 @@ void idCameraAnim::Restore( idRestoreGame* savefile )
 idCameraAnim::Spawn
 =====================
 */
-void idCameraAnim::Spawn( void )
+void idCameraAnim::Spawn()
 {
 	if( spawnArgs.GetVector( "old_origin", "0 0 0", offset ) )
 	{
@@ -353,7 +353,7 @@ void idCameraAnim::Spawn( void )
 idCameraAnim::Load
 ================
 */
-void idCameraAnim::LoadAnim( void )
+void idCameraAnim::LoadAnim()
 {
 	int			version;
 	idLexer		parser( LEXFL_ALLOWPATHNAMES | LEXFL_NOSTRINGESCAPECHARS | LEXFL_NOSTRINGCONCAT );
@@ -500,7 +500,7 @@ void idCameraAnim::LoadAnim( void )
 idCameraAnim::Start
 ================
 */
-void idCameraAnim::Start( void )
+void idCameraAnim::Start()
 {
 	cycle = spawnArgs.GetInt( "cycle" );
 	if( !cycle )
@@ -529,7 +529,7 @@ void idCameraAnim::Start( void )
 idCameraAnim::Stop
 =====================
 */
-void idCameraAnim::Stop( void )
+void idCameraAnim::Stop()
 {
 	if( gameLocal.GetCamera() == this )
 	{
@@ -554,7 +554,7 @@ void idCameraAnim::Stop( void )
 idCameraAnim::Think
 =====================
 */
-void idCameraAnim::Think( void )
+void idCameraAnim::Think()
 {
 	int frame;
 	int frameTime;
@@ -790,7 +790,7 @@ void idCameraAnim::Event_Activate( idEntity* _activator )
 idCameraAnim::Event_Start
 ================
 */
-void idCameraAnim::Event_Start( void )
+void idCameraAnim::Event_Start()
 {
 	Start();
 }
@@ -800,7 +800,7 @@ void idCameraAnim::Event_Start( void )
 idCameraAnim::Event_Stop
 ================
 */
-void idCameraAnim::Event_Stop( void )
+void idCameraAnim::Event_Stop()
 {
 	Stop();
 }
@@ -810,7 +810,7 @@ void idCameraAnim::Event_Stop( void )
 idCameraAnim::Event_SetCallback
 ================
 */
-void idCameraAnim::Event_SetCallback( void )
+void idCameraAnim::Event_SetCallback()
 {
 	if( ( gameLocal.GetCamera() == this ) && !threadNum )
 	{

@@ -61,7 +61,7 @@ public:
 	void				ReadFromSaveGame( idFile* savefile );
 };
 
-ID_INLINE idRegister::idRegister( void )
+ID_INLINE idRegister::idRegister()
 {
 }
 

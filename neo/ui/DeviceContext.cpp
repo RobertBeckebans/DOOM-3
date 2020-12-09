@@ -1238,7 +1238,7 @@ int idDeviceContext::DrawText( const char* text, float textScale, int textAlign,
 idRectangle::String
 =============
 */
-char* idRectangle::String( void ) const
+char* idRectangle::String() const
 {
 	static	int		index = 0;
 	static	char	str[ 8 ][ 48 ];

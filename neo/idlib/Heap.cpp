@@ -56,17 +56,17 @@ class idHeap
 {
 
 public:
-	idHeap( void );
-	~idHeap( void );				// frees all associated data
-	void			Init( void );					// initialize
+	idHeap();
+	~idHeap();				// frees all associated data
+	void			Init();					// initialize
 	void* 			Allocate( const dword bytes );	// allocate memory
 	void			Free( void* p );				// free memory
 	void* 			Allocate16( const dword bytes );// allocate 16 byte aligned memory
 	void			Free16( void* p );				// free 16 byte aligned memory
 	dword			Msize( void* p );				// return size of data block
-	void			Dump( void );
+	void			Dump();
 
-	void 			AllocDefragBlock( void );		// hack for huge renderbumps
+	void 			AllocDefragBlock();		// hack for huge renderbumps
 
 private:
 
@@ -143,7 +143,7 @@ private:
 	void* 			LargeAllocate( dword bytes );	// allocate large block from OS directly
 	void			LargeFree( void* ptr );			// free memory allocated by large heap manager
 
-	void			ReleaseSwappedPages( void );
+	void			ReleaseSwappedPages();
 	void			FreePageReal( idHeap::page_s* p );
 };
 
@@ -183,7 +183,7 @@ void idHeap::Init()
 idHeap::idHeap
 ================
 */
-idHeap::idHeap( void )
+idHeap::idHeap()
 {
 	Init();
 }
@@ -195,7 +195,7 @@ idHeap::~idHeap
   returns all allocated memory back to OS
 ================
 */
-idHeap::~idHeap( void )
+idHeap::~idHeap()
 {
 
 	idHeap::page_s*	p;
@@ -251,7 +251,7 @@ idHeap::~idHeap( void )
 idHeap::AllocDefragBlock
 ================
 */
-void idHeap::AllocDefragBlock( void )
+void idHeap::AllocDefragBlock()
 {
 	int		size = 0x40000000;
 
@@ -440,7 +440,7 @@ idHeap::Dump
   dump contents of the heap
 ================
 */
-void idHeap::Dump( void )
+void idHeap::Dump()
 {
 	idHeap::page_s*	pg;
 
@@ -1110,7 +1110,7 @@ static memoryStats_t	mem_frame_frees;
 Mem_ClearFrameStats
 ==================
 */
-void Mem_ClearFrameStats( void )
+void Mem_ClearFrameStats()
 {
 	mem_frame_allocs.num = mem_frame_frees.num = 0;
 	mem_frame_allocs.minSize = mem_frame_frees.minSize = 0x0fffffff;
@@ -1295,7 +1295,7 @@ void* Mem_ClearedAlloc( const int size )
 Mem_ClearedAlloc
 ==================
 */
-void Mem_AllocDefragBlock( void )
+void Mem_AllocDefragBlock()
 {
 	mem_heap->AllocDefragBlock();
 }
@@ -1337,7 +1337,7 @@ void Mem_DumpCompressed_f( const idCmdArgs& args )
 Mem_Init
 ==================
 */
-void Mem_Init( void )
+void Mem_Init()
 {
 	mem_heap = new idHeap;
 	Mem_ClearFrameStats();
@@ -1348,7 +1348,7 @@ void Mem_Init( void )
 Mem_Shutdown
 ==================
 */
-void Mem_Shutdown( void )
+void Mem_Shutdown()
 {
 	idHeap* m = mem_heap;
 	mem_heap = NULL;
@@ -1975,7 +1975,7 @@ char* Mem_CopyString( const char* in, const char* fileName, const int lineNumber
 Mem_Init
 ==================
 */
-void Mem_Init( void )
+void Mem_Init()
 {
 	mem_heap = new idHeap;
 }
@@ -1985,7 +1985,7 @@ void Mem_Init( void )
 Mem_Shutdown
 ==================
 */
-void Mem_Shutdown( void )
+void Mem_Shutdown()
 {
 
 	if( mem_leakName[0] != '\0' )

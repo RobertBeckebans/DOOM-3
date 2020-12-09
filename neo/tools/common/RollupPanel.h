@@ -48,15 +48,15 @@ class rvRollupPanel
 {
 public:
 
-	rvRollupPanel( void );
-	virtual ~rvRollupPanel( void );
+	rvRollupPanel();
+	virtual ~rvRollupPanel();
 
 	bool	Create( DWORD dwStyle, const RECT& rect, HWND parent, unsigned int id );
 
 	int		InsertItem( const char* caption, HWND dialog, bool autoDestroy, int index = -1 );
 
 	void	RemoveItem( int index );
-	void	RemoveAllItems( void );
+	void	RemoveAllItems();
 
 	void	ExpandItem( int index, bool expand = true );
 	void	ExpandAllItems( bool expand = true );
@@ -64,7 +64,7 @@ public:
 	void	EnableItem( int index, bool enabled = true );
 	void	EnableAllItems( bool enable = true );
 
-	int		GetItemCount( void );
+	int		GetItemCount();
 
 	RPITEM*	GetItem( int index );
 
@@ -76,13 +76,13 @@ public:
 	bool	IsItemExpanded( int index );
 	bool	IsItemEnabled( int index );
 
-	HWND	GetWindow( void );
+	HWND	GetWindow();
 
-	void	AutoSize( void );
+	void	AutoSize();
 
 protected:
 
-	void	RecallLayout( void );
+	void	RecallLayout();
 	void	_RemoveItem( int index );
 	void	_ExpandItem( RPITEM* item, bool expand );
 	void	_EnableItem( RPITEM* item, bool enable );
@@ -115,7 +115,7 @@ protected:
 	static HHOOK		mDialogHook;
 };
 
-ID_INLINE int rvRollupPanel::GetItemCount( void )
+ID_INLINE int rvRollupPanel::GetItemCount()
 {
 	return mItems.Num();
 }
@@ -138,7 +138,7 @@ ID_INLINE bool rvRollupPanel::IsItemEnabled( int index )
 	return mItems[index]->mEnable;
 }
 
-ID_INLINE HWND rvRollupPanel::GetWindow( void )
+ID_INLINE HWND rvRollupPanel::GetWindow()
 {
 	return mWindow;
 }

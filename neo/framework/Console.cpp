@@ -47,13 +47,13 @@ void SCR_DrawTextRightAlign( float& y, const char* text, ... ) id_attribute( ( f
 class idConsoleLocal : public idConsole
 {
 public:
-	virtual	void		Init( void );
-	virtual void		Shutdown( void );
-	virtual	void		LoadGraphics( void );
+	virtual	void		Init();
+	virtual void		Shutdown();
+	virtual	void		LoadGraphics();
 	virtual	bool		ProcessEvent( const sysEvent_t* event, bool forceAccept );
-	virtual	bool		Active( void );
-	virtual	void		ClearNotifyLines( void );
-	virtual	void		Close( void );
+	virtual	bool		Active();
+	virtual	void		ClearNotifyLines();
+	virtual	void		Close();
 	virtual	void		Print( const char* text );
 	virtual	void		Draw( bool forceFullScreen );
 
@@ -80,7 +80,7 @@ private:
 
 	void				Scroll();
 	void				SetDisplayFraction( float frac );
-	void				UpdateDisplayFraction( void );
+	void				UpdateDisplayFraction();
 
 	//============================
 
@@ -381,7 +381,7 @@ static void Con_Dump_f( const idCmdArgs& args )
 idConsoleLocal::Init
 ==============
 */
-void idConsoleLocal::Init( void )
+void idConsoleLocal::Init()
 {
 	int		i;
 
@@ -409,7 +409,7 @@ void idConsoleLocal::Init( void )
 idConsoleLocal::Shutdown
 ==============
 */
-void idConsoleLocal::Shutdown( void )
+void idConsoleLocal::Shutdown()
 {
 	cmdSystem->RemoveCommand( "clear" );
 	cmdSystem->RemoveCommand( "conDump" );
@@ -435,7 +435,7 @@ void idConsoleLocal::LoadGraphics()
 idConsoleLocal::Active
 ================
 */
-bool	idConsoleLocal::Active( void )
+bool	idConsoleLocal::Active()
 {
 	return keyCatching;
 }
@@ -559,7 +559,7 @@ void idConsoleLocal::Dump( const char* fileName )
 idConsoleLocal::PageUp
 ================
 */
-void idConsoleLocal::PageUp( void )
+void idConsoleLocal::PageUp()
 {
 	display -= 2;
 	if( current - display >= TOTAL_LINES )
@@ -573,7 +573,7 @@ void idConsoleLocal::PageUp( void )
 idConsoleLocal::PageDown
 ================
 */
-void idConsoleLocal::PageDown( void )
+void idConsoleLocal::PageDown()
 {
 	display += 2;
 	if( display > current )
@@ -587,7 +587,7 @@ void idConsoleLocal::PageDown( void )
 idConsoleLocal::Top
 ================
 */
-void idConsoleLocal::Top( void )
+void idConsoleLocal::Top()
 {
 	display = 0;
 }
@@ -597,7 +597,7 @@ void idConsoleLocal::Top( void )
 idConsoleLocal::Bottom
 ================
 */
-void idConsoleLocal::Bottom( void )
+void idConsoleLocal::Bottom()
 {
 	display = current;
 }
@@ -785,7 +785,7 @@ UpdateDisplayFraction
 Scrolls the console up or down based on conspeed
 ==============
 */
-void idConsoleLocal::UpdateDisplayFraction( void )
+void idConsoleLocal::UpdateDisplayFraction()
 {
 	if( con_speed.GetFloat() <= 0.1f )
 	{

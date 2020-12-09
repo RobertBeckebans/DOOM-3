@@ -56,8 +56,8 @@ public:
 	static class idFileSystem* 	fileSystem;
 	static int					frameNumber;
 
-	static void					Init( void );
-	static void					ShutDown( void );
+	static void					Init();
+	static void					ShutDown();
 
 	// wrapper to idCommon functions
 	static void					Error( const char* fmt, ... );
@@ -133,9 +133,9 @@ float	LittleFloat( float l );
 void	BigRevBytes( void* bp, int elsize, int elcount );
 void	LittleRevBytes( void* bp, int elsize, int elcount );
 void	LittleBitField( void* bp, int elsize );
-void	Swap_Init( void );
+void	Swap_Init();
 
-bool	Swap_IsBigEndian( void );
+bool	Swap_IsBigEndian();
 
 // for base64
 void	SixtetsForInt( byte* out, int src );

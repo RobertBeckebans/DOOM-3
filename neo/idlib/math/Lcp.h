@@ -62,14 +62,14 @@ If you have questions concerning this license or the applicable additional terms
 class idLCP
 {
 public:
-	static idLCP* 	AllocSquare( void );		// A must be a square matrix
-	static idLCP* 	AllocSymmetric( void );		// A must be a symmetric matrix
+	static idLCP* 	AllocSquare();		// A must be a square matrix
+	static idLCP* 	AllocSymmetric();		// A must be a symmetric matrix
 
-	virtual			~idLCP( void );
+	virtual			~idLCP();
 
 	virtual bool	Solve( const idMatX& A, idVecX& x, const idVecX& b, const idVecX& lo, const idVecX& hi, const int* boxIndex = NULL ) = 0;
 	virtual void	SetMaxIterations( int max );
-	virtual int		GetMaxIterations( void );
+	virtual int		GetMaxIterations();
 
 protected:
 	int				maxIterations;

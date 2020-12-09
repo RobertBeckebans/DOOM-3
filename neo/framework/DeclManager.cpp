@@ -69,7 +69,7 @@ class idDeclType
 public:
 	idStr						typeName;
 	declType_t					type;
-	idDecl* 					( *allocator )( void );
+	idDecl* 					( *allocator )();
 };
 
 class idDeclFolder
@@ -90,44 +90,44 @@ class idDeclLocal : public idDeclBase
 public:
 	idDeclLocal();
 	virtual 					~idDeclLocal() {};
-	virtual const char* 		GetName( void ) const;
-	virtual declType_t			GetType( void ) const;
-	virtual declState_t			GetState( void ) const;
-	virtual bool				IsImplicit( void ) const;
-	virtual bool				IsValid( void ) const;
-	virtual void				Invalidate( void );
-	virtual void				Reload( void );
-	virtual void				EnsureNotPurged( void );
-	virtual int					Index( void ) const;
-	virtual int					GetLineNum( void ) const;
-	virtual const char* 		GetFileName( void ) const;
-	virtual size_t				Size( void ) const;
+	virtual const char* 		GetName() const;
+	virtual declType_t			GetType() const;
+	virtual declState_t			GetState() const;
+	virtual bool				IsImplicit() const;
+	virtual bool				IsValid() const;
+	virtual void				Invalidate();
+	virtual void				Reload();
+	virtual void				EnsureNotPurged();
+	virtual int					Index() const;
+	virtual int					GetLineNum() const;
+	virtual const char* 		GetFileName() const;
+	virtual size_t				Size() const;
 	virtual void				GetText( char* text ) const;
-	virtual int					GetTextLength( void ) const;
+	virtual int					GetTextLength() const;
 	virtual void				SetText( const char* text );
-	virtual bool				ReplaceSourceFileText( void );
-	virtual bool				SourceFileChanged( void ) const;
-	virtual void				MakeDefault( void );
-	virtual bool				EverReferenced( void ) const;
+	virtual bool				ReplaceSourceFileText();
+	virtual bool				SourceFileChanged() const;
+	virtual void				MakeDefault();
+	virtual bool				EverReferenced() const;
 
 protected:
-	virtual bool				SetDefaultText( void );
-	virtual const char* 		DefaultDefinition( void ) const;
+	virtual bool				SetDefaultText();
+	virtual const char* 		DefaultDefinition() const;
 	virtual bool				Parse( const char* text, const int textLength );
-	virtual void				FreeData( void );
-	virtual void				List( void ) const;
-	virtual void				Print( void ) const;
+	virtual void				FreeData();
+	virtual void				List() const;
+	virtual void				Print() const;
 
 protected:
-	void						AllocateSelf( void );
+	void						AllocateSelf();
 
 	// Parses the decl definition.
 	// After calling parse, a decl will be guaranteed usable.
-	void						ParseLocal( void );
+	void						ParseLocal();
 
 	// Does a MakeDefualt, but flags the decl so that it
 	// will Parse() the next time the decl is found.
-	void						Purge( void );
+	void						Purge();
 
 	// Set textSource possible with compression.
 	void						SetTextLocal( const char* text, const int length );
@@ -182,15 +182,15 @@ class idDeclManagerLocal : public idDeclManager
 	friend class idDeclLocal;
 
 public:
-	virtual void				Init( void );
-	virtual void				Shutdown( void );
+	virtual void				Init();
+	virtual void				Shutdown();
 	virtual void				Reload( bool force );
 	virtual void				BeginLevelLoad();
 	virtual void				EndLevelLoad();
-	virtual void				RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )( void ) );
+	virtual void				RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )() );
 	virtual void				RegisterDeclFolder( const char* folder, const char* extension, declType_t defaultType );
-	virtual int					GetChecksum( void ) const;
-	virtual int					GetNumDeclTypes( void ) const;
+	virtual int					GetChecksum() const;
+	virtual int					GetNumDeclTypes() const;
 	virtual int					GetNumDecls( declType_t type );
 	virtual const char* 		GetDeclNameFromType( declType_t type ) const;
 	virtual declType_t			GetDeclTypeFromName( const char* typeName ) const;
@@ -227,7 +227,7 @@ public:
 	{
 		return declTypes[type];
 	}
-	const idDeclFile* 			GetImplicitDeclFile( void ) const
+	const idDeclFile* 			GetImplicitDeclFile() const
 	{
 		return &implicitDecls;
 	}
@@ -333,7 +333,7 @@ static int maxHuffmanBits = 0;
 ClearHuffmanFrequencies
 ================
 */
-void ClearHuffmanFrequencies( void )
+void ClearHuffmanFrequencies()
 {
 	int i;
 
@@ -441,7 +441,7 @@ int HuffmanHeight_r( huffmanNode_t* node )
 SetupHuffman
 ================
 */
-void SetupHuffman( void )
+void SetupHuffman()
 {
 	int i, height;
 	huffmanNode_t* firstNode, *node;
@@ -485,7 +485,7 @@ void SetupHuffman( void )
 ShutdownHuffman
 ================
 */
-void ShutdownHuffman( void )
+void ShutdownHuffman()
 {
 	if( huffmanTree )
 	{
@@ -867,7 +867,7 @@ const char* listDeclStrings[] = { "current", "all", "ever", NULL };
 idDeclManagerLocal::Init
 ===================
 */
-void idDeclManagerLocal::Init( void )
+void idDeclManagerLocal::Init()
 {
 
 	common->Printf( "----- Initializing Decls -----\n" );
@@ -948,7 +948,7 @@ void idDeclManagerLocal::Init( void )
 idDeclManagerLocal::Shutdown
 ===================
 */
-void idDeclManagerLocal::Shutdown( void )
+void idDeclManagerLocal::Shutdown()
 {
 	int			i, j;
 	idDeclLocal* decl;
@@ -1040,7 +1040,7 @@ void idDeclManagerLocal::EndLevelLoad()
 idDeclManagerLocal::RegisterDeclType
 ===================
 */
-void idDeclManagerLocal::RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )( void ) )
+void idDeclManagerLocal::RegisterDeclType( const char* typeName, declType_t type, idDecl * ( *allocator )() )
 {
 	idDeclType* declType;
 
@@ -1132,7 +1132,7 @@ void idDeclManagerLocal::RegisterDeclFolder( const char* folder, const char* ext
 idDeclManagerLocal::GetChecksum
 ===================
 */
-int idDeclManagerLocal::GetChecksum( void ) const
+int idDeclManagerLocal::GetChecksum() const
 {
 	int i, j, total, num;
 	int* checksumData;
@@ -1182,7 +1182,7 @@ int idDeclManagerLocal::GetChecksum( void ) const
 idDeclManagerLocal::GetNumDeclTypes
 ===================
 */
-int idDeclManagerLocal::GetNumDeclTypes( void ) const
+int idDeclManagerLocal::GetNumDeclTypes() const
 {
 	return declTypes.Num();
 }
@@ -1980,7 +1980,7 @@ idDeclLocal* idDeclManagerLocal::FindTypeWithoutParsing( declType_t type, const 
 idDeclLocal::idDeclLocal
 =================
 */
-idDeclLocal::idDeclLocal( void )
+idDeclLocal::idDeclLocal()
 {
 	name = "unnamed";
 	textSource = NULL;
@@ -2006,7 +2006,7 @@ idDeclLocal::idDeclLocal( void )
 idDeclLocal::GetName
 =================
 */
-const char* idDeclLocal::GetName( void ) const
+const char* idDeclLocal::GetName() const
 {
 	return name.c_str();
 }
@@ -2016,7 +2016,7 @@ const char* idDeclLocal::GetName( void ) const
 idDeclLocal::GetType
 =================
 */
-declType_t idDeclLocal::GetType( void ) const
+declType_t idDeclLocal::GetType() const
 {
 	return type;
 }
@@ -2026,7 +2026,7 @@ declType_t idDeclLocal::GetType( void ) const
 idDeclLocal::GetState
 =================
 */
-declState_t idDeclLocal::GetState( void ) const
+declState_t idDeclLocal::GetState() const
 {
 	return declState;
 }
@@ -2036,7 +2036,7 @@ declState_t idDeclLocal::GetState( void ) const
 idDeclLocal::IsImplicit
 =================
 */
-bool idDeclLocal::IsImplicit( void ) const
+bool idDeclLocal::IsImplicit() const
 {
 	return ( sourceFile == declManagerLocal.GetImplicitDeclFile() );
 }
@@ -2046,7 +2046,7 @@ bool idDeclLocal::IsImplicit( void ) const
 idDeclLocal::IsValid
 =================
 */
-bool idDeclLocal::IsValid( void ) const
+bool idDeclLocal::IsValid() const
 {
 	return ( declState != DS_UNPARSED );
 }
@@ -2056,7 +2056,7 @@ bool idDeclLocal::IsValid( void ) const
 idDeclLocal::Invalidate
 =================
 */
-void idDeclLocal::Invalidate( void )
+void idDeclLocal::Invalidate()
 {
 	declState = DS_UNPARSED;
 }
@@ -2066,7 +2066,7 @@ void idDeclLocal::Invalidate( void )
 idDeclLocal::EnsureNotPurged
 =================
 */
-void idDeclLocal::EnsureNotPurged( void )
+void idDeclLocal::EnsureNotPurged()
 {
 	if( declState == DS_UNPARSED )
 	{
@@ -2079,7 +2079,7 @@ void idDeclLocal::EnsureNotPurged( void )
 idDeclLocal::Index
 =================
 */
-int idDeclLocal::Index( void ) const
+int idDeclLocal::Index() const
 {
 	return index;
 }
@@ -2089,7 +2089,7 @@ int idDeclLocal::Index( void ) const
 idDeclLocal::GetLineNum
 =================
 */
-int idDeclLocal::GetLineNum( void ) const
+int idDeclLocal::GetLineNum() const
 {
 	return sourceLine;
 }
@@ -2099,7 +2099,7 @@ int idDeclLocal::GetLineNum( void ) const
 idDeclLocal::GetFileName
 =================
 */
-const char* idDeclLocal::GetFileName( void ) const
+const char* idDeclLocal::GetFileName() const
 {
 	return ( sourceFile ) ? sourceFile->fileName.c_str() : "*invalid*";
 }
@@ -2109,7 +2109,7 @@ const char* idDeclLocal::GetFileName( void ) const
 idDeclLocal::Size
 =================
 */
-size_t idDeclLocal::Size( void ) const
+size_t idDeclLocal::Size() const
 {
 	return sizeof( idDecl ) + name.Allocated();
 }
@@ -2133,7 +2133,7 @@ void idDeclLocal::GetText( char* text ) const
 idDeclLocal::GetTextLength
 =================
 */
-int idDeclLocal::GetTextLength( void ) const
+int idDeclLocal::GetTextLength() const
 {
 	return textLength;
 }
@@ -2187,7 +2187,7 @@ void idDeclLocal::SetTextLocal( const char* text, const int length )
 idDeclLocal::ReplaceSourceFileText
 =================
 */
-bool idDeclLocal::ReplaceSourceFileText( void )
+bool idDeclLocal::ReplaceSourceFileText()
 {
 	int oldFileLength, newFileLength;
 	char* buffer;
@@ -2281,7 +2281,7 @@ bool idDeclLocal::ReplaceSourceFileText( void )
 idDeclLocal::SourceFileChanged
 =================
 */
-bool idDeclLocal::SourceFileChanged( void ) const
+bool idDeclLocal::SourceFileChanged() const
 {
 	int newLength;
 	ID_TIME_T newTimestamp;
@@ -2342,7 +2342,7 @@ void idDeclLocal::MakeDefault()
 idDeclLocal::SetDefaultText
 =================
 */
-bool idDeclLocal::SetDefaultText( void )
+bool idDeclLocal::SetDefaultText()
 {
 	return false;
 }
@@ -2406,7 +2406,7 @@ void idDeclLocal::Print() const
 idDeclLocal::Reload
 =================
 */
-void idDeclLocal::Reload( void )
+void idDeclLocal::Reload()
 {
 	this->sourceFile->Reload( false );
 }
@@ -2416,7 +2416,7 @@ void idDeclLocal::Reload( void )
 idDeclLocal::AllocateSelf
 =================
 */
-void idDeclLocal::AllocateSelf( void )
+void idDeclLocal::AllocateSelf()
 {
 	if( self == NULL )
 	{
@@ -2430,7 +2430,7 @@ void idDeclLocal::AllocateSelf( void )
 idDeclLocal::ParseLocal
 =================
 */
-void idDeclLocal::ParseLocal( void )
+void idDeclLocal::ParseLocal()
 {
 	bool generatedDefaultText = false;
 
@@ -2481,7 +2481,7 @@ void idDeclLocal::ParseLocal( void )
 idDeclLocal::Purge
 =================
 */
-void idDeclLocal::Purge( void )
+void idDeclLocal::Purge()
 {
 	// never purge things that were referenced outside level load,
 	// like the console and menu graphics
@@ -2502,7 +2502,7 @@ void idDeclLocal::Purge( void )
 idDeclLocal::EverReferenced
 =================
 */
-bool idDeclLocal::EverReferenced( void ) const
+bool idDeclLocal::EverReferenced() const
 {
 	return everReferenced;
 }

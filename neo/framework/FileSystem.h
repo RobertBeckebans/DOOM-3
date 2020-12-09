@@ -132,11 +132,11 @@ class idFileList
 {
 	friend class idFileSystemLocal;
 public:
-	const char* 			GetBasePath( void ) const
+	const char* 			GetBasePath() const
 	{
 		return basePath;
 	}
-	int						GetNumFiles( void ) const
+	int						GetNumFiles() const
 	{
 		return list.Num();
 	}
@@ -144,7 +144,7 @@ public:
 	{
 		return list[index];
 	}
-	const idStrList& 		GetList( void ) const
+	const idStrList& 		GetList() const
 	{
 		return list;
 	}
@@ -159,7 +159,7 @@ class idModList
 {
 	friend class idFileSystemLocal;
 public:
-	int						GetNumMods( void ) const
+	int						GetNumMods() const
 	{
 		return mods.Num();
 	}
@@ -182,19 +182,19 @@ class idFileSystem
 public:
 	virtual					~idFileSystem() {}
 	// Initializes the file system.
-	virtual void			Init( void ) = 0;
+	virtual void			Init() = 0;
 	// Restarts the file system.
-	virtual void			Restart( void ) = 0;
+	virtual void			Restart() = 0;
 	// Shutdown the file system.
 	virtual void			Shutdown( bool reloading ) = 0;
 	// Returns true if the file system is initialized.
-	virtual bool			IsInitialized( void ) const = 0;
+	virtual bool			IsInitialized() const = 0;
 	// Returns true if we are doing an fs_copyfiles.
-	virtual bool			PerformingCopyFiles( void ) const = 0;
+	virtual bool			PerformingCopyFiles() const = 0;
 	// Returns a list of mods found along with descriptions
 	// 'mods' contains the directory names to be passed to fs_game
 	// 'descriptions' contains a free form string to be used in the UI
-	virtual idModList* 		ListMods( void ) = 0;
+	virtual idModList* 		ListMods() = 0;
 	// Frees the given mod list
 	virtual void			FreeModList( idModList* modList ) = 0;
 	// Lists files with the given extension in the given directory.
@@ -222,9 +222,9 @@ public:
 	virtual bool			FileIsInPAK( const char* relativePath ) = 0;
 	// Returns a space separated string containing the checksums of all referenced pak files.
 	// will call SetPureServerChecksums internally to restrict itself
-	virtual void			UpdatePureServerChecksums( void ) = 0;
+	virtual void			UpdatePureServerChecksums() = 0;
 	// setup the mapping of OS -> game pak checksum
-	virtual bool			UpdateGamePakChecksums( void ) = 0;
+	virtual bool			UpdateGamePakChecksums() = 0;
 	// 0-terminated list of pak checksums
 	// if pureChecksums[ 0 ] == 0, all data sources will be allowed
 	// otherwise, only pak files that match one of the checksums will be checked for files
@@ -240,9 +240,9 @@ public:
 	// if the given checksum list can't be completely processed and set, will error out
 	virtual void			SetRestartChecksums( const int pureChecksums[ MAX_PURE_PAKS ], int gamePakChecksum ) = 0;
 	// equivalent to calling SetPureServerChecksums with an empty list
-	virtual	void			ClearPureChecksums( void ) = 0;
+	virtual	void			ClearPureChecksums() = 0;
 	// get a mask of supported OSes. if not pure, returns -1
-	virtual int				GetOSMask( void ) = 0;
+	virtual int				GetOSMask() = 0;
 	// Reads a complete file.
 	// Returns the length of the file, or -1 on failure.
 	// A null buffer will just return the file length without loading.
@@ -275,9 +275,9 @@ public:
 	// Returns immediately, performing the read from a background thread.
 	virtual void			BackgroundDownload( backgroundDownload_t* bgl ) = 0;
 	// resets the bytes read counter
-	virtual void			ResetReadCount( void ) = 0;
+	virtual void			ResetReadCount() = 0;
 	// retrieves the current read count
-	virtual int				GetReadCount( void ) = 0;
+	virtual int				GetReadCount() = 0;
 	// adds to the read count
 	virtual void			AddToReadCount( int c ) = 0;
 	// look for a dynamic module
@@ -285,12 +285,12 @@ public:
 	// case sensitive filesystems use an internal directory cache
 	// the cache is cleared when calling OpenFileWrite and RemoveFile
 	// in some cases you may need to use this directly
-	virtual void			ClearDirCache( void ) = 0;
+	virtual void			ClearDirCache() = 0;
 
 	// is D3XP installed? even if not running it atm
-	virtual bool			HasD3XP( void ) = 0;
+	virtual bool			HasD3XP() = 0;
 	// are we using D3XP content ( through a real d3xp run or through a double mod )
-	virtual bool			RunningD3XP( void ) = 0;
+	virtual bool			RunningD3XP() = 0;
 
 	// don't use for large copies - allocates a single memory block for the copy
 	virtual void			CopyFile( const char* fromOSPath, const char* toOSPath ) = 0;
@@ -298,7 +298,7 @@ public:
 	// lookup a relative path, return the size or 0 if not found
 	virtual int				ValidateDownloadPakForChecksum( int checksum, char path[ MAX_STRING_CHARS ], bool isGamePak ) = 0;
 
-	virtual idFile* 		MakeTemporaryFile( void ) = 0;
+	virtual idFile* 		MakeTemporaryFile() = 0;
 
 	// make downloaded pak files known so pure negociation works next time
 	virtual int				AddZipFile( const char* path ) = 0;

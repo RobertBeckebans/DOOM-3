@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idDeclEntityDef::Size
 =================
 */
-size_t idDeclEntityDef::Size( void ) const
+size_t idDeclEntityDef::Size() const
 {
 	return sizeof( idDeclEntityDef ) + dict.Allocated();
 }
@@ -45,7 +45,7 @@ size_t idDeclEntityDef::Size( void ) const
 idDeclEntityDef::FreeData
 ================
 */
-void idDeclEntityDef::FreeData( void )
+void idDeclEntityDef::FreeData()
 {
 	dict.Clear();
 }
@@ -150,7 +150,7 @@ bool idDeclEntityDef::Parse( const char* text, const int textLength )
 idDeclEntityDef::DefaultDefinition
 ================
 */
-const char* idDeclEntityDef::DefaultDefinition( void ) const
+const char* idDeclEntityDef::DefaultDefinition() const
 {
 	return
 		"{\n"
@@ -165,7 +165,7 @@ idDeclEntityDef::Print
 Dumps all key/value pairs, including inherited ones
 ================
 */
-void idDeclEntityDef::Print( void )
+void idDeclEntityDef::Print()
 {
 	dict.Print();
 }

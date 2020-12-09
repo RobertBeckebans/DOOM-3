@@ -208,10 +208,10 @@ public:
 
 	void					Init();
 	void					Enqueue( entityNetEvent_t* event, outOfOrderBehaviour_t oooBehaviour );
-	entityNetEvent_t* 		Dequeue( void );
-	entityNetEvent_t* 		RemoveLast( void );
+	entityNetEvent_t* 		Dequeue();
+	entityNetEvent_t* 		RemoveLast();
 
-	entityNetEvent_t* 		Start( void )
+	entityNetEvent_t* 		Start()
 	{
 		return start;
 	}
@@ -237,16 +237,16 @@ public:
 	idEntityPtr<type>& 		operator=( type* ent );
 
 	// synchronize entity pointers over the network
-	int						GetSpawnId( void ) const
+	int						GetSpawnId() const
 	{
 		return spawnId;
 	}
 	bool					SetSpawnId( int id );
-	bool					UpdateSpawnId( void );
+	bool					UpdateSpawnId();
 
-	bool					IsValid( void ) const;
-	type* 					GetEntity( void ) const;
-	int						GetEntityNum( void ) const;
+	bool					IsValid() const;
+	type* 					GetEntity() const;
+	int						GetEntityNum() const;
 
 private:
 	int						spawnId;
@@ -333,10 +333,10 @@ public:
 
 	idGameLocal();
 
-	virtual void			Init( void );
-	virtual void			Shutdown( void );
+	virtual void			Init();
+	virtual void			Shutdown();
 	virtual void			SetLocalClient( int clientNum );
-	virtual void			ThrottleUserInfo( void );
+	virtual void			ThrottleUserInfo();
 	virtual const idDict* 	SetUserInfo( int clientNum, const idDict& userInfo, bool isClient, bool canModify );
 	virtual const idDict* 	GetUserInfo( int clientNum );
 	virtual void			SetServerInfo( const idDict& serverInfo );
@@ -346,13 +346,13 @@ public:
 	virtual void			InitFromNewMap( const char* mapName, idRenderWorld* renderWorld, idSoundWorld* soundWorld, bool isServer, bool isClient, int randSeed );
 	virtual bool			InitFromSaveGame( const char* mapName, idRenderWorld* renderWorld, idSoundWorld* soundWorld, idFile* saveGameFile );
 	virtual void			SaveGame( idFile* saveGameFile );
-	virtual void			MapShutdown( void );
+	virtual void			MapShutdown();
 	virtual void			CacheDictionaryMedia( const idDict* dict );
 	virtual void			SpawnPlayer( int clientNum );
 	virtual gameReturn_t	RunFrame( const usercmd_t* clientCmds );
 	virtual bool			Draw( int clientNum );
 	virtual escReply_t		HandleESC( idUserInterface** gui );
-	virtual idUserInterface*	StartMenu( void );
+	virtual idUserInterface*	StartMenu();
 	virtual const char* 	HandleGuiCommands( const char* menuCommand );
 	virtual void			HandleMainMenuCommands( const char* menuCommand, idUserInterface* gui );
 	virtual allowReply_t	ServerAllowClient( int numClients, const char* IP, const char* guid, const char* password, char reason[MAX_STRING_CHARS] );
@@ -384,26 +384,26 @@ public:
 	// Initializes all map variables common to both save games and spawned games
 	void					LoadMap( const char* mapName, int randseed );
 
-	void					LocalMapRestart( void );
-	void					MapRestart( void );
+	void					LocalMapRestart();
+	void					MapRestart();
 	static void				MapRestart_f( const idCmdArgs& args );
-	bool					NextMap( void );	// returns wether serverinfo settings have been modified
+	bool					NextMap();	// returns wether serverinfo settings have been modified
 	static void				NextMap_f( const idCmdArgs& args );
 
-	idMapFile* 				GetLevelMap( void );
-	const char* 			GetMapName( void ) const;
+	idMapFile* 				GetLevelMap();
+	const char* 			GetMapName() const;
 
-	int						NumAAS( void ) const;
+	int						NumAAS() const;
 	idAAS* 					GetAAS( int num ) const;
 	idAAS* 					GetAAS( const char* name ) const;
 	void					SetAASAreaState( const idBounds& bounds, const int areaContents, bool closed );
 	aasHandle_t				AddAASObstacle( const idBounds& bounds );
 	void					RemoveAASObstacle( const aasHandle_t handle );
-	void					RemoveAllAASObstacles( void );
+	void					RemoveAllAASObstacles();
 
 	bool					CheatsOk( bool requirePlayer = true );
 	void					SetSkill( int value );
-	gameState_t				GameState( void ) const;
+	gameState_t				GameState() const;
 	idEntity* 				SpawnEntityType( const idTypeInfo& classdef, const idDict* args = NULL, bool bIsClientReadSnapshot = false );
 	bool					SpawnEntityDef( const idDict& args, idEntity** ent = NULL, bool setDefaults = true );
 	int						GetSpawnId( const idEntity* ent ) const;
@@ -417,14 +417,14 @@ public:
 	bool					RequirementMet( idEntity* activator, const idStr& requires, int removeItem );
 
 	void					AlertAI( idEntity* ent );
-	idActor* 				GetAlertEntity( void );
+	idActor* 				GetAlertEntity();
 
 	bool					InPlayerPVS( idEntity* ent ) const;
 	bool					InPlayerConnectedArea( idEntity* ent ) const;
 
 	void					SetCamera( idCamera* cam );
-	idCamera* 				GetCamera( void ) const;
-	bool					SkipCinematic( void );
+	idCamera* 				GetCamera() const;
+	bool					SkipCinematic();
 	void					CalcFov( float base_fov, float& fov_x, float& fov_y ) const;
 
 	void					AddEntityToHash( const char* name, idEntity* ent );
@@ -451,7 +451,7 @@ public:
 	void					CallFrameCommand( idEntity* ent, const function_t* frameCommand );
 	void					CallObjectFrameCommand( idEntity* ent, const char* frameCommand );
 
-	const idVec3& 			GetGravity( void ) const;
+	const idVec3& 			GetGravity() const;
 
 	// added the following to assist licensees with merge issues
 	int						GetFrameNum() const
@@ -550,30 +550,30 @@ private:
 
 	byte					lagometer[ LAGO_IMG_HEIGHT ][ LAGO_IMG_WIDTH ][ 4 ];
 
-	void					Clear( void );
+	void					Clear();
 	// returns true if the entity shouldn't be spawned at all in this game type or difficulty level
 	bool					InhibitEntitySpawn( idDict& spawnArgs );
 	// spawn entities from the map file
-	void					SpawnMapEntities( void );
+	void					SpawnMapEntities();
 	// commons used by init, shutdown, and restart
-	void					MapPopulate( void );
+	void					MapPopulate();
 	void					MapClear( bool clearClients );
 
 	pvsHandle_t				GetClientPVS( idPlayer* player, pvsType_t type );
-	void					SetupPlayerPVS( void );
-	void					FreePlayerPVS( void );
-	void					UpdateGravity( void );
-	void					SortActiveEntityList( void );
-	void					ShowTargets( void );
-	void					RunDebugInfo( void );
+	void					SetupPlayerPVS();
+	void					FreePlayerPVS();
+	void					UpdateGravity();
+	void					SortActiveEntityList();
+	void					ShowTargets();
+	void					RunDebugInfo();
 
-	void					InitScriptForMap( void );
+	void					InitScriptForMap();
 
-	void					InitConsoleCommands( void );
-	void					ShutdownConsoleCommands( void );
+	void					InitConsoleCommands();
+	void					ShutdownConsoleCommands();
 
-	void					InitAsyncNetwork( void );
-	void					ShutdownAsyncNetwork( void );
+	void					InitAsyncNetwork();
+	void					ShutdownAsyncNetwork();
 	void					InitLocalClient( int clientNum );
 	void					InitClientDeclRemap( int clientNum );
 	void					ServerSendDeclRemapToClient( int clientNum, declType_t type, int index );
@@ -582,15 +582,15 @@ private:
 	void					WriteGameStateToSnapshot( idBitMsgDelta& msg ) const;
 	void					ReadGameStateFromSnapshot( const idBitMsgDelta& msg );
 	void					NetworkEventWarning( const entityNetEvent_t* event, const char* fmt, ... ) id_attribute( ( format( printf, 3, 4 ) ) );
-	void					ServerProcessEntityNetworkEventQueue( void );
-	void					ClientProcessEntityNetworkEventQueue( void );
+	void					ServerProcessEntityNetworkEventQueue();
+	void					ClientProcessEntityNetworkEventQueue();
 	void					ClientShowSnapshot( int clientNum ) const;
 	// call after any change to serverInfo. Will update various quick-access flags
-	void					UpdateServerInfoFlags( void );
-	void					RandomizeInitialSpawns( void );
+	void					UpdateServerInfoFlags();
+	void					RandomizeInitialSpawns();
 	static int				sortSpawnPoints( const void* ptr1, const void* ptr2 );
 
-	void					DumpOggSounds( void );
+	void					DumpOggSounds();
 	void					GetShakeSounds( const idDict* dict );
 
 	void					SelectTimeGroup( int timeGroup );
@@ -661,13 +661,13 @@ ID_INLINE bool idEntityPtr<type>::SetSpawnId( int id )
 }
 
 template< class type >
-ID_INLINE bool idEntityPtr<type>::IsValid( void ) const
+ID_INLINE bool idEntityPtr<type>::IsValid() const
 {
 	return ( gameLocal.spawnIds[ spawnId & ( ( 1 << GENTITYNUM_BITS ) - 1 ) ] == ( spawnId >> GENTITYNUM_BITS ) );
 }
 
 template< class type >
-ID_INLINE type* idEntityPtr<type>::GetEntity( void ) const
+ID_INLINE type* idEntityPtr<type>::GetEntity() const
 {
 	int entityNum = spawnId & ( ( 1 << GENTITYNUM_BITS ) - 1 );
 	if( ( gameLocal.spawnIds[ entityNum ] == ( spawnId >> GENTITYNUM_BITS ) ) )
@@ -678,7 +678,7 @@ ID_INLINE type* idEntityPtr<type>::GetEntity( void ) const
 }
 
 template< class type >
-ID_INLINE int idEntityPtr<type>::GetEntityNum( void ) const
+ID_INLINE int idEntityPtr<type>::GetEntityNum() const
 {
 	return ( spawnId & ( ( 1 << GENTITYNUM_BITS ) - 1 ) );
 }

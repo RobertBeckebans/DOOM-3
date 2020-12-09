@@ -43,31 +43,31 @@ class idCompressor : public idFile
 {
 public:
 	// compressor allocation
-	static idCompressor* 	AllocNoCompression( void );
-	static idCompressor* 	AllocBitStream( void );
-	static idCompressor* 	AllocRunLength( void );
-	static idCompressor* 	AllocRunLength_ZeroBased( void );
-	static idCompressor* 	AllocHuffman( void );
-	static idCompressor* 	AllocArithmetic( void );
-	static idCompressor* 	AllocLZSS( void );
-	static idCompressor* 	AllocLZSS_WordAligned( void );
-	static idCompressor* 	AllocLZW( void );
+	static idCompressor* 	AllocNoCompression();
+	static idCompressor* 	AllocBitStream();
+	static idCompressor* 	AllocRunLength();
+	static idCompressor* 	AllocRunLength_ZeroBased();
+	static idCompressor* 	AllocHuffman();
+	static idCompressor* 	AllocArithmetic();
+	static idCompressor* 	AllocLZSS();
+	static idCompressor* 	AllocLZSS_WordAligned();
+	static idCompressor* 	AllocLZW();
 
 	// initialization
 	virtual void			Init( idFile* f, bool compress, int wordLength ) = 0;
-	virtual void			FinishCompress( void ) = 0;
-	virtual float			GetCompressionRatio( void ) const = 0;
+	virtual void			FinishCompress() = 0;
+	virtual float			GetCompressionRatio() const = 0;
 
 	// common idFile interface
-	virtual const char* 	GetName( void ) = 0;
-	virtual const char* 	GetFullPath( void ) = 0;
+	virtual const char* 	GetName() = 0;
+	virtual const char* 	GetFullPath() = 0;
 	virtual int				Read( void* outData, int outLength ) = 0;
 	virtual int				Write( const void* inData, int inLength ) = 0;
-	virtual int				Length( void ) = 0;
-	virtual ID_TIME_T			Timestamp( void ) = 0;
-	virtual int				Tell( void ) = 0;
-	virtual void			ForceFlush( void ) = 0;
-	virtual void			Flush( void ) = 0;
+	virtual int				Length() = 0;
+	virtual ID_TIME_T			Timestamp() = 0;
+	virtual int				Tell() = 0;
+	virtual void			ForceFlush() = 0;
+	virtual void			Flush() = 0;
 	virtual int				Seek( long offset, fsOrigin_t origin ) = 0;
 };
 

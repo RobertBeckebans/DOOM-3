@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idDrawVert::Normalize
 =============
 */
-void idDrawVert::Normalize( void )
+void idDrawVert::Normalize()
 {
 	normal.Normalize();
 	tangents[1].Cross( normal, tangents[0] );

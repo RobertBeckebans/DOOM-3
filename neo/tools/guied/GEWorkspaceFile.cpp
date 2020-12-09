@@ -241,7 +241,7 @@ rvGEWorkspace::NewFile
 Opens a new file for editing
 ================
 */
-bool rvGEWorkspace::NewFile( void )
+bool rvGEWorkspace::NewFile()
 {
 	idStr	empty;
 	idStr	ospath;
@@ -363,7 +363,7 @@ rvGEWorkspace::CheckIn
 Checks in the current workspace file into source control
 ================
 */
-bool rvGEWorkspace::CheckIn( void )
+bool rvGEWorkspace::CheckIn()
 {
 	return false;
 
@@ -376,7 +376,7 @@ rvGEWorkspace::CheckOut
 Checks out the current workspace file from source control
 ================
 */
-bool rvGEWorkspace::CheckOut( void )
+bool rvGEWorkspace::CheckOut()
 {
 	return false;
 }
@@ -388,7 +388,7 @@ rvGEWorkspace::UndoCheckout
 Undoes the checkout of the current file
 ================
 */
-bool rvGEWorkspace::UndoCheckout( void )
+bool rvGEWorkspace::UndoCheckout()
 {
 	return false;
 }

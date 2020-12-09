@@ -8,12 +8,12 @@
 
 // sys
 
-const char* macosx_scanForLibraryDirectory( void );
+const char* macosx_scanForLibraryDirectory();
 
 // In macosx_input.m
-void Sys_InitInput( void );
-void Sys_ShutdownInput( void );
-CGDirectDisplayID Sys_DisplayToUse( void );
+void Sys_InitInput();
+void Sys_ShutdownInput();
+CGDirectDisplayID Sys_DisplayToUse();
 //extern void osxQuit();
 void SetProgramPath( char* path );
 void Sys_SetMouseInputRect( CGRect newRect );

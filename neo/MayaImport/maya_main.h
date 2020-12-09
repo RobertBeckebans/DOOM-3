@@ -40,6 +40,6 @@ If you have questions concerning this license or the applicable additional terms
 
 typedef bool ( *exporterDLLEntry_t )( int version, idCommon* common, idSys* sys );
 typedef const char* ( *exporterInterface_t )( const char* ospath, const char* commandline );
-typedef void ( *exporterShutdown_t )( void );
+typedef void ( *exporterShutdown_t )();
 
 #endif /* !__MAYA_MAIN_H__ */

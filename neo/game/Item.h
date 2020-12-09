@@ -49,11 +49,11 @@ public:
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
-	void					Spawn( void );
+	void					Spawn();
 	void					GetAttributes( idDict& attributes );
 	virtual bool			GiveToPlayer( idPlayer* player );
 	virtual bool			Pickup( idPlayer* player );
-	virtual void			Think( void );
+	virtual void			Think();
 	virtual void			Present();
 
 	enum
@@ -64,7 +64,7 @@ public:
 		EVENT_MAXEVENTS
 	};
 
-	virtual void			ClientPredictionThink( void );
+	virtual void			ClientPredictionThink();
 	virtual bool			ClientReceiveEvent( int event, int time, const idBitMsg& msg );
 
 	// networking
@@ -90,11 +90,11 @@ private:
 	bool					UpdateRenderEntity( renderEntity_s* renderEntity, const renderView_t* renderView ) const;
 	static bool				ModelCallback( renderEntity_s* renderEntity, const renderView_t* renderView );
 
-	void					Event_DropToFloor( void );
+	void					Event_DropToFloor();
 	void					Event_Touch( idEntity* other, trace_t* trace );
 	void					Event_Trigger( idEntity* activator );
-	void					Event_Respawn( void );
-	void					Event_RespawnFx( void );
+	void					Event_Respawn();
+	void					Event_RespawnFx();
 };
 
 class idItemPowerup : public idItem
@@ -164,8 +164,8 @@ public:
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
-	void					Spawn( void );
-	virtual void			Think( void );
+	void					Spawn();
+	virtual void			Think();
 	virtual bool			Pickup( idPlayer* player );
 
 	static void				DropItems( idAnimatedEntity* ent, const char* type, idList<idEntity*>* list );
@@ -182,7 +182,7 @@ private:
 
 	void					Gib( const idVec3& dir, const char* damageDefName );
 
-	void					Event_DropToFloor( void );
+	void					Event_DropToFloor();
 	void					Event_Gib( const char* damageDefName );
 };
 

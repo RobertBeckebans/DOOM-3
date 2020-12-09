@@ -517,7 +517,7 @@ void roqParam::GetNthInputFileName( idStr& fileName, int n )
 	}
 }
 
-const char* roqParam::GetNextImageFilename( void )
+const char* roqParam::GetNextImageFilename()
 {
 	idStr tempBuffer;
 	int	i;
@@ -550,17 +550,17 @@ const char* roqParam::GetNextImageFilename( void )
 	return currentFile.c_str();
 }
 
-const char* roqParam::RoqFilename( void )
+const char* roqParam::RoqFilename()
 {
 	return outputFilename.c_str();
 }
 
-const char* roqParam::SoundFilename( void )
+const char* roqParam::SoundFilename()
 {
 	return soundfile.c_str();
 }
 
-const char* roqParam::RoqTempFilename( void )
+const char* roqParam::RoqTempFilename()
 {
 	int i, j, len;
 
@@ -577,37 +577,37 @@ const char* roqParam::RoqTempFilename( void )
 	return tempFilename.c_str();
 }
 
-bool roqParam::Timecode( void )
+bool roqParam::Timecode()
 {
 	return useTimecodeForRange;
 }
 
-bool roqParam::OutputVectors( void )
+bool roqParam::OutputVectors()
 {
 	return makeVectors;
 }
 
-bool roqParam::HasSound( void )
+bool roqParam::HasSound()
 {
 	return hasSound;
 }
 
-bool roqParam::DeltaFrames( void )
+bool roqParam::DeltaFrames()
 {
 	return justDelta;
 }
 
-bool roqParam::NoAlpha( void )
+bool roqParam::NoAlpha()
 {
 	return noAlphaAtAll;
 }
 
-bool roqParam::SearchType( void )
+bool roqParam::SearchType()
 {
 	return fullSearch;
 }
 
-bool roqParam::MoreFrames( void )
+bool roqParam::MoreFrames()
 {
 	if( onFrame < numInputFiles )
 	{
@@ -619,32 +619,32 @@ bool roqParam::MoreFrames( void )
 	}
 }
 
-bool roqParam::TwentyFourToThirty( void )
+bool roqParam::TwentyFourToThirty()
 {
 	return twentyFourToThirty;
 }
 
-int roqParam::NumberOfFrames( void )
+int roqParam::NumberOfFrames()
 {
 	return numInputFiles;
 }
 
-int roqParam::FirstFrameSize( void )
+int roqParam::FirstFrameSize()
 {
 	return firstframesize;
 }
 
-int roqParam::NormalFrameSize( void )
+int roqParam::NormalFrameSize()
 {
 	return normalframesize;
 }
 
-bool roqParam::IsScaleable( void )
+bool roqParam::IsScaleable()
 {
 	return isScaleable;
 }
 
-int roqParam::JpegQuality( void )
+int roqParam::JpegQuality()
 {
 	return	jpegDefault;
 }

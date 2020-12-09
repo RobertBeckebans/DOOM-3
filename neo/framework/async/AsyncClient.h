@@ -83,46 +83,46 @@ class idAsyncClient
 public:
 	idAsyncClient();
 
-	void				Shutdown( void );
-	bool				InitPort( void );
-	void				ClosePort( void );
+	void				Shutdown();
+	bool				InitPort();
+	void				ClosePort();
 	void				ConnectToServer( const netadr_t adr );
 	void				ConnectToServer( const char* address );
-	void				Reconnect( void );
-	void				DisconnectFromServer( void );
+	void				Reconnect();
+	void				DisconnectFromServer();
 	void				GetServerInfo( const netadr_t adr );
 	void				GetServerInfo( const char* address );
-	void				GetLANServers( void );
-	void				GetNETServers( void );
-	void				ListServers( void );
-	void				ClearServers( void );
+	void				GetLANServers();
+	void				GetNETServers();
+	void				ListServers();
+	void				ClearServers();
 	void				RemoteConsole( const char* command );
 	bool				IsPortInitialized()
 	{
 		return clientPort.GetPort() != 0;
 	}
 
-	bool				IsActive( void ) const
+	bool				IsActive() const
 	{
 		return active;
 	}
-	int					GetLocalClientNum( void ) const
+	int					GetLocalClientNum() const
 	{
 		return clientNum;
 	}
-	int					GetPrediction( void ) const;
-	int					GetTimeSinceLastPacket( void ) const;
-	int					GetOutgoingRate( void ) const;
-	int					GetIncomingRate( void ) const;
-	float				GetOutgoingCompression( void ) const;
-	float				GetIncomingCompression( void ) const;
-	float				GetIncomingPacketLoss( void ) const;
-	int					GetPredictedFrames( void ) const
+	int					GetPrediction() const;
+	int					GetTimeSinceLastPacket() const;
+	int					GetOutgoingRate() const;
+	int					GetIncomingRate() const;
+	float				GetOutgoingCompression() const;
+	float				GetIncomingCompression() const;
+	float				GetIncomingPacketLoss() const;
+	int					GetPredictedFrames() const
 	{
 		return lastFrameDelta;
 	}
 
-	void				RunFrame( void );
+	void				RunFrame();
 	void				SendReliableGameMessage( const idBitMsg& msg );
 
 	void				SendVersionCheck( bool fromMenu = false );
@@ -130,7 +130,7 @@ public:
 	// returns false if internet link doesn't appear to be available
 	bool				SendAuthCheck( const char* cdkey, const char* xpkey );
 
-	void				PacifierUpdate( void );
+	void				PacifierUpdate();
 
 	idServerScan		serverList;
 
@@ -197,16 +197,16 @@ private:
 	int					currentDlSize;
 	int					totalDlSize;	// for partial progress stuff
 
-	void				Clear( void );
-	void				ClearPendingPackets( void );
+	void				Clear();
+	void				ClearPendingPackets();
 	void				DuplicateUsercmds( int frame, int time );
-	void				SendUserInfoToServer( void );
+	void				SendUserInfoToServer();
 	void				SendEmptyToServer( bool force = false, bool mapLoad = false );
 	void				SendPingResponseToServer( int time );
-	void				SendUsercmdsToServer( void );
+	void				SendUsercmdsToServer();
 	void				InitGame( int serverGameInitId, int serverGameFrame, int serverGameTime, const idDict& serverSI );
 	void				ProcessUnreliableServerMessage( const idBitMsg& msg );
-	void				ProcessReliableServerMessages( void );
+	void				ProcessReliableServerMessages();
 	void				ProcessChallengeResponseMessage( const netadr_t from, const idBitMsg& msg );
 	void				ProcessConnectResponseMessage( const netadr_t from, const idBitMsg& msg );
 	void				ProcessDisconnectMessage( const netadr_t from, const idBitMsg& msg );
@@ -217,18 +217,18 @@ private:
 	void				ProcessVersionMessage( const netadr_t from, const idBitMsg& msg );
 	void				ConnectionlessMessage( const netadr_t from, const idBitMsg& msg );
 	void				ProcessMessage( const netadr_t from, idBitMsg& msg );
-	void				SetupConnection( void );
+	void				SetupConnection();
 	void				ProcessPureMessage( const netadr_t from, const idBitMsg& msg );
 	bool				ValidatePureServerChecksums( const netadr_t from, const idBitMsg& msg );
 	void				ProcessReliableMessagePure( const idBitMsg& msg );
 	static const char*	HandleGuiCommand( const char* cmd );
 	const char*			HandleGuiCommandInternal( const char* cmd );
 	void				SendVersionDLUpdate( int state );
-	void				HandleDownloads( void );
-	void				Idle( void );
+	void				HandleDownloads();
+	void				Idle();
 	int					UpdateTime( int clamp );
 	void				ReadLocalizedServerString( const idBitMsg& msg, char* out, int maxLen );
-	bool				CheckTimeout( void );
+	bool				CheckTimeout();
 	void				ProcessDownloadInfoMessage( const netadr_t from, const idBitMsg& msg );
 	int					GetDownloadRequest( const int checksums[ MAX_PURE_PAKS ], int count, int gamePakChecksum );
 };

@@ -38,5 +38,5 @@ CURLcode Curl_connecthost( struct connectdata* conn,
 						   bool* connected /* truly connected? */
 						 );
 
-int Curl_ourerrno( void );
+int Curl_ourerrno();
 #endif

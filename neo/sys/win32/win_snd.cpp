@@ -58,9 +58,9 @@ public:
 	bool GetCurrentPosition( ulong* pdwCurrentWriteCursor );
 
 	int Play( dword dwPriority = 0, dword dwFlags = 0 );
-	int Stop( void );
-	int Reset( void );
-	bool    IsSoundPlaying( void );
+	int Stop();
+	int Reset();
+	bool    IsSoundPlaying();
 	void SetVolume( float x );
 
 	idWaveFile*			m_pWaveFile;
@@ -101,12 +101,12 @@ public:
 	}
 
 	// WIN32 driver doesn't support write API
-	bool Flush( void )
+	bool Flush()
 	{
 		return true;
 	}
 	void Write( bool ) { }
-	short* GetMixBuffer( void )
+	short* GetMixBuffer()
 	{
 		return NULL;
 	}
@@ -157,7 +157,7 @@ idAudioHardwareWIN32::~idAudioHardwareWIN32()
 idAudioHardwareWIN32::Initialize
 ===============
 */
-bool idAudioHardwareWIN32::Initialize( void )
+bool idAudioHardwareWIN32::Initialize()
 {
 	int             hr;
 
@@ -578,7 +578,7 @@ static HMODULE hOpenAL = NULL;
 Sys_LoadOpenAL
 ===============
 */
-bool Sys_LoadOpenAL( void )
+bool Sys_LoadOpenAL()
 {
 #if ID_OPENAL
 	const char* sym;
@@ -612,7 +612,7 @@ bool Sys_LoadOpenAL( void )
 Sys_FreeOpenAL
 ===============
 */
-void Sys_FreeOpenAL( void )
+void Sys_FreeOpenAL()
 {
 	if( hOpenAL )
 	{

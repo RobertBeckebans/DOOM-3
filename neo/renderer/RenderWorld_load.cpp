@@ -111,7 +111,7 @@ void idRenderWorldLocal::FreeWorld()
 idRenderWorldLocal::TouchWorldModels
 ================
 */
-void idRenderWorldLocal::TouchWorldModels( void )
+void idRenderWorldLocal::TouchWorldModels()
 {
 	int i;
 

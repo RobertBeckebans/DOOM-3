@@ -56,7 +56,7 @@ END_CLASS
 idSound::idSound
 ================
 */
-idSound::idSound( void )
+idSound::idSound()
 {
 	lastSoundVol = 0.0f;
 	soundVol = 0.0f;
@@ -107,7 +107,7 @@ void idSound::Restore( idRestoreGame* savefile )
 idSound::Spawn
 ================
 */
-void idSound::Spawn( void )
+void idSound::Spawn()
 {
 	spawnArgs.GetVector( "move", "0 0 0", shakeTranslate );
 	spawnArgs.GetAngles( "rotate", "0 0 0", shakeRotate );
@@ -194,7 +194,7 @@ void idSound::Event_Trigger( idEntity* activator )
 idSound::Event_Timer
 ================
 */
-void idSound::Event_Timer( void )
+void idSound::Event_Timer()
 {
 	DoSound( true );
 	PostEventSec( &EV_Speaker_Timer, wait + gameLocal.random.CRandomFloat() * random );
@@ -205,7 +205,7 @@ void idSound::Event_Timer( void )
 idSound::Think
 ================
 */
-void idSound::Think( void )
+void idSound::Think()
 {
 	idAngles	ang;
 
@@ -316,7 +316,7 @@ void idSound::DoSound( bool play )
 idSound::Event_On
 ================
 */
-void idSound::Event_On( void )
+void idSound::Event_On()
 {
 	if( wait > 0.0f )
 	{
@@ -331,7 +331,7 @@ void idSound::Event_On( void )
 idSound::Event_Off
 ================
 */
-void idSound::Event_Off( void )
+void idSound::Event_Off()
 {
 	if( timerOn )
 	{
@@ -346,7 +346,7 @@ void idSound::Event_Off( void )
 idSound::ShowEditingDialog
 ===============
 */
-void idSound::ShowEditingDialog( void )
+void idSound::ShowEditingDialog()
 {
 	common->InitTool( EDITOR_SOUND, &spawnArgs );
 }

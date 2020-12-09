@@ -59,12 +59,12 @@ public:
 
 	idDict					epairs;
 
-	idMapPrimitive( void )
+	idMapPrimitive()
 	{
 		type = TYPE_INVALID;
 	}
-	virtual					~idMapPrimitive( void ) { }
-	int						GetType( void ) const
+	virtual					~idMapPrimitive() { }
+	int						GetType() const
 	{
 		return type;
 	}
@@ -79,9 +79,9 @@ class idMapBrushSide
 	friend class idMapBrush;
 
 public:
-	idMapBrushSide( void );
-	~idMapBrushSide( void ) { }
-	const char* 			GetMaterial( void ) const
+	idMapBrushSide();
+	~idMapBrushSide() { }
+	const char* 			GetMaterial() const
 	{
 		return material;
 	}
@@ -89,7 +89,7 @@ public:
 	{
 		material = p;
 	}
-	const idPlane& 			GetPlane( void ) const
+	const idPlane& 			GetPlane() const
 	{
 		return plane;
 	}
@@ -116,7 +116,7 @@ protected:
 	idVec3					origin;
 };
 
-ID_INLINE idMapBrushSide::idMapBrushSide( void )
+ID_INLINE idMapBrushSide::idMapBrushSide()
 {
 	plane.Zero();
 	texMat[0].Zero();
@@ -128,19 +128,19 @@ ID_INLINE idMapBrushSide::idMapBrushSide( void )
 class idMapBrush : public idMapPrimitive
 {
 public:
-	idMapBrush( void )
+	idMapBrush()
 	{
 		type = TYPE_BRUSH;
 		sides.Resize( 8, 4 );
 	}
-	~idMapBrush( void )
+	~idMapBrush()
 	{
 		sides.DeleteContents( true );
 	}
 	static idMapBrush* 		Parse( idLexer& src, const idVec3& origin, bool newFormat = true, float version = CURRENT_MAP_VERSION );
 	static idMapBrush* 		ParseQ3( idLexer& src, const idVec3& origin );
 	bool					Write( idFile* fp, int primitiveNum, const idVec3& origin ) const;
-	int						GetNumSides( void ) const
+	int						GetNumSides() const
 	{
 		return sides.Num();
 	}
@@ -152,7 +152,7 @@ public:
 	{
 		return sides[i];
 	}
-	unsigned int			GetGeometryCRC( void ) const;
+	unsigned int			GetGeometryCRC() const;
 
 protected:
 	int						numSides;
@@ -163,12 +163,12 @@ protected:
 class idMapPatch : public idMapPrimitive, public idSurface_Patch
 {
 public:
-	idMapPatch( void );
+	idMapPatch();
 	idMapPatch( int maxPatchWidth, int maxPatchHeight );
-	~idMapPatch( void ) { }
+	~idMapPatch() { }
 	static idMapPatch* 		Parse( idLexer& src, const idVec3& origin, bool patchDef3 = true, float version = CURRENT_MAP_VERSION );
 	bool					Write( idFile* fp, int primitiveNum, const idVec3& origin ) const;
-	const char* 			GetMaterial( void ) const
+	const char* 			GetMaterial() const
 	{
 		return material;
 	}
@@ -176,15 +176,15 @@ public:
 	{
 		material = p;
 	}
-	int						GetHorzSubdivisions( void ) const
+	int						GetHorzSubdivisions() const
 	{
 		return horzSubdivisions;
 	}
-	int						GetVertSubdivisions( void ) const
+	int						GetVertSubdivisions() const
 	{
 		return vertSubdivisions;
 	}
-	bool					GetExplicitlySubdivided( void ) const
+	bool					GetExplicitlySubdivided() const
 	{
 		return explicitSubdivisions;
 	}
@@ -200,7 +200,7 @@ public:
 	{
 		explicitSubdivisions = b;
 	}
-	unsigned int			GetGeometryCRC( void ) const;
+	unsigned int			GetGeometryCRC() const;
 
 protected:
 	idStr					material;
@@ -209,7 +209,7 @@ protected:
 	bool					explicitSubdivisions;
 };
 
-ID_INLINE idMapPatch::idMapPatch( void )
+ID_INLINE idMapPatch::idMapPatch()
 {
 	type = TYPE_PATCH;
 	horzSubdivisions = vertSubdivisions = 0;
@@ -240,17 +240,17 @@ public:
 	idDict					epairs;
 
 public:
-	idMapEntity( void )
+	idMapEntity()
 	{
 		epairs.SetHashSize( 64 );
 	}
-	~idMapEntity( void )
+	~idMapEntity()
 	{
 		primitives.DeleteContents( true );
 	}
 	static idMapEntity* 	Parse( idLexer& src, bool worldSpawn = false, float version = CURRENT_MAP_VERSION );
 	bool					Write( idFile* fp, int entityNum ) const;
-	int						GetNumPrimitives( void ) const
+	int						GetNumPrimitives() const
 	{
 		return primitives.Num();
 	}
@@ -262,7 +262,7 @@ public:
 	{
 		primitives.Append( p );
 	}
-	unsigned int			GetGeometryCRC( void ) const;
+	unsigned int			GetGeometryCRC() const;
 	void					RemovePrimitiveData();
 
 protected:
@@ -273,8 +273,8 @@ protected:
 class idMapFile
 {
 public:
-	idMapFile( void );
-	~idMapFile( void )
+	idMapFile();
+	~idMapFile()
 	{
 		entities.DeleteContents( true );
 	}
@@ -286,7 +286,7 @@ public:
 	bool					Parse( const char* filename, bool ignoreRegion = false, bool osPath = false );
 	bool					Write( const char* fileName, const char* ext, bool fromBasePath = true );
 	// get the number of entities in the map
-	int						GetNumEntities( void ) const
+	int						GetNumEntities() const
 	{
 		return entities.Num();
 	}
@@ -296,18 +296,18 @@ public:
 		return entities[i];
 	}
 	// get the name without file extension
-	const char* 			GetName( void ) const
+	const char* 			GetName() const
 	{
 		return name;
 	}
 	// get the file time
-	ID_TIME_T					GetFileTime( void ) const
+	ID_TIME_T					GetFileTime() const
 	{
 		return fileTime;
 	}
 	// get CRC for the map geometry
 	// texture coordinates and entity key/value pairs are not taken into account
-	unsigned int			GetGeometryCRC( void ) const
+	unsigned int			GetGeometryCRC() const
 	{
 		return geometryCRC;
 	}
@@ -334,10 +334,10 @@ protected:
 	bool					hasPrimitiveData;
 
 private:
-	void					SetGeometryCRC( void );
+	void					SetGeometryCRC();
 };
 
-ID_INLINE idMapFile::idMapFile( void )
+ID_INLINE idMapFile::idMapFile()
 {
 	version = CURRENT_MAP_VERSION;
 	fileTime = 0;

@@ -75,7 +75,7 @@ master_t			idAsyncNetwork::masters[ MAX_MASTER_SERVERS ];
 idAsyncNetwork::idAsyncNetwork
 ==================
 */
-idAsyncNetwork::idAsyncNetwork( void )
+idAsyncNetwork::idAsyncNetwork()
 {
 }
 
@@ -84,7 +84,7 @@ idAsyncNetwork::idAsyncNetwork( void )
 idAsyncNetwork::Init
 ==================
 */
-void idAsyncNetwork::Init( void )
+void idAsyncNetwork::Init()
 {
 
 	realTime = 0;
@@ -117,7 +117,7 @@ void idAsyncNetwork::Init( void )
 idAsyncNetwork::GetMasterAddress
 ==================
 */
-netadr_t idAsyncNetwork::GetMasterAddress( void )
+netadr_t idAsyncNetwork::GetMasterAddress()
 {
 	netadr_t ret;
 	GetMasterAddress( 0, ret );
@@ -164,7 +164,7 @@ bool idAsyncNetwork::GetMasterAddress( int index, netadr_t& adr )
 idAsyncNetwork::Shutdown
 ==================
 */
-void idAsyncNetwork::Shutdown( void )
+void idAsyncNetwork::Shutdown()
 {
 	client.serverList.Shutdown();
 	client.DisconnectFromServer();
@@ -179,7 +179,7 @@ void idAsyncNetwork::Shutdown( void )
 idAsyncNetwork::RunFrame
 ==================
 */
-void idAsyncNetwork::RunFrame( void )
+void idAsyncNetwork::RunFrame()
 {
 	if( console->Active() )
 	{

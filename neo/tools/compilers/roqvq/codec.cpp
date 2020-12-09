@@ -783,7 +783,7 @@ void codec::MakePreviousImage( quadcel* pquad )
 	Mem_Free( idataA );
 }
 
-void codec::InitImages( void )
+void codec::InitImages()
 {
 	int x, y, index0, index1, temp;
 	float ftemp;
@@ -858,7 +858,7 @@ void codec::QuadX( int startX, int startY, int quadSize )
 	}
 }
 
-void codec::InitQStatus( void )
+void codec::InitQStatus()
 {
 	int i, x, y;
 
@@ -1026,7 +1026,7 @@ void codec::VqData2( byte* cel, quadcel* pquad )
 	pquad->snr[CCC] = Snr( cel, tempOut, 4 );
 }
 
-void codec::IRGBtab( void )
+void codec::IRGBtab()
 {
 	initRGBtab++;
 }
@@ -1458,17 +1458,17 @@ int codec::AddQuad( quadcel* pquad, int lownum )
 	return lownum;
 }
 
-int codec::MotMeanX( void )
+int codec::MotMeanX()
 {
 	return dxMean;
 }
 
-int codec::MotMeanY( void )
+int codec::MotMeanY()
 {
 	return dyMean;
 }
 
-void codec::SparseEncode( void )
+void codec::SparseEncode()
 {
 	int i, j, osize, fsize, num[DEAD + 1], *ilist, onf, ong, wtype, temp;
 	float* flist, sRMSE, numredo;
@@ -1835,7 +1835,7 @@ void codec::SparseEncode( void )
 	whichFrame++;
 }
 
-void codec::EncodeNothing( void )
+void codec::EncodeNothing()
 {
 	int i, j, osize, fsize, num[DEAD + 1], *ilist, wtype;
 	float* flist, sRMSE;

@@ -131,7 +131,7 @@ static CGDirectDisplayID GetDisplayIDForScreenIndex( int inScreenIndex )
 
 
 
-void Sys_DoPreferences( void )
+void Sys_DoPreferences()
 {
 
 	// An NSKeyDown event is not fired if the user holds down Cmd during startup.

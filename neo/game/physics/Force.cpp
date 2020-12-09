@@ -41,7 +41,7 @@ idList<idForce*> idForce::forceList;
 idForce::idForce
 ================
 */
-idForce::idForce( void )
+idForce::idForce()
 {
 	forceList.Append( this );
 }
@@ -51,7 +51,7 @@ idForce::idForce( void )
 idForce::~idForce
 ================
 */
-idForce::~idForce( void )
+idForce::~idForce()
 {
 	forceList.Remove( this );
 }
@@ -76,7 +76,7 @@ void idForce::DeletePhysics( const idPhysics* phys )
 idForce::ClearForceList
 ================
 */
-void idForce::ClearForceList( void )
+void idForce::ClearForceList()
 {
 	forceList.Clear();
 }

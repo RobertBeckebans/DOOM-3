@@ -24,6 +24,6 @@ int main()
 	{
 		::MoreMasters();
 	}
-	( void ) exec_commands();
+	() exec_commands();
 	return 0;
 }

@@ -114,7 +114,7 @@ struct MemInfo_t
 class idCommon
 {
 public:
-	virtual						~idCommon( void ) {}
+	virtual						~idCommon() {}
 
 	// Initialize everything.
 	// if the OS allows, pass argc/argv directly (without executable name)
@@ -122,23 +122,23 @@ public:
 	virtual void				Init( int argc, const char** argv, const char* cmdline ) = 0;
 
 	// Shuts down everything.
-	virtual void				Shutdown( void ) = 0;
+	virtual void				Shutdown() = 0;
 
 	// Shuts down everything.
-	virtual void				Quit( void ) = 0;
+	virtual void				Quit() = 0;
 
 	// Returns true if common initialization is complete.
-	virtual bool				IsInitialized( void ) const = 0;
+	virtual bool				IsInitialized() const = 0;
 
 	// Called repeatedly as the foreground thread for rendering and game logic.
-	virtual void				Frame( void ) = 0;
+	virtual void				Frame() = 0;
 
 	// Called repeatedly by blocking function calls with GUI interactivity.
 	virtual void				GUIFrame( bool execCmd, bool network ) = 0;
 
 	// Called 60 times a second from a background thread for sound mixing,
 	// and input generation. Not called until idCommon::Init() has completed.
-	virtual void				Async( void ) = 0;
+	virtual void				Async() = 0;
 
 	// Checks for and removes command line "+set var arg" constructs.
 	// If match is NULL, all set commands will be executed, otherwise
@@ -162,7 +162,7 @@ public:
 	virtual void				BeginRedirect( char* buffer, int buffersize, void ( *flush )( const char* ) ) = 0;
 
 	// Stops redirection of console output.
-	virtual void				EndRedirect( void ) = 0;
+	virtual void				EndRedirect() = 0;
 
 	// Update the screen with every message printed.
 	virtual void				SetRefreshOnPrint( bool set ) = 0;
@@ -184,7 +184,7 @@ public:
 	virtual void				DWarning( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) ) = 0;
 
 	// Prints all queued warnings.
-	virtual void				PrintWarnings( void ) = 0;
+	virtual void				PrintWarnings() = 0;
 
 	// Removes all queued warnings.
 	virtual void				ClearWarnings( const char* reason ) = 0;
@@ -198,7 +198,7 @@ public:
 	virtual void				FatalError( const char* fmt, ... ) id_attribute( ( format( printf, 2, 3 ) ) ) = 0;
 
 	// Returns a pointer to the dictionary with language specific strings.
-	virtual const idLangDict* 	GetLanguageDict( void ) = 0;
+	virtual const idLangDict* 	GetLanguageDict() = 0;
 
 	// Returns key bound to the command
 	virtual const char* 		KeysFromBinding( const char* bind ) = 0;

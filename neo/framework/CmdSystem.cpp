@@ -51,8 +51,8 @@ typedef struct commandDef_s
 class idCmdSystemLocal : public idCmdSystem
 {
 public:
-	virtual void			Init( void );
-	virtual void			Shutdown( void );
+	virtual void			Init();
+	virtual void			Shutdown();
 
 	virtual void			AddCommand( const char* cmdName, cmdFunction_t function, int flags, const char* description, argCompletion_t argCompletion = NULL );
 	virtual void			RemoveCommand( const char* cmdName );
@@ -62,7 +62,7 @@ public:
 	virtual void			ArgCompletion( const char* cmdString, void( *callback )( const char* s ) );
 
 	virtual void			BufferCommandText( cmdExecution_t exec, const char* text );
-	virtual void			ExecuteCommandBuffer( void );
+	virtual void			ExecuteCommandBuffer();
 
 	virtual void			ArgCompletion_FolderExtension( const idCmdArgs& args, void( *callback )( const char* s ), const char* folder, bool stripFolder, ... );
 	virtual void			ArgCompletion_DeclName( const idCmdArgs& args, void( *callback )( const char* s ), int type );
@@ -70,13 +70,13 @@ public:
 	virtual void			BufferCommandArgs( cmdExecution_t exec, const idCmdArgs& args );
 
 	virtual void			SetupReloadEngine( const idCmdArgs& args );
-	virtual bool			PostReloadEngine( void );
+	virtual bool			PostReloadEngine();
 
 	void					SetWait( int numFrames )
 	{
 		wait = numFrames;
 	}
-	commandDef_t* 			GetCommands( void ) const
+	commandDef_t* 			GetCommands() const
 	{
 		return commands;
 	}
@@ -352,7 +352,7 @@ void idCmdSystemLocal::Parse_f( const idCmdArgs& args )
 idCmdSystemLocal::Init
 ============
 */
-void idCmdSystemLocal::Init( void )
+void idCmdSystemLocal::Init()
 {
 
 	AddCommand( "listCmds", List_f, CMD_FL_SYSTEM, "lists commands" );
@@ -377,7 +377,7 @@ void idCmdSystemLocal::Init( void )
 idCmdSystemLocal::Shutdown
 ============
 */
-void idCmdSystemLocal::Shutdown( void )
+void idCmdSystemLocal::Shutdown()
 {
 	commandDef_t* cmd;
 
@@ -700,7 +700,7 @@ void idCmdSystemLocal::BufferCommandArgs( cmdExecution_t exec, const idCmdArgs& 
 idCmdSystemLocal::ExecuteCommandBuffer
 ============
 */
-void idCmdSystemLocal::ExecuteCommandBuffer( void )
+void idCmdSystemLocal::ExecuteCommandBuffer()
 {
 	int			i;
 	char* 		text;
@@ -884,7 +884,7 @@ void idCmdSystemLocal::SetupReloadEngine( const idCmdArgs& args )
 idCmdSystemLocal::PostReloadEngine
 ============
 */
-bool idCmdSystemLocal::PostReloadEngine( void )
+bool idCmdSystemLocal::PostReloadEngine()
 {
 	if( !postReload.Argc() )
 	{

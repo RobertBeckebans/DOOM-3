@@ -77,29 +77,29 @@ public:
 	rvGEApp( );
 	~rvGEApp( );
 
-	bool				Initialize( void );
-	void				RunFrame( void );
-//	bool				Uninitialize			( void );
+	bool				Initialize();
+	void				RunFrame();
+//	bool				Uninitialize			();
 
 	bool				TranslateAccelerator( LPMSG msg );
 
 	rvGEWorkspace*		GetActiveWorkspace( HWND* retwnd = NULL );
-	rvGENavigator&		GetNavigator( void );
-	rvGEProperties&		GetProperties( void );
-	rvGETransformer&	GetTransformer( void );
-	rvGEOptions&		GetOptions( void );
-	HINSTANCE			GetInstance( void );
-	HWND				GetMDIFrame( void );
-	HWND				GetMDIClient( void );
-	rvGEStatusBar&		GetStatusBar( void );
+	rvGENavigator&		GetNavigator();
+	rvGEProperties&		GetProperties();
+	rvGETransformer&	GetTransformer();
+	rvGEOptions&		GetOptions();
+	HINSTANCE			GetInstance();
+	HWND				GetMDIFrame();
+	HWND				GetMDIClient();
+	rvGEStatusBar&		GetStatusBar();
 
 	bool				OpenFile( const char* filename );
 	bool				SaveFile( const char* filename );
-	bool				NewFile( void );
+	bool				NewFile();
 
-	bool				IsActive( void );
+	bool				IsActive();
 
-	void				CloseViewer( void );
+	void				CloseViewer();
 
 	int					ToolWindowActivate( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
@@ -112,8 +112,8 @@ protected:
 
 	void					HandleCommandSave( rvGEWorkspace* workspace, const char* filename );
 
-	bool					InitRecentFiles( void );
-	void					UpdateRecentFiles( void );
+	bool					InitRecentFiles();
+	void					UpdateRecentFiles();
 
 	HWND					mMDIFrame;
 	HWND					mMDIClient;
@@ -140,47 +140,47 @@ private:
 
 };
 
-ID_INLINE bool rvGEApp::IsActive( void )
+ID_INLINE bool rvGEApp::IsActive()
 {
 	return mMDIFrame ? true : false;
 }
 
-ID_INLINE rvGENavigator& rvGEApp::GetNavigator( void )
+ID_INLINE rvGENavigator& rvGEApp::GetNavigator()
 {
 	return mNavigator;
 }
 
-ID_INLINE rvGEProperties& rvGEApp::GetProperties( void )
+ID_INLINE rvGEProperties& rvGEApp::GetProperties()
 {
 	return mProperties;
 }
 
-ID_INLINE rvGETransformer& rvGEApp::GetTransformer( void )
+ID_INLINE rvGETransformer& rvGEApp::GetTransformer()
 {
 	return mTransformer;
 }
 
-ID_INLINE rvGEOptions& rvGEApp::GetOptions( void )
+ID_INLINE rvGEOptions& rvGEApp::GetOptions()
 {
 	return mOptions;
 }
 
-ID_INLINE HINSTANCE rvGEApp::GetInstance( void )
+ID_INLINE HINSTANCE rvGEApp::GetInstance()
 {
 	return mInstance;
 }
 
-ID_INLINE rvGEStatusBar& rvGEApp::GetStatusBar( void )
+ID_INLINE rvGEStatusBar& rvGEApp::GetStatusBar()
 {
 	return mStatusBar;
 }
 
-ID_INLINE HWND rvGEApp::GetMDIFrame( void )
+ID_INLINE HWND rvGEApp::GetMDIFrame()
 {
 	return mMDIFrame;
 }
 
-ID_INLINE HWND rvGEApp::GetMDIClient( void )
+ID_INLINE HWND rvGEApp::GetMDIClient()
 {
 	return mMDIClient;
 }

@@ -44,27 +44,27 @@ const int MAX_PUSHED_EVENTS =	64;
 class idEventLoop
 {
 public:
-	idEventLoop( void );
-	~idEventLoop( void );
+	idEventLoop();
+	~idEventLoop();
 
-	void			Init( void );
+	void			Init();
 
 	// Closes the journal file if needed.
-	void			Shutdown( void );
+	void			Shutdown();
 
 	// It is possible to get an event at the beginning of a frame that
 	// has a time stamp lower than the last event from the previous frame.
-	sysEvent_t		GetEvent( void );
+	sysEvent_t		GetEvent();
 
 	// Dispatches all pending events and returns the current time.
 	int				RunEventLoop( bool commandExecution = true );
 
 	// Gets the current time in a way that will be journaled properly,
 	// as opposed to Sys_Milliseconds(), which always reads a real timer.
-	int				Milliseconds( void );
+	int				Milliseconds();
 
 	// Returns the journal level, 1 = record, 2 = play back.
-	int				JournalLevel( void ) const;
+	int				JournalLevel() const;
 
 	// Journal file.
 	idFile* 		com_journalFile;
@@ -79,7 +79,7 @@ private:
 
 	static idCVar	com_journal;
 
-	sysEvent_t		GetRealEvent( void );
+	sysEvent_t		GetRealEvent();
 	void			ProcessEvent( sysEvent_t ev );
 	void			PushEvent( sysEvent_t* event );
 };

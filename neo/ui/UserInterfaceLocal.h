@@ -63,7 +63,7 @@ public:
 	virtual void				WriteToDemoFile( class idDemoFile* f );
 	virtual bool				WriteToSaveGame( idFile* savefile ) const;
 	virtual bool				ReadFromSaveGame( idFile* savefile );
-	virtual void				SetKeyBindingNames( void );
+	virtual void				SetKeyBindingNames();
 	virtual bool				IsUniqued() const
 	{
 		return uniqued;
@@ -90,11 +90,11 @@ public:
 		return &state;
 	}
 
-	const char* 				GetSourceFile( void ) const
+	const char* 				GetSourceFile() const
 	{
 		return source;
 	}
-	ID_TIME_T						GetTimeStamp( void ) const
+	ID_TIME_T						GetTimeStamp() const
 	{
 		return timeStamp;
 	}
@@ -182,11 +182,11 @@ public:
 	virtual void				Reload( bool all );
 	virtual void				ListGuis() const;
 	virtual bool				CheckGui( const char* qpath ) const;
-	virtual idUserInterface* 	Alloc( void ) const;
+	virtual idUserInterface* 	Alloc() const;
 	virtual void				DeAlloc( idUserInterface* gui );
 	virtual idUserInterface* 	FindGui( const char* qpath, bool autoLoad = false, bool needInteractive = false, bool forceUnique = false );
 	virtual idUserInterface* 	FindDemoGui( const char* qpath );
-	virtual	idListGUI* 			AllocListGUI( void ) const;
+	virtual	idListGUI* 			AllocListGUI() const;
 	virtual void				FreeListGUI( idListGUI* listgui );
 
 private:

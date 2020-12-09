@@ -115,7 +115,7 @@ public:
 	idInteraction* 			entityPrev;
 
 public:
-	idInteraction( void );
+	idInteraction();
 
 	// because these are generated and freed each game tic for active elements all
 	// over the world, we use a custom pool allocater to avoid memory allocation overhead
@@ -124,37 +124,37 @@ public:
 
 	// unlinks from the entity and light, frees all surfaceInteractions,
 	// and puts it back on the free list
-	void					UnlinkAndFree( void );
+	void					UnlinkAndFree();
 
 	// free the interaction surfaces
-	void					FreeSurfaces( void );
+	void					FreeSurfaces();
 
 	// makes the interaction empty for when the light and entity do not actually intersect
 	// all empty interactions are linked at the end of the light's and entity's interaction list
-	void					MakeEmpty( void );
+	void					MakeEmpty();
 
 	// returns true if the interaction is empty
-	bool					IsEmpty( void ) const
+	bool					IsEmpty() const
 	{
 		return ( numSurfaces == 0 );
 	}
 
 	// returns true if the interaction is not yet completely created
-	bool					IsDeferred( void ) const
+	bool					IsDeferred() const
 	{
 		return ( numSurfaces == -1 );
 	}
 
 	// returns true if the interaction has shadows
-	bool					HasShadows( void ) const;
+	bool					HasShadows() const;
 
 	// counts up the memory used by all the surfaceInteractions, which
 	// will be used to determine when we need to start purging old interactions
-	int						MemoryUsed( void );
+	int						MemoryUsed();
 
 	// makes sure all necessary light surfaces and shadow surfaces are created, and
 	// calls R_LinkLightSurf() for each one
-	void					AddActiveInteraction( void );
+	void					AddActiveInteraction();
 
 private:
 	enum
@@ -174,7 +174,7 @@ private:
 	void					CreateInteraction( const idRenderModel* model );
 
 	// unlink from entity and light lists
-	void					Unlink( void );
+	void					Unlink();
 
 	// try to determine if the entire interaction, including shadows, is guaranteed
 	// to be outside the view frustum

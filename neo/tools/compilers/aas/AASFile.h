@@ -219,7 +219,7 @@ typedef struct aasTrace_s
 	int							numAreas;			// number of areas the trace went through
 	int* 						areas;				// array to store areas the trace went through
 	idVec3* 					points;				// points where the trace entered each new area
-	aasTrace_s( void )
+	aasTrace_s()
 	{
 		areas = NULL;
 		points = NULL;
@@ -259,7 +259,7 @@ public:
 	int							tt_startWalkOffLedge;
 
 public:
-	idAASSettings( void );
+	idAASSettings();
 
 	bool						FromFile( const idStr& fileName );
 	bool						FromParser( idLexer& src );
@@ -304,18 +304,18 @@ private:
 class idAASFile
 {
 public:
-	virtual 					~idAASFile( void ) {}
+	virtual 					~idAASFile() {}
 
-	const char* 				GetName( void ) const
+	const char* 				GetName() const
 	{
 		return name.c_str();
 	}
-	unsigned int				GetCRC( void ) const
+	unsigned int				GetCRC() const
 	{
 		return crc;
 	}
 
-	int							GetNumPlanes( void ) const
+	int							GetNumPlanes() const
 	{
 		return planeList.Num();
 	}
@@ -323,7 +323,7 @@ public:
 	{
 		return planeList[index];
 	}
-	int							GetNumVertices( void ) const
+	int							GetNumVertices() const
 	{
 		return vertices.Num();
 	}
@@ -331,7 +331,7 @@ public:
 	{
 		return vertices[index];
 	}
-	int							GetNumEdges( void ) const
+	int							GetNumEdges() const
 	{
 		return edges.Num();
 	}
@@ -339,7 +339,7 @@ public:
 	{
 		return edges[index];
 	}
-	int							GetNumEdgeIndexes( void ) const
+	int							GetNumEdgeIndexes() const
 	{
 		return edgeIndex.Num();
 	}
@@ -347,7 +347,7 @@ public:
 	{
 		return edgeIndex[index];
 	}
-	int							GetNumFaces( void ) const
+	int							GetNumFaces() const
 	{
 		return faces.Num();
 	}
@@ -355,7 +355,7 @@ public:
 	{
 		return faces[index];
 	}
-	int							GetNumFaceIndexes( void ) const
+	int							GetNumFaceIndexes() const
 	{
 		return faceIndex.Num();
 	}
@@ -363,7 +363,7 @@ public:
 	{
 		return faceIndex[index];
 	}
-	int							GetNumAreas( void ) const
+	int							GetNumAreas() const
 	{
 		return areas.Num();
 	}
@@ -371,7 +371,7 @@ public:
 	{
 		return areas[index];
 	}
-	int							GetNumNodes( void ) const
+	int							GetNumNodes() const
 	{
 		return nodes.Num();
 	}
@@ -379,7 +379,7 @@ public:
 	{
 		return nodes[index];
 	}
-	int							GetNumPortals( void ) const
+	int							GetNumPortals() const
 	{
 		return portals.Num();
 	}
@@ -387,7 +387,7 @@ public:
 	{
 		return portals[index];
 	}
-	int							GetNumPortalIndexes( void ) const
+	int							GetNumPortalIndexes() const
 	{
 		return portalIndex.Num();
 	}
@@ -395,7 +395,7 @@ public:
 	{
 		return portalIndex[index];
 	}
-	int							GetNumClusters( void ) const
+	int							GetNumClusters() const
 	{
 		return clusters.Num();
 	}
@@ -404,7 +404,7 @@ public:
 		return clusters[index];
 	}
 
-	const idAASSettings& 		GetSettings( void ) const
+	const idAASSettings& 		GetSettings() const
 	{
 		return settings;
 	}
@@ -435,7 +435,7 @@ public:
 	virtual int					BoundsReachableAreaNum( const idBounds& bounds, const int areaFlags, const int excludeTravelFlags ) const = 0;
 	virtual void				PushPointIntoAreaNum( int areaNum, idVec3& point ) const = 0;
 	virtual bool				Trace( aasTrace_t& trace, const idVec3& start, const idVec3& end ) const = 0;
-	virtual void				PrintInfo( void ) const = 0;
+	virtual void				PrintInfo() const = 0;
 
 protected:
 	idStr						name;

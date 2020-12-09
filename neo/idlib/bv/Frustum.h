@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 class idFrustum
 {
 public:
-	idFrustum( void );
+	idFrustum();
 
 	void			SetOrigin( const idVec3& origin );
 	void			SetAxis( const idMat3& axis );
@@ -49,15 +49,15 @@ public:
 	void			MoveNearDistance( float dNear );
 	void			MoveFarDistance( float dFar );
 
-	const idVec3& 	GetOrigin( void ) const;						// returns frustum origin
-	const idMat3& 	GetAxis( void ) const;							// returns frustum orientation
-	idVec3			GetCenter( void ) const;						// returns center of frustum
+	const idVec3& 	GetOrigin() const;						// returns frustum origin
+	const idMat3& 	GetAxis() const;							// returns frustum orientation
+	idVec3			GetCenter() const;						// returns center of frustum
 
-	bool			IsValid( void ) const;							// returns true if the frustum is valid
-	float			GetNearDistance( void ) const;					// returns distance to near plane
-	float			GetFarDistance( void ) const;					// returns distance to far plane
-	float			GetLeft( void ) const;							// returns left vector length
-	float			GetUp( void ) const;							// returns up vector length
+	bool			IsValid() const;							// returns true if the frustum is valid
+	float			GetNearDistance() const;					// returns distance to near plane
+	float			GetFarDistance() const;					// returns distance to far plane
+	float			GetLeft() const;							// returns left vector length
+	float			GetUp() const;							// returns up vector length
 
 	idFrustum		Expand( const float d ) const;					// returns frustum expanded in all directions with the given value
 	idFrustum& 		ExpandSelf( const float d );					// expands frustum in all directions with the given value
@@ -146,7 +146,7 @@ private:
 };
 
 
-ID_INLINE idFrustum::idFrustum( void )
+ID_INLINE idFrustum::idFrustum()
 {
 	dNear = dFar = 0.0f;
 }
@@ -197,42 +197,42 @@ ID_INLINE void idFrustum::MoveFarDistance( float dFar )
 	this->invFar = 1.0f / dFar;
 }
 
-ID_INLINE const idVec3& idFrustum::GetOrigin( void ) const
+ID_INLINE const idVec3& idFrustum::GetOrigin() const
 {
 	return origin;
 }
 
-ID_INLINE const idMat3& idFrustum::GetAxis( void ) const
+ID_INLINE const idMat3& idFrustum::GetAxis() const
 {
 	return axis;
 }
 
-ID_INLINE idVec3 idFrustum::GetCenter( void ) const
+ID_INLINE idVec3 idFrustum::GetCenter() const
 {
 	return ( origin + axis[0] * ( ( dFar - dNear ) * 0.5f ) );
 }
 
-ID_INLINE bool idFrustum::IsValid( void ) const
+ID_INLINE bool idFrustum::IsValid() const
 {
 	return ( dFar > dNear );
 }
 
-ID_INLINE float idFrustum::GetNearDistance( void ) const
+ID_INLINE float idFrustum::GetNearDistance() const
 {
 	return dNear;
 }
 
-ID_INLINE float idFrustum::GetFarDistance( void ) const
+ID_INLINE float idFrustum::GetFarDistance() const
 {
 	return dFar;
 }
 
-ID_INLINE float idFrustum::GetLeft( void ) const
+ID_INLINE float idFrustum::GetLeft() const
 {
 	return dLeft;
 }
 
-ID_INLINE float idFrustum::GetUp( void ) const
+ID_INLINE float idFrustum::GetUp() const
 {
 	return dUp;
 }

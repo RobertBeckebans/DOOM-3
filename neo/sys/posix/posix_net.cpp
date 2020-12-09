@@ -313,7 +313,7 @@ bool Sys_CompareNetAdrBase( const netadr_t a, const netadr_t b )
 NET_InitNetworking
 ====================
 */
-void Sys_InitNetworking( void )
+void Sys_InitNetworking()
 {
 	// haven't been able to clearly pinpoint which standards or RFCs define SIOCGIFCONF, SIOCGIFADDR, SIOCGIFNETMASK ioctls
 	// it seems fairly widespread, in Linux kernel ioctl, and in BSD .. so let's assume it's always available on our targets

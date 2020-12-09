@@ -269,7 +269,7 @@ Update the enabled/disabled states based on the selections and update
 the rectangle coordinates
 ================
 */
-void rvGETransformer::Update( void )
+void rvGETransformer::Update()
 {
 	bool state = false;
 

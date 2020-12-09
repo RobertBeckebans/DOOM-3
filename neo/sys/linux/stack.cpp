@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 Sys_ShutdownSymbols
 ==================
 */
-void Sys_ShutdownSymbols( void )
+void Sys_ShutdownSymbols()
 {
 }
 

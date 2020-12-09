@@ -43,8 +43,8 @@ class idPhysics_StaticMulti : public idPhysics
 public:
 	CLASS_PROTOTYPE( idPhysics_StaticMulti );
 
-	idPhysics_StaticMulti( void );
-	~idPhysics_StaticMulti( void );
+	idPhysics_StaticMulti();
+	~idPhysics_StaticMulti();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
@@ -57,7 +57,7 @@ public:	// common physics interface
 
 	void					SetClipModel( idClipModel* model, float density, int id = 0, bool freeOld = true );
 	idClipModel* 			GetClipModel( int id = 0 ) const;
-	int						GetNumClipModels( void ) const;
+	int						GetNumClipModels() const;
 
 	void					SetMass( float mass, int id = -1 );
 	float					GetMass( int id = -1 ) const;
@@ -73,19 +73,19 @@ public:	// common physics interface
 
 	bool					Evaluate( int timeStepMSec, int endTimeMSec );
 	void					UpdateTime( int endTimeMSec );
-	int						GetTime( void ) const;
+	int						GetTime() const;
 
 	void					GetImpactInfo( const int id, const idVec3& point, impactInfo_t* info ) const;
 	void					ApplyImpulse( const int id, const idVec3& point, const idVec3& impulse );
 	void					AddForce( const int id, const idVec3& point, const idVec3& force );
-	void					Activate( void );
-	void					PutToRest( void );
-	bool					IsAtRest( void ) const;
-	int						GetRestStartTime( void ) const;
-	bool					IsPushable( void ) const;
+	void					Activate();
+	void					PutToRest();
+	bool					IsAtRest() const;
+	int						GetRestStartTime() const;
+	bool					IsPushable() const;
 
-	void					SaveState( void );
-	void					RestoreState( void );
+	void					SaveState();
+	void					RestoreState();
 
 	void					SetOrigin( const idVec3& newOrigin, int id = -1 );
 	void					SetAxis( const idMat3& newAxis, int id = -1 );
@@ -103,27 +103,27 @@ public:	// common physics interface
 	const idVec3& 			GetAngularVelocity( int id = 0 ) const;
 
 	void					SetGravity( const idVec3& newGravity );
-	const idVec3& 			GetGravity( void ) const;
-	const idVec3& 			GetGravityNormal( void ) const;
+	const idVec3& 			GetGravity() const;
+	const idVec3& 			GetGravityNormal() const;
 
 	void					ClipTranslation( trace_t& results, const idVec3& translation, const idClipModel* model ) const;
 	void					ClipRotation( trace_t& results, const idRotation& rotation, const idClipModel* model ) const;
 	int						ClipContents( const idClipModel* model ) const;
 
-	void					DisableClip( void );
-	void					EnableClip( void );
+	void					DisableClip();
+	void					EnableClip();
 
-	void					UnlinkClip( void );
-	void					LinkClip( void );
+	void					UnlinkClip();
+	void					LinkClip();
 
-	bool					EvaluateContacts( void );
-	int						GetNumContacts( void ) const;
+	bool					EvaluateContacts();
+	int						GetNumContacts() const;
 	const contactInfo_t& 	GetContact( int num ) const;
-	void					ClearContacts( void );
+	void					ClearContacts();
 	void					AddContactEntity( idEntity* e );
 	void					RemoveContactEntity( idEntity* e );
 
-	bool					HasGroundContacts( void ) const;
+	bool					HasGroundContacts() const;
 	bool					IsGroundEntity( int entityNum ) const;
 	bool					IsGroundClipModel( int entityNum, int id ) const;
 
@@ -133,11 +133,11 @@ public:	// common physics interface
 
 	void					SetMaster( idEntity* master, const bool orientated = true );
 
-	const trace_t* 			GetBlockingInfo( void ) const;
-	idEntity* 				GetBlockingEntity( void ) const;
+	const trace_t* 			GetBlockingInfo() const;
+	idEntity* 				GetBlockingEntity() const;
 
-	int						GetLinearEndTime( void ) const;
-	int						GetAngularEndTime( void ) const;
+	int						GetLinearEndTime() const;
+	int						GetAngularEndTime() const;
 
 	void					WriteToSnapshot( idBitMsgDelta& msg ) const;
 	void					ReadFromSnapshot( const idBitMsgDelta& msg );

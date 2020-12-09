@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 idLangDict::idLangDict
 ============
 */
-idLangDict::idLangDict( void )
+idLangDict::idLangDict()
 {
 	args.SetGranularity( 256 );
 	hash.SetGranularity( 256 );
@@ -48,7 +48,7 @@ idLangDict::idLangDict( void )
 idLangDict::~idLangDict
 ============
 */
-idLangDict::~idLangDict( void )
+idLangDict::~idLangDict()
 {
 	Clear();
 }
@@ -58,7 +58,7 @@ idLangDict::~idLangDict( void )
 idLangDict::Clear
 ============
 */
-void idLangDict::Clear( void )
+void idLangDict::Clear()
 {
 	args.Clear();
 	hash.Clear();
@@ -229,7 +229,7 @@ const char* idLangDict::AddString( const char* str )
 idLangDict::GetNumKeyVals
 ============
 */
-int idLangDict::GetNumKeyVals( void ) const
+int idLangDict::GetNumKeyVals() const
 {
 	return args.Num();
 }
@@ -312,7 +312,7 @@ bool idLangDict::ExcludeString( const char* str ) const
 idLangDict::GetNextId
 ============
 */
-int idLangDict::GetNextId( void ) const
+int idLangDict::GetNextId() const
 {
 	int c = args.Num();
 

@@ -58,11 +58,11 @@ template< class objType, class keyType, int maxChildrenPerNode >
 class idBTree
 {
 public:
-	idBTree( void );
-	~idBTree( void );
+	idBTree();
+	~idBTree();
 
-	void							Init( void );
-	void							Shutdown( void );
+	void							Init();
+	void							Shutdown();
 
 	idBTreeNode<objType, keyType>* 	Add( objType* object, keyType key );						// add an object to the tree
 	void							Remove( idBTreeNode<objType, keyType>* node );				// remove an object node from the tree
@@ -71,8 +71,8 @@ public:
 	objType* 						FindSmallestLargerEqual( keyType key ) const;				// find an object with the smallest key larger equal the given key
 	objType* 						FindLargestSmallerEqual( keyType key ) const;				// find an object with the largest key smaller equal the given key
 
-	idBTreeNode<objType, keyType>* 	GetRoot( void ) const;										// returns the root node of the tree
-	int								GetNodeCount( void ) const;									// returns the total number of nodes in the tree
+	idBTreeNode<objType, keyType>* 	GetRoot() const;										// returns the root node of the tree
+	int								GetNodeCount() const;									// returns the total number of nodes in the tree
 	idBTreeNode<objType, keyType>* 	GetNext( idBTreeNode<objType, keyType>* node ) const;		// goes through all nodes of the tree
 	idBTreeNode<objType, keyType>* 	GetNextLeaf( idBTreeNode<objType, keyType>* node ) const;	// goes through all leaf nodes of the tree
 
@@ -80,37 +80,37 @@ private:
 	idBTreeNode<objType, keyType>* 	root;
 	idBlockAlloc<idBTreeNode<objType, keyType>, 128>	nodeAllocator;
 
-	idBTreeNode<objType, keyType>* 	AllocNode( void );
+	idBTreeNode<objType, keyType>* 	AllocNode();
 	void							FreeNode( idBTreeNode<objType, keyType>* node );
 	void							SplitNode( idBTreeNode<objType, keyType>* node );
 	idBTreeNode<objType, keyType>* 	MergeNodes( idBTreeNode<objType, keyType>* node1, idBTreeNode<objType, keyType>* node2 );
 
 	void							CheckTree_r( idBTreeNode<objType, keyType>* node, int& numNodes ) const;
-	void							CheckTree( void ) const;
+	void							CheckTree() const;
 };
 
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE idBTree<objType, keyType, maxChildrenPerNode>::idBTree( void )
+ID_INLINE idBTree<objType, keyType, maxChildrenPerNode>::idBTree()
 {
 	assert( maxChildrenPerNode >= 4 );
 	root = NULL;
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE idBTree<objType, keyType, maxChildrenPerNode>::~idBTree( void )
+ID_INLINE idBTree<objType, keyType, maxChildrenPerNode>::~idBTree()
 {
 	Shutdown();
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::Init( void )
+ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::Init()
 {
 	root = AllocNode();
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::Shutdown( void )
+ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::Shutdown()
 {
 	nodeAllocator.Shutdown();
 	root = NULL;
@@ -391,13 +391,13 @@ ID_INLINE objType* idBTree<objType, keyType, maxChildrenPerNode>::FindLargestSma
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE idBTreeNode<objType, keyType>* idBTree<objType, keyType, maxChildrenPerNode>::GetRoot( void ) const
+ID_INLINE idBTreeNode<objType, keyType>* idBTree<objType, keyType, maxChildrenPerNode>::GetRoot() const
 {
 	return root;
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE int idBTree<objType, keyType, maxChildrenPerNode>::GetNodeCount( void ) const
+ID_INLINE int idBTree<objType, keyType, maxChildrenPerNode>::GetNodeCount() const
 {
 	return nodeAllocator.GetAllocCount();
 }
@@ -453,7 +453,7 @@ ID_INLINE idBTreeNode<objType, keyType>* idBTree<objType, keyType, maxChildrenPe
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE idBTreeNode<objType, keyType>* idBTree<objType, keyType, maxChildrenPerNode>::AllocNode( void )
+ID_INLINE idBTreeNode<objType, keyType>* idBTree<objType, keyType, maxChildrenPerNode>::AllocNode()
 {
 	idBTreeNode<objType, keyType>* node = nodeAllocator.Alloc();
 	node->key = 0;
@@ -600,7 +600,7 @@ ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::CheckTree_r( idBTr
 }
 
 template< class objType, class keyType, int maxChildrenPerNode >
-ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::CheckTree( void ) const
+ID_INLINE void idBTree<objType, keyType, maxChildrenPerNode>::CheckTree() const
 {
 	int numNodes = 0;
 	idBTreeNode<objType, keyType>* node, *lastNode;

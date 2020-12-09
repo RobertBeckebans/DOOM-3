@@ -116,7 +116,7 @@ static int oldWidth, oldHeight;
 SaveWindow
 ===============
 */
-static void SaveWindow( void )
+static void SaveWindow()
 {
 	oldWidth = glConfig.vidWidth;
 	oldHeight = glConfig.vidHeight;
@@ -162,7 +162,7 @@ static void ResizeWindow( int width, int height )
 RestoreWindow
 ===============
 */
-static void RestoreWindow( void )
+static void RestoreWindow()
 {
 #ifdef WIN32
 	int	winWidth, winHeight;

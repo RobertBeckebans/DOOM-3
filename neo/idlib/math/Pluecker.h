@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 class idPluecker
 {
 public:
-	idPluecker( void );
+	idPluecker();
 	explicit idPluecker( const float* a );
 	explicit idPluecker( const idVec3& start, const idVec3& end );
 	explicit idPluecker( const float a1, const float a2, const float a3, const float a4, const float a5, const float a6 );
@@ -64,7 +64,7 @@ public:
 	bool			operator!=(	const idPluecker& a ) const;					// exact compare, no epsilon
 
 	void 			Set( const float a1, const float a2, const float a3, const float a4, const float a5, const float a6 );
-	void			Zero( void );
+	void			Zero();
 
 	void			FromLine( const idVec3& start, const idVec3& end );			// pluecker from line
 	void			FromRay( const idVec3& start, const idVec3& dir );			// pluecker from ray
@@ -75,15 +75,15 @@ public:
 	float			PermutedInnerProduct( const idPluecker& a ) const;			// pluecker permuted inner product
 	float			Distance3DSqr( const idPluecker& a ) const;					// pluecker line distance
 
-	float			Length( void ) const;										// pluecker length
-	float			LengthSqr( void ) const;									// pluecker squared length
-	idPluecker		Normalize( void ) const;									// pluecker normalize
-	float			NormalizeSelf( void );										// pluecker normalize
+	float			Length() const;										// pluecker length
+	float			LengthSqr() const;									// pluecker squared length
+	idPluecker		Normalize() const;									// pluecker normalize
+	float			NormalizeSelf();										// pluecker normalize
 
-	int				GetDimension( void ) const;
+	int				GetDimension() const;
 
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 
 private:
@@ -93,7 +93,7 @@ private:
 extern idPluecker pluecker_origin;
 #define pluecker_zero pluecker_origin
 
-ID_INLINE idPluecker::idPluecker( void )
+ID_INLINE idPluecker::idPluecker()
 {
 }
 
@@ -270,7 +270,7 @@ ID_INLINE void idPluecker::Set( const float a1, const float a2, const float a3, 
 	p[5] = a6;
 }
 
-ID_INLINE void idPluecker::Zero( void )
+ID_INLINE void idPluecker::Zero()
 {
 	p[0] = p[1] = p[2] = p[3] = p[4] = p[5] = 0.0f;
 }
@@ -354,17 +354,17 @@ ID_INLINE float idPluecker::PermutedInnerProduct( const idPluecker& a ) const
 	return p[0] * a.p[4] + p[1] * a.p[5] + p[2] * a.p[3] + p[4] * a.p[0] + p[5] * a.p[1] + p[3] * a.p[2];
 }
 
-ID_INLINE float idPluecker::Length( void ) const
+ID_INLINE float idPluecker::Length() const
 {
 	return ( float )idMath::Sqrt( p[5] * p[5] + p[4] * p[4] + p[2] * p[2] );
 }
 
-ID_INLINE float idPluecker::LengthSqr( void ) const
+ID_INLINE float idPluecker::LengthSqr() const
 {
 	return ( p[5] * p[5] + p[4] * p[4] + p[2] * p[2] );
 }
 
-ID_INLINE float idPluecker::NormalizeSelf( void )
+ID_INLINE float idPluecker::NormalizeSelf()
 {
 	float l, d;
 
@@ -383,7 +383,7 @@ ID_INLINE float idPluecker::NormalizeSelf( void )
 	return d * l;
 }
 
-ID_INLINE idPluecker idPluecker::Normalize( void ) const
+ID_INLINE idPluecker idPluecker::Normalize() const
 {
 	float d;
 
@@ -396,17 +396,17 @@ ID_INLINE idPluecker idPluecker::Normalize( void ) const
 	return idPluecker( p[0] * d, p[1] * d, p[2] * d, p[3] * d, p[4] * d, p[5] * d );
 }
 
-ID_INLINE int idPluecker::GetDimension( void ) const
+ID_INLINE int idPluecker::GetDimension() const
 {
 	return 6;
 }
 
-ID_INLINE const float* idPluecker::ToFloatPtr( void ) const
+ID_INLINE const float* idPluecker::ToFloatPtr() const
 {
 	return p;
 }
 
-ID_INLINE float* idPluecker::ToFloatPtr( void )
+ID_INLINE float* idPluecker::ToFloatPtr()
 {
 	return p;
 }

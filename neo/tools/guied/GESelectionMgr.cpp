@@ -135,7 +135,7 @@ rvGESelectionMgr::ClearSelections
 Remove all of the current selections
 ================
 */
-void rvGESelectionMgr::Clear( void )
+void rvGESelectionMgr::Clear()
 {
 	int i;
 
@@ -161,7 +161,7 @@ rvGESelectionMgr::Render
 Render the selections including the move/size bars
 ================
 */
-void rvGESelectionMgr::Render( void )
+void rvGESelectionMgr::Render()
 {
 	if( !mSelections.Num( ) )
 	{
@@ -296,7 +296,7 @@ rvGESelectionMgr::UpdateRectangle
 Update the selection rectangle from all the currently selected items.
 ================
 */
-void rvGESelectionMgr::UpdateRectangle( void )
+void rvGESelectionMgr::UpdateRectangle()
 {
 	int		i;
 	idVec2	point;
@@ -341,7 +341,7 @@ rvGESelectionMgr::UpdateExpression
 Update whether or not the selection has an expression in it
 ================
 */
-void rvGESelectionMgr::UpdateExpression( void )
+void rvGESelectionMgr::UpdateExpression()
 {
 	int i;
 
@@ -444,7 +444,7 @@ rvGESelectionMgr::GetBottomMost
 Returns the bottom most selected window.
 ================
 */
-idWindow* rvGESelectionMgr::GetBottomMost( void )
+idWindow* rvGESelectionMgr::GetBottomMost()
 {
 	idWindow*	bottom;
 	int			depth;

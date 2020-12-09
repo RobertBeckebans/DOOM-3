@@ -42,17 +42,17 @@ If you have questions concerning this license or the applicable additional terms
 
 static	int		frameNum;
 
-int Sys_Milliseconds( void )
+int Sys_Milliseconds()
 {
 	return frameNum * 16;
 }
 
-double Sys_GetClockTicks( void )
+double Sys_GetClockTicks()
 {
 	return frameNum * 16.0;
 }
 
-double Sys_ClockTicksPerSecond( void )
+double Sys_ClockTicksPerSecond()
 {
 	return 1000.0;
 }
@@ -86,21 +86,21 @@ void Sys_Error( const char* error, ... )
 	exit( 1 );
 }
 
-void Sys_Quit( void )
+void Sys_Quit()
 {
 	exit( 0 );
 }
 
-char* Sys_GetClipboardData( void )
+char* Sys_GetClipboardData()
 {
 	return NULL;
 }
 
-void Sys_GenerateEvents( void )
+void Sys_GenerateEvents()
 {
 }
 
-void Sys_Init( void )
+void Sys_Init()
 {
 }
 
@@ -108,7 +108,7 @@ void Sys_Init( void )
 
 idPort	clientPort, serverPort;
 
-void Sys_InitNetworking( void )
+void Sys_InitNetworking()
 {
 }
 
@@ -124,7 +124,7 @@ void idPort::SendPacket( const netadr_t to, const void* data, int size )
 
 double	idTimer::base;
 
-void idTimer::InitBaseClockTicks( void ) const
+void idTimer::InitBaseClockTicks() const
 {
 }
 
@@ -135,15 +135,15 @@ void _glTexImage2D( GLenum target, GLint level, GLint internalformat, GLsizei wi
 }
 
 
-void Sys_InitInput( void )
+void Sys_InitInput()
 {
 }
 
-void Sys_ShutdownInput( void )
+void Sys_ShutdownInput()
 {
 }
 
-sysEvent_t	Sys_GetEvent( void )
+sysEvent_t	Sys_GetEvent()
 {
 	sysEvent_t	ev;
 
@@ -157,12 +157,12 @@ void	Sys_Mkdir( const char* path )
 {
 }
 
-const char* Sys_DefaultCDPath( void )
+const char* Sys_DefaultCDPath()
 {
 	return "";
 }
 
-const char* Sys_DefaultBasePath( void )
+const char* Sys_DefaultBasePath()
 {
 	return "";
 }
@@ -251,7 +251,7 @@ const char* Sys_NetAdrToString( const netadr_t a )
 	return s;
 }
 
-void Sys_DoPreferences( void )
+void Sys_DoPreferences()
 {
 }
 

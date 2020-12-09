@@ -69,16 +69,16 @@ private:
 public:
 	idEventDef( const char* command, const char* formatspec = NULL, char returnType = 0 );
 
-	const char*					GetName( void ) const;
-	const char*					GetArgFormat( void ) const;
-	unsigned int				GetFormatspecIndex( void ) const;
-	char						GetReturnType( void ) const;
-	int							GetEventNum( void ) const;
-	int							GetNumArgs( void ) const;
-	size_t						GetArgSize( void ) const;
+	const char*					GetName() const;
+	const char*					GetArgFormat() const;
+	unsigned int				GetFormatspecIndex() const;
+	char						GetReturnType() const;
+	int							GetEventNum() const;
+	int							GetNumArgs() const;
+	size_t						GetArgSize() const;
 	int							GetArgOffset( int arg ) const;
 
-	static int					NumEventCommands( void );
+	static int					NumEventCommands();
 	static const idEventDef*		GetEventCommand( int eventnum );
 	static const idEventDef*		FindEvent( const char* name );
 };
@@ -108,15 +108,15 @@ public:
 	static idEvent*				Alloc( const idEventDef* evdef, int numargs, va_list args );
 	static void					CopyArgs( const idEventDef* evdef, int numargs, va_list args, int data[ D_EVENT_MAXARGS ] );
 
-	void						Free( void );
+	void						Free();
 	void						Schedule( idClass* object, const idTypeInfo* cls, int time );
-	byte*						GetData( void );
+	byte*						GetData();
 
 	static void					CancelEvents( const idClass* obj, const idEventDef* evdef = NULL );
-	static void					ClearEventList( void );
-	static void					ServiceEvents( void );
-	static void					Init( void );
-	static void					Shutdown( void );
+	static void					ClearEventList();
+	static void					ServiceEvents();
+	static void					Init();
+	static void					Shutdown();
 
 	// save games
 	static void					Save( idSaveGame* savefile );					// archives object for save game file
@@ -131,7 +131,7 @@ public:
 idEvent::GetData
 ================
 */
-ID_INLINE byte* idEvent::GetData( void )
+ID_INLINE byte* idEvent::GetData()
 {
 	return data;
 }
@@ -141,7 +141,7 @@ ID_INLINE byte* idEvent::GetData( void )
 idEventDef::GetName
 ================
 */
-ID_INLINE const char* idEventDef::GetName( void ) const
+ID_INLINE const char* idEventDef::GetName() const
 {
 	return name;
 }
@@ -151,7 +151,7 @@ ID_INLINE const char* idEventDef::GetName( void ) const
 idEventDef::GetArgFormat
 ================
 */
-ID_INLINE const char* idEventDef::GetArgFormat( void ) const
+ID_INLINE const char* idEventDef::GetArgFormat() const
 {
 	return formatspec;
 }
@@ -161,7 +161,7 @@ ID_INLINE const char* idEventDef::GetArgFormat( void ) const
 idEventDef::GetFormatspecIndex
 ================
 */
-ID_INLINE unsigned int idEventDef::GetFormatspecIndex( void ) const
+ID_INLINE unsigned int idEventDef::GetFormatspecIndex() const
 {
 	return formatspecIndex;
 }
@@ -171,7 +171,7 @@ ID_INLINE unsigned int idEventDef::GetFormatspecIndex( void ) const
 idEventDef::GetReturnType
 ================
 */
-ID_INLINE char idEventDef::GetReturnType( void ) const
+ID_INLINE char idEventDef::GetReturnType() const
 {
 	return returnType;
 }
@@ -181,7 +181,7 @@ ID_INLINE char idEventDef::GetReturnType( void ) const
 idEventDef::GetNumArgs
 ================
 */
-ID_INLINE int idEventDef::GetNumArgs( void ) const
+ID_INLINE int idEventDef::GetNumArgs() const
 {
 	return numargs;
 }
@@ -191,7 +191,7 @@ ID_INLINE int idEventDef::GetNumArgs( void ) const
 idEventDef::GetArgSize
 ================
 */
-ID_INLINE size_t idEventDef::GetArgSize( void ) const
+ID_INLINE size_t idEventDef::GetArgSize() const
 {
 	return argsize;
 }
@@ -212,7 +212,7 @@ ID_INLINE int idEventDef::GetArgOffset( int arg ) const
 idEventDef::GetEventNum
 ================
 */
-ID_INLINE int idEventDef::GetEventNum( void ) const
+ID_INLINE int idEventDef::GetEventNum() const
 {
 	return eventnum;
 }

@@ -41,7 +41,7 @@ If you have questions concerning this license or the applicable additional terms
 class idNetworkSystem
 {
 public:
-	virtual					~idNetworkSystem( void ) {}
+	virtual					~idNetworkSystem() {}
 
 	virtual void			ServerSendReliableMessage( int clientNum, const idBitMsg& msg );
 	virtual void			ServerSendReliableMessageExcluding( int clientNum, const idBitMsg& msg );
@@ -54,11 +54,11 @@ public:
 	virtual float			ServerGetClientIncomingPacketLoss( int clientNum );
 
 	virtual void			ClientSendReliableMessage( const idBitMsg& msg );
-	virtual int				ClientGetPrediction( void );
-	virtual int				ClientGetTimeSinceLastPacket( void );
-	virtual int				ClientGetOutgoingRate( void );
-	virtual int				ClientGetIncomingRate( void );
-	virtual float			ClientGetIncomingPacketLoss( void );
+	virtual int				ClientGetPrediction();
+	virtual int				ClientGetTimeSinceLastPacket();
+	virtual int				ClientGetOutgoingRate();
+	virtual int				ClientGetIncomingRate();
+	virtual float			ClientGetIncomingPacketLoss();
 };
 
 extern idNetworkSystem* 	networkSystem;

@@ -66,7 +66,7 @@ idListNewElement<type>
 ================
 */
 template< class type >
-ID_INLINE type* idListNewElement( void )
+ID_INLINE type* idListNewElement()
 {
 	return new type;
 }
@@ -90,27 +90,27 @@ class idList
 public:
 
 	typedef int		cmp_t( const type*, const type* );
-	typedef type	new_t( void );
+	typedef type	new_t();
 
 	idList( int newgranularity = 16 );
 	idList( const idList<type>& other );
-	~idList<type>( void );
+	~idList<type>();
 
-	void			Clear( void );										// clear the list
-	int				Num( void ) const;									// returns number of elements in list
-	int				NumAllocated( void ) const;							// returns number of elements allocated for
+	void			Clear();										// clear the list
+	int				Num() const;									// returns number of elements in list
+	int				NumAllocated() const;							// returns number of elements allocated for
 	void			SetGranularity( int newgranularity );				// set new granularity
-	int				GetGranularity( void ) const;						// get the current granularity
+	int				GetGranularity() const;						// get the current granularity
 
-	size_t			Allocated( void ) const;							// returns total size of allocated memory
-	size_t			Size( void ) const;									// returns total size of allocated memory including size of list type
-	size_t			MemoryUsed( void ) const;							// returns size of the used elements in the list
+	size_t			Allocated() const;							// returns total size of allocated memory
+	size_t			Size() const;									// returns total size of allocated memory including size of list type
+	size_t			MemoryUsed() const;							// returns size of the used elements in the list
 
 	idList<type>& 	operator=( const idList<type>& other );
 	const type& 	operator[]( int index ) const;
 	type& 			operator[]( int index );
 
-	void			Condense( void );									// resizes list to exactly the number of elements it contains
+	void			Condense();									// resizes list to exactly the number of elements it contains
 	void			Resize( int newsize );								// resizes list to the given number of elements
 	void			Resize( int newsize, int newgranularity );			// resizes list and sets new granularity
 	void			SetNum( int newnum, bool resize = true );			// set number of elements in list and resize to exactly this number if necessary
@@ -118,16 +118,16 @@ public:
 	void			AssureSize( int newSize, const type& initValue );	// assure list has given number of elements and initialize any new elements
 	void			AssureSizeAlloc( int newSize, new_t* allocator );	// assure the pointer list has the given number of elements and allocate any new elements
 
-	type* 			Ptr( void );										// returns a pointer to the list
-	const type* 	Ptr( void ) const;									// returns a pointer to the list
-	type& 			Alloc( void );										// returns reference to a new data element at the end of the list
+	type* 			Ptr();										// returns a pointer to the list
+	const type* 	Ptr() const;									// returns a pointer to the list
+	type& 			Alloc();										// returns reference to a new data element at the end of the list
 	int				Append( const type& obj );							// append element
 	int				Append( const idList<type>& other );				// append list
 	int				AddUnique( const type& obj );						// add unique element
 	int				Insert( const type& obj, int index = 0 );			// insert the element at the given index
 	int				FindIndex( const type& obj ) const;				// find the index for the given element
 	type* 			Find( type const& obj ) const;						// find pointer to the given element
-	int				FindNull( void ) const;								// find the index for the first NULL pointer in the list
+	int				FindNull() const;								// find the index for the first NULL pointer in the list
 	int				IndexOf( const type* obj ) const;					// returns the index for the pointer to an element in the list
 	bool			RemoveIndex( int index );							// remove the element at the given index
 	bool			Remove( const type& obj );							// remove the element
@@ -176,7 +176,7 @@ idList<type>::~idList<type>
 ================
 */
 template< class type >
-ID_INLINE idList<type>::~idList( void )
+ID_INLINE idList<type>::~idList()
 {
 	Clear();
 }
@@ -189,7 +189,7 @@ Frees up the memory allocated by the list.  Assumes that type automatically hand
 ================
 */
 template< class type >
-ID_INLINE void idList<type>::Clear( void )
+ID_INLINE void idList<type>::Clear()
 {
 	if( list )
 	{
@@ -242,7 +242,7 @@ return total memory allocated for the list in bytes, but doesn't take into accou
 ================
 */
 template< class type >
-ID_INLINE size_t idList<type>::Allocated( void ) const
+ID_INLINE size_t idList<type>::Allocated() const
 {
 	return size * sizeof( type );
 }
@@ -255,7 +255,7 @@ return total size of list in bytes, but doesn't take into account additional mem
 ================
 */
 template< class type >
-ID_INLINE size_t idList<type>::Size( void ) const
+ID_INLINE size_t idList<type>::Size() const
 {
 	return sizeof( idList<type> ) + Allocated();
 }
@@ -266,7 +266,7 @@ idList<type>::MemoryUsed
 ================
 */
 template< class type >
-ID_INLINE size_t idList<type>::MemoryUsed( void ) const
+ID_INLINE size_t idList<type>::MemoryUsed() const
 {
 	return num * sizeof( *list );
 }
@@ -280,7 +280,7 @@ Note that this is NOT an indication of the memory allocated.
 ================
 */
 template< class type >
-ID_INLINE int idList<type>::Num( void ) const
+ID_INLINE int idList<type>::Num() const
 {
 	return num;
 }
@@ -293,7 +293,7 @@ Returns the number of elements currently allocated for.
 ================
 */
 template< class type >
-ID_INLINE int idList<type>::NumAllocated( void ) const
+ID_INLINE int idList<type>::NumAllocated() const
 {
 	return size;
 }
@@ -351,7 +351,7 @@ Get the current granularity.
 ================
 */
 template< class type >
-ID_INLINE int idList<type>::GetGranularity( void ) const
+ID_INLINE int idList<type>::GetGranularity() const
 {
 	return granularity;
 }
@@ -364,7 +364,7 @@ Resizes the array to exactly the number of elements it contains or frees up memo
 ================
 */
 template< class type >
-ID_INLINE void idList<type>::Condense( void )
+ID_INLINE void idList<type>::Condense()
 {
 	if( list )
 	{
@@ -651,7 +651,7 @@ FIXME: Create an iterator template for this kind of thing.
 ================
 */
 template< class type >
-ID_INLINE type* idList<type>::Ptr( void )
+ID_INLINE type* idList<type>::Ptr()
 {
 	return list;
 }
@@ -668,7 +668,7 @@ FIXME: Create an iterator template for this kind of thing.
 ================
 */
 template< class type >
-const ID_INLINE type* idList<type>::Ptr( void ) const
+const ID_INLINE type* idList<type>::Ptr() const
 {
 	return list;
 }
@@ -681,7 +681,7 @@ Returns a reference to a new data element at the end of the list.
 ================
 */
 template< class type >
-ID_INLINE type& idList<type>::Alloc( void )
+ID_INLINE type& idList<type>::Alloc()
 {
 	if( !list )
 	{
@@ -886,7 +886,7 @@ on non-pointer lists will cause a compiler error.
 ================
 */
 template< class type >
-ID_INLINE int idList<type>::FindNull( void ) const
+ID_INLINE int idList<type>::FindNull() const
 {
 	int i;
 

@@ -110,7 +110,7 @@ class idSIMD_AltiVec : public idSIMD_Generic
 #if defined(MACOS_X) && defined(__ppc__)
 public:
 
-	virtual const char* VPCALL GetName( void ) const;
+	virtual const char* VPCALL GetName() const;
 
 #ifdef ENABLE_SIMPLE_MATH
 	// Basic math, works for both aligned and unaligned data

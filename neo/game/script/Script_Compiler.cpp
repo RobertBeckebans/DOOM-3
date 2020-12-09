@@ -841,7 +841,7 @@ idCompiler::NextToken
 Sets token, immediateType, and possibly immediate
 ==============
 */
-void idCompiler::NextToken( void )
+void idCompiler::NextToken()
 {
 	int i;
 
@@ -1028,7 +1028,7 @@ idCompiler::SkipOutOfFunction
 For error recovery, pops out of nested braces
 ============
 */
-void idCompiler::SkipOutOfFunction( void )
+void idCompiler::SkipOutOfFunction()
 {
 	while( braceDepth )
 	{
@@ -1045,7 +1045,7 @@ idCompiler::SkipToSemicolon
 For error recovery
 ============
 */
-void idCompiler::SkipToSemicolon( void )
+void idCompiler::SkipToSemicolon()
 {
 	do
 	{
@@ -1066,7 +1066,7 @@ idCompiler::CheckType
 Parses a variable type, including functions types
 ============
 */
-idTypeDef* idCompiler::CheckType( void )
+idTypeDef* idCompiler::CheckType()
 {
 	idTypeDef* type;
 
@@ -1125,7 +1125,7 @@ idCompiler::ParseType
 Parses a variable type, including functions types
 ============
 */
-idTypeDef* idCompiler::ParseType( void )
+idTypeDef* idCompiler::ParseType()
 {
 	idTypeDef* type;
 
@@ -1157,7 +1157,7 @@ idCompiler::ParseImmediate
 Looks for a preexisting constant
 ============
 */
-idVarDef* idCompiler::ParseImmediate( void )
+idVarDef* idCompiler::ParseImmediate()
 {
 	idVarDef* def;
 
@@ -1567,7 +1567,7 @@ idCompiler::ParseValue
 Returns the def for the current token
 ============
 */
-idVarDef* idCompiler::ParseValue( void )
+idVarDef* idCompiler::ParseValue()
 {
 	idVarDef*	def;
 	idVarDef*	namespaceDef;
@@ -1629,7 +1629,7 @@ idVarDef* idCompiler::ParseValue( void )
 idCompiler::GetTerm
 ============
 */
-idVarDef* idCompiler::GetTerm( void )
+idVarDef* idCompiler::GetTerm()
 {
 	idVarDef*	e;
 	int 		op;
@@ -2079,7 +2079,7 @@ void idCompiler::PatchLoop( int start, int continuePos )
 idCompiler::ParseReturnStatement
 ================
 */
-void idCompiler::ParseReturnStatement( void )
+void idCompiler::ParseReturnStatement()
 {
 	idVarDef*	e;
 	etype_t 	type_a;
@@ -2146,7 +2146,7 @@ void idCompiler::ParseReturnStatement( void )
 idCompiler::ParseWhileStatement
 ================
 */
-void idCompiler::ParseWhileStatement( void )
+void idCompiler::ParseWhileStatement()
 {
 	idVarDef*	e;
 	int			patch1;
@@ -2220,7 +2220,7 @@ process:
 end:
 ================
 */
-void idCompiler::ParseForStatement( void )
+void idCompiler::ParseForStatement()
 {
 	idVarDef*	e;
 	int			start;
@@ -2299,7 +2299,7 @@ void idCompiler::ParseForStatement( void )
 idCompiler::ParseDoWhileStatement
 ================
 */
-void idCompiler::ParseDoWhileStatement( void )
+void idCompiler::ParseDoWhileStatement()
 {
 	idVarDef*	e;
 	int			patch1;
@@ -2327,7 +2327,7 @@ void idCompiler::ParseDoWhileStatement( void )
 idCompiler::ParseIfStatement
 ================
 */
-void idCompiler::ParseIfStatement( void )
+void idCompiler::ParseIfStatement()
 {
 	idVarDef*	e;
 	int			patch1;
@@ -2362,7 +2362,7 @@ void idCompiler::ParseIfStatement( void )
 idCompiler::ParseStatement
 ============
 */
-void idCompiler::ParseStatement( void )
+void idCompiler::ParseStatement()
 {
 	if( CheckToken( ";" ) )
 	{
@@ -3037,7 +3037,7 @@ idCompiler::ParseDefs
 Called at the outer layer and when a local statement is hit
 ================
 */
-void idCompiler::ParseDefs( void )
+void idCompiler::ParseDefs()
 {
 	idStr 		name;
 	idTypeDef*	type;

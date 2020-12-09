@@ -432,7 +432,7 @@ void idServerScan::GUIConfig( idUserInterface* pGUI, const char* name )
 idServerScan::GUIUpdateSelected
 ================
 */
-void idServerScan::GUIUpdateSelected( void )
+void idServerScan::GUIUpdateSelected()
 {
 	char screenshot[ MAX_STRING_CHARS ];
 

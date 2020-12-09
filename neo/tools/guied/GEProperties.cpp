@@ -43,7 +43,7 @@ rvGEProperties::rvGEProperties
 constructor
 ================
 */
-rvGEProperties::rvGEProperties( void )
+rvGEProperties::rvGEProperties()
 {
 	mWrapper   = NULL;
 	mWnd	   = NULL;
@@ -124,7 +124,7 @@ rvGEProperties::Update
 Update the properties in the window
 ================
 */
-void rvGEProperties::Update( void )
+void rvGEProperties::Update()
 {
 	int i;
 

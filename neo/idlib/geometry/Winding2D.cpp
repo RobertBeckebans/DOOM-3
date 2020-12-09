@@ -426,7 +426,7 @@ bool idWinding2D::ClipInPlace( const idVec3& plane, const float epsilon, const b
 idWinding2D::Copy
 =============
 */
-idWinding2D* idWinding2D::Copy( void ) const
+idWinding2D* idWinding2D::Copy() const
 {
 	idWinding2D* w;
 
@@ -441,7 +441,7 @@ idWinding2D* idWinding2D::Copy( void ) const
 idWinding2D::Reverse
 =============
 */
-idWinding2D* idWinding2D::Reverse( void ) const
+idWinding2D* idWinding2D::Reverse() const
 {
 	idWinding2D* w;
 	int i;
@@ -460,7 +460,7 @@ idWinding2D* idWinding2D::Reverse( void ) const
 idWinding2D::GetArea
 ============
 */
-float idWinding2D::GetArea( void ) const
+float idWinding2D::GetArea() const
 {
 	int i;
 	idVec2 d1, d2;
@@ -481,7 +481,7 @@ float idWinding2D::GetArea( void ) const
 idWinding2D::GetCenter
 ============
 */
-idVec2 idWinding2D::GetCenter( void ) const
+idVec2 idWinding2D::GetCenter() const
 {
 	int i;
 	idVec2 center;
@@ -563,7 +563,7 @@ idWinding2D::IsTiny
 */
 #define	EDGE_LENGTH		0.2f
 
-bool idWinding2D::IsTiny( void ) const
+bool idWinding2D::IsTiny() const
 {
 	int		i;
 	float	len;
@@ -591,7 +591,7 @@ bool idWinding2D::IsTiny( void ) const
 idWinding2D::IsHuge
 =============
 */
-bool idWinding2D::IsHuge( void ) const
+bool idWinding2D::IsHuge() const
 {
 	int i, j;
 
@@ -613,7 +613,7 @@ bool idWinding2D::IsHuge( void ) const
 idWinding2D::Print
 =============
 */
-void idWinding2D::Print( void ) const
+void idWinding2D::Print() const
 {
 	int i;
 

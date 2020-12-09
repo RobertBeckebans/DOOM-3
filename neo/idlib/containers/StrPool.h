@@ -54,17 +54,17 @@ public:
 	}
 
 	// returns total size of allocated memory
-	size_t				Allocated( void ) const
+	size_t				Allocated() const
 	{
 		return idStr::Allocated();
 	}
 	// returns total size of allocated memory including size of string pool type
-	size_t				Size( void ) const
+	size_t				Size() const
 	{
 		return sizeof( *this ) + Allocated();
 	}
 	// returns a pointer to the pool this string was allocated from
-	const idStrPool* 	GetPool( void ) const
+	const idStrPool* 	GetPool() const
 	{
 		return pool;
 	}
@@ -84,12 +84,12 @@ public:
 
 	void				SetCaseSensitive( bool caseSensitive );
 
-	int					Num( void ) const
+	int					Num() const
 	{
 		return pool.Num();
 	}
-	size_t				Allocated( void ) const;
-	size_t				Size( void ) const;
+	size_t				Allocated() const;
+	size_t				Size() const;
 
 	const idPoolStr* 	operator[]( int index ) const
 	{
@@ -99,7 +99,7 @@ public:
 	const idPoolStr* 	AllocString( const char* string );
 	void				FreeString( const idPoolStr* poolStr );
 	const idPoolStr* 	CopyString( const idPoolStr* poolStr );
-	void				Clear( void );
+	void				Clear();
 
 private:
 	bool				caseSensitive;
@@ -231,7 +231,7 @@ ID_INLINE const idPoolStr* idStrPool::CopyString( const idPoolStr* poolStr )
 idStrPool::Clear
 ================
 */
-ID_INLINE void idStrPool::Clear( void )
+ID_INLINE void idStrPool::Clear()
 {
 	int i;
 
@@ -248,7 +248,7 @@ ID_INLINE void idStrPool::Clear( void )
 idStrPool::Allocated
 ================
 */
-ID_INLINE size_t idStrPool::Allocated( void ) const
+ID_INLINE size_t idStrPool::Allocated() const
 {
 	int i;
 	size_t size;
@@ -266,7 +266,7 @@ ID_INLINE size_t idStrPool::Allocated( void ) const
 idStrPool::Size
 ================
 */
-ID_INLINE size_t idStrPool::Size( void ) const
+ID_INLINE size_t idStrPool::Size() const
 {
 	int i;
 	size_t size;

@@ -86,7 +86,7 @@ void RadiantPrint( const char* text )
 	}
 }
 
-void RadiantShutdown( void )
+void RadiantShutdown()
 {
 	theApp.ExitInstance();
 }
@@ -98,7 +98,7 @@ RadiantInit
 This is also called when you 'quit' in doom
 =================
 */
-void RadiantInit( void )
+void RadiantInit()
 {
 
 	// make sure the renderer is initialized
@@ -179,7 +179,7 @@ void RadiantSync( const char* mapName, const idVec3& viewOrg, const idAngles& vi
 	}
 }
 
-void RadiantRun( void )
+void RadiantRun()
 {
 	static bool exceptionErr = false;
 	int show = ::IsWindowVisible( win32.hWnd );
@@ -373,7 +373,7 @@ void CRadiantApp::OnHelp()
 	ShellExecute( m_pMainWnd->GetSafeHwnd(), "open", "http://www.idDevNet.com", NULL, NULL, SW_SHOW );
 }
 
-int CRadiantApp::Run( void )
+int CRadiantApp::Run()
 {
 	BOOL bIdle = TRUE;
 	LONG lIdleCount = 0;
@@ -493,7 +493,7 @@ bool LoadWindowState( HWND hWnd, const char* pszName )
 ===============================================================
 */
 
-void Sys_UpdateStatusBar( void )
+void Sys_UpdateStatusBar()
 {
 	extern int   g_numbrushes, g_numentities;
 

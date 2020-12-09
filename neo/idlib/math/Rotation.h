@@ -51,7 +51,7 @@ class idRotation
 	friend class idMat3;
 
 public:
-	idRotation( void );
+	idRotation();
 	idRotation( const idVec3& rotationOrigin, const idVec3& rotationVec, const float rotationAngle );
 
 	void				Set( const idVec3& rotationOrigin, const idVec3& rotationVec, const float rotationAngle );
@@ -60,10 +60,10 @@ public:
 	void				SetVec( const float x, const float y, const float z );	// has to be normalized
 	void				SetAngle( const float rotationAngle );
 	void				Scale( const float s );
-	void				ReCalculateMatrix( void );
-	const idVec3& 		GetOrigin( void ) const;
-	const idVec3& 		GetVec( void ) const;
-	float				GetAngle( void ) const;
+	void				ReCalculateMatrix();
+	const idVec3& 		GetOrigin() const;
+	const idVec3& 		GetVec() const;
+	float				GetAngle() const;
 
 	idRotation			operator-() const;										// flips rotation
 	idRotation			operator*( const float s ) const;						// scale rotation
@@ -76,16 +76,16 @@ public:
 	friend idVec3		operator*( const idVec3& v, const idRotation& r );		// rotate vector
 	friend idVec3& 		operator*=( idVec3& v, const idRotation& r );			// rotate vector
 
-	idAngles			ToAngles( void ) const;
-	idQuat				ToQuat( void ) const;
-	const idMat3& 		ToMat3( void ) const;
-	idMat4				ToMat4( void ) const;
-	idVec3				ToAngularVelocity( void ) const;
+	idAngles			ToAngles() const;
+	idQuat				ToQuat() const;
+	const idMat3& 		ToMat3() const;
+	idMat4				ToMat4() const;
+	idVec3				ToAngularVelocity() const;
 
 	void				RotatePoint( idVec3& point ) const;
 
-	void				Normalize180( void );
-	void				Normalize360( void );
+	void				Normalize180();
+	void				Normalize360();
 
 private:
 	idVec3				origin;			// origin of rotation
@@ -96,7 +96,7 @@ private:
 };
 
 
-ID_INLINE idRotation::idRotation( void )
+ID_INLINE idRotation::idRotation()
 {
 }
 
@@ -147,23 +147,23 @@ ID_INLINE void idRotation::Scale( const float s )
 	axisValid = false;
 }
 
-ID_INLINE void idRotation::ReCalculateMatrix( void )
+ID_INLINE void idRotation::ReCalculateMatrix()
 {
 	axisValid = false;
 	ToMat3();
 }
 
-ID_INLINE const idVec3& idRotation::GetOrigin( void ) const
+ID_INLINE const idVec3& idRotation::GetOrigin() const
 {
 	return origin;
 }
 
-ID_INLINE const idVec3& idRotation::GetVec( void ) const
+ID_INLINE const idVec3& idRotation::GetVec() const
 {
 	return vec;
 }
 
-ID_INLINE float idRotation::GetAngle( void ) const
+ID_INLINE float idRotation::GetAngle() const
 {
 	return angle;
 }

@@ -69,7 +69,7 @@ idMD5Anim::~idMD5Anim()
 idMD5Anim::Free
 ====================
 */
-void idMD5Anim::Free( void )
+void idMD5Anim::Free()
 {
 	numFrames	= 0;
 	numJoints	= 0;
@@ -89,7 +89,7 @@ void idMD5Anim::Free( void )
 idMD5Anim::NumFrames
 ====================
 */
-int	idMD5Anim::NumFrames( void ) const
+int	idMD5Anim::NumFrames() const
 {
 	return numFrames;
 }
@@ -99,7 +99,7 @@ int	idMD5Anim::NumFrames( void ) const
 idMD5Anim::NumJoints
 ====================
 */
-int	idMD5Anim::NumJoints( void ) const
+int	idMD5Anim::NumJoints() const
 {
 	return numJoints;
 }
@@ -109,7 +109,7 @@ int	idMD5Anim::NumJoints( void ) const
 idMD5Anim::Length
 ====================
 */
-int idMD5Anim::Length( void ) const
+int idMD5Anim::Length() const
 {
 	return animLength;
 }
@@ -119,7 +119,7 @@ int idMD5Anim::Length( void ) const
 idMD5Anim::TotalMovementDelta
 =====================
 */
-const idVec3& idMD5Anim::TotalMovementDelta( void ) const
+const idVec3& idMD5Anim::TotalMovementDelta() const
 {
 	return totaldelta;
 }
@@ -129,7 +129,7 @@ const idVec3& idMD5Anim::TotalMovementDelta( void ) const
 idMD5Anim::TotalMovementDelta
 =====================
 */
-const char* idMD5Anim::Name( void ) const
+const char* idMD5Anim::Name() const
 {
 	return name;
 }
@@ -139,7 +139,7 @@ const char* idMD5Anim::Name( void ) const
 idMD5Anim::Reload
 ====================
 */
-bool idMD5Anim::Reload( void )
+bool idMD5Anim::Reload()
 {
 	idStr filename;
 
@@ -154,7 +154,7 @@ bool idMD5Anim::Reload( void )
 idMD5Anim::Allocated
 ====================
 */
-size_t idMD5Anim::Allocated( void ) const
+size_t idMD5Anim::Allocated() const
 {
 	size_t	size = bounds.Allocated() + jointInfo.Allocated() + componentFrames.Allocated() + name.Allocated();
 	return size;
@@ -374,7 +374,7 @@ bool idMD5Anim::LoadAnim( const char* filename )
 idMD5Anim::IncreaseRefs
 ====================
 */
-void idMD5Anim::IncreaseRefs( void ) const
+void idMD5Anim::IncreaseRefs() const
 {
 	ref_count++;
 }
@@ -384,7 +384,7 @@ void idMD5Anim::IncreaseRefs( void ) const
 idMD5Anim::DecreaseRefs
 ====================
 */
-void idMD5Anim::DecreaseRefs( void ) const
+void idMD5Anim::DecreaseRefs() const
 {
 	ref_count--;
 }
@@ -394,7 +394,7 @@ void idMD5Anim::DecreaseRefs( void ) const
 idMD5Anim::NumRefs
 ====================
 */
-int idMD5Anim::NumRefs( void ) const
+int idMD5Anim::NumRefs() const
 {
 	return ref_count;
 }
@@ -1039,7 +1039,7 @@ idAnimManager::~idAnimManager()
 idAnimManager::Shutdown
 ====================
 */
-void idAnimManager::Shutdown( void )
+void idAnimManager::Shutdown()
 {
 	animations.DeleteContents();
 	jointnames.Clear();
@@ -1091,7 +1091,7 @@ idMD5Anim* idAnimManager::GetAnim( const char* name )
 idAnimManager::ReloadAnims
 ================
 */
-void idAnimManager::ReloadAnims( void )
+void idAnimManager::ReloadAnims()
 {
 	int			i;
 	idMD5Anim**	animptr;
@@ -1144,7 +1144,7 @@ const char* idAnimManager::JointName( int index ) const
 idAnimManager::ListAnims
 ================
 */
-void idAnimManager::ListAnims( void ) const
+void idAnimManager::ListAnims() const
 {
 	int			i;
 	idMD5Anim**	animptr;
@@ -1184,7 +1184,7 @@ void idAnimManager::ListAnims( void ) const
 idAnimManager::FlushUnusedAnims
 ================
 */
-void idAnimManager::FlushUnusedAnims( void )
+void idAnimManager::FlushUnusedAnims()
 {
 	int						i;
 	idMD5Anim**				animptr;

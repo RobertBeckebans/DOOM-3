@@ -74,7 +74,7 @@ size_t Curl_FormReadOneLine( char* buffer,
 							 size_t nitems,
 							 FILE* mydata );
 
-char* Curl_FormBoundary( void );
+char* Curl_FormBoundary();
 
 void Curl_formclean( struct FormData* );
 

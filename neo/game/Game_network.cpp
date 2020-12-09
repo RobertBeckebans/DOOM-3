@@ -59,7 +59,7 @@ idCVar net_clientLagOMeter( "net_clientLagOMeter", "1", CVAR_GAME | CVAR_BOOL | 
 idGameLocal::InitAsyncNetwork
 ================
 */
-void idGameLocal::InitAsyncNetwork( void )
+void idGameLocal::InitAsyncNetwork()
 {
 	int i, type;
 
@@ -90,7 +90,7 @@ void idGameLocal::InitAsyncNetwork( void )
 idGameLocal::ShutdownAsyncNetwork
 ================
 */
-void idGameLocal::ShutdownAsyncNetwork( void )
+void idGameLocal::ShutdownAsyncNetwork()
 {
 	entityStateAllocator.Shutdown();
 	snapshotAllocator.Shutdown();
@@ -819,7 +819,7 @@ void idGameLocal::NetworkEventWarning( const entityNetEvent_t* event, const char
 idGameLocal::ServerProcessEntityNetworkEventQueue
 ================
 */
-void idGameLocal::ServerProcessEntityNetworkEventQueue( void )
+void idGameLocal::ServerProcessEntityNetworkEventQueue()
 {
 	idEntity*			ent;
 	entityNetEvent_t*	event;
@@ -1431,7 +1431,7 @@ bool idGameLocal::ClientApplySnapshot( int clientNum, int sequence )
 idGameLocal::ClientProcessEntityNetworkEventQueue
 ================
 */
-void idGameLocal::ClientProcessEntityNetworkEventQueue( void )
+void idGameLocal::ClientProcessEntityNetworkEventQueue()
 {
 	idEntity*			ent;
 	entityNetEvent_t*	event;
@@ -1905,7 +1905,7 @@ void idEventQueue::Shutdown()
 idEventQueue::Init
 ===============
 */
-void idEventQueue::Init( void )
+void idEventQueue::Init()
 {
 	start = NULL;
 	end = NULL;
@@ -1916,7 +1916,7 @@ void idEventQueue::Init( void )
 idEventQueue::Dequeue
 ===============
 */
-entityNetEvent_t* idEventQueue::Dequeue( void )
+entityNetEvent_t* idEventQueue::Dequeue()
 {
 	entityNetEvent_t* event = start;
 	if( !event )
@@ -1946,7 +1946,7 @@ entityNetEvent_t* idEventQueue::Dequeue( void )
 idEventQueue::RemoveLast
 ===============
 */
-entityNetEvent_t* idEventQueue::RemoveLast( void )
+entityNetEvent_t* idEventQueue::RemoveLast()
 {
 	entityNetEvent_t* event = end;
 	if( !event )

@@ -116,23 +116,23 @@ public:
 	virtual void		SetGUI( idUserInterface* gui, HandleGuiCommand_t handle );
 
 	virtual const char* MessageBox( msgBoxType_t type, const char* message, const char* title = NULL, bool wait = false, const char* fire_yes = NULL, const char* fire_no = NULL, bool network = false );
-	virtual void		StopBox( void );
+	virtual void		StopBox();
 	virtual void		DownloadProgressBox( backgroundDownload_t* bgl, const char* title, int progress_start = 0, int progress_end = 100 );
 	virtual void		SetPlayingSoundWorld();
 
 	virtual void		TimeHitch( int msec );
 
-	virtual void		ReadCDKey( void );
-	virtual void		WriteCDKey( void );
+	virtual void		ReadCDKey();
+	virtual void		WriteCDKey();
 	virtual const char* GetCDKey( bool xp );
 	virtual bool		CheckKey( const char* key, bool netConnect, bool offline_valid[ 2 ] );
 	virtual bool		CDKeysAreValid( bool strict );
 	virtual void		ClearCDKey( bool valid[ 2 ] );
-	virtual void		SetCDKeyGuiVars( void );
-	virtual bool		WaitingForGameAuth( void );
+	virtual void		SetCDKeyGuiVars();
+	virtual bool		WaitingForGameAuth();
 	virtual void		CDKeysAuthReply( bool valid, const char* auth_msg );
 
-	virtual int			GetSaveGameVersion( void );
+	virtual int			GetSaveGameVersion();
 
 	virtual const char* GetCurrentMapName();
 
@@ -163,7 +163,7 @@ public:
 	bool				LoadGame( const char* saveName );
 	bool				SaveGame( const char* saveName, bool autosave = false );
 
-	const char*			GetAuthMsg( void );
+	const char*			GetAuthMsg();
 
 	//=====================================
 
@@ -311,7 +311,7 @@ public:
 	void				UnloadMap();
 
 	// return true if we actually waiting on an auth reply
-	bool				MaybeWaitOnCDKey( void );
+	bool				MaybeWaitOnCDKey();
 
 	//------------------
 	// Session_menu.cpp
@@ -333,17 +333,17 @@ public:
 	void				HandleNoteCommands( const char* menuCommand );
 	void				GetSaveGameList( idStrList& fileList, idList<fileTIME_T>& fileTimes );
 	void				TakeNotes( const char* p, bool extended = false );
-	void				UpdateMPLevelShot( void );
+	void				UpdateMPLevelShot();
 
-	void				SetSaveGameGuiVars( void );
-	void				SetMainMenuGuiVars( void );
-	void				SetModsMenuGuiVars( void );
-	void				SetMainMenuSkin( void );
-	void				SetPbMenuGuiVars( void );
+	void				SetSaveGameGuiVars();
+	void				SetMainMenuGuiVars();
+	void				SetModsMenuGuiVars();
+	void				SetMainMenuSkin();
+	void				SetPbMenuGuiVars();
 
 private:
-	bool				BoxDialogSanityCheck( void );
-	void				EmitGameAuth( void );
+	bool				BoxDialogSanityCheck();
+	void				EmitGameAuth();
 
 	typedef enum
 	{

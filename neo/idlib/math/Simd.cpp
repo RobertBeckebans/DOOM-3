@@ -48,7 +48,7 @@ idSIMDProcessor* 	SIMDProcessor = NULL;
 idSIMD::Init
 ================
 */
-void idSIMD::Init( void )
+void idSIMD::Init()
 {
 	generic = new idSIMD_Generic;
 	generic->cpuid = CPUID_GENERIC;
@@ -137,7 +137,7 @@ void idSIMD::InitProcessor( const char* module, bool forceGeneric )
 idSIMD::Shutdown
 ================
 */
-void idSIMD::Shutdown( void )
+void idSIMD::Shutdown()
 {
 	if( processor != generic )
 	{
@@ -279,7 +279,7 @@ double TBToDoubleNano( U64 startTime, U64 stopTime, double ticksPerNanosecond )
 	return ( nanoTime );
 }
 
-TIME_TYPE time_in_millisec( void )
+TIME_TYPE time_in_millisec()
 {
 #define K_2POWER32 4294967296.0
 #define TICKS_PER_NANOSECOND 0.025
@@ -366,7 +366,7 @@ void PrintClocks( char* string, int dataCount, int clocks, int otherClocks = 0 )
 GetBaseClocks
 ============
 */
-void GetBaseClocks( void )
+void GetBaseClocks()
 {
 	int i, start, end, bestClocks;
 
@@ -385,7 +385,7 @@ void GetBaseClocks( void )
 TestAdd
 ============
 */
-void TestAdd( void )
+void TestAdd()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -469,7 +469,7 @@ void TestAdd( void )
 TestSub
 ============
 */
-void TestSub( void )
+void TestSub()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -553,7 +553,7 @@ void TestSub( void )
 TestMul
 ============
 */
-void TestMul( void )
+void TestMul()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -638,7 +638,7 @@ void TestMul( void )
 TestDiv
 ============
 */
-void TestDiv( void )
+void TestDiv()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -728,7 +728,7 @@ void TestDiv( void )
 TestMulAdd
 ============
 */
-void TestMulAdd( void )
+void TestMulAdd()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -793,7 +793,7 @@ void TestMulAdd( void )
 TestMulSub
 ============
 */
-void TestMulSub( void )
+void TestMulSub()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -858,7 +858,7 @@ void TestMulSub( void )
 TestDot
 ============
 */
-void TestDot( void )
+void TestDot()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1138,7 +1138,7 @@ void TestDot( void )
 TestCompare
 ============
 */
-void TestCompare( void )
+void TestCompare()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1408,7 +1408,7 @@ void TestCompare( void )
 TestMinMax
 ============
 */
-void TestMinMax( void )
+void TestMinMax()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1556,7 +1556,7 @@ void TestMinMax( void )
 TestClamp
 ============
 */
-void TestClamp( void )
+void TestClamp()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1669,7 +1669,7 @@ void TestClamp( void )
 TestMemcpy
 ============
 */
-void TestMemcpy( void )
+void TestMemcpy()
 {
 	int i, j;
 	byte test0[8192];
@@ -1703,7 +1703,7 @@ void TestMemcpy( void )
 TestMemset
 ============
 */
-void TestMemset( void )
+void TestMemset()
 {
 	int i, j, k;
 	byte test[8192];
@@ -1738,7 +1738,7 @@ void TestMemset( void )
 TestMatXMultiplyVecX
 ============
 */
-void TestMatXMultiplyVecX( void )
+void TestMatXMultiplyVecX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1859,7 +1859,7 @@ void TestMatXMultiplyVecX( void )
 TestMatXMultiplyAddVecX
 ============
 */
-void TestMatXMultiplyAddVecX( void )
+void TestMatXMultiplyAddVecX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -1981,7 +1981,7 @@ void TestMatXMultiplyAddVecX( void )
 TestMatXTransposeMultiplyVecX
 ============
 */
-void TestMatXTransposeMultiplyVecX( void )
+void TestMatXTransposeMultiplyVecX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2070,7 +2070,7 @@ void TestMatXTransposeMultiplyVecX( void )
 TestMatXTransposeMultiplyAddVecX
 ============
 */
-void TestMatXTransposeMultiplyAddVecX( void )
+void TestMatXTransposeMultiplyAddVecX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2162,7 +2162,7 @@ TestMatXMultiplyMatX
 #define TEST_VALUE_RANGE			10.0f
 #define	MATX_MATX_SIMD_EPSILON		1e-4f
 
-void TestMatXMultiplyMatX( void )
+void TestMatXMultiplyMatX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2311,7 +2311,7 @@ void TestMatXMultiplyMatX( void )
 TestMatXTransposeMultiplyMatX
 ============
 */
-void TestMatXTransposeMultiplyMatX( void )
+void TestMatXTransposeMultiplyMatX()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2395,7 +2395,7 @@ void TestMatXTransposeMultiplyMatX( void )
 TestMatXLowerTriangularSolve
 ============
 */
-void TestMatXLowerTriangularSolve( void )
+void TestMatXLowerTriangularSolve()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2446,7 +2446,7 @@ void TestMatXLowerTriangularSolve( void )
 TestMatXLowerTriangularSolveTranspose
 ============
 */
-void TestMatXLowerTriangularSolveTranspose( void )
+void TestMatXLowerTriangularSolveTranspose()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2500,7 +2500,7 @@ void TestMatXLowerTriangularSolveTranspose( void )
 TestMatXLDLTFactor
 ============
 */
-void TestMatXLDLTFactor( void )
+void TestMatXLDLTFactor()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2551,7 +2551,7 @@ void TestMatXLDLTFactor( void )
 TestBlendJoints
 ============
 */
-void TestBlendJoints( void )
+void TestBlendJoints()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2632,7 +2632,7 @@ void TestBlendJoints( void )
 TestConvertJointQuatsToJointMats
 ============
 */
-void TestConvertJointQuatsToJointMats( void )
+void TestConvertJointQuatsToJointMats()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2690,7 +2690,7 @@ void TestConvertJointQuatsToJointMats( void )
 TestConvertJointMatsToJointQuats
 ============
 */
-void TestConvertJointMatsToJointQuats( void )
+void TestConvertJointMatsToJointQuats()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2756,7 +2756,7 @@ void TestConvertJointMatsToJointQuats( void )
 TestTransformJoints
 ============
 */
-void TestTransformJoints( void )
+void TestTransformJoints()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2826,7 +2826,7 @@ void TestTransformJoints( void )
 TestUntransformJoints
 ============
 */
-void TestUntransformJoints( void )
+void TestUntransformJoints()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2898,7 +2898,7 @@ TestTransformVerts
 */
 #define NUMJOINTS	64
 #define NUMVERTS	COUNT/2
-void TestTransformVerts( void )
+void TestTransformVerts()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -2970,7 +2970,7 @@ void TestTransformVerts( void )
 TestTracePointCull
 ============
 */
-void TestTracePointCull( void )
+void TestTracePointCull()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3035,7 +3035,7 @@ void TestTracePointCull( void )
 TestDecalPointCull
 ============
 */
-void TestDecalPointCull( void )
+void TestDecalPointCull()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3103,7 +3103,7 @@ void TestDecalPointCull( void )
 TestOverlayPointCull
 ============
 */
-void TestOverlayPointCull( void )
+void TestOverlayPointCull()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3169,7 +3169,7 @@ void TestOverlayPointCull( void )
 TestDeriveTriPlanes
 ============
 */
-void TestDeriveTriPlanes( void )
+void TestDeriveTriPlanes()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3237,7 +3237,7 @@ void TestDeriveTriPlanes( void )
 TestDeriveTangents
 ============
 */
-void TestDeriveTangents( void )
+void TestDeriveTangents()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3334,7 +3334,7 @@ void TestDeriveTangents( void )
 TestDeriveUnsmoothedTangents
 ============
 */
-void TestDeriveUnsmoothedTangents( void )
+void TestDeriveUnsmoothedTangents()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3421,7 +3421,7 @@ void TestDeriveUnsmoothedTangents( void )
 TestNormalizeTangents
 ============
 */
-void TestNormalizeTangents( void )
+void TestNormalizeTangents()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3492,7 +3492,7 @@ void TestNormalizeTangents( void )
 TestGetTextureSpaceLightVectors
 ============
 */
-void TestGetTextureSpaceLightVectors( void )
+void TestGetTextureSpaceLightVectors()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3564,7 +3564,7 @@ void TestGetTextureSpaceLightVectors( void )
 TestGetSpecularTextureCoords
 ============
 */
-void TestGetSpecularTextureCoords( void )
+void TestGetSpecularTextureCoords()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3639,7 +3639,7 @@ void TestGetSpecularTextureCoords( void )
 TestCreateShadowCache
 ============
 */
-void TestCreateShadowCache( void )
+void TestCreateShadowCache()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3756,7 +3756,7 @@ TestSoundUpSampling
 */
 #define SOUND_UPSAMPLE_EPSILON		1.0f
 
-void TestSoundUpSampling( void )
+void TestSoundUpSampling()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -3861,7 +3861,7 @@ TestSoundMixing
 */
 #define SOUND_MIX_EPSILON		2.0f
 
-void TestSoundMixing( void )
+void TestSoundMixing()
 {
 	int i, j;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;
@@ -4091,7 +4091,7 @@ void TestSoundMixing( void )
 TestMath
 ============
 */
-void TestMath( void )
+void TestMath()
 {
 	int i;
 	TIME_TYPE start, end, bestClocks;
@@ -4528,7 +4528,7 @@ TestNegate
 */
 
 // this wasn't previously in the test
-void TestNegate( void )
+void TestNegate()
 {
 	int i;
 	TIME_TYPE start, end, bestClocksGeneric, bestClocksSIMD;

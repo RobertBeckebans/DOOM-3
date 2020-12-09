@@ -45,7 +45,7 @@ If you have questions concerning this license or the applicable additional terms
 Sys_GetClockTicks
 ================
 */
-double Sys_GetClockTicks( void ) {
+double Sys_GetClockTicks() {
 #if 0
 
 	LARGE_INTEGER li;
@@ -76,7 +76,7 @@ double Sys_GetClockTicks( void ) {
 Sys_ClockTicksPerSecond
 ================
 */
-double Sys_ClockTicksPerSecond( void ) {
+double Sys_ClockTicksPerSecond() {
 	static double ticks = 0;
 #if 0
 
@@ -129,7 +129,7 @@ double Sys_ClockTicksPerSecond( void ) {
 HasCPUID
 ================
 */
-static bool HasCPUID( void ) {
+static bool HasCPUID() {
 	__asm 
 	{
 		pushfd						// save eflags
@@ -196,7 +196,7 @@ static void CPUID( int func, unsigned regs[4] ) {
 IsAMD
 ================
 */
-static bool IsAMD( void ) {
+static bool IsAMD() {
 	char pstring[16];
 	char processorString[13];
 
@@ -227,7 +227,7 @@ static bool IsAMD( void ) {
 HasCMOV
 ================
 */
-static bool HasCMOV( void ) {
+static bool HasCMOV() {
 	unsigned regs[4];
 
 	// get CPU feature bits
@@ -245,7 +245,7 @@ static bool HasCMOV( void ) {
 Has3DNow
 ================
 */
-static bool Has3DNow( void ) {
+static bool Has3DNow() {
 	unsigned regs[4];
 
 	// check AMD-specific functions
@@ -268,7 +268,7 @@ static bool Has3DNow( void ) {
 HasMMX
 ================
 */
-static bool HasMMX( void ) {
+static bool HasMMX() {
 	unsigned regs[4];
 
 	// get CPU feature bits
@@ -286,7 +286,7 @@ static bool HasMMX( void ) {
 HasSSE
 ================
 */
-static bool HasSSE( void ) {
+static bool HasSSE() {
 	unsigned regs[4];
 
 	// get CPU feature bits
@@ -304,7 +304,7 @@ static bool HasSSE( void ) {
 HasSSE2
 ================
 */
-static bool HasSSE2( void ) {
+static bool HasSSE2() {
 	unsigned regs[4];
 
 	// get CPU feature bits
@@ -322,7 +322,7 @@ static bool HasSSE2( void ) {
 HasSSE3
 ================
 */
-static bool HasSSE3( void ) {
+static bool HasSSE3() {
 	unsigned regs[4];
 
 	// get CPU feature bits
@@ -343,7 +343,7 @@ LogicalProcPerPhysicalProc
 #define NUM_LOGICAL_BITS   0x00FF0000     // EBX[23:16] Bit 16-23 in ebx contains the number of logical
                                           // processors per physical processor when execute cpuid with 
                                           // eax set to 1
-static unsigned char LogicalProcPerPhysicalProc( void ) {
+static unsigned char LogicalProcPerPhysicalProc() {
 	unsigned int regebx = 0;
 	__asm {
 		mov eax, 1
@@ -361,7 +361,7 @@ GetAPIC_ID
 #define INITIAL_APIC_ID_BITS  0xFF000000  // EBX[31:24] Bits 24-31 (8 bits) return the 8-bit unique 
                                           // initial APIC ID for the processor this code is running on.
                                           // Default value = 0xff if HT is not supported
-static unsigned char GetAPIC_ID( void ) {
+static unsigned char GetAPIC_ID() {
 	unsigned int regebx = 0;
 	__asm {
 		mov eax, 1
@@ -477,7 +477,7 @@ int CPUCount( int &logicalNum, int &physicalNum ) {
 HasHTT
 ================
 */
-static bool HasHTT( void ) {
+static bool HasHTT() {
 	unsigned regs[4];
 	int logicalNum, physicalNum, HTStatusFlag;
 
@@ -501,7 +501,7 @@ static bool HasHTT( void ) {
 HasHTT
 ================
 */
-static bool HasDAZ( void ) {
+static bool HasDAZ() {
 	__declspec(align(16)) unsigned char FXSaveArea[512];
 	unsigned char *FXArea = FXSaveArea;
 	DWORD dwMask = 0;
@@ -531,7 +531,7 @@ static bool HasDAZ( void ) {
 Sys_GetCPUId
 ================
 */
-cpuid_t Sys_GetCPUId( void ) {
+cpuid_t Sys_GetCPUId() {
 	int flags;
 
 	// verify we're at least a Pentium or 486 with CPUID support
@@ -680,7 +680,7 @@ int Sys_FPU_PrintStateFlags( char *ptr, int ctrl, int stat, int tags, int inof, 
 Sys_FPU_StackIsEmpty
 ===============
 */
-bool Sys_FPU_StackIsEmpty( void ) {
+bool Sys_FPU_StackIsEmpty() {
 	__asm {
 		mov			eax, statePtr
 		fnstenv		[eax]
@@ -699,7 +699,7 @@ empty:
 Sys_FPU_ClearStack
 ===============
 */
-void Sys_FPU_ClearStack( void ) {
+void Sys_FPU_ClearStack() {
 	__asm {
 		mov			eax, statePtr
 		fnstenv		[eax]
@@ -724,7 +724,7 @@ Sys_FPU_GetState
   gets the FPU state without changing the state
 ===============
 */
-const char *Sys_FPU_GetState( void ) {
+const char *Sys_FPU_GetState() {
 	double fpuStack[8] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double *fpuStackPtr = fpuStack;
 	int i, numValues;

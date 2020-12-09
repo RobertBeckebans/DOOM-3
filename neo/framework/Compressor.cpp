@@ -40,21 +40,21 @@ If you have questions concerning this license or the applicable additional terms
 class idCompressor_None : public idCompressor
 {
 public:
-	idCompressor_None( void );
+	idCompressor_None();
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
-	float			GetCompressionRatio( void ) const;
+	void			FinishCompress();
+	float			GetCompressionRatio() const;
 
-	const char* 	GetName( void );
-	const char* 	GetFullPath( void );
+	const char* 	GetName();
+	const char* 	GetFullPath();
 	int				Read( void* outData, int outLength );
 	int				Write( const void* inData, int inLength );
-	int				Length( void );
-	ID_TIME_T			Timestamp( void );
-	int				Tell( void );
-	void			ForceFlush( void );
-	void			Flush( void );
+	int				Length();
+	ID_TIME_T			Timestamp();
+	int				Tell();
+	void			ForceFlush();
+	void			Flush();
 	int				Seek( long offset, fsOrigin_t origin );
 
 protected:
@@ -67,7 +67,7 @@ protected:
 idCompressor_None::idCompressor_None
 ================
 */
-idCompressor_None::idCompressor_None( void )
+idCompressor_None::idCompressor_None()
 {
 	file = NULL;
 	compress = true;
@@ -89,7 +89,7 @@ void idCompressor_None::Init( idFile* f, bool compress, int wordLength )
 idCompressor_None::FinishCompress
 ================
 */
-void idCompressor_None::FinishCompress( void )
+void idCompressor_None::FinishCompress()
 {
 }
 
@@ -98,7 +98,7 @@ void idCompressor_None::FinishCompress( void )
 idCompressor_None::GetCompressionRatio
 ================
 */
-float idCompressor_None::GetCompressionRatio( void ) const
+float idCompressor_None::GetCompressionRatio() const
 {
 	return 0.0f;
 }
@@ -108,7 +108,7 @@ float idCompressor_None::GetCompressionRatio( void ) const
 idCompressor_None::GetName
 ================
 */
-const char* idCompressor_None::GetName( void )
+const char* idCompressor_None::GetName()
 {
 	if( file )
 	{
@@ -125,7 +125,7 @@ const char* idCompressor_None::GetName( void )
 idCompressor_None::GetFullPath
 ================
 */
-const char* idCompressor_None::GetFullPath( void )
+const char* idCompressor_None::GetFullPath()
 {
 	if( file )
 	{
@@ -170,7 +170,7 @@ int idCompressor_None::Read( void* outData, int outLength )
 idCompressor_None::Length
 ================
 */
-int idCompressor_None::Length( void )
+int idCompressor_None::Length()
 {
 	if( file )
 	{
@@ -187,7 +187,7 @@ int idCompressor_None::Length( void )
 idCompressor_None::Timestamp
 ================
 */
-ID_TIME_T idCompressor_None::Timestamp( void )
+ID_TIME_T idCompressor_None::Timestamp()
 {
 	if( file )
 	{
@@ -204,7 +204,7 @@ ID_TIME_T idCompressor_None::Timestamp( void )
 idCompressor_None::Tell
 ================
 */
-int idCompressor_None::Tell( void )
+int idCompressor_None::Tell()
 {
 	if( file )
 	{
@@ -221,7 +221,7 @@ int idCompressor_None::Tell( void )
 idCompressor_None::ForceFlush
 ================
 */
-void idCompressor_None::ForceFlush( void )
+void idCompressor_None::ForceFlush()
 {
 	if( file )
 	{
@@ -234,7 +234,7 @@ void idCompressor_None::ForceFlush( void )
 idCompressor_None::Flush
 ================
 */
-void idCompressor_None::Flush( void )
+void idCompressor_None::Flush()
 {
 	if( file )
 	{
@@ -267,11 +267,11 @@ int idCompressor_None::Seek( long offset, fsOrigin_t origin )
 class idCompressor_BitStream : public idCompressor_None
 {
 public:
-	idCompressor_BitStream( void ) {}
+	idCompressor_BitStream() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
-	float			GetCompressionRatio( void ) const;
+	void			FinishCompress();
+	float			GetCompressionRatio() const;
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -631,7 +631,7 @@ int idCompressor_BitStream::Write( const void* inData, int inLength )
 idCompressor_BitStream::FinishCompress
 ================
 */
-void idCompressor_BitStream::FinishCompress( void )
+void idCompressor_BitStream::FinishCompress()
 {
 	if( compress == false )
 	{
@@ -675,7 +675,7 @@ int idCompressor_BitStream::Read( void* outData, int outLength )
 idCompressor_BitStream::GetCompressionRatio
 ================
 */
-float idCompressor_BitStream::GetCompressionRatio( void ) const
+float idCompressor_BitStream::GetCompressionRatio() const
 {
 	if( compress )
 	{
@@ -702,7 +702,7 @@ float idCompressor_BitStream::GetCompressionRatio( void ) const
 class idCompressor_RunLength : public idCompressor_BitStream
 {
 public:
-	idCompressor_RunLength( void ) {}
+	idCompressor_RunLength() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
 
@@ -837,7 +837,7 @@ int idCompressor_RunLength::Read( void* outData, int outLength )
 class idCompressor_RunLength_ZeroBased : public idCompressor_BitStream
 {
 public:
-	idCompressor_RunLength_ZeroBased( void ) {}
+	idCompressor_RunLength_ZeroBased() {}
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -948,11 +948,11 @@ typedef struct nodetype
 class idCompressor_Huffman : public idCompressor_None
 {
 public:
-	idCompressor_Huffman( void ) {}
+	idCompressor_Huffman() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
-	float			GetCompressionRatio( void ) const;
+	void			FinishCompress();
+	float			GetCompressionRatio() const;
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -1515,7 +1515,7 @@ int idCompressor_Huffman::Write( const void* inData, int inLength )
 idCompressor_Huffman::FinishCompress
 ================
 */
-void idCompressor_Huffman::FinishCompress( void )
+void idCompressor_Huffman::FinishCompress()
 {
 
 	if( compress == false )
@@ -1584,7 +1584,7 @@ int idCompressor_Huffman::Read( void* outData, int outLength )
 idCompressor_Huffman::GetCompressionRatio
 ================
 */
-float idCompressor_Huffman::GetCompressionRatio( void ) const
+float idCompressor_Huffman::GetCompressionRatio() const
 {
 	return ( unCompressedSize - compressedSize ) * 100.0f / unCompressedSize;
 }
@@ -1613,10 +1613,10 @@ const int AC_LOW_INIT		= 0x0000;
 class idCompressor_Arithmetic : public idCompressor_BitStream
 {
 public:
-	idCompressor_Arithmetic( void ) {}
+	idCompressor_Arithmetic() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
+	void			FinishCompress();
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -1647,7 +1647,7 @@ private:
 	unsigned int	scale;
 
 private:
-	void			InitProbabilities( void );
+	void			InitProbabilities();
 	void			UpdateProbabilities( acSymbol_t* symbol );
 	int				ProbabilityForCount( unsigned int count );
 
@@ -1655,13 +1655,13 @@ private:
 	void			EncodeSymbol( acSymbol_t* symbol );
 
 	int				SymbolFromCount( unsigned int count, acSymbol_t* symbol );
-	int				GetCurrentCount( void );
+	int				GetCurrentCount();
 	void			RemoveSymbolFromStream( acSymbol_t* symbol );
 
 	void			PutBit( int bit );
-	int				GetBit( void );
+	int				GetBit();
 
-	void			WriteOverflowBits( void );
+	void			WriteOverflowBits();
 };
 
 /*
@@ -1682,7 +1682,7 @@ void idCompressor_Arithmetic::Init( idFile* f, bool compress, int wordLength )
 idCompressor_Arithmetic::InitProbabilities
 ================
 */
-void idCompressor_Arithmetic::InitProbabilities( void )
+void idCompressor_Arithmetic::InitProbabilities()
 {
 	high			= AC_HIGH_INIT;
 	low				= AC_LOW_INIT;
@@ -1725,7 +1725,7 @@ void idCompressor_Arithmetic::UpdateProbabilities( acSymbol_t* symbol )
 idCompressor_Arithmetic::GetCurrentCount
 ================
 */
-int idCompressor_Arithmetic::GetCurrentCount( void )
+int idCompressor_Arithmetic::GetCurrentCount()
 {
 	return ( unsigned int )( ( ( ( ( long ) code - low ) + 1 ) * scale - 1 ) / ( ( ( long ) high - low ) + 1 ) );
 }
@@ -1844,7 +1844,7 @@ void idCompressor_Arithmetic::RemoveSymbolFromStream( acSymbol_t* symbol )
 idCompressor_Arithmetic::GetBit
 ================
 */
-int idCompressor_Arithmetic::GetBit( void )
+int idCompressor_Arithmetic::GetBit()
 {
 	int getbit;
 
@@ -1950,7 +1950,7 @@ void idCompressor_Arithmetic::PutBit( int putbit )
 idCompressor_Arithmetic::WriteOverflowBits
 ================
 */
-void idCompressor_Arithmetic::WriteOverflowBits( void )
+void idCompressor_Arithmetic::WriteOverflowBits()
 {
 
 	WriteBits( low >> AC_MSB2_SHIFT, 1 );
@@ -2008,7 +2008,7 @@ int idCompressor_Arithmetic::Write( const void* inData, int inLength )
 idCompressor_Arithmetic::FinishCompress
 ================
 */
-void idCompressor_Arithmetic::FinishCompress( void )
+void idCompressor_Arithmetic::FinishCompress()
 {
 	if( compress == false )
 	{
@@ -2099,10 +2099,10 @@ const int LZSS_LENGTH_BITS		= 5;
 class idCompressor_LZSS : public idCompressor_BitStream
 {
 public:
-	idCompressor_LZSS( void ) {}
+	idCompressor_LZSS() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
+	void			FinishCompress();
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -2123,8 +2123,8 @@ protected:
 	bool			FindMatch( int startWord, int startValue, int& wordOffset, int& numWords );
 	void			AddToHash( int index, int hash );
 	int				GetWordFromBlock( int wordOffset ) const;
-	virtual void	CompressBlock( void );
-	virtual void	DecompressBlock( void );
+	virtual void	CompressBlock();
+	virtual void	DecompressBlock();
 };
 
 /*
@@ -2239,7 +2239,7 @@ int idCompressor_LZSS::GetWordFromBlock( int wordOffset ) const
 idCompressor_LZSS::CompressBlock
 ================
 */
-void idCompressor_LZSS::CompressBlock( void )
+void idCompressor_LZSS::CompressBlock()
 {
 	int i, startWord, startValue, wordOffset, numWords;
 
@@ -2282,7 +2282,7 @@ void idCompressor_LZSS::CompressBlock( void )
 idCompressor_LZSS::DecompressBlock
 ================
 */
-void idCompressor_LZSS::DecompressBlock( void )
+void idCompressor_LZSS::DecompressBlock()
 {
 	int i, offset, startWord, numWords;
 
@@ -2351,7 +2351,7 @@ int idCompressor_LZSS::Write( const void* inData, int inLength )
 idCompressor_LZSS::FinishCompress
 ================
 */
-void idCompressor_LZSS::FinishCompress( void )
+void idCompressor_LZSS::FinishCompress()
 {
 	if( compress == false )
 	{
@@ -2420,12 +2420,12 @@ int idCompressor_LZSS::Read( void* outData, int outLength )
 class idCompressor_LZSS_WordAligned : public idCompressor_LZSS
 {
 public:
-	idCompressor_LZSS_WordAligned( void ) {}
+	idCompressor_LZSS_WordAligned() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
 private:
-	virtual void	CompressBlock( void );
-	virtual void	DecompressBlock( void );
+	virtual void	CompressBlock();
+	virtual void	DecompressBlock();
 };
 
 /*
@@ -2450,7 +2450,7 @@ void idCompressor_LZSS_WordAligned::Init( idFile* f, bool compress, int wordLeng
 idCompressor_LZSS_WordAligned::CompressBlock
 ================
 */
-void idCompressor_LZSS_WordAligned::CompressBlock( void )
+void idCompressor_LZSS_WordAligned::CompressBlock()
 {
 	int i, startWord, startValue, wordOffset, numWords;
 
@@ -2492,7 +2492,7 @@ void idCompressor_LZSS_WordAligned::CompressBlock( void )
 idCompressor_LZSS_WordAligned::DecompressBlock
 ================
 */
-void idCompressor_LZSS_WordAligned::DecompressBlock( void )
+void idCompressor_LZSS_WordAligned::DecompressBlock()
 {
 	int i, offset, startWord, numWords;
 
@@ -2573,10 +2573,10 @@ void idCompressor_LZSS_WordAligned::DecompressBlock( void )
 class idCompressor_LZW : public idCompressor_BitStream
 {
 public:
-	idCompressor_LZW( void ) {}
+	idCompressor_LZW() {}
 
 	void			Init( idFile* f, bool compress, int wordLength );
-	void			FinishCompress( void );
+	void			FinishCompress();
 
 	int				Write( const void* inData, int inLength );
 	int				Read( void* outData, int outLength );
@@ -2757,7 +2757,7 @@ bool idCompressor_LZW::BumpBits()
 idCompressor_LZW::FinishCompress
 ================
 */
-void idCompressor_LZW::FinishCompress( void )
+void idCompressor_LZW::FinishCompress()
 {
 	WriteBits( w, codeBits );
 	idCompressor_BitStream::FinishCompress();
@@ -2891,7 +2891,7 @@ void idCompressor_LZW::DecompressBlock()
 idCompressor::AllocNoCompression
 ================
 */
-idCompressor* idCompressor::AllocNoCompression( void )
+idCompressor* idCompressor::AllocNoCompression()
 {
 	return new idCompressor_None();
 }
@@ -2901,7 +2901,7 @@ idCompressor* idCompressor::AllocNoCompression( void )
 idCompressor::AllocBitStream
 ================
 */
-idCompressor* idCompressor::AllocBitStream( void )
+idCompressor* idCompressor::AllocBitStream()
 {
 	return new idCompressor_BitStream();
 }
@@ -2911,7 +2911,7 @@ idCompressor* idCompressor::AllocBitStream( void )
 idCompressor::AllocRunLength
 ================
 */
-idCompressor* idCompressor::AllocRunLength( void )
+idCompressor* idCompressor::AllocRunLength()
 {
 	return new idCompressor_RunLength();
 }
@@ -2921,7 +2921,7 @@ idCompressor* idCompressor::AllocRunLength( void )
 idCompressor::AllocRunLength_ZeroBased
 ================
 */
-idCompressor* idCompressor::AllocRunLength_ZeroBased( void )
+idCompressor* idCompressor::AllocRunLength_ZeroBased()
 {
 	return new idCompressor_RunLength_ZeroBased();
 }
@@ -2931,7 +2931,7 @@ idCompressor* idCompressor::AllocRunLength_ZeroBased( void )
 idCompressor::AllocHuffman
 ================
 */
-idCompressor* idCompressor::AllocHuffman( void )
+idCompressor* idCompressor::AllocHuffman()
 {
 	return new idCompressor_Huffman();
 }
@@ -2941,7 +2941,7 @@ idCompressor* idCompressor::AllocHuffman( void )
 idCompressor::AllocArithmetic
 ================
 */
-idCompressor* idCompressor::AllocArithmetic( void )
+idCompressor* idCompressor::AllocArithmetic()
 {
 	return new idCompressor_Arithmetic();
 }
@@ -2951,7 +2951,7 @@ idCompressor* idCompressor::AllocArithmetic( void )
 idCompressor::AllocLZSS
 ================
 */
-idCompressor* idCompressor::AllocLZSS( void )
+idCompressor* idCompressor::AllocLZSS()
 {
 	return new idCompressor_LZSS();
 }
@@ -2961,7 +2961,7 @@ idCompressor* idCompressor::AllocLZSS( void )
 idCompressor::AllocLZSS_WordAligned
 ================
 */
-idCompressor* idCompressor::AllocLZSS_WordAligned( void )
+idCompressor* idCompressor::AllocLZSS_WordAligned()
 {
 	return new idCompressor_LZSS_WordAligned();
 }
@@ -2971,7 +2971,7 @@ idCompressor* idCompressor::AllocLZSS_WordAligned( void )
 idCompressor::AllocLZW
 ================
 */
-idCompressor* idCompressor::AllocLZW( void )
+idCompressor* idCompressor::AllocLZW()
 {
 	return new idCompressor_LZW();
 }

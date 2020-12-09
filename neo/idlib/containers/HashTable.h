@@ -44,26 +44,26 @@ class idHashTable
 public:
 	idHashTable( int newtablesize = 256 );
 	idHashTable( const idHashTable<Type>& map );
-	~idHashTable( void );
+	~idHashTable();
 
 	// returns total size of allocated memory
-	size_t			Allocated( void ) const;
+	size_t			Allocated() const;
 	// returns total size of allocated memory including size of hash table type
-	size_t			Size( void ) const;
+	size_t			Size() const;
 
 	void			Set( const char* key, Type& value );
 	bool			Get( const char* key, Type** value = NULL ) const;
 	bool			Remove( const char* key );
 
-	void			Clear( void );
-	void			DeleteContents( void );
+	void			Clear();
+	void			DeleteContents();
 
 	// the entire contents can be itterated over, but note that the
 	// exact index for a given element may change when new elements are added
-	int				Num( void ) const;
+	int				Num() const;
 	Type* 			GetIndex( int index ) const;
 
-	int				GetSpread( void ) const;
+	int				GetSpread() const;
 
 private:
 	struct hashnode_s
@@ -149,7 +149,7 @@ idHashTable<Type>::~idHashTable<Type>
 ================
 */
 template< class Type >
-ID_INLINE idHashTable<Type>::~idHashTable( void )
+ID_INLINE idHashTable<Type>::~idHashTable()
 {
 	Clear();
 	delete[] heads;
@@ -161,7 +161,7 @@ idHashTable<Type>::Allocated
 ================
 */
 template< class Type >
-ID_INLINE size_t idHashTable<Type>::Allocated( void ) const
+ID_INLINE size_t idHashTable<Type>::Allocated() const
 {
 	return sizeof( heads ) * tablesize + sizeof( *heads ) * numentries;
 }
@@ -172,7 +172,7 @@ idHashTable<Type>::Size
 ================
 */
 template< class Type >
-ID_INLINE size_t idHashTable<Type>::Size( void ) const
+ID_INLINE size_t idHashTable<Type>::Size() const
 {
 	return sizeof( idHashTable<Type> ) + sizeof( heads ) * tablesize + sizeof( *heads ) * numentries;
 }
@@ -340,7 +340,7 @@ idHashTable<Type>::Clear
 ================
 */
 template< class Type >
-ID_INLINE void idHashTable<Type>::Clear( void )
+ID_INLINE void idHashTable<Type>::Clear()
 {
 	int			i;
 	hashnode_s*	node;
@@ -368,7 +368,7 @@ idHashTable<Type>::DeleteContents
 ================
 */
 template< class Type >
-ID_INLINE void idHashTable<Type>::DeleteContents( void )
+ID_INLINE void idHashTable<Type>::DeleteContents()
 {
 	int			i;
 	hashnode_s*	node;
@@ -397,7 +397,7 @@ idHashTable<Type>::Num
 ================
 */
 template< class Type >
-ID_INLINE int idHashTable<Type>::Num( void ) const
+ID_INLINE int idHashTable<Type>::Num() const
 {
 	return numentries;
 }
@@ -413,7 +413,7 @@ idHashTable<Type>::GetSpread
 ================
 */
 template< class Type >
-int idHashTable<Type>::GetSpread( void ) const
+int idHashTable<Type>::GetSpread() const
 {
 	int i, average, error, e;
 	hashnode_s*	node;

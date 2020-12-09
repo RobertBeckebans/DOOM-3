@@ -44,19 +44,19 @@ class NSBitmapImageRep
 {
 public:
 
-	NSBitmapImageRep( void );
+	NSBitmapImageRep();
 	NSBitmapImageRep( const char* filename );
 	NSBitmapImageRep( int wide, int high );
 	~NSBitmapImageRep();
 
 	NSBitmapImageRep& 	operator=( const NSBitmapImageRep& a );
 
-	int					samplesPerPixel( void );
-	int					pixelsWide( void );
-	int					pixelsHigh( void );
-	byte* 				bitmapData( void );
-	bool				hasAlpha( void );
-	bool				isPlanar( void );
+	int					samplesPerPixel();
+	int					pixelsWide();
+	int					pixelsHigh();
+	byte* 				bitmapData();
+	bool				hasAlpha();
+	bool				isPlanar();
 
 private:
 
@@ -73,37 +73,37 @@ public:
 	roq();
 	~roq();
 
-	void				WriteLossless( void );
+	void				WriteLossless();
 	void				LoadAndDisplayImage( const char* filename );
 	void				CloseRoQFile( bool which );
 	void				InitRoQFile( const char* roqFilename );
-	void				InitRoQPatterns( void );
+	void				InitRoQPatterns();
 	void				EncodeStream( const char* paramInputFile );
 	void				EncodeQuietly( bool which );
-	bool				IsQuiet( void );
-	bool				IsLastFrame( void );
-	NSBitmapImageRep* 	CurrentImage( void );
+	bool				IsQuiet();
+	bool				IsLastFrame();
+	NSBitmapImageRep* 	CurrentImage();
 	void				MarkQuadx( int xat, int yat, int size, float cerror, int choice );
 	void				WritePuzzleFrame( quadcel* pquad );
 	void				WriteFrame( quadcel* pquad );
 	void				WriteCodeBook( byte* codebook );
 	void				WwriteCodeBookToStream( byte* codes, int csize, word cflags );
-	int					PreviousFrameSize( void );
-	bool				MakingVideo( void );
-	bool				ParamNoAlpha( void );
-	bool				SearchType( void );
-	bool				HasSound( void );
-	const char* 		CurrentFilename( void );
-	int					NormalFrameSize( void );
-	int					FirstFrameSize( void );
-	bool				Scaleable( void );
-	void				WriteHangFrame( void );
-	int					NumberOfFrames( void );
+	int					PreviousFrameSize();
+	bool				MakingVideo();
+	bool				ParamNoAlpha();
+	bool				SearchType();
+	bool				HasSound();
+	const char* 		CurrentFilename();
+	int					NormalFrameSize();
+	int					FirstFrameSize();
+	bool				Scaleable();
+	void				WriteHangFrame();
+	int					NumberOfFrames();
 private:
 	void				Write16Word( word* aWord, idFile* stream );
 	void				Write32Word( unsigned int* aWord, idFile* stream );
 	int					SizeFile( idFile* ftosize );
-	void				CloseRoQFile( void );
+	void				CloseRoQFile();
 	void				WriteCodeBookToStream( byte* codebook, int csize, word cflags );
 
 	static	void		JPEGInitDestination( j_compress_ptr cinfo );

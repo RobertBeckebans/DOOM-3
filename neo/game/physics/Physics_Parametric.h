@@ -66,28 +66,28 @@ class idPhysics_Parametric : public idPhysics_Base
 public:
 	CLASS_PROTOTYPE( idPhysics_Parametric );
 
-	idPhysics_Parametric( void );
-	~idPhysics_Parametric( void );
+	idPhysics_Parametric();
+	~idPhysics_Parametric();
 
 	void					Save( idSaveGame* savefile ) const;
 	void					Restore( idRestoreGame* savefile );
 
 	void					SetPusher( int flags );
-	bool					IsPusher( void ) const;
+	bool					IsPusher() const;
 
 	void					SetLinearExtrapolation( extrapolation_t type, int time, int duration, const idVec3& base, const idVec3& speed, const idVec3& baseSpeed );
 	void					SetAngularExtrapolation( extrapolation_t type, int time, int duration, const idAngles& base, const idAngles& speed, const idAngles& baseSpeed );
-	extrapolation_t			GetLinearExtrapolationType( void ) const;
-	extrapolation_t			GetAngularExtrapolationType( void ) const;
+	extrapolation_t			GetLinearExtrapolationType() const;
+	extrapolation_t			GetAngularExtrapolationType() const;
 
 	void					SetLinearInterpolation( int time, int accelTime, int decelTime, int duration, const idVec3& startPos, const idVec3& endPos );
 	void					SetAngularInterpolation( int time, int accelTime, int decelTime, int duration, const idAngles& startAng, const idAngles& endAng );
 
 	void					SetSpline( idCurve_Spline<idVec3>* spline, int accelTime, int decelTime, bool useSplineAngles );
-	idCurve_Spline<idVec3>* GetSpline( void ) const;
-	int						GetSplineAcceleration( void ) const;
-	int						GetSplineDeceleration( void ) const;
-	bool					UsingSplineAngles( void ) const;
+	idCurve_Spline<idVec3>* GetSpline() const;
+	int						GetSplineAcceleration() const;
+	int						GetSplineDeceleration() const;
+	bool					UsingSplineAngles() const;
 
 	void					GetLocalOrigin( idVec3& curOrigin ) const;
 	void					GetLocalAngles( idAngles& curAngles ) const;
@@ -97,7 +97,7 @@ public:
 public:	// common physics interface
 	void					SetClipModel( idClipModel* model, float density, int id = 0, bool freeOld = true );
 	idClipModel* 			GetClipModel( int id = 0 ) const;
-	int						GetNumClipModels( void ) const;
+	int						GetNumClipModels() const;
 
 	void					SetMass( float mass, int id = -1 );
 	float					GetMass( int id = -1 ) const;
@@ -110,15 +110,15 @@ public:	// common physics interface
 
 	bool					Evaluate( int timeStepMSec, int endTimeMSec );
 	void					UpdateTime( int endTimeMSec );
-	int						GetTime( void ) const;
+	int						GetTime() const;
 
-	void					Activate( void );
-	bool					IsAtRest( void ) const;
-	int						GetRestStartTime( void ) const;
-	bool					IsPushable( void ) const;
+	void					Activate();
+	bool					IsAtRest() const;
+	int						GetRestStartTime() const;
+	bool					IsPushable() const;
 
-	void					SaveState( void );
-	void					RestoreState( void );
+	void					SaveState();
+	void					RestoreState();
 
 	void					SetOrigin( const idVec3& newOrigin, int id = -1 );
 	void					SetAxis( const idMat3& newAxis, int id = -1 );
@@ -135,19 +135,19 @@ public:	// common physics interface
 	const idVec3& 			GetLinearVelocity( int id = 0 ) const;
 	const idVec3& 			GetAngularVelocity( int id = 0 ) const;
 
-	void					DisableClip( void );
-	void					EnableClip( void );
+	void					DisableClip();
+	void					EnableClip();
 
-	void					UnlinkClip( void );
-	void					LinkClip( void );
+	void					UnlinkClip();
+	void					LinkClip();
 
 	void					SetMaster( idEntity* master, const bool orientated = true );
 
-	const trace_t* 			GetBlockingInfo( void ) const;
-	idEntity* 				GetBlockingEntity( void ) const;
+	const trace_t* 			GetBlockingInfo() const;
+	idEntity* 				GetBlockingEntity() const;
 
-	int						GetLinearEndTime( void ) const;
-	int						GetAngularEndTime( void ) const;
+	int						GetLinearEndTime() const;
+	int						GetAngularEndTime() const;
 
 	void					WriteToSnapshot( idBitMsgDelta& msg ) const;
 	void					ReadFromSnapshot( const idBitMsgDelta& msg );
@@ -171,8 +171,8 @@ private:
 	bool					isOrientated;
 
 private:
-	bool					TestIfAtRest( void ) const;
-	void					Rest( void );
+	bool					TestIfAtRest() const;
+	void					Rest();
 };
 
 #endif /* !__PHYSICS_PARAMETRIC_H__ */

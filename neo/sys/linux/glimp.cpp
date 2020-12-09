@@ -291,7 +291,7 @@ int idXErrorHandler( Display* l_dpy, XErrorEvent* ev )
 	return 0;
 }
 
-bool GLimp_OpenDisplay( void )
+bool GLimp_OpenDisplay()
 {
 	if( dpy )
 	{
@@ -693,7 +693,7 @@ open your own display connection for the query and close it
 using the one shared with GLimp_Init is not stable
 ================
 */
-int Sys_GetVideoRam( void )
+int Sys_GetVideoRam()
 {
 	static int run_once = 0;
 	int major, minor, value;

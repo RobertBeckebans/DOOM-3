@@ -61,7 +61,7 @@ If you have questions concerning this license or the applicable additional terms
 idSIMD_SSE::GetName
 ============
 */
-const char * idSIMD_SSE::GetName( void ) const {
+const char * idSIMD_SSE::GetName() const {
 	return "MMX & SSE";
 }
 
@@ -2045,7 +2045,7 @@ void SSE_ATan4( float y[4], float x[4], float at[4] ) {
 SSE_TestTrigonometry
 ============
 */
-void SSE_TestTrigonometry( void ) {
+void SSE_TestTrigonometry() {
 	int i;
 	float a, s1, s2, c1, c2;
 
@@ -2096,7 +2096,7 @@ void SSE_TestTrigonometry( void ) {
 idSIMD_SSE::GetName
 ============
 */
-const char * idSIMD_SSE::GetName( void ) const {
+const char * idSIMD_SSE::GetName() const {
 	return "MMX & SSE";
 }
 

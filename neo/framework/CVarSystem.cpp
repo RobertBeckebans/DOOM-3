@@ -43,17 +43,17 @@ class idInternalCVar : public idCVar
 {
 	friend class idCVarSystemLocal;
 public:
-	idInternalCVar( void );
+	idInternalCVar();
 	idInternalCVar( const char* newName, const char* newValue, int newFlags );
 	idInternalCVar( const idCVar* cvar );
-	virtual					~idInternalCVar( void );
+	virtual					~idInternalCVar();
 
 	const char** 			CopyValueStrings( const char** strings );
 	void					Update( const idCVar* cvar );
-	void					UpdateValue( void );
-	void					UpdateCheat( void );
+	void					UpdateValue();
+	void					UpdateCheat();
 	void					Set( const char* newValue, bool force, bool fromServer );
-	void					Reset( void );
+	void					Reset();
 
 private:
 	idStr					nameString;				// name
@@ -73,7 +73,7 @@ private:
 idInternalCVar::idInternalCVar
 ============
 */
-idInternalCVar::idInternalCVar( void )
+idInternalCVar::idInternalCVar()
 {
 }
 
@@ -130,7 +130,7 @@ idInternalCVar::idInternalCVar( const idCVar* cvar )
 idInternalCVar::~idInternalCVar
 ============
 */
-idInternalCVar::~idInternalCVar( void )
+idInternalCVar::~idInternalCVar()
 {
 	Mem_Free( valueStrings );
 	valueStrings = NULL;
@@ -237,7 +237,7 @@ void idInternalCVar::Update( const idCVar* cvar )
 idInternalCVar::UpdateValue
 ============
 */
-void idInternalCVar::UpdateValue( void )
+void idInternalCVar::UpdateValue()
 {
 	bool clamped = false;
 
@@ -332,7 +332,7 @@ void idInternalCVar::UpdateValue( void )
 idInternalCVar::UpdateCheat
 ============
 */
-void idInternalCVar::UpdateCheat( void )
+void idInternalCVar::UpdateCheat()
 {
 	// all variables are considered cheats except for a few types
 	if( flags & ( CVAR_NOCHEAT | CVAR_INIT | CVAR_ROM | CVAR_ARCHIVE | CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NETWORKSYNC ) )
@@ -414,7 +414,7 @@ void idInternalCVar::Set( const char* newValue, bool force, bool fromServer )
 idInternalCVar::Reset
 ============
 */
-void idInternalCVar::Reset( void )
+void idInternalCVar::Reset()
 {
 	valueString = resetString;
 	value = valueString.c_str();
@@ -483,13 +483,13 @@ void idInternalCVar::InternalSetFloat( const float newValue )
 class idCVarSystemLocal : public idCVarSystem
 {
 public:
-	idCVarSystemLocal( void );
+	idCVarSystemLocal();
 
-	virtual					~idCVarSystemLocal( void ) {}
+	virtual					~idCVarSystemLocal() {}
 
-	virtual void			Init( void );
-	virtual void			Shutdown( void );
-	virtual bool			IsInitialized( void ) const;
+	virtual void			Init();
+	virtual void			Shutdown();
+	virtual bool			IsInitialized() const;
 
 	virtual void			Register( idCVar* cvar );
 
@@ -511,7 +511,7 @@ public:
 	virtual void			ArgCompletion( const char* cmdString, void( *callback )( const char* s ) );
 
 	virtual void			SetModifiedFlags( int flags );
-	virtual int				GetModifiedFlags( void ) const;
+	virtual int				GetModifiedFlags() const;
 	virtual void			ClearModifiedFlags( int flags );
 
 	virtual void			ResetFlaggedVariables( int flags );
@@ -634,7 +634,7 @@ void idCVarSystemLocal::SetInternal( const char* name, const char* value, int fl
 idCVarSystemLocal::idCVarSystemLocal
 ============
 */
-idCVarSystemLocal::idCVarSystemLocal( void )
+idCVarSystemLocal::idCVarSystemLocal()
 {
 	initialized = false;
 	modifiedFlags = 0;
@@ -645,7 +645,7 @@ idCVarSystemLocal::idCVarSystemLocal( void )
 idCVarSystemLocal::Init
 ============
 */
-void idCVarSystemLocal::Init( void )
+void idCVarSystemLocal::Init()
 {
 
 	modifiedFlags = 0;
@@ -668,7 +668,7 @@ void idCVarSystemLocal::Init( void )
 idCVarSystemLocal::Shutdown
 ============
 */
-void idCVarSystemLocal::Shutdown( void )
+void idCVarSystemLocal::Shutdown()
 {
 	cvars.DeleteContents( true );
 	cvarHash.Free();
@@ -681,7 +681,7 @@ void idCVarSystemLocal::Shutdown( void )
 idCVarSystemLocal::IsInitialized
 ============
 */
-bool idCVarSystemLocal::IsInitialized( void ) const
+bool idCVarSystemLocal::IsInitialized() const
 {
 	return initialized;
 }
@@ -911,7 +911,7 @@ void idCVarSystemLocal::SetModifiedFlags( int flags )
 idCVarSystemLocal::GetModifiedFlags
 ============
 */
-int idCVarSystemLocal::GetModifiedFlags( void ) const
+int idCVarSystemLocal::GetModifiedFlags() const
 {
 	return modifiedFlags;
 }

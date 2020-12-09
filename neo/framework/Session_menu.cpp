@@ -40,7 +40,7 @@ idCVar	idSessionLocal::gui_configServerRate( "gui_configServerRate", "0", CVAR_G
 idSessionLocal::GetActiveMenu
 ==============
 */
-idUserInterface* idSessionLocal::GetActiveMenu( void )
+idUserInterface* idSessionLocal::GetActiveMenu()
 {
 	return guiActive;
 }
@@ -133,7 +133,7 @@ void idSessionLocal::SetGUI( idUserInterface* gui, HandleGuiCommand_t handle )
 idSessionLocal::ExitMenu
 ===============
 */
-void idSessionLocal::ExitMenu( void )
+void idSessionLocal::ExitMenu()
 {
 	guiActive = NULL;
 
@@ -203,7 +203,7 @@ void idSessionLocal::GetSaveGameList( idStrList& fileList, idList<fileTIME_T>& f
 idSessionLocal::SetSaveGameGuiVars
 ===============
 */
-void idSessionLocal::SetSaveGameGuiVars( void )
+void idSessionLocal::SetSaveGameGuiVars()
 {
 	int i;
 	idStr name;
@@ -252,7 +252,7 @@ void idSessionLocal::SetSaveGameGuiVars( void )
 idSessionLocal::SetModsMenuGuiVars
 ===============
 */
-void idSessionLocal::SetModsMenuGuiVars( void )
+void idSessionLocal::SetModsMenuGuiVars()
 {
 	int i;
 	idModList* list = fileSystem->ListMods();
@@ -277,7 +277,7 @@ void idSessionLocal::SetModsMenuGuiVars( void )
 idSessionLocal::SetMainMenuSkin
 ===============
 */
-void idSessionLocal::SetMainMenuSkin( void )
+void idSessionLocal::SetMainMenuSkin()
 {
 	// skins
 	idStr str = cvarSystem->GetCVarString( "mod_validSkins" );
@@ -317,7 +317,7 @@ void idSessionLocal::SetMainMenuSkin( void )
 idSessionLocal::SetPbMenuGuiVars
 ===============
 */
-void idSessionLocal::SetPbMenuGuiVars( void )
+void idSessionLocal::SetPbMenuGuiVars()
 {
 }
 
@@ -326,7 +326,7 @@ void idSessionLocal::SetPbMenuGuiVars( void )
 idSessionLocal::SetMainMenuGuiVars
 ===============
 */
-void idSessionLocal::SetMainMenuGuiVars( void )
+void idSessionLocal::SetMainMenuGuiVars()
 {
 
 	guiMainMenu->SetStateString( "serverlist_sel_0", "-1" );
@@ -624,7 +624,7 @@ void idSessionLocal::HandleIntroMenuCommands( const char* menuCommand )
 idSessionLocal::UpdateMPLevelShot
 ==============
 */
-void idSessionLocal::UpdateMPLevelShot( void )
+void idSessionLocal::UpdateMPLevelShot()
 {
 	char screenshot[ MAX_STRING_CHARS ];
 	fileSystem->FindMapScreenshot( cvarSystem->GetCVarString( "si_map" ), screenshot, MAX_STRING_CHARS );
@@ -1456,7 +1456,7 @@ void idSessionLocal::GuiFrameEvents()
 idSessionLocal::BoxDialogSanityCheck
 =================
 */
-bool idSessionLocal::BoxDialogSanityCheck( void )
+bool idSessionLocal::BoxDialogSanityCheck()
 {
 	if( !common->IsInitialized() )
 	{
@@ -1959,7 +1959,7 @@ void idSessionLocal::HandleNoteCommands( const char* menuCommand )
 idSessionLocal::SetCDKeyGuiVars
 ===============
 */
-void idSessionLocal::SetCDKeyGuiVars( void )
+void idSessionLocal::SetCDKeyGuiVars()
 {
 	if( !guiMainMenu )
 	{

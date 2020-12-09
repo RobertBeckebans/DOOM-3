@@ -921,7 +921,7 @@ idExportMesh
 ==============================================================================
 */
 
-void idExportMesh::ShareVerts( void )
+void idExportMesh::ShareVerts()
 {
 	int i, j, k;
 	exportVertex_t vert;
@@ -1716,7 +1716,7 @@ void idMayaExport::PruneJoints( idStrList& keepjoints, idStr& prefix )
 idMayaExport::FreeDagNodes
 ===============
 */
-void idMayaExport::FreeDagNodes( void )
+void idMayaExport::FreeDagNodes()
 {
 	int i;
 
@@ -2612,7 +2612,7 @@ idMayaExport::CombineMeshes
 combine surfaces with the same shader.
 ===============
 */
-void idMayaExport::CombineMeshes( void )
+void idMayaExport::CombineMeshes()
 {
 	int						i, j;
 	int						count;
@@ -3248,7 +3248,7 @@ void idMayaExport::CreateAnimation( idMat3& align )
 idMayaExport::ConvertModel
 ===============
 */
-void idMayaExport::ConvertModel( void )
+void idMayaExport::ConvertModel()
 {
 	MStatus	status;
 	idMat3	align;
@@ -3374,7 +3374,7 @@ void idMayaExport::ConvertModel( void )
 idMayaExport::ConvertToMD3
 ===============
 */
-void idMayaExport::ConvertToMD3( void )
+void idMayaExport::ConvertToMD3()
 {
 #if 0
 	int					i, j;
@@ -3558,7 +3558,7 @@ dll setup
 Maya_Shutdown
 ===============
 */
-void Maya_Shutdown( void )
+void Maya_Shutdown()
 {
 	if( initialized )
 	{

@@ -40,7 +40,7 @@ If you have questions concerning this license or the applicable additional terms
 class idBox
 {
 public:
-	idBox( void );
+	idBox();
 	explicit idBox( const idVec3& center, const idVec3& extents, const idMat3& axis );
 	explicit idBox( const idVec3& point );
 	explicit idBox( const idBounds& bounds );
@@ -60,14 +60,14 @@ public:
 	bool			operator==(	const idBox& a ) const;						// exact compare, no epsilon
 	bool			operator!=(	const idBox& a ) const;						// exact compare, no epsilon
 
-	void			Clear( void );									// inside out box
-	void			Zero( void );									// single point at origin
+	void			Clear();									// inside out box
+	void			Zero();									// single point at origin
 
-	const idVec3& 	GetCenter( void ) const;						// returns center of the box
-	const idVec3& 	GetExtents( void ) const;						// returns extents of the box
-	const idMat3& 	GetAxis( void ) const;							// returns the axis of the box
-	float			GetVolume( void ) const;						// returns the volume of the box
-	bool			IsCleared( void ) const;						// returns true if box are inside out
+	const idVec3& 	GetCenter() const;						// returns center of the box
+	const idVec3& 	GetExtents() const;						// returns extents of the box
+	const idMat3& 	GetAxis() const;							// returns the axis of the box
+	float			GetVolume() const;						// returns the volume of the box
+	bool			IsCleared() const;						// returns true if box are inside out
 
 	bool			AddPoint( const idVec3& v );					// add the point, returns true if the box expanded
 	bool			AddBox( const idBox& a );						// add the box, returns true if the box expanded
@@ -97,7 +97,7 @@ public:
 	void			FromBoxRotation( const idBox& box, const idRotation& rotation );
 
 	void			ToPoints( idVec3 points[8] ) const;
-	idSphere		ToSphere( void ) const;
+	idSphere		ToSphere() const;
 
 	// calculates the projection of this box onto the given axis
 	void			AxisProjection( const idVec3& dir, float& min, float& max ) const;
@@ -115,7 +115,7 @@ private:
 
 extern idBox	box_zero;
 
-ID_INLINE idBox::idBox( void )
+ID_INLINE idBox::idBox()
 {
 }
 
@@ -216,41 +216,41 @@ ID_INLINE bool idBox::operator!=( const idBox& a ) const
 	return !Compare( a );
 }
 
-ID_INLINE void idBox::Clear( void )
+ID_INLINE void idBox::Clear()
 {
 	center.Zero();
 	extents[0] = extents[1] = extents[2] = -idMath::INFINITY;
 	axis.Identity();
 }
 
-ID_INLINE void idBox::Zero( void )
+ID_INLINE void idBox::Zero()
 {
 	center.Zero();
 	extents.Zero();
 	axis.Identity();
 }
 
-ID_INLINE const idVec3& idBox::GetCenter( void ) const
+ID_INLINE const idVec3& idBox::GetCenter() const
 {
 	return center;
 }
 
-ID_INLINE const idVec3& idBox::GetExtents( void ) const
+ID_INLINE const idVec3& idBox::GetExtents() const
 {
 	return extents;
 }
 
-ID_INLINE const idMat3& idBox::GetAxis( void ) const
+ID_INLINE const idMat3& idBox::GetAxis() const
 {
 	return axis;
 }
 
-ID_INLINE float idBox::GetVolume( void ) const
+ID_INLINE float idBox::GetVolume() const
 {
 	return ( extents * 2.0f ).LengthSqr();
 }
 
-ID_INLINE bool idBox::IsCleared( void ) const
+ID_INLINE bool idBox::IsCleared() const
 {
 	return extents[0] < 0.0f;
 }
@@ -303,7 +303,7 @@ ID_INLINE bool idBox::ContainsPoint( const idVec3& p ) const
 	return true;
 }
 
-ID_INLINE idSphere idBox::ToSphere( void ) const
+ID_INLINE idSphere idBox::ToSphere() const
 {
 	return idSphere( center, extents.Length() );
 }

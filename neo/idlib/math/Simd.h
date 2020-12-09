@@ -43,9 +43,9 @@ If you have questions concerning this license or the applicable additional terms
 class idSIMD
 {
 public:
-	static void			Init( void );
+	static void			Init();
 	static void			InitProcessor( const char* module, bool forceGeneric );
-	static void			Shutdown( void );
+	static void			Shutdown();
 	static void			Test_f( const class idCmdArgs& args );
 };
 
@@ -98,14 +98,14 @@ typedef enum
 class idSIMDProcessor
 {
 public:
-	idSIMDProcessor( void )
+	idSIMDProcessor()
 	{
 		cpuid = CPUID_NONE;
 	}
 
 	cpuid_t							cpuid;
 
-	virtual const char* VPCALL		GetName( void ) const = 0;
+	virtual const char* VPCALL		GetName() const = 0;
 
 	virtual void VPCALL Add( float* dst,			const float constant,	const float* src,		const int count ) = 0;
 	virtual void VPCALL Add( float* dst,			const float* src0,		const float* src1,		const int count ) = 0;

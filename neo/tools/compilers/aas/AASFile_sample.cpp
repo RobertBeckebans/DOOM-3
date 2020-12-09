@@ -681,7 +681,7 @@ void idAASFileLocal::MaxTreeDepth_r( int nodeNum, int& depth, int& maxDepth ) co
 idAASFileLocal::MaxTreeDepth
 ============
 */
-int idAASFileLocal::MaxTreeDepth( void ) const
+int idAASFileLocal::MaxTreeDepth() const
 {
 	int depth, maxDepth;
 

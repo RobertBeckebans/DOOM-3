@@ -55,12 +55,12 @@ public:
 	float			yaw;
 	float			roll;
 
-	idAngles( void );
+	idAngles();
 	idAngles( float pitch, float yaw, float roll );
 	explicit idAngles( const idVec3& v );
 
 	void 			Set( float pitch, float yaw, float roll );
-	idAngles& 		Zero( void );
+	idAngles& 		Zero();
 
 	float			operator[]( int index ) const;
 	float& 			operator[]( int index );
@@ -82,28 +82,28 @@ public:
 	bool			operator==(	const idAngles& a ) const;						// exact compare, no epsilon
 	bool			operator!=(	const idAngles& a ) const;						// exact compare, no epsilon
 
-	idAngles& 		Normalize360( void );	// normalizes 'this'
-	idAngles& 		Normalize180( void );	// normalizes 'this'
+	idAngles& 		Normalize360();	// normalizes 'this'
+	idAngles& 		Normalize180();	// normalizes 'this'
 
 	void			Clamp( const idAngles& min, const idAngles& max );
 
-	int				GetDimension( void ) const;
+	int				GetDimension() const;
 
 	void			ToVectors( idVec3* forward, idVec3* right = NULL, idVec3* up = NULL ) const;
-	idVec3			ToForward( void ) const;
-	idQuat			ToQuat( void ) const;
-	idRotation		ToRotation( void ) const;
-	idMat3			ToMat3( void ) const;
-	idMat4			ToMat4( void ) const;
-	idVec3			ToAngularVelocity( void ) const;
-	const float* 	ToFloatPtr( void ) const;
-	float* 			ToFloatPtr( void );
+	idVec3			ToForward() const;
+	idQuat			ToQuat() const;
+	idRotation		ToRotation() const;
+	idMat3			ToMat3() const;
+	idMat4			ToMat4() const;
+	idVec3			ToAngularVelocity() const;
+	const float* 	ToFloatPtr() const;
+	float* 			ToFloatPtr();
 	const char* 	ToString( int precision = 2 ) const;
 };
 
 extern idAngles ang_zero;
 
-ID_INLINE idAngles::idAngles( void )
+ID_INLINE idAngles::idAngles()
 {
 }
 
@@ -128,7 +128,7 @@ ID_INLINE void idAngles::Set( float pitch, float yaw, float roll )
 	this->roll	= roll;
 }
 
-ID_INLINE idAngles& idAngles::Zero( void )
+ID_INLINE idAngles& idAngles::Zero()
 {
 	pitch = yaw = roll = 0.0f;
 	return *this;
@@ -283,17 +283,17 @@ ID_INLINE void idAngles::Clamp( const idAngles& min, const idAngles& max )
 	}
 }
 
-ID_INLINE int idAngles::GetDimension( void ) const
+ID_INLINE int idAngles::GetDimension() const
 {
 	return 3;
 }
 
-ID_INLINE const float* idAngles::ToFloatPtr( void ) const
+ID_INLINE const float* idAngles::ToFloatPtr() const
 {
 	return &pitch;
 }
 
-ID_INLINE float* idAngles::ToFloatPtr( void )
+ID_INLINE float* idAngles::ToFloatPtr()
 {
 	return &pitch;
 }

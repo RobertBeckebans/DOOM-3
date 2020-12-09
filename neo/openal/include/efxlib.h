@@ -50,8 +50,8 @@ public:
 	bool FindEffect( idStr& name, idSoundEffect** effect, int* index );
 	bool ReadEffect( idLexer& lexer, idSoundEffect* effect );
 	bool LoadFile( const char* filename, bool OSPath = false );
-	void UnloadFile( void );
-	void Clear( void );
+	void UnloadFile();
+	void Clear();
 
 	idList<idSoundEffect*>effects;
 };

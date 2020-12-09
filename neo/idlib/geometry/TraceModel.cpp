@@ -101,7 +101,7 @@ idTraceModel::InitBox
   Initialize size independent box.
 ============
 */
-void idTraceModel::InitBox( void )
+void idTraceModel::InitBox()
 {
 	int i;
 
@@ -247,7 +247,7 @@ idTraceModel::InitOctahedron
   Initialize size independent octahedron.
 ============
 */
-void idTraceModel::InitOctahedron( void )
+void idTraceModel::InitOctahedron()
 {
 
 	type = TRM_OCTAHEDRON;
@@ -438,7 +438,7 @@ idTraceModel::InitDodecahedron
   Initialize size independent dodecahedron.
 ============
 */
-void idTraceModel::InitDodecahedron( void )
+void idTraceModel::InitDodecahedron()
 {
 
 	type = TRM_DODECAHEDRON;
@@ -884,7 +884,7 @@ idTraceModel::InitBone
   Initialize size independent bone.
 ============
 */
-void idTraceModel::InitBone( void )
+void idTraceModel::InitBone()
 {
 	int i;
 
@@ -1057,7 +1057,7 @@ idTraceModel::GenerateEdgeNormals
 */
 #define SHARP_EDGE_DOT	-0.7f
 
-int idTraceModel::GenerateEdgeNormals( void )
+int idTraceModel::GenerateEdgeNormals()
 {
 	int i, j, edgeNum, numSharpEdges;
 	float dot;

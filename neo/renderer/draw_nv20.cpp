@@ -44,7 +44,7 @@ typedef enum
 GLuint	fragmentDisplayListBase;	// FPROG_NUM_FRAGMENT_PROGRAMS lists
 
 void RB_NV20_DependentSpecularPass( const drawInteraction_t* din );
-void RB_NV20_DependentAmbientPass( void );
+void RB_NV20_DependentAmbientPass();
 
 /*
 =========================================================================================
@@ -71,7 +71,7 @@ void GL_SelectTextureNoClient( int unit )
 RB_NV20_BumpAndLightFragment
 ==================
 */
-static void RB_NV20_BumpAndLightFragment( void )
+static void RB_NV20_BumpAndLightFragment()
 {
 	if( r_useCombinerDisplayLists.GetBool() )
 	{
@@ -221,7 +221,7 @@ static void RB_NV20_DI_BumpAndLightPass( const drawInteraction_t* din, bool mono
 RB_NV20_DiffuseColorFragment
 ==================
 */
-static void RB_NV20_DiffuseColorFragment( void )
+static void RB_NV20_DiffuseColorFragment()
 {
 	if( r_useCombinerDisplayLists.GetBool() )
 	{
@@ -335,7 +335,7 @@ static void RB_NV20_DI_DiffuseColorPass( const drawInteraction_t* din )
 RB_NV20_SpecularColorFragment
 ==================
 */
-static void RB_NV20_SpecularColorFragment( void )
+static void RB_NV20_SpecularColorFragment()
 {
 	if( r_useCombinerDisplayLists.GetBool() )
 	{
@@ -493,7 +493,7 @@ static void RB_NV20_DI_SpecularColorPass( const drawInteraction_t* din )
 RB_NV20_DiffuseAndSpecularColorFragment
 ==================
 */
-static void RB_NV20_DiffuseAndSpecularColorFragment( void )
+static void RB_NV20_DiffuseAndSpecularColorFragment()
 {
 	if( r_useCombinerDisplayLists.GetBool() )
 	{
@@ -790,7 +790,7 @@ static void RB_NV20_CreateDrawInteractions( const drawSurf_t* surf )
 RB_NV20_DrawInteractions
 ==================
 */
-void RB_NV20_DrawInteractions( void )
+void RB_NV20_DrawInteractions()
 {
 	viewLight_t*		vLight;
 
@@ -884,7 +884,7 @@ R_NV20_Init
 
 ==================
 */
-void R_NV20_Init( void )
+void R_NV20_Init()
 {
 	glConfig.allowNV20Path = false;
 

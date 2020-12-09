@@ -348,7 +348,7 @@ idWinVar* idChoiceWindow::GetWinVarByName( const char* _name, bool fixup, drawWi
 }
 
 // update the lists whenever the WinVar have changed
-void idChoiceWindow::UpdateChoicesAndVals( void )
+void idChoiceWindow::UpdateChoicesAndVals()
 {
 	idToken token;
 	idStr str2, str3;

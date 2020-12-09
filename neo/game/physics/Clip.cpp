@@ -81,7 +81,7 @@ static idHashIndex				traceModelHash;
 idClipModel::ClearTraceModelCache
 ===============
 */
-void idClipModel::ClearTraceModelCache( void )
+void idClipModel::ClearTraceModelCache()
 {
 	traceModelCache.DeleteContents( true );
 	traceModelHash.Free();
@@ -92,7 +92,7 @@ void idClipModel::ClearTraceModelCache( void )
 idClipModel::TraceModelCacheSize
 ===============
 */
-int idClipModel::TraceModelCacheSize( void )
+int idClipModel::TraceModelCacheSize()
 {
 	return traceModelCache.Num() * sizeof( idTraceModel );
 }
@@ -296,7 +296,7 @@ void idClipModel::LoadModel( const int renderModelHandle )
 idClipModel::Init
 ================
 */
-void idClipModel::Init( void )
+void idClipModel::Init()
 {
 	enabled = true;
 	entity = NULL;
@@ -320,7 +320,7 @@ void idClipModel::Init( void )
 idClipModel::idClipModel
 ================
 */
-idClipModel::idClipModel( void )
+idClipModel::idClipModel()
 {
 	Init();
 }
@@ -392,7 +392,7 @@ idClipModel::idClipModel( const idClipModel* model )
 idClipModel::~idClipModel
 ================
 */
-idClipModel::~idClipModel( void )
+idClipModel::~idClipModel()
 {
 	// make sure the clip model is no longer linked
 	Unlink();
@@ -502,7 +502,7 @@ void idClipModel::SetPosition( const idVec3& newOrigin, const idMat3& newAxis )
 idClipModel::Handle
 ================
 */
-cmHandle_t idClipModel::Handle( void ) const
+cmHandle_t idClipModel::Handle() const
 {
 	assert( renderModelHandle == -1 );
 	if( collisionModelHandle )
@@ -544,7 +544,7 @@ void idClipModel::GetMassProperties( const float density, float& mass, idVec3& c
 idClipModel::Unlink
 ===============
 */
-void idClipModel::Unlink( void )
+void idClipModel::Unlink()
 {
 	clipLink_t* link;
 
@@ -700,7 +700,7 @@ cmHandle_t idClipModel::CheckModel( const char* name )
 idClip::idClip
 ===============
 */
-idClip::idClip( void )
+idClip::idClip()
 {
 	numClipSectors = 0;
 	clipSectors = NULL;
@@ -772,7 +772,7 @@ clipSector_t* idClip::CreateClipSectors_r( const int depth, const idBounds& boun
 idClip::Init
 ===============
 */
-void idClip::Init( void )
+void idClip::Init()
 {
 	cmHandle_t h;
 	idVec3 size, maxSector = vec3_origin;
@@ -804,7 +804,7 @@ void idClip::Init( void )
 idClip::Shutdown
 ===============
 */
-void idClip::Shutdown( void )
+void idClip::Shutdown()
 {
 	delete[] clipSectors;
 	clipSectors = NULL;
@@ -1872,7 +1872,7 @@ bool idClip::GetModelContactFeature( const contactInfo_t& contact, const idClipM
 idClip::PrintStatistics
 ============
 */
-void idClip::PrintStatistics( void )
+void idClip::PrintStatistics()
 {
 	gameLocal.Printf( "t = %-3d, r = %-3d, m = %-3d, render = %-3d, contents = %-3d, contacts = %-3d\n",
 					  numTranslations, numRotations, numMotions, numRenderModelTraces, numContents, numContacts );
