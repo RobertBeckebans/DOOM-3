@@ -3,36 +3,43 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug with inlines and memory log|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug with inlines|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Debug with inlines|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Debug|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Release|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>$(OutDir)DOOM3.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>+set fs_basepath "C:\Program Files (x86)\Steam\steamapps\common\doom 3" +set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>+set com_allowConsole 1 +set si_pure 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)\..</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>

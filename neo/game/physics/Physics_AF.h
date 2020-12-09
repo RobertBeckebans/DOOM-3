@@ -612,9 +612,9 @@ public:
 								   const float coneAngle, const idVec3& body1Axis );
 	void					SetAnchor( const idVec3& coneAnchor );
 	void					SetBody1Axis( const idVec3& body1Axis );
-	void					SetEpsilon( const float e )
+	void					SetEpsilon( const float _e )
 	{
-		epsilon = e;
+		epsilon = _e;
 	}
 	bool					Add( idPhysics_AF* phys, float invTimeStep );
 	virtual void			DebugDraw( void );

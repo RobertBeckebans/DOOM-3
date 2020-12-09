@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1209
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{347D107C-D787-4408-A60D-86FA45997F9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exes", "exes", "{003B01AB-152D-45C8-BF45-E5A035042D7F}"
@@ -17,8 +19,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DoomDLL", "doomdll.vcxproj", "{49BEC5C6-B964-417A-851E-808886B57420}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MayaImport", "MayaImport.vcxproj", "{49BEC5C6-B964-417A-851E-808886B574F1}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game-d3xp", "game-d3xp.vcxproj", "{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,24 +108,19 @@ Global
 		{49BEC5C6-B964-417A-851E-808886B574F1}.Dedicated Debug|Win32.ActiveCfg = Dedicated Debug|Win32
 		{49BEC5C6-B964-417A-851E-808886B574F1}.Dedicated Release|Win32.ActiveCfg = Dedicated Release|Win32
 		{49BEC5C6-B964-417A-851E-808886B574F1}.Release|Win32.ActiveCfg = Release|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Debug with inlines and memory log|Win32.ActiveCfg = Debug with inlines and memory log|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Debug with inlines|Win32.ActiveCfg = Debug with inlines|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Dedicated Debug with inlines|Win32.ActiveCfg = Dedicated Debug with inlines|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Dedicated Debug|Win32.ActiveCfg = Dedicated Debug|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Dedicated Release|Win32.ActiveCfg = Dedicated Release|Win32
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F}.Release|Win32.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{49BEC5C6-B964-417A-851E-808886B57430} = {1E2B3940-65F8-4D8F-9EEE-85E94EBBC6DF}
 		{49BEC5C6-B964-417A-851E-808886B57400} = {347D107C-D787-4408-A60D-86FA45997F9B}
 		{F46F5D4E-C1D4-4ADE-9FAA-5F0CE3AA07F1} = {347D107C-D787-4408-A60D-86FA45997F9B}
 		{6EA6406F-3E65-47D9-8246-D6660A81606F} = {003B01AB-152D-45C8-BF45-E5A035042D7F}
 		{49BEC5C6-B964-417A-851E-808886B57420} = {003B01AB-152D-45C8-BF45-E5A035042D7F}
-		{49BEC5C6-B964-417A-851E-808886B57430} = {1E2B3940-65F8-4D8F-9EEE-85E94EBBC6DF}
 		{49BEC5C6-B964-417A-851E-808886B574F1} = {1E2B3940-65F8-4D8F-9EEE-85E94EBBC6DF}
-		{0BC6FCC9-C65E-4B1F-9A58-0B9399987C9F} = {1E2B3940-65F8-4D8F-9EEE-85E94EBBC6DF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78226983-B560-4739-AE72-84AE8E140F50}
 	EndGlobalSection
 EndGlobal

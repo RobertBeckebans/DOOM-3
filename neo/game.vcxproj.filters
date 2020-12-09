@@ -72,9 +72,6 @@
     <ClCompile Include="game\gamesys\SysCvar.cpp">
       <Filter>GameSys</Filter>
     </ClCompile>
-    <ClCompile Include="game\gamesys\TypeInfo.cpp">
-      <Filter>GameSys</Filter>
-    </ClCompile>
     <ClCompile Include="game\physics\Clip.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -167,6 +164,9 @@
     <ClCompile Include="game\Trigger.cpp" />
     <ClCompile Include="game\Weapon.cpp" />
     <ClCompile Include="game\WorldSpawn.cpp" />
+    <ClCompile Include="game\gamesys\TypeInfo.cpp">
+      <Filter>GameSys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\ai\AAS.h">
