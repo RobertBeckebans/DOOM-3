@@ -981,6 +981,12 @@ void idMD5Anim::CheckModelHierarchy( const idRenderModel* model ) const
 	int	jointNum;
 	int	parent;
 
+	// RB
+	if( common->ActiveTools() & EDITOR_EXPORTDEFS )
+	{
+		return;
+	}
+
 	if( jointInfo.Num() != model->NumJoints() )
 	{
 		gameLocal.Error( "Model '%s' has different # of joints than anim '%s'", model->Name(), name.c_str() );

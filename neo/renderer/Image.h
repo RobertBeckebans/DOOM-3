@@ -152,6 +152,10 @@ class idImage
 {
 public:
 	idImage();
+	const char* 	GetName() const
+	{
+		return imgName;
+	}
 
 	// Makes this image active on the current GL texture unit.
 	// automatically enables or disables cube mapping or texture3D
