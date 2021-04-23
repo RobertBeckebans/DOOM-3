@@ -2045,11 +2045,28 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 
 	defsSorted.Sort();
 
-	postLoadExportModels.SetBool( true );
+	bool exportModels = false;
+
+	if( !idStr::Icmp( args.Argv( 1 ), "nomodels" ) )
+	{
+		exportModels = false;
+		common->Printf( "exporting entity decls to FGDs without models:\n" );
+	}
+	else
+	{
+		exportModels = true;
+		common->Printf( "exporting entity decls to FGDs with models:\n" );
+	}
+
+	if( exportModels )
+	{
+		postLoadExportModels.SetBool( true );
+	}
 
 	idStrList filenames;
 	filenames.AddUnique( "all" );
 	filenames.AddUnique( "slim" );
+	filenames.AddUnique( "multiplayer" );
 
 	idStrList ignoreList;
 
@@ -2173,6 +2190,24 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 				}
 			}
 
+			// filter multiplayer entities
+			bool multiplayer = ( idStr::FindText( decl->GetName(), "_mp", false ) != -1 ||
+								 idStr::FindText( decl->GetName(), "_coop", false ) != -1 );
+
+			if( f == 2 )
+			{
+				if( !multiplayer )
+				{
+					continue;
+				}
+			}
+			else
+			{
+				if( multiplayer )
+				{
+					continue;
+				}
+			}
 
 
 			//
@@ -2301,6 +2336,37 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 
 			idDict dictToWrite;
 
+			if( idStr::Icmp( decl->GetName(), "light" ) == 0 )
+			{
+				// entityDef light
+
+				// add missing property to control the radius
+
+				LocalEvar_t ev;
+				ev.fullname = "editor_int light";
+				ev.name = "light";
+				ev.desc = "light radius";
+				ev.type = EVAR_INT;
+				evars.Append( ev );
+
+				dictToWrite.Set( "light", "300" );
+			}
+
+			if( idStr::Icmp( decl->GetName(), "light" ) == 0 ||
+					idStr::Icmp( decl->GetName(), "func_static" ) == 0 )
+			{
+				// entities with dynamic models
+
+				LocalEvar_t ev;
+				ev.fullname = "editor_model model";
+				ev.name = "model";
+				ev.desc = "Model Selection (ex mapobjects/model.obj)";
+				ev.type = EVAR_MODEL;
+				evars.Append( ev );
+
+				//dictToWrite.Set( "model", "" );
+			}
+
 			for( int i = 0; i < decl->dict.GetNumKeyVals(); i++ )
 			{
 				kv = decl->dict.GetKeyVal( i );
@@ -2321,10 +2387,10 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 				}
 
 				// TODO FIXME cinematic md5camera animations
-				if( kv->GetKey().IcmpPrefix( "anim" ) == 0 )
-				{
-					continue;
-				}
+				//if( kv->GetKey().IcmpPrefix( "anim" ) == 0 )
+				//{
+				//	continue;
+				//}
 
 				// is it an editor var or a regular spawn argument?
 				LocalEvar_t* ev = nullptr;
@@ -2367,7 +2433,8 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 			bool writeModel = false;
 			idStr exportedModelFileName;
 
-			if( idStr::Icmp( decl->GetName(), "light" ) != 0 )
+			if( idStr::Icmp( decl->GetName(), "light" ) != 0 &&
+					idStr::Icmp( decl->GetName(), "func_static" ) != 0 )
 			{
 				//kv = dictToWrite.MatchPrefix( "model" );
 				//while( kv )
@@ -2413,6 +2480,11 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 			{
 				file->Printf( "model({ \"path\": \"%s\" }) ", exportedModelFileName.c_str() );
 			}
+			else if( idStr::Icmp( decl->GetName(), "func_static" ) == 0 )
+			{
+				// dynamic model case
+				file->Printf( "model({ \"path\" : model }) " );
+			}
 
 			file->Printf( "= %s : \"%s\"\n", decl->GetName(), text.c_str() );
 			file->Printf( "[\n" );
@@ -2434,7 +2506,12 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 				}
 
 				idStr cleanKey = kv->GetKey();
-				cleanKey.ReplaceChar( ' ', '_' );
+				cleanKey.ReplaceChar( ' ', '.' );
+
+				if( cleanKey.Icmp( "color" ) == 0 )
+				{
+					cleanKey = "_color";
+				}
 
 				// don't print the descriptive editor var itself yet
 				if( ev )
@@ -2505,7 +2582,10 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 
 	com_editors &= ~EDITOR_EXPORTDEFS;
 
-	postLoadExportModels.SetBool( false );
+	if( exportModels )
+	{
+		postLoadExportModels.SetBool( false );
+	}
 
 	//declManagerLocal.Reload( true );
 	common->FatalError( "Exporting successful, need to restart manually" );

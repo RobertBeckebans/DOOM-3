@@ -673,7 +673,9 @@ void	FixGlobalTjunctions( uEntity_t* e )
 			{
 				continue;
 			}
-			if( !strstr( modelName, ".lwo" ) && !strstr( modelName, ".ase" ) && !strstr( modelName, ".ma" ) )
+
+			// RB: OBJ support
+			if( !strstr( modelName, ".lwo" ) && !strstr( modelName, ".ase" ) && !strstr( modelName, ".ma" ) && !strstr( modelName, ".obj" ) )
 			{
 				continue;
 			}
