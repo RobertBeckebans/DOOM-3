@@ -1996,7 +1996,7 @@ struct evarPrefix_t
 	const char* prefix;
 };
 
-const evarPrefix_t EvarPrefixes[] =
+static const evarPrefix_t EvarPrefixes[] =
 {
 	{ EVAR_STRING,  "editor_var " },
 	{ EVAR_INT,		"editor_int " },
@@ -2009,15 +2009,15 @@ const evarPrefix_t EvarPrefixes[] =
 	{ EVAR_SOUND,	"editor_snd "}
 };
 
-const int NumEvarPrefixes = sizeof( EvarPrefixes ) / sizeof( evarPrefix_t );
+static const int NumEvarPrefixes = sizeof( EvarPrefixes ) / sizeof( evarPrefix_t );
 
-typedef struct evar_s
+struct LocalEvar_t
 {
 	int	type;
 	idStr fullname;
 	idStr name;
 	idStr desc;
-} evar_t;
+};
 
 #include "../game/anim/Anim.h"
 
@@ -2282,14 +2282,14 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 			}
 
 			// collect editor specific spawn flags
-			idList<evar_t> evars;
+			idList<LocalEvar_t> evars;
 
 			for( int i = 0; i < NumEvarPrefixes; i++ )
 			{
 				kv = decl->dict.MatchPrefix( EvarPrefixes[i].prefix );
 				while( kv )
 				{
-					evar_t ev;
+					LocalEvar_t ev;
 					ev.fullname = kv->GetKey();
 					kv->GetKey().Right( kv->GetKey().Length() - strlen( EvarPrefixes[i].prefix ), ev.name );
 					ev.desc = kv->GetValue();
@@ -2327,7 +2327,7 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 				}
 
 				// is it an editor var or a regular spawn argument?
-				evar_t* ev = nullptr;
+				LocalEvar_t* ev = nullptr;
 				int vc = evars.Num();
 				for( int j = 0; j < vc; j++ )
 				{
@@ -2354,7 +2354,7 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 			// add editor_vars that aren't already covered by the default vars
 			for( int i = 0; i < evars.Num(); i++ )
 			{
-				const evar_t* ev = &evars[ i ];
+				const LocalEvar_t* ev = &evars[ i ];
 
 				const idKeyValue* kv2 = dictToWrite.FindKey( ev->name );
 				if( !kv2 )
@@ -2422,7 +2422,7 @@ void idDeclManagerLocal::ExportDeclsToTrenchBroom_f( const idCmdArgs& args )
 				kv = dictToWrite.GetKeyVal( i );
 
 				// is it an editor var or a regular spawn argument?
-				evar_t* ev = nullptr;
+				LocalEvar_t* ev = nullptr;
 				int vc = evars.Num();
 				for( int j = 0; j < vc; j++ )
 				{
