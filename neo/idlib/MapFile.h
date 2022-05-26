@@ -3,6 +3,7 @@
 
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
+Copyright (C) 2015-2021 Robert Beckebans
 
 This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
@@ -81,6 +82,7 @@ class idMapBrushSide
 public:
 	idMapBrushSide();
 	~idMapBrushSide() { }
+
 	const char* 			GetMaterial() const
 	{
 		return material;
@@ -109,11 +111,37 @@ public:
 	}
 	void					GetTextureVectors( idVec4 v[2] ) const;
 
+	// RB: support Valve 220 projection by TrenchBroom
+	enum ProjectionType
+	{
+		PROJECTION_BP		= 0,
+		PROJECTION_VALVE220	= 1
+	};
+
+	ProjectionType			GetProjectionType() const
+	{
+		return projection;
+	}
+
+	const idVec2i&			GetTextureSize() const
+	{
+		return texSize;
+	}
+	// RB end
+
 protected:
 	idStr					material;
 	idPlane					plane;
 	idVec3					texMat[2];
 	idVec3					origin;
+
+	// RB
+	idVec3					planepts[ 3 ]; // for writing back original planepts
+	ProjectionType			projection;
+	idVec4					texValve[ 2 ]; // alternative texture coordinate mapping
+	idVec2					texScale;
+	idVec2i					texSize;
+
 };
 
 ID_INLINE idMapBrushSide::idMapBrushSide()
@@ -122,6 +150,14 @@ ID_INLINE idMapBrushSide::idMapBrushSide()
 	texMat[0].Zero();
 	texMat[1].Zero();
 	origin.Zero();
+
+	projection = PROJECTION_BP;
+	texValve[0].Zero();
+	texValve[1].Zero();
+	texScale[0] = 1.0f;
+	texScale[1] = 1.0f;
+	texSize[0] = 32;
+	texSize[1] = 32;
 }
 
 
@@ -139,7 +175,9 @@ public:
 	}
 	static idMapBrush* 		Parse( idLexer& src, const idVec3& origin, bool newFormat = true, float version = CURRENT_MAP_VERSION );
 	static idMapBrush* 		ParseQ3( idLexer& src, const idVec3& origin );
+	static idMapBrush* 		ParseValve220( idLexer& src, const idVec3& origin ); // RB
 	bool					Write( idFile* fp, int primitiveNum, const idVec3& origin ) const;
+	bool					WriteValve220( idFile* fp, int primitiveNum, const idVec3& origin ) const; // RB
 	int						GetNumSides() const
 	{
 		return sides.Num();
@@ -249,7 +287,7 @@ public:
 		primitives.DeleteContents( true );
 	}
 	static idMapEntity* 	Parse( idLexer& src, bool worldSpawn = false, float version = CURRENT_MAP_VERSION );
-	bool					Write( idFile* fp, int entityNum ) const;
+	bool					Write( idFile* fp, int entityNum, bool valve220 ) const;
 	int						GetNumPrimitives() const
 	{
 		return primitives.Num();
@@ -316,6 +354,7 @@ public:
 
 	int						AddEntity( idMapEntity* mapentity );
 	idMapEntity* 			FindEntity( const char* name );
+	idMapEntity*			FindEntityAtOrigin( const idVec3& org ); // RB
 	void					RemoveEntity( idMapEntity* mapEnt );
 	void					RemoveEntities( const char* classname );
 	void					RemoveAllEntities();
@@ -332,6 +371,7 @@ protected:
 	idList<idMapEntity*>	entities;
 	idStr					name;
 	bool					hasPrimitiveData;
+	bool					valve220Format; // RB: for TrenchBroom support
 
 private:
 	void					SetGeometryCRC();
@@ -344,6 +384,7 @@ ID_INLINE idMapFile::idMapFile()
 	geometryCRC = 0;
 	entities.Resize( 1024, 256 );
 	hasPrimitiveData = false;
+	valve220Format = false;
 }
 
 #endif /* !__MAPFILE_H__ */

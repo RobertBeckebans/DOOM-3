@@ -153,6 +153,9 @@ public:
 	virtual int					ButtonState( int key );
 	virtual int					KeyState( int key );
 
+	// RB: return active tool flags
+	virtual int					ActiveTools() const;
+
 	void						InitGame();
 	void						ShutdownGame( bool reloading );
 
@@ -1267,6 +1270,12 @@ Returns the state of the key
 int	idCommonLocal::KeyState( int key )
 {
 	return usercmdGen->KeyState( key );
+}
+
+// RB: return active tool flags
+int	idCommonLocal::ActiveTools() const
+{
+	return com_editors;
 }
 
 //============================================================================

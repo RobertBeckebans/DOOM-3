@@ -668,6 +668,25 @@ bool idStr::StripTrailingOnce( const char* string )
 idStr::Replace
 ============
 */
+bool  idStr::ReplaceChar( const char old, const char nw )
+{
+	bool replaced = false;
+	for( int i = 0; i < Length(); i++ )
+	{
+		if( data[i] == old )
+		{
+			data[i] = nw;
+			replaced = true;
+		}
+	}
+	return replaced;
+}
+
+/*
+============
+idStr::Replace
+============
+*/
 void idStr::Replace( const char* old, const char* nw )
 {
 	int		oldLen, newLen, i, j, count;
@@ -861,6 +880,25 @@ idStr& idStr::BackSlashesToSlashes()
 		if( data[ i ] == '\\' )
 		{
 			data[ i ] = '/';
+		}
+	}
+	return *this;
+}
+
+/*
+============
+idStr::SlashesToBackSlashes
+============
+*/
+idStr& idStr::SlashesToBackSlashes()
+{
+	int i;
+
+	for( i = 0; i < len; i++ )
+	{
+		if( data[ i ] == '/' )
+		{
+			data[ i ] = '\\';
 		}
 	}
 	return *this;

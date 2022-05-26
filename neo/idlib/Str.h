@@ -230,10 +230,12 @@ public:
 	void				StripTrailingWhitespace();				// strip trailing white space characters
 	idStr& 				StripQuotes();							// strip quotes around string
 	void				Replace( const char* old, const char* nw );
+	bool				ReplaceChar( const char old, const char nw );
 
 	// file name methods
 	int					FileNameHash() const;						// hash key for the filename (skips extension)
 	idStr& 				BackSlashesToSlashes();					// convert slashes
+	idStr& 				SlashesToBackSlashes();					// convert slashes
 	idStr& 				SetFileExtension( const char* extension );		// set the given file extension
 	idStr& 				StripFileExtension();						// remove any file extension
 	idStr& 				StripAbsoluteFileExtension();				// remove any file extension looking from front (useful if there are multiple .'s)

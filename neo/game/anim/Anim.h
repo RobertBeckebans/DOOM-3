@@ -350,7 +350,7 @@ public:
 	const idDeclSkin* 			GetDefaultSkin() const;
 	const idJointQuat* 			GetDefaultPose() const;
 	void						SetupJoints( int* numJoints, idJointMat** jointList, idBounds& frameBounds, bool removeOriginOffset ) const;
-	idRenderModel* 				ModelHandle() const;
+	idRenderModel* 				ModelHandle() const override; // RB
 	void						GetJointList( const char* jointnames, idList<jointHandle_t>& jointList ) const;
 	const jointInfo_t* 			FindJoint( const char* name ) const;
 

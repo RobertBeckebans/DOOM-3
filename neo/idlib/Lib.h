@@ -187,6 +187,7 @@ template<class T> ID_INLINE T	Min( T x, T y )
 #include "math/Random.h"
 #include "math/Complex.h"
 #include "math/Vector.h"
+#include "math/VectorI.h"
 #include "math/Matrix.h"
 #include "math/Angles.h"
 #include "math/Quat.h"

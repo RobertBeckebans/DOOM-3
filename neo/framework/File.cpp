@@ -1513,3 +1513,27 @@ int idFile_InZip::Seek( long offset, fsOrigin_t origin )
 	}
 	return -1;
 }
+
+/*
+================================================================================================
+
+idFileLocal
+
+================================================================================================
+*/
+
+/*
+========================
+idFileLocal::~idFileLocal
+
+Destructor that will destroy (close) the managed file when this wrapper class goes out of scope.
+========================
+*/
+idFileLocal::~idFileLocal()
+{
+	if( file != NULL )
+	{
+		delete file;
+		file = NULL;
+	}
+}

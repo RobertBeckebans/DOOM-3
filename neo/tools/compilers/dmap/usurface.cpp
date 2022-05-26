@@ -229,6 +229,13 @@ mapTri_t* TriListForSide( const side_t* s, const idWinding* w )
 				dv->st[0] = DotProduct( dv->xyz, s->texVec.v[0] ) + s->texVec.v[0][3];
 				dv->st[1] = DotProduct( dv->xyz, s->texVec.v[1] ) + s->texVec.v[1][3];
 
+				// RB: support Valve 220 projection
+				if( s->texValve220 )
+				{
+					dv->st[0] /= s->texSize[0];
+					dv->st[1] /= s->texSize[1];
+				}
+
 				// copy normal
 				dv->normal = dmapGlobals.mapPlanes[s->planenum].Normal();
 				if( dv->normal.Length() < 0.9 || dv->normal.Length() > 1.1 )
@@ -275,6 +282,13 @@ mapTri_t* TriListForSide( const side_t* s, const idWinding* w )
 				// calculate texture s/t from brush primitive texture matrix
 				dv->st[0] = DotProduct( dv->xyz, s->texVec.v[0] ) + s->texVec.v[0][3];
 				dv->st[1] = DotProduct( dv->xyz, s->texVec.v[1] ) + s->texVec.v[1][3];
+
+				// RB: support Valve 220 projection
+				if( s->texValve220 )
+				{
+					dv->st[0] /= s->texSize[0];
+					dv->st[1] /= s->texSize[1];
+				}
 
 				// copy normal
 				dv->normal = dmapGlobals.mapPlanes[s->planenum].Normal();

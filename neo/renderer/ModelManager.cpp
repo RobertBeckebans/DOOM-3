@@ -32,6 +32,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "Model_local.h"
 #include "tr_local.h"	// just for R_FreeWorldInteractions and R_CreateWorldInteractions
 
+// RB begin
+idCVar postLoadExportModels( "postLoadExportModels", "0", CVAR_BOOL | CVAR_RENDERER, "export models after loading to OBJ model format" );
+// RB end
 
 class idRenderModelManagerLocal : public idRenderModelManager
 {
@@ -271,21 +274,21 @@ void idRenderModelManagerLocal::Shutdown()
 idRenderModelManagerLocal::GetModel
 =================
 */
-idRenderModel* idRenderModelManagerLocal::GetModel( const char* modelName, bool createIfNotFound )
+idRenderModel* idRenderModelManagerLocal::GetModel( const char* _modelName, bool createIfNotFound )
 {
 	idStr		canonical;
 	idStr		extension;
 
-	if( !modelName || !modelName[0] )
+	if( !_modelName || !_modelName[0] )
 	{
 		return NULL;
 	}
 
-	canonical = modelName;
+	canonical = _modelName;
 	canonical.ToLower();
 
 	// see if it is already present
-	int key = hash.GenerateKey( modelName, false );
+	int key = hash.GenerateKey( _modelName, false );
 	for( int i = hash.First( key ); i != -1; i = hash.Next( i ) )
 	{
 		idRenderModel* model = models[i];
@@ -304,6 +307,7 @@ idRenderModel* idRenderModelManagerLocal::GetModel( const char* modelName, bool 
 				// in memory as well
 				model->TouchData();
 			}
+
 			model->SetLevelLoadReferenced( true );
 			return model;
 		}
@@ -313,39 +317,39 @@ idRenderModel* idRenderModelManagerLocal::GetModel( const char* modelName, bool 
 
 	// determine which subclass of idRenderModel to initialize
 
-	idRenderModel*	model;
+	idRenderModel* model = NULL;
 
 	canonical.ExtractFileExtension( extension );
 
 	if( ( extension.Icmp( "ase" ) == 0 ) || ( extension.Icmp( "lwo" ) == 0 ) || ( extension.Icmp( "flt" ) == 0 ) )
 	{
 		model = new idRenderModelStatic;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else if( extension.Icmp( "ma" ) == 0 )
 	{
 		model = new idRenderModelStatic;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else if( extension.Icmp( MD5_MESH_EXT ) == 0 )
 	{
 		model = new idRenderModelMD5;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else if( extension.Icmp( "md3" ) == 0 )
 	{
 		model = new idRenderModelMD3;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else if( extension.Icmp( "prt" ) == 0 )
 	{
 		model = new idRenderModelPrt;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else if( extension.Icmp( "liquid" ) == 0 )
 	{
 		model = new idRenderModelLiquid;
-		model->InitFromFile( modelName );
+		model->InitFromFile( _modelName );
 	}
 	else
 	{
@@ -361,7 +365,7 @@ idRenderModel* idRenderModelManagerLocal::GetModel( const char* modelName, bool 
 		}
 
 		idRenderModelStatic*	smodel = new idRenderModelStatic;
-		smodel->InitEmpty( modelName );
+		smodel->InitEmpty( _modelName );
 		smodel->MakeDefaultModel();
 
 		model = smodel;
@@ -376,6 +380,39 @@ idRenderModel* idRenderModelManagerLocal::GetModel( const char* modelName, bool 
 
 		return NULL;
 	}
+
+	// RB begin
+	if( postLoadExportModels.GetBool() && ( model != defaultModel && model != beamModel && model != spriteModel ) )
+	{
+		idStr exportedFileName;
+
+		exportedFileName = "exported/rendermodels/";
+
+		if( com_editors & EDITOR_EXPORTDEFS )
+		{
+			exportedFileName = "_tb/";
+		}
+
+		exportedFileName.AppendPath( canonical );
+		exportedFileName.SetFileExtension( ".obj" );
+
+		//ID_TIME_T sourceTimeStamp = fileSystem->GetTimestamp( canonical );
+		//ID_TIME_T timeStamp = fileSystem->GetTimestamp( exportedFileName );
+
+		// TODO only update if generated has changed
+
+		//if( timeStamp == FILE_NOT_FOUND_TIMESTAMP )
+		{
+			idFileLocal objFile( fileSystem->OpenFileWrite( exportedFileName, "fs_basepath" ) );
+			common->Printf( "Writing %s\n", exportedFileName.c_str() );
+
+			exportedFileName.SetFileExtension( ".mtl" );
+			idFileLocal mtlFile( fileSystem->OpenFileWrite( exportedFileName, "fs_basepath" ) );
+
+			model->ExportOBJ( objFile, mtlFile );
+		}
+	}
+	// RB end
 
 	AddModel( model );
 
