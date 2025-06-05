@@ -40,7 +40,7 @@ public:
 	idAudioHardwareOSX();
 	~idAudioHardwareOSX();
 
-	bool	Initialize( );
+	bool	Initialize();
 
 	// OSX driver doesn't support memory map API
 	bool	Lock( void** pDSLockedBuffer, ulong* dwDSLockedBufferSize )
@@ -235,7 +235,7 @@ const char*	idAudioHardwareOSX::ExtractStatus( OSStatus status )
 idAudioHardwareOSX::Initialize
 ==========
 */
-bool idAudioHardwareOSX::Initialize( )
+bool idAudioHardwareOSX::Initialize()
 {
 
 	UInt32			size;

@@ -74,8 +74,8 @@ class rvGEApp
 {
 public:
 
-	rvGEApp( );
-	~rvGEApp( );
+	rvGEApp();
+	~rvGEApp();
 
 	bool				Initialize();
 	void				RunFrame();

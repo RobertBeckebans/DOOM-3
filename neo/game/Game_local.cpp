@@ -425,7 +425,7 @@ void idGameLocal::SaveGame( idFile* f )
 
 	idSaveGame savegame( f );
 
-	if( g_flushSave.GetBool( ) == true )
+	if( g_flushSave.GetBool() == true )
 	{
 		// force flushing with each write... for tracking down
 		// save game bugs.
@@ -1012,7 +1012,7 @@ void idGameLocal::LoadMap( const char* mapName, int randseed )
 idGameLocal::LocalMapRestart
 ===================
 */
-void idGameLocal::LocalMapRestart( )
+void idGameLocal::LocalMapRestart()
 {
 	int i, latchSpawnCount;
 
@@ -1078,7 +1078,7 @@ void idGameLocal::LocalMapRestart( )
 idGameLocal::MapRestart
 ===================
 */
-void idGameLocal::MapRestart( )
+void idGameLocal::MapRestart()
 {
 	idBitMsg	outMsg;
 	byte		msgBuf[MAX_GAME_MESSAGE_SIZE];
@@ -1141,7 +1141,7 @@ void idGameLocal::MapRestart_f( const idCmdArgs& args )
 		return;
 	}
 
-	gameLocal.MapRestart( );
+	gameLocal.MapRestart();
 }
 
 /*
@@ -1217,9 +1217,9 @@ void idGameLocal::NextMap_f( const idCmdArgs& args )
 		return;
 	}
 
-	gameLocal.NextMap( );
+	gameLocal.NextMap();
 	// next map was either voted for or triggered by a server command - always restart
-	gameLocal.MapRestart( );
+	gameLocal.MapRestart();
 }
 
 /*

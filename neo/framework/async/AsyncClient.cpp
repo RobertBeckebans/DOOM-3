@@ -431,8 +431,8 @@ void idAsyncClient::GetNETServers()
 	idAsyncNetwork::LANServer.SetBool( false );
 
 	// NetScan only clears GUI and results, not the stored list
-	serverList.Clear( );
-	serverList.NetScan( );
+	serverList.Clear();
+	serverList.NetScan();
 	serverList.StartServers( true );
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
@@ -952,7 +952,7 @@ void idAsyncClient::ProcessUnreliableServerMessage( const idBitMsg& msg )
 			{
 				gameTimeResidual = 0;
 				clientState = CS_INGAME;
-				assert( !sessLocal.GetActiveMenu( ) );
+				assert( !sessLocal.GetActiveMenu() );
 				if( idAsyncNetwork::verbose.GetInteger() )
 				{
 					common->Printf( "received first snapshot, gameInitId = %d, gameFrame %d gameTime %d\n", gameInitId, snapshotGameFrame, snapshotGameTime );
@@ -1147,7 +1147,7 @@ void idAsyncClient::ProcessReliableServerMessages()
 			{
 				int clientNum;
 				char string[MAX_STRING_CHARS];
-				clientNum = msg.ReadLong( );
+				clientNum = msg.ReadLong();
 				ReadLocalizedServerString( msg, string, MAX_STRING_CHARS );
 				if( clientNum == idAsyncClient::clientNum )
 				{
@@ -1603,7 +1603,7 @@ bool idAsyncClient::ValidatePureServerChecksums( const netadr_t from, const idBi
 	numChecksums = 0;
 	do
 	{
-		i = msg.ReadLong( );
+		i = msg.ReadLong();
 		inChecksums[ numChecksums++ ] = i;
 		// just to make sure a broken message doesn't crash us
 		if( numChecksums >= MAX_PURE_PAKS )
@@ -1765,7 +1765,7 @@ void idAsyncClient::ConnectionlessMessage( const netadr_t from, const idBitMsg& 
 	}
 
 	// from master server:
-	if( Sys_CompareNetAdrBase( from, idAsyncNetwork::GetMasterAddress( ) ) )
+	if( Sys_CompareNetAdrBase( from, idAsyncNetwork::GetMasterAddress() ) )
 	{
 		// server list
 		if( idStr::Icmp( string, "servers" ) == 0 )
@@ -2126,8 +2126,8 @@ void idAsyncClient::RunFrame()
 	// check for user info changes
 	if( cvarSystem->GetModifiedFlags() & CVAR_USERINFO )
 	{
-		game->ThrottleUserInfo( );
-		SendUserInfoToServer( );
+		game->ThrottleUserInfo();
+		SendUserInfoToServer();
 		game->SetUserInfo( clientNum, sessLocal.mapSpawnData.userInfo[ clientNum ], true, false );
 		cvarSystem->ClearModifiedFlags( CVAR_USERINFO );
 	}
@@ -2363,7 +2363,7 @@ void idAsyncClient::HandleDownloads()
 				}
 				common->Printf( "start download for %s\n", dlList[ 0 ].url.c_str() );
 
-				idFile_Permanent* f = static_cast< idFile_Permanent*>( fileSystem->MakeTemporaryFile( ) );
+				idFile_Permanent* f = static_cast< idFile_Permanent*>( fileSystem->MakeTemporaryFile() );
 				if( !f )
 				{
 					common->Warning( "could not create temporary file" );

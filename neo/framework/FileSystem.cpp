@@ -3314,7 +3314,7 @@ void idFileSystemLocal::Init()
 	}
 
 	// try to start up normally
-	Startup( );
+	Startup();
 
 	// see if we are going to allow add-ons
 	SetRestrictions();
@@ -3342,7 +3342,7 @@ void idFileSystemLocal::Restart()
 	// free anything we currently have loaded
 	Shutdown( true );
 
-	Startup( );
+	Startup();
 
 	// see if we are going to allow add-ons
 	SetRestrictions();
@@ -3722,7 +3722,7 @@ idFile* idFileSystemLocal::OpenFileReadFlags( const char* relativePath, int sear
 				idStr name;
 				copypath = BuildOSPath( fs_savepath.GetString(), dir->gamedir, relativePath );
 				netpath.ExtractFileName( name );
-				copypath.StripFilename( );
+				copypath.StripFilename();
 				copypath += PATHSEPERATOR_STR;
 				copypath += name;
 
@@ -3844,14 +3844,14 @@ idFile* idFileSystemLocal::OpenFileReadFlags( const char* relativePath, int sear
 					if( !pak->referenced && !( searchFlags & FSFLAG_PURE_NOREF ) )
 					{
 						// mark this pak referenced
-						if( fs_debug.GetInteger( ) )
+						if( fs_debug.GetInteger() )
 						{
 							common->Printf( "idFileSystem::OpenFileRead: %s -> adding %s to referenced paks\n", relativePath, pak->pakFilename.c_str() );
 						}
 						pak->referenced = true;
 					}
 
-					if( fs_debug.GetInteger( ) )
+					if( fs_debug.GetInteger() )
 					{
 						common->Printf( "idFileSystem::OpenFileRead: %s (found in '%s')\n", relativePath, pak->pakFilename.c_str() );
 					}
@@ -3878,7 +3878,7 @@ idFile* idFileSystemLocal::OpenFileReadFlags( const char* relativePath, int sear
 						*foundInPak = pak;
 					}
 					// we don't toggle pure on paks found in addons - they can't be used without a reloadEngine anyway
-					if( fs_debug.GetInteger( ) )
+					if( fs_debug.GetInteger() )
 					{
 						common->Printf( "idFileSystem::OpenFileRead: %s (found in addon pk4 '%s')\n", relativePath, search->pack->pakFilename.c_str() );
 					}
@@ -3888,7 +3888,7 @@ idFile* idFileSystemLocal::OpenFileReadFlags( const char* relativePath, int sear
 		}
 	}
 
-	if( fs_debug.GetInteger( ) )
+	if( fs_debug.GetInteger() )
 	{
 		common->Printf( "Can't find %s\n", relativePath );
 	}
@@ -4469,8 +4469,8 @@ void idFileSystemLocal::FindDLL( const char* name, char _dllPath[ MAX_OSPATH ], 
 	{
 #endif
 		// from executable directory first - this is handy for developement
-		dllPath = Sys_EXEPath( );
-		dllPath.StripFilename( );
+		dllPath = Sys_EXEPath();
+		dllPath.StripFilename();
 		dllPath.AppendPath( dllName );
 		dllFile = OpenExplicitFileRead( dllPath );
 	}
@@ -4568,7 +4568,7 @@ void idFileSystemLocal::FindDLL( const char* name, char _dllPath[ MAX_OSPATH ], 
 	}
 	if( dllFile )
 	{
-		dllPath = dllFile->GetFullPath( );
+		dllPath = dllFile->GetFullPath();
 		CloseFile( dllFile );
 		dllFile = NULL;
 	}

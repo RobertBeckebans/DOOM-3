@@ -350,7 +350,7 @@ void idSessionLocal::SetMainMenuGuiVars()
 		guiMainMenu->SetStateString( "inGame", "0" );
 	}
 
-	SetCDKeyGuiVars( );
+	SetCDKeyGuiVars();
 #ifdef ID_DEMO_BUILD
 	guiMainMenu->SetStateString( "nightmare", "0" );
 #else
@@ -444,7 +444,7 @@ bool idSessionLocal::HandleSaveGameMenuCommand( idCmdArgs& args, int& icmd )
 			}
 
 			sessLocal.SaveGame( saveGameName );
-			SetSaveGameGuiVars( );
+			SetSaveGameGuiVars();
 			guiActive->StateChanged( com_frameTime );
 		}
 		return true;
@@ -458,7 +458,7 @@ bool idSessionLocal::HandleSaveGameMenuCommand( idCmdArgs& args, int& icmd )
 			fileSystem->RemoveFile( va( "savegames/%s.save", loadGameList[choice].c_str() ) );
 			fileSystem->RemoveFile( va( "savegames/%s.tga", loadGameList[choice].c_str() ) );
 			fileSystem->RemoveFile( va( "savegames/%s.txt", loadGameList[choice].c_str() ) );
-			SetSaveGameGuiVars( );
+			SetSaveGameGuiVars();
 			guiActive->StateChanged( com_frameTime );
 		}
 		return true;
@@ -725,14 +725,14 @@ void idSessionLocal::HandleMainMenuCommands( const char* menuCommand )
 			}
 			else
 			{
-				idAsyncNetwork::client.serverList.NetScan( );
+				idAsyncNetwork::client.serverList.NetScan();
 			}
 			continue;
 		}
 
 		if( !idStr::Icmp( cmd, "FilterServers" ) )
 		{
-			idAsyncNetwork::client.serverList.ApplyFilter( );
+			idAsyncNetwork::client.serverList.ApplyFilter();
 			continue;
 		}
 
@@ -1226,7 +1226,7 @@ void idSessionLocal::HandleMainMenuCommands( const char* menuCommand )
 				vcmd = args.Argv( icmd++ );
 			}
 			// filtering PB based on enabled/disabled
-			idAsyncNetwork::client.serverList.ApplyFilter( );
+			idAsyncNetwork::client.serverList.ApplyFilter();
 			SetPbMenuGuiVars();
 			continue;
 		}

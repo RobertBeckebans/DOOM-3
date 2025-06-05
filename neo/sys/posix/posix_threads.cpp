@@ -176,7 +176,7 @@ Sys_CreateThread
 */
 void Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority, xthreadInfo& info, const char* name, xthreadInfo** threads, int* thread_count )
 {
-	Sys_EnterCriticalSection( );
+	Sys_EnterCriticalSection();
 	pthread_attr_t attr;
 	pthread_attr_init( &attr );
 	if( pthread_attr_setdetachstate( &attr, PTHREAD_CREATE_JOINABLE ) != 0 )
@@ -197,7 +197,7 @@ void Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority
 	{
 		common->DPrintf( "WARNING: MAX_THREADS reached\n" );
 	}
-	Sys_LeaveCriticalSection( );
+	Sys_LeaveCriticalSection();
 }
 
 /*
@@ -218,7 +218,7 @@ void Sys_DestroyThread( xthreadInfo& info )
 		common->Error( "ERROR: pthread_join %s failed\n", info.name );
 	}
 	info.threadHandle = 0;
-	Sys_EnterCriticalSection( );
+	Sys_EnterCriticalSection();
 	for( int i = 0 ; i < g_thread_count ; i++ )
 	{
 		if( &info == g_threads[ i ] )
@@ -231,11 +231,11 @@ void Sys_DestroyThread( xthreadInfo& info )
 			}
 			g_threads[ j - 1 ] = NULL;
 			g_thread_count--;
-			Sys_LeaveCriticalSection( );
+			Sys_LeaveCriticalSection();
 			return;
 		}
 	}
-	Sys_LeaveCriticalSection( );
+	Sys_LeaveCriticalSection();
 }
 
 /*
@@ -246,7 +246,7 @@ find the name of the calling thread
 */
 const char* Sys_GetThreadName( int* index )
 {
-	Sys_EnterCriticalSection( );
+	Sys_EnterCriticalSection();
 	pthread_t thread = pthread_self();
 	for( int i = 0 ; i < g_thread_count ; i++ )
 	{
@@ -256,7 +256,7 @@ const char* Sys_GetThreadName( int* index )
 			{
 				*index = i;
 			}
-			Sys_LeaveCriticalSection( );
+			Sys_LeaveCriticalSection();
 			return g_threads[ i ]->name;
 		}
 	}
@@ -264,7 +264,7 @@ const char* Sys_GetThreadName( int* index )
 	{
 		*index = -1;
 	}
-	Sys_LeaveCriticalSection( );
+	Sys_LeaveCriticalSection();
 	return "main";
 }
 
@@ -299,7 +299,7 @@ void Posix_StartAsyncThread()
 Posix_InitPThreads
 ==================
 */
-void Posix_InitPThreads( )
+void Posix_InitPThreads()
 {
 	int i;
 	pthread_mutexattr_t attr;

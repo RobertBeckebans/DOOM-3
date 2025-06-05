@@ -52,7 +52,7 @@ static idServerScan* l_serverScan = NULL;
 idServerScan::idServerScan
 ================
 */
-idServerScan::idServerScan( )
+idServerScan::idServerScan()
 {
 	m_pGUI = NULL;
 	m_sort = SORT_PING;
@@ -66,7 +66,7 @@ idServerScan::idServerScan( )
 idServerScan::LocalClear
 ================
 */
-void idServerScan::LocalClear( )
+void idServerScan::LocalClear()
 {
 	scan_state = IDLE;
 	incoming_net = false;
@@ -87,7 +87,7 @@ void idServerScan::LocalClear( )
 idServerScan::Clear
 ================
 */
-void idServerScan::Clear( )
+void idServerScan::Clear()
 {
 	LocalClear();
 	idList<networkServer_t>::Clear();
@@ -98,7 +98,7 @@ void idServerScan::Clear( )
 idServerScan::Shutdown
 ================
 */
-void idServerScan::Shutdown( )
+void idServerScan::Shutdown()
 {
 	m_pGUI = NULL;
 	if( listGUI )
@@ -115,7 +115,7 @@ void idServerScan::Shutdown( )
 idServerScan::SetupLANScan
 ================
 */
-void idServerScan::SetupLANScan( )
+void idServerScan::SetupLANScan()
 {
 	Clear();
 	GUIUpdateSelected();
@@ -191,7 +191,7 @@ int idServerScan::InfoResponse( networkServer_t& server )
 	int index = Append( server );
 	// for now, don't maintain sorting when adding new info response servers
 	m_sortedServers.Append( Num() - 1 );
-	if( listGUI->IsConfigured( ) && !IsFiltered( server ) )
+	if( listGUI->IsConfigured() && !IsFiltered( server ) )
 	{
 		GUIAdd( Num() - 1, server );
 	}
@@ -235,7 +235,7 @@ void idServerScan::AddServer( int id, const char* srv )
 idServerScan::EndServers
 ================
 */
-void idServerScan::EndServers( )
+void idServerScan::EndServers()
 {
 	incoming_net = false;
 	l_serverScan = this;
@@ -270,7 +270,7 @@ void idServerScan::EmitGetInfo( netadr_t& serv )
 idServerScan::GetChallenge
 ===============
 */
-int idServerScan::GetChallenge( )
+int idServerScan::GetChallenge()
 {
 	return challenge;
 }
@@ -280,7 +280,7 @@ int idServerScan::GetChallenge( )
 idServerScan::NetScan
 ================
 */
-void idServerScan::NetScan( )
+void idServerScan::NetScan()
 {
 	if( !idAsyncNetwork::client.IsPortInitialized() )
 	{
@@ -322,7 +322,7 @@ void idServerScan::NetScan( )
 idServerScan::ServerScanFrame
 ===============
 */
-void idServerScan::RunFrame( )
+void idServerScan::RunFrame()
 {
 	if( scan_state == IDLE )
 	{
@@ -545,7 +545,7 @@ void idServerScan::GUIAdd( int id, const networkServer_t server )
 idServerScan::ApplyFilter
 ================
 */
-void idServerScan::ApplyFilter( )
+void idServerScan::ApplyFilter()
 {
 	int i;
 	networkServer_t serv;

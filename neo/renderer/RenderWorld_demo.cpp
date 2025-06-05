@@ -528,7 +528,7 @@ void	idRenderWorldLocal::WriteRenderLight( qhandle_t handle, const renderLight_t
 ReadRenderLight
 ================
 */
-void	idRenderWorldLocal::ReadRenderLight( )
+void	idRenderWorldLocal::ReadRenderLight()
 {
 	renderLight_t	light;
 	int				index;

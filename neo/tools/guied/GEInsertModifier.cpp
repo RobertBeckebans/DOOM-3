@@ -40,10 +40,10 @@ rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWi
 
 	assert( mParent );
 
-	mUndoParent = window->GetParent( );
+	mUndoParent = window->GetParent();
 	mUndoBefore = NULL;
-	mUndoRect   = mWrapper->GetClientRect( );
-	mRect		= mWrapper->GetClientRect( );
+	mUndoRect   = mWrapper->GetClientRect();
+	mRect		= mWrapper->GetClientRect();
 
 	// Find the child window the window being inserted is before
 	if( mUndoParent )
@@ -55,7 +55,7 @@ rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWi
 
 		index = mUndoParent->GetChildIndex( mWindow );
 
-		if( index + 1 < pwrapper->GetChildCount( ) )
+		if( index + 1 < pwrapper->GetChildCount() )
 		{
 			mUndoBefore = pwrapper->GetChild( index + 1 );
 		}
@@ -65,8 +65,8 @@ rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWi
 	// out the new x and y coordinate as if this window were a child
 	rvGEWindowWrapper* parentWrapper;
 	parentWrapper = rvGEWindowWrapper::GetWrapper( mParent );
-	mRect.x = mWrapper->GetScreenRect( )[0] - parentWrapper->GetScreenRect()[0];
-	mRect.y = mWrapper->GetScreenRect( )[1] - parentWrapper->GetScreenRect()[1];
+	mRect.x = mWrapper->GetScreenRect()[0] - parentWrapper->GetScreenRect()[0];
+	mRect.y = mWrapper->GetScreenRect()[1] - parentWrapper->GetScreenRect()[1];
 }
 
 /*

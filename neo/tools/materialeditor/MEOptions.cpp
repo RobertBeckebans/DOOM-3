@@ -33,7 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 /**
 * Constructor for MEOptions.
 */
-MEOptions::MEOptions( )
+MEOptions::MEOptions()
 {
 
 	registry.Init( "Software\\id Software\\DOOM3\\Tools\\MaterialEditor" );

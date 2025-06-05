@@ -301,9 +301,9 @@ double MeasureClockTicks()
 {
 	double t0, t1;
 
-	t0 = Sys_GetClockTicks( );
+	t0 = Sys_GetClockTicks();
 	Sys_Sleep( 1000 );
-	t1 = Sys_GetClockTicks( );
+	t1 = Sys_GetClockTicks();
 	return t1 - t0;
 }
 
@@ -620,7 +620,7 @@ int main( int argc, const char** argv )
 	Sys_Printf( "memory consistency checking enabled\n" );
 #endif
 
-	Posix_EarlyInit( );
+	Posix_EarlyInit();
 
 	if( argc > 1 )
 	{
@@ -631,7 +631,7 @@ int main( int argc, const char** argv )
 		common->Init( 0, NULL, NULL );
 	}
 
-	Posix_LateInit( );
+	Posix_LateInit();
 
 	while( 1 )
 	{

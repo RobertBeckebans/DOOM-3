@@ -713,7 +713,7 @@ int Sys_GetVideoRam()
 
 	// try a few strategies to guess the amount of video ram
 	common->Printf( "guessing video ram ( use +set sys_videoRam to force ) ..\n" );
-	if( !GLimp_OpenDisplay( ) )
+	if( !GLimp_OpenDisplay() )
 	{
 		run_once = 64;
 		return run_once;

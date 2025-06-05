@@ -119,7 +119,7 @@ void rvOpenFileDialog::UpdateLookIn()
 	// to the combo box
 	path = mLookin;
 
-	while( path.Length( ) )
+	while( path.Length() )
 	{
 		int slash = path.Find( "/" );
 
@@ -127,12 +127,12 @@ void rvOpenFileDialog::UpdateLookIn()
 		if( slash != -1 )
 		{
 			file = path.Left( slash );
-			path = path.Right( path.Length( ) - slash - 1 );
+			path = path.Right( path.Length() - slash - 1 );
 		}
 		else
 		{
 			file = path;
-			path.Empty( );
+			path.Empty();
 		}
 
 		// Add the sub folder
@@ -254,14 +254,14 @@ void rvOpenFileDialog::HandleCommandOK()
 		{
 			idStr::Copynz( mLookin, temp, sizeof( mLookin ) );
 		}
-		UpdateLookIn( );
-		UpdateFileList( );
+		UpdateLookIn();
+		UpdateFileList();
 	}
 	// If the item is a file then build the filename and end the dialog
 	else if( item.iImage == 2 )
 	{
 		mFilename = mLookin;
-		if( mFilename.Length( ) )
+		if( mFilename.Length() )
 		{
 			mFilename.Append( "/" );
 		}
@@ -314,7 +314,7 @@ void rvOpenFileDialog::HandleInitDialog()
 	SetWindowText( mWnd, mTitle );
 
 	// Custom ok button title
-	if( mOKTitle.Length( ) )
+	if( mOKTitle.Length() )
 	{
 		SetWindowText( GetDlgItem( mWnd, IDOK ), mOKTitle );
 	}
@@ -323,17 +323,17 @@ void rvOpenFileDialog::HandleInitDialog()
 	idStr temp;
 	idStr filename = mLookin;
 	filename.ExtractFileExtension( temp );
-	if( temp.Length( ) )
+	if( temp.Length() )
 	{
 		filename.ExtractFileName( temp );
 		SetWindowText( GetDlgItem( mWnd, IDC_TOOLS_FILENAME ), temp );
-		filename.StripFilename( );
+		filename.StripFilename();
 		idStr::snPrintf( mLookin, sizeof( mLookin ), "%s", filename.c_str() );
 	}
 
 	// Update our controls
-	UpdateLookIn( );
-	UpdateFileList( );
+	UpdateLookIn();
+	UpdateFileList();
 }
 
 /*
@@ -372,8 +372,8 @@ void rvOpenFileDialog::HandleLookInChange()
 	}
 
 	// Update the controls with the new lookin path
-	UpdateLookIn( );
-	UpdateFileList( );
+	UpdateLookIn();
+	UpdateFileList();
 }
 
 /*
@@ -388,18 +388,18 @@ void rvOpenFileDialog::SetFilter( const char* s )
 	idStr filters = s;
 	idStr filter;
 
-	while( filters.Length( ) )
+	while( filters.Length() )
 	{
 		int semi = filters.Find( ';' );
 		if( semi != -1 )
 		{
 			filter  = filters.Left( semi );
-			filters = filters.Right( filters.Length( ) - semi );
+			filters = filters.Right( filters.Length() - semi );
 		}
 		else
 		{
 			filter = filters;
-			filters.Empty( );
+			filters.Empty();
 		}
 
 		mFilters.Append( filter.c_str() + ( filter[0] == '*' ? 1 : 0 ) );
@@ -423,7 +423,7 @@ INT_PTR rvOpenFileDialog::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lpa
 			dlg = ( rvOpenFileDialog* ) lparam;
 			SetWindowLong( wnd, GWL_USERDATA, lparam );
 			dlg->mWnd = wnd;
-			dlg->HandleInitDialog( );
+			dlg->HandleInitDialog();
 			return TRUE;
 
 		case WM_NOTIFY:
@@ -458,7 +458,7 @@ INT_PTR rvOpenFileDialog::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lpa
 						}
 
 						case NM_DBLCLK:
-							dlg->HandleCommandOK( );
+							dlg->HandleCommandOK();
 							break;
 					}
 					break;
@@ -471,7 +471,7 @@ INT_PTR rvOpenFileDialog::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lpa
 			{
 				case IDOK:
 				{
-					dlg->HandleCommandOK( );
+					dlg->HandleCommandOK();
 					break;
 				}
 
@@ -486,7 +486,7 @@ INT_PTR rvOpenFileDialog::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lpa
 					{
 						sel--;
 						SendMessage( GetDlgItem( wnd, IDC_TOOLS_LOOKIN ), CB_SETCURSEL, sel, 0 );
-						dlg->HandleLookInChange( );
+						dlg->HandleLookInChange();
 					}
 
 					break;
@@ -495,7 +495,7 @@ INT_PTR rvOpenFileDialog::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lpa
 				case IDC_TOOLS_LOOKIN:
 					if( HIWORD( wparam ) == CBN_SELCHANGE )
 					{
-						dlg->HandleLookInChange( );
+						dlg->HandleLookInChange();
 					}
 					break;
 			}

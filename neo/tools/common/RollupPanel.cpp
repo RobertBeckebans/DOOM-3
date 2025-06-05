@@ -190,7 +190,7 @@ int rvRollupPanel::InsertItem( const char* caption, HWND dialog, bool autoDestro
 
 	// Update
 	mItemHeight += RP_PGBUTTONHEIGHT + ( RP_GRPBOXINDENT / 2 );
-	RecallLayout( );
+	RecallLayout();
 
 	// One hook for all panel dialogs
 	if( !mDialogHook )
@@ -222,7 +222,7 @@ void rvRollupPanel::RemoveItem( int index )
 	_RemoveItem( index );
 
 	// update the layout
-	RecallLayout( );
+	RecallLayout();
 }
 
 /*
@@ -240,7 +240,7 @@ void rvRollupPanel::RemoveAllItems()
 	}
 
 	// update layout
-	RecallLayout( );
+	RecallLayout();
 }
 
 /*
@@ -308,7 +308,7 @@ void rvRollupPanel::ExpandItem( int index, bool expand )
 
 	_ExpandItem( mItems[index], expand );
 
-	RecallLayout( );
+	RecallLayout();
 
 	// scroll to this page (automatic page visibility)
 	if( expand )
@@ -384,7 +384,7 @@ void rvRollupPanel::EnableItem( int index, bool enable )
 	}
 
 	_EnableItem( mItems[index], enable );
-	RecallLayout( );
+	RecallLayout();
 }
 
 /*
@@ -403,7 +403,7 @@ void rvRollupPanel::EnableAllItems( bool enable )
 		_EnableItem( mItems[i], enable );
 	}
 
-	RecallLayout( );
+	RecallLayout();
 }
 
 /*
@@ -499,7 +499,7 @@ int rvRollupPanel::MoveItemAt( int index, int newIndex )
 		index = newIndex;
 	}
 
-	RecallLayout( );
+	RecallLayout();
 
 	return index;
 }
@@ -858,7 +858,7 @@ int rvRollupPanel::HandleCommand( WPARAM wParam, LPARAM lParam )
 
 	// popupMenu command to expand page
 	else if( LOWORD( wParam ) >= RP_IDM_STARTITEMS &&
-			 LOWORD( wParam ) <  RP_IDM_STARTITEMS + GetItemCount( ) )
+			 LOWORD( wParam ) <  RP_IDM_STARTITEMS + GetItemCount() )
 	{
 		int index = LOWORD( wParam ) - RP_IDM_STARTITEMS;
 		ExpandItem( index, !IsItemExpanded( index ) );
@@ -1065,7 +1065,7 @@ int rvRollupPanel::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 
 		mStartYPos = - ( targetPos * mItemHeight ) / clientHeight;
 
-		RecallLayout( );
+		RecallLayout();
 
 		InvalidateRect( mWindow, NULL, FALSE );
 //		UpdateWindow ( mWindow );
@@ -1117,7 +1117,7 @@ int rvRollupPanel::HandleContextMenu( WPARAM wParam, LPARAM lParam )
 	int	  i;
 	POINT point;
 
-	menu = CreatePopupMenu( );
+	menu = CreatePopupMenu();
 	if( !menu )
 	{
 		return 0;

@@ -84,7 +84,7 @@ public:
 	};
 
 	rvGEWorkspace( rvGEApp* app );
-	~rvGEWorkspace( );
+	~rvGEWorkspace();
 
 	// Attach the workspace to a win32 window
 	bool					Attach( HWND wnd );
@@ -297,7 +297,7 @@ ID_INLINE rvGESelectionMgr& rvGEWorkspace::GetSelectionMgr()
 
 ID_INLINE void rvGEWorkspace::ShowHidden()
 {
-	AddModifierShowAll( );
+	AddModifierShowAll();
 }
 
 ID_INLINE void rvGEWorkspace::AddModifierMoveNudge( float x, float y, bool snap )

@@ -128,7 +128,7 @@ int Sys_PollMouseInputEvents()
 #endif
 
 	// that's OS specific, implemented in osx/ and linux/
-	Posix_PollInput( );
+	Posix_PollInput();
 
 	return poll_mouse_event_count;
 }

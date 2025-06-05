@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 rvDebuggerServer::rvDebuggerServer
 ================
 */
-rvDebuggerServer::rvDebuggerServer( )
+rvDebuggerServer::rvDebuggerServer()
 {
 	mConnected			= false;
 	mBreakNext			= false;
@@ -62,7 +62,7 @@ rvDebuggerServer::rvDebuggerServer( )
 rvDebuggerServer::~rvDebuggerServer
 ================
 */
-rvDebuggerServer::~rvDebuggerServer( )
+rvDebuggerServer::~rvDebuggerServer()
 {
 }
 
@@ -83,7 +83,7 @@ bool rvDebuggerServer::Initialize()
 	}
 
 	// Get a copy of the game thread handle so we can suspend the thread on a break
-	DuplicateHandle( GetCurrentProcess(), GetCurrentThread( ), GetCurrentProcess(), &mGameThread, 0, FALSE, DUPLICATE_SAME_ACCESS );
+	DuplicateHandle( GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &mGameThread, 0, FALSE, DUPLICATE_SAME_ACCESS );
 
 	// Create a critical section to ensure that the shared thread
 	// variables are protected
@@ -174,8 +174,8 @@ bool rvDebuggerServer::ProcessMessages()
 				break;
 
 			case DBMSG_DISCONNECT:
-				ClearBreakpoints( );
-				Resume( );
+				ClearBreakpoints();
+				Resume();
 				mConnected = false;
 				break;
 
@@ -188,7 +188,7 @@ bool rvDebuggerServer::ProcessMessages()
 				break;
 
 			case DBMSG_RESUME:
-				Resume( );
+				Resume();
 				break;
 
 			case DBMSG_BREAK:
@@ -197,7 +197,7 @@ bool rvDebuggerServer::ProcessMessages()
 
 			case DBMSG_STEPOVER:
 				mBreakStepOver = true;
-				mBreakStepOverDepth = mBreakInterpreter->GetCallstackDepth( );
+				mBreakStepOverDepth = mBreakInterpreter->GetCallstackDepth();
 				mBreakStepOverFunc1 = mBreakInterpreter->GetCallstack()[mBreakInterpreter->GetCallstackDepth()].f;
 				if( mBreakInterpreter->GetCallstackDepth() > 0 )
 				{
@@ -207,12 +207,12 @@ bool rvDebuggerServer::ProcessMessages()
 				{
 					mBreakStepOverFunc2 = NULL;
 				}
-				Resume( );
+				Resume();
 				break;
 
 			case DBMSG_STEPINTO:
 				mBreakStepInto = true;
-				Resume( );
+				Resume();
 				break;
 
 			case DBMSG_INSPECTVARIABLE:
@@ -304,7 +304,7 @@ void rvDebuggerServer::HandleRemoveBreakpoint( msg_t* msg )
 	// Find the breakpoint that matches the given id and remove it from the list
 	for( i = 0; i < mBreakpoints.Num(); i ++ )
 	{
-		if( mBreakpoints[i]->GetID( ) == id )
+		if( mBreakpoints[i]->GetID() == id )
 		{
 			delete mBreakpoints[i];
 			mBreakpoints.RemoveIndex( i );
@@ -349,7 +349,7 @@ void rvDebuggerServer::MSG_WriteCallstackFunc( msg_t* msg, const prstack_t* stac
 	{
 		idStr qpath;
 		OSPathToRelativePath( mBreakProgram->GetFilename( st->file ), qpath );
-		qpath.BackSlashesToSlashes( );
+		qpath.BackSlashesToSlashes();
 		MSG_WriteString( msg, qpath );
 		MSG_WriteLong( msg, st->linenumber );
 	}
@@ -378,18 +378,18 @@ void rvDebuggerServer::HandleInspectCallstack( msg_t* in_msg )
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )DBMSG_INSPECTCALLSTACK );
 
-	MSG_WriteShort( &msg, ( int )mBreakInterpreter->GetCallstackDepth( ) );
+	MSG_WriteShort( &msg, ( int )mBreakInterpreter->GetCallstackDepth() );
 
 	// write out the current function
-	temp.f = mBreakInterpreter->GetCurrentFunction( );
+	temp.f = mBreakInterpreter->GetCurrentFunction();
 	temp.s = 0;
 	temp.stackbase = 0;
 	MSG_WriteCallstackFunc( &msg, &temp );
 
 	// Run through all of the callstack and write each to the msg
-	for( i = mBreakInterpreter->GetCallstackDepth( ) - 1; i > 0; i -- )
+	for( i = mBreakInterpreter->GetCallstackDepth() - 1; i > 0; i -- )
 	{
-		MSG_WriteCallstackFunc( &msg, mBreakInterpreter->GetCallstack( ) + i );
+		MSG_WriteCallstackFunc( &msg, mBreakInterpreter->GetCallstack() + i );
 	}
 
 	SendPacket( msg.data, msg.cursize );
@@ -420,10 +420,10 @@ void rvDebuggerServer::HandleInspectThreads( msg_t* in_msg )
 	{
 		idThread* thread = idThread::GetThreads()[i];
 
-		MSG_WriteString( &msg, thread->GetThreadName( ) );
-		MSG_WriteLong( &msg, thread->GetThreadNum( ) );
+		MSG_WriteString( &msg, thread->GetThreadName() );
+		MSG_WriteLong( &msg, thread->GetThreadNum() );
 
-		MSG_WriteBits( &msg, ( int )( thread == mBreakInterpreter->GetThread( ) ), 1 );
+		MSG_WriteBits( &msg, ( int )( thread == mBreakInterpreter->GetThread() ), 1 );
 		MSG_WriteBits( &msg, ( int )thread->IsDoneProcessing(), 1 );
 		MSG_WriteBits( &msg, ( int )thread->IsWaiting(), 1 );
 		MSG_WriteBits( &msg, ( int )thread->IsDying(), 1 );
@@ -509,7 +509,7 @@ void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* 
 	mLastStatementLine = st->linenumber;
 
 	// Reset stepping when the last function on the callstack is returned from
-	if( st->op == OP_RETURN && interpreter->GetCallstackDepth( ) <= 1 )
+	if( st->op == OP_RETURN && interpreter->GetCallstackDepth() <= 1 )
 	{
 		mBreakStepOver = false;
 		mBreakStepInto = false;
@@ -525,9 +525,9 @@ void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* 
 	// Only break on the same callstack depth and thread as the break over
 	if( mBreakStepOver )
 	{
-		if( ( interpreter->GetCurrentFunction( ) == mBreakStepOverFunc1 ||
-				interpreter->GetCurrentFunction( ) == mBreakStepOverFunc2 ) &&
-				( interpreter->GetCallstackDepth( )  <= mBreakStepOverDepth ) )
+		if( ( interpreter->GetCurrentFunction() == mBreakStepOverFunc1 ||
+				interpreter->GetCurrentFunction() == mBreakStepOverFunc2 ) &&
+				( interpreter->GetCallstackDepth()  <= mBreakStepOverDepth ) )
 		{
 			Break( interpreter, program, instructionPointer );
 			return;
@@ -544,17 +544,17 @@ void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* 
 
 	idStr qpath;
 	OSPathToRelativePath( filename, qpath );
-	qpath.BackSlashesToSlashes( );
+	qpath.BackSlashesToSlashes();
 
 	EnterCriticalSection( &mCriticalSection );
 
 	// Check all the breakpoints
-	for( i = 0; i < mBreakpoints.Num( ); i ++ )
+	for( i = 0; i < mBreakpoints.Num(); i ++ )
 	{
 		rvDebuggerBreakpoint* bp = mBreakpoints[i];
 
 		// Skip if not match of the line number
-		if( st->linenumber != bp->GetLineNumber( ) )
+		if( st->linenumber != bp->GetLineNumber() )
 		{
 			continue;
 		}
@@ -606,7 +606,7 @@ void rvDebuggerServer::Break( idInterpreter* interpreter, idProgram* program, in
 
 	idStr qpath;
 	OSPathToRelativePath( filename, qpath );
-	qpath.BackSlashesToSlashes( );
+	qpath.BackSlashesToSlashes();
 
 	// Give the mouse cursor back to the world
 	Sys_GrabMouseCursor( false );
@@ -687,7 +687,7 @@ void rvDebuggerServer::ClearBreakpoints()
 		delete mBreakpoints[i];
 	}
 
-	mBreakpoints.Clear( );
+	mBreakpoints.Clear();
 }
 
 /*

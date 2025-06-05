@@ -42,7 +42,7 @@ rvGEKeyValueModifier::rvGEKeyValueModifier( const char* name, idWindow* window, 
 
 bool rvGEKeyValueModifier::Apply()
 {
-	if( mValue.Length( ) )
+	if( mValue.Length() )
 	{
 		mWrapper->SetStateKey( mKey, mValue );
 	}

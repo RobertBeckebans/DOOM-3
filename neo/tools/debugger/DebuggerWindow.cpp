@@ -59,7 +59,7 @@ rvDebuggerWindow::rvDebuggerWindow
 Constructor
 ================
 */
-rvDebuggerWindow::rvDebuggerWindow( )
+rvDebuggerWindow::rvDebuggerWindow()
 {
 	mWnd		   = NULL;
 	mWndScript	   = NULL;
@@ -83,7 +83,7 @@ rvDebuggerWindow::~rvDebuggerWindow
 Destructor
 ================
 */
-rvDebuggerWindow::~rvDebuggerWindow( )
+rvDebuggerWindow::~rvDebuggerWindow()
 {
 	int i;
 
@@ -143,7 +143,7 @@ bool rvDebuggerWindow::Create( HINSTANCE instance )
 {
 	mInstance = instance;
 
-	if( !RegisterClass( ) )
+	if( !RegisterClass() )
 	{
 		return false;
 	}
@@ -165,7 +165,7 @@ bool rvDebuggerWindow::Create( HINSTANCE instance )
 	mWindowMenu    = GetSubMenu( GetMenu( mWnd ), 2 );
 	mWindowMenuPos = GetMenuItemCount( mWindowMenu );
 
-	UpdateTitle( );
+	UpdateTitle();
 
 	Printf( "Quake 4 Script Debugger v0.1\n\n" );
 
@@ -295,7 +295,7 @@ LRESULT CALLBACK rvDebuggerWindow::ScriptWndProc( HWND wnd, UINT msg, WPARAM wpa
 				ti.hwnd   = wnd;
 				ti.uId    = 0;
 				SendMessage( window->mWndToolTips, TTM_DELTOOL, 0, ( LPARAM )( LPTOOLINFO ) &ti );
-				window->mTooltipVar.Empty( );
+				window->mTooltipVar.Empty();
 			}
 
 			// If there is no word then ignore it
@@ -367,14 +367,14 @@ LRESULT CALLBACK rvDebuggerWindow::MarginWndProc( HWND wnd, UINT msg, WPARAM wpa
 		case WM_LBUTTONDBLCLK:
 		{
 			int result = SendMessage( window->mWndScript, WM_LBUTTONDBLCLK, wparam, lparam );
-			window->ToggleBreakpoint( );
+			window->ToggleBreakpoint();
 			return result;
 		}
 
 		case WM_LBUTTONDOWN:
 		{
 			int result = SendMessage( window->mWndScript, WM_LBUTTONDOWN, wparam, lparam );
-			window->ToggleBreakpoint( );
+			window->ToggleBreakpoint();
 			return result;
 		}
 
@@ -393,28 +393,28 @@ LRESULT CALLBACK rvDebuggerWindow::MarginWndProc( HWND wnd, UINT msg, WPARAM wpa
 			dc = BeginPaint( wnd, &ps );
 			FillRect( dc, &rect, GetSysColorBrush( COLOR_3DFACE ) );
 
-			if( window->mScripts.Num( ) )
+			if( window->mScripts.Num() )
 			{
 				for( int i = 0; i < window->mClient->GetBreakpointCount(); i ++ )
 				{
 					rvDebuggerBreakpoint* bp = window->mClient->GetBreakpoint( i );
 					assert( bp );
 
-					if( !idStr::Icmp( window->mScripts[window->mActiveScript]->GetFilename( ), bp->GetFilename( ) ) )
+					if( !idStr::Icmp( window->mScripts[window->mActiveScript]->GetFilename(), bp->GetFilename() ) )
 					{
 						int		c;
 						POINTL	pos;
 
-						c = SendMessage( window->mWndScript, EM_LINEINDEX, bp->GetLineNumber( ) - 1, 0 );
+						c = SendMessage( window->mWndScript, EM_LINEINDEX, bp->GetLineNumber() - 1, 0 );
 						SendMessage( window->mWndScript, EM_POSFROMCHAR, ( WPARAM )&pos, c );
 						ImageList_DrawEx( window->mImageList, 2, dc, rect.left, pos.y, size, size, CLR_NONE, CLR_NONE, ILD_NORMAL );
 					}
 				}
 
-				if( window->mClient->IsStopped( ) )
+				if( window->mClient->IsStopped() )
 				{
 					if( !idStr::Icmp( window->mClient->GetBreakFilename(),
-									  window->mScripts[window->mActiveScript]->GetFilename( ) ) )
+									  window->mScripts[window->mActiveScript]->GetFilename() ) )
 					{
 						int		c;
 						POINTL	pos;
@@ -427,7 +427,7 @@ LRESULT CALLBACK rvDebuggerWindow::MarginWndProc( HWND wnd, UINT msg, WPARAM wpa
 
 				if( window->mCurrentStackDepth != 0 )
 				{
-					if( !window->mClient->GetCallstack()[window->mCurrentStackDepth]->mFilename.Icmp( window->mScripts[window->mActiveScript]->GetFilename( ) ) )
+					if( !window->mClient->GetCallstack()[window->mCurrentStackDepth]->mFilename.Icmp( window->mScripts[window->mActiveScript]->GetFilename() ) )
 					{
 						int		c;
 						POINTL	pos;
@@ -468,9 +468,9 @@ void rvDebuggerWindow::UpdateTitle()
 
 	title = "Quake 4 Script Debugger - ";
 
-	if( mClient->IsConnected( ) )
+	if( mClient->IsConnected() )
 	{
-		if( mClient->IsStopped( ) )
+		if( mClient->IsStopped() )
 		{
 			title += "[break]";
 		}
@@ -484,10 +484,10 @@ void rvDebuggerWindow::UpdateTitle()
 		title += "[disconnected]";
 	}
 
-	if( mScripts.Num( ) )
+	if( mScripts.Num() )
 	{
 		title += " - [";
-		title += idStr( mScripts[mActiveScript]->GetFilename() ).StripPath( );
+		title += idStr( mScripts[mActiveScript]->GetFilename() ).StripPath();
 		title += "]";
 	}
 
@@ -503,7 +503,7 @@ Updates the edit window to contain the current script
 */
 void rvDebuggerWindow::UpdateScript()
 {
-	UpdateTitle( );
+	UpdateTitle();
 
 	// Dont reupdate if the given active script is the one being displayed.
 	if( mActiveScript == mLastActiveScript )
@@ -515,7 +515,7 @@ void rvDebuggerWindow::UpdateScript()
 
 	// Show and hide the script window depending on whether or not
 	// there are loaded scripts
-	if( mScripts.Num( ) < 1 )
+	if( mScripts.Num() < 1 )
 	{
 		ShowWindow( mWndScript, SW_HIDE );
 		return;
@@ -529,7 +529,7 @@ void rvDebuggerWindow::UpdateScript()
 	SendMessage( mWndScript, EM_SETSEL, 0, -1 );
 	SendMessage( mWndScript, EM_REPLACESEL, 0, ( LPARAM )"" );
 	SendMessage( mWndScript, EM_SETSEL, 0, -1 );
-	SendMessage( mWndScript, EM_REPLACESEL, 0, ( LPARAM )mScripts[mActiveScript]->GetContents( ) );
+	SendMessage( mWndScript, EM_REPLACESEL, 0, ( LPARAM )mScripts[mActiveScript]->GetContents() );
 }
 
 /*
@@ -555,8 +555,8 @@ void rvDebuggerWindow::UpdateWindowMenu()
 	for( i = 0; i < mScripts.Num(); i ++ )
 	{
 		idStr name;
-		name = mScripts[i]->GetFilename( );
-		name.StripPath( );
+		name = mScripts[i]->GetFilename();
+		name.StripPath();
 		name = idStr( va( "&%d ", i + 1 ) ) + name;
 		AppendMenu( mWindowMenu, MF_STRING, ID_DBG_WINDOWMIN + i, name );
 	}
@@ -685,7 +685,7 @@ int rvDebuggerWindow::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 				}
 
 				info.dwTypeData = ( LPSTR )run.c_str();
-				info.cch = run.Length( );
+				info.cch = run.Length();
 
 				SendMessage( mWndToolbar, TB_ENABLEBUTTON, id, MAKELONG( ( ( info.fState == MFS_ENABLED ) ? TRUE : FALSE ), 0 ) );
 
@@ -755,7 +755,7 @@ int rvDebuggerWindow::HandleCreate( WPARAM wparam, LPARAM lparam )
 	gDebuggerApp.GetOptions().GetWindowPlacement( "wp_main", mWnd );
 
 	// Create the main toolbar
-	CreateToolbar( );
+	CreateToolbar();
 
 	// Create the script window
 	LoadLibrary( "Riched20.dll" );
@@ -903,8 +903,8 @@ int rvDebuggerWindow::HandleCreate( WPARAM wparam, LPARAM lparam )
 	ListView_SetExtendedListViewStyle( mWndWatch, LVS_EX_FULLROWSELECT );
 
 	// Recent files
-	InitRecentFiles( );
-	UpdateRecentFiles( );
+	InitRecentFiles();
+	UpdateRecentFiles();
 
 	HandleInitMenu( ( WPARAM )GetMenu( mWnd ), 0 );
 
@@ -939,7 +939,7 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 	if( id >= ID_DBG_WINDOWMIN && id <= ID_DBG_WINDOWMAX )
 	{
 		mActiveScript = id - ID_DBG_WINDOWMIN;
-		UpdateScript( );
+		UpdateScript();
 		return 0;
 	}
 
@@ -974,11 +974,11 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 		}
 
 		case ID_DBG_EDIT_FINDNEXT:
-			FindNext( );
+			FindNext();
 			break;
 
 		case ID_DBG_EDIT_FINDPREV:
-			FindPrev( );
+			FindPrev();
 			break;
 
 		case ID_DBG_DEBUG_QUICKWATCH:
@@ -996,22 +996,22 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 			break;
 
 		case ID_DBG_DEBUG_BREAK:
-			mClient->Break( );
+			mClient->Break();
 			break;
 
 		case ID_DBG_DEBUG_STEPOVER:
 			EnableWindows( FALSE );
-			mClient->StepOver( );
+			mClient->StepOver();
 			break;
 
 		case ID_DBG_DEBUG_STEPINTO:
 			EnableWindows( FALSE );
-			mClient->StepInto( );
+			mClient->StepInto();
 			break;
 
 		case ID_DBG_DEBUG_RUN:
 			// Run the game if its not running
-			if( !mClient->IsConnected( ) )
+			if( !mClient->IsConnected() )
 			{
 				char exeFile[MAX_PATH];
 				char curDir[MAX_PATH];
@@ -1035,9 +1035,9 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 			else if( mClient->IsStopped() )
 			{
 				EnableWindows( FALSE );
-				mClient->Resume( );
-				UpdateToolbar( );
-				UpdateTitle( );
+				mClient->Resume();
+				UpdateToolbar();
+				UpdateTitle();
 				InvalidateRect( mWnd, NULL, FALSE );
 			}
 
@@ -1065,7 +1065,7 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 		}
 
 		case ID_DBG_DEBUG_TOGGLEBREAKPOINT:
-			ToggleBreakpoint( );
+			ToggleBreakpoint();
 			break;
 
 		case ID_DBG_FILE_EXIT:
@@ -1077,25 +1077,25 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 			{
 				delete mScripts[mActiveScript];
 				mScripts.RemoveIndex( mActiveScript );
-				if( mActiveScript >= mScripts.Num( ) )
+				if( mActiveScript >= mScripts.Num() )
 				{
 					mActiveScript --;
 				}
-				UpdateWindowMenu( );
-				UpdateScript( );
+				UpdateWindowMenu();
+				UpdateScript();
 			}
 			break;
 
 		case ID_DBG_FILE_NEXT:
-			if( mScripts.Num( ) > 0 )
+			if( mScripts.Num() > 0 )
 			{
 				mActiveScript++;
-				if( mActiveScript >= mScripts.Num( ) )
+				if( mActiveScript >= mScripts.Num() )
 				{
 					mActiveScript = 0;
 				}
-				UpdateWindowMenu( );
-				UpdateScript( );
+				UpdateWindowMenu();
+				UpdateScript();
 			}
 			break;
 
@@ -1107,9 +1107,9 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 			dlg.SetFlags( OFD_MUSTEXIST );
 			if( dlg.DoModal( mWnd ) )
 			{
-				if( !OpenScript( dlg.GetFilename( ) ) )
+				if( !OpenScript( dlg.GetFilename() ) )
 				{
-					MessageBox( mWnd, va( "Failed to open script '%s'", dlg.GetFilename( ) ), "Quake 4 Script Debugger", MB_OK );
+					MessageBox( mWnd, va( "Failed to open script '%s'", dlg.GetFilename() ), "Quake 4 Script Debugger", MB_OK );
 				}
 			}
 			break;
@@ -1120,7 +1120,7 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 			rvDebuggerFindDlg dlg;
 			if( dlg.DoModal( this ) )
 			{
-				FindNext( dlg.GetFindText( ) );
+				FindNext( dlg.GetFindText() );
 			}
 			break;
 		}
@@ -1132,11 +1132,11 @@ int rvDebuggerWindow::HandleCommand( WPARAM wparam, LPARAM lparam )
 				delete mScripts[i];
 			}
 
-			mScripts.Clear( );
+			mScripts.Clear();
 			mActiveScript = -1;
 
-			UpdateWindowMenu( );
-			UpdateScript( );
+			UpdateWindowMenu();
+			UpdateScript();
 			break;
 		}
 	}
@@ -1169,7 +1169,7 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 			gDebuggerApp.GetOptions().SetWindowPlacement( "wp_main", wnd );
 
 			int i;
-			for( i = 0; i < window->mWatches.Num( ); i ++ )
+			for( i = 0; i < window->mWatches.Num(); i ++ )
 			{
 				gDebuggerApp.GetOptions().SetString( va( "watch%d", i ), window->mWatches[i]->mVariable );
 			}
@@ -1274,7 +1274,7 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 
 				InvalidateRect( wnd, NULL, TRUE );
 
-				ReleaseCapture( );
+				ReleaseCapture();
 			}
 			break;
 
@@ -1286,7 +1286,7 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 				DrawFocusRect( dc, &window->mSplitterRect );
 				ReleaseDC( wnd, dc );
 
-				if( GetCapture( ) != wnd )
+				if( GetCapture() != wnd )
 				{
 					break;
 				}
@@ -1423,7 +1423,7 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 								}
 
 								window->AddWatch( ( ( NMLVDISPINFO* )hdr )->item.pszText );
-								window->UpdateWatch( );
+								window->UpdateWatch();
 								return FALSE;
 							}
 							else
@@ -1447,8 +1447,8 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 						if( sel != -1 )
 						{
 							window->mCurrentStackDepth = sel;
-							window->UpdateCallstack( );
-							window->UpdateWatch( );
+							window->UpdateCallstack();
+							window->UpdateWatch();
 							window->OpenScript( window->mClient->GetCallstack()[window->mCurrentStackDepth]->mFilename,
 												window->mClient->GetCallstack()[window->mCurrentStackDepth]->mLineNumber );
 						}
@@ -1491,7 +1491,7 @@ LRESULT CALLBACK rvDebuggerWindow::WndProc( HWND wnd, UINT msg, WPARAM wparam, L
 		}
 
 		case WM_CLOSE:
-			if( window->mClient->IsConnected( ) )
+			if( window->mClient->IsConnected() )
 			{
 				if( IDNO == MessageBox( wnd, "The debugger is currently connected to a running version of the game.  Are you sure you want to close now?", "Quake 4 Script Debugger", MB_YESNO | MB_ICONQUESTION ) )
 				{
@@ -1544,8 +1544,8 @@ void rvDebuggerWindow::ProcessNetMessage( msg_t* msg )
 	switch( command )
 	{
 		case DBMSG_RESUMED:
-			UpdateTitle( );
-			UpdateToolbar( );
+			UpdateTitle();
+			UpdateToolbar();
 			break;
 
 		case DBMSG_INSPECTVARIABLE:
@@ -1612,14 +1612,14 @@ void rvDebuggerWindow::ProcessNetMessage( msg_t* msg )
 
 		case DBMSG_CONNECT:
 		case DBMSG_CONNECTED:
-			UpdateTitle( );
-			UpdateToolbar( );
+			UpdateTitle();
+			UpdateToolbar();
 			Printf( "Connected...\n" );
 			break;
 
 		case DBMSG_DISCONNECT:
-			UpdateTitle( );
-			UpdateToolbar( );
+			UpdateTitle();
+			UpdateToolbar();
 			Printf( "Disconnected...\n" );
 			break;
 
@@ -1631,22 +1631,22 @@ void rvDebuggerWindow::ProcessNetMessage( msg_t* msg )
 
 		case DBMSG_BREAK:
 		{
-			Printf( "Break:  line=%d  file='%s'\n", mClient->GetBreakLineNumber( ), mClient->GetBreakFilename() );
+			Printf( "Break:  line=%d  file='%s'\n", mClient->GetBreakLineNumber(), mClient->GetBreakFilename() );
 
 			mCurrentStackDepth = 0;
 			mClient->InspectVariable( mTooltipVar, mCurrentStackDepth );
-			UpdateWatch( );
+			UpdateWatch();
 			EnableWindows( TRUE );
 			OpenScript( mClient->GetBreakFilename(), mClient->GetBreakLineNumber() - 1 );
-			UpdateTitle( );
-			UpdateToolbar( );
+			UpdateTitle();
+			UpdateToolbar();
 			SetForegroundWindow( mWnd );
 			break;
 		}
 
 		case DBMSG_INSPECTCALLSTACK:
 		{
-			UpdateCallstack( );
+			UpdateCallstack();
 			break;
 		}
 
@@ -1730,7 +1730,7 @@ bool rvDebuggerWindow::OpenScript( const char* filename, int lineNumber )
 	// See if the script is already loaded
 	for( i = 0; i < mScripts.Num(); i ++ )
 	{
-		if( !idStr::Icmp( mScripts[i]->GetFilename( ), filename ) )
+		if( !idStr::Icmp( mScripts[i]->GetFilename(), filename ) )
 		{
 			if( mActiveScript != i )
 			{
@@ -1754,7 +1754,7 @@ bool rvDebuggerWindow::OpenScript( const char* filename, int lineNumber )
 		}
 
 		gDebuggerApp.GetOptions().AddRecentFile( filename );
-		UpdateRecentFiles( );
+		UpdateRecentFiles();
 
 		mActiveScript = mScripts.Append( script );
 	}
@@ -1771,8 +1771,8 @@ bool rvDebuggerWindow::OpenScript( const char* filename, int lineNumber )
 
 #endif
 
-	UpdateScript( );
-	UpdateWindowMenu( );
+	UpdateScript();
+	UpdateWindowMenu();
 
 	// Move to a specific line number?
 	if( lineNumber != -1 )
@@ -1824,7 +1824,7 @@ void rvDebuggerWindow::ToggleBreakpoint()
 
 	// If there is already a breakpoint there then just remove it, otherwise
 	// we need to create a new breakpoint
-	bp = mClient->FindBreakpoint( mScripts[mActiveScript]->GetFilename( ), line );
+	bp = mClient->FindBreakpoint( mScripts[mActiveScript]->GetFilename(), line );
 	if( !bp )
 	{
 		// Make sure the line is code before letting them add a breakpoint there
@@ -1838,7 +1838,7 @@ void rvDebuggerWindow::ToggleBreakpoint()
 	}
 	else
 	{
-		mClient->RemoveBreakpoint( bp->GetID( ) );
+		mClient->RemoveBreakpoint( bp->GetID() );
 	}
 
 	// Force a repaint of the script window
@@ -1986,13 +1986,13 @@ int rvDebuggerWindow::HandleActivate( WPARAM wparam, LPARAM lparam )
 		{
 			if( IDYES == MessageBox( mWnd, va( "%s\n\nThis file has been modified outside of the debugger.\nDo you want to reload it?", mScripts[i]->GetFilename() ), "Quake 4 Script Debugger", MB_YESNO | MB_ICONQUESTION ) )
 			{
-				mScripts[i]->Reload( );
+				mScripts[i]->Reload();
 
 				// Update the script if it was the active one
 				if( mActiveScript == i )
 				{
 					mLastActiveScript = -1;
-					UpdateScript( );
+					UpdateScript();
 				}
 
 				// Loop through the breakpoints and see if any of them have
@@ -2005,9 +2005,9 @@ int rvDebuggerWindow::HandleActivate( WPARAM wparam, LPARAM lparam )
 
 					if( !idStr::Icmp( bp->GetFilename(), mScripts[i]->GetFilename() ) )
 					{
-						if( !mScripts[i]->IsLineCode( bp->GetLineNumber( ) ) )
+						if( !mScripts[i]->IsLineCode( bp->GetLineNumber() ) )
 						{
-							mClient->RemoveBreakpoint( bp->GetID( ) );
+							mClient->RemoveBreakpoint( bp->GetID() );
 						}
 					}
 				}
@@ -2110,7 +2110,7 @@ void rvDebuggerWindow::UpdateRecentFiles()
 	// Make sure everything is initialized
 	if( !mRecentFileMenu )
 	{
-		InitRecentFiles( );
+		InitRecentFiles();
 	}
 
 	// Delete all the old recent files from the menu's
@@ -2134,7 +2134,7 @@ void rvDebuggerWindow::UpdateRecentFiles()
 	}
 
 	// Add the recent files to the menu now
-	for( j = 0, i = gDebuggerApp.GetOptions().GetRecentFileCount( ) - 1; i >= 0; i --, j++ )
+	for( j = 0, i = gDebuggerApp.GetOptions().GetRecentFileCount() - 1; i >= 0; i --, j++ )
 	{
 		UINT id = ID_DBG_FILE_MRU1 + j;
 		idStr str = va( "&%d ", j + 1 );
@@ -2158,9 +2158,9 @@ int rvDebuggerWindow::GetSelectedText( idStr& text )
 	int			end;
 	char*		temp;
 
-	text.Empty( );
+	text.Empty();
 
-	if( mScripts.Num( ) )
+	if( mScripts.Num() )
 	{
 		SendMessage( mWndScript, EM_GETSEL, ( WPARAM )&start, ( LPARAM )&end );
 		if( start == end )
@@ -2202,7 +2202,7 @@ bool rvDebuggerWindow::FindNext( const char* text )
 		mFind = text;
 	}
 
-	if( !mFind.Length( ) )
+	if( !mFind.Length() )
 	{
 		return false;
 	}
@@ -2256,7 +2256,7 @@ bool rvDebuggerWindow::FindPrev( const char* text )
 		mFind = text;
 	}
 
-	if( !mFind.Length( ) )
+	if( !mFind.Length() )
 	{
 		return false;
 	}

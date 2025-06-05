@@ -1698,7 +1698,7 @@ const char* idLexer::ParseBracedSectionExact( idStr& out, int tabs )
 
 	if( !idLexer::ExpectTokenString( "{" ) )
 	{
-		return out.c_str( );
+		return out.c_str();
 	}
 
 	out = "{";

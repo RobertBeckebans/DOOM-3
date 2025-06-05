@@ -61,8 +61,8 @@ class rvDebuggerClient
 {
 public:
 
-	rvDebuggerClient( );
-	~rvDebuggerClient( );
+	rvDebuggerClient();
+	~rvDebuggerClient();
 
 	bool						Initialize();
 	void						Shutdown();
@@ -220,7 +220,7 @@ rvDebuggerClient::GetBreakpointCount
 */
 ID_INLINE int rvDebuggerClient::GetBreakpointCount()
 {
-	return mBreakpoints.Num( );
+	return mBreakpoints.Num();
 }
 
 /*

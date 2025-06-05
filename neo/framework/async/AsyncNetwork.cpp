@@ -503,7 +503,7 @@ void idAsyncNetwork::Kick_f( const idCmdArgs& args )
 idAsyncNetwork::GetNETServers
 ==================
 */
-void idAsyncNetwork::GetNETServers( )
+void idAsyncNetwork::GetNETServers()
 {
 	client.GetNETServers();
 }

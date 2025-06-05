@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 HHOOK	gTransHook	 = NULL;
 HWND	gTransDlg	 = NULL;
 
-rvGETransformer::rvGETransformer( )
+rvGETransformer::rvGETransformer()
 {
 	mWnd		= NULL;
 	mWorkspace	= NULL;
@@ -184,14 +184,14 @@ INT_PTR CALLBACK rvGETransformer::DlgProc( HWND hWnd, UINT msg, WPARAM wParam, L
 				GetWindowText( GetDlgItem( hWnd, LOWORD( wParam ) ), temp, 64 );
 				value = atoi( temp );
 
-				idRectangle rect = trans->mWorkspace->GetSelectionMgr().GetRect( );
+				idRectangle rect = trans->mWorkspace->GetSelectionMgr().GetRect();
 				trans->mWorkspace->WindowToWorkspace( rect );
 
 				// The transformer coords are relative to the botto most selected window's parent so
 				// adjust the rect accordingly
 				if( trans->mRelative )
 				{
-					idRectangle& screenRect = rvGEWindowWrapper::GetWrapper( trans->mRelative )->GetScreenRect( );
+					idRectangle& screenRect = rvGEWindowWrapper::GetWrapper( trans->mRelative )->GetScreenRect();
 					rect.x -= screenRect.x;
 					rect.y -= screenRect.y;
 				}
@@ -244,7 +244,7 @@ void rvGETransformer::Show( bool visible )
 {
 	gApp.GetOptions().SetTransformerVisible( visible );
 	ShowWindow( mWnd, visible ? SW_SHOW : SW_HIDE );
-	Update( );
+	Update();
 }
 
 /*
@@ -258,7 +258,7 @@ void rvGETransformer::SetWorkspace( rvGEWorkspace* workspace )
 {
 	mWorkspace = workspace;
 
-	Update( );
+	Update();
 }
 
 /*
@@ -275,19 +275,19 @@ void rvGETransformer::Update()
 
 	mRelative = NULL;
 
-	if( mWorkspace && mWorkspace->GetSelectionMgr( ).Num( ) )
+	if( mWorkspace && mWorkspace->GetSelectionMgr().Num() )
 	{
 		state = true;
-		mRelative = mWorkspace->GetSelectionMgr().GetBottomMost( );
-		mRelative = mRelative->GetParent( );
+		mRelative = mWorkspace->GetSelectionMgr().GetBottomMost();
+		mRelative = mRelative->GetParent();
 
-		idRectangle rect = mWorkspace->GetSelectionMgr( ).GetRect( );
+		idRectangle rect = mWorkspace->GetSelectionMgr().GetRect();
 		mWorkspace->WindowToWorkspace( rect );
 
 		// Make the rectangle relative to the given parent
 		if( mRelative )
 		{
-			idRectangle& screenRect = rvGEWindowWrapper::GetWrapper( mRelative )->GetScreenRect( );
+			idRectangle& screenRect = rvGEWindowWrapper::GetWrapper( mRelative )->GetScreenRect();
 			rect.x -= screenRect.x;
 			rect.y -= screenRect.y;
 		}

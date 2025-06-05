@@ -34,7 +34,7 @@ class rvDebuggerQuickWatchDlg
 {
 public:
 
-	rvDebuggerQuickWatchDlg( );
+	rvDebuggerQuickWatchDlg();
 
 	bool	DoModal( rvDebuggerWindow* window, int callstackDepth, const char* variable = NULL );
 

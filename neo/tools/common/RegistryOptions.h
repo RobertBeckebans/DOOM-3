@@ -133,12 +133,12 @@ ID_INLINE idVec4 rvRegistryOptions::GetVec4( const char* name )
 
 ID_INLINE int rvRegistryOptions::GetRecentFileCount()
 {
-	return mRecentFiles.Num( );
+	return mRecentFiles.Num();
 }
 
 ID_INLINE const char* rvRegistryOptions::GetRecentFile( int index )
 {
-	return mRecentFiles[index].c_str( );
+	return mRecentFiles[index].c_str();
 }
 
 #endif // REGISTRYOPTIONS_H_

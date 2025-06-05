@@ -70,7 +70,7 @@ Handle translator messages
 */
 bool GUIEditorHandleMessage( void* msg )
 {
-	if( !gApp.IsActive( ) )
+	if( !gApp.IsActive() )
 	{
 		return false;
 	}
@@ -115,7 +115,7 @@ void GUIEditorRun()
 		DispatchMessage( &msg );
 	}
 
-	gApp.RunFrame( );
+	gApp.RunFrame();
 
 	// The GUI editor runs too hot so we need to slow it down a bit.
 	Sleep( 1 );

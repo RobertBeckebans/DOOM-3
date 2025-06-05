@@ -159,7 +159,7 @@ That does not work in BSD, however--BSD does not provide any way to free such bl
 */
 idCVar s_device( "s_dsp", "/dev/dsp", CVAR_SYSTEM | CVAR_ARCHIVE, "" );
 
-bool idAudioHardwareOSS::Initialize( )
+bool idAudioHardwareOSS::Initialize()
 {
 	common->Printf( "------ OSS Sound Initialization ------\n" );
 

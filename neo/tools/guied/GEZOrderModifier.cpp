@@ -40,13 +40,13 @@ rvGEZOrderModifier::rvGEZOrderModifier( const char* name, idWindow* window, EZOr
 	int			index;
 	idWindow*	parent;
 
-	parent = window->GetParent( );
+	parent = window->GetParent();
 	if( !parent )
 	{
 		return;
 	}
 
-	count = parent->GetChildCount( );
+	count = parent->GetChildCount();
 	index = parent->GetChildIndex( mWindow );
 
 	if( index + 1 >= count )
@@ -98,7 +98,7 @@ bool rvGEZOrderModifier::Apply()
 {
 	idWindow* parent;
 
-	parent = mWindow->GetParent( );
+	parent = mWindow->GetParent();
 
 	parent->RemoveChild( mWindow );
 	parent->InsertChild( mWindow, mBefore );
@@ -110,7 +110,7 @@ bool rvGEZOrderModifier::Undo()
 {
 	idWindow* parent;
 
-	parent = mWindow->GetParent( );
+	parent = mWindow->GetParent();
 
 	parent->RemoveChild( mWindow );
 	parent->InsertChild( mWindow, mUndoBefore );
@@ -120,7 +120,7 @@ bool rvGEZOrderModifier::Undo()
 
 bool rvGEZOrderModifier::IsValid()
 {
-	if( !mWindow->GetParent( ) )
+	if( !mWindow->GetParent() )
 	{
 		return false;
 	}

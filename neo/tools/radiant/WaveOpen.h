@@ -49,7 +49,7 @@ public:
 			   LPCTSTR lpszFilter = NULL,
 			   CWnd* pParentWnd = NULL );
 
-	virtual void OnFileNameChange( );
+	virtual void OnFileNameChange();
 protected:
 	//{{AFX_MSG(CWaveOpen)
 	afx_msg void OnBtnPlay();

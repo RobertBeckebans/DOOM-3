@@ -318,7 +318,7 @@ extern void CL_Quit_f(void);
 
 	//Sys_FPU_EnableExceptions( TEST_FPU_EXCEPTIONS );
 
-	Posix_EarlyInit( );
+	Posix_EarlyInit();
 
 #ifndef _DEBUG
 	if ( [self checkOS] == FALSE) {
@@ -340,7 +340,7 @@ extern void CL_Quit_f(void);
 		common->Init( 0, NULL, NULL );
 	}
 
-	Posix_LateInit( );
+	Posix_LateInit();
 
     [NSApp activateIgnoringOtherApps:YES];
 

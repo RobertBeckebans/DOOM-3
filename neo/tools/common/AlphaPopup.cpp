@@ -144,7 +144,7 @@ LRESULT CALLBACK AlphaSlider_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 				}
 				SetWindowLong( hwnd, GWL_USERDATA, MAKELONG( 0x8000, ( unsigned short )( 255.0f * v ) ) );
 				InvalidateRect( hwnd, NULL, FALSE );
-				ReleaseCapture( );
+				ReleaseCapture();
 				SendMessage( GetParent( hwnd ), WM_COMMAND, MAKELONG( GetWindowLong( hwnd, GWL_ID ), 0 ), 0 );
 			}
 			break;
@@ -273,7 +273,7 @@ INT_PTR CALLBACK AlphaSelectDlg_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPA
 
 		case WM_DESTROY:
 			UnhookWindowsHookEx( gAlphaHook );
-			ReleaseCapture( );
+			ReleaseCapture();
 			gAlphaDlg = NULL;
 			break;
 

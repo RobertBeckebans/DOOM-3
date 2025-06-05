@@ -33,7 +33,7 @@ class rvGEPropertyPage
 {
 public:
 
-	rvGEPropertyPage( );
+	rvGEPropertyPage();
 
 	virtual bool	Init()
 	{

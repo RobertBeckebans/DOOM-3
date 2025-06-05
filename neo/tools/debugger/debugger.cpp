@@ -56,7 +56,7 @@ Main entry point for the debugger application
 void DebuggerClientInit( const char* cmdline )
 {
 	// See if the debugger is already running
-	if( rvDebuggerWindow::Activate( ) )
+	if( rvDebuggerWindow::Activate() )
 	{
 		goto DebuggerClientInitDone;
 	}
@@ -66,7 +66,7 @@ void DebuggerClientInit( const char* cmdline )
 		goto DebuggerClientInitDone;
 	}
 
-	gDebuggerApp.Run( );
+	gDebuggerApp.Run();
 
 DebuggerClientInitDone:
 
@@ -91,7 +91,7 @@ void DebuggerClientLaunch()
 	}
 
 	// See if the debugger is already running
-	if( rvDebuggerWindow::Activate( ) )
+	if( rvDebuggerWindow::Activate() )
 	{
 		return;
 	}
@@ -129,7 +129,7 @@ DWORD CALLBACK DebuggerServerThread( LPVOID param )
 
 	while( !gDebuggerServerQuit )
 	{
-		gDebuggerServer->ProcessMessages( );
+		gDebuggerServer->ProcessMessages();
 		Sleep( 1 );
 	}
 
@@ -159,7 +159,7 @@ bool DebuggerServerInit()
 	}
 
 	// Initialize the debugger server
-	if( !gDebuggerServer->Initialize( ) )
+	if( !gDebuggerServer->Initialize() )
 	{
 		delete gDebuggerServer;
 		gDebuggerServer = NULL;

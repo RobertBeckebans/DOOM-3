@@ -32,7 +32,7 @@ class rvGEStatusBar
 {
 public:
 
-	rvGEStatusBar( );
+	rvGEStatusBar();
 
 	bool	Create( HWND parent, UINT id, bool visible = true );
 	void	Resize( int width, int height );
@@ -64,7 +64,7 @@ ID_INLINE void rvGEStatusBar::SetZoom( int zoom )
 	if( mZoom != zoom )
 	{
 		mZoom = zoom;
-		Update( );
+		Update();
 	}
 }
 
@@ -73,7 +73,7 @@ ID_INLINE void rvGEStatusBar::SetTriangles( int triangles )
 	if( triangles != mTriangles )
 	{
 		mTriangles = triangles;
-		Update( );
+		Update();
 	}
 }
 
@@ -82,7 +82,7 @@ ID_INLINE void rvGEStatusBar::SetSimple( bool simple )
 	if( mSimple != simple )
 	{
 		mSimple = simple;
-		Update( );
+		Update();
 	}
 }
 

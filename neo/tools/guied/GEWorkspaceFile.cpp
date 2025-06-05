@@ -59,12 +59,12 @@ bool rvGEWorkspace::SaveFile( const char* filename )
 	// Open the output file for write
 	if( !( file = fileSystem->OpenFileWrite( tempfile ) ) )
 	{
-		int error = GetLastError( );
+		int error = GetLastError();
 		SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 		return false;
 	}
 
-	window = mInterface->GetDesktop( );
+	window = mInterface->GetDesktop();
 
 	WriteWindow( file, 1, window );
 
@@ -82,7 +82,7 @@ bool rvGEWorkspace::SaveFile( const char* filename )
 	mFilename = filename;
 	mModified = false;
 	mNew      = false;
-	UpdateTitle( );
+	UpdateTitle();
 
 	SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 
@@ -125,7 +125,7 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 		return true;
 	}
 
-	if( wrapper->IsDeleted( ) )
+	if( wrapper->IsDeleted() )
 	{
 		return true;
 	}
@@ -133,11 +133,11 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 	// Window def header
 	WriteTabs( file, depth - 1 );
 
-	out = wrapper->WindowTypeToString( wrapper->GetWindowType( ) );
+	out = wrapper->WindowTypeToString( wrapper->GetWindowType() );
 	out.Append( " " );
 	file->Write( out, out.Length() );
 
-	out = window->GetName( );
+	out = window->GetName();
 	file->Write( out, out.Length() );
 	file->Write( "\r\n", 2 );
 
@@ -145,7 +145,7 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 
 	out = "{\r\n";
 	file->Write( out, out.Length() );
-	file->ForceFlush( );
+	file->ForceFlush();
 
 	for( i = 0; i < wrapper->GetStateDict().GetNumKeyVals(); i ++ )
 	{
@@ -229,7 +229,7 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 
 	out = "}\r\n";
 	file->Write( out, out.Length() );
-	file->ForceFlush( );
+	file->ForceFlush();
 
 	return true;
 }
@@ -276,7 +276,7 @@ bool rvGEWorkspace::NewFile()
 	DeleteFile( ospath );
 
 	// Go back to using a .gui extensions
-	ospath.StripFileExtension( );
+	ospath.StripFileExtension();
 	ospath.Append( ".gui" );
 
 	mFilename = ospath;
@@ -304,7 +304,7 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 
 	// Make sure the gui directory exists
 	idStr createDir = ospath;
-	createDir.StripFilename( );
+	createDir.StripFilename();
 	CreateDirectory( createDir, NULL );
 
 	SetFileAttributes( ospath, FILE_ATTRIBUTE_NORMAL );
@@ -321,7 +321,7 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 	SetFileAttributes( ospath, FILE_ATTRIBUTE_NORMAL );
 
 	mFilename = filename;
-	UpdateTitle( );
+	UpdateTitle();
 
 	// Let the real window system parse it first
 	mInterface = NULL;
@@ -346,7 +346,7 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 
 	if( result )
 	{
-		rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop( ) )->Expand( );
+		rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() )->Expand();
 	}
 	else
 	{

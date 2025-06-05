@@ -3516,7 +3516,7 @@ void idSessionLocal::ClearCDKey( bool valid[ 2 ] )
 	{
 		xpkey_state = CDKEY_OK;
 	}
-	WriteCDKey( );
+	WriteCDKey();
 }
 
 /*

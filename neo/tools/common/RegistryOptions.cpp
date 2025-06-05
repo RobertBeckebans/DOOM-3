@@ -103,8 +103,8 @@ bool rvRegistryOptions::Load()
 	DWORD	dwSize;
 	int		i;
 
-	mValues.Clear( );
-	mRecentFiles.Clear( );
+	mValues.Clear();
+	mRecentFiles.Clear();
 
 	if( ERROR_SUCCESS != RegOpenKeyEx( HKEY_LOCAL_MACHINE, mBaseKey, 0, KEY_READ, &hKey ) )
 	{
@@ -240,7 +240,7 @@ void rvRegistryOptions::AddRecentFile( const char* filename )
 	}
 
 	// Alwasy trip to the max MRU size
-	while( mRecentFiles.Num( ) >= MAX_MRU_SIZE )
+	while( mRecentFiles.Num() >= MAX_MRU_SIZE )
 	{
 		mRecentFiles.RemoveIndex( 0 );
 	}

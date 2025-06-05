@@ -253,7 +253,7 @@ public:
 
 	virtual					~idAudioHardware();
 
-	virtual bool			Initialize( ) = 0;
+	virtual bool			Initialize() = 0;
 
 	virtual bool			Lock( void** pDSLockedBuffer, ulong* dwDSLockedBufferSize ) = 0;
 	virtual bool			Unlock( void* pDSLockedBuffer, dword dwDSLockedBufferSize ) = 0;
@@ -761,7 +761,7 @@ typedef struct
 class idSoundSystemLocal : public idSoundSystem
 {
 public:
-	idSoundSystemLocal( )
+	idSoundSystemLocal()
 	{
 		isInitialized = false;
 	}

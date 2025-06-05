@@ -34,7 +34,7 @@ class rvDebuggerFindDlg
 {
 public:
 
-	rvDebuggerFindDlg( );
+	rvDebuggerFindDlg();
 
 	bool	DoModal( rvDebuggerWindow* window );
 

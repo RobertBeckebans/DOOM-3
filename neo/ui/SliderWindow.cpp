@@ -431,7 +431,7 @@ void idSliderWindow::Activate( bool activate, idStr& act )
 idSliderWindow::InitCvar
 ============
 */
-void idSliderWindow::InitCvar( )
+void idSliderWindow::InitCvar()
 {
 	if( cvarStr[0] == '\0' )
 	{

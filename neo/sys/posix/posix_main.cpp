@@ -622,7 +622,7 @@ void Posix_LateInit()
 #ifndef ID_DEDICATED
 	common->Printf( "%d MB Video Memory\n", Sys_GetVideoRam() );
 #endif
-	Posix_StartAsyncThread( );
+	Posix_StartAsyncThread();
 }
 
 /*

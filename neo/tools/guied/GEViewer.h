@@ -33,7 +33,7 @@ class rvGEViewer
 {
 public:
 
-	rvGEViewer( );
+	rvGEViewer();
 
 	bool				Create( HWND parent );
 	bool				Destroy();

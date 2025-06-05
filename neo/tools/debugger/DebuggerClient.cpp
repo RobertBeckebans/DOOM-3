@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 rvDebuggerClient::rvDebuggerClient
 ================
 */
-rvDebuggerClient::rvDebuggerClient( )
+rvDebuggerClient::rvDebuggerClient()
 {
 	mConnected = false;
 	mWaitFor   = DBMSG_UNKNOWN;
@@ -47,11 +47,11 @@ rvDebuggerClient::rvDebuggerClient( )
 rvDebuggerClient::~rvDebuggerClient
 ================
 */
-rvDebuggerClient::~rvDebuggerClient( )
+rvDebuggerClient::~rvDebuggerClient()
 {
-	ClearBreakpoints( );
-	ClearCallstack( );
-	ClearThreads( );
+	ClearBreakpoints();
+	ClearCallstack();
+	ClearThreads();
 }
 
 /*
@@ -139,12 +139,12 @@ bool rvDebuggerClient::ProcessMessages()
 			case DBMSG_CONNECT:
 				mConnected = true;
 				SendMessage( DBMSG_CONNECTED );
-				SendBreakpoints( );
+				SendBreakpoints();
 				break;
 
 			case DBMSG_CONNECTED:
 				mConnected = true;
-				SendBreakpoints( );
+				SendBreakpoints();
 				break;
 
 			case DBMSG_DISCONNECT:
@@ -201,7 +201,7 @@ void rvDebuggerClient::HandleBreak( msg_t* msg )
 	mBreakFilename   = filename;
 
 	// Clear the variables
-	mVariables.Clear( );
+	mVariables.Clear();
 
 	// Request the callstack and threads
 	SendMessage( DBMSG_INSPECTCALLSTACK );
@@ -245,7 +245,7 @@ void rvDebuggerClient::HandleInspectCallstack( msg_t* msg )
 {
 	int depth;
 
-	ClearCallstack( );
+	ClearCallstack();
 
 	// Read all of the callstack entries specfied in the message
 	for( depth = ( short )MSG_ReadShort( msg ) ; depth > 0; depth -- )
@@ -282,7 +282,7 @@ void rvDebuggerClient::HandleInspectThreads( msg_t* msg )
 {
 	int	count;
 
-	ClearThreads( );
+	ClearThreads();
 
 	// Loop over the number of threads in the message
 	for( count = ( short )MSG_ReadShort( msg ) ; count > 0; count -- )
@@ -348,12 +348,12 @@ bool rvDebuggerClient::WaitFor( EDebuggerMessage msg, int time )
 		return false;
 	}
 
-	start    = Sys_Milliseconds( );
+	start    = Sys_Milliseconds();
 	mWaitFor = msg;
 
 	while( mWaitFor != DBMSG_UNKNOWN && Sys_Milliseconds() - start < time )
 	{
-		ProcessMessages( );
+		ProcessMessages();
 		Sleep( 0 );
 	}
 
@@ -381,7 +381,7 @@ rvDebuggerBreakpoint* rvDebuggerClient::FindBreakpoint( const char* filename, in
 	{
 		rvDebuggerBreakpoint* bp = mBreakpoints[i];
 
-		if( linenumber == bp->GetLineNumber( ) && !idStr::Icmp( bp->GetFilename( ), filename ) )
+		if( linenumber == bp->GetLineNumber() && !idStr::Icmp( bp->GetFilename(), filename ) )
 		{
 			return bp;
 		}
@@ -410,7 +410,7 @@ void rvDebuggerClient::ClearBreakpoints()
 		delete bp;
 	}
 
-	mBreakpoints.Clear( );
+	mBreakpoints.Clear();
 }
 
 /*
@@ -442,7 +442,7 @@ bool rvDebuggerClient::RemoveBreakpoint( int bpID )
 
 	for( index = 0; index < GetBreakpointCount(); index ++ )
 	{
-		if( mBreakpoints[index]->GetID( ) == bpID )
+		if( mBreakpoints[index]->GetID() == bpID )
 		{
 			SendRemoveBreakpoint( *mBreakpoints[index] );
 			delete mBreakpoints[index];
@@ -515,8 +515,8 @@ void rvDebuggerClient::SendAddBreakpoint( rvDebuggerBreakpoint& bp, bool onceOnl
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )DBMSG_ADDBREAKPOINT );
 	MSG_WriteBits( &msg, onceOnly ? 1 : 0, 1 );
-	MSG_WriteLong( &msg, ( unsigned long ) bp.GetLineNumber( ) );
-	MSG_WriteLong( &msg, bp.GetID( ) );
+	MSG_WriteLong( &msg, ( unsigned long ) bp.GetLineNumber() );
+	MSG_WriteLong( &msg, bp.GetID() );
 	MSG_WriteString( &msg, bp.GetFilename() );
 
 	SendPacket( msg.data, msg.cursize );
@@ -562,7 +562,7 @@ void rvDebuggerClient::ClearCallstack()
 		delete mCallstack[depth];
 	}
 
-	mCallstack.Clear( );
+	mCallstack.Clear();
 }
 
 /*
@@ -581,6 +581,6 @@ void rvDebuggerClient::ClearThreads()
 		delete mThreads[i];
 	}
 
-	mThreads.Clear( );
+	mThreads.Clear();
 }
 

@@ -75,7 +75,7 @@ typedef enum
 class idServerScan : public idList<networkServer_t>
 {
 public:
-	idServerScan( );
+	idServerScan();
 
 	int					InfoResponse( networkServer_t& server );
 
@@ -86,16 +86,16 @@ public:
 	// if timeout is true, use a timeout once we start AddServer to trigger EndServers and decide the scan is done
 	void				StartServers( bool timeout );
 	// we are done filling up the list of server entries
-	void				EndServers( );
+	void				EndServers();
 
 	// scan the current list of servers - used for refreshes and while receiving a fresh list
-	void				NetScan( );
+	void				NetScan();
 
 	// clear
-	void				Clear( );
+	void				Clear();
 
 	// called each game frame. Updates the scanner state, takes care of ongoing scans
-	void				RunFrame( );
+	void				RunFrame();
 
 	typedef enum
 	{
@@ -114,20 +114,20 @@ public:
 	bool				GetBestPing( networkServer_t& serv );
 
 	// prepare for a LAN scan. idAsyncClient does the network job (UDP broadcast), we do the storage
-	void				SetupLANScan( );
+	void				SetupLANScan();
 
 	void				GUIConfig( idUserInterface* pGUI, const char* name );
 	// update the GUI fields with information about the currently selected server
 	void				GUIUpdateSelected();
 
-	void				Shutdown( );
+	void				Shutdown();
 
-	void				ApplyFilter( );
+	void				ApplyFilter();
 
 	// there is an internal toggle, call twice with same sort to switch
 	void				SetSorting( serverSort_t sort );
 
-	int					GetChallenge( );
+	int					GetChallenge();
 
 private:
 	static const int	MAX_PINGREQUESTS 	= 32;		// how many servers to query at once
@@ -166,7 +166,7 @@ private:
 	int					endWaitTime;		// when to stop waiting on a port init
 
 private:
-	void				LocalClear( );		// we need to clear some internal data as well
+	void				LocalClear();		// we need to clear some internal data as well
 
 	void				EmitGetInfo( netadr_t& serv );
 	void				GUIAdd( int id, const networkServer_t server );

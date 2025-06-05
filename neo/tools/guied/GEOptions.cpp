@@ -100,7 +100,7 @@ bool rvGEOptions::Save()
 		mRegistry.SetLong( va( "customcol%d", i ), mCustomColors[i] );
 	}
 
-	return mRegistry.Save( );
+	return mRegistry.Save();
 }
 
 /*
@@ -112,7 +112,7 @@ Loads previsouly saved options from the registry
 */
 bool rvGEOptions::Load()
 {
-	if( !mRegistry.Load( ) )
+	if( !mRegistry.Load() )
 	{
 		return false;
 	}

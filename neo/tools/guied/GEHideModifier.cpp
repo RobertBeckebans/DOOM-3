@@ -37,16 +37,16 @@ rvGEHideModifier::rvGEHideModifier( const char* name, idWindow* window, bool hid
 {
 	mParent		= NULL;
 	mHide		= hide;
-	mUndoHide	= mWrapper->IsHidden( );
+	mUndoHide	= mWrapper->IsHidden();
 
 	// If unhiding then find any parent window along the way that may be hidden and prevent
 	// this window from being visible
 	if( !hide )
 	{
 		mParent = mWindow;
-		while( NULL != ( mParent = mParent->GetParent( ) ) )
+		while( NULL != ( mParent = mParent->GetParent() ) )
 		{
-			if( rvGEWindowWrapper::GetWrapper( mParent )->IsHidden( ) )
+			if( rvGEWindowWrapper::GetWrapper( mParent )->IsHidden() )
 			{
 				break;
 			}

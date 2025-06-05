@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 rvGEMoveModifier::rvGEMoveModifier( const char* name, idWindow* window, float x, float y ) :
 	rvGEModifier( name, window )
 {
-	mOldRect = mWrapper->GetClientRect( );
+	mOldRect = mWrapper->GetClientRect();
 
 	mNewRect[0] = mOldRect[0] + x;
 	mNewRect[1] = mOldRect[1] + y;
@@ -68,7 +68,7 @@ bool rvGEMoveModifier::Undo()
 
 bool rvGEMoveModifier::IsValid()
 {
-	if( !mWindow->GetParent( ) )
+	if( !mWindow->GetParent() )
 	{
 		return false;
 	}

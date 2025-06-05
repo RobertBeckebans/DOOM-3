@@ -33,7 +33,7 @@ class rvGETransformer
 {
 public:
 
-	rvGETransformer( );
+	rvGETransformer();
 
 	bool		Create( HWND parent, bool visible );
 	void		Show( bool show );

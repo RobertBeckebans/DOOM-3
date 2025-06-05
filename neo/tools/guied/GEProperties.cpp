@@ -128,7 +128,7 @@ void rvGEProperties::Update()
 {
 	int i;
 
-	if( mWorkspace && mWorkspace->GetSelectionMgr( ).Num( ) == 1 )
+	if( mWorkspace && mWorkspace->GetSelectionMgr().Num() == 1 )
 	{
 		mWrapper = rvGEWindowWrapper::GetWrapper( mWorkspace->GetSelectionMgr()[0] );
 	}
@@ -137,18 +137,18 @@ void rvGEProperties::Update()
 		mWrapper = NULL;
 	}
 
-	ShowWindow( mGrid.GetWindow( ), mWrapper ? SW_SHOW : SW_HIDE );
+	ShowWindow( mGrid.GetWindow(), mWrapper ? SW_SHOW : SW_HIDE );
 
-	mGrid.RemoveAllItems( );
+	mGrid.RemoveAllItems();
 
 	if( mWrapper )
 	{
-		for( i = 0; i < ( int )mWrapper->GetStateDict().GetNumKeyVals( ); i ++ )
+		for( i = 0; i < ( int )mWrapper->GetStateDict().GetNumKeyVals(); i ++ )
 		{
 			const idKeyValue* kv = mWrapper->GetStateDict().GetKeyVal( i );
 			idStr temp;
 			temp = kv->GetValue();
-			temp.StripQuotes( );
+			temp.StripQuotes();
 			mGrid.AddItem( kv->GetKey(), temp );
 		}
 	}
@@ -179,13 +179,13 @@ bool rvGEProperties::AddModifier( const char* name, const char* value )
 		}
 	}
 
-	tempstate = mWrapper->GetStateDict( );
+	tempstate = mWrapper->GetStateDict();
 
 	tempstate.Set( name, tempvalue );
 
 	mWorkspace->GetModifierStack().Append( new rvGEStateModifier( "Property Change", mWrapper->GetWindow(), tempstate ) );
 	mWorkspace->SetModified( true );
-	gApp.GetNavigator().Update( );
+	gApp.GetNavigator().Update();
 
 	return true;
 }
@@ -229,7 +229,7 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 												NMKEY* nmkey = (NMKEY*)hdr;
 												if ( nmkey->nVKey == VK_DELETE )
 												{
-													int sel = kv->mGrid.GetCurSel ( );
+													int sel = kv->mGrid.GetCurSel ();
 													if ( sel != -1 )
 													{
 														const char* prop;
@@ -244,7 +244,7 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 														else
 														{
 															idDict tempstate;
-															tempstate = kv->mWrapper->GetStateDict ( );
+															tempstate = kv->mWrapper->GetStateDict ();
 															tempstate.Delete ( prop );
 															kv->mWorkspace->GetModifierStack().Append ( new rvGEStateModifier ( "Property Change", kv->mWrapper->GetWindow(), tempstate ) );
 															kv->mWorkspace->SetModified ( true );
@@ -276,7 +276,7 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 			kv->mGrid.Create( hWnd, 999, PGS_ALLOWINSERT );
 
 			kv->SetWorkspace( NULL );
-			kv->Update( );
+			kv->Update();
 
 			break;
 		}

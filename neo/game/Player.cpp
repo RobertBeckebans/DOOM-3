@@ -2718,7 +2718,7 @@ bool idPlayer::UserInfoChanged( bool canModify )
 	// server maintains TDM balance
 	if( canModify && gameLocal.gameType == GAME_TDM && !gameLocal.mpGame.IsInGame( entityNumber ) && g_balanceTDM.GetBool() )
 	{
-		modifiedInfo |= BalanceTDM( );
+		modifiedInfo |= BalanceTDM();
 	}
 	UpdateSkinSetup( false );
 

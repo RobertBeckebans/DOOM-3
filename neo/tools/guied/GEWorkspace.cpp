@@ -79,10 +79,10 @@ rvGEWorkspace::rvGEWorkspace( rvGEApp* app ) : mApplication( app )
 	mSelections.SetWorkspace( this );
 }
 
-rvGEWorkspace::~rvGEWorkspace( )
+rvGEWorkspace::~rvGEWorkspace()
 {
 	// Make sure all the wrappers get cleaned up
-	rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop( ) )->EnumChildren( CleanupEnumProc, NULL );
+	rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() )->EnumChildren( CleanupEnumProc, NULL );
 
 	DestroyCursor( mHandCursor );
 
@@ -140,13 +140,13 @@ bool rvGEWorkspace::Attach( HWND wnd )
 	mWnd = wnd;
 
 	// Initialize the pixel format for this window
-	SetupPixelFormat( );
+	SetupPixelFormat();
 
 	// Jam the workspace pointer into the userdata window long so
 	// we can retrieve the workspace from the window later
 	SetWindowLong( mWnd, GWL_USERDATA, ( LONG ) this );
 
-	UpdateTitle( );
+	UpdateTitle();
 
 	return true;
 }
@@ -208,10 +208,10 @@ void rvGEWorkspace::RenderGrid()
 	float	x;
 	float	y;
 	float	step;
-	idVec4&	color = mApplication->GetOptions().GetGridColor( );
+	idVec4&	color = mApplication->GetOptions().GetGridColor();
 
 	// See if the grid is off before rendering it
-	if( !mApplication->GetOptions().GetGridVisible( ) )
+	if( !mApplication->GetOptions().GetGridVisible() )
 	{
 		return;
 	}
@@ -222,37 +222,37 @@ void rvGEWorkspace::RenderGrid()
 	qglColor4f( color[0], color[1], color[2], 0.5f );
 
 	qglBegin( GL_LINES );
-	step = mApplication->GetOptions().GetGridWidth( ) * g_ZoomScales[mZoom];
+	step = mApplication->GetOptions().GetGridWidth() * g_ZoomScales[mZoom];
 	for( x = mRect.x + mRect.w; x >= mRect.x ; x -= step )
 	{
 		qglVertex2f( x, mRect.y );
 		qglVertex2f( x, mRect.y + mRect.h );
 	}
-	step = mApplication->GetOptions().GetGridHeight( ) * g_ZoomScales[mZoom];
+	step = mApplication->GetOptions().GetGridHeight() * g_ZoomScales[mZoom];
 	for( y = mRect.y + mRect.h; y >= mRect.y ; y -= step )
 	{
 		qglVertex2f( mRect.x, y );
 		qglVertex2f( mRect.x + mRect.w, y );
 	}
-	qglEnd( );
+	qglEnd();
 
 	qglDisable( GL_BLEND );
 	qglColor3f( color[0], color[1], color[2] );
 
 	qglBegin( GL_LINES );
-	step = mApplication->GetOptions().GetGridWidth( ) * g_ZoomScales[mZoom];
+	step = mApplication->GetOptions().GetGridWidth() * g_ZoomScales[mZoom];
 	for( x = mRect.x + mRect.w; x >= mRect.x ; x -= step * 4 )
 	{
 		qglVertex2f( x, mRect.y );
 		qglVertex2f( x, mRect.y + mRect.h );
 	}
-	step = mApplication->GetOptions().GetGridHeight( ) * g_ZoomScales[mZoom];
+	step = mApplication->GetOptions().GetGridHeight() * g_ZoomScales[mZoom];
 	for( y = mRect.y + mRect.h; y >= mRect.y ; y -= step * 4 )
 	{
 		qglVertex2f( mRect.x, y );
 		qglVertex2f( mRect.x + mRect.w, y );
 	}
-	qglEnd( );
+	qglEnd();
 }
 
 /*
@@ -301,7 +301,7 @@ void rvGEWorkspace::Render( HDC hdc )
 	qglVertex2f( mRect.x + mRect.w, mRect.y );
 	qglVertex2f( mRect.x + mRect.w, mRect.y + mRect.h );
 	qglVertex2f( mRect.x, mRect.y + mRect.h );
-	qglEnd( );
+	qglEnd();
 
 	// Prepare the renderSystem view to draw the GUI in
 	viewDef_t viewDef;
@@ -324,7 +324,7 @@ void rvGEWorkspace::Render( HDC hdc )
 	// We are done using the renderSystem now
 	renderSystem->EndFrame( &front, &back );
 
-	if( mApplication->GetActiveWorkspace( ) == this )
+	if( mApplication->GetActiveWorkspace() == this )
 	{
 		mApplication->GetStatusBar().SetTriangles( backEnd.pc.c_drawIndexes / 3 );
 	}
@@ -343,11 +343,11 @@ void rvGEWorkspace::Render( HDC hdc )
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 
-	RenderGrid( );
+	RenderGrid();
 
-	mSelections.Render( );
+	mSelections.Render();
 
-	qglFinish( );
+	qglFinish();
 	qwglSwapBuffers( hdc );
 
 	qglEnable( GL_TEXTURE_CUBE_MAP_EXT );
@@ -364,7 +364,7 @@ Updates the window title with the name of the file and the zoom level and weithe
 void rvGEWorkspace::UpdateTitle()
 {
 	// Set the window title based on the current filename
-	SetWindowText( mWnd, va( "%s%s (%d%%)", idStr( mFilename ).StripPath( ).c_str( ), mModified ? "*" : "", ( int )( g_ZoomScales[mZoom] * 100 ) ) );
+	SetWindowText( mWnd, va( "%s%s (%d%%)", idStr( mFilename ).StripPath().c_str(), mModified ? "*" : "", ( int )( g_ZoomScales[mZoom] * 100 ) ) );
 
 	gApp.GetStatusBar().SetZoom( ( int )( g_ZoomScales[mZoom] * 100.0f ) );
 }
@@ -446,7 +446,7 @@ void rvGEWorkspace::Scroll( int scrollbar, int offset )
 	SetScrollInfo( mWnd, scrollbar, &si, TRUE );
 	GetScrollInfo( mWnd, scrollbar, &si );
 
-	UpdateRectangle( );
+	UpdateRectangle();
 }
 
 int rvGEWorkspace::HandleScroll( int scrollbar, WPARAM wParam, LPARAM lParam )
@@ -497,7 +497,7 @@ int rvGEWorkspace::HandleScroll( int scrollbar, WPARAM wParam, LPARAM lParam )
 	SetScrollInfo( mWnd, scrollbar, &si, TRUE );
 	GetScrollInfo( mWnd, scrollbar, &si );
 
-	UpdateRectangle( );
+	UpdateRectangle();
 
 	return 0;
 }
@@ -670,7 +670,7 @@ void rvGEWorkspace::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 		case WM_CLOSE:
 		{
 
-			if( IsModified( ) )
+			if( IsModified() )
 			{
 				if( IDYES == gApp.MessageBox( va( "Save changes to the document \"%s\" before closing?", GetFilename() ), MB_YESNO | MB_ICONQUESTION ) )
 				{
@@ -679,9 +679,9 @@ void rvGEWorkspace::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 			}
 
 
-			GetApplication( )->GetNavigator().SetWorkspace( NULL );
-			GetApplication( )->GetTransformer().SetWorkspace( NULL );
-			GetApplication( )->GetProperties().SetWorkspace( NULL );
+			GetApplication()->GetNavigator().SetWorkspace( NULL );
+			GetApplication()->GetTransformer().SetWorkspace( NULL );
+			GetApplication()->GetProperties().SetWorkspace( NULL );
 			break;
 		}
 
@@ -714,11 +714,11 @@ void rvGEWorkspace::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 		case WM_MOUSEWHEEL:
 			if( ( short )HIWORD( wParam ) > 0 )
 			{
-				ZoomIn( );
+				ZoomIn();
 			}
 			else if( ( short )HIWORD( wParam ) < 0 )
 			{
-				ZoomOut( );
+				ZoomOut();
 			}
 			break;
 
@@ -794,7 +794,7 @@ int	rvGEWorkspace::HandleCommand( WPARAM wParam, LPARAM lParam )
 		// Handle multi select as well
 		if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 		{
-			if( wrapper->IsSelected( ) )
+			if( wrapper->IsSelected() )
 			{
 				mSelections.Remove( window );
 			}
@@ -848,7 +848,7 @@ int	rvGEWorkspace::HandleMButtonUp( WPARAM wParam, LPARAM lParam )
 	if( mDragScroll )
 	{
 		mDragScroll = false;
-		ReleaseCapture( );
+		ReleaseCapture();
 	}
 
 	return 0;
@@ -867,7 +867,7 @@ int	rvGEWorkspace::HandleRButtonDown( WPARAM wParam, LPARAM lParam )
 	HMENU menu;
 
 	// Add the select menu
-	mSelectMenu.Clear( );
+	mSelectMenu.Clear();
 
 	// Cache where the menu is being brought up so we can
 	// figure out which windows are under the point
@@ -884,7 +884,7 @@ int	rvGEWorkspace::HandleRButtonDown( WPARAM wParam, LPARAM lParam )
 	//
 	menu = GetSubMenu( LoadMenu( mApplication->GetInstance(), MAKEINTRESOURCE( IDR_GUIED_ITEM_POPUP ) ), 0 );
 
-	HMENU popup = CreatePopupMenu( );
+	HMENU popup = CreatePopupMenu();
 
 	int i;
 	for( i = 0; i < mSelectMenu.Num(); i ++ )
@@ -923,26 +923,26 @@ int	rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
 	WindowToWorkspace( point );
 
 	// Make sure whatever modifications get generated cant be merged into whats already there
-	mModifiers.BlockNextMerge( );
+	mModifiers.BlockNextMerge();
 
 	mDragPoint.Set( LOWORD( lParam ), HIWORD( lParam ) );
-	mDragTime = Sys_Milliseconds( );
+	mDragTime = Sys_Milliseconds();
 	mDragX    = true;
 	mDragY    = true;
 
 	// If we have selections then start a drag
-	if( mSelections.Num( ) )
+	if( mSelections.Num() )
 	{
 		mDragType = mSelections.HitTest( mDragPoint.x, mDragPoint.y );
 	}
 
 	rvGEWindowWrapper* wrapper;
-	wrapper = rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop( ) );
+	wrapper = rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() );
 
 	idWindow* window = wrapper->WindowFromPoint( point.x, point.y );
 
 	// dissallow selection of the desktop.
-	if( gApp.GetOptions().GetIgnoreDesktopSelect() && window == mInterface->GetDesktop( ) )
+	if( gApp.GetOptions().GetIgnoreDesktopSelect() && window == mInterface->GetDesktop() )
 	{
 		window = NULL;
 	}
@@ -975,11 +975,11 @@ int	rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
 		}
 		else
 		{
-			mSelections.Clear( );
+			mSelections.Clear();
 		}
 	}
 
-	if( mSelections.IsExpression( ) )
+	if( mSelections.IsExpression() )
 	{
 		mDragType = rvGESelectionMgr::HT_SELECT;
 	}
@@ -1005,11 +1005,11 @@ int	rvGEWorkspace::HandleLButtonUp( WPARAM wParam, LPARAM lParam )
 {
 	if( mDragType != rvGESelectionMgr::HT_NONE )
 	{
-		ReleaseCapture( );
-		mModifiers.BlockNextMerge( );
+		ReleaseCapture();
+		mModifiers.BlockNextMerge();
 
 		// Update the transformer
-		mApplication->GetTransformer().Update( );
+		mApplication->GetTransformer().Update();
 	}
 
 	// No more dragging
@@ -1027,7 +1027,7 @@ Handle a double click by opening properties
 */
 int	rvGEWorkspace::HandleLButtonDblClk( WPARAM wParam, LPARAM lParam )
 {
-	EditSelectedProperties( );
+	EditSelectedProperties();
 	return 0;
 }
 
@@ -1075,7 +1075,7 @@ int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 	}
 
 	// Handle grid snapping
-	if( gApp.GetOptions().GetGridSnap( ) )
+	if( gApp.GetOptions().GetGridSnap() )
 	{
 		cursor.x = ( float )( ( ( int )cursor.x + gApp.GetOptions().GetGridWidth() / 2 ) / gApp.GetOptions().GetGridWidth() * gApp.GetOptions().GetGridWidth() );
 		cursor.y = ( float )( ( ( int )cursor.y + gApp.GetOptions().GetGridWidth() / 2 ) / gApp.GetOptions().GetGridWidth() * gApp.GetOptions().GetGridWidth() );
@@ -1090,39 +1090,39 @@ int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 	switch( mDragType )
 	{
 		case rvGESelectionMgr::HT_MOVE:
-			AddModifierMove( "Move", cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierMove( "Move", cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_BOTTOM:
-			AddModifierSize( "Size", 0, 0, 0, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", 0, 0, 0, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_TOP:
-			AddModifierSize( "Size", 0, cursor.y - mDragPoint.y, 0, 0, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", 0, cursor.y - mDragPoint.y, 0, 0, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_RIGHT:
-			AddModifierSize( "Size", 0, 0, cursor.x - mDragPoint.x, 0, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", 0, 0, cursor.x - mDragPoint.x, 0, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_LEFT:
-			AddModifierSize( "Size", cursor.x - mDragPoint.x, 0, 0, 0, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", cursor.x - mDragPoint.x, 0, 0, 0, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_TOPLEFT:
-			AddModifierSize( "Size", cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, 0, 0, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, 0, 0, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_TOPRIGHT:
-			AddModifierSize( "Size", 0, cursor.y - mDragPoint.y, cursor.x - mDragPoint.x, 0, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", 0, cursor.y - mDragPoint.y, cursor.x - mDragPoint.x, 0, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_BOTTOMLEFT:
-			AddModifierSize( "Size", cursor.x - mDragPoint.x, 0, 0, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", cursor.x - mDragPoint.x, 0, 0, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap() );
 			break;
 
 		case rvGESelectionMgr::HT_SIZE_BOTTOMRIGHT:
-			AddModifierSize( "Size", 0, 0, cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap( ) );
+			AddModifierSize( "Size", 0, 0, cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap() );
 			break;
 	}
 
@@ -1201,8 +1201,8 @@ int	rvGEWorkspace::HandleKeyDown( WPARAM wParam, LPARAM lParam )
 			break;
 
 		case VK_ESCAPE:
-			mSelections.Clear( );
-			mApplication->GetNavigator().Update( );
+			mSelections.Clear();
+			mApplication->GetNavigator().Update();
 			break;
 	}
 
@@ -1274,8 +1274,8 @@ rvGEWorkspace::EZoomLevel rvGEWorkspace::ZoomIn()
 		mZoom = ZOOM_MAX - 1;
 	}
 
-	UpdateScrollbars( );
-	UpdateTitle( );
+	UpdateScrollbars();
+	UpdateTitle();
 
 	InvalidateRect( mWnd, NULL, FALSE );
 
@@ -1297,8 +1297,8 @@ rvGEWorkspace::EZoomLevel rvGEWorkspace::ZoomOut()
 		mZoom = ZOOM_MIN + 1;
 	}
 
-	UpdateScrollbars( );
-	UpdateTitle( );
+	UpdateScrollbars();
+	UpdateTitle();
 
 	InvalidateRect( mWnd, NULL, FALSE );
 
@@ -1378,12 +1378,12 @@ void rvGEWorkspace::AddModifiers( EModifierType type, ... )
 	va_list args;
 
 	// Nothing to move if there is no selection
-	if( !mSelections.Num( ) )
+	if( !mSelections.Num() )
 	{
 		return;
 	}
 	// More than one selection requires a modifier group
-	else if( mSelections.Num( ) > 1 )
+	else if( mSelections.Num() > 1 )
 	{
 		rvGEModifierGroup*	group = new rvGEModifierGroup;
 		int					i;
@@ -1422,14 +1422,14 @@ bool rvGEWorkspace::BuildSelectMenuEnumProc( rvGEWindowWrapper* wrapper, void* d
 
 	wrapper->EnumChildren( BuildSelectMenuEnumProc, data );
 
-	if( wrapper->IsDeleted( ) || wrapper->IsHidden( ) )
+	if( wrapper->IsDeleted() || wrapper->IsHidden() )
 	{
 		return true;
 	}
 
-	if( wrapper->GetScreenRect( ).Contains( workspace->mSelectMenuPos[0], workspace->mSelectMenuPos[1] ) )
+	if( wrapper->GetScreenRect().Contains( workspace->mSelectMenuPos[0], workspace->mSelectMenuPos[1] ) )
 	{
-		workspace->mSelectMenu.Append( wrapper->GetWindow( ) );
+		workspace->mSelectMenu.Append( wrapper->GetWindow() );
 	}
 
 	return true;
@@ -1441,9 +1441,9 @@ bool rvGEWorkspace::ShowAllEnumProc( rvGEWindowWrapper* wrapper, void* data )
 
 	wrapper->EnumChildren( ShowAllEnumProc, data );
 
-	if( wrapper->IsHidden( ) )
+	if( wrapper->IsHidden() )
 	{
-		group->Append( new rvGEHideModifier( "Show Hidden", wrapper->GetWindow( ), false ) );
+		group->Append( new rvGEHideModifier( "Show Hidden", wrapper->GetWindow(), false ) );
 	}
 
 	return true;
@@ -1453,9 +1453,9 @@ void rvGEWorkspace::AddModifierShowAll()
 {
 	rvGEModifierGroup* group = new rvGEModifierGroup;
 
-	rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop( ) )->EnumChildren( ShowAllEnumProc, group );
+	rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() )->EnumChildren( ShowAllEnumProc, group );
 
-	if( !group->GetCount( ) )
+	if( !group->GetCount() )
 	{
 		delete group;
 	}
@@ -1464,14 +1464,14 @@ void rvGEWorkspace::AddModifierShowAll()
 		mModifiers.Append( group );
 	}
 
-	mApplication->GetNavigator().Refresh( );
+	mApplication->GetNavigator().Refresh();
 }
 
 void rvGEWorkspace::DeleteSelected()
 {
 	AddModifiers( MOD_DELETE );
-	mSelections.Clear( );
-	mApplication->GetNavigator().Update( );
+	mSelections.Clear();
+	mApplication->GetNavigator().Update();
 }
 
 /*
@@ -1516,7 +1516,7 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 	}
 
 	baseName = state ? state->GetString( "name", "unnamed" ) : "unnamed";
-	baseName.StripQuotes( );
+	baseName.StripQuotes();
 
 	count = 0;
 	if( mInterface->GetDesktop()->FindChildByName( baseName ) )
@@ -1531,7 +1531,7 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 			}
 			assert( dw->win );
 			wrapper = rvGEWindowWrapper::GetWrapper( dw->win );
-			if( wrapper && wrapper->IsDeleted( ) )
+			if( wrapper && wrapper->IsDeleted() )
 			{
 				break;
 			}
@@ -1563,7 +1563,7 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 	}
 
 	wrapper->SetStateKey( "name", winName );
-	wrapper->Finish( );
+	wrapper->Finish();
 
 	SetModified( true );
 
@@ -1585,16 +1585,16 @@ idWindow* rvGEWorkspace::AddWindow( rvGEWindowWrapper::EWindowType type )
 	mModifiers.Append( new rvGEInsertModifier( "New", window, mInterface->GetDesktop(), NULL ) );
 
 	mSelections.Set( window );
-	mApplication->GetNavigator().Update( );
-	mApplication->GetTransformer().Update( );
-	mApplication->GetProperties().Update( );
+	mApplication->GetNavigator().Update();
+	mApplication->GetTransformer().Update();
+	mApplication->GetProperties().Update();
 
 	return window;
 }
 
 bool rvGEWorkspace::EditSelectedProperties()
 {
-	if( !mSelections.Num( ) || mSelections.Num() > 1 )
+	if( !mSelections.Num() || mSelections.Num() > 1 )
 	{
 		return false;
 	}
@@ -1606,9 +1606,9 @@ bool rvGEWorkspace::EditSelectedProperties()
 		SetModified( true );
 	}
 
-	mApplication->GetNavigator().Update( );
-	mApplication->GetTransformer().Update( );
-	mApplication->GetProperties().Update( );
+	mApplication->GetNavigator().Update();
+	mApplication->GetTransformer().Update();
+	mApplication->GetProperties().Update();
 
 	return true;
 }
@@ -1617,7 +1617,7 @@ bool rvGEWorkspace::EditSelectedScripts()
 {
 	if( GEItemScriptsDlg_DoModal( mWnd, mSelections[0] ) )
 	{
-		gApp.GetNavigator().Refresh( );
+		gApp.GetNavigator().Refresh();
 		SetModified( true );
 	}
 
@@ -1627,25 +1627,25 @@ bool rvGEWorkspace::EditSelectedScripts()
 void rvGEWorkspace::BringSelectedForward()
 {
 	AddModifiers( MOD_BRING_FORWARD );
-	mApplication->GetNavigator().Update( );
+	mApplication->GetNavigator().Update();
 }
 
 void rvGEWorkspace::BringSelectedToFront()
 {
 	AddModifiers( MOD_BRING_FRONT );
-	mApplication->GetNavigator().Update( );
+	mApplication->GetNavigator().Update();
 }
 
 void rvGEWorkspace::SendSelectedToBack()
 {
 	AddModifiers( MOD_SEND_BACK );
-	mApplication->GetNavigator().Update( );
+	mApplication->GetNavigator().Update();
 }
 
 void rvGEWorkspace::SendSelectedBackward()
 {
 	AddModifiers( MOD_SEND_BACKWARD );
-	mApplication->GetNavigator().Update( );
+	mApplication->GetNavigator().Update();
 }
 
 /*
@@ -1661,9 +1661,9 @@ void rvGEWorkspace::MakeSelectedSameSize( bool changeWidth, bool changeHeight )
 	idRectangle			rectTo;
 	int					i;
 
-	group = new rvGEModifierGroup( );
+	group = new rvGEModifierGroup();
 
-	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetClientRect( );
+	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetClientRect();
 
 	for( i = 1; i < mSelections.Num(); i ++ )
 	{
@@ -1689,7 +1689,7 @@ void rvGEWorkspace::MakeSelectedSameSize( bool changeWidth, bool changeHeight )
 	mModifiers.Append( group );
 
 	// Cant merge alignments
-	mModifiers.BlockNextMerge( );
+	mModifiers.BlockNextMerge();
 
 	SetModified( true );
 }
@@ -1712,10 +1712,10 @@ void rvGEWorkspace::AlignSelected( EItemAlign align )
 
 	modName = "Align " + idStr( alignNames[align] );
 
-	group   = new rvGEModifierGroup( );
+	group   = new rvGEModifierGroup();
 
 	idRectangle rectTo;
-	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetScreenRect( );
+	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetScreenRect();
 
 	// Everything gets aligned to the first selection so run
 	// through all other selections and move them.
@@ -1725,7 +1725,7 @@ void rvGEWorkspace::AlignSelected( EItemAlign align )
 		float		y;
 		idRectangle	rectFrom;
 
-		rectFrom = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect( );
+		rectFrom = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect();
 
 		switch( align )
 		{
@@ -1770,7 +1770,7 @@ void rvGEWorkspace::AlignSelected( EItemAlign align )
 	mModifiers.Append( group );
 
 	// Cant merge alignments
-	mModifiers.BlockNextMerge( );
+	mModifiers.BlockNextMerge();
 
 	SetModified( true );
 }
@@ -1787,7 +1787,7 @@ void rvGEWorkspace::AddModifierMove( const char* modName, float x, float y, bool
 	idRectangle scaleRect;
 	idRectangle newRect;
 
-	scaleRect = mSelections.GetRect( );
+	scaleRect = mSelections.GetRect();
 	WindowToWorkspace( scaleRect );
 	newRect   = scaleRect;
 	newRect.x += x;
@@ -1801,13 +1801,13 @@ void rvGEWorkspace::AddModifierMove( const char* modName, float x, float y, bool
 	rvGEModifierGroup*	group = new rvGEModifierGroup;
 	for( int i = 0; i < mSelections.Num(); i ++ )
 	{
-		if( !mSelections[i]->GetParent( ) )
+		if( !mSelections[i]->GetParent() )
 		{
 			continue;
 		}
 
 		// IF the parent window is being moved around as well then dont move this one.
-		if( rvGEWindowWrapper::GetWrapper( mSelections[i]->GetParent( ) )->IsSelected( ) )
+		if( rvGEWindowWrapper::GetWrapper( mSelections[i]->GetParent() )->IsSelected() )
 		{
 			// We still need the modifier there so the selection can be restored and
 			// so the rectangle gets updated
@@ -1836,7 +1836,7 @@ void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, floa
 	idRectangle	sizeRect;
 	idRectangle newRect;
 
-	scaleRect = mSelections.GetRect( );
+	scaleRect = mSelections.GetRect();
 	WindowToWorkspace( scaleRect );
 	newRect = scaleRect;
 	newRect.x += l;
@@ -1878,7 +1878,7 @@ void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, floa
 	rvGEModifierGroup*	group = new rvGEModifierGroup;
 	for( int i = 0; i < mSelections.Num(); i ++ )
 	{
-		sizeRect  = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect( );
+		sizeRect  = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect();
 
 		l = ( newRect.x + ( ( sizeRect.x - scaleRect.x ) / scaleRect.w ) * newRect.w ) - sizeRect.x;
 		t = ( newRect.y + ( ( sizeRect.y - scaleRect.y ) / scaleRect.h ) * newRect.h ) - sizeRect.y;
@@ -1889,17 +1889,17 @@ void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, floa
 		// time as a child you will get double movement because the child is relative to the parent.  Therefore
 		// we need to subtract out the closest parents sizing.
 		idWindow* parent = mSelections[i];
-		while( NULL != ( parent = parent->GetParent( ) ) )
+		while( NULL != ( parent = parent->GetParent() ) )
 		{
 			rvGEWindowWrapper*	pwrapper = rvGEWindowWrapper::GetWrapper( parent );
 			float				offset;
 
-			if( !pwrapper->IsSelected( ) )
+			if( !pwrapper->IsSelected() )
 			{
 				continue;
 			}
 
-			sizeRect  = pwrapper->GetScreenRect( );
+			sizeRect  = pwrapper->GetScreenRect();
 
 			// Subtract out the left and right modifications
 			offset = ( ( newRect.x + ( ( sizeRect.x - scaleRect.x ) / scaleRect.w ) * newRect.w ) - sizeRect.x );
@@ -1934,7 +1934,7 @@ void rvGEWorkspace::MakeSelectedAChild()
 	rvGEModifierGroup*	group;
 	int					i;
 
-	if( !rvGEWindowWrapper::GetWrapper( mSelections[0] )->CanHaveChildren( ) )
+	if( !rvGEWindowWrapper::GetWrapper( mSelections[0] )->CanHaveChildren() )
 	{
 		gApp.MessageBox( "Cannot add children to an htmlDef item", MB_OK | MB_ICONERROR );
 		return;
@@ -1944,12 +1944,12 @@ void rvGEWorkspace::MakeSelectedAChild()
 
 	for( i = 1; i < mSelections.Num(); i ++ )
 	{
-		if( mSelections[i]->GetParent( ) == mSelections[0] )
+		if( mSelections[i]->GetParent() == mSelections[0] )
 		{
 			continue;
 		}
 
-		if( !mSelections[i]->GetParent( ) )
+		if( !mSelections[i]->GetParent() )
 		{
 			continue;
 		}
@@ -1960,7 +1960,7 @@ void rvGEWorkspace::MakeSelectedAChild()
 	mModifiers.Append( group );
 
 	// Navigator needs an update since the ordering has changed
-	gApp.GetNavigator().Update( );
+	gApp.GetNavigator().Update();
 
 	SetModified( true );
 }
@@ -1975,7 +1975,7 @@ void rvGEWorkspace::Copy()
 		delete mClipboard[i];
 	}
 
-	mClipboard.Clear( );
+	mClipboard.Clear();
 
 	for( i = 0; i < mSelections.Num(); i ++ )
 	{
@@ -1983,11 +1983,11 @@ void rvGEWorkspace::Copy()
 		assert( wrapper );
 
 		rvGEClipboardItem* item = new rvGEClipboardItem;
-		item->mStateDict  = wrapper->GetStateDict( );
-		item->mScriptDict = wrapper->GetScriptDict( );
-		item->mVarDict    = wrapper->GetVariableDict( );
+		item->mStateDict  = wrapper->GetStateDict();
+		item->mScriptDict = wrapper->GetScriptDict();
+		item->mVarDict    = wrapper->GetVariableDict();
 
-		item->mStateDict.Set( "windowType", rvGEWindowWrapper::WindowTypeToString( wrapper->GetWindowType( ) ) );
+		item->mStateDict.Set( "windowType", rvGEWindowWrapper::WindowTypeToString( wrapper->GetWindowType() ) );
 
 		mClipboard.Append( item );
 	}
@@ -1999,7 +1999,7 @@ void rvGEWorkspace::Paste()
 
 	rvGEModifierGroup* group = new rvGEModifierGroup;
 
-	mSelections.Clear( );
+	mSelections.Clear();
 
 	for( i = 0; i < mClipboard.Num(); i ++ )
 	{
@@ -2014,13 +2014,13 @@ void rvGEWorkspace::Paste()
 		group->Append( new rvGEInsertModifier( "Paste", window, mInterface->GetDesktop(), NULL ) );
 		mSelections.Add( window );
 
-		rvGEWindowWrapper::GetWrapper( window )->GetScriptDict( ) = mClipboard[i]->mScriptDict;
-		rvGEWindowWrapper::GetWrapper( window )->GetVariableDict( ) = mClipboard[i]->mVarDict;
+		rvGEWindowWrapper::GetWrapper( window )->GetScriptDict() = mClipboard[i]->mScriptDict;
+		rvGEWindowWrapper::GetWrapper( window )->GetVariableDict() = mClipboard[i]->mVarDict;
 	}
 
 	mModifiers.Append( group );
 
-	mApplication->GetNavigator().Update( );
+	mApplication->GetNavigator().Update();
 
 	SetModified( true );
 }
@@ -2028,26 +2028,26 @@ void rvGEWorkspace::Paste()
 void rvGEWorkspace::HideSelected()
 {
 	AddModifiers( MOD_HIDE );
-	mSelections.Clear( );
-	mApplication->GetNavigator().Refresh( );
+	mSelections.Clear();
+	mApplication->GetNavigator().Refresh();
 }
 
 void rvGEWorkspace::UnhideSelected()
 {
 	AddModifiers( MOD_UNHIDE );
-	mApplication->GetNavigator().Refresh( );
+	mApplication->GetNavigator().Refresh();
 }
 
 void rvGEWorkspace::HideWindow( idWindow* window )
 {
 	AddModifiers( window, MOD_HIDE );
-	mApplication->GetNavigator().Refresh( );
+	mApplication->GetNavigator().Refresh();
 }
 
 void rvGEWorkspace::UnhideWindow( idWindow* window )
 {
 	AddModifiers( window, MOD_UNHIDE );
-	mApplication->GetNavigator().Refresh( );
+	mApplication->GetNavigator().Refresh();
 }
 
 /*
@@ -2064,7 +2064,7 @@ void rvGEWorkspace::SetModified( bool mod )
 	{
 
 		mModified = mod;
-		UpdateTitle( );
+		UpdateTitle();
 
 	}
 }

@@ -31,7 +31,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "GEApp.h"
 
-rvGEStatusBar::rvGEStatusBar( )
+rvGEStatusBar::rvGEStatusBar()
 {
 	mSimple = true;
 	mZoom   = 0;
@@ -70,7 +70,7 @@ void rvGEStatusBar::Resize( int width, int height )
 {
 	SendMessage( mWnd, WM_SIZE, 0, MAKELONG( width, height ) );
 
-	Update( );
+	Update();
 }
 
 /*

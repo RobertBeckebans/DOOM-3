@@ -302,7 +302,7 @@ ID_INLINE void rvGEOptions::AddRecentFile( const char* filename )
 
 ID_INLINE int rvGEOptions::GetRecentFileCount()
 {
-	return mRegistry.GetRecentFileCount( );
+	return mRegistry.GetRecentFileCount();
 }
 
 ID_INLINE const char* rvGEOptions::GetRecentFile( int index )

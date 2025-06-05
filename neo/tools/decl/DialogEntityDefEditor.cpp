@@ -674,7 +674,7 @@ void DialogEntityDefEditor::OnSizing( UINT nSide, LPRECT lpRect )
 DialogEntityDefEditor::OnEditChange
 ================
 */
-void DialogEntityDefEditor::OnEditChange( )
+void DialogEntityDefEditor::OnEditChange()
 {
 	testButton.EnableWindow( TRUE );
 	okButton.EnableWindow( TRUE );
@@ -685,7 +685,7 @@ void DialogEntityDefEditor::OnEditChange( )
 DialogEntityDefEditor::OnInheritChange
 ================
 */
-void DialogEntityDefEditor::OnInheritChange( )
+void DialogEntityDefEditor::OnInheritChange()
 {
 	testButton.EnableWindow( TRUE );
 	okButton.EnableWindow( TRUE );

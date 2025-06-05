@@ -78,7 +78,7 @@ public:
 	idAudioHardwareWIN32();
 	~idAudioHardwareWIN32();
 
-	bool Initialize( );
+	bool Initialize();
 	bool InitializeSpeakers( byte* buffer, int bufferSize, dword dwPrimaryFreq, dword dwPrimaryBitRate, dword dwSpeakers );
 
 	void SetPrimaryBufferFormat( dword dwPrimaryFreq, dword dwPrimaryBitRate, dword dwSpeakers );
@@ -882,7 +882,7 @@ idAudioBufferWIN32::IsSoundPlaying
 Desc: Checks to see if a buffer is playing and returns true if it
 ===============
 */
-bool idAudioBufferWIN32::IsSoundPlaying( )
+bool idAudioBufferWIN32::IsSoundPlaying()
 {
 	if( m_apDSBuffer == NULL )
 	{

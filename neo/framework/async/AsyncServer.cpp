@@ -384,7 +384,7 @@ void idAsyncServer::ExecuteMapChange()
 	// since this is not dependant on si_pure we catch anything bad before loading map
 	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) )
 	{
-		if( !fileSystem->UpdateGamePakChecksums( ) )
+		if( !fileSystem->UpdateGamePakChecksums() )
 		{
 			session->MessageBox( MSG_OK, common->GetLanguageDict()->GetString( "#str_04337" ), common->GetLanguageDict()->GetString( "#str_04338" ), true );
 			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "disconnect\n" );
@@ -407,7 +407,7 @@ void idAsyncServer::ExecuteMapChange()
 	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) )
 	{
 		// lock down the pak list
-		fileSystem->UpdatePureServerChecksums( );
+		fileSystem->UpdatePureServerChecksums();
 		// tell the clients so they can work out their pure lists
 		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
 		{
@@ -1620,7 +1620,7 @@ void idAsyncServer::ProcessAuthMessage( const idBitMsg& msg )
 		common->DPrintf( "auth: invalid reply %d\n", reply );
 		return;
 	}
-	clientId = msg.ReadShort( );
+	clientId = msg.ReadShort();
 	msg.ReadNetadr( &client_from );
 	msg.ReadString( client_guid, sizeof( client_guid ) );
 	if( reply != AUTH_OK )
@@ -2178,7 +2178,7 @@ bool idAsyncServer::VerifyChecksumMessage( int clientNum, const netadr_t* from, 
 	numChecksums = 0;
 	do
 	{
-		i = msg.ReadLong( );
+		i = msg.ReadLong();
 		checksums[ numChecksums++ ] = i;
 		// just to make sure a broken client doesn't crash us
 		if( numChecksums >= MAX_PURE_PAKS )
@@ -2192,7 +2192,7 @@ bool idAsyncServer::VerifyChecksumMessage( int clientNum, const netadr_t* from, 
 	numChecksums--;
 
 	// code pak checksum
-	gamePakChecksum = msg.ReadLong( );
+	gamePakChecksum = msg.ReadLong();
 
 	fileSystem->GetPureServerChecksums( serverChecksums, OS, &serverGamePakChecksum );
 	assert( serverChecksums[ 0 ] );
@@ -2808,7 +2808,7 @@ void idAsyncServer::RunFrame()
 		if( localClientNum >= 0 )
 		{
 			idDict newInfo;
-			game->ThrottleUserInfo( );
+			game->ThrottleUserInfo();
 			newInfo = *cvarSystem->MoveCVarsToDict( CVAR_USERINFO );
 			SendUserInfoBroadcast( localClientNum, newInfo );
 		}

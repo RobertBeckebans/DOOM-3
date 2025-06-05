@@ -93,7 +93,7 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 
 	int i;
 
-	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals( ); i ++ )
+	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals(); i ++ )
 	{
 		const idKeyValue* key = wrapper->GetVariableDict().GetKeyVal( i );
 
@@ -113,7 +113,7 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )"\r\n" );
 	}
 
-	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals( ); i ++ )
+	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals(); i ++ )
 	{
 		const idKeyValue* key = wrapper->GetScriptDict().GetKeyVal( i );
 
@@ -172,8 +172,8 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 		idParser src( parse, parse.Length(), "", LEXFL_ALLOWMULTICHARLITERALS | LEXFL_NOSTRINGCONCAT | LEXFL_ALLOWBACKSLASHSTRINGCONCAT );
 		idToken token;
 
-		wrapper->GetVariableDict().Clear( );
-		wrapper->GetScriptDict().Clear( );
+		wrapper->GetVariableDict().Clear();
+		wrapper->GetScriptDict().Clear();
 
 		while( src.ReadToken( &token ) )
 		{
@@ -197,7 +197,7 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 				idStr					out;
 				int						i;
 
-				src.SetMarker( );
+				src.SetMarker();
 				for( i = 0; i < 3; i ++ )
 				{
 					tempwin.ParseExpression( &src, &var );
@@ -227,7 +227,7 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 				idWindow				tempwin( &ui );
 				idStr					out;
 
-				src.SetMarker( );
+				src.SetMarker();
 				tempwin.ParseExpression( &src, &var );
 				src.GetStringFromMarker( out, true );
 

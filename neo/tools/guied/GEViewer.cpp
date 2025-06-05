@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEApp.h"
 #include "GEViewer.h"
 
-rvGEViewer::rvGEViewer( )
+rvGEViewer::rvGEViewer()
 {
 	mInterface = NULL;
 	mPaused    = true;
@@ -51,7 +51,7 @@ bool rvGEViewer::Create( HWND parent )
 	wndClass.cbSize			= sizeof( WNDCLASSEX );
 	wndClass.lpszClassName	= "GUIED_VIEWER";
 	wndClass.lpfnWndProc	= rvGEViewer::WndProc;
-	wndClass.hInstance		= gApp.GetInstance( );
+	wndClass.hInstance		= gApp.GetInstance();
 	wndClass.style			= CS_OWNDC | CS_BYTEALIGNWINDOW | CS_VREDRAW | CS_HREDRAW;
 	wndClass.hbrBackground	= ( HBRUSH )( COLOR_3DFACE + 1 );
 	RegisterClassEx( &wndClass );
@@ -123,13 +123,13 @@ bool rvGEViewer::OpenFile( const char* filename )
 
 	tempfile = filename;
 	tempfile.StripPath();
-	tempfile.StripFileExtension( );
+	tempfile.StripFileExtension();
 	tempfile = va( "guis/temp.guied", tempfile.c_str() );
 	ospath = fileSystem->RelativePathToOSPath( tempfile, "fs_basepath" );
 
 	// Make sure the gui directory exists
 	idStr createDir = ospath;
-	createDir.StripFilename( );
+	createDir.StripFilename();
 	CreateDirectory( createDir, NULL );
 
 	SetFileAttributes( ospath, FILE_ATTRIBUTE_NORMAL );
@@ -149,7 +149,7 @@ bool rvGEViewer::OpenFile( const char* filename )
 
 	DeleteFile( ospath );
 
-	Play( );
+	Play();
 
 	return true;
 }
@@ -243,11 +243,11 @@ LRESULT CALLBACK rvGEViewer::WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 			switch( LOWORD( wParam ) )
 			{
 				case ID_GUIED_VIEWER_PLAY:
-					viewer->Play( );
+					viewer->Play();
 					break;
 
 				case ID_GUIED_VIEWER_PAUSE:
-					viewer->Pause( );
+					viewer->Pause();
 					break;
 			}
 			break;
@@ -364,7 +364,7 @@ LRESULT CALLBACK rvGEViewer::WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 		case WM_CLOSE:
 			viewer->mInterface = NULL;
-			gApp.CloseViewer( );
+			gApp.CloseViewer();
 			return 0;
 
 		case WM_CREATE:
@@ -374,7 +374,7 @@ LRESULT CALLBACK rvGEViewer::WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 			viewer = ( rvGEViewer* )cs->lpCreateParams;
 			viewer->mWnd = hwnd;
-			viewer->SetupPixelFormat( );
+			viewer->SetupPixelFormat();
 
 			viewer->mToolbar = CreateWindowEx( 0, TOOLBARCLASSNAME, "", CCS_BOTTOM | WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hwnd, ( HMENU )IDR_GUIED_VIEWERTOOLBAR, gApp.GetInstance(), NULL );
 
@@ -542,7 +542,7 @@ void rvGEViewer::Render( HDC dc )
 		renderSystem->EndFrame( &frontEnd, &backEnd );
 	}
 
-	qglFinish( );
+	qglFinish();
 	qwglSwapBuffers( dc );
 }
 

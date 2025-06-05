@@ -52,9 +52,9 @@ class idSetup( scons_utils.idSetupBase ):
 			self.SimpleCommand( brandelf_path + ' -t Linux ' + core_path )
 			self.SimpleCommand( brandelf_path + ' -t Linux ' + ded_path )
 		# main version tag - ENGINE_VERSION in Licensee.h
-		main_version = self.ExtractEngineVersion( )
+		main_version = self.ExtractEngineVersion()
 		# build number
-		version = self.ExtractBuildVersion( )
+		version = self.ExtractBuildVersion()
 		if ( demo_build ):
 			base_dirname = 'doom3-linux-%s.%s-demo' % ( main_version, version )
 		else:

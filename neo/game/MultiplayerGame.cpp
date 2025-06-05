@@ -176,7 +176,7 @@ void idMultiplayerGame::Reset()
 	spectateGui = uiManager->FindGui( "guis/spectate.gui", true, false, true );
 	guiChat = uiManager->FindGui( "guis/chat.gui", true, false, true );
 	mainGui = uiManager->FindGui( "guis/mpmain.gui", true, false, true );
-	mapList = uiManager->AllocListGUI( );
+	mapList = uiManager->AllocListGUI();
 	mapList->Config( mainGui, "mapList" );
 	// set this GUI so that our Draw function is still called when it becomes the active/fullscreen GUI
 	mainGui->SetStateBool( "gameDraw", true );
@@ -1302,7 +1302,7 @@ idMultiplayerGame::FillTourneySlots
 NOTE: called each frame during warmup to keep the tourney slots filled
 ================
 */
-void idMultiplayerGame::FillTourneySlots( )
+void idMultiplayerGame::FillTourneySlots()
 {
 	int i, j, rankmax, rankmaxindex;
 	idEntity* ent;
@@ -1413,7 +1413,7 @@ void idMultiplayerGame::UpdateTourneyLine()
 idMultiplayerGame::CycleTourneyPlayers
 ================
 */
-void idMultiplayerGame::CycleTourneyPlayers( )
+void idMultiplayerGame::CycleTourneyPlayers()
 {
 	int i;
 	idEntity* ent;
@@ -1430,7 +1430,7 @@ void idMultiplayerGame::CycleTourneyPlayers( )
 			currentTourneyPlayer[ 0 ] = lastWinner;
 		}
 	}
-	FillTourneySlots( );
+	FillTourneySlots();
 	// force selected players in/out of the game and update the ranks
 	for( i = 0 ; i < gameLocal.numClients ; i++ )
 	{
@@ -2073,13 +2073,13 @@ const char* idMultiplayerGame::HandleGuiCommands( const char* _menuCommand )
 		}
 		else if(	!idStr::Icmp( cmd, "close" ) )
 		{
-			DisableMenu( );
+			DisableMenu();
 			return NULL;
 		}
 		else if(	!idStr::Icmp( cmd, "spectate" )	)
 		{
 			ToggleSpectate();
-			DisableMenu( );
+			DisableMenu();
 			return NULL;
 		}
 		else if(	!idStr::Icmp( cmd, "chatmessage" ) )
@@ -2106,14 +2106,14 @@ const char* idMultiplayerGame::HandleGuiCommands( const char* _menuCommand )
 		}
 		else if(	!idStr::Icmp( cmd, "readytoggle" ) )
 		{
-			ToggleReady( );
-			DisableMenu( );
+			ToggleReady();
+			DisableMenu();
 			return NULL;
 		}
 		else if(	!idStr::Icmp( cmd, "teamtoggle"	) )
 		{
 			ToggleTeam(	);
-			DisableMenu( );
+			DisableMenu();
 			return NULL;
 		}
 		else if(	!idStr::Icmp( cmd, "callVote" )	)
@@ -2887,7 +2887,7 @@ void idMultiplayerGame::CheckRespawns( idPlayer* spectator )
 					else if( gameState == WARMUP )
 					{
 						// make sure empty tourney slots get filled first
-						FillTourneySlots( );
+						FillTourneySlots();
 						if( i == currentTourneyPlayer[ 0 ] || i == currentTourneyPlayer[ 1 ] )
 						{
 							p->ServerSpectate( false );
@@ -2976,7 +2976,7 @@ void idMultiplayerGame::CheckRespawns( idPlayer* spectator )
 idMultiplayerGame::ForceReady
 ================
 */
-void idMultiplayerGame::ForceReady( )
+void idMultiplayerGame::ForceReady()
 {
 
 	for( int i = 0 ; i < gameLocal.numClients ; i++ )
@@ -3324,7 +3324,7 @@ void idMultiplayerGame::ServerCallVote( int clientNum, const idBitMsg& msg )
 	assert( clientNum != -1 );
 	assert( !gameLocal.isClient );
 
-	voteIndex = ( vote_flags_t )msg.ReadByte( );
+	voteIndex = ( vote_flags_t )msg.ReadByte();
 	msg.ReadString( value, sizeof( value ) );
 
 	// sanity checks - setup the vote
@@ -4106,7 +4106,7 @@ void idMultiplayerGame::ServerWriteInitialReliableMessages( int clientNum )
 	networkSystem->ServerSendReliableMessage( clientNum, outMsg );
 
 	// we send SI in connectResponse messages, but it may have been modified already
-	outMsg.BeginWriting( );
+	outMsg.BeginWriting();
 	outMsg.WriteByte( GAME_RELIABLE_MESSAGE_SERVERINFO );
 	outMsg.WriteDeltaDict( gameLocal.serverInfo, NULL );
 	networkSystem->ServerSendReliableMessage( clientNum, outMsg );
@@ -4132,8 +4132,8 @@ void idMultiplayerGame::ClientReadStartState( const idBitMsg& msg )
 
 	// read the state in preparation for reading snapshot updates
 	gameState = ( idMultiplayerGame::gameState_t )msg.ReadByte();
-	matchStartedTime = msg.ReadLong( );
-	startFragLimit = msg.ReadShort( );
+	matchStartedTime = msg.ReadLong();
+	startFragLimit = msg.ReadShort();
 	while( ( client = msg.ReadShort() ) != MAX_CLIENTS )
 	{
 		assert( gameLocal.entities[ client ] && gameLocal.entities[ client ]->IsType( idPlayer::Type ) );

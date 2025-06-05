@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 rvDebuggerApp::rvDebuggerApp
 ================
 */
-rvDebuggerApp::rvDebuggerApp( ) :
+rvDebuggerApp::rvDebuggerApp() :
 	mOptions( "Software\\id Software\\DOOM3\\Tools\\Debugger" )
 {
 	mInstance		= NULL;
@@ -50,7 +50,7 @@ rvDebuggerApp::rvDebuggerApp( ) :
 rvDebuggerApp::~rvDebuggerApp
 ================
 */
-rvDebuggerApp::~rvDebuggerApp( )
+rvDebuggerApp::~rvDebuggerApp()
 {
 	if( mAccelerators )
 	{
@@ -73,7 +73,7 @@ bool rvDebuggerApp::Initialize( HINSTANCE instance )
 
 	mInstance = instance;
 
-	mOptions.Load( );
+	mOptions.Load();
 
 	mDebuggerWindow = new rvDebuggerWindow;
 
@@ -84,7 +84,7 @@ bool rvDebuggerApp::Initialize( HINSTANCE instance )
 	}
 
 	// Initialize the network connection for the debugger
-	if( !mClient.Initialize( ) )
+	if( !mClient.Initialize() )
 	{
 		return false;
 	}
@@ -149,15 +149,15 @@ Main Loop for the debugger application
 int rvDebuggerApp::Run()
 {
 	// Main message loop:
-	while( ProcessWindowMessages( ) )
+	while( ProcessWindowMessages() )
 	{
-		mClient.ProcessMessages( );
+		mClient.ProcessMessages();
 
 		Sleep( 0 );
 	}
 
-	mClient.Shutdown( );
-	mOptions.Save( );
+	mClient.Shutdown();
+	mOptions.Save();
 
 	delete mDebuggerWindow;
 

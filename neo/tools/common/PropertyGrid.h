@@ -54,7 +54,7 @@ public:
 		PGIT_MAX
 	};
 
-	rvPropertyGrid( );
+	rvPropertyGrid();
 
 	bool	Create( HWND parent, int id, int style = 0 );
 

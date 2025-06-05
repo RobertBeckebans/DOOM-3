@@ -33,7 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEApp.h"
 #include "GEPropertyPage.h"
 
-rvGEPropertyPage::rvGEPropertyPage( )
+rvGEPropertyPage::rvGEPropertyPage()
 {
 	mPage = NULL;
 }
@@ -59,7 +59,7 @@ INT_PTR CALLBACK rvGEPropertyPage::WndProc( HWND hwnd, UINT msg, WPARAM wParam, 
 		SetWindowLong( hwnd, GWL_USERDATA, ( LONG )page );
 		page->mPage = hwnd;
 
-		page->Init( );
+		page->Init();
 
 		return FALSE;
 	}
@@ -87,7 +87,7 @@ int rvGEPropertyPage::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 			switch( ( ( NMHDR FAR* ) lParam )->code )
 			{
 				case PSN_APPLY:
-					if( !Apply( ) )
+					if( !Apply() )
 					{
 						SetWindowLong( mPage, DWL_MSGRESULT, PSNRET_INVALID );
 						return TRUE;
@@ -95,11 +95,11 @@ int rvGEPropertyPage::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 					break;
 
 				case PSN_SETACTIVE:
-					SetActive( );
+					SetActive();
 					break;
 
 				case PSN_KILLACTIVE:
-					KillActive( );
+					KillActive();
 					break;
 			}
 			break;

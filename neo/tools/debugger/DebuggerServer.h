@@ -47,8 +47,8 @@ class rvDebuggerServer
 {
 public:
 
-	rvDebuggerServer( );
-	~rvDebuggerServer( );
+	rvDebuggerServer();
+	~rvDebuggerServer();
 
 	bool		Initialize();
 	void		Shutdown();

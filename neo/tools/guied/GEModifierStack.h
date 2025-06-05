@@ -36,8 +36,8 @@ class rvGEModifierStack
 {
 public:
 
-	rvGEModifierStack( );
-	~rvGEModifierStack( );
+	rvGEModifierStack();
+	~rvGEModifierStack();
 
 	void			BlockNextMerge();
 
@@ -77,13 +77,13 @@ ID_INLINE void rvGEModifierStack::BlockNextMerge()
 
 ID_INLINE rvGEModifier* rvGEModifierStack::GetUndoModifier()
 {
-	assert( CanUndo( ) );
+	assert( CanUndo() );
 	return mModifiers[mCurrentModifier];
 }
 
 ID_INLINE rvGEModifier* rvGEModifierStack::GetRedoModifier()
 {
-	assert( CanRedo( ) );
+	assert( CanRedo() );
 	return mModifiers[mCurrentModifier + 1];
 }
 

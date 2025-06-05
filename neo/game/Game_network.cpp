@@ -431,7 +431,7 @@ void idGameLocal::ServerWriteInitialReliableMessages( int clientNum )
 			continue;
 		}
 		outMsg.Init( msgBuf, sizeof( msgBuf ) );
-		outMsg.BeginWriting( );
+		outMsg.BeginWriting();
 		outMsg.WriteByte( GAME_RELIABLE_MESSAGE_SPAWN_PLAYER );
 		outMsg.WriteByte( i );
 		outMsg.WriteLong( spawnIds[ i ] );
@@ -1573,8 +1573,8 @@ void idGameLocal::ClientProcessReliableMessage( int clientNum, const idBitMsg& m
 		{
 			idMultiplayerGame::msg_evt_t msg_evt = ( idMultiplayerGame::msg_evt_t )msg.ReadByte();
 			int parm1, parm2;
-			parm1 = msg.ReadByte( );
-			parm2 = msg.ReadByte( );
+			parm1 = msg.ReadByte();
+			parm2 = msg.ReadByte();
 			mpGame.PrintMessageEvent( -1, msg_evt, parm1, parm2 );
 			break;
 		}
@@ -1617,7 +1617,7 @@ void idGameLocal::ClientProcessReliableMessage( int clientNum, const idBitMsg& m
 		}
 		case GAME_RELIABLE_MESSAGE_TOURNEYLINE:
 		{
-			line = msg.ReadByte( );
+			line = msg.ReadByte();
 			p = static_cast< idPlayer* >( entities[ clientNum ] );
 			if( !p )
 			{
@@ -1629,16 +1629,16 @@ void idGameLocal::ClientProcessReliableMessage( int clientNum, const idBitMsg& m
 		case GAME_RELIABLE_MESSAGE_STARTVOTE:
 		{
 			char voteString[ MAX_STRING_CHARS ];
-			int clientNum = msg.ReadByte( );
+			int clientNum = msg.ReadByte();
 			msg.ReadString( voteString, sizeof( voteString ) );
 			mpGame.ClientStartVote( clientNum, voteString );
 			break;
 		}
 		case GAME_RELIABLE_MESSAGE_UPDATEVOTE:
 		{
-			int result = msg.ReadByte( );
-			int yesCount = msg.ReadByte( );
-			int noCount = msg.ReadByte( );
+			int result = msg.ReadByte();
+			int yesCount = msg.ReadByte();
+			int noCount = msg.ReadByte();
 			mpGame.ClientUpdateVote( ( idMultiplayerGame::vote_result_t )result, yesCount, noCount );
 			break;
 		}

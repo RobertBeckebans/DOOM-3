@@ -55,7 +55,7 @@ class rvDebuggerApp
 {
 public:
 
-	rvDebuggerApp( );
+	rvDebuggerApp();
 
 	bool				Initialize( HINSTANCE hInstance );
 	int					Run();

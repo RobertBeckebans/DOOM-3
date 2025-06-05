@@ -54,7 +54,7 @@ static INT_PTR CALLBACK AboutDlg_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LP
 }
 
 
-rvGEApp::rvGEApp( )
+rvGEApp::rvGEApp()
 {
 	mMDIFrame			 = NULL;
 	mMDIClient			 = NULL;
@@ -63,7 +63,7 @@ rvGEApp::rvGEApp( )
 	mRecentFileInsertPos = 0;
 }
 
-rvGEApp::~rvGEApp( )
+rvGEApp::~rvGEApp()
 {
 	DestroyAcceleratorTable( mAccelerators );
 }
@@ -85,7 +85,7 @@ bool rvGEApp::Initialize()
 	Sys_GrabMouseCursor( false );
 
 	// Load the options
-	mOptions.Load( );
+	mOptions.Load();
 
 	mInstance = win32.hInstance;
 
@@ -199,8 +199,8 @@ bool rvGEApp::TranslateAccelerator( LPMSG msg )
 
 	if( msg->message == WM_SYSCHAR )
 	{
-		SetFocus( GetMDIClient( ) );
-		msg->hwnd = GetMDIClient( );
+		SetFocus( GetMDIClient() );
+		msg->hwnd = GetMDIClient();
 	}
 
 	if( mViewer )
@@ -208,11 +208,11 @@ bool rvGEApp::TranslateAccelerator( LPMSG msg )
 		return false;
 	}
 
-	focus = GetActiveWindow( );
+	focus = GetActiveWindow();
 
 	// Only use accelerators when on the main window or navigator window
 	if( focus == mMDIClient || focus == mMDIFrame ||
-			focus == GetNavigator().GetWindow( ) )
+			focus == GetNavigator().GetWindow() )
 	{
 		if( ::TranslateAccelerator( mMDIFrame, mAccelerators, msg ) )
 		{
@@ -249,7 +249,7 @@ void rvGEApp::RunFrame()
 
 		if( mViewer )
 		{
-			mViewer->RunFrame( );
+			mViewer->RunFrame();
 		}
 	}
 }
@@ -276,10 +276,10 @@ LRESULT CALLBACK rvGEApp::FrameWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			app->mStatusBar.Resize( LOWORD( lParam ), HIWORD( lParam ) );
 
 			// Calculate the new client window rectangle (minus the status bar)
-			GetWindowRect( app->mStatusBar.GetWindow( ), &rStatus );
+			GetWindowRect( app->mStatusBar.GetWindow(), &rStatus );
 			GetClientRect( hWnd, &rClient );
 
-			if( app->mOptions.GetStatusBarVisible( ) )
+			if( app->mOptions.GetStatusBarVisible() )
 			{
 				rClient.bottom -= ( rStatus.bottom - rStatus.top );
 			}
@@ -315,15 +315,15 @@ LRESULT CALLBACK rvGEApp::FrameWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			break;
 
 		case WM_CLOSE:
-			while( app->mWorkspaces.Num( ) )
+			while( app->mWorkspaces.Num() )
 			{
-				SendMessage( app->mWorkspaces[0]->GetWindow( ), WM_CLOSE, 0, 0 );
+				SendMessage( app->mWorkspaces[0]->GetWindow(), WM_CLOSE, 0, 0 );
 			}
 			break;
 
 		case WM_DESTROY:
 			app->mOptions.SetWindowPlacement( "mdiframe", hWnd );
-			app->mOptions.Save( );
+			app->mOptions.Save();
 			ExitProcess( 0 );
 			break;
 
@@ -352,22 +352,22 @@ LRESULT CALLBACK rvGEApp::FrameWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 
 			app->mMDIFrame = hWnd;
 
-			app->InitRecentFiles( );
-			app->UpdateRecentFiles( );
-			app->mNavigator.Create( hWnd, gApp.mOptions.GetNavigatorVisible( ) );
-			app->mTransformer.Create( hWnd, gApp.mOptions.GetTransformerVisible( ) );
-			app->mStatusBar.Create( hWnd, 9999, gApp.mOptions.GetStatusBarVisible( ) );
-			app->mProperties.Create( hWnd, gApp.mOptions.GetPropertiesVisible( ) );
+			app->InitRecentFiles();
+			app->UpdateRecentFiles();
+			app->mNavigator.Create( hWnd, gApp.mOptions.GetNavigatorVisible() );
+			app->mTransformer.Create( hWnd, gApp.mOptions.GetTransformerVisible() );
+			app->mStatusBar.Create( hWnd, 9999, gApp.mOptions.GetStatusBarVisible() );
+			app->mProperties.Create( hWnd, gApp.mOptions.GetPropertiesVisible() );
 
 			// add all the tool windows to the tool window array
 			app->mToolWindows.Append( app->mMDIFrame );
-			app->mToolWindows.Append( app->mNavigator.GetWindow( ) );
-			app->mToolWindows.Append( app->mProperties.GetWindow( ) );
-			app->mToolWindows.Append( app->mTransformer.GetWindow( ) );
+			app->mToolWindows.Append( app->mNavigator.GetWindow() );
+			app->mToolWindows.Append( app->mProperties.GetWindow() );
+			app->mToolWindows.Append( app->mTransformer.GetWindow() );
 
-			SendMessage( app->mNavigator.GetWindow( ), WM_NCACTIVATE, true, ( LONG ) - 1 );
-			SendMessage( app->mProperties.GetWindow( ), WM_NCACTIVATE, true, ( LONG ) - 1 );
-			SendMessage( app->mTransformer.GetWindow( ), WM_NCACTIVATE, true, ( LONG ) - 1 );
+			SendMessage( app->mNavigator.GetWindow(), WM_NCACTIVATE, true, ( LONG ) - 1 );
+			SendMessage( app->mProperties.GetWindow(), WM_NCACTIVATE, true, ( LONG ) - 1 );
+			SendMessage( app->mTransformer.GetWindow(), WM_NCACTIVATE, true, ( LONG ) - 1 );
 
 			break;
 		}
@@ -396,7 +396,7 @@ LRESULT CALLBACK rvGEApp::MDIChildProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 	switch( uMsg )
 	{
 		case WM_CLOSE:
-			workspace->GetApplication( )->mWorkspaces.Remove( workspace );
+			workspace->GetApplication()->mWorkspaces.Remove( workspace );
 			break;
 
 		case WM_CREATE:
@@ -413,7 +413,7 @@ LRESULT CALLBACK rvGEApp::MDIChildProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			workspace = ( rvGEWorkspace* ) mdics->lParam;
 			workspace->Attach( hWnd );
 
-			workspace->GetApplication( )->mWorkspaces.Append( workspace );
+			workspace->GetApplication()->mWorkspaces.Append( workspace );
 
 			break;
 		}
@@ -422,20 +422,20 @@ LRESULT CALLBACK rvGEApp::MDIChildProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 			assert( workspace );
 			if( ( HWND )lParam == hWnd )
 			{
-				workspace->GetApplication( )->GetNavigator().SetWorkspace( workspace );
-				workspace->GetApplication( )->GetTransformer().SetWorkspace( workspace );
-				workspace->GetApplication( )->GetProperties().SetWorkspace( workspace );
-				gApp.GetStatusBar( ).SetSimple( false );
+				workspace->GetApplication()->GetNavigator().SetWorkspace( workspace );
+				workspace->GetApplication()->GetTransformer().SetWorkspace( workspace );
+				workspace->GetApplication()->GetProperties().SetWorkspace( workspace );
+				gApp.GetStatusBar().SetSimple( false );
 			}
 			else if( lParam == NULL )
 			{
-				gApp.GetStatusBar( ).SetSimple( true );
+				gApp.GetStatusBar().SetSimple( true );
 			}
 			break;
 
 		case WM_DESTROY:
 			assert( workspace );
-			workspace->Detach( );
+			workspace->Detach();
 			delete workspace;
 			break;
 
@@ -478,12 +478,12 @@ void rvGEApp::HandleCommandSave( rvGEWorkspace* workspace, const char* filename 
 	idStr realFilename;
 
 	// See if we need to browse for a filename
-	if( workspace->IsNew( ) || filename == NULL )
+	if( workspace->IsNew() || filename == NULL )
 	{
 		OPENFILENAME ofn;
 		char		 szFile[MAX_PATH];
 
-		strcpy( szFile, workspace->GetFilename( ) );
+		strcpy( szFile, workspace->GetFilename() );
 
 		// Initialize OPENFILENAME
 		ZeroMemory( &ofn, sizeof( OPENFILENAME ) );
@@ -502,7 +502,7 @@ void rvGEApp::HandleCommandSave( rvGEWorkspace* workspace, const char* filename 
 		}
 
 		realFilename = ofn.lpstrFile;
-		realFilename.StripFileExtension( );
+		realFilename.StripFileExtension();
 		realFilename.Append( ".gui" );
 
 		// If the file already exists then warn about overwriting it
@@ -522,8 +522,8 @@ void rvGEApp::HandleCommandSave( rvGEWorkspace* workspace, const char* filename 
 	// Now performe the file save
 	if( workspace->SaveFile( realFilename ) )
 	{
-		mOptions.AddRecentFile( workspace->GetFilename( ) );
-		UpdateRecentFiles( );
+		mOptions.AddRecentFile( workspace->GetFilename() );
+		UpdateRecentFiles();
 	}
 	else
 	{
@@ -554,20 +554,20 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 	{
 		case ID_GUIED_SOURCECONTROL_CHECKIN:
 			assert( workspace );
-			HandleCommandSave( workspace, workspace->GetFilename( ) );
-			workspace->CheckIn( );
+			HandleCommandSave( workspace, workspace->GetFilename() );
+			workspace->CheckIn();
 			break;
 
 		case ID_GUIED_SOURCECONTROL_CHECKOUT:
 			assert( workspace );
-			workspace->CheckOut( );
+			workspace->CheckOut();
 			break;
 
 		case ID_GUIED_SOURCECONTROL_UNDOCHECKOUT:
 			assert( workspace );
 			if( IDYES == MessageBox( va( "Are you sure you want to undo the checkout of the file '%s'?", workspace->GetFilename() ), MB_YESNO | MB_ICONQUESTION ) )
 			{
-				workspace->UndoCheckout( );
+				workspace->UndoCheckout();
 			}
 			break;
 
@@ -580,12 +580,12 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 
 		case ID_GUIED_EDIT_COPY:
 			assert( workspace );
-			workspace->Copy( );
+			workspace->Copy();
 			break;
 
 		case ID_GUIED_EDIT_PASTE:
 			assert( workspace );
-			workspace->Paste( );
+			workspace->Paste();
 			break;
 
 		case ID_GUIED_HELP_ABOUT:
@@ -610,11 +610,11 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 			{
 				if( !workspace->IsModified() || HandleCommand( MAKELONG( ID_GUIED_FILE_SAVE, 0 ), 0 ) )
 				{
-					mViewer->OpenFile( workspace->GetFilename( ) );
+					mViewer->OpenFile( workspace->GetFilename() );
 				}
 			}
 
-			SetActiveWindow( mViewer->GetWindow( ) );
+			SetActiveWindow( mViewer->GetWindow() );
 			break;
 		}
 
@@ -665,37 +665,37 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 
 		case ID_GUIED_ITEM_ARRANGESENDBACKWARD:
 			assert( workspace );
-			workspace->SendSelectedBackward( );
+			workspace->SendSelectedBackward();
 			break;
 
 		case ID_GUIED_ITEM_ARRANGESENDTOBACK:
 			assert( workspace );
-			workspace->SendSelectedToBack( );
+			workspace->SendSelectedToBack();
 			break;
 
 		case ID_GUIED_ITEM_ARRANGEBRINGFORWARD:
 			assert( workspace );
-			workspace->BringSelectedForward( );
+			workspace->BringSelectedForward();
 			break;
 
 		case ID_GUIED_ITEM_ARRANGEBRINGTOFRONT:
 			assert( workspace );
-			workspace->BringSelectedToFront( );
+			workspace->BringSelectedToFront();
 			break;
 
 		case ID_GUIED_ITEM_ARRANGEMAKECHILD:
 			assert( workspace );
-			workspace->MakeSelectedAChild( );
+			workspace->MakeSelectedAChild();
 			break;
 
 		case ID_GUIED_ITEM_PROPERTIES:
 			assert( workspace );
-			workspace->EditSelectedProperties( );
+			workspace->EditSelectedProperties();
 			break;
 
 		case ID_GUIED_ITEM_SCRIPTS:
 			assert( workspace );
-			workspace->EditSelectedScripts( );
+			workspace->EditSelectedScripts();
 			break;
 
 		case ID_GUIED_ITEM_NEWWINDOWDEF:
@@ -771,36 +771,36 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 
 		case ID_GUIED_EDIT_DELETE:
 			assert( workspace );
-			workspace->DeleteSelected( );
+			workspace->DeleteSelected();
 			break;
 
 		case ID_GUIED_VIEW_HIDESELECTED:
 			assert( workspace );
-			workspace->HideSelected( );
+			workspace->HideSelected();
 			break;
 
 		case ID_GUIED_VIEW_UNHIDESELECTED:
 			assert( workspace );
-			workspace->UnhideSelected( );
+			workspace->UnhideSelected();
 			break;
 
 		case ID_GUIED_VIEW_SHOWHIDDEN:
 			assert( workspace );
-			workspace->ShowHidden( );
+			workspace->ShowHidden();
 			break;
 
 		case ID_GUIED_EDIT_UNDO:
 			assert( workspace );
-			workspace->GetModifierStack().Undo( );
-			mNavigator.Update( );
-			mTransformer.Update( );
+			workspace->GetModifierStack().Undo();
+			mNavigator.Update();
+			mTransformer.Update();
 			break;
 
 		case ID_GUIED_EDIT_REDO:
 			assert( workspace );
-			workspace->GetModifierStack().Redo( );
-			mNavigator.Update( );
-			mTransformer.Update( );
+			workspace->GetModifierStack().Redo();
+			mNavigator.Update();
+			mTransformer.Update();
 			break;
 
 		case ID_GUIED_VIEW_OPTIONS:
@@ -817,12 +817,12 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 
 		case ID_GUIED_VIEW_ZOOMIN:
 			assert( workspace );
-			workspace->ZoomIn( );
+			workspace->ZoomIn();
 			break;
 
 		case ID_GUIED_VIEW_ZOOMOUT:
 			assert( workspace );
-			workspace->ZoomOut( );
+			workspace->ZoomOut();
 			break;
 
 		case ID_GUIED_FILE_EXIT:
@@ -838,12 +838,12 @@ int rvGEApp::HandleCommand( WPARAM wParam, LPARAM lParam )
 			break;
 
 		case ID_GUIED_FILE_NEW:
-			NewFile( );
+			NewFile();
 			break;
 
 		case ID_GUIED_FILE_SAVE:
 			assert( workspace );
-			HandleCommandSave( workspace, workspace->GetFilename( ) );
+			HandleCommandSave( workspace, workspace->GetFilename() );
 			break;
 
 		case ID_GUIED_FILE_SAVEAS:
@@ -898,7 +898,7 @@ int rvGEApp::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 	HMENU			hmenu;
 
 	hmenu     = ( HMENU ) wParam;
-	workspace = GetActiveWorkspace( );
+	workspace = GetActiveWorkspace();
 
 	// Run through all the menu items in the menu and see if any of them need
 	// modification in any way
@@ -1007,7 +1007,7 @@ int rvGEApp::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 				info.fMask = MIIM_STATE | MIIM_TYPE;
 				info.fType = MFT_STRING;
 
-				if( !workspace->GetModifierStack().CanUndo( ) )
+				if( !workspace->GetModifierStack().CanUndo() )
 				{
 					undo = "Undo\tCtrl+Z";
 					info.fState = MFS_GRAYED;
@@ -1015,13 +1015,13 @@ int rvGEApp::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 				else
 				{
 					undo = "Undo ";
-					undo.Append( workspace->GetModifierStack().GetUndoModifier()->GetName( ) );
+					undo.Append( workspace->GetModifierStack().GetUndoModifier()->GetName() );
 					undo.Append( "\tCtrl+Z" );
 					info.fState = MFS_ENABLED;
 				}
 
 				info.dwTypeData = ( LPSTR )undo.c_str();
-				info.cch = undo.Length( );
+				info.cch = undo.Length();
 
 				SetMenuItemInfo( hmenu, id, FALSE, &info );
 
@@ -1037,7 +1037,7 @@ int rvGEApp::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 				info.fMask = MIIM_STATE | MIIM_TYPE;
 				info.fType = MFT_STRING;
 
-				if( !workspace || !workspace->GetModifierStack().CanRedo( ) )
+				if( !workspace || !workspace->GetModifierStack().CanRedo() )
 				{
 					undo = "Redo\tCtrl+Y";
 					info.fState = MFS_GRAYED;
@@ -1045,13 +1045,13 @@ int rvGEApp::HandleInitMenu( WPARAM wParam, LPARAM lParam )
 				else
 				{
 					undo = "Redo ";
-					undo.Append( workspace->GetModifierStack().GetRedoModifier()->GetName( ) );
+					undo.Append( workspace->GetModifierStack().GetRedoModifier()->GetName() );
 					undo.Append( "\tCtrl+Y" );
 					info.fState = MFS_ENABLED;
 				}
 
 				info.dwTypeData = ( LPSTR )undo.c_str();
-				info.cch = undo.Length( );
+				info.cch = undo.Length();
 
 				SetMenuItemInfo( hmenu, id, FALSE, &info );
 
@@ -1146,7 +1146,7 @@ Creates a new file and opens a window for it
 bool rvGEApp::NewFile()
 {
 	rvGEWorkspace* workspace = new rvGEWorkspace( this );
-	if( workspace->NewFile( ) )
+	if( workspace->NewFile() )
 	{
 		HWND child;
 
@@ -1186,7 +1186,7 @@ bool rvGEApp::OpenFile( const char* filename )
 	{
 		if( !idStr::Icmp( mWorkspaces[i]->GetFilename(), filename ) )
 		{
-			SendMessage( mMDIClient, WM_MDIACTIVATE, ( WPARAM )mWorkspaces[i]->GetWindow( ), 0 );
+			SendMessage( mMDIClient, WM_MDIACTIVATE, ( WPARAM )mWorkspaces[i]->GetWindow(), 0 );
 			return false;
 		}
 	}
@@ -1215,7 +1215,7 @@ bool rvGEApp::OpenFile( const char* filename )
 		ShowWindow( child, SW_SHOW );
 
 		mOptions.AddRecentFile( filename );
-		UpdateRecentFiles( );
+		UpdateRecentFiles();
 
 		result = true;
 	}
@@ -1273,7 +1273,7 @@ void rvGEApp::UpdateRecentFiles()
 	// Make sure everything is initialized
 	if( !mRecentFileMenu )
 	{
-		InitRecentFiles( );
+		InitRecentFiles();
 	}
 
 	// Delete all the old recent files from the menu's
@@ -1297,7 +1297,7 @@ void rvGEApp::UpdateRecentFiles()
 	}
 
 	// Add the recent files to the menu now
-	for( j = 0, i = mOptions.GetRecentFileCount( ) - 1; i >= 0; i --, j++ )
+	for( j = 0, i = mOptions.GetRecentFileCount() - 1; i >= 0; i --, j++ )
 	{
 		UINT id = ID_GUIED_FILE_MRU1 + j;
 		idStr str = va( "&%d ", j + 1 );
@@ -1320,7 +1320,7 @@ void rvGEApp::CloseViewer()
 		return;
 	}
 
-	mViewer->Destroy( );
+	mViewer->Destroy();
 	delete mViewer;
 	mViewer = NULL;
 }

@@ -31,12 +31,12 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "GEModifierGroup.h"
 
-rvGEModifierGroup::rvGEModifierGroup( ) :
+rvGEModifierGroup::rvGEModifierGroup() :
 	rvGEModifier( "Group", NULL )
 {
 }
 
-rvGEModifierGroup::~rvGEModifierGroup( )
+rvGEModifierGroup::~rvGEModifierGroup()
 {
 	int i;
 
@@ -45,17 +45,17 @@ rvGEModifierGroup::~rvGEModifierGroup( )
 		delete mModifiers[i];
 	}
 
-	mModifiers.Clear( );
+	mModifiers.Clear();
 }
 
 bool rvGEModifierGroup::Append( rvGEModifier* mod )
 {
 	// All modifiers must be the same type
-	assert( !mModifiers.Num() || !idStr::Icmp( mod->GetName( ), mModifiers[0]->GetName( ) ) );
+	assert( !mModifiers.Num() || !idStr::Icmp( mod->GetName(), mModifiers[0]->GetName() ) );
 
-	if( !mModifiers.Num( ) )
+	if( !mModifiers.Num() )
 	{
-		mName = mod->GetName( );
+		mName = mod->GetName();
 	}
 
 	mModifiers.Append( mod );
@@ -68,7 +68,7 @@ bool rvGEModifierGroup::IsValid()
 
 	for( i = 0; i < mModifiers.Num(); i ++ )
 	{
-		if( !mModifiers[i]->IsValid( ) )
+		if( !mModifiers[i]->IsValid() )
 		{
 			return false;
 		}
@@ -83,7 +83,7 @@ bool rvGEModifierGroup::Apply()
 
 	for( i = 0; i < mModifiers.Num(); i ++ )
 	{
-		mModifiers[i]->Apply( );
+		mModifiers[i]->Apply();
 	}
 
 	return true;
@@ -95,7 +95,7 @@ bool rvGEModifierGroup::Undo()
 
 	for( i = 0; i < mModifiers.Num(); i ++ )
 	{
-		mModifiers[i]->Undo( );
+		mModifiers[i]->Undo();
 	}
 
 	return true;
@@ -106,7 +106,7 @@ bool rvGEModifierGroup::CanMerge( rvGEModifier* mergebase )
 	rvGEModifierGroup*	merge = ( rvGEModifierGroup* ) mergebase;
 	int					i;
 
-	if( mModifiers.Num() != merge->mModifiers.Num( ) )
+	if( mModifiers.Num() != merge->mModifiers.Num() )
 	{
 		return false;
 	}
@@ -119,7 +119,7 @@ bool rvGEModifierGroup::CanMerge( rvGEModifier* mergebase )
 			return false;
 		}
 
-		if( idStr::Icmp( mModifiers[i]->GetName( ), merge->mModifiers[i]->GetName( ) ) )
+		if( idStr::Icmp( mModifiers[i]->GetName(), merge->mModifiers[i]->GetName() ) )
 		{
 			return false;
 		}

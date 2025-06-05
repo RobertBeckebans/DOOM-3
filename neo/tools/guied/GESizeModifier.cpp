@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 rvGESizeModifier::rvGESizeModifier( const char* name, idWindow* window, float l, float t, float r, float b ) :
 	rvGEModifier( name, window )
 {
-	mOldRect = mWrapper->GetClientRect( );
+	mOldRect = mWrapper->GetClientRect();
 
 	mNewRect[0] = mOldRect[0] + l;
 	mNewRect[1] = mOldRect[1] + t;
@@ -68,7 +68,7 @@ bool rvGESizeModifier::Undo()
 
 bool rvGESizeModifier::IsValid()
 {
-	if( !mWindow->GetParent( ) )
+	if( !mWindow->GetParent() )
 	{
 		return false;
 	}

@@ -453,7 +453,7 @@ ITextPara : IDispatch
         /*[in]*/ float tbPos,
         /*[in]*/ long tbAlign,
         /*[in]*/ long tbLeader ) = 0;
-      virtual HRESULT __stdcall ClearAllTabs ( ) = 0;
+      virtual HRESULT __stdcall ClearAllTabs () = 0;
       virtual HRESULT __stdcall DeleteTab (
         /*[in]*/ float tbPos ) = 0;
       virtual HRESULT __stdcall GetTab (
@@ -528,7 +528,7 @@ ITextRange : IDispatch
       virtual HRESULT __stdcall IsEqual (
         /*[in]*/ struct ITextRange * pRange,
         /*[out,retval]*/ long * pB ) = 0;
-      virtual HRESULT __stdcall Select ( ) = 0;
+      virtual HRESULT __stdcall Select () = 0;
       virtual HRESULT __stdcall StartOf (
         /*[in]*/ long Unit,
         /*[in]*/ long Extend,
@@ -706,7 +706,7 @@ ITextDocument : IDispatch
         /*[out,retval]*/ float * pValue ) = 0;
       virtual HRESULT __stdcall put_DefaultTabStop (
         /*[in]*/ float pValue ) = 0;
-      virtual HRESULT __stdcall New ( ) = 0;
+      virtual HRESULT __stdcall New () = 0;
       virtual HRESULT __stdcall Open (
         /*[in]*/ VARIANT * pVar,
         /*[in]*/ long Flags,
@@ -719,8 +719,8 @@ ITextDocument : IDispatch
         /*[out,retval]*/ long * pCount ) = 0;
       virtual HRESULT __stdcall Unfreeze (
         /*[out,retval]*/ long * pCount ) = 0;
-      virtual HRESULT __stdcall BeginEditCollection ( ) = 0;
-      virtual HRESULT __stdcall EndEditCollection ( ) = 0;
+      virtual HRESULT __stdcall BeginEditCollection () = 0;
+      virtual HRESULT __stdcall EndEditCollection () = 0;
       virtual HRESULT __stdcall Undo (
         /*[in]*/ long Count,
         /*[out,retval]*/ long * prop ) = 0;
@@ -785,13 +785,13 @@ ITextDocument2 : ITextDocument
         /*[out]*/ long * phWnd ) = 0;
       virtual HRESULT __stdcall GetFEFlags (
         /*[out]*/ long * pFlags ) = 0;
-      virtual HRESULT __stdcall UpdateWindow ( ) = 0;
+      virtual HRESULT __stdcall UpdateWindow () = 0;
       virtual HRESULT __stdcall CheckTextLimit (
         long cch,
         long * pcch ) = 0;
       virtual HRESULT __stdcall IMEInProgress (
         long Mode ) = 0;
-      virtual HRESULT __stdcall SysBeep ( ) = 0;
+      virtual HRESULT __stdcall SysBeep () = 0;
       virtual HRESULT __stdcall Update (
         /*[in]*/ long Mode ) = 0;
       virtual HRESULT __stdcall Notify (

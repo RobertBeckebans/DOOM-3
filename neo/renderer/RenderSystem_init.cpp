@@ -2408,7 +2408,7 @@ void idRenderSystemLocal::Init()
 
 	globalImages->Init();
 
-	idCinematic::InitCinematic( );
+	idCinematic::InitCinematic();
 
 	// build brightness translation tables
 	R_SetColorMappings();
@@ -2439,7 +2439,7 @@ void idRenderSystemLocal::Shutdown()
 {
 	common->Printf( "idRenderSystem::Shutdown()\n" );
 
-	R_DoneFreeType( );
+	R_DoneFreeType();
 
 	if( glConfig.isInitialized )
 	{
@@ -2448,7 +2448,7 @@ void idRenderSystemLocal::Shutdown()
 
 	renderModelManager->Shutdown();
 
-	idCinematic::ShutdownCinematic( );
+	idCinematic::ShutdownCinematic();
 
 	globalImages->Shutdown();
 

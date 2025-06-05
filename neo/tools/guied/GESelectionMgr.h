@@ -50,7 +50,7 @@ public:
 		HT_SIZE_LEFT
 	};
 
-	rvGESelectionMgr( );
+	rvGESelectionMgr();
 
 	void			SetWorkspace( rvGEWorkspace* workspace );
 
@@ -86,7 +86,7 @@ protected:
 
 ID_INLINE int rvGESelectionMgr::Num()
 {
-	return mSelections.Num( );
+	return mSelections.Num();
 }
 
 ID_INLINE idWindow*& rvGESelectionMgr::operator[]( int index )
@@ -104,7 +104,7 @@ ID_INLINE void rvGESelectionMgr::SetWorkspace( rvGEWorkspace* workspace )
 
 ID_INLINE idRectangle& rvGESelectionMgr::GetRect()
 {
-	UpdateRectangle( );
+	UpdateRectangle();
 	return mRect;
 }
 

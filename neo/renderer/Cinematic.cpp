@@ -210,7 +210,7 @@ idCinematic* idCinematic::Alloc()
 idCinematicLocal::~idCinematic
 ==============
 */
-idCinematic::~idCinematic( )
+idCinematic::~idCinematic()
 {
 	Close();
 }

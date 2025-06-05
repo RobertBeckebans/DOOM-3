@@ -36,7 +36,7 @@ class rvGEModifier
 public:
 
 	rvGEModifier( const char* name, idWindow* window );
-	virtual ~rvGEModifier( ) { }
+	virtual ~rvGEModifier() { }
 
 	virtual bool		Apply() = 0;
 	virtual bool		Undo() = 0;

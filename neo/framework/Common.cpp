@@ -1182,7 +1182,7 @@ void idCommonLocal::WriteConfigToFile( const char* filename )
 	sprintf( runtag, "%s - %s", cvarSystem->GetCVarString( "si_version" ), curtime );
 	config_compressor->Init( &compressed, true, 8 );
 	config_compressor->Write( runtag.c_str(), runtag.Length() );
-	config_compressor->FinishCompress( );
+	config_compressor->FinishCompress();
 	out.Encode( ( const byte* )compressed.GetDataPtr(), compressed.Length() );
 	f->Printf( "// %s\n", out.c_str() );
 #endif
@@ -1219,7 +1219,7 @@ void idCommonLocal::WriteConfiguration()
 	com_developer.SetBool( false );
 
 	WriteConfigToFile( CONFIG_FILE );
-	session->WriteCDKey( );
+	session->WriteCDKey();
 
 	// restore the developer cvar
 	com_developer.SetBool( developer );
@@ -1767,7 +1767,7 @@ void Com_ReloadEngine_f( const idCmdArgs& args )
 	{
 		if( menu )
 		{
-			session->StartMenu( );
+			session->StartMenu();
 		}
 	}
 }

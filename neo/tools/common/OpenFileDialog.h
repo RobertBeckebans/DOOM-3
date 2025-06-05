@@ -81,7 +81,7 @@ private:
 
 ID_INLINE const char* rvOpenFileDialog::GetFilename()
 {
-	return mFilename.c_str( );
+	return mFilename.c_str();
 }
 
 ID_INLINE void rvOpenFileDialog::SetTitle( const char* title )

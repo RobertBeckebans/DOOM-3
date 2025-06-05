@@ -790,7 +790,7 @@ void idObjective::Spawn()
 idObjective::Event_Screenshot
 ================
 */
-void idObjective::Event_CamShot( )
+void idObjective::Event_CamShot()
 {
 	const char* camName;
 	idStr shotName = gameLocal.GetMapName();

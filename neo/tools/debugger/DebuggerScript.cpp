@@ -54,7 +54,7 @@ rvDebuggerScript::~rvDebuggerScript
 */
 rvDebuggerScript::~rvDebuggerScript()
 {
-	Unload( );
+	Unload();
 }
 
 /*
@@ -97,7 +97,7 @@ bool rvDebuggerScript::Load( const char* filename )
 	int	  size;
 
 	// Unload the script before reloading it
-	Unload( );
+	Unload();
 
 	// Cache the filename used to load the script
 	mFilename = filename;
@@ -124,7 +124,7 @@ bool rvDebuggerScript::Load( const char* filename )
 	{
 		// Parse the script using the script compiler
 		mProgram = new idProgram;
-		mProgram->BeginCompilation( );
+		mProgram->BeginCompilation();
 		mProgram->CompileFile( SCRIPT_DEFAULT );
 
 		//BSM Nerve: Loads a game specific main script file
@@ -145,7 +145,7 @@ bool rvDebuggerScript::Load( const char* filename )
 		{
 			idStr qpath;
 			qpath = fileSystem->OSPathToRelativePath( mProgram->GetFilename( f ) );
-			qpath.BackSlashesToSlashes( );
+			qpath.BackSlashesToSlashes();
 			if( !qpath.Cmp( filename ) )
 			{
 				break;
@@ -157,7 +157,7 @@ bool rvDebuggerScript::Load( const char* filename )
 			mProgram->CompileText( filename, mContents, false );
 		}
 
-		mProgram->FinishCompilation( );
+		mProgram->FinishCompilation();
 	}
 	catch( idException& )
 	{
@@ -202,7 +202,7 @@ bool rvDebuggerScript::IsLineCode( int linenumber )
 
 	// Run through all the statements in the program and see if any match the
 	// linenumber that we are checking.
-	for( i	= 0; i < mProgram->NumStatements( ); i ++ )
+	for( i	= 0; i < mProgram->NumStatements(); i ++ )
 	{
 		if( mProgram->GetStatement( i ).linenumber == linenumber )
 		{

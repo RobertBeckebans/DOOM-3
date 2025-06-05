@@ -36,8 +36,8 @@ class rvGEModifierGroup : public rvGEModifier
 {
 public:
 
-	rvGEModifierGroup( );
-	~rvGEModifierGroup( );
+	rvGEModifierGroup();
+	~rvGEModifierGroup();
 
 	virtual bool		Apply();
 	virtual bool		Undo();
@@ -60,7 +60,7 @@ protected:
 
 ID_INLINE int rvGEModifierGroup::GetCount()
 {
-	return mModifiers.Num( );
+	return mModifiers.Num();
 }
 
 #endif

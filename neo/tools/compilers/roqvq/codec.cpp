@@ -491,8 +491,8 @@ void codec::SetPreviousImage( const char* filename, NSBitmapImageRep* timage )
 	}
 	common->Printf( "setPreviousImage:%s\n", filename );
 
-	previousImage[0] = new NSBitmapImageRep( );
-	previousImage[1] = new NSBitmapImageRep( );
+	previousImage[0] = new NSBitmapImageRep();
+	previousImage[1] = new NSBitmapImageRep();
 	whichFrame = 1;
 
 	*previousImage[0] = *timage;

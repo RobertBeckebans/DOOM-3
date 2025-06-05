@@ -172,7 +172,7 @@ public:
 	// get the hardcoded idnet master, equivalent to GetMasterAddress( 0, .. )
 	static netadr_t			GetMasterAddress();
 
-	static void				GetNETServers( );
+	static void				GetNETServers();
 
 	static void				ExecuteSessionCommand( const char* sessCmd );
 

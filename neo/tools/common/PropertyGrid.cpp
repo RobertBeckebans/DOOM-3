@@ -36,7 +36,7 @@ class rvPropertyGridItem
 {
 public:
 
-	rvPropertyGridItem( )
+	rvPropertyGridItem()
 	{
 	}
 
@@ -96,7 +96,7 @@ bool rvPropertyGrid::Create( HWND parent, int id, int style )
 	SendMessage( mEdit, WM_SETFONT, ( WPARAM )CreateFontIndirect( &lf ), 0 );
 	ReleaseDC( mWindow, dc );
 
-	RemoveAllItems( );
+	RemoveAllItems();
 
 	return true;
 }
@@ -437,11 +437,11 @@ LRESULT CALLBACK rvPropertyGrid::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 						{
 							case VK_RETURN:
 							case VK_TAB:
-								grid->FinishEdit( );
+								grid->FinishEdit();
 								return 1;
 
 							case VK_ESCAPE:
-								grid->CancelEdit( );
+								grid->CancelEdit();
 								return 1;
 						}
 					}
@@ -466,7 +466,7 @@ LRESULT CALLBACK rvPropertyGrid::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 			{
 				if( HIWORD( wParam ) == EN_KILLFOCUS )
 				{
-					grid->FinishEdit( );
+					grid->FinishEdit();
 					return true;
 				}
 			}

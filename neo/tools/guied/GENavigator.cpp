@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #define	GENAV_ITEMHEIGHT	22
 
-rvGENavigator::rvGENavigator( )
+rvGENavigator::rvGENavigator()
 {
 	mWnd = NULL;
 	mWorkspace = NULL;
@@ -144,7 +144,7 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 	switch( msg )
 	{
 		case WM_INITMENUPOPUP:
-			return SendMessage( gApp.GetMDIFrame( ), msg, wParam, lParam );
+			return SendMessage( gApp.GetMDIFrame(), msg, wParam, lParam );
 
 		case WM_ACTIVATE:
 			common->ActivateTool( LOWORD( wParam ) != WA_INACTIVE );
@@ -178,9 +178,9 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 				idWindow* parent = window;
 				offset = 1;
 				disabled = false;
-				while( parent = parent->GetParent( ) )
+				while( parent = parent->GetParent() )
 				{
-					if( rvGEWindowWrapper::GetWrapper( parent )->IsHidden( ) )
+					if( rvGEWindowWrapper::GetWrapper( parent )->IsHidden() )
 					{
 						disabled = true;
 					}
@@ -203,7 +203,7 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 				InflateRect( &rDraw, -3, -3 );
 				Draw3dRect( dis->hDC, &rDraw, GetSysColorBrush( COLOR_3DSHADOW ), GetSysColorBrush( COLOR_3DHILIGHT ) );
 
-				if( !wrapper->IsHidden( ) )
+				if( !wrapper->IsHidden() )
 				{
 					DrawIconEx( dis->hDC, rDraw.left, rDraw.top, disabled ? nav->mVisibleIconDisabled : nav->mVisibleIcon, 16, 16, 0, NULL, DI_NORMAL );
 				}
@@ -221,9 +221,9 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 					FillRect( dis->hDC, &rDraw, GetSysColorBrush( COLOR_WINDOW ) );
 				}
 
-				if( wrapper->CanHaveChildren( ) && window->GetChildCount( ) )
+				if( wrapper->CanHaveChildren() && window->GetChildCount() )
 				{
-					if( wrapper->IsExpanded( ) )
+					if( wrapper->IsExpanded() )
 					{
 						DrawIconEx( dis->hDC, rDraw.left + offset, rDraw.top + 3, nav->mCollapseIcon, 16, 16, 0, NULL, DI_NORMAL );
 					}
@@ -249,7 +249,7 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 				SetTextColor( dis->hDC, GetSysColor( colorIndex ) );
 				DrawText( dis->hDC, name, name.Length(), &rDraw, DT_LEFT | DT_VCENTER | DT_SINGLELINE );
 
-				if( wrapper->GetVariableDict().GetNumKeyVals( ) || wrapper->GetScriptDict().GetNumKeyVals( ) )
+				if( wrapper->GetVariableDict().GetNumKeyVals() || wrapper->GetScriptDict().GetNumKeyVals() )
 				{
 					DrawIconEx( dis->hDC, dis->rcItem.right - 16, ( dis->rcItem.bottom + dis->rcItem.top ) / 2 - 6, ( dis->itemState & ODS_SELECTED ) ? nav->mScriptsLightIcon : nav->mScriptsIcon, 13, 13, 0, NULL, DI_NORMAL );
 				}
@@ -332,11 +332,11 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 						idWindow* window = ( idWindow* )item.lParam;
 						rvGEWindowWrapper* wrapper = rvGEWindowWrapper::GetWrapper( window );
 
-						offset = wrapper->GetDepth( ) * 10 + 1;
+						offset = wrapper->GetDepth() * 10 + 1;
 
 						if( info.pt.x < GENAV_ITEMHEIGHT )
 						{
-							if( !rvGEWindowWrapper::GetWrapper( window )->IsHidden( ) )
+							if( !rvGEWindowWrapper::GetWrapper( window )->IsHidden() )
 							{
 								nav->mWorkspace->HideWindow( window );
 							}
@@ -347,23 +347,23 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 						}
 						else if( info.pt.x > GENAV_ITEMHEIGHT + offset && info.pt.x < GENAV_ITEMHEIGHT + offset + 16 )
 						{
-							if( wrapper->CanHaveChildren( ) && window->GetChildCount( ) )
+							if( wrapper->CanHaveChildren() && window->GetChildCount() )
 							{
-								if( wrapper->IsExpanded( ) )
+								if( wrapper->IsExpanded() )
 								{
-									wrapper->Collapse( );
-									nav->Update( );
+									wrapper->Collapse();
+									nav->Update();
 								}
 								else
 								{
-									wrapper->Expand( );
-									nav->Update( );
+									wrapper->Expand();
+									nav->Update();
 								}
 							}
 						}
 						else if( nh->code == NM_DBLCLK )
 						{
-							SendMessage( gApp.GetMDIFrame( ), WM_COMMAND, MAKELONG( ID_GUIED_ITEM_PROPERTIES, 0 ), 0 );
+							SendMessage( gApp.GetMDIFrame(), WM_COMMAND, MAKELONG( ID_GUIED_ITEM_PROPERTIES, 0 ), 0 );
 						}
 					}
 
@@ -383,7 +383,7 @@ LRESULT CALLBACK rvGENavigator::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPA
 					{
 						ClientToScreen( hWnd, &info.pt );
 						HMENU menu = GetSubMenu( LoadMenu( gApp.GetInstance(), MAKEINTRESOURCE( IDR_GUIED_ITEM_POPUP ) ), 0 );
-						TrackPopupMenu( menu, TPM_RIGHTBUTTON | TPM_LEFTALIGN, info.pt.x, info.pt.y, 0, gApp.GetMDIFrame( ), NULL );
+						TrackPopupMenu( menu, TPM_RIGHTBUTTON | TPM_LEFTALIGN, info.pt.x, info.pt.y, 0, gApp.GetMDIFrame(), NULL );
 						DestroyMenu( menu );
 					}
 
@@ -463,7 +463,7 @@ void rvGENavigator::AddWindow( idWindow* window )
 	wrapper = rvGEWindowWrapper::GetWrapper( window );
 
 	// Dont add deleted windows
-	if( !wrapper || wrapper->IsDeleted( ) )
+	if( !wrapper || wrapper->IsDeleted() )
 	{
 		return;
 	}
@@ -484,7 +484,7 @@ void rvGENavigator::AddWindow( idWindow* window )
 	}
 
 	// Dont continue if not expanded.
-	if( !wrapper->IsExpanded( ) )
+	if( !wrapper->IsExpanded() )
 	{
 		return;
 	}
@@ -507,7 +507,7 @@ void rvGENavigator::SetWorkspace( rvGEWorkspace* workspace )
 {
 	mWorkspace = workspace;
 
-	Update( );
+	Update();
 }
 
 /*
@@ -525,7 +525,7 @@ void rvGENavigator::Update()
 	// Add starting with the desktop window
 	if( mWorkspace )
 	{
-		AddWindow( mWorkspace->GetInterface( )->GetDesktop( ) );
+		AddWindow( mWorkspace->GetInterface()->GetDesktop() );
 	}
 
 	// For some reason the horizontal scrollbar wants to show up initially after an update
@@ -559,9 +559,9 @@ void rvGENavigator::UpdateSelections()
 		window = ( idWindow* ) item.lParam;
 		wrapper = rvGEWindowWrapper::GetWrapper( window );
 
-		ListView_SetItemState( mTree, i, wrapper->IsSelected( ) ? LVIS_SELECTED : 0, LVIS_SELECTED );
+		ListView_SetItemState( mTree, i, wrapper->IsSelected() ? LVIS_SELECTED : 0, LVIS_SELECTED );
 
-		if( wrapper->IsSelected( ) )
+		if( wrapper->IsSelected() )
 		{
 			ListView_EnsureVisible( mTree, i, false );
 		}

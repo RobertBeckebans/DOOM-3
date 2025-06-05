@@ -49,8 +49,8 @@ class rvDebuggerWindow
 {
 public:
 
-	rvDebuggerWindow( );
-	~rvDebuggerWindow( );
+	rvDebuggerWindow();
+	~rvDebuggerWindow();
 
 	bool			Create( HINSTANCE hInstance );
 

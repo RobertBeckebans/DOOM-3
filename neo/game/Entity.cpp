@@ -2043,7 +2043,7 @@ void idEntity::Bind( idEntity* master, bool orientated )
 
 	FinishBind();
 
-	PostBind( );
+	PostBind();
 }
 
 /*
@@ -5370,7 +5370,7 @@ void idEntity::ReadGUIFromSnapshot( const idBitMsgDelta& msg )
 {
 	int state;
 	idUserInterface* gui;
-	state = msg.ReadByte( );
+	state = msg.ReadByte();
 	gui = renderEntity.gui[ 0 ];
 	if( gui && state != mpGUIState )
 	{
