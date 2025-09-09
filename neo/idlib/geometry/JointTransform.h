@@ -79,11 +79,18 @@ public:
 	bool			operator==(	const idJointMat& a ) const;					// exact compare, no epsilon
 	bool			operator!=(	const idJointMat& a ) const;					// exact compare, no epsilon
 
+	void			Identity();
+	void			Invert();
 	idMat3			ToMat3() const;
 	idVec3			ToVec3() const;
 	idJointQuat		ToJointQuat() const;
 	const float* 	ToFloatPtr() const;
 	float* 			ToFloatPtr();
+
+	static void		Mul( idJointMat& result, const idJointMat& mat, const float s );
+	static void		Mad( idJointMat& result, const idJointMat& mat, const float s );
+	static void		Multiply( idJointMat& result, const idJointMat& m1, const idJointMat& m2 );
+	static void		InverseMultiply( idJointMat& result, const idJointMat& m1, const idJointMat& m2 );
 
 private:
 	float			mat[3 * 4];
@@ -124,37 +131,42 @@ ID_INLINE idVec3 idJointMat::operator*( const idVec4& v ) const
 					mat[2 * 4 + 0] * v[0] + mat[2 * 4 + 1] * v[1] + mat[2 * 4 + 2] * v[2] + mat[2 * 4 + 3] * v[3] );
 }
 
+/*
+========================
+idJointMat::operator*=
+========================
+*/
 ID_INLINE idJointMat& idJointMat::operator*=( const idJointMat& a )
 {
-	float dst[3];
+	float tmp[3];
 
-	dst[0] = mat[0 * 4 + 0] * a.mat[0 * 4 + 0] + mat[1 * 4 + 0] * a.mat[0 * 4 + 1] + mat[2 * 4 + 0] * a.mat[0 * 4 + 2];
-	dst[1] = mat[0 * 4 + 0] * a.mat[1 * 4 + 0] + mat[1 * 4 + 0] * a.mat[1 * 4 + 1] + mat[2 * 4 + 0] * a.mat[1 * 4 + 2];
-	dst[2] = mat[0 * 4 + 0] * a.mat[2 * 4 + 0] + mat[1 * 4 + 0] * a.mat[2 * 4 + 1] + mat[2 * 4 + 0] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 0] = dst[0];
-	mat[1 * 4 + 0] = dst[1];
-	mat[2 * 4 + 0] = dst[2];
+	tmp[0] = mat[0 * 4 + 0] * a.mat[0 * 4 + 0] + mat[1 * 4 + 0] * a.mat[0 * 4 + 1] + mat[2 * 4 + 0] * a.mat[0 * 4 + 2];
+	tmp[1] = mat[0 * 4 + 0] * a.mat[1 * 4 + 0] + mat[1 * 4 + 0] * a.mat[1 * 4 + 1] + mat[2 * 4 + 0] * a.mat[1 * 4 + 2];
+	tmp[2] = mat[0 * 4 + 0] * a.mat[2 * 4 + 0] + mat[1 * 4 + 0] * a.mat[2 * 4 + 1] + mat[2 * 4 + 0] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 0] = tmp[0];
+	mat[1 * 4 + 0] = tmp[1];
+	mat[2 * 4 + 0] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 1] * a.mat[0 * 4 + 0] + mat[1 * 4 + 1] * a.mat[0 * 4 + 1] + mat[2 * 4 + 1] * a.mat[0 * 4 + 2];
-	dst[1] = mat[0 * 4 + 1] * a.mat[1 * 4 + 0] + mat[1 * 4 + 1] * a.mat[1 * 4 + 1] + mat[2 * 4 + 1] * a.mat[1 * 4 + 2];
-	dst[2] = mat[0 * 4 + 1] * a.mat[2 * 4 + 0] + mat[1 * 4 + 1] * a.mat[2 * 4 + 1] + mat[2 * 4 + 1] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 1] = dst[0];
-	mat[1 * 4 + 1] = dst[1];
-	mat[2 * 4 + 1] = dst[2];
+	tmp[0] = mat[0 * 4 + 1] * a.mat[0 * 4 + 0] + mat[1 * 4 + 1] * a.mat[0 * 4 + 1] + mat[2 * 4 + 1] * a.mat[0 * 4 + 2];
+	tmp[1] = mat[0 * 4 + 1] * a.mat[1 * 4 + 0] + mat[1 * 4 + 1] * a.mat[1 * 4 + 1] + mat[2 * 4 + 1] * a.mat[1 * 4 + 2];
+	tmp[2] = mat[0 * 4 + 1] * a.mat[2 * 4 + 0] + mat[1 * 4 + 1] * a.mat[2 * 4 + 1] + mat[2 * 4 + 1] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 1] = tmp[0];
+	mat[1 * 4 + 1] = tmp[1];
+	mat[2 * 4 + 1] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 2] * a.mat[0 * 4 + 0] + mat[1 * 4 + 2] * a.mat[0 * 4 + 1] + mat[2 * 4 + 2] * a.mat[0 * 4 + 2];
-	dst[1] = mat[0 * 4 + 2] * a.mat[1 * 4 + 0] + mat[1 * 4 + 2] * a.mat[1 * 4 + 1] + mat[2 * 4 + 2] * a.mat[1 * 4 + 2];
-	dst[2] = mat[0 * 4 + 2] * a.mat[2 * 4 + 0] + mat[1 * 4 + 2] * a.mat[2 * 4 + 1] + mat[2 * 4 + 2] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 2] = dst[0];
-	mat[1 * 4 + 2] = dst[1];
-	mat[2 * 4 + 2] = dst[2];
+	tmp[0] = mat[0 * 4 + 2] * a.mat[0 * 4 + 0] + mat[1 * 4 + 2] * a.mat[0 * 4 + 1] + mat[2 * 4 + 2] * a.mat[0 * 4 + 2];
+	tmp[1] = mat[0 * 4 + 2] * a.mat[1 * 4 + 0] + mat[1 * 4 + 2] * a.mat[1 * 4 + 1] + mat[2 * 4 + 2] * a.mat[1 * 4 + 2];
+	tmp[2] = mat[0 * 4 + 2] * a.mat[2 * 4 + 0] + mat[1 * 4 + 2] * a.mat[2 * 4 + 1] + mat[2 * 4 + 2] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 2] = tmp[0];
+	mat[1 * 4 + 2] = tmp[1];
+	mat[2 * 4 + 2] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 3] * a.mat[0 * 4 + 0] + mat[1 * 4 + 3] * a.mat[0 * 4 + 1] + mat[2 * 4 + 3] * a.mat[0 * 4 + 2];
-	dst[1] = mat[0 * 4 + 3] * a.mat[1 * 4 + 0] + mat[1 * 4 + 3] * a.mat[1 * 4 + 1] + mat[2 * 4 + 3] * a.mat[1 * 4 + 2];
-	dst[2] = mat[0 * 4 + 3] * a.mat[2 * 4 + 0] + mat[1 * 4 + 3] * a.mat[2 * 4 + 1] + mat[2 * 4 + 3] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 3] = dst[0];
-	mat[1 * 4 + 3] = dst[1];
-	mat[2 * 4 + 3] = dst[2];
+	tmp[0] = mat[0 * 4 + 3] * a.mat[0 * 4 + 0] + mat[1 * 4 + 3] * a.mat[0 * 4 + 1] + mat[2 * 4 + 3] * a.mat[0 * 4 + 2];
+	tmp[1] = mat[0 * 4 + 3] * a.mat[1 * 4 + 0] + mat[1 * 4 + 3] * a.mat[1 * 4 + 1] + mat[2 * 4 + 3] * a.mat[1 * 4 + 2];
+	tmp[2] = mat[0 * 4 + 3] * a.mat[2 * 4 + 0] + mat[1 * 4 + 3] * a.mat[2 * 4 + 1] + mat[2 * 4 + 3] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 3] = tmp[0];
+	mat[1 * 4 + 3] = tmp[1];
+	mat[2 * 4 + 3] = tmp[2];
 
 	mat[0 * 4 + 3] += a.mat[0 * 4 + 3];
 	mat[1 * 4 + 3] += a.mat[1 * 4 + 3];
@@ -163,45 +175,55 @@ ID_INLINE idJointMat& idJointMat::operator*=( const idJointMat& a )
 	return *this;
 }
 
+/*
+========================
+idJointMat::operator/=
+========================
+*/
 ID_INLINE idJointMat& idJointMat::operator/=( const idJointMat& a )
 {
-	float dst[3];
+	float tmp[3];
 
 	mat[0 * 4 + 3] -= a.mat[0 * 4 + 3];
 	mat[1 * 4 + 3] -= a.mat[1 * 4 + 3];
 	mat[2 * 4 + 3] -= a.mat[2 * 4 + 3];
 
-	dst[0] = mat[0 * 4 + 0] * a.mat[0 * 4 + 0] + mat[1 * 4 + 0] * a.mat[1 * 4 + 0] + mat[2 * 4 + 0] * a.mat[2 * 4 + 0];
-	dst[1] = mat[0 * 4 + 0] * a.mat[0 * 4 + 1] + mat[1 * 4 + 0] * a.mat[1 * 4 + 1] + mat[2 * 4 + 0] * a.mat[2 * 4 + 1];
-	dst[2] = mat[0 * 4 + 0] * a.mat[0 * 4 + 2] + mat[1 * 4 + 0] * a.mat[1 * 4 + 2] + mat[2 * 4 + 0] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 0] = dst[0];
-	mat[1 * 4 + 0] = dst[1];
-	mat[2 * 4 + 0] = dst[2];
+	tmp[0] = mat[0 * 4 + 0] * a.mat[0 * 4 + 0] + mat[1 * 4 + 0] * a.mat[1 * 4 + 0] + mat[2 * 4 + 0] * a.mat[2 * 4 + 0];
+	tmp[1] = mat[0 * 4 + 0] * a.mat[0 * 4 + 1] + mat[1 * 4 + 0] * a.mat[1 * 4 + 1] + mat[2 * 4 + 0] * a.mat[2 * 4 + 1];
+	tmp[2] = mat[0 * 4 + 0] * a.mat[0 * 4 + 2] + mat[1 * 4 + 0] * a.mat[1 * 4 + 2] + mat[2 * 4 + 0] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 0] = tmp[0];
+	mat[1 * 4 + 0] = tmp[1];
+	mat[2 * 4 + 0] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 1] * a.mat[0 * 4 + 0] + mat[1 * 4 + 1] * a.mat[1 * 4 + 0] + mat[2 * 4 + 1] * a.mat[2 * 4 + 0];
-	dst[1] = mat[0 * 4 + 1] * a.mat[0 * 4 + 1] + mat[1 * 4 + 1] * a.mat[1 * 4 + 1] + mat[2 * 4 + 1] * a.mat[2 * 4 + 1];
-	dst[2] = mat[0 * 4 + 1] * a.mat[0 * 4 + 2] + mat[1 * 4 + 1] * a.mat[1 * 4 + 2] + mat[2 * 4 + 1] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 1] = dst[0];
-	mat[1 * 4 + 1] = dst[1];
-	mat[2 * 4 + 1] = dst[2];
+	tmp[0] = mat[0 * 4 + 1] * a.mat[0 * 4 + 0] + mat[1 * 4 + 1] * a.mat[1 * 4 + 0] + mat[2 * 4 + 1] * a.mat[2 * 4 + 0];
+	tmp[1] = mat[0 * 4 + 1] * a.mat[0 * 4 + 1] + mat[1 * 4 + 1] * a.mat[1 * 4 + 1] + mat[2 * 4 + 1] * a.mat[2 * 4 + 1];
+	tmp[2] = mat[0 * 4 + 1] * a.mat[0 * 4 + 2] + mat[1 * 4 + 1] * a.mat[1 * 4 + 2] + mat[2 * 4 + 1] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 1] = tmp[0];
+	mat[1 * 4 + 1] = tmp[1];
+	mat[2 * 4 + 1] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 2] * a.mat[0 * 4 + 0] + mat[1 * 4 + 2] * a.mat[1 * 4 + 0] + mat[2 * 4 + 2] * a.mat[2 * 4 + 0];
-	dst[1] = mat[0 * 4 + 2] * a.mat[0 * 4 + 1] + mat[1 * 4 + 2] * a.mat[1 * 4 + 1] + mat[2 * 4 + 2] * a.mat[2 * 4 + 1];
-	dst[2] = mat[0 * 4 + 2] * a.mat[0 * 4 + 2] + mat[1 * 4 + 2] * a.mat[1 * 4 + 2] + mat[2 * 4 + 2] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 2] = dst[0];
-	mat[1 * 4 + 2] = dst[1];
-	mat[2 * 4 + 2] = dst[2];
+	tmp[0] = mat[0 * 4 + 2] * a.mat[0 * 4 + 0] + mat[1 * 4 + 2] * a.mat[1 * 4 + 0] + mat[2 * 4 + 2] * a.mat[2 * 4 + 0];
+	tmp[1] = mat[0 * 4 + 2] * a.mat[0 * 4 + 1] + mat[1 * 4 + 2] * a.mat[1 * 4 + 1] + mat[2 * 4 + 2] * a.mat[2 * 4 + 1];
+	tmp[2] = mat[0 * 4 + 2] * a.mat[0 * 4 + 2] + mat[1 * 4 + 2] * a.mat[1 * 4 + 2] + mat[2 * 4 + 2] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 2] = tmp[0];
+	mat[1 * 4 + 2] = tmp[1];
+	mat[2 * 4 + 2] = tmp[2];
 
-	dst[0] = mat[0 * 4 + 3] * a.mat[0 * 4 + 0] + mat[1 * 4 + 3] * a.mat[1 * 4 + 0] + mat[2 * 4 + 3] * a.mat[2 * 4 + 0];
-	dst[1] = mat[0 * 4 + 3] * a.mat[0 * 4 + 1] + mat[1 * 4 + 3] * a.mat[1 * 4 + 1] + mat[2 * 4 + 3] * a.mat[2 * 4 + 1];
-	dst[2] = mat[0 * 4 + 3] * a.mat[0 * 4 + 2] + mat[1 * 4 + 3] * a.mat[1 * 4 + 2] + mat[2 * 4 + 3] * a.mat[2 * 4 + 2];
-	mat[0 * 4 + 3] = dst[0];
-	mat[1 * 4 + 3] = dst[1];
-	mat[2 * 4 + 3] = dst[2];
+	tmp[0] = mat[0 * 4 + 3] * a.mat[0 * 4 + 0] + mat[1 * 4 + 3] * a.mat[1 * 4 + 0] + mat[2 * 4 + 3] * a.mat[2 * 4 + 0];
+	tmp[1] = mat[0 * 4 + 3] * a.mat[0 * 4 + 1] + mat[1 * 4 + 3] * a.mat[1 * 4 + 1] + mat[2 * 4 + 3] * a.mat[2 * 4 + 1];
+	tmp[2] = mat[0 * 4 + 3] * a.mat[0 * 4 + 2] + mat[1 * 4 + 3] * a.mat[1 * 4 + 2] + mat[2 * 4 + 3] * a.mat[2 * 4 + 2];
+	mat[0 * 4 + 3] = tmp[0];
+	mat[1 * 4 + 3] = tmp[1];
+	mat[2 * 4 + 3] = tmp[2];
 
 	return *this;
 }
 
+/*
+========================
+idJointMat::Compare
+========================
+*/
 ID_INLINE bool idJointMat::Compare( const idJointMat& a ) const
 {
 	int i;
@@ -216,6 +238,11 @@ ID_INLINE bool idJointMat::Compare( const idJointMat& a ) const
 	return true;
 }
 
+/*
+========================
+idJointMat::Compare
+========================
+*/
 ID_INLINE bool idJointMat::Compare( const idJointMat& a, const float epsilon ) const
 {
 	int i;
@@ -230,16 +257,81 @@ ID_INLINE bool idJointMat::Compare( const idJointMat& a, const float epsilon ) c
 	return true;
 }
 
+/*
+========================
+idJointMat::operator==
+========================
+*/
 ID_INLINE bool idJointMat::operator==( const idJointMat& a ) const
 {
 	return Compare( a );
 }
 
+/*
+========================
+idJointMat::operator!=
+========================
+*/
 ID_INLINE bool idJointMat::operator!=( const idJointMat& a ) const
 {
 	return !Compare( a );
 }
 
+/*
+========================
+idJointMat::Identity
+========================
+*/
+ID_INLINE void idJointMat::Identity()
+{
+	mat[0 * 4 + 0] = 1.0f;
+	mat[0 * 4 + 1] = 0.0f;
+	mat[0 * 4 + 2] = 0.0f;
+	mat[0 * 4 + 3] = 0.0f;
+	mat[1 * 4 + 0] = 0.0f;
+	mat[1 * 4 + 1] = 1.0f;
+	mat[1 * 4 + 2] = 0.0f;
+	mat[1 * 4 + 3] = 0.0f;
+	mat[2 * 4 + 0] = 0.0f;
+	mat[2 * 4 + 1] = 0.0f;
+	mat[2 * 4 + 2] = 1.0f;
+	mat[2 * 4 + 3] = 0.0f;
+}
+
+/*
+========================
+idJointMat::Invert
+========================
+*/
+ID_INLINE void idJointMat::Invert()
+{
+	float tmp[3];
+
+	// negate inverse rotated translation part
+	tmp[0] = mat[0 * 4 + 0] * mat[0 * 4 + 3] + mat[1 * 4 + 0] * mat[1 * 4 + 3] + mat[2 * 4 + 0] * mat[2 * 4 + 3];
+	tmp[1] = mat[0 * 4 + 1] * mat[0 * 4 + 3] + mat[1 * 4 + 1] * mat[1 * 4 + 3] + mat[2 * 4 + 1] * mat[2 * 4 + 3];
+	tmp[2] = mat[0 * 4 + 2] * mat[0 * 4 + 3] + mat[1 * 4 + 2] * mat[1 * 4 + 3] + mat[2 * 4 + 2] * mat[2 * 4 + 3];
+	mat[0 * 4 + 3] = -tmp[0];
+	mat[1 * 4 + 3] = -tmp[1];
+	mat[2 * 4 + 3] = -tmp[2];
+
+	// transpose rotation part
+	tmp[0] = mat[0 * 4 + 1];
+	mat[0 * 4 + 1] = mat[1 * 4 + 0];
+	mat[1 * 4 + 0] = tmp[0];
+	tmp[1] = mat[0 * 4 + 2];
+	mat[0 * 4 + 2] = mat[2 * 4 + 0];
+	mat[2 * 4 + 0] = tmp[1];
+	tmp[2] = mat[1 * 4 + 2];
+	mat[1 * 4 + 2] = mat[2 * 4 + 1];
+	mat[2 * 4 + 1] = tmp[2];
+}
+
+/*
+========================
+idJointMat::ToMat3
+========================
+*/
 ID_INLINE idMat3 idJointMat::ToMat3() const
 {
 	return idMat3(	mat[0 * 4 + 0], mat[1 * 4 + 0], mat[2 * 4 + 0],
@@ -260,6 +352,101 @@ ID_INLINE const float* idJointMat::ToFloatPtr() const
 ID_INLINE float* idJointMat::ToFloatPtr()
 {
 	return mat;
+}
+
+/*
+========================
+idJointMat::Mul
+========================
+*/
+ID_INLINE void idJointMat::Mul( idJointMat& result, const idJointMat& mat, const float s )
+{
+	result.mat[0 * 4 + 0] = s * mat.mat[0 * 4 + 0];
+	result.mat[0 * 4 + 1] = s * mat.mat[0 * 4 + 1];
+	result.mat[0 * 4 + 2] = s * mat.mat[0 * 4 + 2];
+	result.mat[0 * 4 + 3] = s * mat.mat[0 * 4 + 3];
+	result.mat[1 * 4 + 0] = s * mat.mat[1 * 4 + 0];
+	result.mat[1 * 4 + 1] = s * mat.mat[1 * 4 + 1];
+	result.mat[1 * 4 + 2] = s * mat.mat[1 * 4 + 2];
+	result.mat[1 * 4 + 3] = s * mat.mat[1 * 4 + 3];
+	result.mat[2 * 4 + 0] = s * mat.mat[2 * 4 + 0];
+	result.mat[2 * 4 + 1] = s * mat.mat[2 * 4 + 1];
+	result.mat[2 * 4 + 2] = s * mat.mat[2 * 4 + 2];
+	result.mat[2 * 4 + 3] = s * mat.mat[2 * 4 + 3];
+}
+
+/*
+========================
+idJointMat::Mad
+========================
+*/
+ID_INLINE void idJointMat::Mad( idJointMat& result, const idJointMat& mat, const float s )
+{
+	result.mat[0 * 4 + 0] += s * mat.mat[0 * 4 + 0];
+	result.mat[0 * 4 + 1] += s * mat.mat[0 * 4 + 1];
+	result.mat[0 * 4 + 2] += s * mat.mat[0 * 4 + 2];
+	result.mat[0 * 4 + 3] += s * mat.mat[0 * 4 + 3];
+	result.mat[1 * 4 + 0] += s * mat.mat[1 * 4 + 0];
+	result.mat[1 * 4 + 1] += s * mat.mat[1 * 4 + 1];
+	result.mat[1 * 4 + 2] += s * mat.mat[1 * 4 + 2];
+	result.mat[1 * 4 + 3] += s * mat.mat[1 * 4 + 3];
+	result.mat[2 * 4 + 0] += s * mat.mat[2 * 4 + 0];
+	result.mat[2 * 4 + 1] += s * mat.mat[2 * 4 + 1];
+	result.mat[2 * 4 + 2] += s * mat.mat[2 * 4 + 2];
+	result.mat[2 * 4 + 3] += s * mat.mat[2 * 4 + 3];
+}
+
+/*
+========================
+idJointMat::Multiply
+========================
+*/
+ID_INLINE void idJointMat::Multiply( idJointMat& result, const idJointMat& m1, const idJointMat& m2 )
+{
+	result.mat[0 * 4 + 0] = m1.mat[0 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[0 * 4 + 1] * m2.mat[1 * 4 + 0] + m1.mat[0 * 4 + 2] * m2.mat[2 * 4 + 0];
+	result.mat[0 * 4 + 1] = m1.mat[0 * 4 + 0] * m2.mat[0 * 4 + 1] + m1.mat[0 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[0 * 4 + 2] * m2.mat[2 * 4 + 1];
+	result.mat[0 * 4 + 2] = m1.mat[0 * 4 + 0] * m2.mat[0 * 4 + 2] + m1.mat[0 * 4 + 1] * m2.mat[1 * 4 + 2] + m1.mat[0 * 4 + 2] * m2.mat[2 * 4 + 2];
+	result.mat[0 * 4 + 3] = m1.mat[0 * 4 + 0] * m2.mat[0 * 4 + 3] + m1.mat[0 * 4 + 1] * m2.mat[1 * 4 + 3] + m1.mat[0 * 4 + 2] * m2.mat[2 * 4 + 3] + m1.mat[0 * 4 + 3];
+
+	result.mat[1 * 4 + 0] = m1.mat[1 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[1 * 4 + 1] * m2.mat[1 * 4 + 0] + m1.mat[1 * 4 + 2] * m2.mat[2 * 4 + 0];
+	result.mat[1 * 4 + 1] = m1.mat[1 * 4 + 0] * m2.mat[0 * 4 + 1] + m1.mat[1 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[1 * 4 + 2] * m2.mat[2 * 4 + 1];
+	result.mat[1 * 4 + 2] = m1.mat[1 * 4 + 0] * m2.mat[0 * 4 + 2] + m1.mat[1 * 4 + 1] * m2.mat[1 * 4 + 2] + m1.mat[1 * 4 + 2] * m2.mat[2 * 4 + 2];
+	result.mat[1 * 4 + 3] = m1.mat[1 * 4 + 0] * m2.mat[0 * 4 + 3] + m1.mat[1 * 4 + 1] * m2.mat[1 * 4 + 3] + m1.mat[1 * 4 + 2] * m2.mat[2 * 4 + 3] + m1.mat[1 * 4 + 3];
+
+	result.mat[2 * 4 + 0] = m1.mat[2 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[2 * 4 + 1] * m2.mat[1 * 4 + 0] + m1.mat[2 * 4 + 2] * m2.mat[2 * 4 + 0];
+	result.mat[2 * 4 + 1] = m1.mat[2 * 4 + 0] * m2.mat[0 * 4 + 1] + m1.mat[2 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[2 * 4 + 2] * m2.mat[2 * 4 + 1];
+	result.mat[2 * 4 + 2] = m1.mat[2 * 4 + 0] * m2.mat[0 * 4 + 2] + m1.mat[2 * 4 + 1] * m2.mat[1 * 4 + 2] + m1.mat[2 * 4 + 2] * m2.mat[2 * 4 + 2];
+	result.mat[2 * 4 + 3] = m1.mat[2 * 4 + 0] * m2.mat[0 * 4 + 3] + m1.mat[2 * 4 + 1] * m2.mat[1 * 4 + 3] + m1.mat[2 * 4 + 2] * m2.mat[2 * 4 + 3] + m1.mat[2 * 4 + 3];
+}
+
+/*
+========================
+idJointMat::InverseMultiply
+========================
+*/
+ID_INLINE void idJointMat::InverseMultiply( idJointMat& result, const idJointMat& m1, const idJointMat& m2 )
+{
+	float dst[3];
+
+	result.mat[0 * 4 + 0] = m1.mat[0 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[0 * 4 + 1] * m2.mat[0 * 4 + 1] + m1.mat[0 * 4 + 2] * m2.mat[0 * 4 + 2];
+	result.mat[0 * 4 + 1] = m1.mat[0 * 4 + 0] * m2.mat[1 * 4 + 0] + m1.mat[0 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[0 * 4 + 2] * m2.mat[1 * 4 + 2];
+	result.mat[0 * 4 + 2] = m1.mat[0 * 4 + 0] * m2.mat[2 * 4 + 0] + m1.mat[0 * 4 + 1] * m2.mat[2 * 4 + 1] + m1.mat[0 * 4 + 2] * m2.mat[2 * 4 + 2];
+
+	result.mat[1 * 4 + 0] = m1.mat[1 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[1 * 4 + 1] * m2.mat[0 * 4 + 1] + m1.mat[1 * 4 + 2] * m2.mat[0 * 4 + 2];
+	result.mat[1 * 4 + 1] = m1.mat[1 * 4 + 0] * m2.mat[1 * 4 + 0] + m1.mat[1 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[1 * 4 + 2] * m2.mat[1 * 4 + 2];
+	result.mat[1 * 4 + 2] = m1.mat[1 * 4 + 0] * m2.mat[2 * 4 + 0] + m1.mat[1 * 4 + 1] * m2.mat[2 * 4 + 1] + m1.mat[1 * 4 + 2] * m2.mat[2 * 4 + 2];
+
+	result.mat[2 * 4 + 0] = m1.mat[2 * 4 + 0] * m2.mat[0 * 4 + 0] + m1.mat[2 * 4 + 1] * m2.mat[0 * 4 + 1] + m1.mat[2 * 4 + 2] * m2.mat[0 * 4 + 2];
+	result.mat[2 * 4 + 1] = m1.mat[2 * 4 + 0] * m2.mat[1 * 4 + 0] + m1.mat[2 * 4 + 1] * m2.mat[1 * 4 + 1] + m1.mat[2 * 4 + 2] * m2.mat[1 * 4 + 2];
+	result.mat[2 * 4 + 2] = m1.mat[2 * 4 + 0] * m2.mat[2 * 4 + 0] + m1.mat[2 * 4 + 1] * m2.mat[2 * 4 + 1] + m1.mat[2 * 4 + 2] * m2.mat[2 * 4 + 2];
+
+	dst[0] = - ( m2.mat[0 * 4 + 0] * m2.mat[0 * 4 + 3] + m2.mat[1 * 4 + 0] * m2.mat[1 * 4 + 3] + m2.mat[2 * 4 + 0] * m2.mat[2 * 4 + 3] );
+	dst[1] = - ( m2.mat[0 * 4 + 1] * m2.mat[0 * 4 + 3] + m2.mat[1 * 4 + 1] * m2.mat[1 * 4 + 3] + m2.mat[2 * 4 + 1] * m2.mat[2 * 4 + 3] );
+	dst[2] = - ( m2.mat[0 * 4 + 2] * m2.mat[0 * 4 + 3] + m2.mat[1 * 4 + 2] * m2.mat[1 * 4 + 3] + m2.mat[2 * 4 + 2] * m2.mat[2 * 4 + 3] );
+
+	result.mat[0 * 4 + 3] = m1.mat[0 * 4 + 0] * dst[0] + m1.mat[0 * 4 + 1] * dst[1] + m1.mat[0 * 4 + 2] * dst[2] + m1.mat[0 * 4 + 3];
+	result.mat[1 * 4 + 3] = m1.mat[1 * 4 + 0] * dst[0] + m1.mat[1 * 4 + 1] * dst[1] + m1.mat[1 * 4 + 2] * dst[2] + m1.mat[1 * 4 + 3];
+	result.mat[2 * 4 + 3] = m1.mat[2 * 4 + 0] * dst[0] + m1.mat[2 * 4 + 1] * dst[1] + m1.mat[2 * 4 + 2] * dst[2] + m1.mat[2 * 4 + 3];
 }
 
 #endif /* !__JOINTTRANSFORM_H__ */

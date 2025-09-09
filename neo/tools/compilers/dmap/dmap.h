@@ -113,6 +113,8 @@ typedef struct side_s
 
 	const idMaterial* 	material;
 	textureVectors_t	texVec;
+	idVec2i				texSize;
+	bool				texValve220;	// RB
 
 	idWinding* 			winding;		// only clipped to the other sides of the brush
 	idWinding* 			visibleHull;	// also clipped to the solid parts of the world
@@ -422,7 +424,7 @@ void	FixGlobalTjunctions( uEntity_t* e );
 
 //=============================================================================
 
-// optimize.cpp -- trianlge mesh reoptimization
+// optimize.cpp -- triangle mesh reoptimization
 
 // the shadow volume optimizer call internal optimizer routines, normal triangles
 // will just be done by OptimizeEntity()

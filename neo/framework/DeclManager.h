@@ -132,6 +132,8 @@ public:
 };
 
 
+class idRenderModel; // RB
+
 class idDecl
 {
 public:
@@ -309,6 +311,12 @@ public:
 	virtual void			Print() const
 	{
 		base->Print();
+	}
+
+	// RB
+	virtual idRenderModel* ModelHandle() const
+	{
+		return NULL;
 	}
 
 public:

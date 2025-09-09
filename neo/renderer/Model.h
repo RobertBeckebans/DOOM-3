@@ -188,6 +188,10 @@ public:
 	// Loads static models only, dynamic models must be loaded by the modelManager
 	virtual void				InitFromFile( const char* fileName ) = 0;
 
+	// RB begin
+	virtual void				ExportOBJ( idFile* objFile, idFile* mtlFile, ID_TIME_T* _timeStamp = NULL ) = 0;
+	// RB end
+
 	// renderBump uses this to load the very high poly count models, skipping the
 	// shadow and tangent generation, along with some surface cleanup to make it load faster
 	virtual void				PartialInitFromFile( const char* fileName ) = 0;

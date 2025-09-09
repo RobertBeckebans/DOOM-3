@@ -305,7 +305,7 @@ void idMD5Mesh::UpdateSurface( const struct renderEntity_s* ent, const idJointMa
 
 	surf->shader = shader;
 
-	if( surf->geometry )
+	if( surf->geometry != NULL )
 	{
 		// if the number of verts and indexes are the same we can re-use the triangle surface
 		// the number of indexes must be the same to assure the correct amount of memory is allocated for the facePlanes
@@ -547,15 +547,12 @@ Upon exit, the model will absolutely be valid, but possibly as a default model
 */
 void idRenderModelMD5::LoadModel()
 {
+
 	int			version;
-	int			i;
 	int			num;
 	int			parentNum;
 	idToken		token;
 	idLexer		parser( LEXFL_ALLOWPATHNAMES | LEXFL_NOSTRINGESCAPECHARS );
-	idJointQuat*	pose;
-	idMD5Joint*	joint;
-	idJointMat* poseMat3;
 
 	if( !purged )
 	{
@@ -590,7 +587,6 @@ void idRenderModelMD5::LoadModel()
 	joints.SetNum( num );
 	defaultPose.SetGranularity( 1 );
 	defaultPose.SetNum( num );
-	poseMat3 = ( idJointMat* )_alloca16( num * sizeof( *poseMat3 ) );
 
 	// parse num meshes
 	parser.ExpectTokenString( "numMeshes" );
@@ -607,32 +603,47 @@ void idRenderModelMD5::LoadModel()
 	//
 	parser.ExpectTokenString( "joints" );
 	parser.ExpectTokenString( "{" );
-	pose = defaultPose.Ptr();
-	joint = joints.Ptr();
-	for( i = 0; i < joints.Num(); i++, joint++, pose++ )
+	idJointMat* poseMat = ( idJointMat* )_alloca16( joints.Num() * sizeof( poseMat[0] ) );
+	for( int i = 0; i < joints.Num(); i++ )
 	{
+		idMD5Joint* joint = &joints[i];
+		idJointQuat*	 pose = &defaultPose[i];
+
 		ParseJoint( parser, joint, pose );
-		poseMat3[ i ].SetRotation( pose->q.ToMat3() );
-		poseMat3[ i ].SetTranslation( pose->t );
+		poseMat[ i ].SetRotation( pose->q.ToMat3() );
+		poseMat[ i ].SetTranslation( pose->t );
 		if( joint->parent )
 		{
 			parentNum = joint->parent - joints.Ptr();
-			pose->q = ( poseMat3[ i ].ToMat3() * poseMat3[ parentNum ].ToMat3().Transpose() ).ToQuat();
-			pose->t = ( poseMat3[ i ].ToVec3() - poseMat3[ parentNum ].ToVec3() ) * poseMat3[ parentNum ].ToMat3().Transpose();
+			pose->q = ( poseMat[ i ].ToMat3() * poseMat[ parentNum ].ToMat3().Transpose() ).ToQuat();
+			pose->t = ( poseMat[ i ].ToVec3() - poseMat[ parentNum ].ToVec3() ) * poseMat[ parentNum ].ToMat3().Transpose();
 		}
 	}
 	parser.ExpectTokenString( "}" );
 
-	for( i = 0; i < meshes.Num(); i++ )
+	//-----------------------------------------
+	// create the inverse of the base pose joints to support tech6 style deformation
+	// of base pose vertexes, normals, and tangents.
+	//
+	// vertex * joints * inverseJoints == vertex when joints is the base pose
+	// When the joints are in another pose, it gives the animated vertex position
+	//-----------------------------------------
+	invertedDefaultPose.SetNum( SIMD_ROUND_JOINTS( joints.Num() ) );
+	for( int i = 0; i < joints.Num(); i++ )
+	{
+		invertedDefaultPose[i] = poseMat[i];
+		invertedDefaultPose[i].Invert();
+	}
+	SIMD_INIT_LAST_JOINT( invertedDefaultPose.Ptr(), joints.Num() );
+
+	for( int i = 0; i < meshes.Num(); i++ )
 	{
 		parser.ExpectTokenString( "mesh" );
-		meshes[ i ].ParseMesh( parser, defaultPose.Num(), poseMat3 );
+		meshes[i].ParseMesh( parser, defaultPose.Num(), poseMat );
 	}
 
-	//
 	// calculate the bounds of the model
-	//
-	CalculateBounds( poseMat3 );
+	CalculateBounds( poseMat );
 
 	// set the timestamp for reloadmodels
 	fileSystem->ReadFile( name, NULL, &timeStamp );
@@ -796,16 +807,115 @@ void idRenderModelMD5::DrawJoints( const renderEntity_t* ent, const struct viewD
 
 /*
 ====================
+TransformJoints
+====================
+*/
+static void TransformJoints( idJointMat* __restrict outJoints, const int numJoints, const idJointMat* __restrict inJoints1, const idJointMat* __restrict inJoints2 )
+{
+
+	float* outFloats = outJoints->ToFloatPtr();
+	const float* inFloats1 = inJoints1->ToFloatPtr();
+	const float* inFloats2 = inJoints2->ToFloatPtr();
+
+	//assert_16_byte_aligned( outFloats );
+	//assert_16_byte_aligned( inFloats1 );
+	//assert_16_byte_aligned( inFloats2 );
+
+#if 0 //defined(USE_INTRINSICS)
+
+	const __m128 mask_keep_last = __m128c( _mm_set_epi32( 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000 ) );
+
+	for( int i = 0; i < numJoints; i += 2, inFloats1 += 2 * 12, inFloats2 += 2 * 12, outFloats += 2 * 12 )
+	{
+		__m128 m1a0 = _mm_load_ps( inFloats1 + 0 * 12 + 0 );
+		__m128 m1b0 = _mm_load_ps( inFloats1 + 0 * 12 + 4 );
+		__m128 m1c0 = _mm_load_ps( inFloats1 + 0 * 12 + 8 );
+		__m128 m1a1 = _mm_load_ps( inFloats1 + 1 * 12 + 0 );
+		__m128 m1b1 = _mm_load_ps( inFloats1 + 1 * 12 + 4 );
+		__m128 m1c1 = _mm_load_ps( inFloats1 + 1 * 12 + 8 );
+
+		__m128 m2a0 = _mm_load_ps( inFloats2 + 0 * 12 + 0 );
+		__m128 m2b0 = _mm_load_ps( inFloats2 + 0 * 12 + 4 );
+		__m128 m2c0 = _mm_load_ps( inFloats2 + 0 * 12 + 8 );
+		__m128 m2a1 = _mm_load_ps( inFloats2 + 1 * 12 + 0 );
+		__m128 m2b1 = _mm_load_ps( inFloats2 + 1 * 12 + 4 );
+		__m128 m2c1 = _mm_load_ps( inFloats2 + 1 * 12 + 8 );
+
+		__m128 tj0 = _mm_and_ps( m1a0, mask_keep_last );
+		__m128 tk0 = _mm_and_ps( m1b0, mask_keep_last );
+		__m128 tl0 = _mm_and_ps( m1c0, mask_keep_last );
+		__m128 tj1 = _mm_and_ps( m1a1, mask_keep_last );
+		__m128 tk1 = _mm_and_ps( m1b1, mask_keep_last );
+		__m128 tl1 = _mm_and_ps( m1c1, mask_keep_last );
+
+		__m128 ta0 = _mm_splat_ps( m1a0, 0 );
+		__m128 td0 = _mm_splat_ps( m1b0, 0 );
+		__m128 tg0 = _mm_splat_ps( m1c0, 0 );
+		__m128 ta1 = _mm_splat_ps( m1a1, 0 );
+		__m128 td1 = _mm_splat_ps( m1b1, 0 );
+		__m128 tg1 = _mm_splat_ps( m1c1, 0 );
+
+		__m128 ra0 = _mm_add_ps( tj0, _mm_mul_ps( ta0, m2a0 ) );
+		__m128 rd0 = _mm_add_ps( tk0, _mm_mul_ps( td0, m2a0 ) );
+		__m128 rg0 = _mm_add_ps( tl0, _mm_mul_ps( tg0, m2a0 ) );
+		__m128 ra1 = _mm_add_ps( tj1, _mm_mul_ps( ta1, m2a1 ) );
+		__m128 rd1 = _mm_add_ps( tk1, _mm_mul_ps( td1, m2a1 ) );
+		__m128 rg1 = _mm_add_ps( tl1, _mm_mul_ps( tg1, m2a1 ) );
+
+		__m128 tb0 = _mm_splat_ps( m1a0, 1 );
+		__m128 te0 = _mm_splat_ps( m1b0, 1 );
+		__m128 th0 = _mm_splat_ps( m1c0, 1 );
+		__m128 tb1 = _mm_splat_ps( m1a1, 1 );
+		__m128 te1 = _mm_splat_ps( m1b1, 1 );
+		__m128 th1 = _mm_splat_ps( m1c1, 1 );
+
+		__m128 rb0 = _mm_add_ps( ra0, _mm_mul_ps( tb0, m2b0 ) );
+		__m128 re0 = _mm_add_ps( rd0, _mm_mul_ps( te0, m2b0 ) );
+		__m128 rh0 = _mm_add_ps( rg0, _mm_mul_ps( th0, m2b0 ) );
+		__m128 rb1 = _mm_add_ps( ra1, _mm_mul_ps( tb1, m2b1 ) );
+		__m128 re1 = _mm_add_ps( rd1, _mm_mul_ps( te1, m2b1 ) );
+		__m128 rh1 = _mm_add_ps( rg1, _mm_mul_ps( th1, m2b1 ) );
+
+		__m128 tc0 = _mm_splat_ps( m1a0, 2 );
+		__m128 tf0 = _mm_splat_ps( m1b0, 2 );
+		__m128 ti0 = _mm_splat_ps( m1c0, 2 );
+		__m128 tf1 = _mm_splat_ps( m1b1, 2 );
+		__m128 ti1 = _mm_splat_ps( m1c1, 2 );
+		__m128 tc1 = _mm_splat_ps( m1a1, 2 );
+
+		__m128 rc0 = _mm_add_ps( rb0, _mm_mul_ps( tc0, m2c0 ) );
+		__m128 rf0 = _mm_add_ps( re0, _mm_mul_ps( tf0, m2c0 ) );
+		__m128 ri0 = _mm_add_ps( rh0, _mm_mul_ps( ti0, m2c0 ) );
+		__m128 rc1 = _mm_add_ps( rb1, _mm_mul_ps( tc1, m2c1 ) );
+		__m128 rf1 = _mm_add_ps( re1, _mm_mul_ps( tf1, m2c1 ) );
+		__m128 ri1 = _mm_add_ps( rh1, _mm_mul_ps( ti1, m2c1 ) );
+
+		_mm_store_ps( outFloats + 0 * 12 + 0, rc0 );
+		_mm_store_ps( outFloats + 0 * 12 + 4, rf0 );
+		_mm_store_ps( outFloats + 0 * 12 + 8, ri0 );
+		_mm_store_ps( outFloats + 1 * 12 + 0, rc1 );
+		_mm_store_ps( outFloats + 1 * 12 + 4, rf1 );
+		_mm_store_ps( outFloats + 1 * 12 + 8, ri1 );
+	}
+
+#else
+
+	for( int i = 0; i < numJoints; i++ )
+	{
+		idJointMat::Multiply( outJoints[i], inJoints1[i], inJoints2[i] );
+	}
+
+#endif
+}
+
+/*
+====================
 idRenderModelMD5::InstantiateDynamicModel
 ====================
 */
 idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEntity_s* ent, const struct viewDef_s* view, idRenderModel* cachedModel )
 {
-	int					i, surfaceNum;
-	idMD5Mesh*			mesh;
-	idRenderModelStatic*	staticModel;
-
-	if( cachedModel && !r_useCachedDynamicModels.GetBool() )
+	if( cachedModel != NULL && !r_useCachedDynamicModels.GetBool() )
 	{
 		delete cachedModel;
 		cachedModel = NULL;
@@ -832,7 +942,8 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 
 	tr.pc.c_generateMd5++;
 
-	if( cachedModel )
+	idRenderModelStatic* staticModel;
+	if( cachedModel != NULL )
 	{
 		assert( dynamic_cast<idRenderModelStatic*>( cachedModel ) != NULL );
 		assert( idStr::Icmp( cachedModel->Name(), MD5_SnapshotName ) == 0 );
@@ -862,8 +973,24 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 		}
 	}
 
+	// update the GPU joints array
+	const int numInvertedJoints = SIMD_ROUND_JOINTS( joints.Num() );
+	if( staticModel->jointsInverted == NULL )
+	{
+		staticModel->numInvertedJoints = numInvertedJoints;
+		staticModel->jointsInverted = ( idJointMat* )Mem_ClearedAlloc( numInvertedJoints * sizeof( idJointMat ) );
+		// TODO staticModel->jointsInvertedBuffer = 0;
+	}
+	else
+	{
+		assert( staticModel->numInvertedJoints == numInvertedJoints );
+	}
+
+	TransformJoints( staticModel->jointsInverted, joints.Num(), ent->joints, invertedDefaultPose.Ptr() );
+
 	// create all the surfaces
-	for( mesh = meshes.Ptr(), i = 0; i < meshes.Num(); i++, mesh++ )
+	idMD5Mesh* mesh = meshes.Ptr();
+	for( int i = 0; i < meshes.Num(); i++, mesh++ )
 	{
 		// avoid deforming the surface if it will be a nodraw due to a skin remapping
 		// FIXME: may have to still deform clipping hulls
@@ -880,6 +1007,7 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 
 		modelSurface_t* surf;
 
+		int surfaceNum = 0;
 		if( staticModel->FindSurfaceWithId( i, surfaceNum ) )
 		{
 			mesh->surfaceNum = surfaceNum;
@@ -1076,3 +1204,67 @@ int	idRenderModelMD5::Memory() const
 	}
 	return total;
 }
+
+
+// RB begin
+void idRenderModelMD5::ExportOBJ( idFile* objFile, idFile* mtlFile, ID_TIME_T* _timeStamp )
+{
+	if( objFile == NULL || mtlFile == NULL )
+	{
+		common->Printf( "Failed to ExportOBJ\n" );
+		return;
+	}
+
+	renderEntity_t			ent;
+
+	memset( &ent, 0, sizeof( ent ) );
+
+	ent.bounds.Clear();
+	ent.suppressSurfaceInViewID = 0;
+
+#if 1
+	if( idStr::FindText( objFile->GetName(), "storagecabinet", false ) != -1 )
+	{
+		common->Printf( "debugging export\n" );
+	}
+#endif
+
+	ent.numJoints = NumJoints();
+	if( ent.numJoints > 0 )
+	{
+		ent.joints = ( idJointMat* )Mem_Alloc16( ent.numJoints * sizeof( *ent.joints ) );
+
+		// convert the joint quaternions to joint matrices
+		SIMDProcessor->ConvertJointQuatsToJointMats( ent.joints, defaultPose.Ptr(), NumJoints() );
+
+		// set up the joint hierarchy
+		idList<int> jointParents;
+
+		jointParents.SetNum( NumJoints() );
+
+		const idMD5Joint* md5joint = joints.Ptr();
+		for( int i = 0; i <  NumJoints(); i++, md5joint++ )
+		{
+			if( md5joint->parent )
+			{
+				jointParents[i] = static_cast<jointHandle_t>( md5joint->parent - joints.Ptr() );
+			}
+			else
+			{
+				jointParents[i] = INVALID_JOINT;
+			}
+		}
+
+		// transform the joint hierarchy
+		SIMDProcessor->TransformJoints( ent.joints, jointParents.Ptr(), 1, joints.Num() - 1 );
+
+		idRenderModel* newmodel = InstantiateDynamicModel( &ent, NULL, NULL );
+		newmodel->ExportOBJ( objFile, mtlFile, _timeStamp );
+
+		Mem_Free16( ent.joints );
+		ent.joints = NULL;
+
+		delete newmodel;
+	}
+}
+// RB end

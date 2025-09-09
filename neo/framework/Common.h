@@ -51,7 +51,8 @@ typedef enum
 	EDITOR_PARTICLE				= BIT( 9 ),
 	EDITOR_PDA					= BIT( 10 ),
 	EDITOR_AAS					= BIT( 11 ),
-	EDITOR_MATERIAL				= BIT( 12 )
+	EDITOR_MATERIAL				= BIT( 12 ),
+	EDITOR_EXPORTDEFS			= BIT( 13 ), // RB
 } toolFlag_t;
 
 #define STRTABLE_ID				"#str_"
@@ -211,6 +212,9 @@ public:
 
 	// Directly sample a keystate.
 	virtual int					KeyState( int key ) = 0;
+
+	// RB: return active tool flags
+	virtual int					ActiveTools() const = 0;
 };
 
 extern idCommon* 		common;

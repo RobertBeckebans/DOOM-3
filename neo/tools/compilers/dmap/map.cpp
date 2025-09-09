@@ -3,6 +3,7 @@
 
 Doom 3 GPL Source Code
 Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
+Copyright (C) 2013-2021 Robert Beckebans
 
 This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
@@ -340,10 +341,29 @@ static void ParseBrush( const idMapBrush* mapBrush, int primitiveNum )
 		memset( s, 0, sizeof( *s ) );
 		s->planenum = FindFloatPlane( ms->GetPlane(), &fixedDegeneracies );
 		s->material = declManager->FindMaterial( ms->GetMaterial() );
+
 		ms->GetTextureVectors( s->texVec.v );
+
+		// RB: Valve 220 projection support
+		s->texValve220 = ( ms->GetProjectionType() == idMapBrushSide::PROJECTION_VALVE220 );
+
+		// RB: TODO
+		s->texSize = ms->GetTextureSize();
+
+		idImage* image = s->material->GetEditorImage();
+		if( image != NULL )
+		{
+			s->texSize.x = image->uploadWidth;
+			s->texSize.y = image->uploadHeight;
+		}
+		// RB end
+
 		// remove any integral shift, which will help with grouping
-		s->texVec.v[0][3] -= floor( s->texVec.v[0][3] );
-		s->texVec.v[1][3] -= floor( s->texVec.v[1][3] );
+		if( !s->texValve220 )
+		{
+			s->texVec.v[0][3] -= floor( s->texVec.v[0][3] );
+			s->texVec.v[1][3] -= floor( s->texVec.v[1][3] );
+		}
 	}
 
 	// if there are mirrored planes, the entire brush is invalid

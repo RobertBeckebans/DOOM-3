@@ -47,6 +47,11 @@ public:
 	virtual						~idRenderModelStatic();
 
 	virtual void				InitFromFile( const char* fileName );
+
+	// RB begin
+	virtual void				ExportOBJ( idFile* objFile, idFile* mtlFile, ID_TIME_T* _timeStamp = NULL );
+	// RB end
+
 	virtual void				PartialInitFromFile( const char* fileName );
 	virtual void				PurgeModel();
 	virtual void				Reset() {};
@@ -108,6 +113,11 @@ public:
 	idBounds					bounds;
 	int							overlaysAdded;
 
+	// when an md5 is instantiated, the inverted joints array is stored to allow GPU skinning
+	int							numInvertedJoints;
+	idJointMat* 				jointsInverted;
+	//vertCacheHandle_t			jointsInvertedBuffer;
+
 protected:
 	int							lastModifiedFrame;
 	int							lastArchivedFrame;
@@ -120,7 +130,7 @@ protected:
 	bool						fastLoad;				// don't generate tangents and shadow data
 	bool						reloadable;				// if not, reloadModels won't check timestamp
 	bool						levelLoadReferenced;	// for determining if it needs to be freed
-	ID_TIME_T						timeStamp;
+	ID_TIME_T					timeStamp;
 
 	static idCVar				r_mergeModelSurfaces;	// combine model surfaces with the same material
 	static idCVar				r_slopVertex;			// merge xyz coordinates this far apart
@@ -186,9 +196,14 @@ public:
 	virtual const idJointQuat* 	GetDefaultPose() const;
 	virtual int					NearestJoint( int surfaceNum, int a, int b, int c ) const;
 
+	// RB begin
+	virtual void				ExportOBJ( idFile* objFile, idFile* mtlFile, ID_TIME_T* _timeStamp = NULL );
+	// RB end
+
 private:
 	idList<idMD5Joint>			joints;
 	idList<idJointQuat>			defaultPose;
+	idList<idJointMat>			invertedDefaultPose;
 	idList<idMD5Mesh>			meshes;
 
 	void						CalculateBounds( const idJointMat* joints );
