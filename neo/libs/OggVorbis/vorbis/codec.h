@@ -25,8 +25,7 @@ extern "C"
 
 #include "../ogg/ogg.h"
 
-typedef struct vorbis_info
-{
+typedef struct vorbis_info {
 	int version;
 	int channels;
 	long rate;
@@ -57,8 +56,7 @@ typedef struct vorbis_info
 /* vorbis_dsp_state buffers the current vorbis audio
    analysis/synthesis state.  The DSP state belongs to a specific
    logical bitstream ****************************************************/
-typedef struct vorbis_dsp_state
-{
+typedef struct vorbis_dsp_state {
 	int analysisp;
 	vorbis_info* vi;
 
@@ -87,8 +85,7 @@ typedef struct vorbis_dsp_state
 	void*       backend_state;
 } vorbis_dsp_state;
 
-typedef struct vorbis_block
-{
+typedef struct vorbis_block {
 	/* necessary stream state for linking to the framing abstraction */
 	float**  pcm;       /* this is a pointer into local storage */
 	oggpack_buffer opb;
@@ -127,8 +124,7 @@ the analysis/synthesis stream; it belongs to a specific logical
 bitstream, but is independant from other vorbis_blocks belonging to
 that logical bitstream. *************************************************/
 
-struct alloc_chain
-{
+struct alloc_chain {
 	void* ptr;
 	struct alloc_chain* next;
 };
@@ -141,8 +137,7 @@ struct alloc_chain
 
 /* the comments are not part of vorbis_info so that vorbis_info can be
    static storage */
-typedef struct vorbis_comment
-{
+typedef struct vorbis_comment {
 	/* unlimited user comment fields.  libvorbis writes 'libvorbis'
 	   whatever vendor is set to in encode */
 	char** user_comments;

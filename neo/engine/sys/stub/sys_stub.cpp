@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,11 +39,11 @@ If you have questions concerning this license or the applicable additional terms
 #include <sys/time.h>
 #include <pwd.h>
 
-#define	MAX_OSPATH			256
+#define MAX_OSPATH 256
 
-static	int		frameNum;
+static int frameNum;
 
-int Sys_Milliseconds()
+int		   Sys_Milliseconds()
 {
 	return frameNum * 16;
 }
@@ -57,11 +58,11 @@ double Sys_ClockTicksPerSecond()
 	return 1000.0;
 }
 
-void	Sys_Sleep( int msec )
+void Sys_Sleep( int msec )
 {
 }
 
-void	Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority, xthreadInfo& info )
+void Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority, xthreadInfo& info )
 {
 }
 
@@ -69,14 +70,14 @@ void Sys_DestroyThread( xthreadInfo& info )
 {
 }
 
-void	Sys_FlushCacheMemory( void* base, int bytes )
+void Sys_FlushCacheMemory( void* base, int bytes )
 {
 }
 
 void Sys_Error( const char* error, ... )
 {
-	va_list		argptr;
-	char		text[4096];
+	va_list argptr;
+	char	text[4096];
 
 	va_start( argptr, error );
 	vprintf( error, argptr );
@@ -106,9 +107,9 @@ void Sys_Init()
 
 //==========================================================
 
-idPort	clientPort, serverPort;
+idPort clientPort, serverPort;
 
-void Sys_InitNetworking()
+void   Sys_InitNetworking()
 {
 }
 
@@ -122,9 +123,9 @@ void idPort::SendPacket( const netadr_t to, const void* data, int size )
 
 //==========================================================
 
-double	idTimer::base;
+double idTimer::base;
 
-void idTimer::InitBaseClockTicks() const
+void   idTimer::InitBaseClockTicks() const
 {
 }
 
@@ -134,7 +135,6 @@ void _glTexImage2D( GLenum target, GLint level, GLint internalformat, GLsizei wi
 {
 }
 
-
 void Sys_InitInput()
 {
 }
@@ -143,9 +143,9 @@ void Sys_ShutdownInput()
 {
 }
 
-sysEvent_t	Sys_GetEvent()
+sysEvent_t Sys_GetEvent()
 {
-	sysEvent_t	ev;
+	sysEvent_t ev;
 
 	memset( &ev, 0, sizeof( ev ) );
 	ev.evType = SE_NONE;
@@ -153,7 +153,7 @@ sysEvent_t	Sys_GetEvent()
 	return ev;
 }
 
-void	Sys_Mkdir( const char* path )
+void Sys_Mkdir( const char* path )
 {
 }
 
@@ -170,51 +170,42 @@ const char* Sys_DefaultBasePath()
 int Sys_ListFiles( const char* directory, const char* extension, idStrList& list )
 {
 	struct dirent* d;
-	DIR*		fdir;
-	bool dironly = false;
-	char		search[MAX_OSPATH];
-	int			i;
-	struct stat st;
+	DIR*		   fdir;
+	bool		   dironly = false;
+	char		   search[MAX_OSPATH];
+	int			   i;
+	struct stat	   st;
 
 	list.Clear();
 
-	if( !extension )
-	{
+	if( !extension ) {
 		extension = "";
 	}
 
-	if( extension[0] == '/' && extension[1] == 0 )
-	{
+	if( extension[0] == '/' && extension[1] == 0 ) {
 		extension = "";
-		dironly = true;
+		dironly	  = true;
 	}
 
 	// search
-	if( ( fdir = opendir( directory ) ) == NULL )
-	{
+	if( ( fdir = opendir( directory ) ) == NULL ) {
 		return 0;
 	}
 
-	while( ( d = readdir( fdir ) ) != NULL )
-	{
+	while( ( d = readdir( fdir ) ) != NULL ) {
 		idStr::snprintf( search, sizeof( search ), "%s/%s", directory, d->d_name );
-		if( stat( search, &st ) == -1 )
-		{
+		if( stat( search, &st ) == -1 ) {
 			continue;
 		}
-		if( !dironly )
-		{
+		if( !dironly ) {
 			idStr look( search );
 			idStr ext;
 			look.ExtractFileExtension( ext );
-			if( extension && extension[0] && ext.Icmp( &extension[1] ) != 0 )
-			{
+			if( extension && extension[0] && ext.Icmp( &extension[1] ) != 0 ) {
 				continue;
 			}
 		}
-		if( ( dironly && !( st.st_mode & S_IFDIR ) ) ||
-				( !dironly && ( st.st_mode & S_IFDIR ) ) )
-		{
+		if( ( dironly && !( st.st_mode & S_IFDIR ) ) || ( !dironly && ( st.st_mode & S_IFDIR ) ) ) {
 			continue;
 		}
 
@@ -226,11 +217,11 @@ int Sys_ListFiles( const char* directory, const char* extension, idStrList& list
 	return list.Num();
 }
 
-void	Sys_GrabMouseCursor( bool grabIt )
+void Sys_GrabMouseCursor( bool grabIt )
 {
 }
 
-bool	Sys_StringToNetAdr( const char* s, netadr_t* a )
+bool Sys_StringToNetAdr( const char* s, netadr_t* a )
 {
 	return false;
 }
@@ -239,14 +230,10 @@ const char* Sys_NetAdrToString( const netadr_t a )
 {
 	static char s[64];
 
-	if( a.type == NA_LOOPBACK )
-	{
+	if( a.type == NA_LOOPBACK ) {
 		idStr::snPrintf( s, sizeof( s ), "localhost" );
-	}
-	else if( a.type == NA_IP )
-	{
-		idStr::snPrintf( s, sizeof( s ), "%i.%i.%i.%i:%i",
-						 a.ip[0], a.ip[1], a.ip[2], a.ip[3], BigShort( a.port ) );
+	} else if( a.type == NA_IP ) {
+		idStr::snPrintf( s, sizeof( s ), "%i.%i.%i.%i:%i", a.ip[0], a.ip[1], a.ip[2], a.ip[3], BigShort( a.port ) );
 	}
 	return s;
 }
@@ -258,20 +245,17 @@ void Sys_DoPreferences()
 int main( int argc, char** argv )
 {
 	// combine the args into a windows-style command line
-	char	cmdline[4096];
+	char cmdline[4096];
 	cmdline[0] = 0;
-	for( int i = 1 ; i < argc ; i++ )
-	{
+	for( int i = 1; i < argc; i++ ) {
 		strcat( cmdline, argv[i] );
-		if( i < argc - 1 )
-		{
+		if( i < argc - 1 ) {
 			strcat( cmdline, " " );
 		}
 	}
 	common->Init( cmdline );
 
-	while( 1 )
-	{
+	while( 1 ) {
 		common->Async();
 		common->Frame();
 		frameNum++;

@@ -19,48 +19,43 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
 
-#if !defined(AFX_MAINFRM_H__330BBF0A_731C_11D1_B539_00AA00A410FC__INCLUDED_)
-#define AFX_MAINFRM_H__330BBF0A_731C_11D1_B539_00AA00A410FC__INCLUDED_
+#if !defined( AFX_MAINFRM_H__330BBF0A_731C_11D1_B539_00AA00A410FC__INCLUDED_ )
+	#define AFX_MAINFRM_H__330BBF0A_731C_11D1_B539_00AA00A410FC__INCLUDED_
 
-#if _MSC_VER >= 1000
-	#pragma once
-#endif // _MSC_VER >= 1000
+	#if _MSC_VER >= 1000
+		#pragma once
+	#endif // _MSC_VER >= 1000
 
-#include "XYWnd.h"
-#include "NewTexWnd.h"
-#include "ZWnd.h"
-#include "CamWnd.h"
-#include "TextureBar.h"
+	#include "XYWnd.h"
+	#include "NewTexWnd.h"
+	#include "ZWnd.h"
+	#include "CamWnd.h"
+	#include "TextureBar.h"
 
-
-const int RAD_SHIFT =   0x01;
-const int RAD_ALT =     0x02;
+const int RAD_SHIFT	  = 0x01;
+const int RAD_ALT	  = 0x02;
 const int RAD_CONTROL = 0x04;
-const int RAD_PRESS   = 0x08;
+const int RAD_PRESS	  = 0x08;
 
-struct SCommandInfo
-{
-	char* m_strCommand;
-	unsigned int   m_nKey;
-	unsigned int   m_nModifiers;
+struct SCommandInfo {
+	char*		 m_strCommand;
+	unsigned int m_nKey;
+	unsigned int m_nModifiers;
 	unsigned int m_nCommand;
 };
 
-struct SKeyInfo
-{
-	char* m_strName;
+struct SKeyInfo {
+	char*		 m_strName;
 	unsigned int m_nVKKey;
 };
-
-
-
 
 class CMainFrame : public CFrameWnd
 {
@@ -69,118 +64,86 @@ public:
 	CMainFrame();
 	void HandleKey( UINT nChar, UINT nRepCnt, UINT nFlags, bool bDown = true )
 	{
-		if( bDown )
-		{
+		if( bDown ) {
 			OnKeyDown( nChar, nRepCnt, nFlags );
-		}
-		else
-		{
+		} else {
 			OnKeyUp( nChar, nRepCnt, nFlags );
 		}
 	};
 
 	// Attributes
 public:
-
 	// Operations
 public:
-
 	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMainFrame)
 public:
 	virtual BOOL PreCreateWindow( CREATESTRUCT& cs );
 	virtual BOOL PreTranslateMessage( MSG* pMsg );
+
 protected:
-	virtual BOOL OnCommand( WPARAM wParam, LPARAM lParam );
+	virtual BOOL	OnCommand( WPARAM wParam, LPARAM lParam );
 	virtual LRESULT DefWindowProc( UINT message, WPARAM wParam, LPARAM lParam );
 	virtual LRESULT WindowProc( UINT message, WPARAM wParam, LPARAM lParam );
-	virtual BOOL OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext );
+	virtual BOOL	OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext );
 	//}}AFX_VIRTUAL
 
 	// Implementation
 public:
-	void UpdatePatchToolbarButtons();
-	void NudgeSelection( int nDirection, float fAmount );
-	void UpdateTextureBar();
-	void SetButtonMenuStates();
-	void SetTexValStatus();
-	void SetGridStatus();
-	void RoutineProcessing();
-	CXYWnd* ActiveXY();
-	void UpdateWindows( int nBits );
-	void SetStatusText( int nPane, const char* pText );
-	void UpdateStatusText();
-	void SetWindowStyle( int nStyle );
-	bool GetNurbMode()
-	{
-		return nurbMode;
-	}
-	idCurve_NURBS<idVec2>* GetNurb()
-	{
-		return &nurb;
-	}
-	void OnPrecisionCursorCycle();
+	void				   UpdatePatchToolbarButtons();
+	void				   NudgeSelection( int nDirection, float fAmount );
+	void				   UpdateTextureBar();
+	void				   SetButtonMenuStates();
+	void				   SetTexValStatus();
+	void				   SetGridStatus();
+	void				   RoutineProcessing();
+	CXYWnd*				   ActiveXY();
+	void				   UpdateWindows( int nBits );
+	void				   SetStatusText( int nPane, const char* pText );
+	void				   UpdateStatusText();
+	void				   SetWindowStyle( int nStyle );
+	bool				   GetNurbMode() { return nurbMode; }
+	idCurve_NURBS<idVec2>* GetNurb() { return &nurb; }
+	void				   OnPrecisionCursorCycle();
 
 	virtual ~CMainFrame();
-	CXYWnd* GetXYWnd()
-	{
-		return m_pXYWnd;
-	};
-	CXYWnd* GetXZWnd()
-	{
-		return m_pXZWnd;
-	};
-	CXYWnd* GetYZWnd()
-	{
-		return m_pYZWnd;
-	};
-	CCamWnd* GetCamera()
-	{
-		return m_pCamWnd;
-	};
-	CZWnd* GetZWnd()
-	{
-		return m_pZWnd;
-	};
+	CXYWnd*	 GetXYWnd() { return m_pXYWnd; };
+	CXYWnd*	 GetXZWnd() { return m_pXZWnd; };
+	CXYWnd*	 GetYZWnd() { return m_pYZWnd; };
+	CCamWnd* GetCamera() { return m_pCamWnd; };
+	CZWnd*	 GetZWnd() { return m_pZWnd; };
 
-	void SetActiveXY( CXYWnd* p )
+	void	 SetActiveXY( CXYWnd* p )
 	{
-		if( m_pActiveXY )
-		{
-			m_pActiveXY->SetActive( false );
-		}
+		if( m_pActiveXY ) { m_pActiveXY->SetActive( false ); }
 		m_pActiveXY = p;
 
-		if( m_pActiveXY )
-		{
-			m_pActiveXY->SetActive( true );
-		}
-
+		if( m_pActiveXY ) { m_pActiveXY->SetActive( true ); }
 	};
 
-#ifdef _DEBUG
+	#ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump( CDumpContext& dc ) const;
-#endif
+	#endif
 
-protected:  // control bar embedded members
-	CStatusBar  m_wndStatusBar;
-	CToolBar m_wndToolBar;
-	CTextureBar m_wndTextureBar;
-	CSplitterWnd m_wndSplit;
-	CSplitterWnd m_wndSplit2;
-	CSplitterWnd m_wndSplit3;
-	CXYWnd* m_pXYWnd;
-	CXYWnd* m_pYZWnd;
-	CXYWnd* m_pXZWnd;
-	CCamWnd* m_pCamWnd;
-	CZWnd* m_pZWnd;
-	CString m_strStatus[15];
-	CXYWnd* m_pActiveXY;
-	bool m_bCamPreview;
-	bool busy;
-	bool nurbMode;
+protected: // control bar embedded members
+	CStatusBar			  m_wndStatusBar;
+	CToolBar			  m_wndToolBar;
+	CTextureBar			  m_wndTextureBar;
+	CSplitterWnd		  m_wndSplit;
+	CSplitterWnd		  m_wndSplit2;
+	CSplitterWnd		  m_wndSplit3;
+	CXYWnd*				  m_pXYWnd;
+	CXYWnd*				  m_pYZWnd;
+	CXYWnd*				  m_pXZWnd;
+	CCamWnd*			  m_pCamWnd;
+	CZWnd*				  m_pZWnd;
+	CString				  m_strStatus[15];
+	CXYWnd*				  m_pActiveXY;
+	bool				  m_bCamPreview;
+	bool				  busy;
+	bool				  nurbMode;
 	idCurve_NURBS<idVec2> nurb;
 	// Generated message map functions
 protected:
@@ -191,13 +154,10 @@ protected:
 	void ShowMenuItemKeyBindings( CMenu* pMenu );
 	void SetEntityCheck();
 	void SetGridChecks( int nID );
-public:
-	void Nudge( int nDim, float fNudge );
-	void SetBusy( bool b )
-	{
-		busy = b;
-	}
 
+public:
+	void		 Nudge( int nDim, float fNudge );
+	void		 SetBusy( bool b ) { busy = b; }
 
 	// these are public so i can easily reflect messages
 	// from child windows..
@@ -205,7 +165,7 @@ public:
 	afx_msg void OnBSPStatus( UINT wParam, long lParam );
 	afx_msg void OnBSPDone( UINT wParam, long lParam );
 	afx_msg void OnParentNotify( UINT message, LPARAM lParam );
-	afx_msg int OnCreate( LPCREATESTRUCT lpCreateStruct );
+	afx_msg int	 OnCreate( LPCREATESTRUCT lpCreateStruct );
 	afx_msg void OnTimer( UINT nIDEvent );
 	afx_msg void OnDestroy();
 	afx_msg void OnClose();
@@ -302,8 +262,8 @@ public:
 	afx_msg void OnSelectionSelectpartialtall();
 	afx_msg void OnSelectionSelecttouching();
 	afx_msg void OnSelectionUngroupentity();
-	afx_msg	void OnSelectionWireFrameOn();
-	afx_msg	void OnSelectionWireFrameOff();
+	afx_msg void OnSelectionWireFrameOn();
+	afx_msg void OnSelectionWireFrameOff();
 	afx_msg void OnSelectionVisibleOn();
 	afx_msg void OnSelectionVisibleOff();
 	afx_msg void OnAutocaulk();
@@ -560,7 +520,7 @@ public:
 	afx_msg void OnViewRendersound();
 	afx_msg void OnSoundShowsoundvolumes();
 	afx_msg void OnSoundShowselectedsoundvolumes();
-	afx_msg	void OnNurbEditor();
+	afx_msg void OnNurbEditor();
 	afx_msg void OnSelectCompleteEntity();
 	afx_msg void OnGenerateMaterialsList();
 	afx_msg void OnMru( unsigned int nID );
@@ -572,7 +532,7 @@ public:
 	afx_msg void OnSelectAlltargets();
 
 	//}}AFX_MSG
-	void CheckTextureScale( int id );
+	void		 CheckTextureScale( int id );
 
 	DECLARE_MESSAGE_MAP()
 };

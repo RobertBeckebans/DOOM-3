@@ -26,8 +26,7 @@
 #include "timeval.h"
 
 
-typedef enum
-{
+typedef enum {
 	TIMER_NONE,
 	TIMER_NAMELOOKUP,
 	TIMER_CONNECT,

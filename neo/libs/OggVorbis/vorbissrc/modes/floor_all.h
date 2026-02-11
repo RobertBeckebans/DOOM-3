@@ -19,24 +19,21 @@
 #include "backends.h"
 #include "books/floor/floor_books.h"
 
-static static_codebook* _floor_128x4_books[] =
-{
+static static_codebook* _floor_128x4_books[] = {
 	&_huff_book_line_128x4_class0,
 	&_huff_book_line_128x4_0sub0,
 	&_huff_book_line_128x4_0sub1,
 	&_huff_book_line_128x4_0sub2,
 	&_huff_book_line_128x4_0sub3,
 };
-static static_codebook* _floor_256x4_books[] =
-{
+static static_codebook* _floor_256x4_books[] = {
 	&_huff_book_line_256x4_class0,
 	&_huff_book_line_256x4_0sub0,
 	&_huff_book_line_256x4_0sub1,
 	&_huff_book_line_256x4_0sub2,
 	&_huff_book_line_256x4_0sub3,
 };
-static static_codebook* _floor_128x7_books[] =
-{
+static static_codebook* _floor_128x7_books[] = {
 	&_huff_book_line_128x7_class0,
 	&_huff_book_line_128x7_class1,
 
@@ -47,8 +44,7 @@ static static_codebook* _floor_128x7_books[] =
 	&_huff_book_line_128x7_1sub2,
 	&_huff_book_line_128x7_1sub3,
 };
-static static_codebook* _floor_256x7_books[] =
-{
+static static_codebook* _floor_256x7_books[] = {
 	&_huff_book_line_256x7_class0,
 	&_huff_book_line_256x7_class1,
 
@@ -59,8 +55,7 @@ static static_codebook* _floor_256x7_books[] =
 	&_huff_book_line_256x7_1sub2,
 	&_huff_book_line_256x7_1sub3,
 };
-static static_codebook* _floor_128x11_books[] =
-{
+static static_codebook* _floor_128x11_books[] = {
 	&_huff_book_line_128x11_class1,
 	&_huff_book_line_128x11_class2,
 	&_huff_book_line_128x11_class3,
@@ -75,8 +70,7 @@ static static_codebook* _floor_128x11_books[] =
 	&_huff_book_line_128x11_3sub2,
 	&_huff_book_line_128x11_3sub3,
 };
-static static_codebook* _floor_128x17_books[] =
-{
+static static_codebook* _floor_128x17_books[] = {
 	&_huff_book_line_128x17_class1,
 	&_huff_book_line_128x17_class2,
 	&_huff_book_line_128x17_class3,
@@ -91,8 +85,7 @@ static static_codebook* _floor_128x17_books[] =
 	&_huff_book_line_128x17_3sub2,
 	&_huff_book_line_128x17_3sub3,
 };
-static static_codebook* _floor_512x17_books[] =
-{
+static static_codebook* _floor_512x17_books[] = {
 	&_huff_book_line_512x17_class1,
 	&_huff_book_line_512x17_class2,
 	&_huff_book_line_512x17_class3,
@@ -107,8 +100,7 @@ static static_codebook* _floor_512x17_books[] =
 	&_huff_book_line_512x17_3sub2,
 	&_huff_book_line_512x17_3sub3,
 };
-static static_codebook* _floor_1024x27_books[] =
-{
+static static_codebook* _floor_1024x27_books[] = {
 	&_huff_book_line_1024x27_class1,
 	&_huff_book_line_1024x27_class2,
 	&_huff_book_line_1024x27_class3,
@@ -127,8 +119,7 @@ static static_codebook* _floor_1024x27_books[] =
 	&_huff_book_line_1024x27_4sub3,
 };
 
-static static_codebook** _floor_books[10] =
-{
+static static_codebook** _floor_books[10] = {
 	_floor_128x4_books,
 	_floor_256x4_books,
 	_floor_128x7_books,
@@ -141,15 +132,14 @@ static static_codebook** _floor_books[10] =
 	_floor_512x17_books,
 };
 
-static vorbis_info_floor1 _floor[10] =
-{
+static vorbis_info_floor1 _floor[10] = {
 	/* 128 x 4 */
 	{
 		1, {0}, {4}, {2}, {0},
 		{{1, 2, 3, 4}},
 		4, {0, 128, 33, 8, 16, 70},
 
-		60, 30, 500,   1., 18.,  -1
+		60, 30, 500,   1., 18., -1
 	},
 	/* 256 x 4 */
 	{
@@ -157,7 +147,7 @@ static vorbis_info_floor1 _floor[10] =
 		{{1, 2, 3, 4}},
 		4, {0, 256, 66, 16, 32, 140},
 
-		60, 30, 500,   1., 18.,  -1
+		60, 30, 500,   1., 18., -1
 	},
 	/* 128 x 7 */
 	{
@@ -165,7 +155,7 @@ static vorbis_info_floor1 _floor[10] =
 		{{ -1, 2, 3, 4}, { -1, 5, 6, 7}},
 		4, {0, 128, 14, 4, 58, 2, 8, 28, 90},
 
-		60, 30, 500,   1., 18.,  -1
+		60, 30, 500,   1., 18., -1
 	},
 	/* 256 x 7 */
 	{
@@ -173,7 +163,7 @@ static vorbis_info_floor1 _floor[10] =
 		{{ -1, 2, 3, 4}, { -1, 5, 6, 7}},
 		4, {0, 256, 28, 8, 116, 4, 16, 56, 180},
 
-		60, 30, 500,   1., 18.,  -1
+		60, 30, 500,   1., 18., -1
 	},
 
 	/* 128 x 11 */
@@ -183,7 +173,7 @@ static vorbis_info_floor1 _floor[10] =
 
 		2, {0, 128,  8, 33,  4, 16, 70,  2, 6, 12,  23, 46, 90},
 
-		60, 30, 500,   1, 18.,  -1
+		60, 30, 500,   1, 18., -1
 	},
 
 	/* 128 x 17 */
@@ -192,7 +182,7 @@ static vorbis_info_floor1 _floor[10] =
 		{{3}, {4, 5}, { -1, 6, 7, 8}, { -1, 9, 10, 11}},
 		2, {0, 128,  12, 46,  4, 8, 16,  23, 33, 70,  2, 6, 10,  14, 19, 28,  39, 58, 90},
 
-		60, 30, 500,    1, 18.,  -1
+		60, 30, 500,    1, 18., -1
 	},
 
 	/* 1024 x 17 */
@@ -204,7 +194,7 @@ static vorbis_info_floor1 _floor[10] =
 			14, 46, 79,  111, 158, 220,  312, 464, 720
 		},
 
-		60, 30, 500,    1, 18.,  -1 /* lowpass! */
+		60, 30, 500,    1, 18., -1 /* lowpass! */
 	},
 	/* 1024 x 27 */
 	{
@@ -215,7 +205,7 @@ static vorbis_info_floor1 _floor[10] =
 			3, 10, 18, 28,  39, 55, 79, 111,  158, 220, 312,  464, 650, 850
 		},
 
-		60, 30, 500,    3, 18.,  -1 /* lowpass */
+		60, 30, 500,    3, 18., -1 /* lowpass */
 	},
 	/* 2048 x 27 */
 	{
@@ -226,7 +216,7 @@ static vorbis_info_floor1 _floor[10] =
 			6, 20, 36, 56,  78, 110, 158, 222,  316, 440, 624,  928, 1300, 1700
 		},
 
-		60, 30, 500,    3, 18.,  -1 /* lowpass */
+		60, 30, 500,    3, 18., -1 /* lowpass */
 	},
 	/* 512 x 17 */
 	{
@@ -237,7 +227,7 @@ static vorbis_info_floor1 _floor[10] =
 			7, 23, 39,  55, 79, 110,  156, 232, 360
 		},
 
-		60, 30, 500,    1, 18.,  -1 /* lowpass! */
+		60, 30, 500,    1, 18., -1 /* lowpass! */
 	},
 
 };

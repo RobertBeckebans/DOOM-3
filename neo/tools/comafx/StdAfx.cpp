@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -52,14 +53,12 @@ InitAfx
 */
 void InitAfx()
 {
-	if( !afxInitialized )
-	{
+	if( !afxInitialized ) {
 		AfxWinInit( win32.hInstance, NULL, "", SW_SHOW );
 		AfxInitRichEdit();
 		afxInitialized = true;
 	}
 }
-
 
 /*
 ===============================================================================
@@ -77,25 +76,22 @@ DefaultOnToolHitTest
 int DefaultOnToolHitTest( const toolTip_t* toolTips, const CDialog* dialog, CPoint point, TOOLINFO* pTI )
 {
 	CWnd* wnd;
-	RECT clientRect, rect;
+	RECT  clientRect, rect;
 
 	dialog->GetWindowRect( &clientRect );
 	point.x += clientRect.left;
 	point.y += clientRect.top;
-	for( int i = 0; toolTips[i].tip; i++ )
-	{
+	for( int i = 0; toolTips[i].tip; i++ ) {
 		wnd = dialog->GetDlgItem( toolTips[i].id );
-		if( !( wnd->GetStyle() & WS_VISIBLE ) )
-		{
+		if( !( wnd->GetStyle() & WS_VISIBLE ) ) {
 			continue;
 		}
 		wnd->GetWindowRect( &rect );
-		if( point.x >= rect.left && point.x <= rect.right && point.y >= rect.top && point.y <= rect.bottom )
-		{
+		if( point.x >= rect.left && point.x <= rect.right && point.y >= rect.top && point.y <= rect.bottom ) {
 			pTI->hwnd = dialog->GetSafeHwnd();
 			pTI->uFlags |= TTF_IDISHWND;
 			pTI->uFlags &= ~TTF_CENTERTIP;
-			pTI->uId = ( UINT_PTR ) wnd->GetSafeHwnd();
+			pTI->uId = ( UINT_PTR )wnd->GetSafeHwnd();
 			return pTI->uId;
 		}
 	}
@@ -116,37 +112,29 @@ BOOL DefaultOnToolTipNotify( const toolTip_t* toolTips, UINT id, NMHDR* pNMHDR, 
 	*pResult = 0;
 
 	UINT nID = pNMHDR->idFrom;
-	if( pTTTA->uFlags & TTF_IDISHWND )
-	{
+	if( pTTTA->uFlags & TTF_IDISHWND ) {
 		// idFrom is actually the HWND of the tool
 		nID = ::GetDlgCtrlID( ( HWND )nID );
 	}
 
 	int i;
-	for( i = 0; toolTips[i].tip; i++ )
-	{
-		if( toolTips[i].id == nID )
-		{
+	for( i = 0; toolTips[i].tip; i++ ) {
+		if( toolTips[i].id == nID ) {
 			break;
 		}
 	}
 
-	if( !toolTips[i].tip )
-	{
+	if( !toolTips[i].tip ) {
 		return FALSE;
 	}
 
-	if( pNMHDR->code == TTN_NEEDTEXTA )
-	{
+	if( pNMHDR->code == TTN_NEEDTEXTA ) {
 		lstrcpyn( pTTTA->szText, toolTips[i].tip, sizeof( pTTTA->szText ) );
-	}
-	else
-	{
+	} else {
 		_mbstowcsz( pTTTW->szText, toolTips[i].tip, sizeof( pTTTW->szText ) );
 	}
 	return TRUE;
 }
-
 
 /*
 ===============================================================================
@@ -168,13 +156,10 @@ EditControlEnterHit
 bool EditControlEnterHit( CEdit* edit )
 {
 	CString strIn, strOut;
-	if( edit->GetLineCount() > 1 )
-	{
+	if( edit->GetLineCount() > 1 ) {
 		edit->GetWindowText( strIn );
-		for( int i = 0; i < strIn.GetLength(); i++ )
-		{
-			if( strIn[i] >= ' ' )
-			{
+		for( int i = 0; i < strIn.GetLength(); i++ ) {
+			if( strIn[i] >= ' ' ) {
 				strOut.AppendChar( strIn[i] );
 			}
 		}
@@ -192,28 +177,22 @@ EditVerifyFloat
 */
 float EditVerifyFloat( CEdit* edit, bool allowNegative )
 {
-
 	CString strIn, strOut;
-	bool dot = false;
-	int start, end;
+	bool	dot = false;
+	int		start, end;
 
 	edit->GetSel( start, end );
 	edit->GetWindowText( strIn );
-	for( int i = 0; i < strIn.GetLength(); i++ )
-	{
+	for( int i = 0; i < strIn.GetLength(); i++ ) {
 		// first character may be a minus sign
-		if( allowNegative && strOut.GetLength() == 0 && strIn[i] == '-' )
-		{
+		if( allowNegative && strOut.GetLength() == 0 && strIn[i] == '-' ) {
 			strOut.AppendChar( '-' );
 		}
 		// the string may contain one dot
-		else if( !dot && strIn[i] == '.' )
-		{
+		else if( !dot && strIn[i] == '.' ) {
 			strOut.AppendChar( strIn[i] );
 			dot = true;
-		}
-		else if( strIn[i] >= '0' && strIn[i] <= '9' )
-		{
+		} else if( strIn[i] >= '0' && strIn[i] <= '9' ) {
 			strOut.AppendChar( strIn[i] );
 		}
 	}
@@ -221,7 +200,6 @@ float EditVerifyFloat( CEdit* edit, bool allowNegative )
 	edit->SetSel( start, end );
 
 	return atof( strOut.GetBuffer( 0 ) );
-
 }
 
 /*
@@ -233,116 +211,79 @@ void SpinFloatString( CString& str, bool up )
 {
 	int i, dotIndex = -1, digitIndex = -1;
 
-	for( i = 0; str[i]; i++ )
-	{
-		if( str[i] == '.' )
-		{
-			if( dotIndex == -1 )
-			{
+	for( i = 0; str[i]; i++ ) {
+		if( str[i] == '.' ) {
+			if( dotIndex == -1 ) {
 				dotIndex = i;
 			}
-		}
-		else if( str[i] != '0' )
-		{
-			if( digitIndex == -1 )
-			{
+		} else if( str[i] != '0' ) {
+			if( digitIndex == -1 ) {
 				digitIndex = i;
 			}
 		}
 	}
-	if( digitIndex == -1 )
-	{
+	if( digitIndex == -1 ) {
 		str.SetString( "1" );
 		return;
 	}
 
-	if( dotIndex != -1 )
-	{
+	if( dotIndex != -1 ) {
 		str.Delete( dotIndex, 1 );
-		if( digitIndex > dotIndex )
-		{
+		if( digitIndex > dotIndex ) {
 			digitIndex--;
 		}
-	}
-	else
-	{
+	} else {
 		dotIndex = i;
 	}
 
-	if( up )
-	{
-		if( str[digitIndex] == '9' )
-		{
+	if( up ) {
+		if( str[digitIndex] == '9' ) {
 			str.SetAt( digitIndex, '0' );
-			if( digitIndex == 0 )
-			{
+			if( digitIndex == 0 ) {
 				str.Insert( 0, '1' );
 				dotIndex++;
-			}
-			else
-			{
+			} else {
 				str.SetAt( digitIndex - 1, '1' );
 			}
-		}
-		else
-		{
+		} else {
 			str.SetAt( digitIndex, str[digitIndex] + 1 );
 		}
-	}
-	else
-	{
-		if( str[digitIndex] == '1' )
-		{
-			if( str[digitIndex + 1] == '\0' )
-			{
+	} else {
+		if( str[digitIndex] == '1' ) {
+			if( str[digitIndex + 1] == '\0' ) {
 				str.SetAt( digitIndex, '0' );
 				str.AppendChar( '9' );
-			}
-			else if( str[digitIndex + 1] == '0' )
-			{
+			} else if( str[digitIndex + 1] == '0' ) {
 				str.SetAt( digitIndex, '0' );
 				str.SetAt( digitIndex + 1, '9' );
-			}
-			else
-			{
+			} else {
 				str.SetAt( digitIndex + 1, str[digitIndex + 1] - 1 );
 			}
-		}
-		else
-		{
+		} else {
 			str.SetAt( digitIndex, str[digitIndex] - 1 );
 		}
 	}
-	if( dotIndex < str.GetLength() )
-	{
+	if( dotIndex < str.GetLength() ) {
 		str.Insert( dotIndex, '.' );
 		// remove trailing zeros
-		for( i = str.GetLength() - 1; i >= 0; i-- )
-		{
-			if( str[i] != '0' && str[i] != '.' )
-			{
+		for( i = str.GetLength() - 1; i >= 0; i-- ) {
+			if( str[i] != '0' && str[i] != '.' ) {
 				break;
 			}
 		}
-		if( i < str.GetLength() - 1 )
-		{
+		if( i < str.GetLength() - 1 ) {
 			str.Delete( i + 1, str.GetLength() - i );
 		}
 	}
-	for( i = 0; str[i]; i++ )
-	{
-		if( str[i] == '.' )
-		{
-			if( i > 1 )
-			{
+	for( i = 0; str[i]; i++ ) {
+		if( str[i] == '.' ) {
+			if( i > 1 ) {
 				str.Delete( 0, i - 1 );
 			}
 			break;
 		}
-		if( str[i] != '0' )
-		{
-			if( i > 0 )
-			{
+		if( str[i] != '0' ) {
+			if( i > 0 ) {
 				str.Delete( 0, i );
 			}
 			break;
@@ -375,14 +316,11 @@ int SetSafeComboBoxSelection( CComboBox* combo, const char* string, int skip )
 	int index;
 
 	index = combo->FindString( -1, string );
-	if( index == -1 )
-	{
+	if( index == -1 ) {
 		index = 0;
 	}
-	if( combo->GetCount() != 0 )
-	{
-		if( index == skip )
-		{
+	if( combo->GetCount() != 0 ) {
+		if( index == skip ) {
 			index = ( skip + 1 ) % combo->GetCount();
 		}
 		combo->SetCurSel( index );
@@ -401,20 +339,15 @@ int GetSafeComboBoxSelection( CComboBox* combo, CString& string, int skip )
 	int index;
 
 	index = combo->GetCurSel();
-	if( index == CB_ERR )
-	{
+	if( index == CB_ERR ) {
 		index = 0;
 	}
-	if( combo->GetCount() != 0 )
-	{
-		if( index == skip )
-		{
+	if( combo->GetCount() != 0 ) {
+		if( index == skip ) {
 			index = ( skip + 1 ) % combo->GetCount();
 		}
 		combo->GetLBText( index, string );
-	}
-	else
-	{
+	} else {
 		string = "";
 	}
 
@@ -430,16 +363,13 @@ int UnsetSafeComboBoxSelection( CComboBox* combo, CString& string )
 {
 	int skip, index;
 
-	skip = combo->FindString( -1, string );
+	skip  = combo->FindString( -1, string );
 	index = combo->GetCurSel();
-	if( index == CB_ERR )
-	{
+	if( index == CB_ERR ) {
 		index = 0;
 	}
-	if( combo->GetCount() != 0 )
-	{
-		if( index == skip )
-		{
+	if( combo->GetCount() != 0 ) {
+		if( index == skip ) {
 			index = ( skip + 1 ) % combo->GetCount();
 		}
 		combo->SetCurSel( index );

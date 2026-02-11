@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -40,13 +41,13 @@ If you have questions concerning this license or the applicable additional terms
 idWaveFile::idWaveFile()
 {
 	memset( &mpwfx, 0, sizeof( waveformatextensible_t ) );
-	mhmmio		= NULL;
-	mdwSize		= 0;
-	mseekBase	= 0;
+	mhmmio				  = NULL;
+	mdwSize				  = 0;
+	mseekBase			  = 0;
 	mbIsReadingFromMemory = false;
-	mpbData		= NULL;
-	ogg			= NULL;
-	isOgg		= false;
+	mpbData				  = NULL;
+	ogg					  = NULL;
+	isOgg				  = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -57,8 +58,7 @@ idWaveFile::~idWaveFile()
 {
 	Close();
 
-	if( mbIsReadingFromMemory && mpbData )
-	{
+	if( mbIsReadingFromMemory && mpbData ) {
 		Mem_Free( mpbData );
 	}
 
@@ -71,14 +71,12 @@ idWaveFile::~idWaveFile()
 //-----------------------------------------------------------------------------
 int idWaveFile::Open( const char* strFileName, waveformatex_t* pwfx )
 {
-
 	mbIsReadingFromMemory = false;
 
-	mpbData     = NULL;
-	mpbDataCur  = mpbData;
+	mpbData	   = NULL;
+	mpbDataCur = mpbData;
 
-	if( strFileName == NULL )
-	{
+	if( strFileName == NULL ) {
 		return -1;
 	}
 
@@ -86,26 +84,22 @@ int idWaveFile::Open( const char* strFileName, waveformatex_t* pwfx )
 
 	// note: used to only check for .wav when making a build
 	name.SetFileExtension( ".ogg" );
-	if( fileSystem->ReadFile( name, NULL, NULL ) != -1 )
-	{
+	if( fileSystem->ReadFile( name, NULL, NULL ) != -1 ) {
 		return OpenOGG( name, pwfx );
 	}
 
 	memset( &mpwfx, 0, sizeof( waveformatextensible_t ) );
 
 	mhmmio = fileSystem->OpenFileRead( strFileName );
-	if( !mhmmio )
-	{
+	if( !mhmmio ) {
 		mdwSize = 0;
 		return -1;
 	}
-	if( mhmmio->Length() <= 0 )
-	{
+	if( mhmmio->Length() <= 0 ) {
 		mhmmio = NULL;
 		return -1;
 	}
-	if( ReadMMIO() != 0 )
-	{
+	if( ReadMMIO() != 0 ) {
 		// ReadMMIO will fail if its an not a wave file
 		Close();
 		return -1;
@@ -113,20 +107,17 @@ int idWaveFile::Open( const char* strFileName, waveformatex_t* pwfx )
 
 	mfileTime = mhmmio->Timestamp();
 
-	if( ResetFile() != 0 )
-	{
+	if( ResetFile() != 0 ) {
 		Close();
 		return -1;
 	}
 
 	// After the reset, the size of the wav file is mck.cksize so store it now
-	mdwSize = mck.cksize / sizeof( short );
+	mdwSize	 = mck.cksize / sizeof( short );
 	mMemSize = mck.cksize;
 
-	if( mck.cksize != 0xffffffff )
-	{
-		if( pwfx )
-		{
+	if( mck.cksize != 0xffffffff ) {
+		if( pwfx ) {
 			memcpy( pwfx, ( waveformatex_t* )&mpwfx, sizeof( waveformatex_t ) );
 		}
 		return 0;
@@ -140,12 +131,12 @@ int idWaveFile::Open( const char* strFileName, waveformatex_t* pwfx )
 //-----------------------------------------------------------------------------
 int idWaveFile::OpenFromMemory( short* pbData, int ulDataSize, waveformatextensible_t* pwfx )
 {
-	mpwfx       = *pwfx;
-	mulDataSize = ulDataSize;
-	mpbData     = pbData;
-	mpbDataCur  = mpbData;
-	mdwSize		= ulDataSize / sizeof( short );
-	mMemSize	= ulDataSize;
+	mpwfx				  = *pwfx;
+	mulDataSize			  = ulDataSize;
+	mpbData				  = pbData;
+	mpbDataCur			  = mpbData;
+	mdwSize				  = ulDataSize / sizeof( short );
+	mMemSize			  = ulDataSize;
 	mbIsReadingFromMemory = true;
 
 	return 0;
@@ -159,84 +150,73 @@ int idWaveFile::OpenFromMemory( short* pbData, int ulDataSize, waveformatextensi
 //-----------------------------------------------------------------------------
 int idWaveFile::ReadMMIO()
 {
-	mminfo_t		ckIn;           // chunk info. for general use.
-	pcmwaveformat_t pcmWaveFormat;  // Temp PCM structure to load in.
+	mminfo_t		ckIn;		   // chunk info. for general use.
+	pcmwaveformat_t pcmWaveFormat; // Temp PCM structure to load in.
 
 	memset( &mpwfx, 0, sizeof( waveformatextensible_t ) );
 
 	mhmmio->Read( &mckRiff, 12 );
 	assert( !isOgg );
-	mckRiff.ckid = LittleLong( mckRiff.ckid );
-	mckRiff.cksize = LittleLong( mckRiff.cksize );
-	mckRiff.fccType = LittleLong( mckRiff.fccType );
+	mckRiff.ckid		 = LittleLong( mckRiff.ckid );
+	mckRiff.cksize		 = LittleLong( mckRiff.cksize );
+	mckRiff.fccType		 = LittleLong( mckRiff.fccType );
 	mckRiff.dwDataOffset = 12;
 
 	// Check to make sure this is a valid wave file
-	if( ( mckRiff.ckid != fourcc_riff ) || ( mckRiff.fccType != mmioFOURCC( 'W', 'A', 'V', 'E' ) ) )
-	{
+	if( ( mckRiff.ckid != fourcc_riff ) || ( mckRiff.fccType != mmioFOURCC( 'W', 'A', 'V', 'E' ) ) ) {
 		return -1;
 	}
 
 	// Search the input file for for the 'fmt ' chunk.
 	ckIn.dwDataOffset = 12;
-	do
-	{
-		if( 8 != mhmmio->Read( &ckIn, 8 ) )
-		{
+	do {
+		if( 8 != mhmmio->Read( &ckIn, 8 ) ) {
 			return -1;
 		}
 		assert( !isOgg );
-		ckIn.ckid = LittleLong( ckIn.ckid );
+		ckIn.ckid	= LittleLong( ckIn.ckid );
 		ckIn.cksize = LittleLong( ckIn.cksize );
 		ckIn.dwDataOffset += ckIn.cksize - 8;
-	}
-	while( ckIn.ckid != mmioFOURCC( 'f', 'm', 't', ' ' ) );
+	} while( ckIn.ckid != mmioFOURCC( 'f', 'm', 't', ' ' ) );
 
 	// Expect the 'fmt' chunk to be at least as large as <PCMWAVEFORMAT>;
 	// if there are extra parameters at the end, we'll ignore them
-	if( ckIn.cksize < sizeof( pcmwaveformat_t ) )
-	{
+	if( ckIn.cksize < sizeof( pcmwaveformat_t ) ) {
 		return -1;
 	}
 
 	// Read the 'fmt ' chunk into <pcmWaveFormat>.
-	if( mhmmio->Read( &pcmWaveFormat, sizeof( pcmWaveFormat ) ) != sizeof( pcmWaveFormat ) )
-	{
+	if( mhmmio->Read( &pcmWaveFormat, sizeof( pcmWaveFormat ) ) != sizeof( pcmWaveFormat ) ) {
 		return -1;
 	}
 	assert( !isOgg );
-	pcmWaveFormat.wf.wFormatTag = LittleShort( pcmWaveFormat.wf.wFormatTag );
-	pcmWaveFormat.wf.nChannels = LittleShort( pcmWaveFormat.wf.nChannels );
-	pcmWaveFormat.wf.nSamplesPerSec = LittleLong( pcmWaveFormat.wf.nSamplesPerSec );
+	pcmWaveFormat.wf.wFormatTag		 = LittleShort( pcmWaveFormat.wf.wFormatTag );
+	pcmWaveFormat.wf.nChannels		 = LittleShort( pcmWaveFormat.wf.nChannels );
+	pcmWaveFormat.wf.nSamplesPerSec	 = LittleLong( pcmWaveFormat.wf.nSamplesPerSec );
 	pcmWaveFormat.wf.nAvgBytesPerSec = LittleLong( pcmWaveFormat.wf.nAvgBytesPerSec );
-	pcmWaveFormat.wf.nBlockAlign = LittleShort( pcmWaveFormat.wf.nBlockAlign );
-	pcmWaveFormat.wBitsPerSample = LittleShort( pcmWaveFormat.wBitsPerSample );
+	pcmWaveFormat.wf.nBlockAlign	 = LittleShort( pcmWaveFormat.wf.nBlockAlign );
+	pcmWaveFormat.wBitsPerSample	 = LittleShort( pcmWaveFormat.wBitsPerSample );
 
 	// Copy the bytes from the pcm structure to the waveformatex_t structure
 	memcpy( &mpwfx, &pcmWaveFormat, sizeof( pcmWaveFormat ) );
 
 	// Allocate the waveformatex_t, but if its not pcm format, read the next
 	// word, and thats how many extra bytes to allocate.
-	if( pcmWaveFormat.wf.wFormatTag == WAVE_FORMAT_TAG_PCM )
-	{
+	if( pcmWaveFormat.wf.wFormatTag == WAVE_FORMAT_TAG_PCM ) {
 		mpwfx.Format.cbSize = 0;
-	}
-	else
-	{
-		return -1;	// we don't handle these (32 bit wavefiles, etc)
+	} else {
+		return -1; // we don't handle these (32 bit wavefiles, etc)
 #if 0
 		// Read in length of extra bytes.
 		word cbExtraBytes = 0L;
-		if( mhmmio->Read( ( char* )&cbExtraBytes, sizeof( word ) ) != sizeof( word ) )
-		{
+		if( mhmmio->Read( ( char* )&cbExtraBytes, sizeof( word ) ) != sizeof( word ) ) {
 			return -1;
 		}
 
 		mpwfx.Format.cbSize = cbExtraBytes;
 
 		// Now, read those extra bytes into the structure, if cbExtraAlloc != 0.
-		if( mhmmio->Read( ( char* )( ( ( byte* ) & ( mpwfx.Format.cbSize ) ) + sizeof( word ) ), cbExtraBytes ) != cbExtraBytes )
-		{
+		if( mhmmio->Read( ( char* )( ( ( byte* ) & ( mpwfx.Format.cbSize ) ) + sizeof( word ) ), cbExtraBytes ) != cbExtraBytes ) {
 			memset( &mpwfx, 0, sizeof( waveformatextensible_t ) );
 			return -1;
 		}
@@ -253,40 +233,32 @@ int idWaveFile::ReadMMIO()
 //-----------------------------------------------------------------------------
 int idWaveFile::ResetFile()
 {
-	if( mbIsReadingFromMemory )
-	{
+	if( mbIsReadingFromMemory ) {
 		mpbDataCur = mpbData;
-	}
-	else
-	{
-		if( mhmmio == NULL )
-		{
+	} else {
+		if( mhmmio == NULL ) {
 			return -1;
 		}
 
 		// Seek to the data
-		if( -1 == mhmmio->Seek( mckRiff.dwDataOffset + sizeof( fourcc ), FS_SEEK_SET ) )
-		{
+		if( -1 == mhmmio->Seek( mckRiff.dwDataOffset + sizeof( fourcc ), FS_SEEK_SET ) ) {
 			return -1;
 		}
 
 		// Search the input file for for the 'fmt ' chunk.
 		mck.ckid = 0;
-		do
-		{
+		do {
 			byte ioin;
-			if( !mhmmio->Read( &ioin, 1 ) )
-			{
+			if( !mhmmio->Read( &ioin, 1 ) ) {
 				return -1;
 			}
 			mck.ckid = ( mck.ckid >> 8 ) | ( ioin << 24 );
-		}
-		while( mck.ckid != mmioFOURCC( 'd', 'a', 't', 'a' ) );
+		} while( mck.ckid != mmioFOURCC( 'd', 'a', 't', 'a' ) );
 
 		mhmmio->Read( &mck.cksize, 4 );
 		assert( !isOgg );
 		mck.cksize = LittleLong( mck.cksize );
-		mseekBase = mhmmio->Tell();
+		mseekBase  = mhmmio->Tell();
 	}
 
 	return 0;
@@ -302,56 +274,40 @@ int idWaveFile::ResetFile()
 //-----------------------------------------------------------------------------
 int idWaveFile::Read( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead )
 {
-
-	if( ogg != NULL )
-	{
-
+	if( ogg != NULL ) {
 		return ReadOGG( pBuffer, dwSizeToRead, pdwSizeRead );
 
-	}
-	else if( mbIsReadingFromMemory )
-	{
-
-		if( mpbDataCur == NULL )
-		{
+	} else if( mbIsReadingFromMemory ) {
+		if( mpbDataCur == NULL ) {
 			return -1;
 		}
-		if( ( byte* )( mpbDataCur + dwSizeToRead ) > ( byte* )( mpbData + mulDataSize ) )
-		{
+		if( ( byte* )( mpbDataCur + dwSizeToRead ) > ( byte* )( mpbData + mulDataSize ) ) {
 			dwSizeToRead = mulDataSize - ( int )( mpbDataCur - mpbData );
 		}
 		SIMDProcessor->Memcpy( pBuffer, mpbDataCur, dwSizeToRead );
 		mpbDataCur += dwSizeToRead;
 
-		if( pdwSizeRead != NULL )
-		{
+		if( pdwSizeRead != NULL ) {
 			*pdwSizeRead = dwSizeToRead;
 		}
 
 		return dwSizeToRead;
 
-	}
-	else
-	{
-
-		if( mhmmio == NULL )
-		{
+	} else {
+		if( mhmmio == NULL ) {
 			return -1;
 		}
-		if( pBuffer == NULL )
-		{
+		if( pBuffer == NULL ) {
 			return -1;
 		}
 
 		dwSizeToRead = mhmmio->Read( pBuffer, dwSizeToRead );
 		// this is hit by ogg code, which does it's own byte swapping internally
-		if( !isOgg )
-		{
+		if( !isOgg ) {
 			LittleRevBytes( pBuffer, 2, dwSizeToRead / 2 );
 		}
 
-		if( pdwSizeRead != NULL )
-		{
+		if( pdwSizeRead != NULL ) {
 			*pdwSizeRead = dwSizeToRead;
 		}
 
@@ -365,12 +321,10 @@ int idWaveFile::Read( byte* pBuffer, int dwSizeToRead, int* pdwSizeRead )
 //-----------------------------------------------------------------------------
 int idWaveFile::Close()
 {
-	if( ogg != NULL )
-	{
+	if( ogg != NULL ) {
 		return CloseOGG();
 	}
-	if( mhmmio != NULL )
-	{
+	if( mhmmio != NULL ) {
 		fileSystem->CloseFile( mhmmio );
 		mhmmio = NULL;
 	}
@@ -382,28 +336,18 @@ int idWaveFile::Close()
 //-----------------------------------------------------------------------------
 int idWaveFile::Seek( int offset )
 {
-
-	if( ogg != NULL )
-	{
-
+	if( ogg != NULL ) {
 		common->FatalError( "idWaveFile::Seek: cannot seek on an OGG file\n" );
 
-	}
-	else if( mbIsReadingFromMemory )
-	{
-
+	} else if( mbIsReadingFromMemory ) {
 		mpbDataCur = mpbData + offset;
 
-	}
-	else
-	{
-		if( mhmmio == NULL )
-		{
+	} else {
+		if( mhmmio == NULL ) {
 			return -1;
 		}
 
-		if( ( int )( offset + mseekBase ) == mhmmio->Tell() )
-		{
+		if( ( int )( offset + mseekBase ) == mhmmio->Tell() ) {
 			return 0;
 		}
 		mhmmio->Seek( offset + mseekBase, FS_SEEK_SET );

@@ -37,8 +37,7 @@ curl_hash* Curl_global_host_cache_get();
 
 #define Curl_global_host_cache_use(__p) ((__p)->set.global_dns_cache)
 
-struct Curl_dns_entry
-{
+struct Curl_dns_entry {
 	Curl_addrinfo* addr;
 	time_t timestamp;
 	long inuse;      /* use-counter, make very sure you decrease this

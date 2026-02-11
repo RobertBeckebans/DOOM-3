@@ -81,14 +81,12 @@ const float	HUGE_DISTANCE = 100000;
 void	Error( char* error, ... );
 void	Warning( char* error, ... );
 
-typedef struct
-{
+typedef struct {
 	int		p1, p2;
-	face_t*	f1, *f2;
+	face_t*	f1, * f2;
 } pedge_t;
 
-typedef struct
-{
+typedef struct {
 	int		iSize;
 	int		iTexMenu;		// nearest, linear, etc
 	float	fGamma;			// gamma for textures
@@ -123,8 +121,7 @@ void    Sys_Status( const char* psz, int part = -1 );
 /*
 ** most of the QE globals are stored in this structure
 */
-typedef struct
-{
+typedef struct {
 	bool d_showgrid;
 	float d_gridsize;
 

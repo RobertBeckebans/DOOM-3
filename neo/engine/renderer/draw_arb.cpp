@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -79,11 +80,11 @@ it is set to lessThan for blended transparent surfaces
 */
 static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 {
-	const drawSurf_t* surf = din->surf;
-	const srfTriangles_t*	tri = din->surf->geo;
+	const drawSurf_t*	  surf = din->surf;
+	const srfTriangles_t* tri  = din->surf->geo;
 
 	// set the vertex arrays, which may not all be enabled on a given pass
-	idDrawVert* ac = ( idDrawVert* )vertexCache.Position( tri->ambientCache );
+	idDrawVert*			  ac = ( idDrawVert* )vertexCache.Position( tri->ambientCache );
 	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ac->xyz.ToFloatPtr() );
 	GL_SelectTexture( 0 );
 	qglTexCoordPointer( 2, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->st );
@@ -106,11 +107,11 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 	qglTexGenfv( GL_S, GL_OBJECT_PLANE, din->lightProjection[3].ToFloatPtr() );
 	qglTexCoord2f( 0, 0.5 );
 
-// ATI R100 can't do partial texgens
-#define	NO_MIXED_TEXGEN
+	// ATI R100 can't do partial texgens
+#define NO_MIXED_TEXGEN
 
 #ifdef NO_MIXED_TEXGEN
-	idVec4	plane;
+	idVec4 plane;
 	plane[0] = 0;
 	plane[1] = 0;
 	plane[2] = 0;
@@ -141,40 +142,35 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 #if 0
 	GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ZERO | GLS_DEPTHMASK
 			  | backEnd.depthFunc );
-// the texccords are the non-normalized vector towards the light origin
+	// the texccords are the non-normalized vector towards the light origin
 	GL_SelectTexture( 0 );
 	globalImages->normalCubeMapImage->Bind();
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	qglTexCoordPointer( 3, GL_FLOAT, sizeof( lightingCache_t ), ( ( lightingCache_t* )vertexCache.Position( tri->lightingCache ) )->localLightVector.ToFloatPtr() );
-// draw it
+	// draw it
 	RB_DrawElementsWithCounters( tri );
 	return;
 #endif
 
 	// we can't do bump mapping with standard calls, so skip it
-	if( glConfig.envDot3Available && glConfig.cubeMapAvailable )
-	{
+	if( glConfig.envDot3Available && glConfig.cubeMapAvailable ) {
 		//
 		// draw the bump map result onto the alpha channel
 		//
-		GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ZERO | GLS_COLORMASK | GLS_DEPTHMASK
-				  | backEnd.depthFunc );
+		GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ZERO | GLS_COLORMASK | GLS_DEPTHMASK | backEnd.depthFunc );
 
 		// texture 0 will be the per-surface bump map
 		GL_SelectTexture( 0 );
 		qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
-//	FIXME: matrix work!	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
+		//	FIXME: matrix work!	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
 		din->bumpImage->Bind();
 
 		// texture 1 is the normalization cube map
 		// the texccords are the non-normalized vector towards the light origin
 		GL_SelectTexture( 1 );
-		if( din->ambientLight )
-		{
-			globalImages->ambientNormalMap->Bind();	// fixed value
-		}
-		else
-		{
+		if( din->ambientLight ) {
+			globalImages->ambientNormalMap->Bind(); // fixed value
+		} else {
 			globalImages->normalCubeMapImage->Bind();
 		}
 		qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -200,7 +196,7 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 		qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
 
 		GL_SelectTexture( 0 );
-//		RB_FinishStageTexture( &surfaceStage->texture, surf );
+		//		RB_FinishStageTexture( &surfaceStage->texture, surf );
 	}
 
 	//-----------------------------------------------------
@@ -209,25 +205,20 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 	//
 	//-----------------------------------------------------
 	// don't trash alpha
-	GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ONE | GLS_ALPHAMASK | GLS_DEPTHMASK
-			  | backEnd.depthFunc );
+	GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ONE | GLS_ALPHAMASK | GLS_DEPTHMASK | backEnd.depthFunc );
 
 	// texture 0 will get the surface color texture
 	GL_SelectTexture( 0 );
 
 	// select the vertex color source
-	if( din->vertexColor == SVC_IGNORE )
-	{
+	if( din->vertexColor == SVC_IGNORE ) {
 		qglColor4fv( din->diffuseColor.ToFloatPtr() );
-	}
-	else
-	{
+	} else {
 		// FIXME: does this not get diffuseColor blended in?
 		qglColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( idDrawVert ), ( void* )&ac->color );
 		qglEnableClientState( GL_COLOR_ARRAY );
 
-		if( din->vertexColor == SVC_INVERSE_MODULATE )
-		{
+		if( din->vertexColor == SVC_INVERSE_MODULATE ) {
 			GL_TexEnv( GL_COMBINE_ARB );
 			qglTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_MODULATE );
 			qglTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE );
@@ -240,7 +231,7 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	// FIXME: does this not get the texture matrix?
-//	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
+	//	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
 	din->diffuseImage->Bind();
 
 	// texture 1 will get the light projected texture
@@ -265,13 +256,12 @@ static void RB_ARB_DrawInteraction( const drawInteraction_t* din )
 	globalImages->BindNull();
 	GL_SelectTexture( 0 );
 
-	if( din->vertexColor != SVC_IGNORE )
-	{
+	if( din->vertexColor != SVC_IGNORE ) {
 		qglDisableClientState( GL_COLOR_ARRAY );
 		GL_TexEnv( GL_MODULATE );
 	}
 
-//	RB_FinishStageTexture( &surfaceStage->texture, surf );
+	//	RB_FinishStageTexture( &surfaceStage->texture, surf );
 }
 
 /*
@@ -289,11 +279,11 @@ it is set to lessThan for blended transparent surfaces
 */
 static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 {
-	const drawSurf_t* surf = din->surf;
-	const srfTriangles_t*	tri = din->surf->geo;
+	const drawSurf_t*	  surf = din->surf;
+	const srfTriangles_t* tri  = din->surf->geo;
 
 	// set the vertex arrays, which may not all be enabled on a given pass
-	idDrawVert* ac = ( idDrawVert* )vertexCache.Position( tri->ambientCache );
+	idDrawVert*			  ac = ( idDrawVert* )vertexCache.Position( tri->ambientCache );
 	qglVertexPointer( 3, GL_FLOAT, sizeof( idDrawVert ), ac->xyz.ToFloatPtr() );
 	GL_SelectTexture( 0 );
 	qglTexCoordPointer( 2, GL_FLOAT, sizeof( idDrawVert ), ( void* )&ac->st );
@@ -302,24 +292,20 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 	//
 	// bump map dot cubeMap into the alpha channel
 	//
-	GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ZERO | GLS_COLORMASK | GLS_DEPTHMASK
-			  | backEnd.depthFunc );
+	GL_State( GLS_SRCBLEND_ONE | GLS_DSTBLEND_ZERO | GLS_COLORMASK | GLS_DEPTHMASK | backEnd.depthFunc );
 
 	// texture 0 will be the per-surface bump map
 	GL_SelectTexture( 0 );
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
-//	FIXME: matrix work!	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
+	//	FIXME: matrix work!	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
 	din->bumpImage->Bind();
 
 	// texture 1 is the normalization cube map
 	// the texccords are the non-normalized vector towards the light origin
 	GL_SelectTexture( 1 );
-	if( din->ambientLight )
-	{
-		globalImages->ambientNormalMap->Bind();	// fixed value
-	}
-	else
-	{
+	if( din->ambientLight ) {
+		globalImages->ambientNormalMap->Bind(); // fixed value
+	} else {
 		globalImages->normalCubeMapImage->Bind();
 	}
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
@@ -345,8 +331,7 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 	qglDisableClientState( GL_TEXTURE_COORD_ARRAY );
 
 	GL_SelectTexture( 0 );
-//		RB_FinishStageTexture( &surfaceStage->texture, surf );
-
+	//		RB_FinishStageTexture( &surfaceStage->texture, surf );
 
 	//-----------------------------------------------------
 	//
@@ -354,25 +339,20 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 	//
 	//-----------------------------------------------------
 	// multiply result by alpha, but don't trash alpha
-	GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ONE | GLS_ALPHAMASK | GLS_DEPTHMASK
-			  | backEnd.depthFunc );
+	GL_State( GLS_SRCBLEND_DST_ALPHA | GLS_DSTBLEND_ONE | GLS_ALPHAMASK | GLS_DEPTHMASK | backEnd.depthFunc );
 
 	// texture 0 will get the surface color texture
 	GL_SelectTexture( 0 );
 
 	// select the vertex color source
-	if( din->vertexColor == SVC_IGNORE )
-	{
+	if( din->vertexColor == SVC_IGNORE ) {
 		qglColor4fv( din->diffuseColor.ToFloatPtr() );
-	}
-	else
-	{
+	} else {
 		// FIXME: does this not get diffuseColor blended in?
 		qglColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( idDrawVert ), ( void* )&ac->color );
 		qglEnableClientState( GL_COLOR_ARRAY );
 
-		if( din->vertexColor == SVC_INVERSE_MODULATE )
-		{
+		if( din->vertexColor == SVC_INVERSE_MODULATE ) {
 			GL_TexEnv( GL_COMBINE_ARB );
 			qglTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_MODULATE );
 			qglTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE );
@@ -385,7 +365,7 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 
 	qglEnableClientState( GL_TEXTURE_COORD_ARRAY );
 	// FIXME: does this not get the texture matrix?
-//	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
+	//	RB_BindStageTexture( surfaceRegs, &surfaceStage->texture, surf );
 	din->diffuseImage->Bind();
 
 	// texture 1 will get the light projected texture
@@ -408,7 +388,7 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 
 	qglTexGenfv( GL_S, GL_OBJECT_PLANE, din->lightProjection[3].ToFloatPtr() );
 
-	idVec4	plane;
+	idVec4 plane;
 	plane[0] = 0;
 	plane[1] = 0;
 	plane[2] = 0;
@@ -439,15 +419,13 @@ static void RB_ARB_DrawThreeTextureInteraction( const drawInteraction_t* din )
 
 	GL_SelectTexture( 0 );
 
-	if( din->vertexColor != SVC_IGNORE )
-	{
+	if( din->vertexColor != SVC_IGNORE ) {
 		qglDisableClientState( GL_COLOR_ARRAY );
 		GL_TexEnv( GL_MODULATE );
 	}
 
-//	RB_FinishStageTexture( &surfaceStage->texture, surf );
+	//	RB_FinishStageTexture( &surfaceStage->texture, surf );
 }
-
 
 /*
 ==================
@@ -456,33 +434,25 @@ RB_CreateDrawInteractions
 */
 static void RB_CreateDrawInteractions( const drawSurf_t* surf )
 {
-	if( !surf )
-	{
+	if( !surf ) {
 		return;
 	}
 
 	// force a space calculation
 	backEnd.currentSpace = NULL;
 
-	if( r_useTripleTextureARB.GetBool() && glConfig.maxTextureUnits >= 3 )
-	{
-		for( ; surf ; surf = surf->nextOnLight )
-		{
+	if( r_useTripleTextureARB.GetBool() && glConfig.maxTextureUnits >= 3 ) {
+		for( ; surf; surf = surf->nextOnLight ) {
 			// break it up into multiple primitive draw interactions if necessary
 			RB_CreateSingleDrawInteractions( surf, RB_ARB_DrawThreeTextureInteraction );
 		}
-	}
-	else
-	{
-		for( ; surf ; surf = surf->nextOnLight )
-		{
+	} else {
+		for( ; surf; surf = surf->nextOnLight ) {
 			// break it up into multiple primitive draw interactions if necessary
 			RB_CreateSingleDrawInteractions( surf, RB_ARB_DrawInteraction );
 		}
 	}
 }
-
-
 
 /*
 ==================
@@ -495,32 +465,26 @@ static void RB_RenderViewLight( viewLight_t* vLight )
 	backEnd.vLight = vLight;
 
 	// do fogging later
-	if( vLight->lightShader->IsFogLight() )
-	{
+	if( vLight->lightShader->IsFogLight() ) {
 		return;
 	}
-	if( vLight->lightShader->IsBlendLight() )
-	{
+	if( vLight->lightShader->IsBlendLight() ) {
 		return;
 	}
 
 	RB_LogComment( "---------- RB_RenderViewLight 0x%p ----------\n", vLight );
 
 	// clear the stencil buffer if needed
-	if( vLight->globalShadows || vLight->localShadows )
-	{
+	if( vLight->globalShadows || vLight->localShadows ) {
 		backEnd.currentScissor = vLight->scissorRect;
-		if( r_useScissor.GetBool() )
-		{
+		if( r_useScissor.GetBool() ) {
 			qglScissor( backEnd.viewDef->viewport.x1 + backEnd.currentScissor.x1,
-						backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
-						backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
-						backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
+				backEnd.viewDef->viewport.y1 + backEnd.currentScissor.y1,
+				backEnd.currentScissor.x2 + 1 - backEnd.currentScissor.x1,
+				backEnd.currentScissor.y2 + 1 - backEnd.currentScissor.y1 );
 		}
 		qglClear( GL_STENCIL_BUFFER_BIT );
-	}
-	else
-	{
+	} else {
 		// no shadows, so no need to read or write the stencil buffer
 		// we might in theory want to use GL_ALWAYS instead of disabling
 		// completely, to satisfy the invarience rules
@@ -533,8 +497,7 @@ static void RB_RenderViewLight( viewLight_t* vLight )
 	RB_StencilShadowPass( vLight->localShadows );
 	RB_CreateDrawInteractions( vLight->globalInteractions );
 
-	if( r_skipTranslucent.GetBool() )
-	{
+	if( r_skipTranslucent.GetBool() ) {
 		return;
 	}
 
@@ -547,7 +510,6 @@ static void RB_RenderViewLight( viewLight_t* vLight )
 	RB_CreateDrawInteractions( vLight->translucentInteractions );
 }
 
-
 /*
 ==================
 RB_ARB_DrawInteractions
@@ -557,9 +519,7 @@ void RB_ARB_DrawInteractions()
 {
 	qglEnable( GL_STENCIL_TEST );
 
-	for( viewLight_t* vLight = backEnd.viewDef->viewLights ; vLight ; vLight = vLight->next )
-	{
+	for( viewLight_t* vLight = backEnd.viewDef->viewLights; vLight; vLight = vLight->next ) {
 		RB_RenderViewLight( vLight );
 	}
 }
-

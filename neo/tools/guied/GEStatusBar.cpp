@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -33,8 +34,8 @@ If you have questions concerning this license or the applicable additional terms
 
 rvGEStatusBar::rvGEStatusBar()
 {
-	mSimple = true;
-	mZoom   = 0;
+	mSimple	   = true;
+	mZoom	   = 0;
 	mTriangles = 0;
 }
 
@@ -49,8 +50,7 @@ bool rvGEStatusBar::Create( HWND parent, UINT id, bool visible )
 {
 	mWnd = CreateStatusWindow( WS_CHILD | WS_VISIBLE | WS_BORDER, "", parent, id );
 
-	if( !mWnd )
-	{
+	if( !mWnd ) {
 		return false;
 	}
 
@@ -82,22 +82,19 @@ Updates the status bar by setting up each part's width and text
 */
 void rvGEStatusBar::Update()
 {
-	RECT	rStatus;
-	SIZE	zoomSize;
-	SIZE	trisSize;
-	int		parts[5];
+	RECT rStatus;
+	SIZE zoomSize;
+	SIZE trisSize;
+	int	 parts[5];
 
 	GetWindowRect( mWnd, &rStatus );
 
-	if( mSimple )
-	{
+	if( mSimple ) {
 		parts[0] = -1;
 
 		SendMessage( mWnd, SB_SETPARTS, 1, ( LONG )parts );
 		SendMessage( mWnd, SB_SETTEXT, 1, ( LPARAM ) "" );
-	}
-	else
-	{
+	} else {
 		zoomSize.cx = 85;
 		trisSize.cx = 65;
 
@@ -109,8 +106,8 @@ void rvGEStatusBar::Update()
 
 		SendMessage( mWnd, SB_SETPARTS, 5, ( LONG )parts );
 		SendMessage( mWnd, SB_SETTEXT, 0, ( LPARAM ) "" );
-		SendMessage( mWnd, SB_SETTEXT, 1, ( LPARAM ) va( " Tris: %d", mTriangles ) );
-		SendMessage( mWnd, SB_SETTEXT, 2, ( LPARAM ) va( " Zoom: %d%%", mZoom ) );
+		SendMessage( mWnd, SB_SETTEXT, 1, ( LPARAM )va( " Tris: %d", mTriangles ) );
+		SendMessage( mWnd, SB_SETTEXT, 2, ( LPARAM )va( " Zoom: %d%%", mZoom ) );
 	}
 }
 

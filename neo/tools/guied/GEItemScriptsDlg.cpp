@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,13 +37,11 @@ If you have questions concerning this license or the applicable additional terms
 
 LRESULT CALLBACK GEScriptEdit_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	WNDPROC wndproc = ( WNDPROC ) GetWindowLong( hwnd, GWL_USERDATA );
+	WNDPROC wndproc = ( WNDPROC )GetWindowLong( hwnd, GWL_USERDATA );
 
-	switch( msg )
-	{
+	switch( msg ) {
 		case WM_CHAR:
-			if( wParam == VK_ESCAPE )
-			{
+			if( wParam == VK_ESCAPE ) {
 				SendMessage( GetParent( hwnd ), WM_CLOSE, 0, 0 );
 			}
 			break;
@@ -56,9 +55,9 @@ LRESULT CALLBACK GEScriptEdit_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
 bool GEItescriptsDlg_Init( HWND hwnd )
 {
-	idWindow*			window;
-	rvGEWindowWrapper*	wrapper;
-	HWND				script;
+	idWindow*		   window;
+	rvGEWindowWrapper* wrapper;
+	HWND			   script;
 
 	// Extract the window pointer from the win32 windows user data long
 	window = ( idWindow* )GetWindowLong( hwnd, GWL_USERDATA );
@@ -74,10 +73,10 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 	UINT tabsize = 16;
 	SendMessage( script, EM_SETTABSTOPS, 1, ( LPARAM )&tabsize );
 	SetWindowLong( script, GWL_USERDATA, GetWindowLong( script, GWL_WNDPROC ) );
-	SetWindowLong( script, GWL_WNDPROC, ( LONG ) GEScriptEdit_WndProc );
+	SetWindowLong( script, GWL_WNDPROC, ( LONG )GEScriptEdit_WndProc );
 
 	TEXTMETRIC tm;
-	HDC dc;
+	HDC		   dc;
 	dc = GetDC( script );
 	GetTextMetrics( dc, &tm );
 	ReleaseDC( script, dc );
@@ -93,28 +92,25 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 
 	int i;
 
-	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals(); i++ ) {
 		const idKeyValue* key = wrapper->GetVariableDict().GetKeyVal( i );
 
 		SendMessage( script, EM_SETSEL, -1, -1 );
 		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )key->GetKey().c_str() );
 		SendMessage( script, EM_SETSEL, -1, -1 );
-		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )"\t" );
+		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM ) "\t" );
 		SendMessage( script, EM_SETSEL, -1, -1 );
 		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )key->GetValue().c_str() );
 		SendMessage( script, EM_SETSEL, -1, -1 );
-		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )"\r\n" );
+		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM ) "\r\n" );
 	}
 
-	if( i )
-	{
+	if( i ) {
 		SendMessage( script, EM_SETSEL, -1, -1 );
-		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )"\r\n" );
+		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM ) "\r\n" );
 	}
 
-	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals(); i++ ) {
 		const idKeyValue* key = wrapper->GetScriptDict().GetKeyVal( i );
 
 		SendMessage( script, EM_SETSEL, -1, -1 );
@@ -122,7 +118,7 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 		SendMessage( script, EM_SETSEL, -1, -1 );
 		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )key->GetValue().c_str() );
 		SendMessage( script, EM_SETSEL, -1, -1 );
-		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM )"\r\n\r\n" );
+		SendMessage( script, EM_REPLACESEL, FALSE, ( LPARAM ) "\r\n\r\n" );
 	}
 
 	SendMessage( script, EM_SETSEL, 0, 0 );
@@ -133,9 +129,9 @@ bool GEItescriptsDlg_Init( HWND hwnd )
 
 bool GEItescriptsDlg_Apply( HWND hwnd )
 {
-	idWindow*			window;
-	rvGEWindowWrapper*	wrapper;
-	HWND				script;
+	idWindow*		   window;
+	rvGEWindowWrapper* wrapper;
+	HWND			   script;
 
 	// Extract the window pointer from the win32 windows user data long
 	window = ( idWindow* )GetWindowLong( hwnd, GWL_USERDATA );
@@ -150,16 +146,16 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 
 	GETTEXTLENGTHEX textLen;
 	int				chars;
-	textLen.flags = GTL_DEFAULT | GTL_USECRLF;
+	textLen.flags	 = GTL_DEFAULT | GTL_USECRLF;
 	textLen.codepage = CP_ACP;
-	chars = SendMessage( script, EM_GETTEXTLENGTHEX, ( WPARAM )&textLen, 0 );
+	chars			 = SendMessage( script, EM_GETTEXTLENGTHEX, ( WPARAM )&textLen, 0 );
 
-	char* text = new char[chars + 1];
+	char*	  text = new char[chars + 1];
 
 	GETTEXTEX getText;
-	getText.cb = chars + 1;
-	getText.codepage = CP_ACP;
-	getText.flags = GT_DEFAULT | GT_USECRLF;
+	getText.cb			  = chars + 1;
+	getText.codepage	  = CP_ACP;
+	getText.flags		  = GT_DEFAULT | GT_USECRLF;
 	getText.lpDefaultChar = NULL;
 	getText.lpUsedDefChar = NULL;
 	SendMessage( script, EM_GETTEXTEX, ( WPARAM )&getText, ( LPARAM )text );
@@ -167,39 +163,34 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 	idStr parse = text;
 	delete[] text;
 
-	try
-	{
+	try {
 		idParser src( parse, parse.Length(), "", LEXFL_ALLOWMULTICHARLITERALS | LEXFL_NOSTRINGCONCAT | LEXFL_ALLOWBACKSLASHSTRINGCONCAT );
-		idToken token;
+		idToken	 token;
 
 		wrapper->GetVariableDict().Clear();
 		wrapper->GetScriptDict().Clear();
 
-		while( src.ReadToken( &token ) )
-		{
+		while( src.ReadToken( &token ) ) {
 			idStr scriptName;
 			idStr out;
 
-			if( !token.Icmp( "definevec4" ) )
-			{
+			if( !token.Icmp( "definevec4" ) ) {
 				idToken token2;
 				idStr	result;
 
-				if( !src.ReadToken( &token2 ) )
-				{
+				if( !src.ReadToken( &token2 ) ) {
 					src.Error( "expected define name" );
 					return false;
 				}
 
-				idWinVec4				var;
-				idUserInterfaceLocal	ui;
-				idWindow				tempwin( &ui );
-				idStr					out;
-				int						i;
+				idWinVec4			 var;
+				idUserInterfaceLocal ui;
+				idWindow			 tempwin( &ui );
+				idStr				 out;
+				int					 i;
 
 				src.SetMarker();
-				for( i = 0; i < 3; i ++ )
-				{
+				for( i = 0; i < 3; i++ ) {
 					tempwin.ParseExpression( &src, &var );
 					src.ExpectTokenString( "," );
 				}
@@ -210,22 +201,19 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 				wrapper->GetVariableDict().Set( token + "\t\"" + token2 + "\"", out );
 
 				continue;
-			}
-			else if( !token.Icmp( "definefloat" ) || !token.Icmp( "float" ) )
-			{
+			} else if( !token.Icmp( "definefloat" ) || !token.Icmp( "float" ) ) {
 				idToken token2;
 				idStr	result;
 
-				if( !src.ReadToken( &token2 ) )
-				{
+				if( !src.ReadToken( &token2 ) ) {
 					src.Error( "expected define name" );
 					return false;
 				}
 
-				idWinFloat				var;
-				idUserInterfaceLocal	ui;
-				idWindow				tempwin( &ui );
-				idStr					out;
+				idWinFloat			 var;
+				idUserInterfaceLocal ui;
+				idWindow			 tempwin( &ui );
+				idStr				 out;
 
 				src.SetMarker();
 				tempwin.ParseExpression( &src, &var );
@@ -238,62 +226,47 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 			// If the token is a scriptdef then just parse out the
 			// braced section and add it to the list.  Right now only
 			// one scriptdef per window is supported
-			else if( !token.Icmp( "scriptdef" ) )
-			{
+			else if( !token.Icmp( "scriptdef" ) ) {
 				scriptName = "scriptDef";
-			}
-			else if( !token.Icmp( "ontime" ) )
-			{
-				if( !src.ReadToken( &token ) )
-				{
+			} else if( !token.Icmp( "ontime" ) ) {
+				if( !src.ReadToken( &token ) ) {
 					src.Error( "expected time" );
 					return false;
 				}
 
 				scriptName = "onTime ";
 				scriptName.Append( token );
-			}
-			else if( !token.Icmp( "onevent" ) )
-			{
-				if( !src.ReadToken( &token ) )
-				{
+			} else if( !token.Icmp( "onevent" ) ) {
+				if( !src.ReadToken( &token ) ) {
 					src.Error( "expected time" );
 					return false;
 				}
 
 				scriptName = "onEvent ";
 				scriptName.Append( token );
-			}
-			else
-			{
+			} else {
 				int i;
 
-				for( i = 0; i < idWindow::SCRIPT_COUNT; i ++ )
-				{
-					if( idStr::Icmp( idWindow::ScriptNames[i], token ) == 0 )
-					{
+				for( i = 0; i < idWindow::SCRIPT_COUNT; i++ ) {
+					if( idStr::Icmp( idWindow::ScriptNames[i], token ) == 0 ) {
 						scriptName = idWindow::ScriptNames[i];
 						break;
 					}
 				}
 
-				if( i >= idWindow::SCRIPT_COUNT )
-				{
+				if( i >= idWindow::SCRIPT_COUNT ) {
 					src.Error( "expected script name" );
 					return false;
 				}
 			}
 
-			if( !src.ParseBracedSectionExact( out, 1 ) )
-			{
+			if( !src.ParseBracedSectionExact( out, 1 ) ) {
 				return false;
 			}
 
 			wrapper->GetScriptDict().Set( scriptName, out );
 		}
-	}
-	catch( idException& e )
-	{
+	} catch( idException& e ) {
 		MessageBox( hwnd, e.error, "Script Error", MB_OK | MB_ICONERROR );
 		return false;
 	}
@@ -303,35 +276,27 @@ bool GEItescriptsDlg_Apply( HWND hwnd )
 
 INT_PTR CALLBACK GEItescriptsDlg_WndProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	switch( msg )
-	{
+	switch( msg ) {
 		case WM_INITDIALOG:
 			SetWindowLong( hwnd, GWL_USERDATA, lParam );
 			GEItescriptsDlg_Init( hwnd );
 
 			gApp.GetOptions().GetWindowPlacement( "scripts", hwnd );
 
-		// Let it fall through so the scripts window gets resized.
+			// Let it fall through so the scripts window gets resized.
 
-		case WM_SIZE:
-		{
+		case WM_SIZE: {
 			RECT rClient;
 			GetClientRect( hwnd, &rClient );
-			MoveWindow( GetDlgItem( hwnd, IDC_GUIED_SCRIPT ),
-						rClient.left, rClient.top,
-						rClient.right - rClient.left,
-						rClient.bottom - rClient.top,
-						FALSE );
+			MoveWindow( GetDlgItem( hwnd, IDC_GUIED_SCRIPT ), rClient.left, rClient.top, rClient.right - rClient.left, rClient.bottom - rClient.top, FALSE );
 			break;
 		}
 
 		case WM_ERASEBKGND:
 			return TRUE;
 
-
 		case WM_CLOSE:
-			if( !GEItescriptsDlg_Apply( hwnd ) )
-			{
+			if( !GEItescriptsDlg_Apply( hwnd ) ) {
 				return TRUE;
 			}
 			gApp.GetOptions().SetWindowPlacement( "scripts", hwnd );
@@ -353,8 +318,7 @@ bool GEItemScriptsDlg_DoModal( HWND parent, idWindow* window )
 {
 	LoadLibrary( "Riched20.dll" );
 
-	if( DialogBoxParam( gApp.GetInstance(), MAKEINTRESOURCE( IDD_GUIED_SCRIPTS ), parent, GEItescriptsDlg_WndProc, ( LPARAM ) window ) )
-	{
+	if( DialogBoxParam( gApp.GetInstance(), MAKEINTRESOURCE( IDD_GUIED_SCRIPTS ), parent, GEItescriptsDlg_WndProc, ( LPARAM )window ) ) {
 		return true;
 	}
 

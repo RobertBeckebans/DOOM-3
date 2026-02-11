@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,55 +38,40 @@ If you have questions concerning this license or the applicable additional terms
 ===================================================================================
 */
 
-typedef struct
-{
+typedef struct {
 	const char* name;
 	const char* type;
 	const char* value;
 } constantInfo_t;
 
-typedef struct
-{
+typedef struct {
 	const char* name;
-	int value;
+	int			value;
 } enumValueInfo_t;
 
-typedef struct
-{
-	const char* typeName;
+typedef struct {
+	const char*			   typeName;
 	const enumValueInfo_t* values;
 } enumTypeInfo_t;
 
-typedef struct
-{
+typedef struct {
 	const char* type;
 	const char* name;
-	int offset;
-	int size;
+	int			offset;
+	int			size;
 } classVariableInfo_t;
 
-typedef struct
-{
-	const char* typeName;
-	const char* superType;
-	int size;
+typedef struct {
+	const char*				   typeName;
+	const char*				   superType;
+	int						   size;
 	const classVariableInfo_t* variables;
 } classTypeInfo_t;
 
+static constantInfo_t  constantInfo[] = { { NULL, NULL, NULL } };
 
-static constantInfo_t constantInfo[] =
-{
-	{ NULL, NULL, NULL }
-};
+static enumTypeInfo_t  enumTypeInfo[] = { { NULL, NULL } };
 
-static enumTypeInfo_t enumTypeInfo[] =
-{
-	{ NULL, NULL }
-};
-
-static classTypeInfo_t classTypeInfo[] =
-{
-	{ NULL, NULL, 0, NULL }
-};
+static classTypeInfo_t classTypeInfo[] = { { NULL, NULL, 0, NULL } };
 
 #endif /* !__GAMETYPEINFO_H__ */

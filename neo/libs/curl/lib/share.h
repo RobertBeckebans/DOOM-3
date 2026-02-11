@@ -29,8 +29,7 @@
 #include "cookie.h"
 
 /* this struct is libcurl-private, don't export details */
-struct Curl_share
-{
+struct Curl_share {
 	unsigned int specifier;
 	volatile unsigned int dirty;
 

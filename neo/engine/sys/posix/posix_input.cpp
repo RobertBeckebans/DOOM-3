@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -28,40 +29,36 @@ If you have questions concerning this license or the applicable additional terms
 #include "../../idlib/precompiled.h"
 #include "posix_public.h"
 
-typedef struct poll_keyboard_event_s
-{
-	int key;
+typedef struct poll_keyboard_event_s {
+	int	 key;
 	bool state;
 } poll_keyboard_event_t;
 
-typedef struct poll_mouse_event_s
-{
+typedef struct poll_mouse_event_s {
 	int action;
 	int value;
 } poll_mouse_event_t;
 
-#define MAX_POLL_EVENTS 50
+#define MAX_POLL_EVENTS		 50
 #define POLL_EVENTS_HEADROOM 2 // some situations require to add several events
 static poll_keyboard_event_t poll_events_keyboard[MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM];
-static int poll_keyboard_event_count;
-static poll_mouse_event_t poll_events_mouse[MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM];
-static int poll_mouse_event_count;
+static int					 poll_keyboard_event_count;
+static poll_mouse_event_t	 poll_events_mouse[MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM];
+static int					 poll_mouse_event_count;
 
 /*
 ==========
 Posix_AddKeyboardPollEvent
 ==========
 */
-bool Posix_AddKeyboardPollEvent( int key, bool state )
+bool						 Posix_AddKeyboardPollEvent( int key, bool state )
 {
-	if( poll_keyboard_event_count >= MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM )
-	{
+	if( poll_keyboard_event_count >= MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM ) {
 		common->FatalError( "poll_keyboard_event_count exceeded MAX_POLL_EVENT + POLL_EVENTS_HEADROOM\n" );
 	}
-	poll_events_keyboard[poll_keyboard_event_count].key = key;
+	poll_events_keyboard[poll_keyboard_event_count].key		= key;
 	poll_events_keyboard[poll_keyboard_event_count++].state = state;
-	if( poll_keyboard_event_count >= MAX_POLL_EVENTS )
-	{
+	if( poll_keyboard_event_count >= MAX_POLL_EVENTS ) {
 		common->DPrintf( "WARNING: reached MAX_POLL_EVENT poll_keyboard_event_count\n" );
 		return false;
 	}
@@ -75,14 +72,12 @@ Posix_AddMousePollEvent
 */
 bool Posix_AddMousePollEvent( int action, int value )
 {
-	if( poll_mouse_event_count >= MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM )
-	{
+	if( poll_mouse_event_count >= MAX_POLL_EVENTS + POLL_EVENTS_HEADROOM ) {
 		common->FatalError( "poll_mouse_event_count exceeded MAX_POLL_EVENT + POLL_EVENTS_HEADROOM\n" );
 	}
-	poll_events_mouse[poll_mouse_event_count].action = action;
+	poll_events_mouse[poll_mouse_event_count].action  = action;
 	poll_events_mouse[poll_mouse_event_count++].value = value;
-	if( poll_mouse_event_count >= MAX_POLL_EVENTS )
-	{
+	if( poll_mouse_event_count >= MAX_POLL_EVENTS ) {
 		common->DPrintf( "WARNING: reached MAX_POLL_EVENT poll_mouse_event_count\n" );
 		return false;
 	}
@@ -105,24 +100,23 @@ int Sys_PollKeyboardInputEvents()
 
 int Sys_ReturnKeyboardInputEvent( const int n, int& key, bool& state )
 {
-	if( n >= poll_keyboard_event_count )
-	{
+	if( n >= poll_keyboard_event_count ) {
 		return 0;
 	}
-	key = poll_events_keyboard[n].key;
+	key	  = poll_events_keyboard[n].key;
 	state = poll_events_keyboard[n].state;
 	return 1;
 }
 
 void Sys_EndKeyboardInputEvents()
 {
-	//isn't this were it's supposed to be, was missing some key strokes with it set below
+	// isn't this were it's supposed to be, was missing some key strokes with it set below
 	poll_keyboard_event_count = 0;
 }
 
 int Sys_PollMouseInputEvents()
 {
-#if 0 //moved to the Sys_End functions
+#if 0 // moved to the Sys_End functions
 	poll_keyboard_event_count = 0;
 	poll_mouse_event_count = 0;
 #endif
@@ -133,14 +127,13 @@ int Sys_PollMouseInputEvents()
 	return poll_mouse_event_count;
 }
 
-int	Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
+int Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
 {
-	if( n >= poll_mouse_event_count )
-	{
+	if( n >= poll_mouse_event_count ) {
 		return 0;
 	}
-	action = poll_events_mouse[ n ].action;
-	value = poll_events_mouse[ n ].value;
+	action = poll_events_mouse[n].action;
+	value  = poll_events_mouse[n].value;
 	return 1;
 }
 

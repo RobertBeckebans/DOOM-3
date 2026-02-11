@@ -46,179 +46,183 @@
 #include starlet
 #include iodef
 #include iosbdef
-char *getpass_r(const char *prompt, char *buffer, size_t buflen)
+char* getpass_r( const char* prompt, char* buffer, size_t buflen )
 {
-  long sts;
-  short chan;
-  struct _iosb iosb;
-  $DESCRIPTOR(ttdesc, "TT");
+	long sts;
+	short chan;
+	struct _iosb iosb;
+	$DESCRIPTOR( ttdesc, "TT" );
 
-  buffer[0]='\0';
-  sts = sys$assign(&ttdesc, &chan,0,0);
-  if (sts & 1) {
-    sts = sys$qiow(0, chan,
-                   IO$_READPROMPT | IO$M_NOECHO,
-                   &iosb, 0, 0, buffer, buflen, 0, 0,
-                   prompt, strlen(prompt));
+	buffer[0] = '\0';
+	sts = sys$assign( &ttdesc, &chan, 0, 0 );
+	if( sts & 1 ) {
+		sts = sys$qiow( 0, chan,
+						IO$_READPROMPT | IO$M_NOECHO,
+						&iosb, 0, 0, buffer, buflen, 0, 0,
+						prompt, strlen( prompt ) );
 
-    if((sts & 1) && (iosb.iosb$w_status&1))
-      buffer[iosb.iosb$w_bcnt] = '\0';
+		if( ( sts & 1 ) && ( iosb.iosb$w_status & 1 ) ) {
+			buffer[iosb.iosb$w_bcnt] = '\0';
+		}
 
-    sts = sys$dassgn(chan);
-  }
-  return buffer; /* we always return success */
+		sts = sys$dassgn( chan );
+	}
+	return buffer; /* we always return success */
 }
 #else /* VMS */
 #ifdef HAVE_TERMIOS_H
-#  if !defined(HAVE_TCGETATTR) && !defined(HAVE_TCSETATTR) 
-#    undef HAVE_TERMIOS_H
-#  endif
+	#if !defined(HAVE_TCGETATTR) && !defined(HAVE_TCSETATTR)
+		#undef HAVE_TERMIOS_H
+	#endif
 #endif
 
 #ifndef RETSIGTYPE
-#  define RETSIGTYPE void
+	#define RETSIGTYPE void
 #endif
 
 #ifdef HAVE_UNISTD_H
-#include <unistd.h>
+	#include <unistd.h>
 #endif
 #include <stdio.h>
 #include <signal.h>
 #ifdef HAVE_TERMIOS_H
-#  include <termios.h>
+	#include <termios.h>
 #else
-#  ifdef HAVE_TERMIO_H
-#  include <termio.h>
-#  else
-#  endif
+	#ifdef HAVE_TERMIO_H
+		#include <termio.h>
+	#else
+	#endif
 #endif
 
 /* The last #include file should be: */
 #ifdef CURLDEBUG
-#include "../lib/memdebug.h"
+	#include "../lib/memdebug.h"
 #endif
 
-char *getpass_r(const char *prompt, char *buffer, size_t buflen)
+char* getpass_r( const char* prompt, char* buffer, size_t buflen )
 {
-  FILE *infp;
-  char infp_fclose = 0;
-  FILE *outfp;
-  RETSIGTYPE (*sigint)(int);
+	FILE *infp;
+	char infp_fclose = 0;
+	FILE *outfp;
+	RETSIGTYPE( *sigint )( int );
 #ifdef SIGTSTP
-  RETSIGTYPE (*sigtstp)(int);
+	RETSIGTYPE( *sigtstp )( int );
 #endif
-  size_t bytes_read;
-  int infd;
-  int outfd;
+	size_t bytes_read;
+	int infd;
+	int outfd;
 #ifdef HAVE_TERMIOS_H
-  struct termios orig;
-  struct termios noecho;
+	struct termios orig;
+	struct termios noecho;
 #else
 #  ifdef HAVE_TERMIO_H
-  struct termio orig;
-  struct termio noecho;  
+	struct termio orig;
+	struct termio noecho;
 #  else
 #  endif
 #endif
 
-  sigint = signal(SIGINT, SIG_IGN);
+	sigint = signal( SIGINT, SIG_IGN );
 #ifdef SIGTSTP
-  sigtstp = signal(SIGTSTP, SIG_IGN);
+	sigtstp = signal( SIGTSTP, SIG_IGN );
 #endif
 
-  infp=fopen("/dev/tty", "r");
-  if( NULL == infp )
-    infp = stdin;
-  else
-    infp_fclose = 1;
+	infp = fopen( "/dev/tty", "r" );
+	if( NULL == infp ) {
+		infp = stdin;
+	} else {
+		infp_fclose = 1;
+	}
 
-  outfp = stderr;
+	outfp = stderr;
 
-  infd = fileno(infp);
-  outfd = fileno(outfp);
+	infd = fileno( infp );
+	outfd = fileno( outfp );
 
-  /* dissable echo */
+	/* dissable echo */
 #ifdef HAVE_TERMIOS_H
-  tcgetattr(outfd, &orig);
+	tcgetattr( outfd, &orig );
 
-  noecho = orig;
-  noecho.c_lflag &= ~ECHO;
-  tcsetattr(outfd, TCSANOW, &noecho);
+	noecho = orig;
+	noecho.c_lflag &= ~ECHO;
+	tcsetattr( outfd, TCSANOW, &noecho );
 #else
 #  ifdef HAVE_TERMIO_H
-  ioctl(outfd, TCGETA, &orig);
-  noecho = orig;
-  noecho.c_lflag &= ~ECHO;
-  ioctl(outfd, TCSETA, &noecho);
+	ioctl( outfd, TCGETA, &orig );
+	noecho = orig;
+	noecho.c_lflag &= ~ECHO;
+	ioctl( outfd, TCSETA, &noecho );
 #  else
 #  endif
 #endif
 
-  fputs(prompt, outfp);
-  fflush(outfp);
+	fputs( prompt, outfp );
+	fflush( outfp );
 
-  bytes_read=read(infd, buffer, buflen);
-  buffer[bytes_read > 0 ? (bytes_read -1) : 0] = '\0';
+	bytes_read = read( infd, buffer, buflen );
+	buffer[bytes_read > 0 ? ( bytes_read - 1 ) : 0] = '\0';
 
-  /* print a new line if needed */
+	/* print a new line if needed */
 #ifdef HAVE_TERMIOS_H
-  fputs("\n", outfp);
+	fputs( "\n", outfp );
 #else
 #  ifdef HAVE_TERMIO_H
-  fputs("\n", outfp);
+	fputs( "\n", outfp );
 #  else
 #  endif
 #endif
 
-  /*
-   * reset term charectaristics, use TCSAFLUSH incase the
-   * user types more than buflen
-   */
+	/*
+	 * reset term charectaristics, use TCSAFLUSH incase the
+	 * user types more than buflen
+	 */
 #ifdef HAVE_TERMIOS_H
-  tcsetattr(outfd, TCSAFLUSH, &orig);
+	tcsetattr( outfd, TCSAFLUSH, &orig );
 #else
 #  ifdef HAVE_TERMIO_H
-  ioctl(outfd, TCSETA, &orig);
+	ioctl( outfd, TCSETA, &orig );
 #  else
 #  endif
 #endif
-  
-  signal(SIGINT, sigint);
+
+	signal( SIGINT, sigint );
 #ifdef SIGTSTP
-  signal(SIGTSTP, sigtstp);
+	signal( SIGTSTP, sigtstp );
 #endif
 
-  if(infp_fclose)
-    fclose(infp);
+	if( infp_fclose ) {
+		fclose( infp );
+	}
 
-  return buffer; /* we always return success */
+	return buffer; /* we always return success */
 }
 #endif /* VMS */
 #else /* WIN32 */
 #include <stdio.h>
 #include <conio.h>
-char *getpass_r(const char *prompt, char *buffer, size_t buflen)
+char* getpass_r( const char* prompt, char* buffer, size_t buflen )
 {
-  size_t i;
-  printf("%s", prompt);
- 
-  for(i=0; i<buflen; i++) {
-    buffer[i] = getch();
-    if ( buffer[i] == '\r' ) {
-      buffer[i] = 0;
-      break;
-    }
-    else
-      if ( buffer[i] == '\b')
-        /* remove this letter and if this is not the first key, remove the
-           previous one as well */
-        i = i - (i>=1?2:1);
-  }
-  /* if user didn't hit ENTER, terminate buffer */
-  if (i==buflen)
-    buffer[buflen-1]=0;
+	size_t i;
+	printf( "%s", prompt );
 
-  return buffer; /* we always return success */
+	for( i = 0; i < buflen; i++ ) {
+		buffer[i] = getch();
+		if( buffer[i] == '\r' ) {
+			buffer[i] = 0;
+			break;
+		} else if( buffer[i] == '\b' )
+			/* remove this letter and if this is not the first key, remove the
+			   previous one as well */
+		{
+			i = i - ( i >= 1 ? 2 : 1 );
+		}
+	}
+	/* if user didn't hit ENTER, terminate buffer */
+	if( i == buflen ) {
+		buffer[buflen - 1] = 0;
+	}
+
+	return buffer; /* we always return success */
 }
 #endif
 
@@ -226,9 +230,9 @@ char *getpass_r(const char *prompt, char *buffer, size_t buflen)
 
 #if 0
 /* for consistensy, here's the old-style function: */
-char *getpass(const char *prompt)
+char* getpass( const char* prompt )
 {
-  static char buf[256];
-  return getpass_r(prompt, buf, sizeof(buf));
+	static char buf[256];
+	return getpass_r( prompt, buf, sizeof( buf ) );
 }
 #endif

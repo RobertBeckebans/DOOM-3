@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,9 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 
 // DialogAFView dialog
 
-toolTip_t DialogAFView::toolTips[] =
-{
-	{ IDC_CHECK_VIEW_BODIES, "show bodies" },
+toolTip_t DialogAFView::toolTips[] = { { IDC_CHECK_VIEW_BODIES, "show bodies" },
 	{ IDC_CHECK_VIEW_BODYNAMES, "show body names" },
 	{ IDC_CHECK_VIEW_BODYMASS, "show body mass" },
 	{ IDC_CHECK_VIEW_TOTALMASS, "show total mass" },
@@ -61,8 +60,7 @@ toolTip_t DialogAFView::toolTips[] =
 	{ IDC_CHECK_PHYSICS_TIMING, "show performance timings" },
 	{ IDC_CHECK_PHYSICS_DRAG_ENTITIES, "drag entities" },
 	{ IDC_CHECK_PHYSICS_SHOW_DRAG_SELECTION, "show selection box around the entity selected for dragging" },
-	{ 0, NULL }
-};
+	{ 0, NULL } };
 
 IMPLEMENT_DYNAMIC( DialogAFView, CDialog )
 
@@ -71,34 +69,34 @@ IMPLEMENT_DYNAMIC( DialogAFView, CDialog )
 DialogAFView::DialogAFView
 ================
 */
-DialogAFView::DialogAFView( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogAFView::IDD, pParent )
+DialogAFView::DialogAFView( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogAFView::IDD, pParent )
 
 {
-	m_showBodies = cvarSystem->GetCVarBool( "af_showBodies" );
-	m_showBodyNames = cvarSystem->GetCVarBool( "af_showBodyNames" );
-	m_showMass = cvarSystem->GetCVarBool( "af_showMass" );
-	m_showTotalMass = cvarSystem->GetCVarBool( "af_showTotalMass" );
-	m_showInertia = cvarSystem->GetCVarBool( "af_showInertia" );
-	m_showVelocity = cvarSystem->GetCVarBool( "af_showVelocity" );
-	m_showConstraints = cvarSystem->GetCVarBool( "af_showConstraints" );
-	m_showConstraintNames = cvarSystem->GetCVarBool( "af_showConstraintNames" );
-	m_showPrimaryOnly = cvarSystem->GetCVarBool( "af_showPrimaryOnly" );
-	m_showLimits = cvarSystem->GetCVarBool( "af_showLimits" );
+	m_showBodies			= cvarSystem->GetCVarBool( "af_showBodies" );
+	m_showBodyNames			= cvarSystem->GetCVarBool( "af_showBodyNames" );
+	m_showMass				= cvarSystem->GetCVarBool( "af_showMass" );
+	m_showTotalMass			= cvarSystem->GetCVarBool( "af_showTotalMass" );
+	m_showInertia			= cvarSystem->GetCVarBool( "af_showInertia" );
+	m_showVelocity			= cvarSystem->GetCVarBool( "af_showVelocity" );
+	m_showConstraints		= cvarSystem->GetCVarBool( "af_showConstraints" );
+	m_showConstraintNames	= cvarSystem->GetCVarBool( "af_showConstraintNames" );
+	m_showPrimaryOnly		= cvarSystem->GetCVarBool( "af_showPrimaryOnly" );
+	m_showLimits			= cvarSystem->GetCVarBool( "af_showLimits" );
 	m_showConstrainedBodies = cvarSystem->GetCVarBool( "af_showConstrainedBodies" );
-	m_showTrees = cvarSystem->GetCVarBool( "af_showTrees" );
-	m_showSkeleton = cvarSystem->GetCVarInteger( "af_showSkel" ) == 1;
-	m_showSkeletonOnly = cvarSystem->GetCVarInteger( "af_showSkel" ) == 2;
-	m_debugLineDepthTest = cvarSystem->GetCVarBool( "r_debugLineDepthTest" );
-	m_debugLineUseArrows = cvarSystem->GetCVarInteger( "r_debugArrowStep" ) != 0;
-	m_noFriction = cvarSystem->GetCVarBool( "af_skipFriction" );
-	m_noLimits = cvarSystem->GetCVarBool( "af_skipLimits" );
-	m_gravity = cvarSystem->GetCVarFloat( "g_gravity" );
-	m_noGravity = ( m_gravity == 0.0f );
-	m_noSelfCollision = cvarSystem->GetCVarBool( "af_skipSelfCollision" );
-	m_showTimings = cvarSystem->GetCVarBool( "af_showTimings" );
-	m_dragEntity = cvarSystem->GetCVarBool( "g_dragEntity" );
-	m_dragShowSelection = cvarSystem->GetCVarBool( "g_dragShowSelection" );
+	m_showTrees				= cvarSystem->GetCVarBool( "af_showTrees" );
+	m_showSkeleton			= cvarSystem->GetCVarInteger( "af_showSkel" ) == 1;
+	m_showSkeletonOnly		= cvarSystem->GetCVarInteger( "af_showSkel" ) == 2;
+	m_debugLineDepthTest	= cvarSystem->GetCVarBool( "r_debugLineDepthTest" );
+	m_debugLineUseArrows	= cvarSystem->GetCVarInteger( "r_debugArrowStep" ) != 0;
+	m_noFriction			= cvarSystem->GetCVarBool( "af_skipFriction" );
+	m_noLimits				= cvarSystem->GetCVarBool( "af_skipLimits" );
+	m_gravity				= cvarSystem->GetCVarFloat( "g_gravity" );
+	m_noGravity				= ( m_gravity == 0.0f );
+	m_noSelfCollision		= cvarSystem->GetCVarBool( "af_skipSelfCollision" );
+	m_showTimings			= cvarSystem->GetCVarBool( "af_showTimings" );
+	m_dragEntity			= cvarSystem->GetCVarBool( "g_dragEntity" );
+	m_dragShowSelection		= cvarSystem->GetCVarBool( "g_dragShowSelection" );
 
 	Create( IDD_DIALOG_AF_VIEW, pParent );
 	EnableToolTips( TRUE );
@@ -160,33 +158,32 @@ int DialogAFView::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 }
 
 BEGIN_MESSAGE_MAP( DialogAFView, CDialog )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_BODIES, OnBnClickedCheckViewBodies )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_BODYNAMES, OnBnClickedCheckViewBodynames )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_BODYMASS, OnBnClickedCheckViewBodyMass )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_TOTALMASS, OnBnClickedCheckViewTotalMass )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_INERTIATENSOR, OnBnClickedCheckViewInertiatensor )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_VELOCITY, OnBnClickedCheckViewVelocity )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINTS, OnBnClickedCheckViewConstraints )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINTNAMES, OnBnClickedCheckViewConstraintnames )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_PRIMARYONLY, OnBnClickedCheckViewPrimaryonly )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_LIMITS, OnBnClickedCheckViewLimits )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINEDBODIES, OnBnClickedCheckViewConstrainedBodies )
-	ON_BN_CLICKED( IDC_CHECK_VIEW_TREES, OnBnClickedCheckViewTrees )
-	ON_BN_CLICKED( IDC_CHECK_MD5_SKELETON, OnBnClickedCheckMd5Skeleton )
-	ON_BN_CLICKED( IDC_CHECK_MD5_SKELETONONLY, OnBnClickedCheckMd5Skeletononly )
-	ON_BN_CLICKED( IDC_CHECK_LINES_DEPTHTEST, OnBnClickedCheckLinesDepthtest )
-	ON_BN_CLICKED( IDC_CHECK_LINES_USEARROWS, OnBnClickedCheckLinesUsearrows )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOFRICTION, OnBnClickedCheckPhysicsNofriction )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOLIMITS, OnBnClickedCheckPhysicsNolimits )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOGRAVITY, OnBnClickedCheckPhysicsNogravity )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOSELFCOLLISION, OnBnClickedCheckPhysicsNoselfcollision )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_TIMING, OnBnClickedCheckPhysicsTiming )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_DRAG_ENTITIES, OnBnClickedCheckPhysicsDragEntities )
-	ON_BN_CLICKED( IDC_CHECK_PHYSICS_SHOW_DRAG_SELECTION, OnBnClickedCheckPhysicsShowDragSelection )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
+ON_BN_CLICKED( IDC_CHECK_VIEW_BODIES, OnBnClickedCheckViewBodies )
+ON_BN_CLICKED( IDC_CHECK_VIEW_BODYNAMES, OnBnClickedCheckViewBodynames )
+ON_BN_CLICKED( IDC_CHECK_VIEW_BODYMASS, OnBnClickedCheckViewBodyMass )
+ON_BN_CLICKED( IDC_CHECK_VIEW_TOTALMASS, OnBnClickedCheckViewTotalMass )
+ON_BN_CLICKED( IDC_CHECK_VIEW_INERTIATENSOR, OnBnClickedCheckViewInertiatensor )
+ON_BN_CLICKED( IDC_CHECK_VIEW_VELOCITY, OnBnClickedCheckViewVelocity )
+ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINTS, OnBnClickedCheckViewConstraints )
+ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINTNAMES, OnBnClickedCheckViewConstraintnames )
+ON_BN_CLICKED( IDC_CHECK_VIEW_PRIMARYONLY, OnBnClickedCheckViewPrimaryonly )
+ON_BN_CLICKED( IDC_CHECK_VIEW_LIMITS, OnBnClickedCheckViewLimits )
+ON_BN_CLICKED( IDC_CHECK_VIEW_CONSTRAINEDBODIES, OnBnClickedCheckViewConstrainedBodies )
+ON_BN_CLICKED( IDC_CHECK_VIEW_TREES, OnBnClickedCheckViewTrees )
+ON_BN_CLICKED( IDC_CHECK_MD5_SKELETON, OnBnClickedCheckMd5Skeleton )
+ON_BN_CLICKED( IDC_CHECK_MD5_SKELETONONLY, OnBnClickedCheckMd5Skeletononly )
+ON_BN_CLICKED( IDC_CHECK_LINES_DEPTHTEST, OnBnClickedCheckLinesDepthtest )
+ON_BN_CLICKED( IDC_CHECK_LINES_USEARROWS, OnBnClickedCheckLinesUsearrows )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOFRICTION, OnBnClickedCheckPhysicsNofriction )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOLIMITS, OnBnClickedCheckPhysicsNolimits )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOGRAVITY, OnBnClickedCheckPhysicsNogravity )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_NOSELFCOLLISION, OnBnClickedCheckPhysicsNoselfcollision )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_TIMING, OnBnClickedCheckPhysicsTiming )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_DRAG_ENTITIES, OnBnClickedCheckPhysicsDragEntities )
+ON_BN_CLICKED( IDC_CHECK_PHYSICS_SHOW_DRAG_SELECTION, OnBnClickedCheckPhysicsShowDragSelection )
 END_MESSAGE_MAP()
-
 
 // DialogAFView message handlers
 
@@ -270,14 +267,10 @@ void DialogAFView::OnBnClickedCheckViewTrees()
 void DialogAFView::OnBnClickedCheckMd5Skeleton()
 {
 	UpdateData( TRUE );
-	if( !m_showSkeletonOnly )
-	{
-		if( m_showSkeleton )
-		{
+	if( !m_showSkeletonOnly ) {
+		if( m_showSkeleton ) {
 			cvarSystem->SetCVarInteger( "r_showSkel", 1 );
-		}
-		else
-		{
+		} else {
 			cvarSystem->SetCVarInteger( "r_showSkel", 0 );
 		}
 	}
@@ -286,18 +279,12 @@ void DialogAFView::OnBnClickedCheckMd5Skeleton()
 void DialogAFView::OnBnClickedCheckMd5Skeletononly()
 {
 	UpdateData( TRUE );
-	if( m_showSkeletonOnly )
-	{
+	if( m_showSkeletonOnly ) {
 		cvarSystem->SetCVarInteger( "r_showSkel", 2 );
-	}
-	else
-	{
-		if( m_showSkeleton )
-		{
+	} else {
+		if( m_showSkeleton ) {
 			cvarSystem->SetCVarInteger( "r_showSkel", 1 );
-		}
-		else
-		{
+		} else {
 			cvarSystem->SetCVarInteger( "r_showSkel", 0 );
 		}
 	}
@@ -312,12 +299,9 @@ void DialogAFView::OnBnClickedCheckLinesDepthtest()
 void DialogAFView::OnBnClickedCheckLinesUsearrows()
 {
 	UpdateData( TRUE );
-	if( m_debugLineUseArrows )
-	{
+	if( m_debugLineUseArrows ) {
 		cvarSystem->SetCVarInteger( "r_debugArrowStep", 120 );
-	}
-	else
-	{
+	} else {
 		cvarSystem->SetCVarInteger( "r_debugArrowStep", 0 );
 	}
 }

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,23 +37,23 @@ idRenderEntityLocal::idRenderEntityLocal()
 	memset( &parms, 0, sizeof( parms ) );
 	memset( modelMatrix, 0, sizeof( modelMatrix ) );
 
-	world					= NULL;
-	index					= 0;
-	lastModifiedFrameNum	= 0;
-	archived				= false;
-	dynamicModel			= NULL;
-	dynamicModelFrameCount	= 0;
-	cachedDynamicModel		= NULL;
-	referenceBounds			= bounds_zero;
-	viewCount				= 0;
-	viewEntity				= NULL;
-	visibleCount			= 0;
-	decals					= NULL;
-	overlay					= NULL;
-	entityRefs				= NULL;
-	firstInteraction		= NULL;
-	lastInteraction			= NULL;
-	needsPortalSky			= false;
+	world				   = NULL;
+	index				   = 0;
+	lastModifiedFrameNum   = 0;
+	archived			   = false;
+	dynamicModel		   = NULL;
+	dynamicModelFrameCount = 0;
+	cachedDynamicModel	   = NULL;
+	referenceBounds		   = bounds_zero;
+	viewCount			   = 0;
+	viewEntity			   = NULL;
+	visibleCount		   = 0;
+	decals				   = NULL;
+	overlay				   = NULL;
+	entityRefs			   = NULL;
+	firstInteraction	   = NULL;
+	lastInteraction		   = NULL;
+	needsPortalSky		   = false;
 }
 
 void idRenderEntityLocal::FreeRenderEntity()
@@ -94,23 +95,23 @@ idRenderLightLocal::idRenderLightLocal()
 	memset( frustum, 0, sizeof( frustum ) );
 	memset( frustumWindings, 0, sizeof( frustumWindings ) );
 
-	lightHasMoved			= false;
-	world					= NULL;
-	index					= 0;
-	areaNum					= 0;
-	lastModifiedFrameNum	= 0;
-	archived				= false;
-	lightShader				= NULL;
-	falloffImage			= NULL;
-	globalLightOrigin		= vec3_zero;
-	frustumTris				= NULL;
-	numShadowFrustums		= 0;
-	viewCount				= 0;
-	viewLight				= NULL;
-	references				= NULL;
-	foggedPortals			= NULL;
-	firstInteraction		= NULL;
-	lastInteraction			= NULL;
+	lightHasMoved		 = false;
+	world				 = NULL;
+	index				 = 0;
+	areaNum				 = 0;
+	lastModifiedFrameNum = 0;
+	archived			 = false;
+	lightShader			 = NULL;
+	falloffImage		 = NULL;
+	globalLightOrigin	 = vec3_zero;
+	frustumTris			 = NULL;
+	numShadowFrustums	 = 0;
+	viewCount			 = 0;
+	viewLight			 = NULL;
+	references			 = NULL;
+	foggedPortals		 = NULL;
+	firstInteraction	 = NULL;
+	lastInteraction		 = NULL;
 }
 
 void idRenderLightLocal::FreeRenderLight()

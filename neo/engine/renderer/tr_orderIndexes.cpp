@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -30,49 +31,41 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
-
 /*
 ===============
 R_MeshCost
 ===============
 */
-#define	CACHE_SIZE	24
-#define	STALL_SIZE	8
-int	R_MeshCost( int numIndexes, glIndex_t* indexes )
+#define CACHE_SIZE 24
+#define STALL_SIZE 8
+int R_MeshCost( int numIndexes, glIndex_t* indexes )
 {
-	int	inCache[CACHE_SIZE];
-	int	i, j, v;
-	int	c_stalls;
-	int	c_loads;
-	int	fifo;
+	int inCache[CACHE_SIZE];
+	int i, j, v;
+	int c_stalls;
+	int c_loads;
+	int fifo;
 
-	for( i = 0 ; i < CACHE_SIZE ; i++ )
-	{
+	for( i = 0; i < CACHE_SIZE; i++ ) {
 		inCache[i] = -1;
 	}
 
-	c_loads = 0;
+	c_loads	 = 0;
 	c_stalls = 0;
-	fifo = 0;
+	fifo	 = 0;
 
-	for( i = 0 ; i < numIndexes ; i++ )
-	{
+	for( i = 0; i < numIndexes; i++ ) {
 		v = indexes[i];
-		for( j = 0 ; j < CACHE_SIZE ; j++ )
-		{
-			if( inCache[( fifo + j ) % CACHE_SIZE ] == v )
-			{
+		for( j = 0; j < CACHE_SIZE; j++ ) {
+			if( inCache[( fifo + j ) % CACHE_SIZE] == v ) {
 				break;
 			}
 		}
-		if( j == CACHE_SIZE )
-		{
+		if( j == CACHE_SIZE ) {
 			c_loads++;
-			inCache[ fifo % CACHE_SIZE ] = v;
+			inCache[fifo % CACHE_SIZE] = v;
 			fifo++;
-		}
-		else if( j < STALL_SIZE )
-		{
+		} else if( j < STALL_SIZE ) {
 			c_stalls++;
 		}
 	}
@@ -80,11 +73,9 @@ int	R_MeshCost( int numIndexes, glIndex_t* indexes )
 	return c_loads;
 }
 
-
-typedef struct vertRef_s
-{
-	struct vertRef_s*	next;
-	int			tri;
+typedef struct vertRef_s {
+	struct vertRef_s* next;
+	int				  tri;
 } vertRef_t;
 
 /*
@@ -97,21 +88,20 @@ of the internal GPU vertex caches
 */
 void R_OrderIndexes( int numIndexes, glIndex_t* indexes )
 {
-	bool*	triangleUsed;
-	int			numTris;
-	glIndex_t*	oldIndexes;
-	glIndex_t*	base;
-	int			numOldIndexes;
-	int			tri;
-	int			i;
-	vertRef_t*	vref, **vrefs, *vrefTable;
-	int			numVerts;
-	int			v1, v2;
-	int			c_starts;
-	int			c_cost;
+	bool*	   triangleUsed;
+	int		   numTris;
+	glIndex_t* oldIndexes;
+	glIndex_t* base;
+	int		   numOldIndexes;
+	int		   tri;
+	int		   i;
+	vertRef_t *vref, **vrefs, *vrefTable;
+	int		   numVerts;
+	int		   v1, v2;
+	int		   c_starts;
+	int		   c_cost;
 
-	if( !r_orderIndexes.GetBool() )
-	{
+	if( !r_orderIndexes.GetBool() ) {
 		return;
 	}
 
@@ -121,16 +111,14 @@ void R_OrderIndexes( int numIndexes, glIndex_t* indexes )
 	numOldIndexes = numIndexes;
 
 	// make a table to mark the triangles when they are emited
-	numTris = numIndexes / 3;
+	numTris		 = numIndexes / 3;
 	triangleUsed = ( bool* )_alloca( numTris * sizeof( *triangleUsed ) );
 	memset( triangleUsed, 0, numTris * sizeof( *triangleUsed ) );
 
 	// find the highest vertex number
 	numVerts = 0;
-	for( i = 0 ; i < numIndexes ; i++ )
-	{
-		if( indexes[i] > numVerts )
-		{
+	for( i = 0; i < numIndexes; i++ ) {
+		if( indexes[i] > numVerts ) {
 			numVerts = indexes[i];
 		}
 	}
@@ -141,39 +129,33 @@ void R_OrderIndexes( int numIndexes, glIndex_t* indexes )
 	memset( vrefs, 0, numVerts * sizeof( *vrefs ) );
 
 	vrefTable = ( vertRef_t* )_alloca( numIndexes * sizeof( *vrefTable ) );
-	for( i = 0 ; i < numIndexes ; i++ )
-	{
+	for( i = 0; i < numIndexes; i++ ) {
 		tri = i / 3;
 
-		vrefTable[i].tri = tri;
-		vrefTable[i].next = vrefs[oldIndexes[i]];
+		vrefTable[i].tri	 = tri;
+		vrefTable[i].next	 = vrefs[oldIndexes[i]];
 		vrefs[oldIndexes[i]] = &vrefTable[i];
 	}
 
 	// generate new indexes
 	numIndexes = 0;
-	c_starts = 0;
-	while( numIndexes != numOldIndexes )
-	{
+	c_starts   = 0;
+	while( numIndexes != numOldIndexes ) {
 		// find a triangle that hasn't been used
-		for( tri = 0 ; tri < numTris ; tri++ )
-		{
-			if( !triangleUsed[tri] )
-			{
+		for( tri = 0; tri < numTris; tri++ ) {
+			if( !triangleUsed[tri] ) {
 				break;
 			}
 		}
-		if( tri == numTris )
-		{
+		if( tri == numTris ) {
 			common->Error( "R_OrderIndexes: ran out of unused tris" );
 		}
 
 		c_starts++;
 
-		do
-		{
+		do {
 			// emit this tri
-			base = oldIndexes + tri * 3;
+			base					= oldIndexes + tri * 3;
 			indexes[numIndexes + 0] = base[0];
 			indexes[numIndexes + 1] = base[1];
 			indexes[numIndexes + 2] = base[2];
@@ -182,46 +164,35 @@ void R_OrderIndexes( int numIndexes, glIndex_t* indexes )
 			triangleUsed[tri] = true;
 
 			// try to find a shared edge to another unused tri
-			for( i = 0 ; i < 3 ; i++ )
-			{
+			for( i = 0; i < 3; i++ ) {
 				v1 = base[i];
 				v2 = base[( i + 1 ) % 3];
 
-				for( vref = vrefs[v1] ; vref ; vref = vref->next )
-				{
+				for( vref = vrefs[v1]; vref; vref = vref->next ) {
 					tri = vref->tri;
-					if( triangleUsed[tri] )
-					{
+					if( triangleUsed[tri] ) {
 						continue;
 					}
 
 					// if this triangle also uses v2, grab it
-					if( oldIndexes[tri * 3 + 0] == v2
-							|| oldIndexes[tri * 3 + 1] == v2
-							|| oldIndexes[tri * 3 + 2] == v2 )
-					{
+					if( oldIndexes[tri * 3 + 0] == v2 || oldIndexes[tri * 3 + 1] == v2 || oldIndexes[tri * 3 + 2] == v2 ) {
 						break;
 					}
 				}
-				if( vref )
-				{
+				if( vref ) {
 					break;
 				}
 			}
 
 			// if we couldn't chain off of any verts, we need to find a new one
-			if( i == 3 )
-			{
+			if( i == 3 ) {
 				break;
 			}
-		}
-		while( 1 );
+		} while( 1 );
 	}
 
 	c_cost = R_MeshCost( numIndexes, indexes );
-
 }
-
 
 /*
 
@@ -235,4 +206,3 @@ void R_OrderIndexes( int numIndexes, glIndex_t* indexes )
 
 
 */
-

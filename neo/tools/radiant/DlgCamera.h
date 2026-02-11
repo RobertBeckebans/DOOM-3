@@ -19,18 +19,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
-#if !defined(AFX_DLGCAMERA_H__59C12359_E3EB_4081_9F28_01793D75CF20__INCLUDED_)
-#define AFX_DLGCAMERA_H__59C12359_E3EB_4081_9F28_01793D75CF20__INCLUDED_
+#if !defined( AFX_DLGCAMERA_H__59C12359_E3EB_4081_9F28_01793D75CF20__INCLUDED_ )
+	#define AFX_DLGCAMERA_H__59C12359_E3EB_4081_9F28_01793D75CF20__INCLUDED_
 
-#if _MSC_VER > 1000
-	#pragma once
-#endif // _MSC_VER > 1000
+	#if _MSC_VER > 1000
+		#pragma once
+	#endif // _MSC_VER > 1000
 // DlgCamera.h : header file
 //
 
@@ -41,35 +42,34 @@ extern void showCameraInspector();
 
 class CDlgCamera : public CDialog
 {
-// Construction
+	// Construction
 public:
 	CDlgCamera( CWnd* pParent = NULL ); // standard constructor
 	void setupFromCamera();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CDlgCamera)
 	enum { IDD = IDD_DLG_CAMERA };
-	CScrollBar	m_wndSegments;
-	CListBox	m_wndEvents;
-	CComboBox	m_wndSplines;
-	CString	m_strName;
-	float	m_fSeconds;
-	BOOL	m_trackCamera;
-	int		m_numSegments;
-	int		m_currentSegment;
-	CString	m_strType;
-	int		m_editPoints;
+	CScrollBar m_wndSegments;
+	CListBox   m_wndEvents;
+	CComboBox  m_wndSplines;
+	CString	   m_strName;
+	float	   m_fSeconds;
+	BOOL	   m_trackCamera;
+	int		   m_numSegments;
+	int		   m_currentSegment;
+	CString	   m_strType;
+	int		   m_editPoints;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDlgCamera)
 protected:
-	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual void DoDataExchange( CDataExchange* pDX ); // DDX/DDV support
+													   //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CDlgCamera)

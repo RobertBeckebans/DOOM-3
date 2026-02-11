@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,92 +38,78 @@ typedef bool ( *PFNENUMCHILDRENPROC )( rvGEWindowWrapper* wrapper, void* data );
 class rvGEWindowWrapper
 {
 public:
-
-	enum EWindowType
-	{
-		WT_UNKNOWN,
-		WT_NORMAL,
-		WT_EDIT,
-		WT_HTML,
-		WT_CHOICE,
-		WT_SLIDER,
-		WT_BIND,
-		WT_LIST,
-		WT_RENDER,
-		WT_TRANSITION
-	};
+	enum EWindowType { WT_UNKNOWN, WT_NORMAL, WT_EDIT, WT_HTML, WT_CHOICE, WT_SLIDER, WT_BIND, WT_LIST, WT_RENDER, WT_TRANSITION };
 
 	rvGEWindowWrapper( idWindow* window, EWindowType type );
 
-	static rvGEWindowWrapper*	GetWrapper( idWindow* window );
+	static rvGEWindowWrapper* GetWrapper( idWindow* window );
 
-	idWindow*			GetWindow();
-	idDict&				GetStateDict();
-	idDict&				GetVariableDict();
-	idDict&				GetScriptDict();
-	idRectangle&		GetClientRect();
-	idRectangle&		GetScreenRect();
-	EWindowType			GetWindowType();
-	int					GetChildCount();
-	int					GetDepth();
-	idWindow*			GetChild( int index );
+	idWindow*				  GetWindow();
+	idDict&					  GetStateDict();
+	idDict&					  GetVariableDict();
+	idDict&					  GetScriptDict();
+	idRectangle&			  GetClientRect();
+	idRectangle&			  GetScreenRect();
+	EWindowType				  GetWindowType();
+	int						  GetChildCount();
+	int						  GetDepth();
+	idWindow*				  GetChild( int index );
 
-	void				SetRect( idRectangle& rect );
-	void				SetState( const idDict& dict );
-	void				SetStateKey( const char* key, const char* value, bool update = true );
-	void				DeleteStateKey( const char* key );
-	bool				VerfiyStateKey( const char* name, const char* value, idStr* result = NULL );
+	void					  SetRect( idRectangle& rect );
+	void					  SetState( const idDict& dict );
+	void					  SetStateKey( const char* key, const char* value, bool update = true );
+	void					  DeleteStateKey( const char* key );
+	bool					  VerfiyStateKey( const char* name, const char* value, idStr* result = NULL );
 
-	bool				IsFlippedHorz();
-	bool				IsFlippedVert();
-	bool				IsHidden();
-	bool				IsDeleted();
-	bool				IsSelected();
-	bool				IsExpanded();
+	bool					  IsFlippedHorz();
+	bool					  IsFlippedVert();
+	bool					  IsHidden();
+	bool					  IsDeleted();
+	bool					  IsSelected();
+	bool					  IsExpanded();
 
-	bool				CanHaveChildren();
-	bool				CanMoveAndSize();
+	bool					  CanHaveChildren();
+	bool					  CanMoveAndSize();
 
-	void				SetFlippedHorz( bool f );
-	void				SetFlippedVert( bool f );
-	void				SetHidden( bool v );
-	void				SetDeleted( bool del );
-	void				SetSelected( bool sel );
-	void				SetWindowType( EWindowType type );
+	void					  SetFlippedHorz( bool f );
+	void					  SetFlippedVert( bool f );
+	void					  SetHidden( bool v );
+	void					  SetDeleted( bool del );
+	void					  SetSelected( bool sel );
+	void					  SetWindowType( EWindowType type );
 
-	bool				Expand();
-	bool				Collapse();
+	bool					  Expand();
+	bool					  Collapse();
 
-	bool				EnumChildren( PFNENUMCHILDRENPROC proc, void* data );
+	bool					  EnumChildren( PFNENUMCHILDRENPROC proc, void* data );
 
-	idWindow*			WindowFromPoint( float x, float y, bool visibleOnly = true );
+	idWindow*				  WindowFromPoint( float x, float y, bool visibleOnly = true );
 
-	void				Finish();
+	void					  Finish();
 
-	static EWindowType	StringToWindowType( const char* string );
-	static const char*	WindowTypeToString( EWindowType type );
+	static EWindowType		  StringToWindowType( const char* string );
+	static const char*		  WindowTypeToString( EWindowType type );
 
 protected:
+	void		CalcScreenRect();
+	void		UpdateRect();
+	void		UpdateWindowState();
 
-	void				CalcScreenRect();
-	void				UpdateRect();
-	void				UpdateWindowState();
-
-	idRectangle		mClientRect;
-	idRectangle		mScreenRect;
-	idWindow*		mWindow;
-	idDict			mState;
-	idDict			mVariables;
-	idDict			mScripts;
-	bool			mFlippedHorz;
-	bool			mFlippedVert;
-	bool			mHidden;
-	bool			mDeleted;
-	bool			mSelected;
-	bool			mExpanded;
-	bool			mOldVisible;
-	bool			mMoveable;
-	EWindowType		mType;
+	idRectangle mClientRect;
+	idRectangle mScreenRect;
+	idWindow*	mWindow;
+	idDict		mState;
+	idDict		mVariables;
+	idDict		mScripts;
+	bool		mFlippedHorz;
+	bool		mFlippedVert;
+	bool		mHidden;
+	bool		mDeleted;
+	bool		mSelected;
+	bool		mExpanded;
+	bool		mOldVisible;
+	bool		mMoveable;
+	EWindowType mType;
 };
 
 ID_INLINE idDict& rvGEWindowWrapper::GetStateDict()

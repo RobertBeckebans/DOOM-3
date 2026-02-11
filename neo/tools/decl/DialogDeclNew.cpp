@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -41,18 +42,13 @@ If you have questions concerning this license or the applicable additional terms
 	#define DEBUG_NEW new
 #endif
 
-
-toolTip_t DialogDeclNew::toolTips[] =
-{
-	{ IDC_DECLNEW_COMBO_NEW_TYPE, "select the declaration type to create" },
+toolTip_t DialogDeclNew::toolTips[] = { { IDC_DECLNEW_COMBO_NEW_TYPE, "select the declaration type to create" },
 	{ IDC_DECLNEW_EDIT_NEW_NAME, "enter a name for the new declaration" },
 	{ IDC_DECLNEW_EDIT_NEW_FILE, "enter the name of the file to add the declaration to" },
 	{ IDC_DECLNEW_BUTTON_NEW_FILE, "select existing file to add the declaration to" },
 	{ IDOK, "create new declaration" },
 	{ IDCANCEL, "cancel" },
-	{ 0, NULL }
-};
-
+	{ 0, NULL } };
 
 IMPLEMENT_DYNAMIC( DialogDeclNew, CDialog )
 
@@ -61,10 +57,10 @@ IMPLEMENT_DYNAMIC( DialogDeclNew, CDialog )
 DialogDeclNew::DialogDeclNew
 ================
 */
-DialogDeclNew::DialogDeclNew( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogDeclNew::IDD, pParent )
-	, declTree( NULL )
-	, newDecl( NULL )
+DialogDeclNew::DialogDeclNew( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogDeclNew::IDD, pParent ),
+	declTree( NULL ),
+	newDecl( NULL )
 {
 }
 
@@ -105,8 +101,7 @@ void DialogDeclNew::InitTypeList()
 	int i;
 
 	typeList.ResetContent();
-	for( i = 0; i < declManager->GetNumDeclTypes(); i++ )
-	{
+	for( i = 0; i < declManager->GetNumDeclTypes(); i++ ) {
 		typeList.AddString( declManager->GetDeclNameFromType( ( declType_t )i ) );
 	}
 }
@@ -118,7 +113,6 @@ DialogDeclNew::OnInitDialog
 */
 BOOL DialogDeclNew::OnInitDialog()
 {
-
 	CDialog::OnInitDialog();
 
 	InitTypeList();
@@ -129,22 +123,20 @@ BOOL DialogDeclNew::OnInitDialog()
 
 	EnableToolTips( TRUE );
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-
 BEGIN_MESSAGE_MAP( DialogDeclNew, CDialog )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
-	ON_WM_DESTROY()
-	ON_WM_ACTIVATE()
-	ON_WM_SETFOCUS()
-	ON_BN_CLICKED( IDC_DECLNEW_BUTTON_NEW_FILE, OnBnClickedFile )
-	ON_BN_CLICKED( IDOK, OnBnClickedOk )
-	ON_BN_CLICKED( IDCANCEL, OnBnClickedCancel )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
+ON_WM_DESTROY()
+ON_WM_ACTIVATE()
+ON_WM_SETFOCUS()
+ON_BN_CLICKED( IDC_DECLNEW_BUTTON_NEW_FILE, OnBnClickedFile )
+ON_BN_CLICKED( IDOK, OnBnClickedOk )
+ON_BN_CLICKED( IDCANCEL, OnBnClickedCancel )
 END_MESSAGE_MAP()
-
 
 // DialogDeclNew message handlers
 
@@ -195,64 +187,61 @@ DialogDeclNew::OnBnClickedFile
 */
 void DialogDeclNew::OnBnClickedFile()
 {
-	CString typeName, folder, ext;
-	idStr path;
+	CString		typeName, folder, ext;
+	idStr		path;
 	const char* errorTitle = "Error selecting file.";
 
-	if( GetSafeComboBoxSelection( &typeList, typeName, -1 ) == -1 )
-	{
+	if( GetSafeComboBoxSelection( &typeList, typeName, -1 ) == -1 ) {
 		MessageBox( "Select a declaration type first.", errorTitle, MB_OK );
 		return;
 	}
 
 	declType_t type = declManager->GetDeclTypeFromName( typeName );
-	if( type >= declManager->GetNumDeclTypes() )
-	{
+	if( type >= declManager->GetNumDeclTypes() ) {
 		MessageBox( "Unknown declaration type.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
-	switch( type )
-	{
+	switch( type ) {
 		case DECL_TABLE:
 			folder = "materials";
-			ext = "(*.mtr)|*.mtr|(*.*)|*.*||";
+			ext	   = "(*.mtr)|*.mtr|(*.*)|*.*||";
 			break;
 		case DECL_MATERIAL:
 			folder = "materials";
-			ext = "(*.mtr)|*.mtr|(*.*)|*.*||";
+			ext	   = "(*.mtr)|*.mtr|(*.*)|*.*||";
 			break;
 		case DECL_SKIN:
 			folder = "skins";
-			ext = "(*.skin)|*.skin|(*.*)|*.*||";
+			ext	   = "(*.skin)|*.skin|(*.*)|*.*||";
 			break;
 		case DECL_SOUND:
 			folder = "sound";
-			ext = "(*.sndshd|*.sndshd|(*.*)|*.*||";
+			ext	   = "(*.sndshd|*.sndshd|(*.*)|*.*||";
 			break;
 		case DECL_ENTITYDEF:
 			folder = "def";
-			ext = "(*.def)|*.def|(*.decl)|*.decl|(*.*)|*.*||";
+			ext	   = "(*.def)|*.def|(*.decl)|*.decl|(*.*)|*.*||";
 			break;
 		case DECL_MODELDEF:
 			folder = "def";
-			ext = "(*.def)|*.def|(*.*)|*.*||";
+			ext	   = "(*.def)|*.def|(*.*)|*.*||";
 			break;
 		case DECL_FX:
 			folder = "fx";
-			ext = "(*.fx)|*.fx|(*.*)|*.*||";
+			ext	   = "(*.fx)|*.fx|(*.*)|*.*||";
 			break;
 		case DECL_PARTICLE:
 			folder = "particles";
-			ext = "(*.prt)|*.prt|(*.*)|*.*||";
+			ext	   = "(*.prt)|*.prt|(*.*)|*.*||";
 			break;
 		case DECL_AF:
 			folder = "af";
-			ext = "(*.af)|*.af|(*.*)|*.*||";
+			ext	   = "(*.af)|*.af|(*.*)|*.*||";
 			break;
 		default:
 			folder = "def";
-			ext = "(*.decl)|*.decl|(*.*)|*.*||";
+			ext	   = "(*.decl)|*.decl|(*.*)|*.*||";
 			break;
 	}
 
@@ -260,8 +249,7 @@ void DialogDeclNew::OnBnClickedFile()
 	path += "\\*";
 
 	CFileDialog dlgFile( TRUE, "decl", path, 0, ext, this );
-	if( dlgFile.DoModal() == IDOK )
-	{
+	if( dlgFile.DoModal() == IDOK ) {
 		path = fileSystem->OSPathToRelativePath( dlgFile.m_ofn.lpstrFile );
 		fileEdit.SetWindowText( path );
 	}
@@ -274,44 +262,38 @@ DialogDeclNew::OnBnClickedOk
 */
 void DialogDeclNew::OnBnClickedOk()
 {
-	CString typeName, declName, fileName;
+	CString		typeName, declName, fileName;
 	const char* errorTitle = "Error creating declaration.";
 
-	if( !declTree )
-	{
+	if( !declTree ) {
 		MessageBox( "No declaration tree available.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
-	if( GetSafeComboBoxSelection( &typeList, typeName, -1 ) == -1 )
-	{
+	if( GetSafeComboBoxSelection( &typeList, typeName, -1 ) == -1 ) {
 		MessageBox( "No declaration type selected.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
 	nameEdit.GetWindowText( declName );
-	if( declName.GetLength() == 0 )
-	{
+	if( declName.GetLength() == 0 ) {
 		MessageBox( "No declaration name specified.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
 	fileEdit.GetWindowText( fileName );
-	if( fileName.GetLength() == 0 )
-	{
+	if( fileName.GetLength() == 0 ) {
 		MessageBox( "No file name specified.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
-	if( declTree->FindItem( idStr( typeName + "/" + declName ) ) )
-	{
+	if( declTree->FindItem( idStr( typeName + "/" + declName ) ) ) {
 		MessageBox( "Declaration already exists.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}
 
 	declType_t type = declManager->GetDeclTypeFromName( typeName );
-	if( type >= declManager->GetNumDeclTypes() )
-	{
+	if( type >= declManager->GetNumDeclTypes() ) {
 		MessageBox( "Unknown declaration type.", errorTitle, MB_OK | MB_ICONERROR );
 		return;
 	}

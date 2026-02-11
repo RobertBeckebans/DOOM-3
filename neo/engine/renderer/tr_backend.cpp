@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -30,10 +31,8 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
-
-frameData_t*		frameData;
-backEndState_t	backEnd;
-
+frameData_t*   frameData;
+backEndState_t backEnd;
 
 /*
 ======================
@@ -43,9 +42,9 @@ This should initialize all GL state that any part of the entire program
 may touch, including the editor.
 ======================
 */
-void RB_SetDefaultGLState()
+void		   RB_SetDefaultGLState()
 {
-	int		i;
+	int i;
 
 	RB_LogComment( "--- R_SetDefaultGLState ---\n" );
 
@@ -80,13 +79,11 @@ void RB_SetDefaultGLState()
 	qglCullFace( GL_FRONT_AND_BACK );
 	qglShadeModel( GL_SMOOTH );
 
-	if( r_useScissor.GetBool() )
-	{
+	if( r_useScissor.GetBool() ) {
 		qglScissor( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
 	}
 
-	for( i = glConfig.maxTextureUnits - 1 ; i >= 0 ; i-- )
-	{
+	for( i = glConfig.maxTextureUnits - 1; i >= 0; i-- ) {
 		GL_SelectTexture( i );
 
 		// object linear texgen is our default
@@ -97,17 +94,14 @@ void RB_SetDefaultGLState()
 
 		GL_TexEnv( GL_MODULATE );
 		qglDisable( GL_TEXTURE_2D );
-		if( glConfig.texture3DAvailable )
-		{
+		if( glConfig.texture3DAvailable ) {
 			qglDisable( GL_TEXTURE_3D );
 		}
-		if( glConfig.cubeMapAvailable )
-		{
+		if( glConfig.cubeMapAvailable ) {
 			qglDisable( GL_TEXTURE_CUBE_MAP_EXT );
 		}
 	}
 }
-
 
 /*
 ====================
@@ -118,8 +112,7 @@ void RB_LogComment( const char* comment, ... )
 {
 	va_list marker;
 
-	if( !tr.logFile )
-	{
+	if( !tr.logFile ) {
 		return;
 	}
 
@@ -129,10 +122,7 @@ void RB_LogComment( const char* comment, ... )
 	va_end( marker );
 }
 
-
 //=============================================================================
-
-
 
 /*
 ====================
@@ -141,13 +131,11 @@ GL_SelectTexture
 */
 void GL_SelectTexture( int unit )
 {
-	if( backEnd.glState.currenttmu == unit )
-	{
+	if( backEnd.glState.currenttmu == unit ) {
 		return;
 	}
 
-	if( unit < 0 || unit >= glConfig.maxTextureUnits && unit >= glConfig.maxTextureImageUnits )
-	{
+	if( unit < 0 || unit >= glConfig.maxTextureUnits && unit >= glConfig.maxTextureImageUnits ) {
 		common->Warning( "GL_SelectTexture: unit = %i", unit );
 		return;
 	}
@@ -159,7 +147,6 @@ void GL_SelectTexture( int unit )
 	backEnd.glState.currenttmu = unit;
 }
 
-
 /*
 ====================
 GL_Cull
@@ -170,41 +157,27 @@ rendered is a mirored view.
 */
 void GL_Cull( int cullType )
 {
-	if( backEnd.glState.faceCulling == cullType )
-	{
+	if( backEnd.glState.faceCulling == cullType ) {
 		return;
 	}
 
-	if( cullType == CT_TWO_SIDED )
-	{
+	if( cullType == CT_TWO_SIDED ) {
 		qglDisable( GL_CULL_FACE );
-	}
-	else
-	{
-		if( backEnd.glState.faceCulling == CT_TWO_SIDED )
-		{
+	} else {
+		if( backEnd.glState.faceCulling == CT_TWO_SIDED ) {
 			qglEnable( GL_CULL_FACE );
 		}
 
-		if( cullType == CT_BACK_SIDED )
-		{
-			if( backEnd.viewDef->isMirror )
-			{
+		if( cullType == CT_BACK_SIDED ) {
+			if( backEnd.viewDef->isMirror ) {
 				qglCullFace( GL_FRONT );
-			}
-			else
-			{
+			} else {
 				qglCullFace( GL_BACK );
 			}
-		}
-		else
-		{
-			if( backEnd.viewDef->isMirror )
-			{
+		} else {
+			if( backEnd.viewDef->isMirror ) {
 				qglCullFace( GL_BACK );
-			}
-			else
-			{
+			} else {
 				qglCullFace( GL_FRONT );
 			}
 		}
@@ -220,18 +193,16 @@ GL_TexEnv
 */
 void GL_TexEnv( int env )
 {
-	tmu_t*	tmu;
+	tmu_t* tmu;
 
 	tmu = &backEnd.glState.tmu[backEnd.glState.currenttmu];
-	if( env == tmu->texEnv )
-	{
+	if( env == tmu->texEnv ) {
 		return;
 	}
 
 	tmu->texEnv = env;
 
-	switch( env )
-	{
+	switch( env ) {
 		case GL_COMBINE_EXT:
 		case GL_MODULATE:
 		case GL_REPLACE:
@@ -267,20 +238,16 @@ This routine is responsible for setting the most commonly changed state
 */
 void GL_State( int stateBits )
 {
-	int	diff;
+	int diff;
 
-	if( !r_useStateCaching.GetBool() || backEnd.glState.forceGlState )
-	{
+	if( !r_useStateCaching.GetBool() || backEnd.glState.forceGlState ) {
 		// make sure everything is set all the time, so we
 		// can see if our delta checking is screwing up
-		diff = -1;
+		diff						 = -1;
 		backEnd.glState.forceGlState = false;
-	}
-	else
-	{
+	} else {
 		diff = stateBits ^ backEnd.glState.glStateBits;
-		if( !diff )
-		{
+		if( !diff ) {
 			return;
 		}
 	}
@@ -288,32 +255,23 @@ void GL_State( int stateBits )
 	//
 	// check depthFunc bits
 	//
-	if( diff & ( GLS_DEPTHFUNC_EQUAL | GLS_DEPTHFUNC_LESS | GLS_DEPTHFUNC_ALWAYS ) )
-	{
-		if( stateBits & GLS_DEPTHFUNC_EQUAL )
-		{
+	if( diff & ( GLS_DEPTHFUNC_EQUAL | GLS_DEPTHFUNC_LESS | GLS_DEPTHFUNC_ALWAYS ) ) {
+		if( stateBits & GLS_DEPTHFUNC_EQUAL ) {
 			qglDepthFunc( GL_EQUAL );
-		}
-		else if( stateBits & GLS_DEPTHFUNC_ALWAYS )
-		{
+		} else if( stateBits & GLS_DEPTHFUNC_ALWAYS ) {
 			qglDepthFunc( GL_ALWAYS );
-		}
-		else
-		{
+		} else {
 			qglDepthFunc( GL_LEQUAL );
 		}
 	}
 
-
 	//
 	// check blend bits
 	//
-	if( diff & ( GLS_SRCBLEND_BITS | GLS_DSTBLEND_BITS ) )
-	{
+	if( diff & ( GLS_SRCBLEND_BITS | GLS_DSTBLEND_BITS ) ) {
 		GLenum srcFactor, dstFactor;
 
-		switch( stateBits & GLS_SRCBLEND_BITS )
-		{
+		switch( stateBits & GLS_SRCBLEND_BITS ) {
 			case GLS_SRCBLEND_ZERO:
 				srcFactor = GL_ZERO;
 				break;
@@ -342,13 +300,12 @@ void GL_State( int stateBits )
 				srcFactor = GL_SRC_ALPHA_SATURATE;
 				break;
 			default:
-				srcFactor = GL_ONE;		// to get warning to shut up
+				srcFactor = GL_ONE; // to get warning to shut up
 				common->Error( "GL_State: invalid src blend state bits\n" );
 				break;
 		}
 
-		switch( stateBits & GLS_DSTBLEND_BITS )
-		{
+		switch( stateBits & GLS_DSTBLEND_BITS ) {
 			case GLS_DSTBLEND_ZERO:
 				dstFactor = GL_ZERO;
 				break;
@@ -374,7 +331,7 @@ void GL_State( int stateBits )
 				dstFactor = GL_ONE_MINUS_DST_ALPHA;
 				break;
 			default:
-				dstFactor = GL_ONE;		// to get warning to shut up
+				dstFactor = GL_ONE; // to get warning to shut up
 				common->Error( "GL_State: invalid dst blend state bits\n" );
 				break;
 		}
@@ -385,14 +342,10 @@ void GL_State( int stateBits )
 	//
 	// check depthmask
 	//
-	if( diff & GLS_DEPTHMASK )
-	{
-		if( stateBits & GLS_DEPTHMASK )
-		{
+	if( diff & GLS_DEPTHMASK ) {
+		if( stateBits & GLS_DEPTHMASK ) {
 			qglDepthMask( GL_FALSE );
-		}
-		else
-		{
+		} else {
 			qglDepthMask( GL_TRUE );
 		}
 	}
@@ -400,9 +353,8 @@ void GL_State( int stateBits )
 	//
 	// check colormask
 	//
-	if( diff & ( GLS_REDMASK | GLS_GREENMASK | GLS_BLUEMASK | GLS_ALPHAMASK ) )
-	{
-		GLboolean		r, g, b, a;
+	if( diff & ( GLS_REDMASK | GLS_GREENMASK | GLS_BLUEMASK | GLS_ALPHAMASK ) ) {
+		GLboolean r, g, b, a;
 		r = ( stateBits & GLS_REDMASK ) ? 0 : 1;
 		g = ( stateBits & GLS_GREENMASK ) ? 0 : 1;
 		b = ( stateBits & GLS_BLUEMASK ) ? 0 : 1;
@@ -413,14 +365,10 @@ void GL_State( int stateBits )
 	//
 	// fill/line mode
 	//
-	if( diff & GLS_POLYMODE_LINE )
-	{
-		if( stateBits & GLS_POLYMODE_LINE )
-		{
+	if( diff & GLS_POLYMODE_LINE ) {
+		if( stateBits & GLS_POLYMODE_LINE ) {
 			qglPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-		}
-		else
-		{
+		} else {
 			qglPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 		}
 	}
@@ -428,10 +376,8 @@ void GL_State( int stateBits )
 	//
 	// alpha test
 	//
-	if( diff & GLS_ATEST_BITS )
-	{
-		switch( stateBits & GLS_ATEST_BITS )
-		{
+	if( diff & GLS_ATEST_BITS ) {
+		switch( stateBits & GLS_ATEST_BITS ) {
 			case 0:
 				qglDisable( GL_ALPHA_TEST );
 				break;
@@ -456,9 +402,6 @@ void GL_State( int stateBits )
 	backEnd.glState.glStateBits = stateBits;
 }
 
-
-
-
 /*
 ============================================================================
 
@@ -478,19 +421,16 @@ void RB_SetGL2D()
 {
 	// set 2D virtual screen size
 	qglViewport( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
-	if( r_useScissor.GetBool() )
-	{
+	if( r_useScissor.GetBool() ) {
 		qglScissor( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
 	}
 	qglMatrixMode( GL_PROJECTION );
 	qglLoadIdentity();
-	qglOrtho( 0, 640, 480, 0, 0, 1 );		// always assume 640x480 virtual coordinates
+	qglOrtho( 0, 640, 480, 0, 0, 1 ); // always assume 640x480 virtual coordinates
 	qglMatrixMode( GL_MODELVIEW );
 	qglLoadIdentity();
 
-	GL_State( GLS_DEPTHFUNC_ALWAYS |
-			  GLS_SRCBLEND_SRC_ALPHA |
-			  GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA );
+	GL_State( GLS_DEPTHFUNC_ALWAYS | GLS_SRCBLEND_SRC_ALPHA | GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA );
 
 	GL_Cull( CT_TWO_SIDED );
 
@@ -498,17 +438,15 @@ void RB_SetGL2D()
 	qglDisable( GL_STENCIL_TEST );
 }
 
-
-
 /*
 =============
 RB_SetBuffer
 
 =============
 */
-static void	RB_SetBuffer( const void* data )
+static void RB_SetBuffer( const void* data )
 {
-	const setBufferCommand_t*	cmd;
+	const setBufferCommand_t* cmd;
 
 	// see which draw buffer we want to render the frame to
 
@@ -521,23 +459,15 @@ static void	RB_SetBuffer( const void* data )
 	// clear screen for debugging
 	// automatically enable this with several other debug tools
 	// that might leave unrendered portions of the screen
-	if( r_clear.GetFloat() || idStr::Length( r_clear.GetString() ) != 1 || r_lockSurfaces.GetBool() || r_singleArea.GetBool() || r_showOverDraw.GetBool() )
-	{
+	if( r_clear.GetFloat() || idStr::Length( r_clear.GetString() ) != 1 || r_lockSurfaces.GetBool() || r_singleArea.GetBool() || r_showOverDraw.GetBool() ) {
 		float c[3];
-		if( sscanf( r_clear.GetString(), "%f %f %f", &c[0], &c[1], &c[2] ) == 3 )
-		{
+		if( sscanf( r_clear.GetString(), "%f %f %f", &c[0], &c[1], &c[2] ) == 3 ) {
 			qglClearColor( c[0], c[1], c[2], 1 );
-		}
-		else if( r_clear.GetInteger() == 2 )
-		{
-			qglClearColor( 0.0f, 0.0f,  0.0f, 1.0f );
-		}
-		else if( r_showOverDraw.GetBool() )
-		{
+		} else if( r_clear.GetInteger() == 2 ) {
+			qglClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
+		} else if( r_showOverDraw.GetBool() ) {
 			qglClearColor( 1.0f, 1.0f, 1.0f, 1.0f );
-		}
-		else
-		{
+		} else {
 			qglClearColor( 0.4f, 0.0f, 0.25f, 1.0f );
 		}
 		qglClear( GL_COLOR_BUFFER_BIT );
@@ -554,26 +484,24 @@ was there.  This is used to test for texture thrashing.
 */
 void RB_ShowImages()
 {
-	int		i;
-	idImage*	image;
-	float	x, y, w, h;
-	int		start, end;
+	int		 i;
+	idImage* image;
+	float	 x, y, w, h;
+	int		 start, end;
 
 	RB_SetGL2D();
 
-	//qglClearColor( 0.2, 0.2, 0.2, 1 );
-	//qglClear( GL_COLOR_BUFFER_BIT );
+	// qglClearColor( 0.2, 0.2, 0.2, 1 );
+	// qglClear( GL_COLOR_BUFFER_BIT );
 
 	qglFinish();
 
 	start = Sys_Milliseconds();
 
-	for( i = 0 ; i < globalImages->images.Num() ; i++ )
-	{
+	for( i = 0; i < globalImages->images.Num(); i++ ) {
 		image = globalImages->images[i];
 
-		if( image->texnum == idImage::TEXTURE_NOT_LOADED && image->partialImage == NULL )
-		{
+		if( image->texnum == idImage::TEXTURE_NOT_LOADED && image->partialImage == NULL ) {
 			continue;
 		}
 
@@ -583,8 +511,7 @@ void RB_ShowImages()
 		y = i / 20 * h;
 
 		// show in proportional size in mode 2
-		if( r_showImages.GetInteger() == 2 )
-		{
+		if( r_showImages.GetInteger() == 2 ) {
 			w *= image->uploadWidth / 512.0f;
 			h *= image->uploadHeight / 512.0f;
 		}
@@ -608,32 +535,28 @@ void RB_ShowImages()
 	common->Printf( "%i msec to draw all images\n", end - start );
 }
 
-
 /*
 =============
 RB_SwapBuffers
 
 =============
 */
-const void	RB_SwapBuffers( const void* data )
+const void RB_SwapBuffers( const void* data )
 {
 	// texture swapping test
-	if( r_showImages.GetInteger() != 0 )
-	{
+	if( r_showImages.GetInteger() != 0 ) {
 		RB_ShowImages();
 	}
 
 	// force a gl sync if requested
-	if( r_finish.GetBool() )
-	{
+	if( r_finish.GetBool() ) {
 		qglFinish();
 	}
 
 	RB_LogComment( "***************** RB_SwapBuffers *****************\n\n\n" );
 
 	// don't flip if drawing to front buffer
-	if( !r_frontBuffer.GetBool() )
-	{
+	if( !r_frontBuffer.GetBool() ) {
 		GLimp_SwapBuffers();
 	}
 }
@@ -645,21 +568,19 @@ RB_CopyRender
 Copy part of the current framebuffer to an image
 =============
 */
-const void	RB_CopyRender( const void* data )
+const void RB_CopyRender( const void* data )
 {
-	const copyRenderCommand_t*	cmd;
+	const copyRenderCommand_t* cmd;
 
 	cmd = ( const copyRenderCommand_t* )data;
 
-	if( r_skipCopyTexture.GetBool() )
-	{
+	if( r_skipCopyTexture.GetBool() ) {
 		return;
 	}
 
 	RB_LogComment( "***************** RB_CopyRender *****************\n" );
 
-	if( cmd->image )
-	{
+	if( cmd->image ) {
 		cmd->image->CopyFramebuffer( cmd->x, cmd->y, cmd->imageWidth, cmd->imageHeight, false );
 	}
 }
@@ -672,14 +593,13 @@ This function will be called syncronously if running without
 smp extensions, or asyncronously by another thread.
 ====================
 */
-int		backEndStartTime, backEndFinishTime;
+int	 backEndStartTime, backEndFinishTime;
 void RB_ExecuteBackEndCommands( const emptyCommand_t* cmds )
 {
 	// r_debugRenderToTexture
-	int	c_draw3d = 0, c_draw2d = 0, c_setBuffers = 0, c_swapBuffers = 0, c_copyRenders = 0;
+	int c_draw3d = 0, c_draw2d = 0, c_setBuffers = 0, c_swapBuffers = 0, c_copyRenders = 0;
 
-	if( cmds->commandId == RC_NOP && !cmds->next )
-	{
+	if( cmds->commandId == RC_NOP && !cmds->next ) {
 		return;
 	}
 
@@ -691,20 +611,15 @@ void RB_ExecuteBackEndCommands( const emptyCommand_t* cmds )
 	// upload any image loads that have completed
 	globalImages->CompleteBackgroundImageLoads();
 
-	for( ; cmds ; cmds = ( const emptyCommand_t* )cmds->next )
-	{
-		switch( cmds->commandId )
-		{
+	for( ; cmds; cmds = ( const emptyCommand_t* )cmds->next ) {
+		switch( cmds->commandId ) {
 			case RC_NOP:
 				break;
 			case RC_DRAW_VIEW:
 				RB_DrawView( cmds );
-				if( ( ( const drawSurfsCommand_t* )cmds )->viewDef->viewEntitys )
-				{
+				if( ( ( const drawSurfsCommand_t* )cmds )->viewDef->viewEntitys ) {
 					c_draw3d++;
-				}
-				else
-				{
+				} else {
 					c_draw2d++;
 				}
 				break;
@@ -732,10 +647,9 @@ void RB_ExecuteBackEndCommands( const emptyCommand_t* cmds )
 
 	// stop rendering on this thread
 	backEndFinishTime = Sys_Milliseconds();
-	backEnd.pc.msec = backEndFinishTime - backEndStartTime;
+	backEnd.pc.msec	  = backEndFinishTime - backEndStartTime;
 
-	if( r_debugRenderToTexture.GetInteger() == 1 )
-	{
+	if( r_debugRenderToTexture.GetInteger() == 1 ) {
 		common->Printf( "3d: %i, 2d: %i, SetBuf: %i, SwpBuf: %i, CpyRenders: %i, CpyFrameBuf: %i\n", c_draw3d, c_draw2d, c_setBuffers, c_swapBuffers, c_copyRenders, backEnd.c_copyFrameBuffer );
 		backEnd.c_copyFrameBuffer = 0;
 	}

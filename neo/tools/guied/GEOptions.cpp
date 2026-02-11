@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,15 +39,15 @@ rvGEOptions::rvGEOptions()
 {
 	// Grid options
 	mGridColor.Set( 0.2f, 0.2f, 1.0f, 1.0f );
-	mGridWidth = 10;
-	mGridHeight = 10;
-	mGridSnap = false;
-	mGridVisible = false;
-	mNavigatorVisible = true;
-	mTransformerVisible = true;
+	mGridWidth			 = 10;
+	mGridHeight			 = 10;
+	mGridSnap			 = false;
+	mGridVisible		 = false;
+	mNavigatorVisible	 = true;
+	mTransformerVisible	 = true;
 	mIgnoreDesktopSelect = true;
-	mStatusBarVisible = true;
-	mPropertiesVisible = true;
+	mStatusBarVisible	 = true;
+	mPropertiesVisible	 = true;
 
 	mWorkspaceColor.Set( 0.0f, 0.0f, 0.0f, 1.0f );
 	mSelectionColor.Set( 0.5f, 0.5f, 1.0f, 1.0f );
@@ -95,8 +96,7 @@ bool rvGEOptions::Save()
 
 	// Custom colors
 	int i;
-	for( i = 0; i < 16; i ++ )
-	{
+	for( i = 0; i < 16; i++ ) {
 		mRegistry.SetLong( va( "customcol%d", i ), mCustomColors[i] );
 	}
 
@@ -112,8 +112,7 @@ Loads previsouly saved options from the registry
 */
 bool rvGEOptions::Load()
 {
-	if( !mRegistry.Load() )
-	{
+	if( !mRegistry.Load() ) {
 		return false;
 	}
 
@@ -121,26 +120,25 @@ bool rvGEOptions::Load()
 	mLastOptionsPage = mRegistry.GetLong( "lastOptionsPage" );
 
 	// Read the grid settings
-	mGridColor = mRegistry.GetVec4( "gridColor" );
-	mGridWidth = mRegistry.GetLong( "gridWidth" );
-	mGridHeight = mRegistry.GetLong( "gridHeight" );
-	mGridSnap  = mRegistry.GetBool( "gridSnap" );
+	mGridColor	 = mRegistry.GetVec4( "gridColor" );
+	mGridWidth	 = mRegistry.GetLong( "gridWidth" );
+	mGridHeight	 = mRegistry.GetLong( "gridHeight" );
+	mGridSnap	 = mRegistry.GetBool( "gridSnap" );
 	mGridVisible = mRegistry.GetBool( "gridVisible" );
 
 	// Tool window states
-	mNavigatorVisible = mRegistry.GetBool( "navigatorVisible" );
-	mPropertiesVisible = mRegistry.GetBool( "PropertiesVisible" );
+	mNavigatorVisible	= mRegistry.GetBool( "navigatorVisible" );
+	mPropertiesVisible	= mRegistry.GetBool( "PropertiesVisible" );
 	mTransformerVisible = mRegistry.GetBool( "transformerVisible" );
-	mStatusBarVisible = mRegistry.GetBool( "statusBarVisible" );
+	mStatusBarVisible	= mRegistry.GetBool( "statusBarVisible" );
 
 	// General stuff
-	mSelectionColor = mRegistry.GetVec4( "selectionColor" );
+	mSelectionColor		 = mRegistry.GetVec4( "selectionColor" );
 	mIgnoreDesktopSelect = mRegistry.GetBool( "ignoreDesktopSelect" );
 
 	// Custom colors
 	int i;
-	for( i = 0; i < 16; i ++ )
-	{
+	for( i = 0; i < 16; i++ ) {
 		mCustomColors[i] = mRegistry.GetLong( va( "customcol%d", i ) );
 	}
 
@@ -156,37 +154,31 @@ Snap the rectangle to the grid
 */
 void rvGEOptions::SnapRectToGrid( idRectangle& rect, bool snapLeft, bool snapTop, bool snapWidth, bool snapHeight )
 {
-	if( snapLeft )
-	{
+	if( snapLeft ) {
 		float offset = ( int )( rect.x + GetGridWidth() / 2 ) / GetGridWidth() * GetGridWidth();
 		offset -= rect.x;
 		rect.x += offset;
 		rect.w -= offset;
 	}
 
-	if( snapWidth )
-	{
+	if( snapWidth ) {
 		float offset = ( int )( rect.x + rect.w + GetGridWidth() / 2 ) / GetGridWidth() * GetGridWidth();
 		offset -= rect.x;
 		offset -= rect.w;
 		rect.w += offset;
 	}
 
-	if( snapTop )
-	{
+	if( snapTop ) {
 		float offset = ( int )( rect.y + GetGridHeight() / 2 ) / GetGridHeight() * GetGridHeight();
 		offset -= rect.y;
 		rect.y += offset;
 		rect.h -= offset;
 	}
 
-	if( snapHeight )
-	{
+	if( snapHeight ) {
 		float offset = ( int )( rect.y + rect.h + GetGridHeight() / 2 ) / GetGridHeight() * GetGridHeight();
 		offset -= rect.y;
 		offset -= rect.h;
 		rect.h += offset;
 	}
 }
-
-

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,26 +39,24 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CTextureBar dialog
 
-
-CTextureBar::CTextureBar()
-	: CDialogBar()
+CTextureBar::CTextureBar() :
+	CDialogBar()
 {
 	//{{AFX_DATA_INIT(CTextureBar)
-	m_nHShift = 0;
-	m_nHScale = 0;
-	m_nRotate = 0;
-	m_nVShift = 0;
-	m_nVScale = 0;
+	m_nHShift	 = 0;
+	m_nHScale	 = 0;
+	m_nRotate	 = 0;
+	m_nVShift	 = 0;
+	m_nVScale	 = 0;
 	m_nRotateAmt = 45;
 	//}}AFX_DATA_INIT
 }
-
 
 void CTextureBar::DoDataExchange( CDataExchange* pDX )
 {
@@ -77,18 +76,17 @@ void CTextureBar::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CTextureBar, CDialogBar )
-	//{{AFX_MSG_MAP(CTextureBar)
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_HSHIFT, OnDeltaposSpinHshift )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_VSHIFT, OnDeltaposSpinVshift )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_HSCALE, OnDeltaposSpinHScale )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_VSCALE, OnDeltaposSpinVScale )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_ROTATE, OnDeltaposSpinRotate )
-	ON_COMMAND( ID_SELECTION_PRINT, OnSelectionPrint )
-	ON_WM_CREATE()
-	ON_BN_CLICKED( IDC_BTN_APPLYTEXTURESTUFF, OnBtnApplytexturestuff )
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CTextureBar)
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_HSHIFT, OnDeltaposSpinHshift )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_VSHIFT, OnDeltaposSpinVshift )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_HSCALE, OnDeltaposSpinHScale )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_VSCALE, OnDeltaposSpinVScale )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_ROTATE, OnDeltaposSpinRotate )
+ON_COMMAND( ID_SELECTION_PRINT, OnSelectionPrint )
+ON_WM_CREATE()
+ON_BN_CLICKED( IDC_BTN_APPLYTEXTURESTUFF, OnBtnApplytexturestuff )
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,14 +95,11 @@ END_MESSAGE_MAP()
 void CTextureBar::OnDeltaposSpinHshift( NMHDR* pNMHDR, LRESULT* pResult )
 {
 	NM_UPDOWN* pNMUpDown = ( NM_UPDOWN* )pNMHDR;
-	*pResult = 0;
+	*pResult			 = 0;
 
-	if( pNMUpDown->iDelta < 0 )
-	{
+	if( pNMUpDown->iDelta < 0 ) {
 		Select_ShiftTexture( abs( g_qeglobals.d_savedinfo.m_nTextureTweak ), 0 );
-	}
-	else
-	{
+	} else {
 		Select_ShiftTexture( -abs( g_qeglobals.d_savedinfo.m_nTextureTweak ), 0 );
 	}
 	GetSurfaceAttributes();
@@ -116,12 +111,9 @@ void CTextureBar::OnDeltaposSpinVshift( NMHDR* pNMHDR, LRESULT* pResult )
 	// TODO: Add your control notification handler code here
 
 	*pResult = 0;
-	if( pNMUpDown->iDelta < 0 )
-	{
+	if( pNMUpDown->iDelta < 0 ) {
 		Select_ShiftTexture( 0, abs( g_qeglobals.d_savedinfo.m_nTextureTweak ) );
-	}
-	else
-	{
+	} else {
 		Select_ShiftTexture( 0, -abs( g_qeglobals.d_savedinfo.m_nTextureTweak ) );
 	}
 	GetSurfaceAttributes();
@@ -133,13 +125,10 @@ void CTextureBar::OnDeltaposSpinHScale( NMHDR* pNMHDR, LRESULT* pResult )
 	// TODO: Add your control notification handler code here
 
 	*pResult = 0;
-	if( pNMUpDown->iDelta < 0 )
-	{
+	if( pNMUpDown->iDelta < 0 ) {
 		Select_ScaleTexture( ( float )abs( g_qeglobals.d_savedinfo.m_nTextureTweak ), 0 );
-	}
-	else
-	{
-		Select_ScaleTexture( ( float ) - abs( g_qeglobals.d_savedinfo.m_nTextureTweak ), 0 );
+	} else {
+		Select_ScaleTexture( ( float )-abs( g_qeglobals.d_savedinfo.m_nTextureTweak ), 0 );
 	}
 	GetSurfaceAttributes();
 }
@@ -150,13 +139,10 @@ void CTextureBar::OnDeltaposSpinVScale( NMHDR* pNMHDR, LRESULT* pResult )
 	// TODO: Add your control notification handler code here
 
 	*pResult = 0;
-	if( pNMUpDown->iDelta < 0 )
-	{
+	if( pNMUpDown->iDelta < 0 ) {
 		Select_ScaleTexture( 0, ( float )abs( g_qeglobals.d_savedinfo.m_nTextureTweak ) );
-	}
-	else
-	{
-		Select_ScaleTexture( 0, ( float ) - abs( g_qeglobals.d_savedinfo.m_nTextureTweak ) );
+	} else {
+		Select_ScaleTexture( 0, ( float )-abs( g_qeglobals.d_savedinfo.m_nTextureTweak ) );
 	}
 	GetSurfaceAttributes();
 }
@@ -164,35 +150,28 @@ void CTextureBar::OnDeltaposSpinVScale( NMHDR* pNMHDR, LRESULT* pResult )
 void CTextureBar::OnDeltaposSpinRotate( NMHDR* pNMHDR, LRESULT* pResult )
 {
 	NM_UPDOWN* pNMUpDown = ( NM_UPDOWN* )pNMHDR;
-	*pResult = 0;
+	*pResult			 = 0;
 	UpdateData( TRUE );
-	if( pNMUpDown->iDelta < 0 )
-	{
+	if( pNMUpDown->iDelta < 0 ) {
 		Select_RotateTexture( abs( m_nRotateAmt ) );
-	}
-	else
-	{
+	} else {
 		Select_RotateTexture( -abs( m_nRotateAmt ) );
 	}
 	GetSurfaceAttributes();
 }
 
-
 void CTextureBar::OnSelectionPrint()
 {
 	// TODO: Add your command handler code here
-
 }
 
 int CTextureBar::OnCreate( LPCREATESTRUCT lpCreateStruct )
 {
-	if( CDialogBar::OnCreate( lpCreateStruct ) == -1 )
-	{
+	if( CDialogBar::OnCreate( lpCreateStruct ) == -1 ) {
 		return -1;
 	}
 	return 0;
 }
-
 
 void CTextureBar::OnBtnApplytexturestuff()
 {
@@ -203,8 +182,7 @@ void CTextureBar::GetSurfaceAttributes()
 {
 	texdef_t* pt = ( g_ptrSelectedFaces.GetSize() > 0 ) ? &( reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( 0 ) ) )->texdef : &g_qeglobals.d_texturewin.texdef;
 
-	if( pt )
-	{
+	if( pt ) {
 		m_nHShift = pt->shift[0];
 		m_nVShift = pt->shift[1];
 		m_nHScale = pt->scale[0];
@@ -217,13 +195,11 @@ void CTextureBar::GetSurfaceAttributes()
 //++timo implement brush primitive here
 void CTextureBar::SetSurfaceAttributes()
 {
-	if( g_ptrSelectedFaces.GetSize() > 0 )
-	{
-		if( g_qeglobals.m_bBrushPrimitMode )
-		{
+	if( g_ptrSelectedFaces.GetSize() > 0 ) {
+		if( g_qeglobals.m_bBrushPrimitMode ) {
 			common->Printf( "Warning : brush primitive mode not implemented in CTextureBar" );
 		}
-		face_t* selFace = reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( 0 ) );
+		face_t*	  selFace = reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( 0 ) );
 
 		texdef_t* pt = &selFace->texdef;
 		UpdateData( TRUE );
@@ -231,7 +207,7 @@ void CTextureBar::SetSurfaceAttributes()
 		pt->shift[1] = m_nVShift;
 		pt->scale[0] = m_nHScale;
 		pt->scale[1] = m_nVScale;
-		pt->rotate = m_nRotate;
+		pt->rotate	 = m_nRotate;
 		Sys_UpdateWindows( W_CAMERA );
 	}
 }

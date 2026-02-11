@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -50,7 +51,7 @@ void R_SurfaceToTextureAxis( const srfTriangles_t* tri, idVec3& origin, idVec3 a
 {
 	float		area, inva;
 	float		d0[5], d1[5];
-	idDrawVert*	a, *b, *c;
+	idDrawVert *a, *b, *c;
 	float		bounds[2][2];
 	float		boundsOrg[2];
 	int			i, j;
@@ -59,17 +60,13 @@ void R_SurfaceToTextureAxis( const srfTriangles_t* tri, idVec3& origin, idVec3 a
 	// find the bounds of the texture
 	bounds[0][0] = bounds[0][1] = 999999;
 	bounds[1][0] = bounds[1][1] = -999999;
-	for( i = 0 ; i < tri->numVerts ; i++ )
-	{
-		for( j = 0 ; j < 2 ; j++ )
-		{
+	for( i = 0; i < tri->numVerts; i++ ) {
+		for( j = 0; j < 2; j++ ) {
 			v = tri->verts[i].st[j];
-			if( v < bounds[0][j] )
-			{
+			if( v < bounds[0][j] ) {
 				bounds[0][j] = v;
 			}
-			if( v > bounds[1][j] )
-			{
+			if( v > bounds[1][j] ) {
 				bounds[1][j] = v;
 			}
 		}
@@ -80,7 +77,6 @@ void R_SurfaceToTextureAxis( const srfTriangles_t* tri, idVec3& origin, idVec3 a
 	// from throwing it an entire cycle off
 	boundsOrg[0] = floor( ( bounds[0][0] + bounds[1][0] ) * 0.5 );
 	boundsOrg[1] = floor( ( bounds[0][1] + bounds[1][1] ) * 0.5 );
-
 
 	// determine the world S and T vectors from the first drawSurf triangle
 	a = tri->verts + tri->indexes[0];
@@ -95,12 +91,11 @@ void R_SurfaceToTextureAxis( const srfTriangles_t* tri, idVec3& origin, idVec3 a
 	d1[4] = c->st[1] - a->st[1];
 
 	area = d0[3] * d1[4] - d0[4] * d1[3];
-	if( area == 0.0 )
-	{
+	if( area == 0.0 ) {
 		axis[0].Zero();
 		axis[1].Zero();
 		axis[2].Zero();
-		return;	// degenerate
+		return; // degenerate
 	}
 	inva = 1.0 / area;
 
@@ -133,17 +128,15 @@ call the GUI generator to create quads for it.
 */
 void R_RenderGuiSurf( idUserInterface* gui, drawSurf_t* drawSurf )
 {
-	idVec3	origin, axis[3];
+	idVec3 origin, axis[3];
 
 	// for testing the performance hit
-	if( r_skipGuiShaders.GetInteger() == 1 )
-	{
+	if( r_skipGuiShaders.GetInteger() == 1 ) {
 		return;
 	}
 
 	// don't allow an infinite recursion loop
-	if( tr.guiRecursionLevel == 4 )
-	{
+	if( tr.guiRecursionLevel == 4 ) {
 		return;
 	}
 
@@ -152,31 +145,30 @@ void R_RenderGuiSurf( idUserInterface* gui, drawSurf_t* drawSurf )
 	// create the new matrix to draw on this surface
 	R_SurfaceToTextureAxis( drawSurf->geo, origin, axis );
 
-	float	guiModelMatrix[16];
-	float	modelMatrix[16];
+	float guiModelMatrix[16];
+	float modelMatrix[16];
 
-	guiModelMatrix[0] = axis[0][0] / 640.0;
-	guiModelMatrix[4] = axis[1][0] / 480.0;
-	guiModelMatrix[8] = axis[2][0];
+	guiModelMatrix[0]  = axis[0][0] / 640.0;
+	guiModelMatrix[4]  = axis[1][0] / 480.0;
+	guiModelMatrix[8]  = axis[2][0];
 	guiModelMatrix[12] = origin[0];
 
-	guiModelMatrix[1] = axis[0][1] / 640.0;
-	guiModelMatrix[5] = axis[1][1] / 480.0;
-	guiModelMatrix[9] = axis[2][1];
+	guiModelMatrix[1]  = axis[0][1] / 640.0;
+	guiModelMatrix[5]  = axis[1][1] / 480.0;
+	guiModelMatrix[9]  = axis[2][1];
 	guiModelMatrix[13] = origin[1];
 
-	guiModelMatrix[2] = axis[0][2] / 640.0;
-	guiModelMatrix[6] = axis[1][2] / 480.0;
+	guiModelMatrix[2]  = axis[0][2] / 640.0;
+	guiModelMatrix[6]  = axis[1][2] / 480.0;
 	guiModelMatrix[10] = axis[2][2];
 	guiModelMatrix[14] = origin[2];
 
-	guiModelMatrix[3] = 0;
-	guiModelMatrix[7] = 0;
+	guiModelMatrix[3]  = 0;
+	guiModelMatrix[7]  = 0;
 	guiModelMatrix[11] = 0;
 	guiModelMatrix[15] = 1;
 
-	myGlMultMatrix( guiModelMatrix, drawSurf->space->modelMatrix,
-					modelMatrix );
+	myGlMultMatrix( guiModelMatrix, drawSurf->space->modelMatrix, modelMatrix );
 
 	tr.guiRecursionLevel++;
 
@@ -188,9 +180,6 @@ void R_RenderGuiSurf( idUserInterface* gui, drawSurf_t* drawSurf )
 
 	tr.guiRecursionLevel--;
 }
-
-
-
 
 /*
 ================,
@@ -207,13 +196,10 @@ void R_ReloadGuis_f( const idCmdArgs& args )
 {
 	bool all;
 
-	if( !idStr::Icmp( args.Argv( 1 ), "all" ) )
-	{
+	if( !idStr::Icmp( args.Argv( 1 ), "all" ) ) {
 		all = true;
 		common->Printf( "Reloading all gui files...\n" );
-	}
-	else
-	{
+	} else {
 		all = false;
 		common->Printf( "Checking for changed gui files...\n" );
 	}

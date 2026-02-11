@@ -31,8 +31,7 @@
 #define VE_MINSTRETCH 2   /* a bit less than short block */
 #define VE_MAXSTRETCH 12  /* one-third full block */
 
-typedef struct
-{
+typedef struct {
 	float ampbuf[VE_AMP];
 	int   ampptr;
 
@@ -43,16 +42,14 @@ typedef struct
 
 } envelope_filter_state;
 
-typedef struct
-{
+typedef struct {
 	int begin;
 	int end;
 	float* window;
 	float total;
 } envelope_band;
 
-typedef struct
-{
+typedef struct {
 	int ch;
 	int winlength;
 	int searchstep;

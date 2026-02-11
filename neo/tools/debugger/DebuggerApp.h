@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -54,32 +55,29 @@ const int MAX_MSGLEN = 1400;
 class rvDebuggerApp
 {
 public:
-
 	rvDebuggerApp();
 
-	bool				Initialize( HINSTANCE hInstance );
-	int					Run();
+	bool			   Initialize( HINSTANCE hInstance );
+	int				   Run();
 
-	rvRegistryOptions&	GetOptions();
-	rvDebuggerClient&	GetClient();
-	rvDebuggerWindow&	GetWindow();
+	rvRegistryOptions& GetOptions();
+	rvDebuggerClient&  GetClient();
+	rvDebuggerWindow&  GetWindow();
 
-	HINSTANCE			GetInstance();
+	HINSTANCE		   GetInstance();
 
-	bool				TranslateAccelerator( LPMSG msg );
+	bool			   TranslateAccelerator( LPMSG msg );
 
 protected:
-
-	rvRegistryOptions	mOptions;
-	rvDebuggerWindow*	mDebuggerWindow;
-	HINSTANCE			mInstance;
-	rvDebuggerClient	mClient;
-	HACCEL				mAccelerators;
+	rvRegistryOptions mOptions;
+	rvDebuggerWindow* mDebuggerWindow;
+	HINSTANCE		  mInstance;
+	rvDebuggerClient  mClient;
+	HACCEL			  mAccelerators;
 
 private:
-
-	bool	ProcessNetMessages();
-	bool	ProcessWindowMessages();
+	bool ProcessNetMessages();
+	bool ProcessWindowMessages();
 };
 
 ID_INLINE HINSTANCE rvDebuggerApp::GetInstance()

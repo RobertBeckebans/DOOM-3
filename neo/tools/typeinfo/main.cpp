@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -32,11 +33,11 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "TypeInfoGen.h"
 
-idSession* 			session = NULL;
-idDeclManager* 		declManager = NULL;
-idEventLoop* 		eventLoop = NULL;
+idSession*	   session	   = NULL;
+idDeclManager* declManager = NULL;
+idEventLoop*   eventLoop   = NULL;
 
-int idEventLoop::JournalLevel() const
+int			   idEventLoop::JournalLevel() const
 {
 	return 0;
 }
@@ -49,66 +50,99 @@ int idEventLoop::JournalLevel() const
 ==============================================================
 */
 
-#define STDIO_PRINT( pre, post )	\
-	va_list argptr;					\
-	va_start( argptr, fmt );		\
-	printf( pre );					\
-	vprintf( fmt, argptr );			\
-	printf( post );					\
+#define STDIO_PRINT( pre, post ) \
+	va_list argptr;              \
+	va_start( argptr, fmt );     \
+	printf( pre );               \
+	vprintf( fmt, argptr );      \
+	printf( post );              \
 	va_end( argptr )
-
 
 class idCommonLocal : public idCommon
 {
 public:
-	idCommonLocal() {}
+	idCommonLocal()
+	{
+	}
 
-	virtual void			Init( int argc, const char** argv, const char* cmdline ) {}
-	virtual void			Shutdown() {}
-	virtual void			Quit() {}
-	virtual bool			IsInitialized() const
+	virtual void Init( int argc, const char** argv, const char* cmdline )
+	{
+	}
+	virtual void Shutdown()
+	{
+	}
+	virtual void Quit()
+	{
+	}
+	virtual bool IsInitialized() const
 	{
 		return true;
 	}
-	virtual void			Frame() {}
-	virtual void			GUIFrame( bool execCmd, bool network ) {}
-	virtual void			Async() {}
-	virtual void			StartupVariable( const char* match, bool once ) {}
-	virtual void			InitTool( const toolFlag_t tool, const idDict* dict ) {}
-	virtual void			ActivateTool( bool active ) {}
-	virtual void			WriteConfigToFile( const char* filename ) {}
-	virtual void			WriteFlaggedCVarsToFile( const char* filename, int flags, const char* setCmd ) {}
-	virtual void			BeginRedirect( char* buffer, int buffersize, void ( *flush )( const char* ) ) {}
-	virtual void			EndRedirect() {}
-	virtual void			SetRefreshOnPrint( bool set ) {}
-	virtual void			Printf( const char* fmt, ... )
+	virtual void Frame()
+	{
+	}
+	virtual void GUIFrame( bool execCmd, bool network )
+	{
+	}
+	virtual void Async()
+	{
+	}
+	virtual void StartupVariable( const char* match, bool once )
+	{
+	}
+	virtual void InitTool( const toolFlag_t tool, const idDict* dict )
+	{
+	}
+	virtual void ActivateTool( bool active )
+	{
+	}
+	virtual void WriteConfigToFile( const char* filename )
+	{
+	}
+	virtual void WriteFlaggedCVarsToFile( const char* filename, int flags, const char* setCmd )
+	{
+	}
+	virtual void BeginRedirect( char* buffer, int buffersize, void ( *flush )( const char* ) )
+	{
+	}
+	virtual void EndRedirect()
+	{
+	}
+	virtual void SetRefreshOnPrint( bool set )
+	{
+	}
+	virtual void Printf( const char* fmt, ... )
 	{
 		STDIO_PRINT( "", "" );
 	}
-	virtual void			VPrintf( const char* fmt, va_list arg )
+	virtual void VPrintf( const char* fmt, va_list arg )
 	{
 		vprintf( fmt, arg );
 	}
-	virtual void			DPrintf( const char* fmt, ... )
+	virtual void DPrintf( const char* fmt, ... )
 	{
 		/*STDIO_PRINT( "", "" );*/
 	}
-	virtual void			Warning( const char* fmt, ... )
+	virtual void Warning( const char* fmt, ... )
 	{
 		STDIO_PRINT( "WARNING: ", "\n" );
 	}
-	virtual void			DWarning( const char* fmt, ... )
+	virtual void DWarning( const char* fmt, ... )
 	{
 		/*STDIO_PRINT( "WARNING: ", "\n" );*/
 	}
-	virtual void			PrintWarnings() {}
-	virtual void			ClearWarnings( const char* reason ) {}
-	virtual void			Error( const char* fmt, ... )
+	virtual void PrintWarnings()
+	{
+	}
+	virtual void ClearWarnings( const char* reason )
+	{
+	}
+	virtual void Error( const char* fmt, ... )
 	{
 		STDIO_PRINT( "ERROR: ", "\n" );
 		exit( 0 );
 	}
-	virtual void			FatalError( const char* fmt, ... )
+	virtual void FatalError( const char* fmt, ... )
 	{
 		STDIO_PRINT( "FATAL ERROR: ", "\n" );
 		exit( 0 );
@@ -117,28 +151,28 @@ public:
 	{
 		return NULL;
 	}
-	virtual const char* 	KeysFromBinding( const char* bind )
+	virtual const char* KeysFromBinding( const char* bind )
 	{
 		return NULL;
 	}
-	virtual const char* 	BindingFromKey( const char* key )
+	virtual const char* BindingFromKey( const char* key )
 	{
 		return NULL;
 	}
-	virtual int				ButtonState( int key )
+	virtual int ButtonState( int key )
 	{
 		return 0;
 	}
-	virtual int				KeyState( int key )
+	virtual int KeyState( int key )
 	{
 		return 0;
 	}
 };
 
-idCVar com_developer( "developer", "0", CVAR_BOOL | CVAR_SYSTEM, "developer mode" );
+idCVar		  com_developer( "developer", "0", CVAR_BOOL | CVAR_SYSTEM, "developer mode" );
 
-idCommonLocal		commonLocal;
-idCommon* 			common = &commonLocal;
+idCommonLocal commonLocal;
+idCommon*	  common = &commonLocal;
 
 /*
 ==============================================================
@@ -148,16 +182,18 @@ idCommon* 			common = &commonLocal;
 ==============================================================
 */
 
-void			Sys_Mkdir( const char* path ) {}
-ID_TIME_T			Sys_FileTimeStamp( FILE* fp )
+void		  Sys_Mkdir( const char* path )
+{
+}
+ID_TIME_T Sys_FileTimeStamp( FILE* fp )
 {
 	return 0;
 }
 
 #ifdef _WIN32
 
-#include <io.h>
-#include <direct.h>
+	#include <io.h>
+	#include <direct.h>
 
 const char* Sys_Cwd()
 {
@@ -167,8 +203,7 @@ const char* Sys_Cwd()
 	cwd[sizeof( cwd ) - 1] = 0;
 
 	int i = idStr::FindText( cwd, CD_BASEDIR, false );
-	if( i >= 0 )
-	{
+	if( i >= 0 ) {
 		cwd[i + strlen( CD_BASEDIR )] = '\0';
 	}
 
@@ -197,24 +232,20 @@ const char* Sys_EXEPath()
 
 int Sys_ListFiles( const char* directory, const char* extension, idStrList& list )
 {
-	idStr		search;
+	idStr			   search;
 	struct _finddata_t findinfo;
-	int			findhandle;
-	int			flag;
+	int				   findhandle;
+	int				   flag;
 
-	if( !extension )
-	{
+	if( !extension ) {
 		extension = "";
 	}
 
 	// passing a slash as extension will find directories
-	if( extension[0] == '/' && extension[1] == 0 )
-	{
+	if( extension[0] == '/' && extension[1] == 0 ) {
 		extension = "";
-		flag = 0;
-	}
-	else
-	{
+		flag	  = 0;
+	} else {
 		flag = _A_SUBDIR;
 	}
 
@@ -224,19 +255,15 @@ int Sys_ListFiles( const char* directory, const char* extension, idStrList& list
 	list.Clear();
 
 	findhandle = _findfirst( search, &findinfo );
-	if( findhandle == -1 )
-	{
+	if( findhandle == -1 ) {
 		return -1;
 	}
 
-	do
-	{
-		if( flag ^ ( findinfo.attrib & _A_SUBDIR ) )
-		{
+	do {
+		if( flag ^ ( findinfo.attrib & _A_SUBDIR ) ) {
 			list.Append( findinfo.name );
 		}
-	}
-	while( _findnext( findhandle, &findinfo ) != -1 );
+	} while( _findnext( findhandle, &findinfo ) != -1 );
 
 	_findclose( findhandle );
 
@@ -245,127 +272,158 @@ int Sys_ListFiles( const char* directory, const char* extension, idStrList& list
 
 #else
 
-const char* 	Sys_DefaultCDPath()
+const char* Sys_DefaultCDPath()
 {
 	return "";
 }
-const char* 	Sys_DefaultBasePath()
+const char* Sys_DefaultBasePath()
 {
 	return "";
 }
-const char* 	Sys_DefaultSavePath()
+const char* Sys_DefaultSavePath()
 {
 	return "";
 }
-int				Sys_ListFiles( const char* directory, const char* extension, idStrList& list )
+int Sys_ListFiles( const char* directory, const char* extension, idStrList& list )
 {
 	return 0;
 }
 
 #endif
 
-xthreadInfo* 	g_threads[MAX_THREADS];
-int				g_thread_count;
+xthreadInfo* g_threads[MAX_THREADS];
+int			 g_thread_count;
 
-void			Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority, xthreadInfo& info, const char* name, xthreadInfo* threads[MAX_THREADS], int* thread_count ) {}
-void			Sys_DestroyThread( xthreadInfo& info ) {}
+void		 Sys_CreateThread( xthread_t function, void* parms, xthreadPriority priority, xthreadInfo& info, const char* name, xthreadInfo* threads[MAX_THREADS], int* thread_count )
+{
+}
+void Sys_DestroyThread( xthreadInfo& info )
+{
+}
 
-void			Sys_EnterCriticalSection( int index ) {}
-void			Sys_LeaveCriticalSection( int index ) {}
+void Sys_EnterCriticalSection( int index )
+{
+}
+void Sys_LeaveCriticalSection( int index )
+{
+}
 
-void			Sys_WaitForEvent( int index ) {}
-void			Sys_TriggerEvent( int index ) {}
+void Sys_WaitForEvent( int index )
+{
+}
+void Sys_TriggerEvent( int index )
+{
+}
 
 /*
 ==============
 idSysLocal stub
 ==============
 */
-void			idSysLocal::DebugPrintf( const char* fmt, ... ) {}
-void			idSysLocal::DebugVPrintf( const char* fmt, va_list arg ) {}
+void idSysLocal::DebugPrintf( const char* fmt, ... )
+{
+}
+void idSysLocal::DebugVPrintf( const char* fmt, va_list arg )
+{
+}
 
-double			idSysLocal::GetClockTicks()
+double idSysLocal::GetClockTicks()
 {
 	return 0.0;
 }
-double			idSysLocal::ClockTicksPerSecond()
+double idSysLocal::ClockTicksPerSecond()
 {
 	return 1.0;
 }
-cpuid_t			idSysLocal::GetProcessorId()
+cpuid_t idSysLocal::GetProcessorId()
 {
 	return ( cpuid_t )0;
 }
-const char* 	idSysLocal::GetProcessorString()
+const char* idSysLocal::GetProcessorString()
 {
 	return "";
 }
-const char* 	idSysLocal::FPU_GetState()
+const char* idSysLocal::FPU_GetState()
 {
 	return "";
 }
-bool			idSysLocal::FPU_StackIsEmpty()
+bool idSysLocal::FPU_StackIsEmpty()
 {
 	return true;
 }
-void			idSysLocal::FPU_SetFTZ( bool enable ) {}
-void			idSysLocal::FPU_SetDAZ( bool enable ) {}
+void idSysLocal::FPU_SetFTZ( bool enable )
+{
+}
+void idSysLocal::FPU_SetDAZ( bool enable )
+{
+}
 
-bool			idSysLocal::LockMemory( void* ptr, int bytes )
+bool idSysLocal::LockMemory( void* ptr, int bytes )
 {
 	return false;
 }
-bool			idSysLocal::UnlockMemory( void* ptr, int bytes )
+bool idSysLocal::UnlockMemory( void* ptr, int bytes )
 {
 	return false;
 }
 
-void			idSysLocal::GetCallStack( address_t* callStack, const int callStackSize )
+void idSysLocal::GetCallStack( address_t* callStack, const int callStackSize )
 {
 	memset( callStack, 0, callStackSize * sizeof( callStack[0] ) );
 }
-const char* 	idSysLocal::GetCallStackStr( const address_t* callStack, const int callStackSize )
+const char* idSysLocal::GetCallStackStr( const address_t* callStack, const int callStackSize )
 {
 	return "";
 }
-const char* 	idSysLocal::GetCallStackCurStr( int depth )
+const char* idSysLocal::GetCallStackCurStr( int depth )
 {
 	return "";
 }
-void			idSysLocal::ShutdownSymbols() {}
+void idSysLocal::ShutdownSymbols()
+{
+}
 
-int				idSysLocal::DLL_Load( const char* dllName )
+int idSysLocal::DLL_Load( const char* dllName )
 {
 	return 0;
 }
-void* 			idSysLocal::DLL_GetProcAddress( int dllHandle, const char* procName )
+void* idSysLocal::DLL_GetProcAddress( int dllHandle, const char* procName )
 {
 	return NULL;
 }
-void			idSysLocal::DLL_Unload( int dllHandle ) { }
-void			idSysLocal::DLL_GetFileName( const char* baseName, char* dllName, int maxLength ) { }
+void idSysLocal::DLL_Unload( int dllHandle )
+{
+}
+void idSysLocal::DLL_GetFileName( const char* baseName, char* dllName, int maxLength )
+{
+}
 
-sysEvent_t		idSysLocal::GenerateMouseButtonEvent( int button, bool down )
+sysEvent_t idSysLocal::GenerateMouseButtonEvent( int button, bool down )
 {
 	sysEvent_t ev;
 	memset( &ev, 0, sizeof( ev ) );
 	return ev;
 }
-sysEvent_t		idSysLocal::GenerateMouseMoveEvent( int deltax, int deltay )
+sysEvent_t idSysLocal::GenerateMouseMoveEvent( int deltax, int deltay )
 {
 	sysEvent_t ev;
 	memset( &ev, 0, sizeof( ev ) );
 	return ev;
 }
 
-void			idSysLocal::OpenURL( const char* url, bool quit ) { }
-void			idSysLocal::StartProcess( const char* exeName, bool quit ) { }
+void idSysLocal::OpenURL( const char* url, bool quit )
+{
+}
+void idSysLocal::StartProcess( const char* exeName, bool quit )
+{
+}
 
-void			idSysLocal::FPU_EnableExceptions( int exceptions ) { }
+void idSysLocal::FPU_EnableExceptions( int exceptions )
+{
+}
 
-idSysLocal		sysLocal;
-idSys* 			sys = &sysLocal;
-
+idSysLocal sysLocal;
+idSys*	   sys = &sysLocal;
 
 /*
 ==============================================================
@@ -375,15 +433,15 @@ idSys* 			sys = &sysLocal;
 ==============================================================
 */
 
-int main( int argc, char** argv )
+int		   main( int argc, char** argv )
 {
-	idStr fileName, sourcePath;
+	idStr		   fileName, sourcePath;
 	idTypeInfoGen* generator;
 
-	idLib::common = common;
+	idLib::common	  = common;
 	idLib::cvarSystem = cvarSystem;
 	idLib::fileSystem = fileSystem;
-	idLib::sys = sys;
+	idLib::sys		  = sys;
 
 	idLib::Init();
 	cmdSystem->Init();
@@ -393,33 +451,23 @@ int main( int argc, char** argv )
 
 	generator = new idTypeInfoGen;
 
-	if( argc > 1 )
-	{
-		sourcePath = idStr( "../"SOURCE_CODE_BASE_FOLDER"/" ) + argv[1];
-	}
-	else
-	{
-		sourcePath = "../"SOURCE_CODE_BASE_FOLDER"/game";
+	if( argc > 1 ) {
+		sourcePath = idStr( "../" SOURCE_CODE_BASE_FOLDER "/" ) + argv[1];
+	} else {
+		sourcePath = "../" SOURCE_CODE_BASE_FOLDER "/game";
 	}
 
-	if( argc > 2 )
-	{
-		fileName = idStr( "../"SOURCE_CODE_BASE_FOLDER"/" ) + argv[2];
-	}
-	else
-	{
-		fileName = "../"SOURCE_CODE_BASE_FOLDER"/game/gamesys/GameTypeInfo.h";
+	if( argc > 2 ) {
+		fileName = idStr( "../" SOURCE_CODE_BASE_FOLDER "/" ) + argv[2];
+	} else {
+		fileName = "../" SOURCE_CODE_BASE_FOLDER "/game/gamesys/GameTypeInfo.h";
 	}
 
-	if( argc > 3 )
-	{
-		for( int i = 3; i < argc; i++ )
-		{
+	if( argc > 3 ) {
+		for( int i = 3; i < argc; i++ ) {
 			generator->AddDefine( argv[i] );
 		}
-	}
-	else
-	{
+	} else {
 		generator->AddDefine( "__cplusplus" );
 		generator->AddDefine( "GAME_DLL" );
 		generator->AddDefine( "ID_TYPEINFO" );

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,9 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 
 // CGetString dialog
 
-
-CGetString::CGetString( LPCSTR pPrompt, CString* pFeedback, CWnd* pParent /*=NULL*/ )
-	: CDialog( CGetString::IDD, pParent )
+CGetString::CGetString( LPCSTR pPrompt, CString* pFeedback, CWnd* pParent /*=NULL*/ ) :
+	CDialog( CGetString::IDD, pParent )
 {
 	m_strEditBox = _T( "" );
 
@@ -61,16 +61,14 @@ BOOL CGetString::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	GetDlgItem( IDC_PROMPT )->SetWindowText( m_pPrompt );
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 BEGIN_MESSAGE_MAP( CGetString, CDialog )
-	//{{AFX_MSG_MAP(CGetString)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CGetString)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
-
 
 void CGetString::OnOK()
 {
@@ -81,16 +79,14 @@ void CGetString::OnOK()
 	CDialog::OnOK();
 }
 
-
 // returns NULL if CANCEL, else input string
 //
 LPCSTR GetString( LPCSTR psPrompt )
 {
 	static CString strReturn;
 
-	CGetString Input( psPrompt, &strReturn );
-	if( Input.DoModal() == IDOK )
-	{
+	CGetString	   Input( psPrompt, &strReturn );
+	if( Input.DoModal() == IDOK ) {
 		strReturn.TrimLeft();
 		strReturn.TrimRight();
 
@@ -100,11 +96,9 @@ LPCSTR GetString( LPCSTR psPrompt )
 	return NULL;
 }
 
-
 bool GetYesNo( const char* psQuery )
 {
-	if( MessageBox( g_pParentWnd->GetSafeHwnd(), psQuery, "Query", MB_YESNO | MB_ICONWARNING ) == IDYES )
-	{
+	if( MessageBox( g_pParentWnd->GetSafeHwnd(), psQuery, "Query", MB_YESNO | MB_ICONWARNING ) == IDYES ) {
 		return true;
 	}
 
@@ -113,25 +107,20 @@ bool GetYesNo( const char* psQuery )
 
 void ErrorBox( const char* sString )
 {
-	if( ( rand() & 31 ) == 30 )
-	{
+	if( ( rand() & 31 ) == 30 ) {
 		static bool bPlayed = false;
-		if( !bPlayed )
-		{
+		if( !bPlayed ) {
 			bPlayed = true;
 			PlaySound( "k:\\util\\overlay.bin", NULL, SND_FILENAME | SND_ASYNC );
 		}
 	}
-	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Error",		MB_OK | MB_ICONERROR | MB_TASKMODAL );
+	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Error", MB_OK | MB_ICONERROR | MB_TASKMODAL );
 }
 void InfoBox( const char* sString )
 {
-	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Info",		MB_OK | MB_ICONINFORMATION | MB_TASKMODAL );
+	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Info", MB_OK | MB_ICONINFORMATION | MB_TASKMODAL );
 }
 void WarningBox( const char* sString )
 {
-	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Warning",	MB_OK | MB_ICONWARNING | MB_TASKMODAL );
+	MessageBox( g_pParentWnd->GetSafeHwnd(), sString, "Warning", MB_OK | MB_ICONWARNING | MB_TASKMODAL );
 }
-
-
-

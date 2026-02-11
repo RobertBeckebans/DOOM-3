@@ -15,39 +15,32 @@
 
  ********************************************************************/
 
-static double rate_mapping_32[11] =
-{
+static double rate_mapping_32[11] = {
 	28000., 35000., 45000., 56000., 60000.,
 	75000., 90000., 100000., 115000., 150000., 190000.,
 };
 
-static double rate_mapping_32_un[11] =
-{
+static double rate_mapping_32_un[11] = {
 	42000., 52000., 64000., 72000., 78000.,
 	86000., 92000., 110000., 120000., 140000., 190000.,
 };
 
-static double rate_mapping_32_low[2] =
-{
+static double rate_mapping_32_low[2] = {
 	20000., 28000.
 };
 
-static double rate_mapping_32_un_low[2] =
-{
+static double rate_mapping_32_un_low[2] = {
 	24000., 42000.,
 };
 
-static double _psy_lowpass_32_low[2] =
-{
+static double _psy_lowpass_32_low[2] = {
 	13., 13.,
 };
-static double _psy_lowpass_32[11] =
-{
+static double _psy_lowpass_32[11] = {
 	13., 13., 14., 15., 99., 99., 99., 99., 99., 99., 99.
 };
 
-ve_setup_data_template ve_setup_32_stereo =
-{
+ve_setup_data_template ve_setup_32_stereo = {
 	10,
 	rate_mapping_32,
 	quality_mapping_44,
@@ -98,8 +91,7 @@ ve_setup_data_template ve_setup_32_stereo =
 	_mapres_template_44_stereo
 };
 
-ve_setup_data_template ve_setup_32_uncoupled =
-{
+ve_setup_data_template ve_setup_32_uncoupled = {
 	10,
 	rate_mapping_32_un,
 	quality_mapping_44,
@@ -150,8 +142,7 @@ ve_setup_data_template ve_setup_32_uncoupled =
 	_mapres_template_44_uncoupled
 };
 
-ve_setup_data_template ve_setup_32_stereo_low =
-{
+ve_setup_data_template ve_setup_32_stereo_low = {
 	1,
 	rate_mapping_32_low,
 	quality_mapping_44_stereo_low,
@@ -203,8 +194,7 @@ ve_setup_data_template ve_setup_32_stereo_low =
 };
 
 
-ve_setup_data_template ve_setup_32_uncoupled_low =
-{
+ve_setup_data_template ve_setup_32_uncoupled_low = {
 	1,
 	rate_mapping_32_un_low,
 	quality_mapping_44_stereo_low,

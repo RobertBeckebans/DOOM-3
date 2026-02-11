@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -65,16 +66,16 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char		THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 // globals
-CString			g_strAppPath;						// holds the full path of the executable
-CMainFrame*		g_pParentWnd = NULL;				// used to precast to CMainFrame
-CPrefsDlg		g_Preferences;						// global prefs instance
-CPrefsDlg&		g_PrefsDlg = g_Preferences;		// reference used throughout
-int				g_nUpdateBits = 0;					// window update flags
-bool			g_bScreenUpdates = true;			// whether window painting is active, used in a few places
+CString		g_strAppPath;					  // holds the full path of the executable
+CMainFrame* g_pParentWnd = NULL;			  // used to precast to CMainFrame
+CPrefsDlg	g_Preferences;					  // global prefs instance
+CPrefsDlg&	g_PrefsDlg		 = g_Preferences; // reference used throughout
+int			g_nUpdateBits	 = 0;			  // window update flags
+bool		g_bScreenUpdates = true;		  // whether window painting is active, used in a few places
 
 //
 // to disable updates for speed reasons both of the above should be made members
@@ -82,10 +83,10 @@ bool			g_bScreenUpdates = true;			// whether window painting is active, used in 
 // bool g_bSnapToGrid = true; // early use, no longer in use, clamping pref will
 // be used
 //
-CString			g_strProject;						// holds the active project filename
+CString		g_strProject; // holds the active project filename
 
 #define D3XP_ID_FILE_SAVE_COPY ( WM_USER + 28476 )
-#define D3XP_ID_SHOW_MODELS ( WM_USER + 28477 )
+#define D3XP_ID_SHOW_MODELS	   ( WM_USER + 28477 )
 
 //
 // CMainFrame
@@ -93,624 +94,619 @@ CString			g_strProject;						// holds the active project filename
 // VK_??? equivelant m_nModifiers are key states as follows bit 0 - shift 1 - alt
 // 2 - control 4 - press only
 //
-#define SPEED_MOVE	32.0f
-#define SPEED_TURN	22.5f
+#define SPEED_MOVE			   32.0f
+#define SPEED_TURN			   22.5f
 
-#define MAX_GRID	64.0f
-#define MIN_GRID	0.125f
+#define MAX_GRID			   64.0f
+#define MIN_GRID			   0.125f
 
-SCommandInfo	g_Commands[] =
-{
-	{ "Texture_AxialByHeight",   'U', 0,	ID_SELECT_AXIALTEXTURE_BYHEIGHT },
-	{ "Texture_AxialArbitrary",  'U', RAD_SHIFT, ID_SELECT_AXIALTEXTURE_ARBITRARY },
-	{ "Texture_AxialByWidth",    'U', RAD_CONTROL, ID_SELECT_AXIALTEXTURE_BYWIDTH },
-	{ "Texture_Decrement",       VK_SUBTRACT, RAD_SHIFT, ID_SELECTION_TEXTURE_DEC },
-	{ "Texture_Increment",       VK_ADD, RAD_SHIFT, ID_SELECTION_TEXTURE_INC },
-	{ "Texture_Fit",             '5', RAD_SHIFT, ID_SELECTION_TEXTURE_FIT },
-	{ "Texture_RotateClock",     VK_NEXT, RAD_SHIFT, ID_SELECTION_TEXTURE_ROTATECLOCK },
-	{ "Texture_RotateCounter",   VK_PRIOR, RAD_SHIFT, ID_SELECTION_TEXTURE_ROTATECOUNTER },
-	{ "Texture_ScaleUp",         VK_UP, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALEUP },
-	{ "Texture_ScaleDown",       VK_DOWN, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALEDOWN },
-	{ "Texture_ShiftLeft",       VK_LEFT, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTLEFT },
-	{ "Texture_ShiftRight",      VK_RIGHT, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTRIGHT },
-	{ "Texture_ShiftUp",         VK_UP, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTUP },
-	{ "Texture_ShiftDown",       VK_DOWN, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTDOWN },
-	{ "Texture_ScaleLeft",       VK_LEFT, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALELEFT },
-	{ "Texture_ScaleRight",      VK_RIGHT, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALERIGHT },
-	{ "Texture_InvertX",         'I', RAD_CONTROL | RAD_SHIFT, ID_CURVE_NEGATIVETEXTUREY },
-	{ "Texture_InvertY",         'I', RAD_SHIFT, ID_CURVE_NEGATIVETEXTUREX },
-	{ "Texture_ToggleLock",      'T', RAD_SHIFT, ID_TOGGLE_LOCK },
+SCommandInfo g_Commands[] = {
+	{ "Texture_AxialByHeight", 'U', 0, ID_SELECT_AXIALTEXTURE_BYHEIGHT },
+	{ "Texture_AxialArbitrary", 'U', RAD_SHIFT, ID_SELECT_AXIALTEXTURE_ARBITRARY },
+	{ "Texture_AxialByWidth", 'U', RAD_CONTROL, ID_SELECT_AXIALTEXTURE_BYWIDTH },
+	{ "Texture_Decrement", VK_SUBTRACT, RAD_SHIFT, ID_SELECTION_TEXTURE_DEC },
+	{ "Texture_Increment", VK_ADD, RAD_SHIFT, ID_SELECTION_TEXTURE_INC },
+	{ "Texture_Fit", '5', RAD_SHIFT, ID_SELECTION_TEXTURE_FIT },
+	{ "Texture_RotateClock", VK_NEXT, RAD_SHIFT, ID_SELECTION_TEXTURE_ROTATECLOCK },
+	{ "Texture_RotateCounter", VK_PRIOR, RAD_SHIFT, ID_SELECTION_TEXTURE_ROTATECOUNTER },
+	{ "Texture_ScaleUp", VK_UP, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALEUP },
+	{ "Texture_ScaleDown", VK_DOWN, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALEDOWN },
+	{ "Texture_ShiftLeft", VK_LEFT, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTLEFT },
+	{ "Texture_ShiftRight", VK_RIGHT, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTRIGHT },
+	{ "Texture_ShiftUp", VK_UP, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTUP },
+	{ "Texture_ShiftDown", VK_DOWN, RAD_SHIFT, ID_SELECTION_TEXTURE_SHIFTDOWN },
+	{ "Texture_ScaleLeft", VK_LEFT, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALELEFT },
+	{ "Texture_ScaleRight", VK_RIGHT, RAD_CONTROL, ID_SELECTION_TEXTURE_SCALERIGHT },
+	{ "Texture_InvertX", 'I', RAD_CONTROL | RAD_SHIFT, ID_CURVE_NEGATIVETEXTUREY },
+	{ "Texture_InvertY", 'I', RAD_SHIFT, ID_CURVE_NEGATIVETEXTUREX },
+	{ "Texture_ToggleLock", 'T', RAD_SHIFT, ID_TOGGLE_LOCK },
 
 	{ "Texture_ShowAllTextures", 'A', RAD_CONTROL, ID_TEXTURES_SHOWALL },
 
-	{ "Edit_Copy",              'C', RAD_CONTROL, ID_EDIT_COPYBRUSH },
-	{ "Edit_Paste",             'V', RAD_CONTROL, ID_EDIT_PASTEBRUSH },
-	{ "Edit_Undo",              'Z', RAD_CONTROL, ID_EDIT_UNDO },
-	{ "Edit_Redo",              'Y', RAD_CONTROL, ID_EDIT_REDO },
+	{ "Edit_Copy", 'C', RAD_CONTROL, ID_EDIT_COPYBRUSH },
+	{ "Edit_Paste", 'V', RAD_CONTROL, ID_EDIT_PASTEBRUSH },
+	{ "Edit_Undo", 'Z', RAD_CONTROL, ID_EDIT_UNDO },
+	{ "Edit_Redo", 'Y', RAD_CONTROL, ID_EDIT_REDO },
 
-	{ "Camera_Forward",          VK_UP, 0, ID_CAMERA_FORWARD },
-	{ "Camera_Back",             VK_DOWN, 0, ID_CAMERA_BACK },
-	{ "Camera_Left",             VK_LEFT, 0, ID_CAMERA_LEFT },
-	{ "Camera_Right",            VK_RIGHT, 0, ID_CAMERA_RIGHT },
-	{ "Camera_Up",               'D', 0, ID_CAMERA_UP },
-	{ "Camera_Down",             'C', 0, ID_CAMERA_DOWN },
-	{ "Camera_AngleUp",          'A', 0, ID_CAMERA_ANGLEUP },
-	{ "Camera_AngleDown",        'Z', 0, ID_CAMERA_ANGLEDOWN },
-	{ "Camera_StrafeRight",      VK_PERIOD, 0, ID_CAMERA_STRAFERIGHT },
-	{ "Camera_StrafeLeft",       VK_COMMA, 0, ID_CAMERA_STRAFELEFT },
-	{ "Camera_UpFloor",          VK_PRIOR, 0, ID_VIEW_UPFLOOR },
-	{ "Camera_DownFloor",        VK_NEXT, 0, ID_VIEW_DOWNFLOOR },
-	{ "Camera_CenterView",       VK_END, 0, ID_VIEW_CENTER },
+	{ "Camera_Forward", VK_UP, 0, ID_CAMERA_FORWARD },
+	{ "Camera_Back", VK_DOWN, 0, ID_CAMERA_BACK },
+	{ "Camera_Left", VK_LEFT, 0, ID_CAMERA_LEFT },
+	{ "Camera_Right", VK_RIGHT, 0, ID_CAMERA_RIGHT },
+	{ "Camera_Up", 'D', 0, ID_CAMERA_UP },
+	{ "Camera_Down", 'C', 0, ID_CAMERA_DOWN },
+	{ "Camera_AngleUp", 'A', 0, ID_CAMERA_ANGLEUP },
+	{ "Camera_AngleDown", 'Z', 0, ID_CAMERA_ANGLEDOWN },
+	{ "Camera_StrafeRight", VK_PERIOD, 0, ID_CAMERA_STRAFERIGHT },
+	{ "Camera_StrafeLeft", VK_COMMA, 0, ID_CAMERA_STRAFELEFT },
+	{ "Camera_UpFloor", VK_PRIOR, 0, ID_VIEW_UPFLOOR },
+	{ "Camera_DownFloor", VK_NEXT, 0, ID_VIEW_DOWNFLOOR },
+	{ "Camera_CenterView", VK_END, 0, ID_VIEW_CENTER },
 
-	{ "Grid_ZoomOut",            VK_INSERT, 0, ID_VIEW_ZOOMOUT },
-	{ "FileSaveCopy",            'C', RAD_CONTROL | RAD_ALT | RAD_SHIFT, D3XP_ID_FILE_SAVE_COPY },
-	{ "ShowHideModels",          'M', RAD_CONTROL, D3XP_ID_SHOW_MODELS },
-	{ "NextView",                VK_HOME, 0, ID_VIEW_NEXTVIEW },
-	{ "Grid_ZoomIn",             VK_DELETE, 0, ID_VIEW_ZOOMIN },
+	{ "Grid_ZoomOut", VK_INSERT, 0, ID_VIEW_ZOOMOUT },
+	{ "FileSaveCopy", 'C', RAD_CONTROL | RAD_ALT | RAD_SHIFT, D3XP_ID_FILE_SAVE_COPY },
+	{ "ShowHideModels", 'M', RAD_CONTROL, D3XP_ID_SHOW_MODELS },
+	{ "NextView", VK_HOME, 0, ID_VIEW_NEXTVIEW },
+	{ "Grid_ZoomIn", VK_DELETE, 0, ID_VIEW_ZOOMIN },
 
-	{ "Grid_SetPoint5",          '4', RAD_SHIFT, ID_GRID_POINT5 },
-	{ "Grid_SetPoint25",         '3', RAD_SHIFT, ID_GRID_POINT25 },
-	{ "Grid_SetPoint125",        '2', RAD_SHIFT, ID_GRID_POINT125 },
+	{ "Grid_SetPoint5", '4', RAD_SHIFT, ID_GRID_POINT5 },
+	{ "Grid_SetPoint25", '3', RAD_SHIFT, ID_GRID_POINT25 },
+	{ "Grid_SetPoint125", '2', RAD_SHIFT, ID_GRID_POINT125 },
 	//{ "Grid_SetPoint0625",     '1', RAD_SHIFT, ID_GRID_POINT0625 },
-	{ "Grid_Set1",               '1', 0, ID_GRID_1 },
-	{ "Grid_Set2",               '2', 0, ID_GRID_2 },
-	{ "Grid_Set4",               '3', 0, ID_GRID_4 },
-	{ "Grid_Set8",               '4', 0, ID_GRID_8 },
-	{ "Grid_Set16",              '5', 0, ID_GRID_16 },
-	{ "Grid_Set32",              '6', 0, ID_GRID_32 },
-	{ "Grid_Set64",              '7', 0, ID_GRID_64 },
-	{ "Grid_Down",               219, 0, ID_GRID_PREV },
-	{ "Grid_Up",                 221, 0, ID_GRID_NEXT },
+	{ "Grid_Set1", '1', 0, ID_GRID_1 },
+	{ "Grid_Set2", '2', 0, ID_GRID_2 },
+	{ "Grid_Set4", '3', 0, ID_GRID_4 },
+	{ "Grid_Set8", '4', 0, ID_GRID_8 },
+	{ "Grid_Set16", '5', 0, ID_GRID_16 },
+	{ "Grid_Set32", '6', 0, ID_GRID_32 },
+	{ "Grid_Set64", '7', 0, ID_GRID_64 },
+	{ "Grid_Down", 219, 0, ID_GRID_PREV },
+	{ "Grid_Up", 221, 0, ID_GRID_NEXT },
 
-	{ "Grid_Toggle",             '0', 0, ID_GRID_TOGGLE },
-	{ "Grid_ToggleSizePaint",    'Q', RAD_PRESS, ID_SELECTION_TOGGLESIZEPAINT },
+	{ "Grid_Toggle", '0', 0, ID_GRID_TOGGLE },
+	{ "Grid_ToggleSizePaint", 'Q', RAD_PRESS, ID_SELECTION_TOGGLESIZEPAINT },
 
-	{ "Grid_PrecisionCursorMode", VK_F11, 0 , ID_PRECISION_CURSOR_CYCLE},
+	{ "Grid_PrecisionCursorMode", VK_F11, 0, ID_PRECISION_CURSOR_CYCLE },
 
-	{ "Grid_NextView",           VK_TAB, RAD_CONTROL, ID_VIEW_NEXTVIEW },
-	{ "Grid_ToggleCrosshairs",   'X', RAD_SHIFT, ID_VIEW_CROSSHAIR },
+	{ "Grid_NextView", VK_TAB, RAD_CONTROL, ID_VIEW_NEXTVIEW },
+	{ "Grid_ToggleCrosshairs", 'X', RAD_SHIFT, ID_VIEW_CROSSHAIR },
 
-	{ "Grid_ZZoomOut",           VK_INSERT, RAD_CONTROL, ID_VIEW_ZZOOMOUT },
-	{ "Grid_ZZoomIn",            VK_DELETE, RAD_CONTROL, ID_VIEW_ZZOOMIN },
+	{ "Grid_ZZoomOut", VK_INSERT, RAD_CONTROL, ID_VIEW_ZZOOMOUT },
+	{ "Grid_ZZoomIn", VK_DELETE, RAD_CONTROL, ID_VIEW_ZZOOMIN },
 
-	{ "Brush_Make3Sided",        '3', RAD_CONTROL, ID_BRUSH_3SIDED },
-	{ "Brush_Make4Sided",        '4', RAD_CONTROL, ID_BRUSH_4SIDED },
-	{ "Brush_Make5Sided",        '5', RAD_CONTROL, ID_BRUSH_5SIDED },
-	{ "Brush_Make6Sided",        '6', RAD_CONTROL, ID_BRUSH_6SIDED },
-	{ "Brush_Make7Sided",        '7', RAD_CONTROL, ID_BRUSH_7SIDED },
-	{ "Brush_Make8Sided",        '8', RAD_CONTROL, ID_BRUSH_8SIDED },
-	{ "Brush_Make9Sided",        '9', RAD_CONTROL, ID_BRUSH_9SIDED },
+	{ "Brush_Make3Sided", '3', RAD_CONTROL, ID_BRUSH_3SIDED },
+	{ "Brush_Make4Sided", '4', RAD_CONTROL, ID_BRUSH_4SIDED },
+	{ "Brush_Make5Sided", '5', RAD_CONTROL, ID_BRUSH_5SIDED },
+	{ "Brush_Make6Sided", '6', RAD_CONTROL, ID_BRUSH_6SIDED },
+	{ "Brush_Make7Sided", '7', RAD_CONTROL, ID_BRUSH_7SIDED },
+	{ "Brush_Make8Sided", '8', RAD_CONTROL, ID_BRUSH_8SIDED },
+	{ "Brush_Make9Sided", '9', RAD_CONTROL, ID_BRUSH_9SIDED },
 
-	{ "Leak_NextSpot",           'K', RAD_CONTROL | RAD_SHIFT, ID_MISC_NEXTLEAKSPOT },
-	{ "Leak_PrevSpot",           'L', RAD_CONTROL | RAD_SHIFT, ID_MISC_PREVIOUSLEAKSPOT },
+	{ "Leak_NextSpot", 'K', RAD_CONTROL | RAD_SHIFT, ID_MISC_NEXTLEAKSPOT },
+	{ "Leak_PrevSpot", 'L', RAD_CONTROL | RAD_SHIFT, ID_MISC_PREVIOUSLEAKSPOT },
 
-	{ "File_Open",               'O', RAD_CONTROL, ID_FILE_OPEN },
-	{ "File_Save",               'S', RAD_CONTROL, ID_FILE_SAVE },
+	{ "File_Open", 'O', RAD_CONTROL, ID_FILE_OPEN },
+	{ "File_Save", 'S', RAD_CONTROL, ID_FILE_SAVE },
 
-	{ "TAB",                      VK_TAB, 0, ID_PATCH_TAB },
-	{ "TAB",                      VK_TAB, RAD_SHIFT, ID_PATCH_TAB },
+	{ "TAB", VK_TAB, 0, ID_PATCH_TAB },
+	{ "TAB", VK_TAB, RAD_SHIFT, ID_PATCH_TAB },
 
-	{ "Patch_BendMode",           'B', 0, ID_PATCH_BEND },
-	{ "Patch_FreezeVertices",     'F', 0, ID_CURVE_FREEZE },
-	{ "Patch_UnFreezeVertices",   'F', RAD_CONTROL, ID_CURVE_UNFREEZE },
+	{ "Patch_BendMode", 'B', 0, ID_PATCH_BEND },
+	{ "Patch_FreezeVertices", 'F', 0, ID_CURVE_FREEZE },
+	{ "Patch_UnFreezeVertices", 'F', RAD_CONTROL, ID_CURVE_UNFREEZE },
 	{ "Patch_UnFreezeAllVertices", 'F', RAD_CONTROL | RAD_SHIFT, ID_CURVE_UNFREEZEALL },
-	{ "Patch_Thicken",            'T', RAD_CONTROL, ID_CURVE_THICKEN },
-	{ "Patch_ClearOverlays",      'Y', RAD_SHIFT, ID_CURVE_OVERLAY_CLEAR },
-	{ "Patch_MakeOverlay",        'Y', 0, ID_CURVE_OVERLAY_SET },
-	{ "Patch_CycleCapTexturing",   'P', RAD_CONTROL | RAD_SHIFT, ID_CURVE_CYCLECAP },
+	{ "Patch_Thicken", 'T', RAD_CONTROL, ID_CURVE_THICKEN },
+	{ "Patch_ClearOverlays", 'Y', RAD_SHIFT, ID_CURVE_OVERLAY_CLEAR },
+	{ "Patch_MakeOverlay", 'Y', 0, ID_CURVE_OVERLAY_SET },
+	{ "Patch_CycleCapTexturing", 'P', RAD_CONTROL | RAD_SHIFT, ID_CURVE_CYCLECAP },
 	{ "Patch_CycleCapTexturingAlt", 'P', RAD_SHIFT, ID_CURVE_CYCLECAPALT },
-	{ "Patch_InvertCurve",        'I', RAD_CONTROL, ID_CURVE_NEGATIVE },
-	{ "Patch_IncPatchColumn",     VK_ADD, RAD_CONTROL | RAD_SHIFT, ID_CURVE_INSERTCOLUMN },
-	{ "Patch_IncPatchRow",        VK_ADD, RAD_CONTROL, ID_CURVE_INSERTROW },
-	{ "Patch_DecPatchColumn",     VK_SUBTRACT, RAD_CONTROL | RAD_SHIFT, ID_CURVE_DELETECOLUMN },
-	{ "Patch_DecPatchRow",        VK_SUBTRACT, RAD_CONTROL, ID_CURVE_DELETEROW },
-	{ "Patch_RedisperseRows",     'E', RAD_CONTROL, ID_CURVE_REDISPERSE_ROWS },
-	{ "Patch_RedisperseCols",     'E', RAD_CONTROL | RAD_SHIFT, ID_CURVE_REDISPERSE_COLS },
-	{ "Patch_Naturalize",         'N', RAD_CONTROL, ID_PATCH_NATURALIZE },
-	{ "Patch_SnapToGrid",         'G', RAD_CONTROL, ID_SELECT_SNAPTOGRID },
-	{ "Patch_CapCurrentCurve",    'C', RAD_SHIFT, ID_CURVE_CAP },
+	{ "Patch_InvertCurve", 'I', RAD_CONTROL, ID_CURVE_NEGATIVE },
+	{ "Patch_IncPatchColumn", VK_ADD, RAD_CONTROL | RAD_SHIFT, ID_CURVE_INSERTCOLUMN },
+	{ "Patch_IncPatchRow", VK_ADD, RAD_CONTROL, ID_CURVE_INSERTROW },
+	{ "Patch_DecPatchColumn", VK_SUBTRACT, RAD_CONTROL | RAD_SHIFT, ID_CURVE_DELETECOLUMN },
+	{ "Patch_DecPatchRow", VK_SUBTRACT, RAD_CONTROL, ID_CURVE_DELETEROW },
+	{ "Patch_RedisperseRows", 'E', RAD_CONTROL, ID_CURVE_REDISPERSE_ROWS },
+	{ "Patch_RedisperseCols", 'E', RAD_CONTROL | RAD_SHIFT, ID_CURVE_REDISPERSE_COLS },
+	{ "Patch_Naturalize", 'N', RAD_CONTROL, ID_PATCH_NATURALIZE },
+	{ "Patch_SnapToGrid", 'G', RAD_CONTROL, ID_SELECT_SNAPTOGRID },
+	{ "Patch_CapCurrentCurve", 'C', RAD_SHIFT, ID_CURVE_CAP },
 
-	{ "Clipper_Toggle",          'X', 0, ID_VIEW_CLIPPER },
-	{ "Clipper_ClipSelected",    VK_RETURN, 0, ID_CLIP_SELECTED },
-	{ "Clipper_SplitSelected",   VK_RETURN, RAD_SHIFT, ID_SPLIT_SELECTED },
-	{ "Clipper_FlipClip",        VK_RETURN, RAD_CONTROL, ID_FLIP_CLIP },
+	{ "Clipper_Toggle", 'X', 0, ID_VIEW_CLIPPER },
+	{ "Clipper_ClipSelected", VK_RETURN, 0, ID_CLIP_SELECTED },
+	{ "Clipper_SplitSelected", VK_RETURN, RAD_SHIFT, ID_SPLIT_SELECTED },
+	{ "Clipper_FlipClip", VK_RETURN, RAD_CONTROL, ID_FLIP_CLIP },
 
-	{ "CameraClip_ZoomOut",       219, RAD_CONTROL, ID_VIEW_CUBEOUT },
-	{ "CameraClip_ZoomIn",        221, RAD_CONTROL, ID_VIEW_CUBEIN },
-	{ "CameraClip_Toggle",        220, RAD_CONTROL, ID_VIEW_CUBICCLIPPING },
+	{ "CameraClip_ZoomOut", 219, RAD_CONTROL, ID_VIEW_CUBEOUT },
+	{ "CameraClip_ZoomIn", 221, RAD_CONTROL, ID_VIEW_CUBEIN },
+	{ "CameraClip_Toggle", 220, RAD_CONTROL, ID_VIEW_CUBICCLIPPING },
 
-	{ "ViewTab_EntityInfo",     'N', 0, ID_VIEW_ENTITY },
-	{ "ViewTab_Console",        'O', 0, ID_VIEW_CONSOLE },
-	{ "ViewTab_Textures",       'T', 0, ID_VIEW_TEXTURE },
-	{ "ViewTab_MediaBrowser",   'M', 0, ID_VIEW_MEDIABROWSER },
+	{ "ViewTab_EntityInfo", 'N', 0, ID_VIEW_ENTITY },
+	{ "ViewTab_Console", 'O', 0, ID_VIEW_CONSOLE },
+	{ "ViewTab_Textures", 'T', 0, ID_VIEW_TEXTURE },
+	{ "ViewTab_MediaBrowser", 'M', 0, ID_VIEW_MEDIABROWSER },
 
 	{ "Window_SurfaceInspector", 'S', 0, ID_TEXTURES_INSPECTOR },
-	{ "Window_PatchInspector",  'S', RAD_SHIFT, ID_PATCH_INSPECTOR },
-	{ "Window_EntityList",      'I', 0, ID_EDIT_ENTITYINFO },
-	{ "Window_Preferences",     'P', 0, ID_PREFS },
-	{ "Window_ToggleCamera",    'C', RAD_CONTROL | RAD_SHIFT, ID_TOGGLECAMERA },
-	{ "Window_ToggleView",      'V', RAD_CONTROL | RAD_SHIFT, ID_TOGGLEVIEW },
-	{ "Window_ToggleZ",         'Z', RAD_CONTROL | RAD_SHIFT, ID_TOGGLEZ },
-	{ "Window_LightEditor",     'J', 0, ID_PROJECTED_LIGHT },
-	{ "Window_EntityColor",     'K', 0, ID_MISC_SELECTENTITYCOLOR },
+	{ "Window_PatchInspector", 'S', RAD_SHIFT, ID_PATCH_INSPECTOR },
+	{ "Window_EntityList", 'I', 0, ID_EDIT_ENTITYINFO },
+	{ "Window_Preferences", 'P', 0, ID_PREFS },
+	{ "Window_ToggleCamera", 'C', RAD_CONTROL | RAD_SHIFT, ID_TOGGLECAMERA },
+	{ "Window_ToggleView", 'V', RAD_CONTROL | RAD_SHIFT, ID_TOGGLEVIEW },
+	{ "Window_ToggleZ", 'Z', RAD_CONTROL | RAD_SHIFT, ID_TOGGLEZ },
+	{ "Window_LightEditor", 'J', 0, ID_PROJECTED_LIGHT },
+	{ "Window_EntityColor", 'K', 0, ID_MISC_SELECTENTITYCOLOR },
 
-	{ "Selection_DragEdges",     'E', 0, ID_SELECTION_DRAGEDGES },
-	{ "Selection_DragVertices",  'V', 0, ID_SELECTION_DRAGVERTECIES },
-	{ "Selection_Clone",         VK_SPACE, 0, ID_SELECTION_CLONE },
-	{ "Selection_Delete",        VK_BACK, 0, ID_SELECTION_DELETE },
-	{ "Selection_UnSelect",      VK_ESCAPE, 0, ID_SELECTION_DESELECT },
-	{ "Selection_Invert",        'I' , 0 , ID_SELECTION_INVERT },
+	{ "Selection_DragEdges", 'E', 0, ID_SELECTION_DRAGEDGES },
+	{ "Selection_DragVertices", 'V', 0, ID_SELECTION_DRAGVERTECIES },
+	{ "Selection_Clone", VK_SPACE, 0, ID_SELECTION_CLONE },
+	{ "Selection_Delete", VK_BACK, 0, ID_SELECTION_DELETE },
+	{ "Selection_UnSelect", VK_ESCAPE, 0, ID_SELECTION_DESELECT },
+	{ "Selection_Invert", 'I', 0, ID_SELECTION_INVERT },
 	{ "Selection_ToggleMoveOnly", 'W', 0, ID_SELECTION_MOVEONLY },
 
-	{ "Selection_MoveDown",     VK_SUBTRACT, 0, ID_SELECTION_MOVEDOWN },
-	{ "Selection_MoveUp",       VK_ADD, 0, ID_SELECTION_MOVEUP },
-	{ "Selection_DumpBrush",    'D', RAD_SHIFT, ID_SELECTION_PRINT },
-	{ "Selection_NudgeLeft",    VK_LEFT, RAD_ALT, ID_SELECTION_SELECT_NUDGELEFT },
-	{ "Selection_NudgeRight",   VK_RIGHT, RAD_ALT, ID_SELECTION_SELECT_NUDGERIGHT },
-	{ "Selection_NudgeUp",      VK_UP, RAD_ALT, ID_SELECTION_SELECT_NUDGEUP },
-	{ "Selection_NudgeDown",    VK_DOWN, RAD_ALT, ID_SELECTION_SELECT_NUDGEDOWN },
-	{ "Selection_Combine",      'K', RAD_SHIFT, ID_SELECTION_COMBINE },
-	{ "Selection_Connect",      'K', RAD_CONTROL, ID_SELECTION_CONNECT },
-	{ "Selection_Ungroup",      'G', RAD_SHIFT, ID_SELECTION_UNGROUPENTITY },
-	{ "Selection_CSGMerge",     'M', RAD_SHIFT, ID_SELECTION_CSGMERGE },
+	{ "Selection_MoveDown", VK_SUBTRACT, 0, ID_SELECTION_MOVEDOWN },
+	{ "Selection_MoveUp", VK_ADD, 0, ID_SELECTION_MOVEUP },
+	{ "Selection_DumpBrush", 'D', RAD_SHIFT, ID_SELECTION_PRINT },
+	{ "Selection_NudgeLeft", VK_LEFT, RAD_ALT, ID_SELECTION_SELECT_NUDGELEFT },
+	{ "Selection_NudgeRight", VK_RIGHT, RAD_ALT, ID_SELECTION_SELECT_NUDGERIGHT },
+	{ "Selection_NudgeUp", VK_UP, RAD_ALT, ID_SELECTION_SELECT_NUDGEUP },
+	{ "Selection_NudgeDown", VK_DOWN, RAD_ALT, ID_SELECTION_SELECT_NUDGEDOWN },
+	{ "Selection_Combine", 'K', RAD_SHIFT, ID_SELECTION_COMBINE },
+	{ "Selection_Connect", 'K', RAD_CONTROL, ID_SELECTION_CONNECT },
+	{ "Selection_Ungroup", 'G', RAD_SHIFT, ID_SELECTION_UNGROUPENTITY },
+	{ "Selection_CSGMerge", 'M', RAD_SHIFT, ID_SELECTION_CSGMERGE },
 
-	{ "Selection_CenterOrigin",           'O', RAD_SHIFT, ID_SELECTION_CENTER_ORIGIN },
-	{ "Selection_SelectCompleteEntity",   'E' , RAD_CONTROL | RAD_ALT | RAD_SHIFT , ID_SELECT_COMPLETE_ENTITY },
-	{ "Selection_SelectAllOfType",        'A', RAD_SHIFT, ID_SELECT_ALL },
+	{ "Selection_CenterOrigin", 'O', RAD_SHIFT, ID_SELECTION_CENTER_ORIGIN },
+	{ "Selection_SelectCompleteEntity", 'E', RAD_CONTROL | RAD_ALT | RAD_SHIFT, ID_SELECT_COMPLETE_ENTITY },
+	{ "Selection_SelectAllOfType", 'A', RAD_SHIFT, ID_SELECT_ALL },
 
-	{ "Show_ToggleLights",       '0' , RAD_ALT , ID_VIEW_SHOWLIGHTS },
-	{ "Show_TogglePatches",      'P', RAD_CONTROL, ID_VIEW_SHOWCURVES },
-	{ "Show_ToggleClip",         'L', RAD_CONTROL, ID_VIEW_SHOWCLIP },
+	{ "Show_ToggleLights", '0', RAD_ALT, ID_VIEW_SHOWLIGHTS },
+	{ "Show_TogglePatches", 'P', RAD_CONTROL, ID_VIEW_SHOWCURVES },
+	{ "Show_ToggleClip", 'L', RAD_CONTROL, ID_VIEW_SHOWCLIP },
 
-	{ "Show_HideSelected",       'H', 0, ID_VIEW_HIDESHOW_HIDESELECTED },
-	{ "Show_ShowHidden",         'H', RAD_SHIFT, ID_VIEW_HIDESHOW_SHOWHIDDEN },
-	{ "Show_HideNotSelected",    'H', RAD_CONTROL | RAD_SHIFT, ID_VIEW_HIDESHOW_HIDENOTSELECTED },
+	{ "Show_HideSelected", 'H', 0, ID_VIEW_HIDESHOW_HIDESELECTED },
+	{ "Show_ShowHidden", 'H', RAD_SHIFT, ID_VIEW_HIDESHOW_SHOWHIDDEN },
+	{ "Show_HideNotSelected", 'H', RAD_CONTROL | RAD_SHIFT, ID_VIEW_HIDESHOW_HIDENOTSELECTED },
 
-	{ "Render_ToggleSound",      VK_F9, 0, ID_VIEW_RENDERSOUND },
+	{ "Render_ToggleSound", VK_F9, 0, ID_VIEW_RENDERSOUND },
 	{ "Render_ToggleSelections", VK_F8, 0, ID_VIEW_RENDERSELECTION },
-	{ "Render_RebuildData",      VK_F7, 0, ID_VIEW_REBUILDRENDERDATA },
-	{ "Render_ToggleAnimation",  VK_F6, 0, ID_VIEW_MATERIALANIMATION},
+	{ "Render_RebuildData", VK_F7, 0, ID_VIEW_REBUILDRENDERDATA },
+	{ "Render_ToggleAnimation", VK_F6, 0, ID_VIEW_MATERIALANIMATION },
 	{ "Render_ToggleEntityOutlines", VK_F5, 0, ID_VIEW_RENDERENTITYOUTLINES },
-	{ "Render_ToggleRealtimeBuild",  VK_F4, 0, ID_VIEW_REALTIMEREBUILD },
-	{ "Render_Toggle",           VK_F3, 0, ID_VIEW_RENDERMODE },
+	{ "Render_ToggleRealtimeBuild", VK_F4, 0, ID_VIEW_REALTIMEREBUILD },
+	{ "Render_Toggle", VK_F3, 0, ID_VIEW_RENDERMODE },
 
-	{ "Find_Textures",    'F', RAD_SHIFT, ID_TEXTURE_REPLACEALL },
-	{ "Find_Entity",       VK_F3, RAD_CONTROL, ID_MISC_FINDORREPLACEENTITY},
-	{ "Find_NextEntity",   VK_F3, RAD_SHIFT, ID_MISC_FINDNEXTENT},
+	{ "Find_Textures", 'F', RAD_SHIFT, ID_TEXTURE_REPLACEALL },
+	{ "Find_Entity", VK_F3, RAD_CONTROL, ID_MISC_FINDORREPLACEENTITY },
+	{ "Find_NextEntity", VK_F3, RAD_SHIFT, ID_MISC_FINDNEXTENT },
 
-	{ "_ShowDOOM",               VK_F2, 0, ID_SHOW_DOOM },
+	{ "_ShowDOOM", VK_F2, 0, ID_SHOW_DOOM },
 
-	{ "Rotate_MouseRotate",            'R', 0, ID_SELECT_MOUSEROTATE },
-	{ "Rotate_ToggleFlatRotation",     'R', RAD_CONTROL, ID_VIEW_CAMERAUPDATE },
-	{ "Rotate_CycleRotationAxis",      'R', RAD_SHIFT, ID_TOGGLE_ROTATELOCK },
+	{ "Rotate_MouseRotate", 'R', 0, ID_SELECT_MOUSEROTATE },
+	{ "Rotate_ToggleFlatRotation", 'R', RAD_CONTROL, ID_VIEW_CAMERAUPDATE },
+	{ "Rotate_CycleRotationAxis", 'R', RAD_SHIFT, ID_TOGGLE_ROTATELOCK },
 
-	{ "_AutoCaulk",	             'A', RAD_CONTROL | RAD_SHIFT, ID_AUTOCAULK },	// ctrl-shift-a, since SHIFT-A is already taken
+	{ "_AutoCaulk", 'A', RAD_CONTROL | RAD_SHIFT, ID_AUTOCAULK }, // ctrl-shift-a, since SHIFT-A is already taken
 };
 
-int				g_nCommandCount = sizeof( g_Commands ) / sizeof( SCommandInfo );
+int		  g_nCommandCount = sizeof( g_Commands ) / sizeof( SCommandInfo );
 
-SKeyInfo		g_Keys[] =
-{
-	{ "Space", VK_SPACE },
-	{ "Backspace", VK_BACK },
-	{ "Escape", VK_ESCAPE },
-	{ "End", VK_END },
-	{ "Insert", VK_INSERT },
-	{ "Delete", VK_DELETE },
-	{ "PageUp", VK_PRIOR },
-	{ "PageDown", VK_NEXT },
-	{ "Up", VK_UP },
-	{ "Down", VK_DOWN },
-	{ "Left", VK_LEFT },
-	{ "Right", VK_RIGHT },
-	{ "F1", VK_F1 },
-	{ "F2", VK_F2 },
-	{ "F3", VK_F3 },
-	{ "F4", VK_F4 },
-	{ "F5", VK_F5 },
-	{ "F6", VK_F6 },
-	{ "F7", VK_F7 },
-	{ "F8", VK_F8 },
-	{ "F9", VK_F9 },
-	{ "F10", VK_F10 },
-	{ "F11", VK_F11 },
-	{ "F12", VK_F12 },
-	{ "Tab", VK_TAB },
-	{ "Return", VK_RETURN },
-	{ "Comma", VK_COMMA },
-	{ "Period", VK_PERIOD },
-	{ "Plus", VK_ADD },
-	{ "Multiply", VK_MULTIPLY },
-	{ "Subtract", VK_SUBTRACT },
-	{ "NumPad0", VK_NUMPAD0 },
-	{ "NumPad1", VK_NUMPAD1 },
-	{ "NumPad2", VK_NUMPAD2 },
-	{ "NumPad3", VK_NUMPAD3 },
-	{ "NumPad4", VK_NUMPAD4 },
-	{ "NumPad5", VK_NUMPAD5 },
-	{ "NumPad6", VK_NUMPAD6 },
-	{ "NumPad7", VK_NUMPAD7 },
-	{ "NumPad8", VK_NUMPAD8 },
-	{ "NumPad9", VK_NUMPAD9 },
-	{ "[", 219 },
-	{ "]", 221 },
-	{ "\\", 220 }
-};
+SKeyInfo  g_Keys[] = { { "Space", VK_SPACE },
+	 { "Backspace", VK_BACK },
+	 { "Escape", VK_ESCAPE },
+	 { "End", VK_END },
+	 { "Insert", VK_INSERT },
+	 { "Delete", VK_DELETE },
+	 { "PageUp", VK_PRIOR },
+	 { "PageDown", VK_NEXT },
+	 { "Up", VK_UP },
+	 { "Down", VK_DOWN },
+	 { "Left", VK_LEFT },
+	 { "Right", VK_RIGHT },
+	 { "F1", VK_F1 },
+	 { "F2", VK_F2 },
+	 { "F3", VK_F3 },
+	 { "F4", VK_F4 },
+	 { "F5", VK_F5 },
+	 { "F6", VK_F6 },
+	 { "F7", VK_F7 },
+	 { "F8", VK_F8 },
+	 { "F9", VK_F9 },
+	 { "F10", VK_F10 },
+	 { "F11", VK_F11 },
+	 { "F12", VK_F12 },
+	 { "Tab", VK_TAB },
+	 { "Return", VK_RETURN },
+	 { "Comma", VK_COMMA },
+	 { "Period", VK_PERIOD },
+	 { "Plus", VK_ADD },
+	 { "Multiply", VK_MULTIPLY },
+	 { "Subtract", VK_SUBTRACT },
+	 { "NumPad0", VK_NUMPAD0 },
+	 { "NumPad1", VK_NUMPAD1 },
+	 { "NumPad2", VK_NUMPAD2 },
+	 { "NumPad3", VK_NUMPAD3 },
+	 { "NumPad4", VK_NUMPAD4 },
+	 { "NumPad5", VK_NUMPAD5 },
+	 { "NumPad6", VK_NUMPAD6 },
+	 { "NumPad7", VK_NUMPAD7 },
+	 { "NumPad8", VK_NUMPAD8 },
+	 { "NumPad9", VK_NUMPAD9 },
+	 { "[", 219 },
+	 { "]", 221 },
+	 { "\\", 220 } };
 
-int				g_nKeyCount = sizeof( g_Keys ) / sizeof( SKeyInfo );
+int		  g_nKeyCount = sizeof( g_Keys ) / sizeof( SKeyInfo );
 
-const int		CMD_TEXTUREWAD_END = CMD_TEXTUREWAD + 127;
-const int		CMD_BSPCOMMAND_END = CMD_BSPCOMMAND + 127;
-const int		IDMRU_END = IDMRU + 9;
+const int CMD_TEXTUREWAD_END = CMD_TEXTUREWAD + 127;
+const int CMD_BSPCOMMAND_END = CMD_BSPCOMMAND + 127;
+const int IDMRU_END			 = IDMRU + 9;
 
-const int		g_msgBSPDone = RegisterWindowMessage( DMAP_DONE );
-const int		g_msgBSPStatus = RegisterWindowMessage( DMAP_MSGID );
+const int g_msgBSPDone	 = RegisterWindowMessage( DMAP_DONE );
+const int g_msgBSPStatus = RegisterWindowMessage( DMAP_MSGID );
 
 IMPLEMENT_DYNAMIC( CMainFrame, CFrameWnd )
 BEGIN_MESSAGE_MAP( CMainFrame, CFrameWnd )
 //{{AFX_MSG_MAP(CMainFrame)
-	ON_WM_PARENTNOTIFY()
-	ON_WM_CREATE()
-	ON_WM_TIMER()
-	ON_WM_DESTROY()
-	ON_WM_CLOSE()
-	ON_WM_KEYDOWN()
-	ON_WM_SIZE()
-	ON_COMMAND( ID_VIEW_CAMERATOGGLE, ToggleCamera )
-	ON_COMMAND( ID_FILE_CLOSE, OnFileClose )
-	ON_COMMAND( ID_FILE_EXIT, OnFileExit )
-	ON_COMMAND( ID_FILE_LOADPROJECT, OnFileLoadproject )
-	ON_COMMAND( ID_FILE_NEW, OnFileNew )
-	ON_COMMAND( ID_FILE_OPEN, OnFileOpen )
-	ON_COMMAND( ID_FILE_POINTFILE, OnFilePointfile )
-	ON_COMMAND( ID_FILE_PRINT, OnFilePrint )
-	ON_COMMAND( ID_FILE_PRINT_PREVIEW, OnFilePrintPreview )
-	ON_COMMAND( ID_FILE_SAVE, OnFileSave )
-	ON_COMMAND( ID_FILE_SAVEAS, OnFileSaveas )
-	ON_COMMAND( D3XP_ID_FILE_SAVE_COPY, OnFileSaveCopy )
-	ON_COMMAND( D3XP_ID_SHOW_MODELS, OnViewShowModels )
-	ON_COMMAND( ID_VIEW_100, OnView100 )
-	ON_COMMAND( ID_VIEW_CENTER, OnViewCenter )
-	ON_COMMAND( ID_VIEW_CONSOLE, OnViewConsole )
-	ON_COMMAND( ID_VIEW_DOWNFLOOR, OnViewDownfloor )
-	ON_COMMAND( ID_VIEW_ENTITY, OnViewEntity )
-	ON_COMMAND( ID_VIEW_MEDIABROWSER, OnViewMediaBrowser )
-	ON_COMMAND( ID_VIEW_FRONT, OnViewFront )
-	ON_COMMAND( ID_VIEW_SHOWBLOCKS, OnViewShowblocks )
-	ON_COMMAND( ID_VIEW_SHOWCLIP, OnViewShowclip )
-	ON_COMMAND( ID_VIEW_SHOWTRIGGERS, OnViewShowTriggers )
-	ON_COMMAND( ID_VIEW_SHOWCOORDINATES, OnViewShowcoordinates )
-	ON_COMMAND( ID_VIEW_SHOWENT, OnViewShowent )
-	ON_COMMAND( ID_VIEW_SHOWLIGHTS, OnViewShowlights )
-	ON_COMMAND( ID_VIEW_SHOWNAMES, OnViewShownames )
-	ON_COMMAND( ID_VIEW_SHOWPATH, OnViewShowpath )
-	ON_COMMAND( ID_VIEW_SHOWCOMBATNODES, OnViewShowCombatNodes )
-	ON_COMMAND( ID_VIEW_SHOWWATER, OnViewShowwater )
-	ON_COMMAND( ID_VIEW_SHOWWORLD, OnViewShowworld )
-	ON_COMMAND( ID_VIEW_TEXTURE, OnViewTexture )
-	ON_COMMAND( ID_VIEW_UPFLOOR, OnViewUpfloor )
-	ON_COMMAND( ID_VIEW_XY, OnViewXy )
-	ON_COMMAND( ID_VIEW_Z100, OnViewZ100 )
-	ON_COMMAND( ID_VIEW_ZOOMIN, OnViewZoomin )
-	ON_COMMAND( ID_VIEW_ZOOMOUT, OnViewZoomout )
-	ON_COMMAND( ID_VIEW_ZZOOMIN, OnViewZzoomin )
-	ON_COMMAND( ID_VIEW_ZZOOMOUT, OnViewZzoomout )
-	ON_COMMAND( ID_VIEW_SIDE, OnViewSide )
-	ON_COMMAND( ID_TEXTURES_SHOWINUSE, OnTexturesShowinuse )
-	ON_COMMAND( ID_TEXTURES_INSPECTOR, OnTexturesInspector )
-	ON_COMMAND( ID_MISC_FINDBRUSH, OnMiscFindbrush )
-	ON_COMMAND( ID_MISC_GAMMA, OnMiscGamma )
-	ON_COMMAND( ID_MISC_NEXTLEAKSPOT, OnMiscNextleakspot )
-	ON_COMMAND( ID_MISC_PREVIOUSLEAKSPOT, OnMiscPreviousleakspot )
-	ON_COMMAND( ID_MISC_PRINTXY, OnMiscPrintxy )
-	ON_COMMAND( ID_MISC_SELECTENTITYCOLOR, OnMiscSelectentitycolor )
-	ON_COMMAND( ID_MISC_FINDORREPLACEENTITY, OnMiscFindOrReplaceEntity )
-	ON_COMMAND( ID_MISC_FINDNEXTENT, OnMiscFindNextEntity )
-	ON_COMMAND( ID_MISC_SETVIEWPOS, OnMiscSetViewPos )
-	ON_COMMAND( ID_TEXTUREBK, OnTexturebk )
-	ON_COMMAND( ID_COLORS_MAJOR, OnColorsMajor )
-	ON_COMMAND( ID_COLORS_MINOR, OnColorsMinor )
-	ON_COMMAND( ID_COLORS_XYBK, OnColorsXybk )
-	ON_COMMAND( ID_BRUSH_3SIDED, OnBrush3sided )
-	ON_COMMAND( ID_BRUSH_4SIDED, OnBrush4sided )
-	ON_COMMAND( ID_BRUSH_5SIDED, OnBrush5sided )
-	ON_COMMAND( ID_BRUSH_6SIDED, OnBrush6sided )
-	ON_COMMAND( ID_BRUSH_7SIDED, OnBrush7sided )
-	ON_COMMAND( ID_BRUSH_8SIDED, OnBrush8sided )
-	ON_COMMAND( ID_BRUSH_9SIDED, OnBrush9sided )
-	ON_COMMAND( ID_BRUSH_ARBITRARYSIDED, OnBrushArbitrarysided )
-	ON_COMMAND( ID_BRUSH_FLIPX, OnBrushFlipx )
-	ON_COMMAND( ID_BRUSH_FLIPY, OnBrushFlipy )
-	ON_COMMAND( ID_BRUSH_FLIPZ, OnBrushFlipz )
-	ON_COMMAND( ID_BRUSH_ROTATEX, OnBrushRotatex )
-	ON_COMMAND( ID_BRUSH_ROTATEY, OnBrushRotatey )
-	ON_COMMAND( ID_BRUSH_ROTATEZ, OnBrushRotatez )
-	ON_COMMAND( ID_REGION_OFF, OnRegionOff )
-	ON_COMMAND( ID_REGION_SETBRUSH, OnRegionSetbrush )
-	ON_COMMAND( ID_REGION_SETSELECTION, OnRegionSetselection )
-	ON_COMMAND( ID_REGION_SETTALLBRUSH, OnRegionSettallbrush )
-	ON_COMMAND( ID_REGION_SETXY, OnRegionSetxy )
-	ON_COMMAND( ID_SELECTION_ARBITRARYROTATION, OnSelectionArbitraryrotation )
-	ON_COMMAND( ID_SELECTION_CLONE, OnSelectionClone )
-	ON_COMMAND( ID_SELECTION_CONNECT, OnSelectionConnect )
-	ON_COMMAND( ID_SELECTION_CSGSUBTRACT, OnSelectionCsgsubtract )
-	ON_COMMAND( ID_SELECTION_CSGMERGE, OnSelectionCsgmerge )
-	ON_COMMAND( ID_SELECTION_DELETE, OnSelectionDelete )
-	ON_COMMAND( ID_SELECTION_DESELECT, OnSelectionDeselect )
-	ON_COMMAND( ID_SELECTION_DRAGEDGES, OnSelectionDragedges )
-	ON_COMMAND( ID_SELECTION_DRAGVERTECIES, OnSelectionDragvertecies )
-	ON_COMMAND( ID_SELECTION_CENTER_ORIGIN, OnSelectionCenterOrigin )
-	ON_COMMAND( ID_SELECTION_MAKEHOLLOW, OnSelectionMakehollow )
-	ON_COMMAND( ID_SELECTION_SELECTCOMPLETETALL, OnSelectionSelectcompletetall )
-	ON_COMMAND( ID_SELECTION_SELECTINSIDE, OnSelectionSelectinside )
-	ON_COMMAND( ID_SELECTION_SELECTPARTIALTALL, OnSelectionSelectpartialtall )
-	ON_COMMAND( ID_SELECTION_SELECTTOUCHING, OnSelectionSelecttouching )
-	ON_COMMAND( ID_SELECTION_UNGROUPENTITY, OnSelectionUngroupentity )
-	ON_COMMAND( ID_TEXTURES_POPUP, OnTexturesPopup )
-	ON_COMMAND( ID_SPLINES_POPUP, OnSplinesPopup )
-	ON_COMMAND( ID_SPLINES_EDITPOINTS, OnSplinesEditPoints )
-	ON_COMMAND( ID_SPLINES_ADDPOINTS, OnSplinesAddPoints )
-	ON_COMMAND( ID_SPLINES_INSERTPOINTS, OnSplinesInsertPoint )
-	ON_COMMAND( ID_SPLINES_DELETEPOINTS, OnSplinesDeletePoint )
-	ON_COMMAND( ID_POPUP_SELECTION, OnPopupSelection )
-	ON_COMMAND( ID_VIEW_CHANGE, OnViewChange )
-	ON_COMMAND( ID_VIEW_CAMERAUPDATE, OnViewCameraupdate )
-	ON_WM_SIZING()
-	ON_COMMAND( ID_HELP_ABOUT, OnHelpAbout )
-	ON_COMMAND( ID_VIEW_CLIPPER, OnViewClipper )
-	ON_COMMAND( ID_CAMERA_ANGLEDOWN, OnCameraAngledown )
-	ON_COMMAND( ID_CAMERA_ANGLEUP, OnCameraAngleup )
-	ON_COMMAND( ID_CAMERA_BACK, OnCameraBack )
-	ON_COMMAND( ID_CAMERA_DOWN, OnCameraDown )
-	ON_COMMAND( ID_CAMERA_FORWARD, OnCameraForward )
-	ON_COMMAND( ID_CAMERA_LEFT, OnCameraLeft )
-	ON_COMMAND( ID_CAMERA_RIGHT, OnCameraRight )
-	ON_COMMAND( ID_CAMERA_STRAFELEFT, OnCameraStrafeleft )
-	ON_COMMAND( ID_CAMERA_STRAFERIGHT, OnCameraStraferight )
-	ON_COMMAND( ID_CAMERA_UP, OnCameraUp )
-	ON_COMMAND( ID_GRID_TOGGLE, OnGridToggle )
-	ON_COMMAND( ID_PREFS, OnPrefs )
-	ON_COMMAND( ID_TOGGLECAMERA, OnTogglecamera )
-	ON_COMMAND( ID_TOGGLEVIEW, OnToggleview )
-	ON_COMMAND( ID_TOGGLEZ, OnTogglez )
-	ON_COMMAND( ID_TOGGLE_LOCK, OnToggleLock )
-	ON_COMMAND( ID_EDIT_MAPINFO, OnEditMapinfo )
-	ON_COMMAND( ID_EDIT_ENTITYINFO, OnEditEntityinfo )
-	ON_COMMAND( ID_VIEW_NEXTVIEW, OnViewNextview )
-	ON_COMMAND( ID_HELP_COMMANDLIST, OnHelpCommandlist )
-	ON_COMMAND( ID_FILE_NEWPROJECT, OnFileNewproject )
-	ON_COMMAND( ID_FLIP_CLIP, OnFlipClip )
-	ON_COMMAND( ID_CLIP_SELECTED, OnClipSelected )
-	ON_COMMAND( ID_SPLIT_SELECTED, OnSplitSelected )
-	ON_COMMAND( ID_TOGGLEVIEW_XZ, OnToggleviewXz )
-	ON_COMMAND( ID_TOGGLEVIEW_YZ, OnToggleviewYz )
-	ON_COMMAND( ID_COLORS_BRUSH, OnColorsBrush )
-	ON_COMMAND( ID_COLORS_CLIPPER, OnColorsClipper )
-	ON_COMMAND( ID_COLORS_GRIDTEXT, OnColorsGridtext )
-	ON_COMMAND( ID_COLORS_SELECTEDBRUSH, OnColorsSelectedbrush )
-	ON_COMMAND( ID_COLORS_GRIDBLOCK, OnColorsGridblock )
-	ON_COMMAND( ID_COLORS_VIEWNAME, OnColorsViewname )
-	ON_COMMAND( ID_COLOR_SETORIGINAL, OnColorSetoriginal )
-	ON_COMMAND( ID_COLOR_SETQER, OnColorSetqer )
-	ON_COMMAND( ID_COLOR_SUPERMAL, OnColorSetSuperMal )
-	ON_COMMAND( ID_THEMES_MAX , OnColorSetMax )
-	ON_COMMAND( ID_COLOR_SETBLACK, OnColorSetblack )
-	ON_COMMAND( ID_SNAPTOGRID, OnSnaptogrid )
-	ON_COMMAND( ID_SELECT_SCALE, OnSelectScale )
-	ON_COMMAND( ID_SELECT_MOUSEROTATE, OnSelectMouserotate )
-	ON_COMMAND( ID_EDIT_COPYBRUSH, OnEditCopybrush )
-	ON_COMMAND( ID_EDIT_PASTEBRUSH, OnEditPastebrush )
-	ON_COMMAND( ID_EDIT_UNDO, OnEditUndo )
-	ON_COMMAND( ID_EDIT_REDO, OnEditRedo )
-	ON_UPDATE_COMMAND_UI( ID_EDIT_UNDO, OnUpdateEditUndo )
-	ON_UPDATE_COMMAND_UI( ID_EDIT_REDO, OnUpdateEditRedo )
-	ON_COMMAND( ID_SELECTION_INVERT, OnSelectionInvert )
-	ON_COMMAND( ID_SELECTION_TEXTURE_DEC, OnSelectionTextureDec )
-	ON_COMMAND( ID_SELECTION_TEXTURE_FIT, OnSelectionTextureFit )
-	ON_COMMAND( ID_SELECTION_TEXTURE_INC, OnSelectionTextureInc )
-	ON_COMMAND( ID_SELECTION_TEXTURE_ROTATECLOCK, OnSelectionTextureRotateclock )
-	ON_COMMAND( ID_SELECTION_TEXTURE_ROTATECOUNTER, OnSelectionTextureRotatecounter )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SCALEDOWN, OnSelectionTextureScaledown )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SCALEUP, OnSelectionTextureScaleup )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTDOWN, OnSelectionTextureShiftdown )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTLEFT, OnSelectionTextureShiftleft )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTRIGHT, OnSelectionTextureShiftright )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTUP, OnSelectionTextureShiftup )
-	ON_COMMAND( ID_GRID_NEXT, OnGridNext )
-	ON_COMMAND( ID_GRID_PREV, OnGridPrev )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SCALELEFT, OnSelectionTextureScaleLeft )
-	ON_COMMAND( ID_SELECTION_TEXTURE_SCALERIGHT, OnSelectionTextureScaleRight )
-	ON_COMMAND( ID_TEXTURE_REPLACEALL, OnTextureReplaceall )
-	ON_COMMAND( ID_SCALELOCKX, OnScalelockx )
-	ON_COMMAND( ID_SCALELOCKY, OnScalelocky )
-	ON_COMMAND( ID_SCALELOCKZ, OnScalelockz )
-	ON_COMMAND( ID_SELECT_MOUSESCALE, OnSelectMousescale )
-	ON_COMMAND( ID_VIEW_CUBICCLIPPING, OnViewCubicclipping )
-	ON_COMMAND( ID_FILE_IMPORT, OnFileImport )
-	ON_COMMAND( ID_FILE_PROJECTSETTINGS, OnFileProjectsettings )
-	ON_UPDATE_COMMAND_UI( ID_FILE_IMPORT, OnUpdateFileImport )
-	ON_COMMAND( ID_VIEW_CUBEIN, OnViewCubein )
-	ON_COMMAND( ID_VIEW_CUBEOUT, OnViewCubeout )
-	ON_COMMAND( ID_FILE_SAVEREGION, OnFileSaveregion )
-	ON_UPDATE_COMMAND_UI( ID_FILE_SAVEREGION, OnUpdateFileSaveregion )
-	ON_COMMAND( ID_SELECTION_MOVEDOWN, OnSelectionMovedown )
-	ON_COMMAND( ID_SELECTION_MOVEUP, OnSelectionMoveup )
-	ON_COMMAND( ID_TOOLBAR_MAIN, OnToolbarMain )
-	ON_COMMAND( ID_TOOLBAR_TEXTURE, OnToolbarTexture )
-	ON_COMMAND( ID_SELECTION_PRINT, OnSelectionPrint )
-	ON_COMMAND( ID_SELECTION_TOGGLESIZEPAINT, OnSelectionTogglesizepaint )
-	ON_COMMAND( ID_BRUSH_MAKECONE, OnBrushMakecone )
-	ON_COMMAND( ID_TEXTURES_LOAD, OnTexturesLoad )
-	ON_COMMAND( ID_TOGGLE_ROTATELOCK, OnToggleRotatelock )
-	ON_COMMAND( ID_CURVE_BEVEL, OnCurveBevel )
-	ON_COMMAND( ID_CURVE_INCREASE_VERT, OnCurveIncreaseVert )
-	ON_COMMAND( ID_CURVE_DECREASE_VERT, OnCurveDecreaseVert )
-	ON_COMMAND( ID_CURVE_INCREASE_HORZ, OnCurveIncreaseHorz )
-	ON_COMMAND( ID_CURVE_DECREASE_HORZ, OnCurveDecreaseHorz )
-	ON_COMMAND( ID_CURVE_CYLINDER, OnCurveCylinder )
-	ON_COMMAND( ID_CURVE_EIGHTHSPHERE, OnCurveEighthsphere )
-	ON_COMMAND( ID_CURVE_ENDCAP, OnCurveEndcap )
-	ON_COMMAND( ID_CURVE_HEMISPHERE, OnCurveHemisphere )
-	ON_COMMAND( ID_CURVE_INVERTCURVE, OnCurveInvertcurve )
-	ON_COMMAND( ID_CURVE_QUARTER, OnCurveQuarter )
-	ON_COMMAND( ID_CURVE_SPHERE, OnCurveSphere )
-	ON_COMMAND( ID_FILE_IMPORTMAP, OnFileImportmap )
-	ON_COMMAND( ID_FILE_EXPORTMAP, OnFileExportmap )
-	ON_COMMAND( ID_EDIT_LOADPREFAB, OnEditLoadprefab )
-	ON_COMMAND( ID_VIEW_SHOWCURVES, OnViewShowcurves )
-	ON_COMMAND( ID_SELECTION_SELECT_NUDGEDOWN, OnSelectionSelectNudgedown )
-	ON_COMMAND( ID_SELECTION_SELECT_NUDGELEFT, OnSelectionSelectNudgeleft )
-	ON_COMMAND( ID_SELECTION_SELECT_NUDGERIGHT, OnSelectionSelectNudgeright )
-	ON_COMMAND( ID_SELECTION_SELECT_NUDGEUP, OnSelectionSelectNudgeup )
-	ON_WM_SYSKEYDOWN()
-	ON_COMMAND( ID_TEXTURES_LOADLIST, OnTexturesLoadlist )
-	ON_COMMAND( ID_DYNAMIC_LIGHTING, OnDynamicLighting )
-	ON_COMMAND( ID_CURVE_SIMPLEPATCHMESH, OnCurveSimplepatchmesh )
-	ON_COMMAND( ID_PATCH_SHOWBOUNDINGBOX, OnPatchToggleBox )
-	ON_COMMAND( ID_PATCH_WIREFRAME, OnPatchWireframe )
-	ON_COMMAND( ID_CURVE_PATCHCONE, OnCurvePatchcone )
-	ON_COMMAND( ID_CURVE_PATCHTUBE, OnCurvePatchtube )
-	ON_COMMAND( ID_PATCH_WELD, OnPatchWeld )
-	ON_COMMAND( ID_CURVE_PATCHBEVEL, OnCurvePatchbevel )
-	ON_COMMAND( ID_CURVE_PATCHENDCAP, OnCurvePatchendcap )
-	ON_COMMAND( ID_CURVE_PATCHINVERTEDBEVEL, OnCurvePatchinvertedbevel )
-	ON_COMMAND( ID_CURVE_PATCHINVERTEDENDCAP, OnCurvePatchinvertedendcap )
-	ON_COMMAND( ID_PATCH_DRILLDOWN, OnPatchDrilldown )
-	ON_COMMAND( ID_CURVE_INSERTCOLUMN, OnCurveInsertcolumn )
-	ON_COMMAND( ID_CURVE_INSERTROW, OnCurveInsertrow )
-	ON_COMMAND( ID_CURVE_DELETECOLUMN, OnCurveDeletecolumn )
-	ON_COMMAND( ID_CURVE_DELETEROW, OnCurveDeleterow )
-	ON_COMMAND( ID_CURVE_INSERT_ADDCOLUMN, OnCurveInsertAddcolumn )
-	ON_COMMAND( ID_CURVE_INSERT_ADDROW, OnCurveInsertAddrow )
-	ON_COMMAND( ID_CURVE_INSERT_INSERTCOLUMN, OnCurveInsertInsertcolumn )
-	ON_COMMAND( ID_CURVE_INSERT_INSERTROW, OnCurveInsertInsertrow )
-	ON_COMMAND( ID_CURVE_NEGATIVE, OnCurveNegative )
-	ON_COMMAND( ID_CURVE_NEGATIVETEXTUREX, OnCurveNegativeTextureX )
-	ON_COMMAND( ID_CURVE_NEGATIVETEXTUREY, OnCurveNegativeTextureY )
-	ON_COMMAND( ID_CURVE_DELETE_FIRSTCOLUMN, OnCurveDeleteFirstcolumn )
-	ON_COMMAND( ID_CURVE_DELETE_FIRSTROW, OnCurveDeleteFirstrow )
-	ON_COMMAND( ID_CURVE_DELETE_LASTCOLUMN, OnCurveDeleteLastcolumn )
-	ON_COMMAND( ID_CURVE_DELETE_LASTROW, OnCurveDeleteLastrow )
-	ON_COMMAND( ID_PATCH_BEND, OnPatchBend )
-	ON_COMMAND( ID_PATCH_INSDEL, OnPatchInsdel )
-	ON_COMMAND( ID_PATCH_ENTER, OnPatchEnter )
-	ON_COMMAND( ID_PATCH_TAB, OnPatchTab )
-	ON_COMMAND( ID_CURVE_PATCHDENSETUBE, OnCurvePatchdensetube )
-	ON_COMMAND( ID_CURVE_PATCHVERYDENSETUBE, OnCurvePatchverydensetube )
-	ON_COMMAND( ID_CURVE_CAP, OnCurveCap )
-	ON_COMMAND( ID_CURVE_CAP_INVERTEDBEVEL, OnCurveCapInvertedbevel )
-	ON_COMMAND( ID_CURVE_CAP_INVERTEDENDCAP, OnCurveCapInvertedendcap )
-	ON_COMMAND( ID_CURVE_REDISPERSE_COLS, OnCurveRedisperseCols )
-	ON_COMMAND( ID_CURVE_REDISPERSE_ROWS, OnCurveRedisperseRows )
-	ON_COMMAND( ID_PATCH_NATURALIZE, OnPatchNaturalize )
-	ON_COMMAND( ID_PATCH_NATURALIZEALT, OnPatchNaturalizeAlt )
-	ON_COMMAND( ID_SELECT_SNAPTOGRID, OnSnapToGrid )
-	ON_COMMAND( ID_CURVE_PATCHSQUARE, OnCurvePatchsquare )
-	ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_10, OnTexturesTexturewindowscale10 )
-	ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_100, OnTexturesTexturewindowscale100 )
-	ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_200, OnTexturesTexturewindowscale200 )
-	ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_25, OnTexturesTexturewindowscale25 )
-	ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_50, OnTexturesTexturewindowscale50 )
-	ON_COMMAND( ID_TEXTURES_FLUSH, OnTexturesFlush )
-	ON_COMMAND( ID_CURVE_OVERLAY_CLEAR, OnCurveOverlayClear )
-	ON_COMMAND( ID_CURVE_OVERLAY_SET, OnCurveOverlaySet )
-	ON_COMMAND( ID_CURVE_THICKEN, OnCurveThicken )
-	ON_COMMAND( ID_CURVE_CYCLECAP, OnCurveCyclecap )
-	ON_COMMAND( ID_CURVE_CYCLECAPALT, OnCurveCyclecapAlt )
-	ON_COMMAND( ID_CURVE_MATRIX_TRANSPOSE, OnCurveMatrixTranspose )
-	ON_COMMAND( ID_TEXTURES_RELOADSHADERS, OnTexturesReloadshaders )
-	ON_COMMAND( ID_SHOW_ENTITIES, OnShowEntities )
-	ON_COMMAND( ID_VIEW_ENTITIESAS_SKINNED, OnViewEntitiesasSkinned )
-	ON_COMMAND( ID_VIEW_ENTITIESAS_WIREFRAME, OnViewEntitiesasWireframe )
-	ON_COMMAND( ID_VIEW_SHOWHINT, OnViewShowhint )
-	ON_UPDATE_COMMAND_UI( ID_TEXTURES_SHOWINUSE, OnUpdateTexturesShowinuse )
-	ON_COMMAND( ID_TEXTURES_SHOWALL, OnTexturesShowall )
-	ON_COMMAND( ID_TEXTURES_HIDEALL, OnTexturesHideall )
-	ON_COMMAND( ID_PATCH_INSPECTOR, OnPatchInspector )
-	ON_COMMAND( ID_VIEW_OPENGLLIGHTING, OnViewOpengllighting )
-	ON_COMMAND( ID_SELECT_ALL, OnSelectAll )
-	ON_COMMAND( ID_VIEW_SHOWCAULK, OnViewShowcaulk )
-	ON_COMMAND( ID_CURVE_FREEZE, OnCurveFreeze )
-	ON_COMMAND( ID_CURVE_UNFREEZE, OnCurveUnFreeze )
-	ON_COMMAND( ID_CURVE_UNFREEZEALL, OnCurveUnFreezeAll )
-	ON_COMMAND( ID_SELECT_RESELECT, OnSelectReselect )
-	ON_COMMAND( ID_VIEW_SHOWANGLES, OnViewShowangles )
-	ON_COMMAND( ID_EDIT_SAVEPREFAB, OnEditSaveprefab )
-	ON_COMMAND( ID_CURVE_MOREENDCAPSBEVELS_SQUAREBEVEL, OnCurveMoreendcapsbevelsSquarebevel )
-	ON_COMMAND( ID_CURVE_MOREENDCAPSBEVELS_SQUAREENDCAP, OnCurveMoreendcapsbevelsSquareendcap )
-	ON_COMMAND( ID_BRUSH_PRIMITIVES_SPHERE, OnBrushPrimitivesSphere )
-	ON_COMMAND( ID_VIEW_CROSSHAIR, OnViewCrosshair )
-	ON_COMMAND( ID_VIEW_HIDESHOW_HIDESELECTED, OnViewHideshowHideselected )
-	ON_COMMAND( ID_VIEW_HIDESHOW_HIDENOTSELECTED, OnViewHideshowHideNotselected )
-	ON_COMMAND( ID_VIEW_HIDESHOW_SHOWHIDDEN, OnViewHideshowShowhidden )
-	ON_COMMAND( ID_TEXTURES_SHADERS_SHOW, OnTexturesShadersShow )
-	ON_COMMAND( ID_TEXTURES_FLUSH_UNUSED, OnTexturesFlushUnused )
-	ON_COMMAND( ID_PROJECTED_LIGHT, OnProjectedLight )
-	ON_COMMAND( ID_SHOW_LIGHTTEXTURES, OnShowLighttextures )
-	ON_COMMAND( ID_SHOW_LIGHTVOLUMES, OnShowLightvolumes )
-	ON_WM_ACTIVATE()
-	ON_COMMAND( ID_SPLINES_MODE, OnSplinesMode )
-	ON_COMMAND( ID_SPLINES_LOAD, OnSplinesLoad )
-	ON_COMMAND( ID_SPLINES_SAVE, OnSplinesSave )
-	//ON_COMMAND(ID_SPLINES_EDIT, OnSplinesEdit)
-	ON_COMMAND( ID_SPLINE_TEST, OnSplineTest )
-	ON_COMMAND( ID_POPUP_NEWCAMERA_INTERPOLATED, OnPopupNewcameraInterpolated )
-	ON_COMMAND( ID_POPUP_NEWCAMERA_SPLINE, OnPopupNewcameraSpline )
-	ON_COMMAND( ID_POPUP_NEWCAMERA_FIXED, OnPopupNewcameraFixed )
-	ON_COMMAND( ID_SELECTION_MOVEONLY, OnSelectionMoveonly )
-	ON_COMMAND( ID_SELECT_BRUSHESONLY, OnSelectBrushesOnly )
-	ON_COMMAND( ID_SELECT_BYBOUNDINGBRUSH, OnSelectByBoundingBrush )
-	ON_COMMAND( ID_SELECTION_COMBINE, OnSelectionCombine )
-	ON_COMMAND( ID_PATCH_COMBINE, OnPatchCombine )
-	ON_COMMAND( ID_SHOW_DOOM, OnShowDoom )
-	ON_COMMAND( ID_VIEW_RENDERMODE, OnViewRendermode )
-	ON_COMMAND( ID_VIEW_REBUILDRENDERDATA, OnViewRebuildrenderdata )
-	ON_COMMAND( ID_VIEW_REALTIMEREBUILD, OnViewRealtimerebuild )
-	ON_COMMAND( ID_VIEW_RENDERENTITYOUTLINES, OnViewRenderentityoutlines )
-	ON_COMMAND( ID_VIEW_MATERIALANIMATION, OnViewMaterialanimation )
-	ON_COMMAND( ID_SELECT_AXIALTEXTURE_BYWIDTH, OnAxialTextureByWidth )
-	ON_COMMAND( ID_SELECT_AXIALTEXTURE_BYHEIGHT, OnAxialTextureByHeight )
-	ON_COMMAND( ID_SELECT_AXIALTEXTURE_ARBITRARY, OnAxialTextureArbitrary )
-	ON_COMMAND( ID_SELECTION_EXPORT_TOOBJ, OnSelectionExportToobj )
-	ON_COMMAND( ID_SELECTION_EXPORT_TOCM, OnSelectionExportToCM )
-	ON_COMMAND( ID_VIEW_RENDERSELECTION, OnViewRenderselection )
-	ON_COMMAND( ID_SELECT_NOMODELS, OnSelectNomodels )
-	ON_COMMAND( ID_VIEW_SHOW_SHOWVISPORTALS, OnViewShowShowvisportals )
-	ON_COMMAND( ID_VIEW_SHOW_NODRAW, OnViewShowNoDraw )
-	ON_COMMAND( ID_VIEW_RENDERSOUND, OnViewRendersound )
-	ON_COMMAND( ID_SOUND_SHOWSOUNDVOLUMES, OnSoundShowsoundvolumes )
-	ON_COMMAND( ID_SOUND_SHOWSELECTEDSOUNDVOLUMES, OnSoundShowselectedsoundvolumes )
-	ON_COMMAND( ID_PATCH_NURBEDITOR, OnNurbEditor )
-	ON_COMMAND( ID_SELECT_COMPLETE_ENTITY, OnSelectCompleteEntity )
-	ON_COMMAND( ID_PRECISION_CURSOR_CYCLE , OnPrecisionCursorCycle )
-	ON_COMMAND( ID_MATERIALS_GENERATEMATERIALSLIST, OnGenerateMaterialsList )
-	ON_COMMAND( ID_SELECTION_VIEW_WIREFRAMEON, OnSelectionWireFrameOn )
-	ON_COMMAND( ID_SELECTION_VIEW_WIREFRAMEOFF, OnSelectionWireFrameOff )
-	ON_COMMAND( ID_SELECTION_VIEW_VISIBLEON, OnSelectionVisibleOn )
-	ON_COMMAND( ID_SELECTION_VIEW_VISIBLEOFF, OnSelectionVisibleOff )
-	//}}AFX_MSG_MAP
-	ON_COMMAND_RANGE( CMD_TEXTUREWAD, CMD_TEXTUREWAD_END, OnTextureWad )
-	ON_COMMAND_RANGE( CMD_BSPCOMMAND, CMD_BSPCOMMAND_END, OnBspCommand )
-	ON_COMMAND_RANGE( IDMRU, IDMRU_END, OnMru )
-	ON_COMMAND_RANGE( ID_VIEW_NEAREST, ID_TEXTURES_FLATSHADE, OnViewNearest )
-	ON_COMMAND_RANGE( ID_GRID_POINT0625, ID_GRID_64, OnGrid1 )
+ON_WM_PARENTNOTIFY()
+ON_WM_CREATE()
+ON_WM_TIMER()
+ON_WM_DESTROY()
+ON_WM_CLOSE()
+ON_WM_KEYDOWN()
+ON_WM_SIZE()
+ON_COMMAND( ID_VIEW_CAMERATOGGLE, ToggleCamera )
+ON_COMMAND( ID_FILE_CLOSE, OnFileClose )
+ON_COMMAND( ID_FILE_EXIT, OnFileExit )
+ON_COMMAND( ID_FILE_LOADPROJECT, OnFileLoadproject )
+ON_COMMAND( ID_FILE_NEW, OnFileNew )
+ON_COMMAND( ID_FILE_OPEN, OnFileOpen )
+ON_COMMAND( ID_FILE_POINTFILE, OnFilePointfile )
+ON_COMMAND( ID_FILE_PRINT, OnFilePrint )
+ON_COMMAND( ID_FILE_PRINT_PREVIEW, OnFilePrintPreview )
+ON_COMMAND( ID_FILE_SAVE, OnFileSave )
+ON_COMMAND( ID_FILE_SAVEAS, OnFileSaveas )
+ON_COMMAND( D3XP_ID_FILE_SAVE_COPY, OnFileSaveCopy )
+ON_COMMAND( D3XP_ID_SHOW_MODELS, OnViewShowModels )
+ON_COMMAND( ID_VIEW_100, OnView100 )
+ON_COMMAND( ID_VIEW_CENTER, OnViewCenter )
+ON_COMMAND( ID_VIEW_CONSOLE, OnViewConsole )
+ON_COMMAND( ID_VIEW_DOWNFLOOR, OnViewDownfloor )
+ON_COMMAND( ID_VIEW_ENTITY, OnViewEntity )
+ON_COMMAND( ID_VIEW_MEDIABROWSER, OnViewMediaBrowser )
+ON_COMMAND( ID_VIEW_FRONT, OnViewFront )
+ON_COMMAND( ID_VIEW_SHOWBLOCKS, OnViewShowblocks )
+ON_COMMAND( ID_VIEW_SHOWCLIP, OnViewShowclip )
+ON_COMMAND( ID_VIEW_SHOWTRIGGERS, OnViewShowTriggers )
+ON_COMMAND( ID_VIEW_SHOWCOORDINATES, OnViewShowcoordinates )
+ON_COMMAND( ID_VIEW_SHOWENT, OnViewShowent )
+ON_COMMAND( ID_VIEW_SHOWLIGHTS, OnViewShowlights )
+ON_COMMAND( ID_VIEW_SHOWNAMES, OnViewShownames )
+ON_COMMAND( ID_VIEW_SHOWPATH, OnViewShowpath )
+ON_COMMAND( ID_VIEW_SHOWCOMBATNODES, OnViewShowCombatNodes )
+ON_COMMAND( ID_VIEW_SHOWWATER, OnViewShowwater )
+ON_COMMAND( ID_VIEW_SHOWWORLD, OnViewShowworld )
+ON_COMMAND( ID_VIEW_TEXTURE, OnViewTexture )
+ON_COMMAND( ID_VIEW_UPFLOOR, OnViewUpfloor )
+ON_COMMAND( ID_VIEW_XY, OnViewXy )
+ON_COMMAND( ID_VIEW_Z100, OnViewZ100 )
+ON_COMMAND( ID_VIEW_ZOOMIN, OnViewZoomin )
+ON_COMMAND( ID_VIEW_ZOOMOUT, OnViewZoomout )
+ON_COMMAND( ID_VIEW_ZZOOMIN, OnViewZzoomin )
+ON_COMMAND( ID_VIEW_ZZOOMOUT, OnViewZzoomout )
+ON_COMMAND( ID_VIEW_SIDE, OnViewSide )
+ON_COMMAND( ID_TEXTURES_SHOWINUSE, OnTexturesShowinuse )
+ON_COMMAND( ID_TEXTURES_INSPECTOR, OnTexturesInspector )
+ON_COMMAND( ID_MISC_FINDBRUSH, OnMiscFindbrush )
+ON_COMMAND( ID_MISC_GAMMA, OnMiscGamma )
+ON_COMMAND( ID_MISC_NEXTLEAKSPOT, OnMiscNextleakspot )
+ON_COMMAND( ID_MISC_PREVIOUSLEAKSPOT, OnMiscPreviousleakspot )
+ON_COMMAND( ID_MISC_PRINTXY, OnMiscPrintxy )
+ON_COMMAND( ID_MISC_SELECTENTITYCOLOR, OnMiscSelectentitycolor )
+ON_COMMAND( ID_MISC_FINDORREPLACEENTITY, OnMiscFindOrReplaceEntity )
+ON_COMMAND( ID_MISC_FINDNEXTENT, OnMiscFindNextEntity )
+ON_COMMAND( ID_MISC_SETVIEWPOS, OnMiscSetViewPos )
+ON_COMMAND( ID_TEXTUREBK, OnTexturebk )
+ON_COMMAND( ID_COLORS_MAJOR, OnColorsMajor )
+ON_COMMAND( ID_COLORS_MINOR, OnColorsMinor )
+ON_COMMAND( ID_COLORS_XYBK, OnColorsXybk )
+ON_COMMAND( ID_BRUSH_3SIDED, OnBrush3sided )
+ON_COMMAND( ID_BRUSH_4SIDED, OnBrush4sided )
+ON_COMMAND( ID_BRUSH_5SIDED, OnBrush5sided )
+ON_COMMAND( ID_BRUSH_6SIDED, OnBrush6sided )
+ON_COMMAND( ID_BRUSH_7SIDED, OnBrush7sided )
+ON_COMMAND( ID_BRUSH_8SIDED, OnBrush8sided )
+ON_COMMAND( ID_BRUSH_9SIDED, OnBrush9sided )
+ON_COMMAND( ID_BRUSH_ARBITRARYSIDED, OnBrushArbitrarysided )
+ON_COMMAND( ID_BRUSH_FLIPX, OnBrushFlipx )
+ON_COMMAND( ID_BRUSH_FLIPY, OnBrushFlipy )
+ON_COMMAND( ID_BRUSH_FLIPZ, OnBrushFlipz )
+ON_COMMAND( ID_BRUSH_ROTATEX, OnBrushRotatex )
+ON_COMMAND( ID_BRUSH_ROTATEY, OnBrushRotatey )
+ON_COMMAND( ID_BRUSH_ROTATEZ, OnBrushRotatez )
+ON_COMMAND( ID_REGION_OFF, OnRegionOff )
+ON_COMMAND( ID_REGION_SETBRUSH, OnRegionSetbrush )
+ON_COMMAND( ID_REGION_SETSELECTION, OnRegionSetselection )
+ON_COMMAND( ID_REGION_SETTALLBRUSH, OnRegionSettallbrush )
+ON_COMMAND( ID_REGION_SETXY, OnRegionSetxy )
+ON_COMMAND( ID_SELECTION_ARBITRARYROTATION, OnSelectionArbitraryrotation )
+ON_COMMAND( ID_SELECTION_CLONE, OnSelectionClone )
+ON_COMMAND( ID_SELECTION_CONNECT, OnSelectionConnect )
+ON_COMMAND( ID_SELECTION_CSGSUBTRACT, OnSelectionCsgsubtract )
+ON_COMMAND( ID_SELECTION_CSGMERGE, OnSelectionCsgmerge )
+ON_COMMAND( ID_SELECTION_DELETE, OnSelectionDelete )
+ON_COMMAND( ID_SELECTION_DESELECT, OnSelectionDeselect )
+ON_COMMAND( ID_SELECTION_DRAGEDGES, OnSelectionDragedges )
+ON_COMMAND( ID_SELECTION_DRAGVERTECIES, OnSelectionDragvertecies )
+ON_COMMAND( ID_SELECTION_CENTER_ORIGIN, OnSelectionCenterOrigin )
+ON_COMMAND( ID_SELECTION_MAKEHOLLOW, OnSelectionMakehollow )
+ON_COMMAND( ID_SELECTION_SELECTCOMPLETETALL, OnSelectionSelectcompletetall )
+ON_COMMAND( ID_SELECTION_SELECTINSIDE, OnSelectionSelectinside )
+ON_COMMAND( ID_SELECTION_SELECTPARTIALTALL, OnSelectionSelectpartialtall )
+ON_COMMAND( ID_SELECTION_SELECTTOUCHING, OnSelectionSelecttouching )
+ON_COMMAND( ID_SELECTION_UNGROUPENTITY, OnSelectionUngroupentity )
+ON_COMMAND( ID_TEXTURES_POPUP, OnTexturesPopup )
+ON_COMMAND( ID_SPLINES_POPUP, OnSplinesPopup )
+ON_COMMAND( ID_SPLINES_EDITPOINTS, OnSplinesEditPoints )
+ON_COMMAND( ID_SPLINES_ADDPOINTS, OnSplinesAddPoints )
+ON_COMMAND( ID_SPLINES_INSERTPOINTS, OnSplinesInsertPoint )
+ON_COMMAND( ID_SPLINES_DELETEPOINTS, OnSplinesDeletePoint )
+ON_COMMAND( ID_POPUP_SELECTION, OnPopupSelection )
+ON_COMMAND( ID_VIEW_CHANGE, OnViewChange )
+ON_COMMAND( ID_VIEW_CAMERAUPDATE, OnViewCameraupdate )
+ON_WM_SIZING()
+ON_COMMAND( ID_HELP_ABOUT, OnHelpAbout )
+ON_COMMAND( ID_VIEW_CLIPPER, OnViewClipper )
+ON_COMMAND( ID_CAMERA_ANGLEDOWN, OnCameraAngledown )
+ON_COMMAND( ID_CAMERA_ANGLEUP, OnCameraAngleup )
+ON_COMMAND( ID_CAMERA_BACK, OnCameraBack )
+ON_COMMAND( ID_CAMERA_DOWN, OnCameraDown )
+ON_COMMAND( ID_CAMERA_FORWARD, OnCameraForward )
+ON_COMMAND( ID_CAMERA_LEFT, OnCameraLeft )
+ON_COMMAND( ID_CAMERA_RIGHT, OnCameraRight )
+ON_COMMAND( ID_CAMERA_STRAFELEFT, OnCameraStrafeleft )
+ON_COMMAND( ID_CAMERA_STRAFERIGHT, OnCameraStraferight )
+ON_COMMAND( ID_CAMERA_UP, OnCameraUp )
+ON_COMMAND( ID_GRID_TOGGLE, OnGridToggle )
+ON_COMMAND( ID_PREFS, OnPrefs )
+ON_COMMAND( ID_TOGGLECAMERA, OnTogglecamera )
+ON_COMMAND( ID_TOGGLEVIEW, OnToggleview )
+ON_COMMAND( ID_TOGGLEZ, OnTogglez )
+ON_COMMAND( ID_TOGGLE_LOCK, OnToggleLock )
+ON_COMMAND( ID_EDIT_MAPINFO, OnEditMapinfo )
+ON_COMMAND( ID_EDIT_ENTITYINFO, OnEditEntityinfo )
+ON_COMMAND( ID_VIEW_NEXTVIEW, OnViewNextview )
+ON_COMMAND( ID_HELP_COMMANDLIST, OnHelpCommandlist )
+ON_COMMAND( ID_FILE_NEWPROJECT, OnFileNewproject )
+ON_COMMAND( ID_FLIP_CLIP, OnFlipClip )
+ON_COMMAND( ID_CLIP_SELECTED, OnClipSelected )
+ON_COMMAND( ID_SPLIT_SELECTED, OnSplitSelected )
+ON_COMMAND( ID_TOGGLEVIEW_XZ, OnToggleviewXz )
+ON_COMMAND( ID_TOGGLEVIEW_YZ, OnToggleviewYz )
+ON_COMMAND( ID_COLORS_BRUSH, OnColorsBrush )
+ON_COMMAND( ID_COLORS_CLIPPER, OnColorsClipper )
+ON_COMMAND( ID_COLORS_GRIDTEXT, OnColorsGridtext )
+ON_COMMAND( ID_COLORS_SELECTEDBRUSH, OnColorsSelectedbrush )
+ON_COMMAND( ID_COLORS_GRIDBLOCK, OnColorsGridblock )
+ON_COMMAND( ID_COLORS_VIEWNAME, OnColorsViewname )
+ON_COMMAND( ID_COLOR_SETORIGINAL, OnColorSetoriginal )
+ON_COMMAND( ID_COLOR_SETQER, OnColorSetqer )
+ON_COMMAND( ID_COLOR_SUPERMAL, OnColorSetSuperMal )
+ON_COMMAND( ID_THEMES_MAX, OnColorSetMax )
+ON_COMMAND( ID_COLOR_SETBLACK, OnColorSetblack )
+ON_COMMAND( ID_SNAPTOGRID, OnSnaptogrid )
+ON_COMMAND( ID_SELECT_SCALE, OnSelectScale )
+ON_COMMAND( ID_SELECT_MOUSEROTATE, OnSelectMouserotate )
+ON_COMMAND( ID_EDIT_COPYBRUSH, OnEditCopybrush )
+ON_COMMAND( ID_EDIT_PASTEBRUSH, OnEditPastebrush )
+ON_COMMAND( ID_EDIT_UNDO, OnEditUndo )
+ON_COMMAND( ID_EDIT_REDO, OnEditRedo )
+ON_UPDATE_COMMAND_UI( ID_EDIT_UNDO, OnUpdateEditUndo )
+ON_UPDATE_COMMAND_UI( ID_EDIT_REDO, OnUpdateEditRedo )
+ON_COMMAND( ID_SELECTION_INVERT, OnSelectionInvert )
+ON_COMMAND( ID_SELECTION_TEXTURE_DEC, OnSelectionTextureDec )
+ON_COMMAND( ID_SELECTION_TEXTURE_FIT, OnSelectionTextureFit )
+ON_COMMAND( ID_SELECTION_TEXTURE_INC, OnSelectionTextureInc )
+ON_COMMAND( ID_SELECTION_TEXTURE_ROTATECLOCK, OnSelectionTextureRotateclock )
+ON_COMMAND( ID_SELECTION_TEXTURE_ROTATECOUNTER, OnSelectionTextureRotatecounter )
+ON_COMMAND( ID_SELECTION_TEXTURE_SCALEDOWN, OnSelectionTextureScaledown )
+ON_COMMAND( ID_SELECTION_TEXTURE_SCALEUP, OnSelectionTextureScaleup )
+ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTDOWN, OnSelectionTextureShiftdown )
+ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTLEFT, OnSelectionTextureShiftleft )
+ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTRIGHT, OnSelectionTextureShiftright )
+ON_COMMAND( ID_SELECTION_TEXTURE_SHIFTUP, OnSelectionTextureShiftup )
+ON_COMMAND( ID_GRID_NEXT, OnGridNext )
+ON_COMMAND( ID_GRID_PREV, OnGridPrev )
+ON_COMMAND( ID_SELECTION_TEXTURE_SCALELEFT, OnSelectionTextureScaleLeft )
+ON_COMMAND( ID_SELECTION_TEXTURE_SCALERIGHT, OnSelectionTextureScaleRight )
+ON_COMMAND( ID_TEXTURE_REPLACEALL, OnTextureReplaceall )
+ON_COMMAND( ID_SCALELOCKX, OnScalelockx )
+ON_COMMAND( ID_SCALELOCKY, OnScalelocky )
+ON_COMMAND( ID_SCALELOCKZ, OnScalelockz )
+ON_COMMAND( ID_SELECT_MOUSESCALE, OnSelectMousescale )
+ON_COMMAND( ID_VIEW_CUBICCLIPPING, OnViewCubicclipping )
+ON_COMMAND( ID_FILE_IMPORT, OnFileImport )
+ON_COMMAND( ID_FILE_PROJECTSETTINGS, OnFileProjectsettings )
+ON_UPDATE_COMMAND_UI( ID_FILE_IMPORT, OnUpdateFileImport )
+ON_COMMAND( ID_VIEW_CUBEIN, OnViewCubein )
+ON_COMMAND( ID_VIEW_CUBEOUT, OnViewCubeout )
+ON_COMMAND( ID_FILE_SAVEREGION, OnFileSaveregion )
+ON_UPDATE_COMMAND_UI( ID_FILE_SAVEREGION, OnUpdateFileSaveregion )
+ON_COMMAND( ID_SELECTION_MOVEDOWN, OnSelectionMovedown )
+ON_COMMAND( ID_SELECTION_MOVEUP, OnSelectionMoveup )
+ON_COMMAND( ID_TOOLBAR_MAIN, OnToolbarMain )
+ON_COMMAND( ID_TOOLBAR_TEXTURE, OnToolbarTexture )
+ON_COMMAND( ID_SELECTION_PRINT, OnSelectionPrint )
+ON_COMMAND( ID_SELECTION_TOGGLESIZEPAINT, OnSelectionTogglesizepaint )
+ON_COMMAND( ID_BRUSH_MAKECONE, OnBrushMakecone )
+ON_COMMAND( ID_TEXTURES_LOAD, OnTexturesLoad )
+ON_COMMAND( ID_TOGGLE_ROTATELOCK, OnToggleRotatelock )
+ON_COMMAND( ID_CURVE_BEVEL, OnCurveBevel )
+ON_COMMAND( ID_CURVE_INCREASE_VERT, OnCurveIncreaseVert )
+ON_COMMAND( ID_CURVE_DECREASE_VERT, OnCurveDecreaseVert )
+ON_COMMAND( ID_CURVE_INCREASE_HORZ, OnCurveIncreaseHorz )
+ON_COMMAND( ID_CURVE_DECREASE_HORZ, OnCurveDecreaseHorz )
+ON_COMMAND( ID_CURVE_CYLINDER, OnCurveCylinder )
+ON_COMMAND( ID_CURVE_EIGHTHSPHERE, OnCurveEighthsphere )
+ON_COMMAND( ID_CURVE_ENDCAP, OnCurveEndcap )
+ON_COMMAND( ID_CURVE_HEMISPHERE, OnCurveHemisphere )
+ON_COMMAND( ID_CURVE_INVERTCURVE, OnCurveInvertcurve )
+ON_COMMAND( ID_CURVE_QUARTER, OnCurveQuarter )
+ON_COMMAND( ID_CURVE_SPHERE, OnCurveSphere )
+ON_COMMAND( ID_FILE_IMPORTMAP, OnFileImportmap )
+ON_COMMAND( ID_FILE_EXPORTMAP, OnFileExportmap )
+ON_COMMAND( ID_EDIT_LOADPREFAB, OnEditLoadprefab )
+ON_COMMAND( ID_VIEW_SHOWCURVES, OnViewShowcurves )
+ON_COMMAND( ID_SELECTION_SELECT_NUDGEDOWN, OnSelectionSelectNudgedown )
+ON_COMMAND( ID_SELECTION_SELECT_NUDGELEFT, OnSelectionSelectNudgeleft )
+ON_COMMAND( ID_SELECTION_SELECT_NUDGERIGHT, OnSelectionSelectNudgeright )
+ON_COMMAND( ID_SELECTION_SELECT_NUDGEUP, OnSelectionSelectNudgeup )
+ON_WM_SYSKEYDOWN()
+ON_COMMAND( ID_TEXTURES_LOADLIST, OnTexturesLoadlist )
+ON_COMMAND( ID_DYNAMIC_LIGHTING, OnDynamicLighting )
+ON_COMMAND( ID_CURVE_SIMPLEPATCHMESH, OnCurveSimplepatchmesh )
+ON_COMMAND( ID_PATCH_SHOWBOUNDINGBOX, OnPatchToggleBox )
+ON_COMMAND( ID_PATCH_WIREFRAME, OnPatchWireframe )
+ON_COMMAND( ID_CURVE_PATCHCONE, OnCurvePatchcone )
+ON_COMMAND( ID_CURVE_PATCHTUBE, OnCurvePatchtube )
+ON_COMMAND( ID_PATCH_WELD, OnPatchWeld )
+ON_COMMAND( ID_CURVE_PATCHBEVEL, OnCurvePatchbevel )
+ON_COMMAND( ID_CURVE_PATCHENDCAP, OnCurvePatchendcap )
+ON_COMMAND( ID_CURVE_PATCHINVERTEDBEVEL, OnCurvePatchinvertedbevel )
+ON_COMMAND( ID_CURVE_PATCHINVERTEDENDCAP, OnCurvePatchinvertedendcap )
+ON_COMMAND( ID_PATCH_DRILLDOWN, OnPatchDrilldown )
+ON_COMMAND( ID_CURVE_INSERTCOLUMN, OnCurveInsertcolumn )
+ON_COMMAND( ID_CURVE_INSERTROW, OnCurveInsertrow )
+ON_COMMAND( ID_CURVE_DELETECOLUMN, OnCurveDeletecolumn )
+ON_COMMAND( ID_CURVE_DELETEROW, OnCurveDeleterow )
+ON_COMMAND( ID_CURVE_INSERT_ADDCOLUMN, OnCurveInsertAddcolumn )
+ON_COMMAND( ID_CURVE_INSERT_ADDROW, OnCurveInsertAddrow )
+ON_COMMAND( ID_CURVE_INSERT_INSERTCOLUMN, OnCurveInsertInsertcolumn )
+ON_COMMAND( ID_CURVE_INSERT_INSERTROW, OnCurveInsertInsertrow )
+ON_COMMAND( ID_CURVE_NEGATIVE, OnCurveNegative )
+ON_COMMAND( ID_CURVE_NEGATIVETEXTUREX, OnCurveNegativeTextureX )
+ON_COMMAND( ID_CURVE_NEGATIVETEXTUREY, OnCurveNegativeTextureY )
+ON_COMMAND( ID_CURVE_DELETE_FIRSTCOLUMN, OnCurveDeleteFirstcolumn )
+ON_COMMAND( ID_CURVE_DELETE_FIRSTROW, OnCurveDeleteFirstrow )
+ON_COMMAND( ID_CURVE_DELETE_LASTCOLUMN, OnCurveDeleteLastcolumn )
+ON_COMMAND( ID_CURVE_DELETE_LASTROW, OnCurveDeleteLastrow )
+ON_COMMAND( ID_PATCH_BEND, OnPatchBend )
+ON_COMMAND( ID_PATCH_INSDEL, OnPatchInsdel )
+ON_COMMAND( ID_PATCH_ENTER, OnPatchEnter )
+ON_COMMAND( ID_PATCH_TAB, OnPatchTab )
+ON_COMMAND( ID_CURVE_PATCHDENSETUBE, OnCurvePatchdensetube )
+ON_COMMAND( ID_CURVE_PATCHVERYDENSETUBE, OnCurvePatchverydensetube )
+ON_COMMAND( ID_CURVE_CAP, OnCurveCap )
+ON_COMMAND( ID_CURVE_CAP_INVERTEDBEVEL, OnCurveCapInvertedbevel )
+ON_COMMAND( ID_CURVE_CAP_INVERTEDENDCAP, OnCurveCapInvertedendcap )
+ON_COMMAND( ID_CURVE_REDISPERSE_COLS, OnCurveRedisperseCols )
+ON_COMMAND( ID_CURVE_REDISPERSE_ROWS, OnCurveRedisperseRows )
+ON_COMMAND( ID_PATCH_NATURALIZE, OnPatchNaturalize )
+ON_COMMAND( ID_PATCH_NATURALIZEALT, OnPatchNaturalizeAlt )
+ON_COMMAND( ID_SELECT_SNAPTOGRID, OnSnapToGrid )
+ON_COMMAND( ID_CURVE_PATCHSQUARE, OnCurvePatchsquare )
+ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_10, OnTexturesTexturewindowscale10 )
+ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_100, OnTexturesTexturewindowscale100 )
+ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_200, OnTexturesTexturewindowscale200 )
+ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_25, OnTexturesTexturewindowscale25 )
+ON_COMMAND( ID_TEXTURES_TEXTUREWINDOWSCALE_50, OnTexturesTexturewindowscale50 )
+ON_COMMAND( ID_TEXTURES_FLUSH, OnTexturesFlush )
+ON_COMMAND( ID_CURVE_OVERLAY_CLEAR, OnCurveOverlayClear )
+ON_COMMAND( ID_CURVE_OVERLAY_SET, OnCurveOverlaySet )
+ON_COMMAND( ID_CURVE_THICKEN, OnCurveThicken )
+ON_COMMAND( ID_CURVE_CYCLECAP, OnCurveCyclecap )
+ON_COMMAND( ID_CURVE_CYCLECAPALT, OnCurveCyclecapAlt )
+ON_COMMAND( ID_CURVE_MATRIX_TRANSPOSE, OnCurveMatrixTranspose )
+ON_COMMAND( ID_TEXTURES_RELOADSHADERS, OnTexturesReloadshaders )
+ON_COMMAND( ID_SHOW_ENTITIES, OnShowEntities )
+ON_COMMAND( ID_VIEW_ENTITIESAS_SKINNED, OnViewEntitiesasSkinned )
+ON_COMMAND( ID_VIEW_ENTITIESAS_WIREFRAME, OnViewEntitiesasWireframe )
+ON_COMMAND( ID_VIEW_SHOWHINT, OnViewShowhint )
+ON_UPDATE_COMMAND_UI( ID_TEXTURES_SHOWINUSE, OnUpdateTexturesShowinuse )
+ON_COMMAND( ID_TEXTURES_SHOWALL, OnTexturesShowall )
+ON_COMMAND( ID_TEXTURES_HIDEALL, OnTexturesHideall )
+ON_COMMAND( ID_PATCH_INSPECTOR, OnPatchInspector )
+ON_COMMAND( ID_VIEW_OPENGLLIGHTING, OnViewOpengllighting )
+ON_COMMAND( ID_SELECT_ALL, OnSelectAll )
+ON_COMMAND( ID_VIEW_SHOWCAULK, OnViewShowcaulk )
+ON_COMMAND( ID_CURVE_FREEZE, OnCurveFreeze )
+ON_COMMAND( ID_CURVE_UNFREEZE, OnCurveUnFreeze )
+ON_COMMAND( ID_CURVE_UNFREEZEALL, OnCurveUnFreezeAll )
+ON_COMMAND( ID_SELECT_RESELECT, OnSelectReselect )
+ON_COMMAND( ID_VIEW_SHOWANGLES, OnViewShowangles )
+ON_COMMAND( ID_EDIT_SAVEPREFAB, OnEditSaveprefab )
+ON_COMMAND( ID_CURVE_MOREENDCAPSBEVELS_SQUAREBEVEL, OnCurveMoreendcapsbevelsSquarebevel )
+ON_COMMAND( ID_CURVE_MOREENDCAPSBEVELS_SQUAREENDCAP, OnCurveMoreendcapsbevelsSquareendcap )
+ON_COMMAND( ID_BRUSH_PRIMITIVES_SPHERE, OnBrushPrimitivesSphere )
+ON_COMMAND( ID_VIEW_CROSSHAIR, OnViewCrosshair )
+ON_COMMAND( ID_VIEW_HIDESHOW_HIDESELECTED, OnViewHideshowHideselected )
+ON_COMMAND( ID_VIEW_HIDESHOW_HIDENOTSELECTED, OnViewHideshowHideNotselected )
+ON_COMMAND( ID_VIEW_HIDESHOW_SHOWHIDDEN, OnViewHideshowShowhidden )
+ON_COMMAND( ID_TEXTURES_SHADERS_SHOW, OnTexturesShadersShow )
+ON_COMMAND( ID_TEXTURES_FLUSH_UNUSED, OnTexturesFlushUnused )
+ON_COMMAND( ID_PROJECTED_LIGHT, OnProjectedLight )
+ON_COMMAND( ID_SHOW_LIGHTTEXTURES, OnShowLighttextures )
+ON_COMMAND( ID_SHOW_LIGHTVOLUMES, OnShowLightvolumes )
+ON_WM_ACTIVATE()
+ON_COMMAND( ID_SPLINES_MODE, OnSplinesMode )
+ON_COMMAND( ID_SPLINES_LOAD, OnSplinesLoad )
+ON_COMMAND( ID_SPLINES_SAVE, OnSplinesSave )
+// ON_COMMAND(ID_SPLINES_EDIT, OnSplinesEdit)
+ON_COMMAND( ID_SPLINE_TEST, OnSplineTest )
+ON_COMMAND( ID_POPUP_NEWCAMERA_INTERPOLATED, OnPopupNewcameraInterpolated )
+ON_COMMAND( ID_POPUP_NEWCAMERA_SPLINE, OnPopupNewcameraSpline )
+ON_COMMAND( ID_POPUP_NEWCAMERA_FIXED, OnPopupNewcameraFixed )
+ON_COMMAND( ID_SELECTION_MOVEONLY, OnSelectionMoveonly )
+ON_COMMAND( ID_SELECT_BRUSHESONLY, OnSelectBrushesOnly )
+ON_COMMAND( ID_SELECT_BYBOUNDINGBRUSH, OnSelectByBoundingBrush )
+ON_COMMAND( ID_SELECTION_COMBINE, OnSelectionCombine )
+ON_COMMAND( ID_PATCH_COMBINE, OnPatchCombine )
+ON_COMMAND( ID_SHOW_DOOM, OnShowDoom )
+ON_COMMAND( ID_VIEW_RENDERMODE, OnViewRendermode )
+ON_COMMAND( ID_VIEW_REBUILDRENDERDATA, OnViewRebuildrenderdata )
+ON_COMMAND( ID_VIEW_REALTIMEREBUILD, OnViewRealtimerebuild )
+ON_COMMAND( ID_VIEW_RENDERENTITYOUTLINES, OnViewRenderentityoutlines )
+ON_COMMAND( ID_VIEW_MATERIALANIMATION, OnViewMaterialanimation )
+ON_COMMAND( ID_SELECT_AXIALTEXTURE_BYWIDTH, OnAxialTextureByWidth )
+ON_COMMAND( ID_SELECT_AXIALTEXTURE_BYHEIGHT, OnAxialTextureByHeight )
+ON_COMMAND( ID_SELECT_AXIALTEXTURE_ARBITRARY, OnAxialTextureArbitrary )
+ON_COMMAND( ID_SELECTION_EXPORT_TOOBJ, OnSelectionExportToobj )
+ON_COMMAND( ID_SELECTION_EXPORT_TOCM, OnSelectionExportToCM )
+ON_COMMAND( ID_VIEW_RENDERSELECTION, OnViewRenderselection )
+ON_COMMAND( ID_SELECT_NOMODELS, OnSelectNomodels )
+ON_COMMAND( ID_VIEW_SHOW_SHOWVISPORTALS, OnViewShowShowvisportals )
+ON_COMMAND( ID_VIEW_SHOW_NODRAW, OnViewShowNoDraw )
+ON_COMMAND( ID_VIEW_RENDERSOUND, OnViewRendersound )
+ON_COMMAND( ID_SOUND_SHOWSOUNDVOLUMES, OnSoundShowsoundvolumes )
+ON_COMMAND( ID_SOUND_SHOWSELECTEDSOUNDVOLUMES, OnSoundShowselectedsoundvolumes )
+ON_COMMAND( ID_PATCH_NURBEDITOR, OnNurbEditor )
+ON_COMMAND( ID_SELECT_COMPLETE_ENTITY, OnSelectCompleteEntity )
+ON_COMMAND( ID_PRECISION_CURSOR_CYCLE, OnPrecisionCursorCycle )
+ON_COMMAND( ID_MATERIALS_GENERATEMATERIALSLIST, OnGenerateMaterialsList )
+ON_COMMAND( ID_SELECTION_VIEW_WIREFRAMEON, OnSelectionWireFrameOn )
+ON_COMMAND( ID_SELECTION_VIEW_WIREFRAMEOFF, OnSelectionWireFrameOff )
+ON_COMMAND( ID_SELECTION_VIEW_VISIBLEON, OnSelectionVisibleOn )
+ON_COMMAND( ID_SELECTION_VIEW_VISIBLEOFF, OnSelectionVisibleOff )
+//}}AFX_MSG_MAP
+ON_COMMAND_RANGE( CMD_TEXTUREWAD, CMD_TEXTUREWAD_END, OnTextureWad )
+ON_COMMAND_RANGE( CMD_BSPCOMMAND, CMD_BSPCOMMAND_END, OnBspCommand )
+ON_COMMAND_RANGE( IDMRU, IDMRU_END, OnMru )
+ON_COMMAND_RANGE( ID_VIEW_NEAREST, ID_TEXTURES_FLATSHADE, OnViewNearest )
+ON_COMMAND_RANGE( ID_GRID_POINT0625, ID_GRID_64, OnGrid1 )
 #if _MSC_VER < 1300
-	ON_REGISTERED_MESSAGE( g_msgBSPDone, OnBSPDone )
-	ON_REGISTERED_MESSAGE( g_msgBSPStatus, OnBSPStatus )
-	ON_MESSAGE( WM_DISPLAYCHANGE, OnDisplayChange )
+ON_REGISTERED_MESSAGE( g_msgBSPDone, OnBSPDone )
+ON_REGISTERED_MESSAGE( g_msgBSPStatus, OnBSPStatus )
+ON_MESSAGE( WM_DISPLAYCHANGE, OnDisplayChange )
 #endif
-	ON_COMMAND( ID_AUTOCAULK, OnAutocaulk )
-	ON_UPDATE_COMMAND_UI( ID_AUTOCAULK, OnUpdateAutocaulk )
-	ON_COMMAND( ID_SELECT_ALLTARGETS, OnSelectAlltargets )
+ON_COMMAND( ID_AUTOCAULK, OnAutocaulk )
+ON_UPDATE_COMMAND_UI( ID_AUTOCAULK, OnUpdateAutocaulk )
+ON_COMMAND( ID_SELECT_ALLTARGETS, OnSelectAlltargets )
 END_MESSAGE_MAP()
-static UINT indicators[] =
-{
-	ID_SEPARATOR,	// status line indicator
-	ID_SEPARATOR,	// status line indicator
-	ID_SEPARATOR,	// status line indicator
-	ID_SEPARATOR,	// status line indicator
-	ID_SEPARATOR,	// status line indicator
-	ID_SEPARATOR,	// status line indicator
+static UINT indicators[] = {
+	ID_SEPARATOR, // status line indicator
+	ID_SEPARATOR, // status line indicator
+	ID_SEPARATOR, // status line indicator
+	ID_SEPARATOR, // status line indicator
+	ID_SEPARATOR, // status line indicator
+	ID_SEPARATOR, // status line indicator
 };
 
 /*
@@ -730,8 +726,7 @@ void CMainFrame::OnBSPStatus( UINT wParam, long lParam )
 {
 	// lparam is an atom contain the text
 	char buff[1024];
-	if( ::GlobalGetAtomName( static_cast<ATOM>( lParam ), buff, sizeof( buff ) ) )
-	{
+	if( ::GlobalGetAtomName( static_cast<ATOM>( lParam ), buff, sizeof( buff ) ) ) {
 		common->Printf( "%s", buff );
 		::GlobalDeleteAtom( static_cast<ATOM>( lParam ) );
 	}
@@ -744,8 +739,7 @@ void CMainFrame::OnBSPStatus( UINT wParam, long lParam )
 void CMainFrame::OnBSPDone( UINT wParam, long lParam )
 {
 	idStr str = cvarSystem->GetCVarString( "radiant_bspdone" );
-	if( str.Length() )
-	{
+	if( str.Length() ) {
 		sndPlaySound( str.c_str(), SND_FILENAME | SND_ASYNC );
 	}
 }
@@ -757,16 +751,16 @@ void CMainFrame::OnBSPDone( UINT wParam, long lParam )
 //
 CMainFrame::CMainFrame()
 {
-	m_bDoLoop = false;
-	g_pParentWnd = this;
-	m_pXYWnd = NULL;
-	m_pCamWnd = NULL;
-	m_pZWnd = NULL;
-	m_pYZWnd = NULL;
-	m_pXZWnd = NULL;
-	m_pActiveXY = NULL;
+	m_bDoLoop	  = false;
+	g_pParentWnd  = this;
+	m_pXYWnd	  = NULL;
+	m_pCamWnd	  = NULL;
+	m_pZWnd		  = NULL;
+	m_pYZWnd	  = NULL;
+	m_pXZWnd	  = NULL;
+	m_pActiveXY	  = NULL;
 	m_bCamPreview = true;
-	nurbMode = 0;
+	nurbMode	  = 0;
 }
 
 /*
@@ -784,19 +778,13 @@ CMainFrame::~CMainFrame()
 void HandlePopup( CWnd* pWindow, unsigned int uId )
 {
 	// Get the current position of the mouse
-	CPoint	ptMouse;
+	CPoint ptMouse;
 	GetCursorPos( &ptMouse );
 
 	// Load up a menu that has the options we are looking for in it
-	CMenu	mnuPopup;
+	CMenu mnuPopup;
 	VERIFY( mnuPopup.LoadMenu( uId ) );
-	mnuPopup.GetSubMenu( 0 )->TrackPopupMenu
-	(
-		TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
-		ptMouse.x,
-		ptMouse.y,
-		pWindow
-	);
+	mnuPopup.GetSubMenu( 0 )->TrackPopupMenu( TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON, ptMouse.x, ptMouse.y, pWindow );
 	mnuPopup.DestroyMenu();
 
 	// Set focus back to window
@@ -817,9 +805,8 @@ void CMainFrame::OnParentNotify( UINT message, LPARAM lParam )
  */
 void CMainFrame::SetButtonMenuStates()
 {
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
 		//
 		pMenu->CheckMenuItem( ID_VIEW_SHOWNAMES, MF_BYCOMMAND | MF_CHECKED );
 		pMenu->CheckMenuItem( ID_VIEW_SHOWCOORDINATES, MF_BYCOMMAND | MF_CHECKED );
@@ -837,111 +824,78 @@ void CMainFrame::SetButtonMenuStates()
 		pMenu->CheckMenuItem( ID_VIEW_SHOW_NODRAW, MF_BYCOMMAND | MF_CHECKED );
 		pMenu->CheckMenuItem( ID_VIEW_SHOWANGLES, MF_BYCOMMAND | MF_CHECKED );
 
-		if( !g_qeglobals.d_savedinfo.show_names )
-		{
+		if( !g_qeglobals.d_savedinfo.show_names ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWNAMES, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( !g_qeglobals.d_savedinfo.show_coordinates )
-		{
+		if( !g_qeglobals.d_savedinfo.show_coordinates ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWCOORDINATES, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_LIGHTS )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_LIGHTS ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWLIGHTS, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_COMBATNODES )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_COMBATNODES ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWCOMBATNODES, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ENT )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ENT ) {
 			pMenu->CheckMenuItem( ID_VIEW_ENTITY, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_PATHS )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_PATHS ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWPATH, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_DYNAMICS )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_DYNAMICS ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWWATER, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_WORLD )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_WORLD ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWWORLD, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_CLIP )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_CLIP ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWCLIP, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_TRIGGERS )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_TRIGGERS ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWTRIGGERS, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_HINT )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_HINT ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWHINT, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_CAULK )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_CAULK ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWCAULK, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_VISPORTALS )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_VISPORTALS ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOW_SHOWVISPORTALS, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_NODRAW )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_NODRAW ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOW_NODRAW, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
-		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ANGLES )
-		{
+		if( g_qeglobals.d_savedinfo.exclude & EXCLUDE_ANGLES ) {
 			pMenu->CheckMenuItem( ID_VIEW_SHOWANGLES, MF_BYCOMMAND | MF_UNCHECKED );
 		}
 
 		pMenu->CheckMenuItem( ID_TOGGLE_LOCK, MF_BYCOMMAND | ( g_PrefsDlg.m_bTextureLock ) ? MF_CHECKED : MF_UNCHECKED );
-		pMenu->CheckMenuItem
-		(
-			ID_TOGGLE_ROTATELOCK,
-			MF_BYCOMMAND | ( g_PrefsDlg.m_bRotateLock ) ? MF_CHECKED : MF_UNCHECKED
-		);
-		pMenu->CheckMenuItem
-		(
-			ID_VIEW_CUBICCLIPPING,
-			MF_BYCOMMAND | ( g_PrefsDlg.m_bCubicClipping ) ? MF_CHECKED : MF_UNCHECKED
-		);
-		pMenu->CheckMenuItem
-		(
-			ID_VIEW_OPENGLLIGHTING,
-			MF_BYCOMMAND | ( g_PrefsDlg.m_bGLLighting ) ? MF_CHECKED : MF_UNCHECKED
-		);
+		pMenu->CheckMenuItem( ID_TOGGLE_ROTATELOCK, MF_BYCOMMAND | ( g_PrefsDlg.m_bRotateLock ) ? MF_CHECKED : MF_UNCHECKED );
+		pMenu->CheckMenuItem( ID_VIEW_CUBICCLIPPING, MF_BYCOMMAND | ( g_PrefsDlg.m_bCubicClipping ) ? MF_CHECKED : MF_UNCHECKED );
+		pMenu->CheckMenuItem( ID_VIEW_OPENGLLIGHTING, MF_BYCOMMAND | ( g_PrefsDlg.m_bGLLighting ) ? MF_CHECKED : MF_UNCHECKED );
 		pMenu->CheckMenuItem( ID_SNAPTOGRID, MF_BYCOMMAND | ( !g_PrefsDlg.m_bNoClamp ) ? MF_CHECKED : MF_UNCHECKED );
-		if( m_wndToolBar.GetSafeHwnd() )
-		{
-			m_wndToolBar.GetToolBarCtrl().CheckButton
-			(
-				ID_VIEW_CUBICCLIPPING,
-				( g_PrefsDlg.m_bCubicClipping ) ? TRUE : FALSE
-			);
+		if( m_wndToolBar.GetSafeHwnd() ) {
+			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_VIEW_CUBICCLIPPING, ( g_PrefsDlg.m_bCubicClipping ) ? TRUE : FALSE );
 		}
 
 		int n = g_PrefsDlg.m_nTextureScale;
 		int id;
-		switch( n )
-		{
+		switch( n ) {
 			case 10:
 				id = ID_TEXTURES_TEXTUREWINDOWSCALE_10;
 				break;
@@ -962,8 +916,7 @@ void CMainFrame::SetButtonMenuStates()
 		CheckTextureScale( id );
 	}
 
-	if( g_qeglobals.d_project_entity )
-	{
+	if( g_qeglobals.d_project_entity ) {
 		// FillTextureMenu(); // redundant but i'll clean it up later.. yeah right..
 		FillBSPMenu();
 		LoadMruInReg( g_qeglobals.d_lpMruMenu, "Software\\" EDITOR_REGISTRY_KEY "\\MRU" );
@@ -977,73 +930,62 @@ void CMainFrame::SetButtonMenuStates()
  */
 void CMainFrame::ShowMenuItemKeyBindings( CMenu* pMenu )
 {
-	int				i, j;
-	char			key[1024], *ptr;
-	MENUITEMINFO	MenuItemInfo;
+	int			 i, j;
+	char		 key[1024], *ptr;
+	MENUITEMINFO MenuItemInfo;
 
 	// return;
-	for( i = 0; i < g_nCommandCount; i++ )
-	{
+	for( i = 0; i < g_nCommandCount; i++ ) {
 		memset( &MenuItemInfo, 0, sizeof( MENUITEMINFO ) );
-		MenuItemInfo.cbSize = sizeof( MENUITEMINFO );
-		MenuItemInfo.fMask = MIIM_TYPE;
+		MenuItemInfo.cbSize		= sizeof( MENUITEMINFO );
+		MenuItemInfo.fMask		= MIIM_TYPE;
 		MenuItemInfo.dwTypeData = key;
-		MenuItemInfo.cch = sizeof( key );
-		if( !pMenu->GetMenuItemInfo( g_Commands[i].m_nCommand, &MenuItemInfo ) )
-		{
+		MenuItemInfo.cch		= sizeof( key );
+		if( !pMenu->GetMenuItemInfo( g_Commands[i].m_nCommand, &MenuItemInfo ) ) {
 			continue;
 		}
 
-		if( MenuItemInfo.fType != MFT_STRING )
-		{
+		if( MenuItemInfo.fType != MFT_STRING ) {
 			continue;
 		}
 
 		ptr = strchr( key, '\t' );
-		if( ptr )
-		{
+		if( ptr ) {
 			*ptr = '\0';
 		}
 
 		strcat( key, "\t" );
-		if( g_Commands[i].m_nModifiers )  	// are there modifiers present?
-		{
-			if( g_Commands[i].m_nModifiers & RAD_SHIFT )
-			{
+		if( g_Commands[i].m_nModifiers ) { // are there modifiers present?
+			if( g_Commands[i].m_nModifiers & RAD_SHIFT ) {
 				strcat( key, "Shift-" );
 			}
 
-			if( g_Commands[i].m_nModifiers & RAD_ALT )
-			{
+			if( g_Commands[i].m_nModifiers & RAD_ALT ) {
 				strcat( key, "Alt-" );
 			}
 
-			if( g_Commands[i].m_nModifiers & RAD_CONTROL )
-			{
+			if( g_Commands[i].m_nModifiers & RAD_CONTROL ) {
 				strcat( key, "Ctrl-" );
 			}
 		}
 
-		for( j = 0; j < g_nKeyCount; j++ )
-		{
-			if( g_Commands[i].m_nKey == g_Keys[j].m_nVKKey )
-			{
+		for( j = 0; j < g_nKeyCount; j++ ) {
+			if( g_Commands[i].m_nKey == g_Keys[j].m_nVKKey ) {
 				strcat( key, g_Keys[j].m_strName );
 				break;
 			}
 		}
 
-		if( j >= g_nKeyCount )
-		{
+		if( j >= g_nKeyCount ) {
 			sprintf( &key[strlen( key )], "%c", g_Commands[i].m_nKey );
 		}
 
 		memset( &MenuItemInfo, 0, sizeof( MENUITEMINFO ) );
-		MenuItemInfo.cbSize = sizeof( MENUITEMINFO );
-		MenuItemInfo.fMask = MIIM_TYPE;
-		MenuItemInfo.fType = MFT_STRING;
+		MenuItemInfo.cbSize		= sizeof( MENUITEMINFO );
+		MenuItemInfo.fMask		= MIIM_TYPE;
+		MenuItemInfo.fType		= MFT_STRING;
 		MenuItemInfo.dwTypeData = key;
-		MenuItemInfo.cch = strlen( key );
+		MenuItemInfo.cch		= strlen( key );
 		SetMenuItemInfo( pMenu->m_hMenu, g_Commands[i].m_nCommand, FALSE, &MenuItemInfo );
 	}
 }
@@ -1056,32 +998,30 @@ MFCCreate
 void MFCCreate( HINSTANCE hInstance )
 {
 	HMENU hMenu = NULL;
-	int i = sizeof( g_qeglobals.d_savedinfo );
-	long l = i;
+	int	  i		= sizeof( g_qeglobals.d_savedinfo );
+	long  l		= i;
 
 	g_qeglobals.d_savedinfo.exclude |= ( EXCLUDE_HINT | EXCLUDE_CLIP );
 	LoadRegistryInfo( "radiant_SavedInfo", &g_qeglobals.d_savedinfo, &l );
 
 	int nOldSize = g_qeglobals.d_savedinfo.iSize;
-	if( g_qeglobals.d_savedinfo.iSize != sizeof( g_qeglobals.d_savedinfo ) )
-	{
+	if( g_qeglobals.d_savedinfo.iSize != sizeof( g_qeglobals.d_savedinfo ) ) {
 		// fill in new defaults
-		g_qeglobals.d_savedinfo.iSize = sizeof( g_qeglobals.d_savedinfo );
-		g_qeglobals.d_savedinfo.fGamma = 1.0;
-		g_qeglobals.d_savedinfo.iTexMenu = ID_VIEW_BILINEARMIPMAP;
+		g_qeglobals.d_savedinfo.iSize			= sizeof( g_qeglobals.d_savedinfo );
+		g_qeglobals.d_savedinfo.fGamma			= 1.0;
+		g_qeglobals.d_savedinfo.iTexMenu		= ID_VIEW_BILINEARMIPMAP;
 		g_qeglobals.d_savedinfo.m_nTextureTweak = 1.0;
 
-		//g_qeglobals.d_savedinfo.exclude = INCLUDE_EASY | INCLUDE_NORMAL | INCLUDE_HARD | INCLUDE_DEATHMATCH;
+		// g_qeglobals.d_savedinfo.exclude = INCLUDE_EASY | INCLUDE_NORMAL | INCLUDE_HARD | INCLUDE_DEATHMATCH;
 		g_qeglobals.d_savedinfo.show_coordinates = true;
-		g_qeglobals.d_savedinfo.show_names       = false;
+		g_qeglobals.d_savedinfo.show_names		 = false;
 
-		for( i = 0 ; i < 3 ; i++ )
-		{
+		for( i = 0; i < 3; i++ ) {
 			g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][i] = 0;
-			g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i] = 1.0;
-			g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i] = 0.75;
-			g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i] = 0.5;
-			g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25;
+			g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i]	 = 1.0;
+			g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i]	 = 0.75;
+			g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i]	 = 0.5;
+			g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i]	 = 0.25;
 		}
 
 		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0] = 0.0;
@@ -1108,10 +1048,8 @@ void MFCCreate( HINSTANCE hInstance )
 		g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][1] = 0.0;
 		g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][2] = 0.75;
 
-
 		// old size was smaller, reload original prefs
-		if( nOldSize > 0 && nOldSize < sizeof( g_qeglobals.d_savedinfo ) )
-		{
+		if( nOldSize > 0 && nOldSize < sizeof( g_qeglobals.d_savedinfo ) ) {
 			long l = nOldSize;
 			LoadRegistryInfo( "radiant_SavedInfo", &g_qeglobals.d_savedinfo, &l );
 		}
@@ -1124,8 +1062,8 @@ void MFCCreate( HINSTANCE hInstance )
  */
 int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 {
-	char*	pBuffer = g_strAppPath.GetBufferSetLength( _MAX_PATH + 1 );
-	int		nResult = ::GetModuleFileName( NULL, pBuffer, _MAX_PATH );
+	char* pBuffer = g_strAppPath.GetBufferSetLength( _MAX_PATH + 1 );
+	int	  nResult = ::GetModuleFileName( NULL, pBuffer, _MAX_PATH );
 	ASSERT( nResult != 0 );
 	pBuffer[g_strAppPath.ReverseFind( '\\' ) + 1] = '\0';
 	g_strAppPath.ReleaseBuffer();
@@ -1137,24 +1075,20 @@ int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 	MFCCreate( AfxGetInstanceHandle() );
 
 	// g_PrefsDlg.LoadPrefs();
-	if( CFrameWnd::OnCreate( lpCreateStruct ) == -1 )
-	{
+	if( CFrameWnd::OnCreate( lpCreateStruct ) == -1 ) {
 		return -1;
 	}
 
-	UINT	nID = ( g_PrefsDlg.m_bWideToolbar ) ? IDR_TOOLBAR_ADVANCED : IDR_TOOLBAR1;
+	UINT nID = ( g_PrefsDlg.m_bWideToolbar ) ? IDR_TOOLBAR_ADVANCED : IDR_TOOLBAR1;
 
-	if( !m_wndToolBar.CreateEx( this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-								| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC ) || !m_wndToolBar.LoadToolBar( nID ) )
-	{
+	if( !m_wndToolBar.CreateEx( this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC ) || !m_wndToolBar.LoadToolBar( nID ) ) {
 		TRACE0( "Failed to create toolbar\n" );
-		return -1;	// fail to create
+		return -1; // fail to create
 	}
 
-	if( !m_wndStatusBar.Create( this ) || !m_wndStatusBar.SetIndicators( indicators, sizeof( indicators ) / sizeof( UINT ) ) )
-	{
+	if( !m_wndStatusBar.Create( this ) || !m_wndStatusBar.SetIndicators( indicators, sizeof( indicators ) / sizeof( UINT ) ) ) {
 		TRACE0( "Failed to create status bar\n" );
-		return -1;	// fail to create
+		return -1; // fail to create
 	}
 
 	m_bCamPreview = true;
@@ -1192,13 +1126,11 @@ int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 	CMenu* pMenu = GetMenu();
 	ShowMenuItemKeyBindings( pMenu );
 
-	CFont*	pFont = new CFont();
+	CFont* pFont = new CFont();
 	pFont->CreatePointFont( g_PrefsDlg.m_nStatusSize * 10, "Arial" );
 	m_wndStatusBar.SetFont( pFont );
 
-
-	if( g_PrefsDlg.m_bRunBefore == FALSE )
-	{
+	if( g_PrefsDlg.m_bRunBefore == FALSE ) {
 		g_PrefsDlg.m_bRunBefore = TRUE;
 		g_PrefsDlg.SavePrefs();
 
@@ -1208,12 +1140,9 @@ int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 		 * editing QE4 project files directly, this is HIGHLY recommended", "Create a
 		 * default project?", MB_YESNO) == IDYES) { OnFileNewproject(); }
 		 */
-	}
-	else
-	{
+	} else {
 		// load plugins before the first Map_LoadFile required for model plugins
-		if( g_PrefsDlg.m_bLoadLastMap && g_PrefsDlg.m_strLastMap.GetLength() > 0 )
-		{
+		if( g_PrefsDlg.m_bLoadLastMap && g_PrefsDlg.m_strLastMap.GetLength() > 0 ) {
 			Map_LoadFile( g_PrefsDlg.m_strLastMap.GetBuffer( 0 ) );
 		}
 	}
@@ -1228,8 +1157,7 @@ int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 
 	PostMessage( WM_KEYDOWN, 'O', NULL );
 
-	if( radiant_entityMode.GetBool() )
-	{
+	if( radiant_entityMode.GetBool() ) {
 		g_qeglobals.d_savedinfo.exclude |= ( EXCLUDE_PATHS | EXCLUDE_CLIP | EXCLUDE_CAULK | EXCLUDE_VISPORTALS | EXCLUDE_NODRAW | EXCLUDE_TRIGGERS );
 	}
 
@@ -1244,15 +1172,13 @@ int CMainFrame::OnCreate( LPCREATESTRUCT lpCreateStruct )
 
 void FindReplace( CString& strContents, const char* pTag, const char* pValue )
 {
-	if( strcmp( pTag, pValue ) == 0 )
-	{
+	if( strcmp( pTag, pValue ) == 0 ) {
 		return;
 	}
-	for( int nPos = strContents.Find( pTag ); nPos >= 0; nPos = strContents.Find( pTag ) )
-	{
-		int nRightLen = strContents.GetLength() - strlen( pTag ) - nPos;
-		CString strLeft = strContents.Left( nPos );
-		CString strRight = strContents.Right( nRightLen );
+	for( int nPos = strContents.Find( pTag ); nPos >= 0; nPos = strContents.Find( pTag ) ) {
+		int		nRightLen = strContents.GetLength() - strlen( pTag ) - nPos;
+		CString strLeft	  = strContents.Left( nPos );
+		CString strRight  = strContents.Right( nRightLen );
 		strLeft += pValue;
 		strLeft += strRight;
 		strContents = strLeft;
@@ -1266,33 +1192,28 @@ void CMainFrame::LoadCommandMap()
 	strINI = g_strAppPath;
 	strINI += "\\radiant.ini";
 
-	for( int i = 0; i < g_nCommandCount; i++ )
-	{
+	for( int i = 0; i < g_nCommandCount; i++ ) {
 		int nLen = GetPrivateProfileString( "Commands", g_Commands[i].m_strCommand, "", pBuff, 1024, strINI );
-		if( nLen > 0 )
-		{
+		if( nLen > 0 ) {
 			CString strBuff = pBuff;
 			strBuff.TrimLeft();
 			strBuff.TrimRight();
 
-			int nSpecial = strBuff.Find( "+alt" );
+			int nSpecial			   = strBuff.Find( "+alt" );
 			g_Commands[i].m_nModifiers = 0;
-			if( nSpecial >= 0 )
-			{
+			if( nSpecial >= 0 ) {
 				g_Commands[i].m_nModifiers |= RAD_ALT;
 				FindReplace( strBuff, "+alt", "" );
 			}
 
 			nSpecial = strBuff.Find( "+ctrl" );
-			if( nSpecial >= 0 )
-			{
+			if( nSpecial >= 0 ) {
 				g_Commands[i].m_nModifiers |= RAD_CONTROL;
 				FindReplace( strBuff, "+ctrl", "" );
 			}
 
 			nSpecial = strBuff.Find( "+shift" );
-			if( nSpecial >= 0 )
-			{
+			if( nSpecial >= 0 ) {
 				g_Commands[i].m_nModifiers |= RAD_SHIFT;
 				FindReplace( strBuff, "+shift", "" );
 			}
@@ -1300,16 +1221,11 @@ void CMainFrame::LoadCommandMap()
 			strBuff.TrimLeft();
 			strBuff.TrimRight();
 			strBuff.MakeUpper();
-			if( nLen == 1 )  	// most often case.. deal with first
-			{
+			if( nLen == 1 ) { // most often case.. deal with first
 				g_Commands[i].m_nKey = __toascii( strBuff.GetAt( 0 ) );
-			}
-			else  				// special key
-			{
-				for( int j = 0; j < g_nKeyCount; j++ )
-				{
-					if( strBuff.CompareNoCase( g_Keys[j].m_strName ) == 0 )
-					{
+			} else { // special key
+				for( int j = 0; j < g_nKeyCount; j++ ) {
+					if( strBuff.CompareNoCase( g_Keys[j].m_strName ) == 0 ) {
 						g_Commands[i].m_nKey = g_Keys[j].m_nVKKey;
 						break;
 					}
@@ -1363,26 +1279,21 @@ void CMainFrame::CreateQEChildren()
 	// the basedir directory
 	//
 	bool bProjectLoaded = false;
-	if( g_PrefsDlg.m_bLoadLast && g_PrefsDlg.m_strLastProject.GetLength() > 0 )
-	{
+	if( g_PrefsDlg.m_bLoadLast && g_PrefsDlg.m_strLastProject.GetLength() > 0 ) {
 		bProjectLoaded = QE_LoadProject( g_PrefsDlg.m_strLastProject.GetBuffer( 0 ) );
 	}
-	if( !bProjectLoaded )
-	{
+	if( !bProjectLoaded ) {
 		bProjectLoaded = QE_LoadProject( EDITOR_DEFAULT_PROJECT );
 	}
 
-	if( !bProjectLoaded )
-	{
-		CFileDialog dlgFile( true, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, EDITOR_WINDOWTEXT " Project files (*.qe4, *.prj)|*.qe4|*.prj||",	this );
-		if( dlgFile.DoModal() == IDOK )
-		{
+	if( !bProjectLoaded ) {
+		CFileDialog dlgFile( true, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, EDITOR_WINDOWTEXT " Project files (*.qe4, *.prj)|*.qe4|*.prj||", this );
+		if( dlgFile.DoModal() == IDOK ) {
 			bProjectLoaded = QE_LoadProject( dlgFile.GetPathName().GetBuffer( 0 ) );
 		}
 	}
 
-	if( !bProjectLoaded )
-	{
+	if( !bProjectLoaded ) {
 		Error( "Unable to load project file. It was unavailable in the scripts path and the default could not be found" );
 	}
 
@@ -1410,7 +1321,7 @@ BOOL CMainFrame::OnCommand( WPARAM wParam, LPARAM lParam )
  */
 LRESULT CMainFrame::DefWindowProc( UINT message, WPARAM wParam, LPARAM lParam )
 {
-	//RoutineProcessing();
+	// RoutineProcessing();
 	return CFrameWnd::DefWindowProc( message, wParam, lParam );
 }
 
@@ -1420,31 +1331,27 @@ LRESULT CMainFrame::DefWindowProc( UINT message, WPARAM wParam, LPARAM lParam )
  */
 void CMainFrame::RoutineProcessing()
 {
-	if( m_bDoLoop )
-	{
-		double	time = 0.0;
+	if( m_bDoLoop ) {
+		double		  time	  = 0.0;
 		static double oldtime = 0.0;
-		double	delta = 0.0;
+		double		  delta	  = 0.0;
 
-		time = Sys_DoubleTime();
-		delta = time - oldtime;
+		time	= Sys_DoubleTime();
+		delta	= time - oldtime;
 		oldtime = time;
-		if( delta > 0.2 )
-		{
+		if( delta > 0.2 ) {
 			delta = 0.2;
 		}
 
 		// run time dependant behavior
-		if( m_pCamWnd )
-		{
+		if( m_pCamWnd ) {
 			m_pCamWnd->Cam_MouseControl( delta );
 		}
 
-		if( g_PrefsDlg.m_bQE4Painting && g_nUpdateBits )
-		{
-			int nBits = g_nUpdateBits;	// this is done to keep this routine from being
-			g_nUpdateBits = 0;			// re-entered due to the paint process.. only
-			UpdateWindows( nBits );		// happens in rare cases but causes a stack overflow
+		if( g_PrefsDlg.m_bQE4Painting && g_nUpdateBits ) {
+			int nBits	  = g_nUpdateBits; // this is done to keep this routine from being
+			g_nUpdateBits = 0;			   // re-entered due to the paint process.. only
+			UpdateWindows( nBits );		   // happens in rare cases but causes a stack overflow
 		}
 	}
 }
@@ -1464,18 +1371,15 @@ LRESULT CMainFrame::WindowProc( UINT message, WPARAM wParam, LPARAM lParam )
  */
 bool MouseDown()
 {
-	if( ::GetAsyncKeyState( VK_LBUTTON ) )
-	{
+	if( ::GetAsyncKeyState( VK_LBUTTON ) ) {
 		return true;
 	}
 
-	if( ::GetAsyncKeyState( VK_RBUTTON ) )
-	{
+	if( ::GetAsyncKeyState( VK_RBUTTON ) ) {
 		return true;
 	}
 
-	if( ::GetAsyncKeyState( VK_MBUTTON ) )
-	{
+	if( ::GetAsyncKeyState( VK_MBUTTON ) ) {
 		return true;
 	}
 
@@ -1491,19 +1395,15 @@ void CMainFrame::OnTimer( UINT nIDEvent )
 {
 	static bool autoSavePending = false;
 
-	if( nIDEvent == QE_TIMER0 && !MouseDown() )
-	{
+	if( nIDEvent == QE_TIMER0 && !MouseDown() ) {
 		QE_CountBrushesAndUpdateStatusBar();
 	}
-	if( nIDEvent == QE_TIMER1 || autoSavePending )
-	{
-		if( MouseDown() )
-		{
+	if( nIDEvent == QE_TIMER1 || autoSavePending ) {
+		if( MouseDown() ) {
 			autoSavePending = true;
 			return;
 		}
-		if( Sys_Waiting() )
-		{
+		if( Sys_Waiting() ) {
 			autoSavePending = true;
 			return;
 		}
@@ -1512,8 +1412,7 @@ void CMainFrame::OnTimer( UINT nIDEvent )
 	}
 }
 
-struct SplitInfo
-{
+struct SplitInfo {
 	int m_nMin;
 	int m_nCur;
 };
@@ -1528,8 +1427,7 @@ bool LoadWindowPlacement( HWND hwnd, const char* pName )
 	wp.length = sizeof( WINDOWPLACEMENT );
 
 	LONG lSize = sizeof( wp );
-	if( LoadRegistryInfo( pName, &wp, &lSize ) )
-	{
+	if( LoadRegistryInfo( pName, &wp, &lSize ) ) {
 		::SetWindowPlacement( hwnd, &wp );
 		return true;
 	}
@@ -1545,8 +1443,7 @@ void SaveWindowPlacement( HWND hwnd, const char* pName )
 {
 	WINDOWPLACEMENT wp;
 	wp.length = sizeof( WINDOWPLACEMENT );
-	if( ::GetWindowPlacement( hwnd, &wp ) )
-	{
+	if( ::GetWindowPlacement( hwnd, &wp ) ) {
 		SaveRegistryInfo( pName, &wp, sizeof( wp ) );
 	}
 }
@@ -1577,89 +1474,76 @@ void CMainFrame::OnDestroy()
 	SaveWindowPlacement( m_pZWnd->GetSafeHwnd(), "radiant_zwindow" );
 	SaveWindowState( g_Inspectors->texWnd.GetSafeHwnd(), "radiant_texwindow" );
 
-	if( m_pXYWnd->GetSafeHwnd() )
-	{
+	if( m_pXYWnd->GetSafeHwnd() ) {
 		m_pXYWnd->SendMessage( WM_DESTROY, 0, 0 );
 	}
 
 	delete m_pXYWnd;
 	m_pXYWnd = NULL;
 
-	if( m_pYZWnd->GetSafeHwnd() )
-	{
+	if( m_pYZWnd->GetSafeHwnd() ) {
 		m_pYZWnd->SendMessage( WM_DESTROY, 0, 0 );
 	}
 
 	delete m_pYZWnd;
 	m_pYZWnd = NULL;
 
-	if( m_pXZWnd->GetSafeHwnd() )
-	{
+	if( m_pXZWnd->GetSafeHwnd() ) {
 		m_pXZWnd->SendMessage( WM_DESTROY, 0, 0 );
 	}
 
 	delete m_pXZWnd;
 	m_pXZWnd = NULL;
 
-	if( m_pZWnd->GetSafeHwnd() )
-	{
+	if( m_pZWnd->GetSafeHwnd() ) {
 		m_pZWnd->SendMessage( WM_DESTROY, 0, 0 );
 	}
 
 	delete m_pZWnd;
 	m_pZWnd = NULL;
 
-	if( m_pCamWnd->GetSafeHwnd() )
-	{
+	if( m_pCamWnd->GetSafeHwnd() ) {
 		m_pCamWnd->SendMessage( WM_DESTROY, 0, 0 );
 	}
 
 	delete m_pCamWnd;
 	m_pCamWnd = NULL;
 
-	if( idStr::Icmp( currentmap, "unnamed.map" ) != 0 )
-	{
+	if( idStr::Icmp( currentmap, "unnamed.map" ) != 0 ) {
 		g_PrefsDlg.m_strLastMap = currentmap;
 		g_PrefsDlg.SavePrefs();
 	}
 
 	CleanUpEntities();
 
-	while( active_brushes.next != &active_brushes )
-	{
+	while( active_brushes.next != &active_brushes ) {
 		Brush_Free( active_brushes.next, false );
 	}
 
-	while( selected_brushes.next != &selected_brushes )
-	{
+	while( selected_brushes.next != &selected_brushes ) {
 		Brush_Free( selected_brushes.next, false );
 	}
 
-	while( filtered_brushes.next != &filtered_brushes )
-	{
+	while( filtered_brushes.next != &filtered_brushes ) {
 		Brush_Free( filtered_brushes.next, false );
 	}
 
-	while( entities.next != &entities )
-	{
+	while( entities.next != &entities ) {
 		Entity_Free( entities.next );
 	}
 
-
 	g_qeglobals.d_project_entity->epairs.Clear();
 
-	entity_t*	pEntity = g_qeglobals.d_project_entity->next;
-	while( pEntity != NULL && pEntity != g_qeglobals.d_project_entity )
-	{
-		entity_t*	pNextEntity = pEntity->next;
+	entity_t* pEntity = g_qeglobals.d_project_entity->next;
+	while( pEntity != NULL && pEntity != g_qeglobals.d_project_entity ) {
+		entity_t* pNextEntity = pEntity->next;
 		Entity_Free( pEntity );
 		pEntity = pNextEntity;
 	}
 
 	Texture_Cleanup();
 
-	if( world_entity )
-	{
+	if( world_entity ) {
 		Entity_Free( world_entity );
 	}
 
@@ -1684,8 +1568,7 @@ void CMainFrame::OnDestroy()
  */
 void CMainFrame::OnClose()
 {
-	if( ConfirmModified() )
-	{
+	if( ConfirmModified() ) {
 		g_Inspectors->SaveWindowPlacement();
 		CFrameWnd::OnClose();
 	}
@@ -1699,60 +1582,44 @@ void CMainFrame::OnKeyUp( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
 	// run through our list to see if we have a handler for nChar
 
-	for( int i = 0; i < g_nCommandCount; i++ )
-	{
-		if( g_Commands[i].m_nKey == nChar )  	// find a match?
-		{
-			bool	bGo = true;
-			if( g_Commands[i].m_nModifiers & RAD_PRESS )
-			{
+	for( int i = 0; i < g_nCommandCount; i++ ) {
+		if( g_Commands[i].m_nKey == nChar ) { // find a match?
+			bool bGo = true;
+			if( g_Commands[i].m_nModifiers & RAD_PRESS ) {
 				int nModifiers = g_Commands[i].m_nModifiers & ~RAD_PRESS;
-				if( nModifiers )  				// are there modifiers present?
-				{
-					if( nModifiers & RAD_ALT )
-					{
-						if( !( GetAsyncKeyState( VK_MENU ) & 0x8000 ) )
-						{
+				if( nModifiers ) { // are there modifiers present?
+					if( nModifiers & RAD_ALT ) {
+						if( !( GetAsyncKeyState( VK_MENU ) & 0x8000 ) ) {
 							bGo = false;
 						}
 					}
 
-					if( nModifiers & RAD_CONTROL )
-					{
-						if( !( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) )
-						{
+					if( nModifiers & RAD_CONTROL ) {
+						if( !( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) ) {
 							bGo = false;
 						}
 					}
 
-					if( nModifiers & RAD_SHIFT )
-					{
-						if( !( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
-						{
+					if( nModifiers & RAD_SHIFT ) {
+						if( !( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ) {
 							bGo = false;
 						}
 					}
-				}
-				else  	// no modifiers make sure none of those keys are pressed
-				{
-					if( GetAsyncKeyState( VK_MENU ) & 0x8000 )
-					{
+				} else { // no modifiers make sure none of those keys are pressed
+					if( GetAsyncKeyState( VK_MENU ) & 0x8000 ) {
 						bGo = false;
 					}
 
-					if( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
-					{
+					if( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) {
 						bGo = false;
 					}
 
-					if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-					{
+					if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) {
 						bGo = false;
 					}
 				}
 
-				if( bGo )
-				{
+				if( bGo ) {
 					SendMessage( WM_COMMAND, g_Commands[i].m_nCommand, 0 );
 					break;
 				}
@@ -1767,14 +1634,10 @@ void CMainFrame::OnKeyUp( UINT nChar, UINT nRepCnt, UINT nFlags )
  */
 bool CamOK( unsigned int nKey )
 {
-	if( nKey == VK_UP || nKey == VK_LEFT || nKey == VK_RIGHT || nKey == VK_DOWN )
-	{
-		if( ::GetAsyncKeyState( nKey ) )
-		{
+	if( nKey == VK_UP || nKey == VK_LEFT || nKey == VK_RIGHT || nKey == VK_DOWN ) {
+		if( ::GetAsyncKeyState( nKey ) ) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
@@ -1789,8 +1652,7 @@ bool CamOK( unsigned int nKey )
 void CMainFrame::OnSysKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
 	// OnKeyDown(nChar, nRepCnt, nFlags);
-	if( nChar == VK_DOWN )
-	{
+	if( nChar == VK_DOWN ) {
 		OnKeyDown( nChar, nRepCnt, nFlags );
 	}
 
@@ -1803,30 +1665,23 @@ void CMainFrame::OnSysKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
  */
 void CMainFrame::OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
-
-	for( int i = 0; i < g_nCommandCount; i++ )
-	{
-		if( g_Commands[i].m_nKey == nChar )  	// find a match?
-		{
+	for( int i = 0; i < g_nCommandCount; i++ ) {
+		if( g_Commands[i].m_nKey == nChar ) { // find a match?
 			// check modifiers
-			unsigned int	nState = 0;
-			if( GetAsyncKeyState( VK_MENU ) & 0x8000 )
-			{
+			unsigned int nState = 0;
+			if( GetAsyncKeyState( VK_MENU ) & 0x8000 ) {
 				nState |= RAD_ALT;
 			}
 
-			if( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
-			{
+			if( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) {
 				nState |= RAD_CONTROL;
 			}
 
-			if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-			{
+			if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) {
 				nState |= RAD_SHIFT;
 			}
 
-			if( ( g_Commands[i].m_nModifiers & 0x7 ) == nState )
-			{
+			if( ( g_Commands[i].m_nModifiers & 0x7 ) == nState ) {
 				SendMessage( WM_COMMAND, g_Commands[i].m_nCommand, 0 );
 				break;
 			}
@@ -1842,7 +1697,6 @@ void CMainFrame::OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
  */
 BOOL CMainFrame::OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext )
 {
-
 	g_Inspectors = new CInspectorDialog( this );
 	g_Inspectors->Create( IDD_DIALOG_INSPECTORS, this );
 
@@ -1852,15 +1706,13 @@ BOOL CMainFrame::OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext )
 	CRect r;
 	g_Inspectors->GetWindowRect( r );
 
-	//stupid hack to get the window resize itself properly
+	// stupid hack to get the window resize itself properly
 	r.DeflateRect( 0, 0, 0, 1 );
 	g_Inspectors->MoveWindow( r );
 	r.InflateRect( 0, 0, 0, 1 );
 	g_Inspectors->MoveWindow( r );
 
-
-	if( !LoadWindowPlacement( GetSafeHwnd(), "radiant_MainWindowPlace" ) )
-	{
+	if( !LoadWindowPlacement( GetSafeHwnd(), "radiant_MainWindowPlace" ) ) {
 	}
 
 	CRect rect( 5, 25, 100, 100 );
@@ -1887,7 +1739,7 @@ BOOL CMainFrame::OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext )
 
 	m_pCamWnd->SetXYFriend( m_pXYWnd );
 
-	CRect	rctWork;
+	CRect rctWork;
 
 	LoadWindowPlacement( m_pXYWnd->GetSafeHwnd(), "radiant_xywindow" );
 	LoadWindowPlacement( m_pXZWnd->GetSafeHwnd(), "radiant_xzwindow" );
@@ -1895,25 +1747,21 @@ BOOL CMainFrame::OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext )
 	LoadWindowPlacement( m_pCamWnd->GetSafeHwnd(), "radiant_camerawindow" );
 	LoadWindowPlacement( m_pZWnd->GetSafeHwnd(), "radiant_zwindow" );
 
-	if( !g_PrefsDlg.m_bXZVis )
-	{
+	if( !g_PrefsDlg.m_bXZVis ) {
 		m_pXZWnd->ShowWindow( SW_HIDE );
 	}
 
-	if( !g_PrefsDlg.m_bYZVis )
-	{
+	if( !g_PrefsDlg.m_bYZVis ) {
 		m_pYZWnd->ShowWindow( SW_HIDE );
 	}
 
-	if( !g_PrefsDlg.m_bZVis )
-	{
+	if( !g_PrefsDlg.m_bZVis ) {
 		m_pZWnd->ShowWindow( SW_HIDE );
 	}
 
 	CreateQEChildren();
 
-	if( m_pXYWnd )
-	{
+	if( m_pXYWnd ) {
 		m_pXYWnd->SetActive( true );
 	}
 
@@ -1923,24 +1771,23 @@ BOOL CMainFrame::OnCreateClient( LPCREATESTRUCT lpcs, CCreateContext* pContext )
 	return TRUE;
 }
 
-CRect	g_rctOld( 0, 0, 0, 0 );
+CRect g_rctOld( 0, 0, 0, 0 );
 
 /*
  =======================================================================================================================
  =======================================================================================================================
  */
-void CMainFrame::OnSize( UINT nType, int cx, int cy )
+void  CMainFrame::OnSize( UINT nType, int cx, int cy )
 {
 	CFrameWnd::OnSize( nType, cx, cy );
 
-	CRect	rctParent;
+	CRect rctParent;
 	GetClientRect( rctParent );
 
-	UINT	nID;
-	UINT	nStyle;
-	int		nWidth;
-	if( m_wndStatusBar.GetSafeHwnd() )
-	{
+	UINT nID;
+	UINT nStyle;
+	int	 nWidth;
+	if( m_wndStatusBar.GetSafeHwnd() ) {
 		m_wndStatusBar.GetPaneInfo( 0, nID, nStyle, nWidth );
 		m_wndStatusBar.SetPaneInfo( 0, nID, nStyle, rctParent.Width() * 0.15f );
 		m_wndStatusBar.GetPaneInfo( 1, nID, nStyle, nWidth );
@@ -1956,9 +1803,9 @@ void CMainFrame::OnSize( UINT nType, int cx, int cy )
 	}
 }
 
-void	OpenDialog();
-void	SaveAsDialog( bool bRegion );
-void	Select_Ungroup();
+void OpenDialog();
+void SaveAsDialog( bool bRegion );
+void Select_Ungroup();
 
 /*
  =======================================================================================================================
@@ -1966,12 +1813,9 @@ void	Select_Ungroup();
  */
 void CMainFrame::ToggleCamera()
 {
-	if( m_bCamPreview )
-	{
+	if( m_bCamPreview ) {
 		m_bCamPreview = false;
-	}
-	else
-	{
+	} else {
 		m_bCamPreview = true;
 	}
 }
@@ -1999,8 +1843,7 @@ void CMainFrame::OnFileExit()
  */
 void CMainFrame::OnFileLoadproject()
 {
-	if( ConfirmModified() )
-	{
+	if( ConfirmModified() ) {
 		ProjectDialog();
 	}
 }
@@ -2011,8 +1854,7 @@ void CMainFrame::OnFileLoadproject()
  */
 void CMainFrame::OnFileNew()
 {
-	if( ConfirmModified() )
-	{
+	if( ConfirmModified() ) {
 		Map_New();
 	}
 }
@@ -2023,8 +1865,7 @@ void CMainFrame::OnFileNew()
  */
 void CMainFrame::OnFileOpen()
 {
-	if( ConfirmModified() )
-	{
+	if( ConfirmModified() ) {
 		OpenDialog();
 	}
 }
@@ -2035,12 +1876,9 @@ void CMainFrame::OnFileOpen()
  */
 void CMainFrame::OnFilePointfile()
 {
-	if( g_qeglobals.d_pointfile_display_list )
-	{
+	if( g_qeglobals.d_pointfile_display_list ) {
 		Pointfile_Clear();
-	}
-	else
-	{
+	} else {
 		Pointfile_Check();
 	}
 	Sys_UpdateWindows( W_ALL );
@@ -2068,12 +1906,9 @@ void CMainFrame::OnFilePrintPreview()
  */
 void CMainFrame::OnFileSave()
 {
-	if( !strcmp( currentmap, "unnamed.map" ) )
-	{
+	if( !strcmp( currentmap, "unnamed.map" ) ) {
 		SaveAsDialog( false );
-	}
-	else
-	{
+	} else {
 		Map_SaveFile( currentmap, false );
 	}
 
@@ -2096,9 +1931,9 @@ void CMainFrame::OnFileSaveas()
  */
 void CMainFrame::OnFileSaveCopy()
 {
-	char aFile[260] = "\0";
-	char aFilter[260] = "Map\0*.map\0\0";
-	char aTitle[260] = "Save a Copy\0";
+	char		 aFile[260]	  = "\0";
+	char		 aFilter[260] = "Map\0*.map\0\0";
+	char		 aTitle[260]  = "Save a Copy\0";
 	OPENFILENAME afn;
 
 	memset( &afn, 0, sizeof( OPENFILENAME ) );
@@ -2106,8 +1941,7 @@ void CMainFrame::OnFileSaveCopy()
 	CString strPath = ValueForKey( g_qeglobals.d_project_entity, "basepath" );
 	AddSlash( strPath );
 	strPath += "maps";
-	if( g_PrefsDlg.m_strMaps.GetLength() > 0 )
-	{
+	if( g_PrefsDlg.m_strMaps.GetLength() > 0 ) {
 		strPath += va( "\\%s", g_PrefsDlg.m_strMaps );
 	}
 
@@ -2115,26 +1949,25 @@ void CMainFrame::OnFileSaveCopy()
 	aFile[0] = '\0';
 
 	/* Set the members of the OPENFILENAME structure. */
-	afn.lStructSize = sizeof( OPENFILENAME );
-	afn.hwndOwner = g_pParentWnd->GetSafeHwnd();
-	afn.lpstrFilter = aFilter;
-	afn.nFilterIndex = 1;
-	afn.lpstrFile = aFile;
-	afn.nMaxFile = sizeof( aFile );
-	afn.lpstrFileTitle = NULL;
-	afn.nMaxFileTitle = 0;
+	afn.lStructSize		= sizeof( OPENFILENAME );
+	afn.hwndOwner		= g_pParentWnd->GetSafeHwnd();
+	afn.lpstrFilter		= aFilter;
+	afn.nFilterIndex	= 1;
+	afn.lpstrFile		= aFile;
+	afn.nMaxFile		= sizeof( aFile );
+	afn.lpstrFileTitle	= NULL;
+	afn.nMaxFileTitle	= 0;
 	afn.lpstrInitialDir = strPath;
-	afn.lpstrTitle = aTitle;
-	afn.Flags = OFN_SHOWHELP | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT;
+	afn.lpstrTitle		= aTitle;
+	afn.Flags			= OFN_SHOWHELP | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT;
 
 	/* Display the Open dialog box. */
-	if( !GetSaveFileName( &afn ) )
-	{
+	if( !GetSaveFileName( &afn ) ) {
 		return; // canceled
 	}
 
 	DefaultExtension( afn.lpstrFile, ".map" );
-	Map_SaveFile( afn.lpstrFile, false );	// ignore region
+	Map_SaveFile( afn.lpstrFile, false ); // ignore region
 
 	// Set the title back to the current working map
 	Sys_SetTitle( currentmap );
@@ -2156,18 +1989,15 @@ void CMainFrame::OnViewShowModels()
  */
 void CMainFrame::OnView100()
 {
-	if( m_pXYWnd )
-	{
+	if( m_pXYWnd ) {
 		m_pXYWnd->SetScale( 1 );
 	}
 
-	if( m_pXZWnd )
-	{
+	if( m_pXZWnd ) {
 		m_pXZWnd->SetScale( 1 );
 	}
 
-	if( m_pYZWnd )
-	{
+	if( m_pYZWnd ) {
 		m_pYZWnd->SetScale( 1 );
 	}
 
@@ -2181,7 +2011,7 @@ void CMainFrame::OnView100()
 void CMainFrame::OnViewCenter()
 {
 	m_pCamWnd->Camera().angles[ROLL] = m_pCamWnd->Camera().angles[PITCH] = 0;
-	m_pCamWnd->Camera().angles[YAW] = 22.5 * floor( ( m_pCamWnd->Camera().angles[YAW] + 11 ) / 22.5 );
+	m_pCamWnd->Camera().angles[YAW]										 = 22.5 * floor( ( m_pCamWnd->Camera().angles[YAW] + 11 ) / 22.5 );
 	Sys_UpdateWindows( W_CAMERA | W_XY_OVERLAY );
 }
 
@@ -2217,8 +2047,6 @@ void CMainFrame::OnViewMediaBrowser()
 	g_Inspectors->SetMode( W_MEDIA );
 }
 
-
-
 /*
  =======================================================================================================================
  =======================================================================================================================
@@ -2237,34 +2065,30 @@ void CMainFrame::OnViewFront()
 
 BOOL DoMru( HWND hWnd, WORD wId )
 {
-	char szFileName[128];
+	char	 szFileName[128];
 	OFSTRUCT of;
-	BOOL fExist;
+	BOOL	 fExist;
 
 	GetMenuItem( g_qeglobals.d_lpMruMenu, wId, TRUE, szFileName, sizeof( szFileName ) );
 
 	// Test if the file exists.
 
-	fExist = OpenFile( szFileName , &of, OF_EXIST ) != HFILE_ERROR;
+	fExist = OpenFile( szFileName, &of, OF_EXIST ) != HFILE_ERROR;
 
-	if( fExist )
-	{
-
+	if( fExist ) {
 		// Place the file on the top of MRU.
 		AddNewItem( g_qeglobals.d_lpMruMenu, ( LPSTR )szFileName );
 
 		// Now perform opening this file !!!
 		Map_LoadFile( szFileName );
-	}
-	else
-		// Remove the file on MRU.
+	} else
+	// Remove the file on MRU.
 	{
 		DelMenuItem( g_qeglobals.d_lpMruMenu, wId, TRUE );
 	}
 
 	// Refresh the File menu.
-	PlaceMenuMRUItem( g_qeglobals.d_lpMruMenu, GetSubMenu( GetMenu( hWnd ), 0 ),
-					  ID_FILE_EXIT );
+	PlaceMenuMRUItem( g_qeglobals.d_lpMruMenu, GetSubMenu( GetMenu( hWnd ), 0 ), ID_FILE_EXIT );
 
 	return fExist;
 }
@@ -2272,8 +2096,7 @@ BOOL DoMru( HWND hWnd, WORD wId )
 void CMainFrame::OnMru( unsigned int nID )
 {
 	// DHM - _D3XP
-	if( ConfirmModified() )
-	{
+	if( ConfirmModified() ) {
 		DoMru( GetSafeHwnd(), nID );
 	}
 }
@@ -2313,85 +2136,69 @@ This is the new all-internal bsp
 */
 void RunBsp( const char* command )
 {
-	char	sys[2048];
-	char	name[2048];
-	char*	in;
+	char  sys[2048];
+	char  name[2048];
+	char* in;
 
 	// bring the console window forward for feedback
 	g_Inspectors->SetMode( W_CONSOLE );
 
 	// decide if we are doing a .map or a .reg
 	strcpy( name, currentmap );
-	if( region_active )
-	{
+	if( region_active ) {
 		Map_SaveFile( name, false );
 		StripExtension( name );
 		strcat( name, ".reg" );
 	}
 
-	if( !Map_SaveFile( name, region_active ) )
-	{
+	if( !Map_SaveFile( name, region_active ) ) {
 		return;
 	}
 
 	// name should be a full pathname, but we only
 	// want to pass the maps/ part to dmap
 	in = strstr( name, "maps/" );
-	if( !in )
-	{
+	if( !in ) {
 		in = strstr( name, "maps\\" );
 	}
-	if( !in )
-	{
+	if( !in ) {
 		in = name;
 	}
 
-	if( idStr::Icmpn( command, "bspext", strlen( "runbsp" ) ) == 0 )
-	{
+	if( idStr::Icmpn( command, "bspext", strlen( "runbsp" ) ) == 0 ) {
 		PROCESS_INFORMATION ProcessInformation;
-		STARTUPINFO	startupinfo;
-		char buff[2048];
+		STARTUPINFO			startupinfo;
+		char				buff[2048];
 
-		idStr base = cvarSystem->GetCVarString( "fs_basepath" );
-		idStr cd = cvarSystem->GetCVarString( "fs_cdpath" );
-		idStr paths;
-		if( base.Length() )
-		{
+		idStr				base = cvarSystem->GetCVarString( "fs_basepath" );
+		idStr				cd	 = cvarSystem->GetCVarString( "fs_cdpath" );
+		idStr				paths;
+		if( base.Length() ) {
 			paths += "+set fs_basepath ";
 			paths += base;
 		}
-		if( cd.Length() )
-		{
+		if( cd.Length() ) {
 			paths += "+set fs_cdpath ";
 			paths += cd;
 		}
 
 		::GetModuleFileName( AfxGetApp()->m_hInstance, buff, sizeof( buff ) );
-		if( strlen( command ) > strlen( "bspext" ) )
-		{
+		if( strlen( command ) > strlen( "bspext" ) ) {
 			idStr::snPrintf( sys, sizeof( sys ), "%s %s +set r_fullscreen 0 +dmap editorOutput %s %s +quit", buff, paths.c_str(), command + strlen( "bspext" ), in );
-		}
-		else
-		{
+		} else {
 			idStr::snPrintf( sys, sizeof( sys ), "%s %s +set r_fullscreen 0 +dmap editorOutput %s +quit", buff, paths.c_str(), in );
 		}
 
 		::GetStartupInfo( &startupinfo );
-		if( !CreateProcess( NULL, sys, NULL, NULL, FALSE, 0, NULL, NULL, &startupinfo, &ProcessInformation ) )
-		{
+		if( !CreateProcess( NULL, sys, NULL, NULL, FALSE, 0, NULL, NULL, &startupinfo, &ProcessInformation ) ) {
 			common->Printf( "Could not start bsp process %s %s/n", buff, sys );
 		}
 		g_pParentWnd->SetFocus();
 
-	}
-	else     // assumes bsp is the command
-	{
-		if( strlen( command ) > strlen( "bsp" ) )
-		{
+	} else { // assumes bsp is the command
+		if( strlen( command ) > strlen( "bsp" ) ) {
 			idStr::snPrintf( sys, sizeof( sys ), "dmap %s %s", command + strlen( "bsp" ), in );
-		}
-		else
-		{
+		} else {
 			idStr::snPrintf( sys, sizeof( sys ), "dmap %s", in );
 		}
 
@@ -2404,8 +2211,7 @@ void RunBsp( const char* command )
 
 void CMainFrame::OnBspCommand( unsigned int nID )
 {
-	if( g_PrefsDlg.m_bSnapShots && stricmp( currentmap, "unnamed.map" ) != 0 )
-	{
+	if( g_PrefsDlg.m_bSnapShots && stricmp( currentmap, "unnamed.map" ) != 0 ) {
 		Map_Snapshot();
 	}
 
@@ -2422,12 +2228,7 @@ void CMainFrame::OnBspCommand( unsigned int nID )
 void CMainFrame::OnViewShowblocks()
 {
 	g_qeglobals.show_blocks = !( g_qeglobals.show_blocks );
-	CheckMenuItem
-	(
-		::GetMenu( GetSafeHwnd() ),
-		ID_VIEW_SHOWBLOCKS,
-		MF_BYCOMMAND | ( g_qeglobals.show_blocks ? MF_CHECKED : MF_UNCHECKED )
-	);
+	CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWBLOCKS, MF_BYCOMMAND | ( g_qeglobals.show_blocks ? MF_CHECKED : MF_UNCHECKED ) );
 	Sys_UpdateWindows( W_XY );
 }
 
@@ -2437,12 +2238,9 @@ void CMainFrame::OnViewShowblocks()
  */
 void CMainFrame::OnViewShowclip()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CLIP ) & EXCLUDE_CLIP )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CLIP ) & EXCLUDE_CLIP ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCLIP, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCLIP, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2455,12 +2253,9 @@ void CMainFrame::OnViewShowclip()
  */
 void CMainFrame::OnViewShowTriggers()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_TRIGGERS ) & EXCLUDE_TRIGGERS )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_TRIGGERS ) & EXCLUDE_TRIGGERS ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWTRIGGERS, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWTRIGGERS, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2474,12 +2269,7 @@ void CMainFrame::OnViewShowTriggers()
 void CMainFrame::OnViewShowcoordinates()
 {
 	g_qeglobals.d_savedinfo.show_coordinates ^= 1;
-	CheckMenuItem
-	(
-		::GetMenu( GetSafeHwnd() ),
-		ID_VIEW_SHOWCOORDINATES,
-		MF_BYCOMMAND | ( g_qeglobals.d_savedinfo.show_coordinates ? MF_CHECKED : MF_UNCHECKED )
-	);
+	CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCOORDINATES, MF_BYCOMMAND | ( g_qeglobals.d_savedinfo.show_coordinates ? MF_CHECKED : MF_UNCHECKED ) );
 	Sys_UpdateWindows( W_XY );
 }
 
@@ -2489,12 +2279,9 @@ void CMainFrame::OnViewShowcoordinates()
  */
 void CMainFrame::OnViewShowent()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_ENT ) & EXCLUDE_ENT )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_ENT ) & EXCLUDE_ENT ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWENT, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWENT, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2507,12 +2294,9 @@ void CMainFrame::OnViewShowent()
  */
 void CMainFrame::OnViewShowlights()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_LIGHTS ) & EXCLUDE_LIGHTS )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_LIGHTS ) & EXCLUDE_LIGHTS ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWLIGHTS, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWLIGHTS, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2526,12 +2310,7 @@ void CMainFrame::OnViewShowlights()
 void CMainFrame::OnViewShownames()
 {
 	g_qeglobals.d_savedinfo.show_names = !( g_qeglobals.d_savedinfo.show_names );
-	CheckMenuItem
-	(
-		::GetMenu( GetSafeHwnd() ),
-		ID_VIEW_SHOWNAMES,
-		MF_BYCOMMAND | ( g_qeglobals.d_savedinfo.show_names ? MF_CHECKED : MF_UNCHECKED )
-	);
+	CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWNAMES, MF_BYCOMMAND | ( g_qeglobals.d_savedinfo.show_names ? MF_CHECKED : MF_UNCHECKED ) );
 	Map_BuildBrushData();
 	Sys_UpdateWindows( W_XY );
 }
@@ -2542,12 +2321,9 @@ void CMainFrame::OnViewShownames()
  */
 void CMainFrame::OnViewShowpath()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_PATHS ) & EXCLUDE_PATHS )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_PATHS ) & EXCLUDE_PATHS ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWPATH, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWPATH, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2560,12 +2336,9 @@ void CMainFrame::OnViewShowpath()
  */
 void CMainFrame::OnViewShowCombatNodes()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_COMBATNODES ) & EXCLUDE_COMBATNODES )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_COMBATNODES ) & EXCLUDE_COMBATNODES ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCOMBATNODES, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCOMBATNODES, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2578,12 +2351,9 @@ void CMainFrame::OnViewShowCombatNodes()
  */
 void CMainFrame::OnViewShowwater()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_DYNAMICS ) & EXCLUDE_DYNAMICS )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_DYNAMICS ) & EXCLUDE_DYNAMICS ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWWATER, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWWATER, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2596,12 +2366,9 @@ void CMainFrame::OnViewShowwater()
  */
 void CMainFrame::OnViewShowworld()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_WORLD ) & EXCLUDE_WORLD )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_WORLD ) & EXCLUDE_WORLD ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWWORLD, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWWORLD, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -2653,29 +2420,23 @@ void CMainFrame::OnViewZ100()
  */
 void CMainFrame::OnViewZoomin()
 {
-	if( m_pXYWnd && m_pXYWnd->Active() )
-	{
+	if( m_pXYWnd && m_pXYWnd->Active() ) {
 		m_pXYWnd->SetScale( m_pXYWnd->Scale() * 5.0f / 4.0f );
-		if( m_pXYWnd->Scale() > 256.0f )
-		{
+		if( m_pXYWnd->Scale() > 256.0f ) {
 			m_pXYWnd->SetScale( 256.0f );
 		}
 	}
 
-	if( m_pXZWnd && m_pXZWnd->Active() )
-	{
+	if( m_pXZWnd && m_pXZWnd->Active() ) {
 		m_pXZWnd->SetScale( m_pXZWnd->Scale() * 5.0f / 4.0f );
-		if( m_pXZWnd->Scale() > 256.0f )
-		{
+		if( m_pXZWnd->Scale() > 256.0f ) {
 			m_pXZWnd->SetScale( 256.0f );
 		}
 	}
 
-	if( m_pYZWnd && m_pYZWnd->Active() )
-	{
+	if( m_pYZWnd && m_pYZWnd->Active() ) {
 		m_pYZWnd->SetScale( m_pYZWnd->Scale() * 5.0f / 4.0f );
-		if( m_pYZWnd->Scale() > 256.0f )
-		{
+		if( m_pYZWnd->Scale() > 256.0f ) {
 			m_pYZWnd->SetScale( 256.0f );
 		}
 	}
@@ -2689,29 +2450,23 @@ void CMainFrame::OnViewZoomin()
  */
 void CMainFrame::OnViewZoomout()
 {
-	if( m_pXYWnd && m_pXYWnd->Active() )
-	{
+	if( m_pXYWnd && m_pXYWnd->Active() ) {
 		m_pXYWnd->SetScale( m_pXYWnd->Scale() * 4.0f / 5.0f );
-		if( m_pXYWnd->Scale() < 0.1f / 32.0f )
-		{
+		if( m_pXYWnd->Scale() < 0.1f / 32.0f ) {
 			m_pXYWnd->SetScale( 0.1f / 32.0f );
 		}
 	}
 
-	if( m_pXZWnd && m_pXZWnd->Active() )
-	{
+	if( m_pXZWnd && m_pXZWnd->Active() ) {
 		m_pXZWnd->SetScale( m_pXZWnd->Scale() * 4.0f / 5.0f );
-		if( m_pXZWnd->Scale() < 0.1f / 32.0f )
-		{
+		if( m_pXZWnd->Scale() < 0.1f / 32.0f ) {
 			m_pXZWnd->SetScale( 0.1f / 32.0f );
 		}
 	}
 
-	if( m_pYZWnd && m_pYZWnd->Active() )
-	{
+	if( m_pYZWnd && m_pYZWnd->Active() ) {
 		m_pYZWnd->SetScale( m_pYZWnd->Scale() * 4.0f / 5.0f );
-		if( m_pYZWnd->Scale() < 0.1f / 32.0f )
-		{
+		if( m_pYZWnd->Scale() < 0.1f / 32.0f ) {
 			m_pYZWnd->SetScale( 0.1f / 32.0f );
 		}
 	}
@@ -2726,8 +2481,7 @@ void CMainFrame::OnViewZoomout()
 void CMainFrame::OnViewZzoomin()
 {
 	z.scale *= 5.0f / 4.0f;
-	if( z.scale > 4.0f )
-	{
+	if( z.scale > 4.0f ) {
 		z.scale = 4.0f;
 	}
 
@@ -2741,8 +2495,7 @@ void CMainFrame::OnViewZzoomin()
 void CMainFrame::OnViewZzoomout()
 {
 	z.scale *= 4.0f / 5.0f;
-	if( z.scale < 0.125f )
-	{
+	if( z.scale < 0.125f ) {
 		z.scale = 0.125f;
 	}
 
@@ -2763,8 +2516,7 @@ void CMainFrame::OnViewSide()
 static void UpdateGrid()
 {
 	// g_qeglobals.d_gridsize = 1 << g_qeglobals.d_gridsize;
-	if( g_PrefsDlg.m_bSnapTToGrid )
-	{
+	if( g_PrefsDlg.m_bSnapTToGrid ) {
 		g_qeglobals.d_savedinfo.m_nTextureTweak = g_qeglobals.d_gridsize;
 	}
 }
@@ -2775,8 +2527,7 @@ static void UpdateGrid()
  */
 void CMainFrame::OnGrid1( unsigned int nID )
 {
-	switch( nID )
-	{
+	switch( nID ) {
 		case ID_GRID_1:
 			g_qeglobals.d_gridsize = 1;
 			break;
@@ -2807,7 +2558,7 @@ void CMainFrame::OnGrid1( unsigned int nID )
 		case ID_GRID_POINT125:
 			g_qeglobals.d_gridsize = 0.125f;
 			break;
-			//case ID_GRID_POINT0625:
+			// case ID_GRID_POINT0625:
 			//	g_qeglobals.d_gridsize = 0.0625f;
 			//	break;
 	}
@@ -2837,7 +2588,7 @@ extern bool texture_showinuse;
  =======================================================================================================================
  =======================================================================================================================
  */
-void CMainFrame::OnUpdateTexturesShowinuse( CCmdUI* pCmdUI )
+void		CMainFrame::OnUpdateTexturesShowinuse( CCmdUI* pCmdUI )
 {
 	pCmdUI->SetCheck( texture_showinuse );
 }
@@ -2866,10 +2617,9 @@ void CMainFrame::OnMiscFindbrush()
  */
 void CMainFrame::OnMiscGamma()
 {
-	float	fSave = g_qeglobals.d_savedinfo.fGamma;
+	float fSave = g_qeglobals.d_savedinfo.fGamma;
 	DoGamma();
-	if( fSave != g_qeglobals.d_savedinfo.fGamma )
-	{
+	if( fSave != g_qeglobals.d_savedinfo.fGamma ) {
 		MessageBox( "You must restart Q3Radiant for Gamma settings to take place" );
 	}
 }
@@ -2908,33 +2658,28 @@ void CMainFrame::OnMiscPrintxy()
 
 void UpdateRadiantColor( float r, float g, float b, float a )
 {
-	if( g_pParentWnd )
-	{
+	if( g_pParentWnd ) {
 		g_pParentWnd->RoutineProcessing();
 	}
 }
 
 bool DoColor( int iIndex )
 {
-	COLORREF cr = ( int )( g_qeglobals.d_savedinfo.colors[iIndex][0] * 255 ) +
-				  ( ( ( int )( g_qeglobals.d_savedinfo.colors[iIndex][1] * 255 ) ) << 8 ) +
+	COLORREF cr = ( int )( g_qeglobals.d_savedinfo.colors[iIndex][0] * 255 ) + ( ( ( int )( g_qeglobals.d_savedinfo.colors[iIndex][1] * 255 ) ) << 8 ) +
 				  ( ( ( int )( g_qeglobals.d_savedinfo.colors[iIndex][2] * 255 ) ) << 16 );
 
 	CDialogColorPicker dlg( cr );
 
 	dlg.UpdateParent = UpdateRadiantColor;
 
-	if( dlg.DoModal() == IDOK )
-	{
+	if( dlg.DoModal() == IDOK ) {
 		g_qeglobals.d_savedinfo.colors[iIndex][0] = ( dlg.GetColor() & 255 ) / 255.0;
 		g_qeglobals.d_savedinfo.colors[iIndex][1] = ( ( dlg.GetColor() >> 8 ) & 255 ) / 255.0;
 		g_qeglobals.d_savedinfo.colors[iIndex][2] = ( ( dlg.GetColor() >> 16 ) & 255 ) / 255.0;
 
 		Sys_UpdateWindows( W_ALL );
 		return true;
-	}
-	else
-	{
+	} else {
 		return false;
 	}
 }
@@ -2944,20 +2689,16 @@ bool DoColor( int iIndex )
  =======================================================================================================================
  */
 extern void Select_SetKeyVal( const char* key, const char* val );
-void CMainFrame::OnMiscSelectentitycolor()
+void		CMainFrame::OnMiscSelectentitycolor()
 {
-
 	entity_t* ent = NULL;
-	if( QE_SingleBrush( true, true ) )
-	{
-		ent = selected_brushes.next->owner;
+	if( QE_SingleBrush( true, true ) ) {
+		ent				 = selected_brushes.next->owner;
 		CString strColor = ValueForKey( ent, "_color" );
-		if( strColor.GetLength() > 0 )
-		{
-			float	fR, fG, fB;
-			int		n = sscanf( strColor, "%f %f %f", &fR, &fG, &fB );
-			if( n == 3 )
-			{
+		if( strColor.GetLength() > 0 ) {
+			float fR, fG, fB;
+			int	  n = sscanf( strColor, "%f %f %f", &fR, &fG, &fB );
+			if( n == 3 ) {
 				g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][0] = fR;
 				g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][1] = fG;
 				g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][2] = fB;
@@ -2965,43 +2706,40 @@ void CMainFrame::OnMiscSelectentitycolor()
 		}
 	}
 
-	if( DoColor( COLOR_ENTITY ) )
-	{
-		char	buffer[100];
+	if( DoColor( COLOR_ENTITY ) ) {
+		char buffer[100];
 		sprintf( buffer, "%f %f %f", g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][0], g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][1], g_qeglobals.d_savedinfo.colors[COLOR_ENTITY][2] );
 		Select_SetKeyVal( "_color", buffer );
-		if( ent )
-		{
+		if( ent ) {
 			g_Inspectors->UpdateEntitySel( ent->eclass );
 		}
 		Sys_UpdateWindows( W_ALL );
 	}
 }
 
-CString strFindKey;
-CString strFindValue;
-CString strReplaceKey;
-CString strReplaceValue;
-bool    gbWholeStringMatchOnly = true;
-bool	gbSelectAllMatchingEnts = false;
-brush_t* gpPrevEntBrushFound = NULL;
+CString	 strFindKey;
+CString	 strFindValue;
+CString	 strReplaceKey;
+CString	 strReplaceValue;
+bool	 gbWholeStringMatchOnly	 = true;
+bool	 gbSelectAllMatchingEnts = false;
+brush_t* gpPrevEntBrushFound	 = NULL;
 
 // all this because there's no ansi stristr(), sigh...
 //
-LPCSTR String_ToLower( LPCSTR psString )
+LPCSTR	 String_ToLower( LPCSTR psString )
 {
-	const int iBufferSize = 4096;
+	const int	iBufferSize = 4096;
 	static char sString[8][iBufferSize];
-	static int iIndex = 0;
+	static int	iIndex = 0;
 
-	if( strlen( psString ) >= iBufferSize )
-	{
+	if( strlen( psString ) >= iBufferSize ) {
 		assert( 0 );
 		common->Printf( "String_ToLower(): Warning, input string was %d bytes too large, performing strlwr() inline!\n", strlen( psString ) - ( iBufferSize - 1 ) );
 		return strlwr( const_cast<char*>( psString ) );
 	}
 
-	iIndex = ++ iIndex & 7;
+	iIndex = ++iIndex & 7;
 
 	strcpy( sString[iIndex], psString );
 	strlwr( sString[iIndex] );
@@ -3009,28 +2747,24 @@ LPCSTR String_ToLower( LPCSTR psString )
 	return sString[iIndex];
 }
 
-
-bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
+bool FindNextBrush( brush_t* pPrevFoundBrush ) // can be NULL for fresh search
 {
-	bool bFoundSomething = false;
-	entity_t* pLastFoundEnt;
-	brush_t*  pLastFoundBrush;
+	bool		bFoundSomething = false;
+	entity_t*	pLastFoundEnt;
+	brush_t*	pLastFoundBrush;
 
 	CWaitCursor waitcursor;
 
-	Select_Deselect( true );	// bool bDeSelectToListBack
+	Select_Deselect( true ); // bool bDeSelectToListBack
 
 	// see whether to start search from prev_brush->next by checking if prev_brush is still in the active list...
 	//
 	brush_t* pStartBrush = active_brushes.next;
 
-	if( pPrevFoundBrush && !gbSelectAllMatchingEnts )
-	{
+	if( pPrevFoundBrush && !gbSelectAllMatchingEnts ) {
 		brush_t* pPrev = NULL;
-		for( brush_t* b = active_brushes.next ; b != &active_brushes ; b = b->next )
-		{
-			if( pPrev == pPrevFoundBrush && pPrevFoundBrush )
-			{
+		for( brush_t* b = active_brushes.next; b != &active_brushes; b = b->next ) {
+			if( pPrev == pPrevFoundBrush && pPrevFoundBrush ) {
 				pStartBrush = b;
 				break;
 			}
@@ -3040,21 +2774,19 @@ bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
 
 	// now do the search proper...
 	//
-	int iBrushesScanned = 0;
-	int iBrushesSelected = 0;
-	int iEntsScanned = 0;
+	int		 iBrushesScanned  = 0;
+	int		 iBrushesSelected = 0;
+	int		 iEntsScanned	  = 0;
 
 	brush_t* pNextBrush;
-	for( brush_t* b = pStartBrush; b != &active_brushes ; b = pNextBrush )
-	{
+	for( brush_t* b = pStartBrush; b != &active_brushes; b = pNextBrush ) {
 		// setup the <nextbrush> ptr before going any further (because selecting a brush down below moves it to a
 		//	different link list), but we need to ensure that the next brush has a different ent-owner than the current
 		//	one, or multi-brush ents will confuse the list process if they get selected (infinite loop badness)...
 		//
 		// pNextBrush = &active_brushes;	// default to loop-stop condition
 		pNextBrush = b->next;
-		while( pNextBrush->owner == b->owner && pNextBrush != &active_brushes )
-		{
+		while( pNextBrush->owner == b->owner && pNextBrush != &active_brushes ) {
 			pNextBrush = pNextBrush->next;
 		}
 
@@ -3063,71 +2795,50 @@ bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
 		// a simple progress bar so they don't think it's locked up on long searches...
 		//
 		static int iDotBodge = 0;
-		if( !( ++iDotBodge & 15 ) )
-		{
-			common->Printf( "." );    // cut down on printing
+		if( !( ++iDotBodge & 15 ) ) {
+			common->Printf( "." ); // cut down on printing
 		}
 
-		bool bMatch = false;
-		entity_t* ent = b->owner;
+		bool	  bMatch = false;
+		entity_t* ent	 = b->owner;
 
-		if( ent && ent != world_entity )	// needed!
-		{
+		if( ent && ent != world_entity ) { // needed!
 			iEntsScanned++;
-			if( FilterBrush( b ) )
-			{
+			if( FilterBrush( b ) ) {
 				continue;
 			}
 
 			// only check the find-key if there was one specified...
 			//
-			if( !strFindKey.IsEmpty() )
-			{
+			if( !strFindKey.IsEmpty() ) {
 				const char* psEntFoundValue = ValueForKey( ent, strFindKey );
 
-				if( strlen( psEntFoundValue )
-						&&
-						(
-//							(stricmp(strFindValue, psEntFoundValue)==0)	// found this exact key/value
-							(
-								( gbWholeStringMatchOnly && stricmp( psEntFoundValue, strFindValue ) == 0 )
-								||
-								( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) )
-							)
-							||											//  or
-							( strFindValue.IsEmpty() )					// any value for this key if blank value search specified
-						)
-				  )
-				{
+				if( strlen( psEntFoundValue ) && (
+													 //							(stricmp(strFindValue, psEntFoundValue)==0)	// found this exact key/value
+													 ( ( gbWholeStringMatchOnly && stricmp( psEntFoundValue, strFindValue ) == 0 ) ||
+														 ( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) ) ) || //  or
+													 ( strFindValue.IsEmpty() ) // any value for this key if blank value search specified
+													 ) ) {
 					bMatch = true;
 				}
-			}
-			else
-			{
+			} else {
 				// no FIND key specified, so just scan all of them...
 				//
 				int iNumEntKeys = GetNumKeys( ent );
-				for( int i = 0; i < iNumEntKeys; i++ )
-				{
+				for( int i = 0; i < iNumEntKeys; i++ ) {
 					const char* psEntFoundValue = ValueForKey( ent, GetKeyString( ent, i ) );
-					if( psEntFoundValue )
-					{
-						if(	( strlen( psEntFoundValue ) &&	strFindValue.IsEmpty() )	// if blank <value> search specified then any found-value is ok
-								||
-								( gbWholeStringMatchOnly && stricmp( psEntFoundValue, strFindValue ) == 0 )
-								||
-								( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) )
-						  )
-						{
-							if( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) )
-							{
-//								OutputDebugString(va("Matching because: psEntFoundValue '%s' & strFindValue '%s'\n",psEntFoundValue, strFindValue));
-//								Sys_Printf("Matching because: psEntFoundValue '%s' & strFindValue '%s'\n",psEntFoundValue, strFindValue);
+					if( psEntFoundValue ) {
+						if( ( strlen( psEntFoundValue ) && strFindValue.IsEmpty() ) // if blank <value> search specified then any found-value is ok
+							|| ( gbWholeStringMatchOnly && stricmp( psEntFoundValue, strFindValue ) == 0 ) ||
+							( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) ) ) {
+							if( !gbWholeStringMatchOnly && strstr( String_ToLower( psEntFoundValue ), String_ToLower( strFindValue ) ) ) {
+								//								OutputDebugString(va("Matching because: psEntFoundValue '%s' & strFindValue '%s'\n",psEntFoundValue, strFindValue));
+								//								Sys_Printf("Matching because: psEntFoundValue '%s' & strFindValue '%s'\n",psEntFoundValue, strFindValue);
 
-//								if (strstr(psEntFoundValue,"killsplat"))
-//								{
-//									DebugBreak();
-//								}
+								//								if (strstr(psEntFoundValue,"killsplat"))
+								//								{
+								//									DebugBreak();
+								//								}
 							}
 							bMatch = true;
 							break;
@@ -3136,41 +2847,34 @@ bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
 				}
 			}
 
-			if( bMatch )
-			{
+			if( bMatch ) {
 				bFoundSomething = true;
 				pLastFoundEnt	= ent;
-				pLastFoundBrush	= b;
+				pLastFoundBrush = b;
 				iBrushesSelected++;
 
-				g_bScreenUpdates = false;	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				g_bScreenUpdates = false; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 				Select_Brush( b );
 
-				g_bScreenUpdates = true;	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				g_bScreenUpdates = true; // !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-				if( !gbSelectAllMatchingEnts )
-				{
+				if( !gbSelectAllMatchingEnts ) {
 					break;
 				}
 			}
 		}
 	}
-	if( gbSelectAllMatchingEnts )
-	{
+	if( gbSelectAllMatchingEnts ) {
 		common->Printf( "\nBrushes Selected: %d           (Brushes Scanned %d, Ents Scanned %d)\n", iBrushesSelected, iBrushesScanned, iEntsScanned );
 	}
 
-	if( bFoundSomething )
-	{
+	if( bFoundSomething ) {
 		idVec3 v3Origin;
 
-		if( pLastFoundEnt->origin[0] != 0.0f || pLastFoundEnt->origin[1] != 0.0f || pLastFoundEnt->origin[2] != 0.0f )
-		{
+		if( pLastFoundEnt->origin[0] != 0.0f || pLastFoundEnt->origin[1] != 0.0f || pLastFoundEnt->origin[2] != 0.0f ) {
 			VectorCopy( pLastFoundEnt->origin, v3Origin );
-		}
-		else
-		{
+		} else {
 			// pLastFoundEnt's origin is zero, so use average point of brush mins maxs instead...
 			//
 			v3Origin[0] = ( pLastFoundBrush->mins[0] + pLastFoundBrush->maxs[0] ) / 2;
@@ -3181,7 +2885,7 @@ bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
 		// got one, jump the camera to it...
 		//
 		VectorCopy( v3Origin, g_pParentWnd->GetCamera()->Camera().origin );
-		g_pParentWnd->GetCamera()->Camera().origin[1] -= 32;	// back off a touch to look at it
+		g_pParentWnd->GetCamera()->Camera().origin[1] -= 32; // back off a touch to look at it
 		g_pParentWnd->GetCamera()->Camera().angles[0] = 0;
 		g_pParentWnd->GetCamera()->Camera().angles[1] = 90;
 		g_pParentWnd->GetCamera()->Camera().angles[2] = 0;
@@ -3201,72 +2905,57 @@ bool FindNextBrush( brush_t* pPrevFoundBrush )	// can be NULL for fresh search
 	return bFoundSomething;
 }
 
-
 void CMainFrame::OnMiscFindOrReplaceEntity()
 {
 	CEntKeyFindReplace FindReplace( &strFindKey, &strFindValue, &strReplaceKey, &strReplaceValue, &gbWholeStringMatchOnly, &gbSelectAllMatchingEnts );
-	switch( FindReplace.DoModal() )
-	{
-		case ID_RET_REPLACE:
-		{
-			brush_t* next = NULL;
-			int iOccurences = 0;
-			for( brush_t* b = active_brushes.next ; b != &active_brushes ; b = next )
-			{
-				next = b->next;	// important to do this here, in case brush gets linked to a different list
+	switch( FindReplace.DoModal() ) {
+		case ID_RET_REPLACE: {
+			brush_t* next		 = NULL;
+			int		 iOccurences = 0;
+			for( brush_t* b = active_brushes.next; b != &active_brushes; b = next ) {
+				next		  = b->next; // important to do this here, in case brush gets linked to a different list
 				entity_t* ent = b->owner;
 
-				if( ent )	// needed!
-				{
-					if( FilterBrush( b ) )
-					{
+				if( ent ) { // needed!
+					if( FilterBrush( b ) ) {
 						continue;
 					}
 
 					const char* psEntFoundValue = ValueForKey( ent, strFindKey );
 
 					if( stricmp( strFindValue, psEntFoundValue ) == 0 ||		// found this exact key/value
-							( strlen( psEntFoundValue ) &&	strFindValue.IsEmpty() ) // or any value for this key if blank value search specified
-					  )
-					{
+						( strlen( psEntFoundValue ) && strFindValue.IsEmpty() ) // or any value for this key if blank value search specified
+					) {
 						// found this search key/value, so delete it...
 						//
 						DeleteKey( ent, strFindKey );
 						//
 						// and replace with the new key/value (if specified)...
 						//
-						if( !strReplaceKey.IsEmpty() && !strReplaceValue.IsEmpty() )
-						{
+						if( !strReplaceKey.IsEmpty() && !strReplaceValue.IsEmpty() ) {
 							SetKeyValue( ent, strReplaceKey, strReplaceValue );
 						}
 						iOccurences++;
 					}
 				}
 			}
-			if( iOccurences )
-			{
+			if( iOccurences ) {
 				common->Printf( "%d occurence(s) replaced\n", iOccurences );
-			}
-			else
-			{
+			} else {
 				common->Printf( "Nothing found to replace\n" );
 			}
-		}
-		break;
-		case ID_RET_FIND:
-		{
+		} break;
+		case ID_RET_FIND: {
 			gpPrevEntBrushFound = NULL;
 			FindNextBrush( NULL );
-		}
-		break;
+		} break;
 	}
 }
 void CMainFrame::OnMiscFindNextEntity()
 {
 	// try it once, if it fails, try it again from top, and give up if still failed after that...
 	//
-	if( !FindNextBrush( gpPrevEntBrushFound ) )
-	{
+	if( !FindNextBrush( gpPrevEntBrushFound ) ) {
 		gpPrevEntBrushFound = NULL;
 		FindNextBrush( NULL );
 	}
@@ -3275,30 +2964,25 @@ void CMainFrame::OnMiscFindNextEntity()
 void CMainFrame::OnMiscSetViewPos()
 {
 	CString psNewCoords = GetString( "Input coords (x y z [rot])\n\nUse spaces to seperate numbers" );
-	if( !psNewCoords.IsEmpty() )
-	{
+	if( !psNewCoords.IsEmpty() ) {
 		idVec3 v3Viewpos;
-		float fYaw = 0;
+		float  fYaw = 0;
 
 		psNewCoords.Remove( ',' );
 		int iArgsFound = sscanf( psNewCoords, "%f %f %f", &v3Viewpos[0], &v3Viewpos[1], &v3Viewpos[2] );
-		if( iArgsFound == 3 )
-		{
+		if( iArgsFound == 3 ) {
 			// try for an optional 4th (note how this wasn't part of the sscanf() above, so I can check 1st-3, not just any 3)
 			//
 			int iArgsFound = sscanf( psNewCoords, "%f %f %f %f", &v3Viewpos[0], &v3Viewpos[1], &v3Viewpos[2], &fYaw );
-			if( iArgsFound != 4 )
-			{
-				fYaw = 0;	// jic
+			if( iArgsFound != 4 ) {
+				fYaw = 0; // jic
 			}
 
 			g_pParentWnd->GetCamera()->Camera().angles[YAW] = fYaw;
 			VectorCopy( v3Viewpos, g_pParentWnd->GetCamera()->Camera().origin );
 			VectorCopy( v3Viewpos, g_pParentWnd->GetXYWnd()->GetOrigin() );
 			Sys_UpdateWindows( W_ALL );
-		}
-		else
-		{
+		} else {
 			ErrorBox( va( "\"%s\" wasn't 3 valid floats with spaces", psNewCoords ) );
 		}
 	}
@@ -3458,13 +3142,11 @@ void CMainFrame::OnBrushFlipx()
 	Undo_AddBrushList( &selected_brushes );
 
 	Select_FlipAxis( 0 );
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		if( b->owner->eclass->fixedsize )
-		{
-			char	buf[16];
-			float	a = FloatForKey( b->owner, "angle" );
-			a = div( ( 180 - a ), 180 ).rem;
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		if( b->owner->eclass->fixedsize ) {
+			char  buf[16];
+			float a = FloatForKey( b->owner, "angle" );
+			a		= div( ( 180 - a ), 180 ).rem;
 			SetKeyValue( b->owner, "angle", itoa( a, buf, 10 ) );
 			Brush_Build( b );
 		}
@@ -3484,40 +3166,28 @@ void CMainFrame::OnBrushFlipy()
 	Undo_AddBrushList( &selected_brushes );
 
 	Select_FlipAxis( 1 );
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		if( b->owner->eclass->fixedsize )
-		{
-			float	a = FloatForKey( b->owner, "angle" );
-			if( a == 0 || a == 180 || a == 360 )
-			{
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		if( b->owner->eclass->fixedsize ) {
+			float a = FloatForKey( b->owner, "angle" );
+			if( a == 0 || a == 180 || a == 360 ) {
 				continue;
 			}
 
-			if( a == 90 || a == 270 )
-			{
+			if( a == 90 || a == 270 ) {
 				a += 180;
-			}
-			else if( a > 270 )
-			{
+			} else if( a > 270 ) {
 				a += 90;
-			}
-			else if( a > 180 )
-			{
+			} else if( a > 180 ) {
 				a -= 90;
-			}
-			else if( a > 90 )
-			{
+			} else if( a > 90 ) {
 				a += 90;
-			}
-			else
-			{
+			} else {
 				a -= 90;
 			}
 
 			a = ( int )a % 360;
 
-			char	buf[16];
+			char buf[16];
 			SetKeyValue( b->owner, "angle", itoa( a, buf, 10 ) );
 			Brush_Build( b );
 		}
@@ -3635,7 +3305,7 @@ void CMainFrame::OnSelectionArbitraryrotation()
 	Undo_Start( "arbitrary rotation" );
 	Undo_AddBrushList( &selected_brushes );
 
-	CRotateDlg	dlg;
+	CRotateDlg dlg;
 	dlg.DoModal();
 
 	// DoRotate ();
@@ -3715,8 +3385,7 @@ void CMainFrame::OnSelectionDelete()
 	Undo_AddBrushList( &selected_brushes );
 
 	// add all deleted entities to the undo
-	for( brush = selected_brushes.next; brush != &selected_brushes; brush = brush->next )
-	{
+	for( brush = selected_brushes.next; brush != &selected_brushes; brush = brush->next ) {
 		Undo_AddEntity( brush->owner );
 	}
 
@@ -3732,41 +3401,25 @@ void CMainFrame::OnSelectionDelete()
  */
 void CMainFrame::OnSelectionDeselect()
 {
-	if( !ByeByeSurfaceDialog() )
-	{
-		if( g_bClipMode )
-		{
+	if( !ByeByeSurfaceDialog() ) {
+		if( g_bClipMode ) {
 			OnViewClipper();
-		}
-		else if( g_bRotateMode )
-		{
+		} else if( g_bRotateMode ) {
 			OnSelectMouserotate();
-		}
-		else if( g_bScaleMode )
-		{
+		} else if( g_bScaleMode ) {
 			OnSelectMousescale();
-		}
-		else if( g_bPathMode )
-		{
-			if( ActiveXY() )
-			{
+		} else if( g_bPathMode ) {
+			if( ActiveXY() ) {
 				ActiveXY()->KillPathMode();
 			}
-		}
-		else if( g_bAxialMode )
-		{
+		} else if( g_bAxialMode ) {
 			g_bAxialMode = false;
 			Sys_UpdateWindows( W_CAMERA );
-		}
-		else
-		{
-			if( g_qeglobals.d_select_mode == sel_curvepoint && g_qeglobals.d_num_move_points > 0 )
-			{
+		} else {
+			if( g_qeglobals.d_select_mode == sel_curvepoint && g_qeglobals.d_num_move_points > 0 ) {
 				g_qeglobals.d_num_move_points = 0;
 				Sys_UpdateWindows( W_ALL );
-			}
-			else
-			{
+			} else {
 				Select_Deselect();
 				SetStatusText( 2, " " );
 			}
@@ -3780,16 +3433,12 @@ void CMainFrame::OnSelectionDeselect()
  */
 void CMainFrame::OnSelectionDragedges()
 {
-	if( g_qeglobals.d_select_mode == sel_edge )
-	{
+	if( g_qeglobals.d_select_mode == sel_edge ) {
 		g_qeglobals.d_select_mode = sel_brush;
 		Sys_UpdateWindows( W_ALL );
-	}
-	else
-	{
+	} else {
 		SetupVertexSelection();
-		if( g_qeglobals.d_numpoints )
-		{
+		if( g_qeglobals.d_numpoints ) {
 			g_qeglobals.d_select_mode = sel_edge;
 		}
 
@@ -3803,23 +3452,16 @@ void CMainFrame::OnSelectionDragedges()
  */
 void CMainFrame::OnSelectionDragvertecies()
 {
-	if( g_qeglobals.d_select_mode == sel_vertex || g_qeglobals.d_select_mode == sel_curvepoint )
-	{
+	if( g_qeglobals.d_select_mode == sel_vertex || g_qeglobals.d_select_mode == sel_curvepoint ) {
 		g_qeglobals.d_select_mode = sel_brush;
 		Sys_UpdateWindows( W_ALL );
-	}
-	else
-	{
+	} else {
 		// --if (QE_SingleBrush() && selected_brushes.next->patchBrush)
-		if( OnlyPatchesSelected() )
-		{
+		if( OnlyPatchesSelected() ) {
 			Patch_EditPatch();
-		}
-		else if( !AnyPatchesSelected() )
-		{
+		} else if( !AnyPatchesSelected() ) {
 			SetupVertexSelection();
-			if( g_qeglobals.d_numpoints )
-			{
+			if( g_qeglobals.d_numpoints ) {
 				g_qeglobals.d_select_mode = sel_vertex;
 			}
 		}
@@ -3847,9 +3489,9 @@ void CMainFrame::OnSelectionCenterOrigin()
  */
 void CMainFrame::OnSelectionSelectcompletetall()
 {
-	//if (ActiveXY()) {
+	// if (ActiveXY()) {
 	//	ActiveXY()->UndoCopy();
-	//}
+	// }
 
 	Select_CompleteTall();
 }
@@ -3899,7 +3541,6 @@ void CMainFrame::OnUpdateAutocaulk( CCmdUI* pCmdUI )
 	pCmdUI->Enable( selected_brushes.next != &selected_brushes );
 }
 
-
 /*
  =======================================================================================================================
  =======================================================================================================================
@@ -3944,27 +3585,21 @@ void CMainFrame::OnViewCameraupdate()
 {
 	g_qeglobals.flatRotation++;
 
-	if( g_qeglobals.flatRotation > 2 )
-	{
+	if( g_qeglobals.flatRotation > 2 ) {
 		g_qeglobals.flatRotation = 0;
 	}
 
-	if( g_qeglobals.flatRotation )
-	{
+	if( g_qeglobals.flatRotation ) {
 		g_qeglobals.rotateAxis = 0;
-		if( ActiveXY()->GetViewType() == XY )
-		{
+		if( ActiveXY()->GetViewType() == XY ) {
 			g_qeglobals.rotateAxis = 2;
-		}
-		else if( ActiveXY()->GetViewType() == XZ )
-		{
+		} else if( ActiveXY()->GetViewType() == XZ ) {
 			g_qeglobals.rotateAxis = 1;
 		}
 	}
 	Select_InitializeRotation();
 	Sys_UpdateWindows( W_CAMERA | W_XY );
 }
-
 
 /*
  =======================================================================================================================
@@ -3991,17 +3626,12 @@ void CMainFrame::OnHelpAbout()
  */
 void CMainFrame::OnViewClipper()
 {
-	if( ActiveXY() )
-	{
-		if( ActiveXY()->ClipMode() )
-		{
+	if( ActiveXY() ) {
+		if( ActiveXY()->ClipMode() ) {
 			ActiveXY()->SetClipMode( false );
 			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_VIEW_CLIPPER, FALSE );
-		}
-		else
-		{
-			if( ActiveXY()->RotateMode() )
-			{
+		} else {
+			if( ActiveXY()->RotateMode() ) {
 				OnSelectMouserotate();
 			}
 
@@ -4018,8 +3648,7 @@ void CMainFrame::OnViewClipper()
 void CMainFrame::OnCameraAngledown()
 {
 	m_pCamWnd->Camera().angles[0] -= SPEED_TURN;
-	if( m_pCamWnd->Camera().angles[0] < -85 )
-	{
+	if( m_pCamWnd->Camera().angles[0] < -85 ) {
 		m_pCamWnd->Camera().angles[0] = -85;
 	}
 
@@ -4033,8 +3662,7 @@ void CMainFrame::OnCameraAngledown()
 void CMainFrame::OnCameraAngleup()
 {
 	m_pCamWnd->Camera().angles[0] += SPEED_TURN;
-	if( m_pCamWnd->Camera().angles[0] > 85 )
-	{
+	if( m_pCamWnd->Camera().angles[0] > 85 ) {
 		m_pCamWnd->Camera().angles[0] = 85;
 	}
 
@@ -4149,20 +3777,17 @@ void CMainFrame::OnGridToggle()
  */
 void CMainFrame::OnPrefs()
 {
-	BOOL	bToolbar = g_PrefsDlg.m_bWideToolbar;
+	BOOL bToolbar = g_PrefsDlg.m_bWideToolbar;
 	g_PrefsDlg.LoadPrefs();
-	if( g_PrefsDlg.DoModal() == IDOK )
-	{
-		if( g_PrefsDlg.m_bWideToolbar != bToolbar )
-		{
+	if( g_PrefsDlg.DoModal() == IDOK ) {
+		if( g_PrefsDlg.m_bWideToolbar != bToolbar ) {
 			MessageBox( "You need to restart Q3Radiant for the view changes to take place." );
 		}
 
 		g_Inspectors->texWnd.UpdatePrefs();
 
-		CMenu*	pMenu = GetMenu();
-		if( pMenu )
-		{
+		CMenu* pMenu = GetMenu();
+		if( pMenu ) {
 			pMenu->CheckMenuItem( ID_SNAPTOGRID, MF_BYCOMMAND | ( !g_PrefsDlg.m_bNoClamp ) ? MF_CHECKED : MF_UNCHECKED );
 		}
 	}
@@ -4183,16 +3808,12 @@ void CMainFrame::SetWindowStyle( int nStyle )
  */
 void CMainFrame::OnTogglecamera()
 {
-	if( m_pCamWnd->IsWindowVisible() )
-	{
+	if( m_pCamWnd->IsWindowVisible() ) {
 		m_pCamWnd->ShowWindow( SW_HIDE );
-	}
-	else
-	{
+	} else {
 		m_pCamWnd->ShowWindow( SW_SHOW );
 	}
 }
-
 
 /*
  =======================================================================================================================
@@ -4200,14 +3821,10 @@ void CMainFrame::OnTogglecamera()
  */
 void CMainFrame::OnToggleview()
 {
-	if( m_pXYWnd && m_pXYWnd->GetSafeHwnd() )
-	{
-		if( m_pXYWnd->IsWindowVisible() )
-		{
+	if( m_pXYWnd && m_pXYWnd->GetSafeHwnd() ) {
+		if( m_pXYWnd->IsWindowVisible() ) {
 			m_pXYWnd->ShowWindow( SW_HIDE );
-		}
-		else
-		{
+		} else {
 			m_pXYWnd->ShowWindow( SW_SHOW );
 		}
 	}
@@ -4219,14 +3836,10 @@ void CMainFrame::OnToggleview()
  */
 void CMainFrame::OnTogglez()
 {
-	if( m_pZWnd && m_pZWnd->GetSafeHwnd() )
-	{
-		if( m_pZWnd->IsWindowVisible() )
-		{
+	if( m_pZWnd && m_pZWnd->GetSafeHwnd() ) {
+		if( m_pZWnd->IsWindowVisible() ) {
 			m_pZWnd->ShowWindow( SW_HIDE );
-		}
-		else
-		{
+		} else {
 			m_pZWnd->ShowWindow( SW_SHOW );
 		}
 	}
@@ -4240,9 +3853,8 @@ void CMainFrame::OnToggleLock()
 {
 	g_PrefsDlg.m_bTextureLock = !g_PrefsDlg.m_bTextureLock;
 
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
 		pMenu->CheckMenuItem( ID_TOGGLE_LOCK, MF_BYCOMMAND | ( g_PrefsDlg.m_bTextureLock ) ? MF_CHECKED : MF_UNCHECKED );
 	}
 
@@ -4256,7 +3868,7 @@ void CMainFrame::OnToggleLock()
  */
 void CMainFrame::OnEditMapinfo()
 {
-	CMapInfo	dlg;
+	CMapInfo dlg;
 	dlg.DoModal();
 }
 
@@ -4275,29 +3887,20 @@ void CMainFrame::OnEditEntityinfo()
  */
 void CMainFrame::OnViewNextview()
 {
-	if( m_pXYWnd->GetViewType() == XY )
-	{
+	if( m_pXYWnd->GetViewType() == XY ) {
 		m_pXYWnd->SetViewType( XZ );
-	}
-	else if( m_pXYWnd->GetViewType() == XZ )
-	{
+	} else if( m_pXYWnd->GetViewType() == XZ ) {
 		m_pXYWnd->SetViewType( YZ );
-	}
-	else
-	{
+	} else {
 		m_pXYWnd->SetViewType( XY );
 	}
 
 	m_pXYWnd->PositionView();
-	if( g_qeglobals.flatRotation )
-	{
+	if( g_qeglobals.flatRotation ) {
 		g_qeglobals.rotateAxis = 0;
-		if( ActiveXY()->GetViewType() == XY )
-		{
+		if( ActiveXY()->GetViewType() == XY ) {
 			g_qeglobals.rotateAxis = 2;
-		}
-		else if( ActiveXY()->GetViewType() == XZ )
-		{
+		} else if( ActiveXY()->GetViewType() == XZ ) {
 			g_qeglobals.rotateAxis = 1;
 		}
 	}
@@ -4310,11 +3913,10 @@ void CMainFrame::OnViewNextview()
  */
 void CMainFrame::OnHelpCommandlist()
 {
-	CCommandsDlg	dlg;
+	CCommandsDlg dlg;
 	dlg.DoModal();
 #if 0
-	if( g_b3Dfx )
-	{
+	if( g_b3Dfx ) {
 		C3DFXCamWnd* pWnd = new C3DFXCamWnd();
 		CRect		rect( 50, 50, 400, 400 );
 		pWnd->Create( _3DFXCAMERA_WINDOW_CLASS, "", QE3_CHILDSTYLE, rect, this, 1234 );
@@ -4337,10 +3939,8 @@ void CMainFrame::OnFileNewproject()
  */
 void CMainFrame::UpdateStatusText()
 {
-	for( int n = 0; n < 6; n++ )
-	{
-		if( m_strStatus[n].GetLength() >= 0 && m_wndStatusBar.GetSafeHwnd() )
-		{
+	for( int n = 0; n < 6; n++ ) {
+		if( m_strStatus[n].GetLength() >= 0 && m_wndStatusBar.GetSafeHwnd() ) {
 			m_wndStatusBar.SetPaneText( n, m_strStatus[n] );
 		}
 	}
@@ -4352,8 +3952,7 @@ void CMainFrame::UpdateStatusText()
  */
 void CMainFrame::SetStatusText( int nPane, const char* pText )
 {
-	if( pText && nPane <= 5 && nPane >= 0 )
-	{
+	if( pText && nPane <= 5 && nPane >= 0 ) {
 		m_strStatus[nPane] = pText;
 		UpdateStatusText();
 	}
@@ -4365,48 +3964,37 @@ void CMainFrame::SetStatusText( int nPane, const char* pText )
  */
 void CMainFrame::UpdateWindows( int nBits )
 {
-
-	if( !g_bScreenUpdates )
-	{
+	if( !g_bScreenUpdates ) {
 		return;
 	}
 
-	if( nBits & ( W_XY | W_XY_OVERLAY ) )
-	{
-		if( m_pXYWnd )
-		{
+	if( nBits & ( W_XY | W_XY_OVERLAY ) ) {
+		if( m_pXYWnd ) {
 			m_pXYWnd->RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 		}
 
-		if( m_pXZWnd )
-		{
+		if( m_pXZWnd ) {
 			m_pXZWnd->RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 		}
 
-		if( m_pYZWnd )
-		{
+		if( m_pYZWnd ) {
 			m_pYZWnd->RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 		}
 	}
 
-	if( nBits & W_CAMERA || ( ( nBits & W_CAMERA_IFON ) && m_bCamPreview ) )
-	{
-		if( m_pCamWnd )
-		{
+	if( nBits & W_CAMERA || ( ( nBits & W_CAMERA_IFON ) && m_bCamPreview ) ) {
+		if( m_pCamWnd ) {
 			m_pCamWnd->RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 		}
 	}
 
-	if( nBits & ( W_Z | W_Z_OVERLAY ) )
-	{
-		if( m_pZWnd )
-		{
+	if( nBits & ( W_Z | W_Z_OVERLAY ) ) {
+		if( m_pZWnd ) {
 			m_pZWnd->RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 		}
 	}
 
-	if( nBits & W_TEXTURE )
-	{
+	if( nBits & W_TEXTURE ) {
 		g_Inspectors->texWnd.RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 	}
 }
@@ -4417,12 +4005,9 @@ void CMainFrame::UpdateWindows( int nBits )
  */
 void WINAPI Sys_UpdateWindows( int nBits )
 {
-	if( g_PrefsDlg.m_bQE4Painting )
-	{
+	if( g_PrefsDlg.m_bQE4Painting ) {
 		g_nUpdateBits |= nBits;
-	}
-	else if( g_pParentWnd )
-	{
+	} else if( g_pParentWnd ) {
 		g_pParentWnd->UpdateWindows( nBits );
 	}
 }
@@ -4433,8 +4018,7 @@ void WINAPI Sys_UpdateWindows( int nBits )
  */
 void CMainFrame::OnFlipClip()
 {
-	if( m_pActiveXY )
-	{
+	if( m_pActiveXY ) {
 		m_pActiveXY->FlipClip();
 	}
 }
@@ -4445,27 +4029,20 @@ void CMainFrame::OnFlipClip()
  */
 void CMainFrame::OnClipSelected()
 {
-	if( m_pActiveXY && m_pActiveXY->ClipMode() )
-	{
+	if( m_pActiveXY && m_pActiveXY->ClipMode() ) {
 		Undo_Start( "clip selected" );
 		Undo_AddBrushList( &selected_brushes );
 		m_pActiveXY->Clip();
 		Undo_EndBrushList( &selected_brushes );
 		Undo_End();
-	}
-	else
-	{
-		if( g_bPatchBendMode )
-		{
+	} else {
+		if( g_bPatchBendMode ) {
 			Patch_BendHandleENTER();
+		} else if( g_bAxialMode ) {
 		}
-		else if( g_bAxialMode )
-		{
-
-		}
-		//else if (g_bPatchBendMode) {
+		// else if (g_bPatchBendMode) {
 		//	Patch_InsDelHandleENTER();
-		//}
+		// }
 	}
 }
 
@@ -4475,8 +4052,7 @@ void CMainFrame::OnClipSelected()
  */
 void CMainFrame::OnSplitSelected()
 {
-	if( m_pActiveXY )
-	{
+	if( m_pActiveXY ) {
 		Undo_Start( "split selected" );
 		Undo_AddBrushList( &selected_brushes );
 		m_pActiveXY->SplitClip();
@@ -4500,16 +4076,12 @@ CXYWnd* CMainFrame::ActiveXY()
  */
 void CMainFrame::OnToggleviewXz()
 {
-	if( m_pXZWnd && m_pXZWnd->GetSafeHwnd() )
-	{
+	if( m_pXZWnd && m_pXZWnd->GetSafeHwnd() ) {
 		// get windowplacement doesn't actually save this so we will here
 		g_PrefsDlg.m_bXZVis = m_pXZWnd->IsWindowVisible();
-		if( g_PrefsDlg.m_bXZVis )
-		{
+		if( g_PrefsDlg.m_bXZVis ) {
 			m_pXZWnd->ShowWindow( SW_HIDE );
-		}
-		else
-		{
+		} else {
 			m_pXZWnd->ShowWindow( SW_SHOW );
 		}
 
@@ -4524,15 +4096,11 @@ void CMainFrame::OnToggleviewXz()
  */
 void CMainFrame::OnToggleviewYz()
 {
-	if( m_pYZWnd && m_pYZWnd->GetSafeHwnd() )
-	{
+	if( m_pYZWnd && m_pYZWnd->GetSafeHwnd() ) {
 		g_PrefsDlg.m_bYZVis = m_pYZWnd->IsWindowVisible();
-		if( g_PrefsDlg.m_bYZVis )
-		{
+		if( g_PrefsDlg.m_bYZVis ) {
 			m_pYZWnd->ShowWindow( SW_HIDE );
-		}
-		else
-		{
+		} else {
 			m_pYZWnd->ShowWindow( SW_SHOW );
 		}
 
@@ -4555,7 +4123,6 @@ void CMainFrame::OnToggleTextureBar()
 {
 	ShowControlBar( &m_wndTextureBar, !m_wndTextureBar.IsWindowVisible(), false );
 }
-
 
 /*
  =======================================================================================================================
@@ -4623,13 +4190,12 @@ void CMainFrame::OnColorsViewname()
  */
 void CMainFrame::OnColorSetoriginal()
 {
-	for( int i = 0; i < 3; i++ )
-	{
+	for( int i = 0; i < 3; i++ ) {
 		g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][i] = 0.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i] = 1.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i] = 0.75f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i] = 0.5f;
-		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i]	 = 1.0f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i]	 = 0.75f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i]	 = 0.5f;
+		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i]	 = 0.25f;
 	}
 
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0] = 0.0f;
@@ -4669,13 +4235,12 @@ void CMainFrame::OnColorSetoriginal()
  */
 void CMainFrame::OnColorSetqer()
 {
-	for( int i = 0; i < 3; i++ )
-	{
+	for( int i = 0; i < 3; i++ ) {
 		g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][i] = 0.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i] = 1.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i] = 1.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i] = 0.5f;
-		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i]	 = 1.0f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i]	 = 1.0f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i]	 = 0.5f;
+		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i]	 = 0.25f;
 	}
 
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0] = 0.0f;
@@ -4709,35 +4274,34 @@ void CMainFrame::OnColorSetqer()
 	Sys_UpdateWindows( W_ALL );
 }
 
-//FIXME: these just need to be read from a def file
+// FIXME: these just need to be read from a def file
 void CMainFrame::OnColorSetSuperMal()
 {
 	OnColorSetqer();
 	g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][0] = 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][1] = 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][2] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][0] = 0.35f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][1] = 0.35f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][2] = 0.35f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][0] = 0.5f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][1] = 0.5f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][2] = 0.5f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][0] = 0.39f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][1] = 0.39f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][2] = 0.39f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][0] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][2] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][0] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][2] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][0] = 1.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][1] = 0.90f;
-	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][2] = 0.90f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][0] = 0.5f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][2] = 0.74f;
-
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][0]	 = 0.35f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][1]	 = 0.35f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][2]	 = 0.35f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][0]	 = 0.5f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][1]	 = 0.5f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][2]	 = 0.5f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][0]	 = 0.39f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][1]	 = 0.39f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][2]	 = 0.39f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][0]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][1]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][2]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][0]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][1]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][2]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][0]	 = 1.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][1]	 = 0.90f;
+	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][2]	 = 0.90f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][0]	 = 0.5f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][1]	 = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][2]	 = 0.74f;
 
 	Sys_UpdateWindows( W_ALL );
 }
@@ -4748,12 +4312,11 @@ void CMainFrame::OnColorSetSuperMal()
  */
 void CMainFrame::OnColorSetblack()
 {
-	for( int i = 0; i < 3; i++ )
-	{
+	for( int i = 0; i < 3; i++ ) {
 		g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][i] = 0.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i] = 0.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i] = 0.0f;
-		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i]	 = 0.0f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i]	 = 0.0f;
+		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i]	 = 0.25f;
 	}
 
 	g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][0] = 0.3f;
@@ -4793,44 +4356,42 @@ void CMainFrame::OnColorSetblack()
 
 void CMainFrame::OnColorSetMax()
 {
-	for( int i = 0 ; i < 3 ; i++ )
-	{
+	for( int i = 0; i < 3; i++ ) {
 		g_qeglobals.d_savedinfo.colors[COLOR_TEXTUREBACK][i] = 0.25f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i] = 0.77f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i] = 0.83f;
-		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i] = 0.89f;
-		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i] = 0.25f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDBACK][i]	 = 0.77f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMINOR][i]	 = 0.83f;
+		g_qeglobals.d_savedinfo.colors[COLOR_GRIDMAJOR][i]	 = 0.89f;
+		g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][i]	 = 0.25f;
 	}
 
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0] = 1.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][1] = 1.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][2] = 1.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][0] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][2] = 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][0]	= 1.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][1]	= 1.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDBLOCK][2]	= 1.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][0]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][1]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_GRIDTEXT][2]	= 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][0] = 1.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][1] = 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_SELBRUSHES][2] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][0] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][2] = 1.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][0] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][2] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][0] = 0.5f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][1] = 0.0f;
-	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][2] = 0.75f;
+	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][0]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][1]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_CLIPPER][2]	= 1.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][0]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][1]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_BRUSHES][2]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][0]	= 0.5f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][1]	= 0.0f;
+	g_qeglobals.d_savedinfo.colors[COLOR_VIEWNAME][2]	= 0.75f;
 
-	//g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][0] = 0.0f;
-	//g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][1] = 1.0f;
-	//g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][2] = 1.0f;
+	// g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][0] = 0.0f;
+	// g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][1] = 1.0f;
+	// g_qeglobals.d_savedinfo.colors[COLOR_CAMERABACK][2] = 1.0f;
 
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][0] = 1.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][1] = 0.0f;
 	g_qeglobals.d_savedinfo.colors[COLOR_PRECISION_CROSSHAIR][2] = 1.0f;
 
 	Sys_UpdateWindows( W_ALL );
-
 }
 
 /*
@@ -4842,9 +4403,8 @@ void CMainFrame::OnSnaptogrid()
 	g_PrefsDlg.m_bNoClamp ^= 1;
 	g_PrefsDlg.SavePrefs();
 
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
 		pMenu->CheckMenuItem( ID_SNAPTOGRID, MF_BYCOMMAND | ( !g_PrefsDlg.m_bNoClamp ) ? MF_CHECKED : MF_UNCHECKED );
 	}
 }
@@ -4859,16 +4419,12 @@ void CMainFrame::OnSelectScale()
 	Undo_Start( "scale" );
 	Undo_AddBrushList( &selected_brushes );
 
-	CScaleDialog	dlg;
-	if( dlg.DoModal() == IDOK )
-	{
-		if( dlg.m_fX > 0 && dlg.m_fY > 0 && dlg.m_fZ > 0 )
-		{
+	CScaleDialog dlg;
+	if( dlg.DoModal() == IDOK ) {
+		if( dlg.m_fX > 0 && dlg.m_fY > 0 && dlg.m_fZ > 0 ) {
 			Select_Scale( dlg.m_fX, dlg.m_fY, dlg.m_fZ );
 			Sys_UpdateWindows( W_ALL );
-		}
-		else
-		{
+		} else {
 			common->Printf( "Warning.. Tried to scale by a zero value." );
 		}
 	}
@@ -4883,37 +4439,26 @@ void CMainFrame::OnSelectScale()
  */
 void CMainFrame::OnSelectMouserotate()
 {
-	if( ActiveXY() )
-	{
-		if( ActiveXY()->ClipMode() )
-		{
+	if( ActiveXY() ) {
+		if( ActiveXY()->ClipMode() ) {
 			OnViewClipper();
 		}
 
-		if( ActiveXY()->RotateMode() )
-		{
+		if( ActiveXY()->RotateMode() ) {
 			ActiveXY()->SetRotateMode( false );
 			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSEROTATE, FALSE );
 			Map_BuildBrushData();
-		}
-		else
-		{
+		} else {
 			// may not work if no brush selected, see return value
-			if( ActiveXY()->SetRotateMode( true ) )
-			{
+			if( ActiveXY()->SetRotateMode( true ) ) {
 				g_qeglobals.rotateAxis = 0;
-				if( ActiveXY()->GetViewType() == XY )
-				{
+				if( ActiveXY()->GetViewType() == XY ) {
 					g_qeglobals.rotateAxis = 2;
-				}
-				else if( ActiveXY()->GetViewType() == XZ )
-				{
+				} else if( ActiveXY()->GetViewType() == XZ ) {
 					g_qeglobals.rotateAxis = 1;
 				}
 				m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSEROTATE, TRUE );
-			}
-			else  	// if MFC called, we need to set back to FALSE ourselves
-			{
+			} else { // if MFC called, we need to set back to FALSE ourselves
 				m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSEROTATE, FALSE );
 			}
 		}
@@ -4927,8 +4472,7 @@ void CMainFrame::OnSelectMouserotate()
  */
 void CMainFrame::OnEditCopybrush()
 {
-	if( ActiveXY() )
-	{
+	if( ActiveXY() ) {
 		ActiveXY()->Copy();
 	}
 }
@@ -4939,8 +4483,7 @@ void CMainFrame::OnEditCopybrush()
  */
 void CMainFrame::OnEditPastebrush()
 {
-	if( ActiveXY() )
-	{
+	if( ActiveXY() ) {
 		ActiveXY()->Paste();
 	}
 }
@@ -4993,8 +4536,7 @@ void CMainFrame::OnUpdateEditRedo( CCmdUI* pCmdUI )
 void CMainFrame::OnSelectionTextureDec()
 {
 	g_qeglobals.d_savedinfo.m_nTextureTweak -= 1.0f;
-	if( g_qeglobals.d_savedinfo.m_nTextureTweak == 0.0f )
-	{
+	if( g_qeglobals.d_savedinfo.m_nTextureTweak == 0.0f ) {
 		g_qeglobals.d_savedinfo.m_nTextureTweak -= 1.0f;
 	}
 
@@ -5017,8 +4559,7 @@ void CMainFrame::OnSelectionTextureFit()
 void CMainFrame::OnSelectionTextureInc()
 {
 	g_qeglobals.d_savedinfo.m_nTextureTweak += 1.0f;
-	if( g_qeglobals.d_savedinfo.m_nTextureTweak == 0.0f )
-	{
+	if( g_qeglobals.d_savedinfo.m_nTextureTweak == 0.0f ) {
 		g_qeglobals.d_savedinfo.m_nTextureTweak += 1.0f;
 	}
 
@@ -5121,7 +4662,7 @@ void CMainFrame::OnSelectionTextureShiftup()
  */
 void CMainFrame::SetGridChecks( int id )
 {
-	HMENU	hMenu = ::GetMenu( GetSafeHwnd() );
+	HMENU hMenu = ::GetMenu( GetSafeHwnd() );
 	CheckMenuItem( hMenu, ID_GRID_1, MF_BYCOMMAND | MF_UNCHECKED );
 	CheckMenuItem( hMenu, ID_GRID_2, MF_BYCOMMAND | MF_UNCHECKED );
 	CheckMenuItem( hMenu, ID_GRID_4, MF_BYCOMMAND | MF_UNCHECKED );
@@ -5142,18 +4683,16 @@ void CMainFrame::SetGridChecks( int id )
  */
 void CMainFrame::OnGridNext()
 {
-	if( g_qeglobals.d_gridsize >= MAX_GRID )
-	{
+	if( g_qeglobals.d_gridsize >= MAX_GRID ) {
 		return;
 	}
 
 	g_qeglobals.d_gridsize *= 2.0f;
 
-	float	minGrid = MIN_GRID;
-	int		id = ID_GRID_START;
+	float minGrid = MIN_GRID;
+	int	  id	  = ID_GRID_START;
 
-	while( minGrid < g_qeglobals.d_gridsize && id < ID_GRID_END )
-	{
+	while( minGrid < g_qeglobals.d_gridsize && id < ID_GRID_END ) {
 		minGrid *= 2.0f;
 		id++;
 	}
@@ -5171,18 +4710,16 @@ void CMainFrame::OnGridNext()
  */
 void CMainFrame::OnGridPrev()
 {
-	if( g_qeglobals.d_gridsize <= MIN_GRID )
-	{
+	if( g_qeglobals.d_gridsize <= MIN_GRID ) {
 		return;
 	}
 
 	g_qeglobals.d_gridsize /= 2;
 
-	float	maxGrid = MAX_GRID;
-	int		id = ID_GRID_END;
+	float maxGrid = MAX_GRID;
+	int	  id	  = ID_GRID_END;
 
-	while( maxGrid > g_qeglobals.d_gridsize && id > ID_GRID_START )
-	{
+	while( maxGrid > g_qeglobals.d_gridsize && id > ID_GRID_START ) {
 		maxGrid /= 2.0f;
 		id--;
 	}
@@ -5205,16 +4742,7 @@ void CMainFrame::SetGridStatus()
 	char	c2;
 	c1 = ( g_PrefsDlg.m_bTextureLock ) ? 'M' : ' ';
 	c2 = ( g_PrefsDlg.m_bRotateLock ) ? 'R' : ' ';
-	strStatus.Format
-	(
-		"G:%1.2f T:%1.2f R:%i C:%i L:%c%c",
-		g_qeglobals.d_gridsize,
-		g_qeglobals.d_savedinfo.m_nTextureTweak,
-		g_PrefsDlg.m_nRotation,
-		g_PrefsDlg.m_nCubicScale,
-		c1,
-		c2
-	);
+	strStatus.Format( "G:%1.2f T:%1.2f R:%i C:%i L:%c%c", g_qeglobals.d_gridsize, g_qeglobals.d_savedinfo.m_nTextureTweak, g_PrefsDlg.m_nRotation, g_PrefsDlg.m_nCubicScale, c1, c2 );
 	SetStatusText( 4, strStatus );
 }
 
@@ -5246,12 +4774,9 @@ void CMainFrame::OnTextureReplaceall()
  */
 void CMainFrame::OnScalelockx()
 {
-	if( g_nScaleHow & SCALE_X )
-	{
+	if( g_nScaleHow & SCALE_X ) {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKX, FALSE );
-	}
-	else
-	{
+	} else {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKX );
 	}
 
@@ -5264,12 +4789,9 @@ void CMainFrame::OnScalelockx()
  */
 void CMainFrame::OnScalelocky()
 {
-	if( g_nScaleHow & SCALE_Y )
-	{
+	if( g_nScaleHow & SCALE_Y ) {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKY, FALSE );
-	}
-	else
-	{
+	} else {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKY );
 	}
 
@@ -5282,12 +4804,9 @@ void CMainFrame::OnScalelocky()
  */
 void CMainFrame::OnScalelockz()
 {
-	if( g_nScaleHow & SCALE_Z )
-	{
+	if( g_nScaleHow & SCALE_Z ) {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKZ, FALSE );
-	}
-	else
-	{
+	} else {
 		m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SCALELOCKZ );
 	}
 
@@ -5300,27 +4819,21 @@ void CMainFrame::OnScalelockz()
  */
 void CMainFrame::OnSelectMousescale()
 {
-	if( ActiveXY() )
-	{
-		if( ActiveXY()->ClipMode() )
-		{
+	if( ActiveXY() ) {
+		if( ActiveXY()->ClipMode() ) {
 			OnViewClipper();
 		}
 
-		if( ActiveXY()->RotateMode() )
-		{
+		if( ActiveXY()->RotateMode() ) {
 			// SetRotateMode(false) always works
 			ActiveXY()->SetRotateMode( false );
 			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSESCALE, FALSE );
 		}
 
-		if( ActiveXY()->ScaleMode() )
-		{
+		if( ActiveXY()->ScaleMode() ) {
 			ActiveXY()->SetScaleMode( false );
 			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSESCALE, FALSE );
-		}
-		else
-		{
+		} else {
 			ActiveXY()->SetScaleMode( true );
 			m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_MOUSESCALE );
 		}
@@ -5360,8 +4873,7 @@ void CMainFrame::OnUpdateFileImport( CCmdUI* pCmdUI )
 void CMainFrame::OnViewCubein()
 {
 	g_PrefsDlg.m_nCubicScale--;
-	if( g_PrefsDlg.m_nCubicScale < 1 )
-	{
+	if( g_PrefsDlg.m_nCubicScale < 1 ) {
 		g_PrefsDlg.m_nCubicScale = 1;
 	}
 
@@ -5377,8 +4889,7 @@ void CMainFrame::OnViewCubein()
 void CMainFrame::OnViewCubeout()
 {
 	g_PrefsDlg.m_nCubicScale++;
-	if( g_PrefsDlg.m_nCubicScale > 99 )
-	{
+	if( g_PrefsDlg.m_nCubicScale > 99 ) {
 		g_PrefsDlg.m_nCubicScale = 99;
 	}
 
@@ -5395,14 +4906,9 @@ void CMainFrame::OnViewCubicclipping()
 {
 	g_PrefsDlg.m_bCubicClipping ^= 1;
 
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
-		pMenu->CheckMenuItem
-		(
-			ID_VIEW_CUBICCLIPPING,
-			MF_BYCOMMAND | ( g_PrefsDlg.m_bCubicClipping ) ? MF_CHECKED : MF_UNCHECKED
-		);
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
+		pMenu->CheckMenuItem( ID_VIEW_CUBICCLIPPING, MF_BYCOMMAND | ( g_PrefsDlg.m_bCubicClipping ) ? MF_CHECKED : MF_UNCHECKED );
 	}
 
 	m_wndToolBar.GetToolBarCtrl().CheckButton( ID_VIEW_CUBICCLIPPING, ( g_PrefsDlg.m_bCubicClipping ) ? TRUE : FALSE );
@@ -5438,9 +4944,9 @@ void CMainFrame::OnSelectionMovedown()
 	Undo_Start( "move up" );
 	Undo_AddBrushList( &selected_brushes );
 
-	idVec3	vAmt;
+	idVec3 vAmt;
 	vAmt[0] = vAmt[1] = 0.0f;
-	vAmt[2] = -g_qeglobals.d_gridsize;
+	vAmt[2]			  = -g_qeglobals.d_gridsize;
 	Select_Move( vAmt );
 	Sys_UpdateWindows( W_CAMERA | W_XY | W_Z );
 
@@ -5454,9 +4960,9 @@ void CMainFrame::OnSelectionMovedown()
  */
 void CMainFrame::OnSelectionMoveup()
 {
-	idVec3	vAmt;
+	idVec3 vAmt;
 	vAmt[0] = vAmt[1] = 0.0f;
-	vAmt[2] = g_qeglobals.d_gridsize;
+	vAmt[2]			  = g_qeglobals.d_gridsize;
 	Select_Move( vAmt );
 	Sys_UpdateWindows( W_CAMERA | W_XY | W_Z );
 }
@@ -5483,8 +4989,7 @@ void CMainFrame::OnToolbarTexture()
  */
 void CMainFrame::OnSelectionPrint()
 {
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
 		Brush_Print( b );
 	}
 }
@@ -5495,14 +5000,13 @@ void CMainFrame::OnSelectionPrint()
  */
 void CMainFrame::UpdateTextureBar()
 {
-	if( m_wndTextureBar.GetSafeHwnd() )
-	{
+	if( m_wndTextureBar.GetSafeHwnd() ) {
 		m_wndTextureBar.GetSurfaceAttributes();
 	}
 }
 
-bool	g_bTABDown = false;
-bool	g_bOriginalFlag;
+bool g_bTABDown = false;
+bool g_bOriginalFlag;
 
 /*
  =======================================================================================================================
@@ -5510,20 +5014,16 @@ bool	g_bOriginalFlag;
  */
 void CMainFrame::OnSelectionTogglesizepaint()
 {
-	if( ::GetAsyncKeyState( 'Q' ) )
-	{
-		if( !g_bTABDown )
-		{
-			g_bTABDown = true;
-			g_bOriginalFlag = ( g_PrefsDlg.m_bSizePaint != FALSE );
+	if( ::GetAsyncKeyState( 'Q' ) ) {
+		if( !g_bTABDown ) {
+			g_bTABDown				= true;
+			g_bOriginalFlag			= ( g_PrefsDlg.m_bSizePaint != FALSE );
 			g_PrefsDlg.m_bSizePaint = !g_bOriginalFlag;
 			Sys_UpdateWindows( W_XY );
 			return;
 		}
-	}
-	else
-	{
-		g_bTABDown = false;
+	} else {
+		g_bTABDown				= false;
 		g_PrefsDlg.m_bSizePaint = g_bOriginalFlag;
 		Sys_UpdateWindows( W_XY );
 		return;
@@ -5549,27 +5049,26 @@ void CMainFrame::OnBrushMakecone()
  */
 void CMainFrame::OnTexturesLoad()
 {
-	BROWSEINFO	bi;
-	CString		strPath;
-	char*		p = strPath.GetBuffer( MAX_PATH + 1 );
-	bi.hwndOwner = GetSafeHwnd();
-	bi.pidlRoot = NULL;
+	BROWSEINFO bi;
+	CString	   strPath;
+	char*	   p	  = strPath.GetBuffer( MAX_PATH + 1 );
+	bi.hwndOwner	  = GetSafeHwnd();
+	bi.pidlRoot		  = NULL;
 	bi.pszDisplayName = p;
-	bi.lpszTitle = "Load textures from path";
-	bi.ulFlags = 0;
-	bi.lpfn = NULL;
-	bi.lParam = NULL;
-	bi.iImage = 0;
+	bi.lpszTitle	  = "Load textures from path";
+	bi.ulFlags		  = 0;
+	bi.lpfn			  = NULL;
+	bi.lParam		  = NULL;
+	bi.iImage		  = 0;
 
-	LPITEMIDLIST	pidlBrowse;
+	LPITEMIDLIST pidlBrowse;
 	pidlBrowse = SHBrowseForFolder( &bi );
-	if( pidlBrowse )
-	{
+	if( pidlBrowse ) {
 		SHGetPathFromIDList( pidlBrowse, p );
 		strPath.ReleaseBuffer();
 		AddSlash( strPath );
-		//FIXME: idMaterial
-		//Texture_ShowDirectory(strPath.GetBuffer(0));
+		// FIXME: idMaterial
+		// Texture_ShowDirectory(strPath.GetBuffer(0));
 	}
 }
 
@@ -5581,8 +5080,7 @@ void CMainFrame::OnToggleRotatelock()
 {
 	g_qeglobals.flatRotation = false;
 	g_qeglobals.rotateAxis++;
-	if( g_qeglobals.rotateAxis > 2 )
-	{
+	if( g_qeglobals.rotateAxis > 2 ) {
 		g_qeglobals.rotateAxis = 0;
 	}
 	Select_InitializeRotation();
@@ -5668,8 +5166,7 @@ void CMainFrame::OnCurveSphere()
 void CMainFrame::OnFileImportmap()
 {
 	CFileDialog dlgFile( TRUE, NULL, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Map files (*.map)|*.map||", this );
-	if( dlgFile.DoModal() == IDOK )
-	{
+	if( dlgFile.DoModal() == IDOK ) {
 		Map_ImportFile( dlgFile.GetPathName().GetBuffer( 0 ) );
 	}
 }
@@ -5681,8 +5178,7 @@ void CMainFrame::OnFileImportmap()
 void CMainFrame::OnFileExportmap()
 {
 	CFileDialog dlgFile( FALSE, "map", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Map files (*.map)|*.map||", this );
-	if( dlgFile.DoModal() == IDOK )
-	{
+	if( dlgFile.DoModal() == IDOK ) {
 		Map_SaveSelected( dlgFile.GetPathName().GetBuffer( 0 ) );
 	}
 }
@@ -5693,12 +5189,9 @@ void CMainFrame::OnFileExportmap()
  */
 void CMainFrame::OnViewShowcurves()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CURVES ) & EXCLUDE_CURVES )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CURVES ) & EXCLUDE_CURVES ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCURVES, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCURVES, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -5747,90 +5240,59 @@ void CMainFrame::OnSelectionSelectNudgeup()
  */
 void CMainFrame::NudgeSelection( int nDirection, float fAmount )
 {
-	if( ActiveXY()->RotateMode() )
-	{
+	if( ActiveXY()->RotateMode() ) {
 		int nAxis = 0;
-		if( ActiveXY()->GetViewType() == XY )
-		{
+		if( ActiveXY()->GetViewType() == XY ) {
 			nAxis = 2;
-		}
-		else if( g_pParentWnd->ActiveXY()->GetViewType() == XZ )
-		{
-			nAxis = 1;
+		} else if( g_pParentWnd->ActiveXY()->GetViewType() == XZ ) {
+			nAxis	= 1;
 			fAmount = -fAmount;
 		}
 
-		if( nDirection == 2 || nDirection == 3 )
-		{
+		if( nDirection == 2 || nDirection == 3 ) {
 			fAmount = -fAmount;
 		}
 
-		float	fDeg = -fAmount;
+		float fDeg = -fAmount;
 
 		g_pParentWnd->ActiveXY()->Rotation()[nAxis] += fAmount;
 
 		CString strStatus;
-		strStatus.Format
-		(
-			"Rotation x:: %.1f  y:: %.1f  z:: %.1f",
-			g_pParentWnd->ActiveXY()->Rotation()[0],
-			g_pParentWnd->ActiveXY()->Rotation()[1],
-			g_pParentWnd->ActiveXY()->Rotation()[2]
-		);
+		strStatus.Format( "Rotation x:: %.1f  y:: %.1f  z:: %.1f", g_pParentWnd->ActiveXY()->Rotation()[0], g_pParentWnd->ActiveXY()->Rotation()[1], g_pParentWnd->ActiveXY()->Rotation()[2] );
 		g_pParentWnd->SetStatusText( 2, strStatus );
 		Select_RotateAxis( nAxis, fDeg, false, true );
 		Sys_UpdateWindows( W_ALL );
-	}
-	else if( ActiveXY()->ScaleMode() )
-	{
-		if( nDirection == 0 || nDirection == 3 )
-		{
+	} else if( ActiveXY()->ScaleMode() ) {
+		if( nDirection == 0 || nDirection == 3 ) {
 			fAmount = -fAmount;
 		}
 
-		idVec3	v;
+		idVec3 v;
 		v[0] = v[1] = v[2] = 1.0f;
-		if( fAmount > 0 )
-		{
+		if( fAmount > 0 ) {
 			v[0] = 1.1f;
 			v[1] = 1.1f;
 			v[2] = 1.1f;
-		}
-		else
-		{
+		} else {
 			v[0] = 0.9f;
 			v[1] = 0.9f;
 			v[2] = 0.9f;
 		}
 
-		Select_Scale
-		(
-			( g_nScaleHow & SCALE_X ) ? v[0] : 1.0f,
-			( g_nScaleHow & SCALE_Y ) ? v[1] : 1.0f,
-			( g_nScaleHow & SCALE_Z ) ? v[2] : 1.0f
-		);
+		Select_Scale( ( g_nScaleHow & SCALE_X ) ? v[0] : 1.0f, ( g_nScaleHow & SCALE_Y ) ? v[1] : 1.0f, ( g_nScaleHow & SCALE_Z ) ? v[2] : 1.0f );
 		Sys_UpdateWindows( W_ALL );
-	}
-	else
-	{
+	} else {
 		// 0 - left, 1 - up, 2 - right, 3 - down
 		int nDim;
-		if( nDirection == 0 )
-		{
-			nDim = ActiveXY()->GetViewType() == YZ ? 1 : 0;
+		if( nDirection == 0 ) {
+			nDim	= ActiveXY()->GetViewType() == YZ ? 1 : 0;
 			fAmount = -fAmount;
-		}
-		else if( nDirection == 1 )
-		{
+		} else if( nDirection == 1 ) {
 			nDim = ActiveXY()->GetViewType() == XY ? 1 : 2;
-		}
-		else if( nDirection == 2 )
-		{
+		} else if( nDirection == 2 ) {
 			nDim = ActiveXY()->GetViewType() == YZ ? 1 : 0;
-		}
-		else
-		{
-			nDim = ActiveXY()->GetViewType() == XY ? 1 : 2;
+		} else {
+			nDim	= ActiveXY()->GetViewType() == XY ? 1 : 2;
 			fAmount = -fAmount;
 		}
 
@@ -5853,9 +5315,9 @@ BOOL CMainFrame::PreTranslateMessage( MSG* pMsg )
  */
 void CMainFrame::Nudge( int nDim, float fNudge )
 {
-	idVec3	vMove;
+	idVec3 vMove;
 	vMove[0] = vMove[1] = vMove[2] = 0;
-	vMove[nDim] = fNudge;
+	vMove[nDim]					   = fNudge;
 	Select_Move( vMove, true );
 	Sys_UpdateWindows( W_ALL );
 }
@@ -5877,11 +5339,7 @@ void CMainFrame::OnTexturesLoadlist()
 void CMainFrame::OnSelectByBoundingBrush()
 {
 	g_PrefsDlg.m_selectByBoundingBrush ^= 1;
-	m_wndToolBar.GetToolBarCtrl().CheckButton
-	(
-		ID_SELECT_BYBOUNDINGBRUSH,
-		( g_PrefsDlg.m_selectByBoundingBrush ) ? TRUE : FALSE
-	);
+	m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_BYBOUNDINGBRUSH, ( g_PrefsDlg.m_selectByBoundingBrush ) ? TRUE : FALSE );
 }
 
 /*
@@ -5894,9 +5352,6 @@ void CMainFrame::OnSelectBrushesOnly()
 	m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SELECT_BRUSHESONLY, ( g_PrefsDlg.m_selectOnlyBrushes ) ? TRUE : FALSE );
 }
 
-
-
-
 /*
  =======================================================================================================================
  =======================================================================================================================
@@ -5904,7 +5359,7 @@ void CMainFrame::OnSelectBrushesOnly()
 void CMainFrame::OnDynamicLighting()
 {
 	CCamWnd* pCam = new CCamWnd();
-	CRect	rect( 100, 100, 300, 300 );
+	CRect	 rect( 100, 100, 300, 300 );
 	pCam->Create( CAMERA_WINDOW_CLASS, "", WS_OVERLAPPEDWINDOW, rect, GetDesktopWindow(), 12345 );
 	pCam->ShowWindow( SW_SHOW );
 }
@@ -5918,7 +5373,7 @@ void CMainFrame::OnCurveSimplepatchmesh()
 	Undo_Start( "make simpe patch mesh" );
 	Undo_AddBrushList( &selected_brushes );
 
-	CPatchDensityDlg	dlg;
+	CPatchDensityDlg dlg;
 	dlg.DoModal();
 
 	Undo_EndBrushList( &selected_brushes );
@@ -6282,57 +5737,43 @@ void CMainFrame::OnPatchEnter()
  =======================================================================================================================
  */
 extern bool Sys_KeyDown( int key );
-void CMainFrame::OnPatchTab()
+void		CMainFrame::OnPatchTab()
 {
-	if( g_bPatchBendMode )
-	{
+	if( g_bPatchBendMode ) {
 		Patch_BendHandleTAB();
-	}
-	else if( g_bPatchInsertMode )
-	{
+	} else if( g_bPatchInsertMode ) {
 		Patch_InsDelHandleTAB();
-	}
-	else if( g_bAxialMode )
-	{
+	} else if( g_bAxialMode ) {
 		int faceCount = g_ptrSelectedFaces.GetSize();
-		if( faceCount > 0 )
-		{
-			face_t*	selFace = reinterpret_cast < face_t* >( g_ptrSelectedFaces.GetAt( 0 ) );
-			int* ip = ( Sys_KeyDown( VK_SHIFT ) ) ? &g_axialAnchor : &g_axialDest;
+		if( faceCount > 0 ) {
+			face_t* selFace = reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( 0 ) );
+			int*	ip		= ( Sys_KeyDown( VK_SHIFT ) ) ? &g_axialAnchor : &g_axialDest;
 			( *ip )++;
-			if( *ip >= selFace->face_winding->GetNumPoints() )
-			{
+			if( *ip >= selFace->face_winding->GetNumPoints() ) {
 				*ip = 0;
 			}
 		}
 		Sys_UpdateWindows( W_CAMERA );
-	}
-	else
-	{
+	} else {
 		//
 		// check to see if the selected brush is part of a func group if it is, deselect
 		// everything and reselect the next brush in the group
 		//
-		brush_t*		b = selected_brushes.next;
-		entity_t*	e;
-		if( b != &selected_brushes )
-		{
-			if( idStr::Icmp( b->owner->eclass->name, "worldspawn" ) != 0 )
-			{
+		brush_t*  b = selected_brushes.next;
+		entity_t* e;
+		if( b != &selected_brushes ) {
+			if( idStr::Icmp( b->owner->eclass->name, "worldspawn" ) != 0 ) {
 				e = b->owner;
 				Select_Deselect();
 				brush_t* b2;
-				for( b2 = e->brushes.onext; b2 != &e->brushes; b2 = b2->onext )
-				{
-					if( b == b2 )
-					{
+				for( b2 = e->brushes.onext; b2 != &e->brushes; b2 = b2->onext ) {
+					if( b == b2 ) {
 						b2 = b2->onext;
 						break;
 					}
 				}
 
-				if( b2 == &e->brushes )
-				{
+				if( b2 == &e->brushes ) {
 					b2 = b2->onext;
 				}
 
@@ -6493,9 +5934,8 @@ void CMainFrame::OnCurvePatchsquare()
  */
 void CMainFrame::CheckTextureScale( int id )
 {
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
 		pMenu->CheckMenuItem( ID_TEXTURES_TEXTUREWINDOWSCALE_10, MF_BYCOMMAND | MF_UNCHECKED );
 		pMenu->CheckMenuItem( ID_TEXTURES_TEXTUREWINDOWSCALE_25, MF_BYCOMMAND | MF_UNCHECKED );
 		pMenu->CheckMenuItem( ID_TEXTURES_TEXTUREWINDOWSCALE_50, MF_BYCOMMAND | MF_UNCHECKED );
@@ -6505,8 +5945,8 @@ void CMainFrame::CheckTextureScale( int id )
 	}
 
 	g_PrefsDlg.SavePrefs();
-	//FIXME: idMaterial
-	//Texture_ResetPosition();
+	// FIXME: idMaterial
+	// Texture_ResetPosition();
 	Sys_UpdateWindows( W_TEXTURE );
 }
 
@@ -6566,8 +6006,8 @@ void CMainFrame::OnTexturesTexturewindowscale50()
  */
 void CMainFrame::OnTexturesFlush()
 {
-	//FIXME: idMaterial
-	//Texture_Flush();
+	// FIXME: idMaterial
+	// Texture_Flush();
 	Sys_UpdateWindows( W_ALL );
 }
 
@@ -6600,9 +6040,8 @@ void CMainFrame::OnCurveThicken()
 	Undo_Start( "curve thicken" );
 	Undo_AddBrushList( &selected_brushes );
 
-	CDialogThick	dlg;
-	if( dlg.DoModal() == IDOK )
-	{
+	CDialogThick dlg;
+	if( dlg.DoModal() == IDOK ) {
 		Patch_Thicken( dlg.m_nAmount, ( dlg.m_bSeams != FALSE ) );
 		Sys_UpdateWindows( W_ALL );
 	}
@@ -6654,9 +6093,8 @@ void CMainFrame::OnTexturesReloadshaders()
  */
 void CMainFrame::SetEntityCheck()
 {
-	CMenu*	pMenu = GetMenu();
-	if( pMenu )
-	{
+	CMenu* pMenu = GetMenu();
+	if( pMenu ) {
 		pMenu->CheckMenuItem( ID_VIEW_ENTITIESAS_WIREFRAME, MF_BYCOMMAND | ( g_PrefsDlg.m_nEntityShowState == ENTITY_WIRE ) ? MF_CHECKED : MF_UNCHECKED );
 		pMenu->CheckMenuItem( ID_VIEW_ENTITIESAS_SKINNED, MF_BYCOMMAND | ( g_PrefsDlg.m_nEntityShowState == ENTITY_SKINNED ) ? MF_CHECKED : MF_UNCHECKED );
 	}
@@ -6701,12 +6139,9 @@ void CMainFrame::OnViewEntitiesasWireframe()
  */
 void CMainFrame::OnViewShowhint()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_HINT ) & EXCLUDE_HINT )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_HINT ) & EXCLUDE_HINT ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWHINT, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWHINT, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -6744,12 +6179,7 @@ void CMainFrame::OnViewOpengllighting()
 {
 	g_PrefsDlg.m_bGLLighting ^= 1;
 	g_PrefsDlg.SavePrefs();
-	CheckMenuItem
-	(
-		::GetMenu( GetSafeHwnd() ),
-		ID_VIEW_OPENGLLIGHTING,
-		MF_BYCOMMAND | ( g_PrefsDlg.m_bGLLighting ) ? MF_CHECKED : MF_UNCHECKED
-	);
+	CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_OPENGLLIGHTING, MF_BYCOMMAND | ( g_PrefsDlg.m_bGLLighting ) ? MF_CHECKED : MF_UNCHECKED );
 	Sys_UpdateWindows( W_XY | W_CAMERA );
 }
 
@@ -6768,12 +6198,9 @@ void CMainFrame::OnSelectAll()
  */
 void CMainFrame::OnViewShowcaulk()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CAULK ) & EXCLUDE_CAULK )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_CAULK ) & EXCLUDE_CAULK ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCAULK, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWCAULK, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -6822,12 +6249,9 @@ void CMainFrame::OnSelectReselect()
  */
 void CMainFrame::OnViewShowangles()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_ANGLES ) & EXCLUDE_ANGLES )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_ANGLES ) & EXCLUDE_ANGLES ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWANGLES, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOWANGLES, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -6840,21 +6264,12 @@ void CMainFrame::OnViewShowangles()
  */
 void CMainFrame::OnEditSaveprefab()
 {
-	CFileDialog dlgFile
-	(
-		FALSE,
-		"pfb",
-		NULL,
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-		"Prefab files (*.pfb)|*.pfb||",
-		this
-	);
+	CFileDialog dlgFile( FALSE, "pfb", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Prefab files (*.pfb)|*.pfb||", this );
 	char		CurPath[1024];
 	::GetCurrentDirectory( 1024, CurPath );
 
 	dlgFile.m_ofn.lpstrInitialDir = CurPath;
-	if( dlgFile.DoModal() == IDOK )
-	{
+	if( dlgFile.DoModal() == IDOK ) {
 		Map_SaveSelected( dlgFile.GetPathName().GetBuffer( 0 ) );
 	}
 }
@@ -6865,20 +6280,11 @@ void CMainFrame::OnEditSaveprefab()
  */
 void CMainFrame::OnEditLoadprefab()
 {
-	CFileDialog dlgFile
-	(
-		TRUE,
-		"pfb",
-		NULL,
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-		"Prefab files (*.pfb)|*.pfb||",
-		this
-	);
+	CFileDialog dlgFile( TRUE, "pfb", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Prefab files (*.pfb)|*.pfb||", this );
 	char		CurPath[1024];
 	::GetCurrentDirectory( 1024, CurPath );
 	dlgFile.m_ofn.lpstrInitialDir = CurPath;
-	if( dlgFile.DoModal() == IDOK )
-	{
+	if( dlgFile.DoModal() == IDOK ) {
 		Map_ImportFile( dlgFile.GetPathName().GetBuffer( 0 ) );
 	}
 }
@@ -6936,7 +6342,7 @@ extern bool g_bCrossHairs;
  =======================================================================================================================
  =======================================================================================================================
  */
-void CMainFrame::OnViewCrosshair()
+void		CMainFrame::OnViewCrosshair()
 {
 	g_bCrossHairs ^= 1;
 	Sys_UpdateWindows( W_XY );
@@ -6987,8 +6393,8 @@ void CMainFrame::OnTexturesShadersShow()
  */
 void CMainFrame::OnTexturesFlushUnused()
 {
-	//FIXME: idMaterial
-	//Texture_FlushUnused();
+	// FIXME: idMaterial
+	// Texture_FlushUnused();
 	Sys_UpdateWindows( W_TEXTURE );
 }
 
@@ -7041,20 +6447,16 @@ void CMainFrame::OnActivate( UINT nState, CWnd* pWndOther, BOOL bMinimized )
 {
 	CFrameWnd::OnActivate( nState, pWndOther, bMinimized );
 
-	if( nState != WA_INACTIVE )
-	{
+	if( nState != WA_INACTIVE ) {
 		common->ActivateTool( true );
-		if( ::IsWindowVisible( win32.hWnd ) )
-		{
+		if( ::IsWindowVisible( win32.hWnd ) ) {
 			::ShowWindow( win32.hWnd, SW_HIDE );
 		}
 
 		// start playing the editor sound world
 		soundSystem->SetPlayingSoundWorld( g_qeglobals.sw );
-	}
-	else
-	{
-		//com_editorActive = false;
+	} else {
+		// com_editorActive = false;
 	}
 }
 
@@ -7106,20 +6508,19 @@ extern void testCamSpeed();
  =======================================================================================================================
  =======================================================================================================================
  */
-void CMainFrame::OnSplineTest()
+void		CMainFrame::OnSplineTest()
 {
-	long	start = GetTickCount();
+	long start = GetTickCount();
 	g_splineList->startCamera( start );
 
-	float	cycle = g_splineList->getTotalTime();
-	long	msecs = cycle * 1000;
-	long	current = start;
-	idVec3	lookat( 0, 0, 0 );
-	idVec3	dir;
+	float  cycle   = g_splineList->getTotalTime();
+	long   msecs   = cycle * 1000;
+	long   current = start;
+	idVec3 lookat( 0, 0, 0 );
+	idVec3 dir;
 
-	while( current < start + msecs )
-	{
-		float	fov;
+	while( current < start + msecs ) {
+		float fov;
 		g_splineList->getCameraInfo( current, g_pParentWnd->GetCamera()->Camera().origin, dir, &fov );
 		g_pParentWnd->GetCamera()->Camera().angles[1] = atan2( dir[1], dir[0] ) * 180 / 3.14159;
 		g_pParentWnd->GetCamera()->Camera().angles[0] = asin( dir[2] ) * 180 / 3.14159;
@@ -7153,7 +6554,7 @@ void CMainFrame::OnSplinesCameraPoints()
 void CMainFrame::OnPopupNewcameraInterpolated()
 {
 	g_qeglobals.d_select_mode = sel_addpoint;
-	g_qeglobals.selectObject = g_splineList->startNewCamera( idCameraPosition::INTERPOLATED );
+	g_qeglobals.selectObject  = g_splineList->startNewCamera( idCameraPosition::INTERPOLATED );
 	OnSplinesEdit();
 }
 
@@ -7164,7 +6565,7 @@ void CMainFrame::OnPopupNewcameraInterpolated()
 void CMainFrame::OnPopupNewcameraSpline()
 {
 	g_qeglobals.d_select_mode = sel_addpoint;
-	g_qeglobals.selectObject = g_splineList->startNewCamera( idCameraPosition::SPLINE );
+	g_qeglobals.selectObject  = g_splineList->startNewCamera( idCameraPosition::SPLINE );
 	OnSplinesEdit();
 }
 
@@ -7175,7 +6576,7 @@ void CMainFrame::OnPopupNewcameraSpline()
 void CMainFrame::OnPopupNewcameraFixed()
 {
 	g_qeglobals.d_select_mode = sel_addpoint;
-	g_qeglobals.selectObject = g_splineList->startNewCamera( idCameraPosition::FIXED );
+	g_qeglobals.selectObject  = g_splineList->startNewCamera( idCameraPosition::FIXED );
 	OnSplinesEdit();
 }
 
@@ -7185,7 +6586,7 @@ extern void Patch_AdjustSubdivisions( float hadj, float vadj );
  =======================================================================================================================
  =======================================================================================================================
  */
-void CMainFrame::OnCurveIncreaseVert()
+void		CMainFrame::OnCurveIncreaseVert()
 {
 	Patch_AdjustSubdivisions( 0.0f, -0.5f );
 }
@@ -7230,13 +6631,11 @@ void CMainFrame::OnSelectionMoveonly()
 void CMainFrame::OnSelectBrushlight()
 {
 	// TODO: Add your command handler code here
-
 }
 
 void CMainFrame::OnSelectionCombine()
 {
-	if( g_qeglobals.d_select_count < 2 )
-	{
+	if( g_qeglobals.d_select_count < 2 ) {
 		Sys_Status( "Must have at least two things selected.", 0 );
 		Sys_Beep();
 		return;
@@ -7244,29 +6643,25 @@ void CMainFrame::OnSelectionCombine()
 
 	entity_t* e1 = g_qeglobals.d_select_order[0]->owner;
 
-	if( e1 == world_entity )
-	{
+	if( e1 == world_entity ) {
 		Sys_Status( "First selection must not be world.", 0 );
 		Sys_Beep();
 		return;
 	}
 
-	idStr str;
+	idStr  str;
 	idMat3 mat;
 	idVec3 v;
-	if( e1->eclass->nShowFlags & ECLASS_LIGHT )
-	{
+	if( e1->eclass->nShowFlags & ECLASS_LIGHT ) {
 		// copy the lights origin and rotation matrix to
 		// light_origin and light_rotation
-		e1->trackLightOrigin = true;
+		e1->trackLightOrigin				= true;
 		e1->brushes.onext->trackLightOrigin = true;
-		if( GetVectorForKey( e1, "origin", v ) )
-		{
+		if( GetVectorForKey( e1, "origin", v ) ) {
 			SetKeyVec3( e1, "light_origin", v );
 			e1->lightOrigin = v;
 		}
-		if( !GetMatrixForKey( e1, "rotation", mat ) )
-		{
+		if( !GetMatrixForKey( e1, "rotation", mat ) ) {
 			mat.Identity();
 		}
 		sprintf( str, "%g %g %g %g %g %g %g %g %g", mat[0][0], mat[0][1], mat[0][2], mat[1][0], mat[1][1], mat[1][2], mat[2][0], mat[2][1], mat[2][2] );
@@ -7275,31 +6670,23 @@ void CMainFrame::OnSelectionCombine()
 	}
 
 	bool setModel = true;
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		if( b->owner != e1 )
-		{
-			if( e1->eclass->nShowFlags & ECLASS_LIGHT )
-			{
-				if( GetVectorForKey( b->owner, "origin", v ) )
-				{
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		if( b->owner != e1 ) {
+			if( e1->eclass->nShowFlags & ECLASS_LIGHT ) {
+				if( GetVectorForKey( b->owner, "origin", v ) ) {
 					e1->origin = b->owner->origin;
 					SetKeyVec3( e1, "origin", b->owner->origin );
 				}
-				if( GetMatrixForKey( b->owner, "rotation", mat ) )
-				{
+				if( GetMatrixForKey( b->owner, "rotation", mat ) ) {
 					e1->rotation = b->owner->rotation;
-					mat = b->owner->rotation;
+					mat			 = b->owner->rotation;
 					sprintf( str, "%g %g %g %g %g %g %g %g %g", mat[0][0], mat[0][1], mat[0][2], mat[1][0], mat[1][1], mat[1][2], mat[2][0], mat[2][1], mat[2][2] );
 					SetKeyValue( e1, "rotation", str, false );
 				}
-				if( b->modelHandle )
-				{
+				if( b->modelHandle ) {
 					SetKeyValue( e1, "model", ValueForKey( b->owner, "model" ) );
 					setModel = false;
-				}
-				else
-				{
+				} else {
 					b->entityModel = true;
 				}
 			}
@@ -7308,8 +6695,7 @@ void CMainFrame::OnSelectionCombine()
 		}
 	}
 
-	if( setModel )
-	{
+	if( setModel ) {
 		SetKeyValue( e1, "model", ValueForKey( e1, "name" ) );
 	}
 
@@ -7319,20 +6705,15 @@ void CMainFrame::OnSelectionCombine()
 }
 
 extern void Patch_Weld( patchMesh_t* p, patchMesh_t* p2 );
-void CMainFrame::OnPatchCombine()
+void		CMainFrame::OnPatchCombine()
 {
-	patchMesh_t* p, *p2;
+	patchMesh_t *p, *p2;
 	p = p2 = NULL;
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		if( b->pPatch )
-		{
-			if( p == NULL )
-			{
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		if( b->pPatch ) {
+			if( p == NULL ) {
 				p = b->pPatch;
-			}
-			else if( p2 == NULL )
-			{
+			} else if( p2 == NULL ) {
 				p2 = b->pPatch;
 				Patch_Weld( p, p2 );
 				return;
@@ -7344,8 +6725,7 @@ void CMainFrame::OnPatchCombine()
 void CMainFrame::OnShowDoom()
 {
 	int show = ::IsWindowVisible( win32.hWnd ) ? SW_HIDE : SW_NORMAL;
-	if( show == SW_NORMAL )
-	{
+	if( show == SW_NORMAL ) {
 		g_Inspectors->SetMode( W_TEXTURE );
 	}
 	::ShowWindow( win32.hWnd, show );
@@ -7361,8 +6741,7 @@ void CMainFrame::OnViewRendermode()
 void CMainFrame::OnViewRebuildrenderdata()
 {
 	m_pCamWnd->BuildRendererState();
-	if( !m_pCamWnd->GetRenderMode() )
-	{
+	if( !m_pCamWnd->GetRenderMode() ) {
 		OnViewRendermode();
 	}
 	Sys_UpdateWindows( W_ALL );
@@ -7390,21 +6769,18 @@ void CMainFrame::OnViewMaterialanimation()
 }
 
 extern void Face_SetAxialScale_BrushPrimit( face_t* face, bool y );
-void CMainFrame::OnAxialTextureByWidth()
+void		CMainFrame::OnAxialTextureByWidth()
 {
 	// temp test code
 	int faceCount = g_ptrSelectedFaces.GetSize();
 
-	if( faceCount > 0 )
-	{
-		for( int i = 0; i < faceCount; i++ )
-		{
-			face_t*	selFace = reinterpret_cast < face_t* >( g_ptrSelectedFaces.GetAt( i ) );
+	if( faceCount > 0 ) {
+		for( int i = 0; i < faceCount; i++ ) {
+			face_t* selFace = reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( i ) );
 			Face_SetAxialScale_BrushPrimit( selFace, false );
 		}
 		Sys_UpdateWindows( W_CAMERA );
 	}
-
 }
 
 void CMainFrame::OnAxialTextureByHeight()
@@ -7412,11 +6788,9 @@ void CMainFrame::OnAxialTextureByHeight()
 	// temp test code
 	int faceCount = g_ptrSelectedFaces.GetSize();
 
-	if( faceCount > 0 )
-	{
-		for( int i = 0; i < faceCount; i++ )
-		{
-			face_t*	selFace = reinterpret_cast < face_t* >( g_ptrSelectedFaces.GetAt( i ) );
+	if( faceCount > 0 ) {
+		for( int i = 0; i < faceCount; i++ ) {
+			face_t* selFace = reinterpret_cast<face_t*>( g_ptrSelectedFaces.GetAt( i ) );
 			Face_SetAxialScale_BrushPrimit( selFace, true );
 		}
 		Sys_UpdateWindows( W_CAMERA );
@@ -7425,28 +6799,26 @@ void CMainFrame::OnAxialTextureByHeight()
 
 void CMainFrame::OnAxialTextureArbitrary()
 {
-	if( g_bAxialMode )
-	{
+	if( g_bAxialMode ) {
 		g_bAxialMode = false;
 	}
 	int faceCount = g_ptrSelectedFaces.GetSize();
-	if( faceCount > 0 )
-	{
+	if( faceCount > 0 ) {
 		g_axialAnchor = 0;
-		g_axialDest = 1;
-		g_bAxialMode = true;
+		g_axialDest	  = 1;
+		g_bAxialMode  = true;
 	}
 	Sys_UpdateWindows( W_CAMERA );
 }
 
 extern void Select_ToOBJ();
-void CMainFrame::OnSelectionExportToobj()
+void		CMainFrame::OnSelectionExportToobj()
 {
 	Select_ToOBJ();
 }
 
 extern void Select_ToCM();
-void CMainFrame::OnSelectionExportToCM()
+void		CMainFrame::OnSelectionExportToCM()
 {
 	Select_ToCM();
 }
@@ -7471,7 +6843,6 @@ void CMainFrame::OnSelectionVisibleOff()
 	Select_ForceVisible( false );
 }
 
-
 void CMainFrame::OnViewRenderselection()
 {
 	m_pCamWnd->ToggleSelectMode();
@@ -7487,12 +6858,9 @@ void CMainFrame::OnSelectNomodels()
 
 void CMainFrame::OnViewShowShowvisportals()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_VISPORTALS ) & EXCLUDE_VISPORTALS )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_VISPORTALS ) & EXCLUDE_VISPORTALS ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOW_SHOWVISPORTALS, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOW_SHOWVISPORTALS, MF_BYCOMMAND | MF_CHECKED );
 	}
 
@@ -7501,19 +6869,14 @@ void CMainFrame::OnViewShowShowvisportals()
 
 void CMainFrame::OnViewShowNoDraw()
 {
-	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_NODRAW ) & EXCLUDE_NODRAW )
-	{
+	if( ( g_qeglobals.d_savedinfo.exclude ^= EXCLUDE_NODRAW ) & EXCLUDE_NODRAW ) {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOW_NODRAW, MF_BYCOMMAND | MF_UNCHECKED );
-	}
-	else
-	{
+	} else {
 		CheckMenuItem( ::GetMenu( GetSafeHwnd() ), ID_VIEW_SHOW_NODRAW, MF_BYCOMMAND | MF_CHECKED );
 	}
 
 	Sys_UpdateWindows( W_XY | W_CAMERA );
 }
-
-
 
 void CMainFrame::OnViewRendersound()
 {
@@ -7522,12 +6885,10 @@ void CMainFrame::OnViewRendersound()
 	Sys_UpdateWindows( W_CAMERA );
 }
 
-
 void CMainFrame::OnSoundShowsoundvolumes()
 {
 	g_qeglobals.d_savedinfo.showSoundAlways ^= 1;
-	if( g_qeglobals.d_savedinfo.showSoundAlways )
-	{
+	if( g_qeglobals.d_savedinfo.showSoundAlways ) {
 		g_qeglobals.d_savedinfo.showSoundWhenSelected = false;
 	}
 	m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SOUND_SHOWSOUNDVOLUMES, g_qeglobals.d_savedinfo.showSoundAlways );
@@ -7538,20 +6899,17 @@ void CMainFrame::OnSoundShowsoundvolumes()
 void CMainFrame::OnNurbEditor()
 {
 	nurbMode ^= 1;
-	if( nurbMode )
-	{
-		int num = nurb.GetNumValues();
+	if( nurbMode ) {
+		int	  num  = nurb.GetNumValues();
 		idStr temp = va( "%i 3 ", num );
-		for( int i = 0; i < num; i++ )
-		{
+		for( int i = 0; i < num; i++ ) {
 			temp += va( "(%i %i) ", ( int )nurb.GetValue( i ).x, ( int )nurb.GetValue( i ).y );
 		}
 		temp += "\r\n";
-		if( OpenClipboard() )
-		{
+		if( OpenClipboard() ) {
 			::EmptyClipboard();
 			HGLOBAL clip;
-			char* buff;
+			char*	buff;
 			clip = ::GlobalAlloc( GMEM_DDESHARE, temp.Length() + 1 );
 			buff = ( char* )::GlobalLock( clip );
 			strcpy( buff, temp );
@@ -7563,12 +6921,10 @@ void CMainFrame::OnNurbEditor()
 	}
 }
 
-
 void CMainFrame::OnSoundShowselectedsoundvolumes()
 {
 	g_qeglobals.d_savedinfo.showSoundWhenSelected ^= 1;
-	if( g_qeglobals.d_savedinfo.showSoundWhenSelected )
-	{
+	if( g_qeglobals.d_savedinfo.showSoundWhenSelected ) {
 		g_qeglobals.d_savedinfo.showSoundAlways = false;
 	}
 	m_wndToolBar.GetToolBarCtrl().CheckButton( ID_SOUND_SHOWSOUNDVOLUMES, g_qeglobals.d_savedinfo.showSoundAlways );
@@ -7581,33 +6937,26 @@ void CMainFrame::OnSelectAlltargets()
 	Select_AllTargets();
 }
 
-
 void CMainFrame::OnSelectCompleteEntity()
 {
-	brush_t* b = NULL;
+	brush_t*  b = NULL;
 	entity_t* e = NULL;
 
 	b = selected_brushes.next;
-	if( b == &selected_brushes )
-	{
-		return; //no brushes selected
+	if( b == &selected_brushes ) {
+		return; // no brushes selected
 	}
 
 	e = b->owner;
-	if( b->owner == world_entity )
-	{
-		return; //don't select the world entity
+	if( b->owner == world_entity ) {
+		return; // don't select the world entity
 	}
 
-	for( b = e->brushes.onext; b != &e->brushes; b = b->onext )
-	{
-		Select_Brush( b , false );
+	for( b = e->brushes.onext; b != &e->brushes; b = b->onext ) {
+		Select_Brush( b, false );
 	}
 	Sys_UpdateWindows( W_ALL );
 }
-
-
-
 
 //---------------------------------------------------------------------------
 // OnPrecisionCursorCycle
@@ -7626,52 +6975,42 @@ void CMainFrame::OnPrecisionCursorCycle()
 void CMainFrame::OnGenerateMaterialsList()
 {
 	idStrList mtrList;
-	idStr     mtrName, mtrFileName;
-
+	idStr	  mtrName, mtrFileName;
 
 	g_Inspectors->consoleWnd.ExecuteCommand( "clear" );
 	Sys_BeginWait();
 	common->Printf( "Generating list of active materials...\n" );
 
-	for( brush_t* b = active_brushes.next ; b != &active_brushes ; b = b->next )
-	{
-		if( b->pPatch )
-		{
+	for( brush_t* b = active_brushes.next; b != &active_brushes; b = b->next ) {
+		if( b->pPatch ) {
 			mtrName = b->pPatch->d_texture->GetName();
-			if( !mtrList.Find( mtrName ) )
-			{
+			if( !mtrList.Find( mtrName ) ) {
 				mtrList.Insert( mtrName );
 			}
 
-		}
-		else
-		{
-			for( face_t* f = b->brush_faces ; f != NULL ; f = f->next )
-			{
+		} else {
+			for( face_t* f = b->brush_faces; f != NULL; f = f->next ) {
 				mtrName = f->d_texture->GetName();
-				if( !mtrList.Find( mtrName ) )
-				{
+				if( !mtrList.Find( mtrName ) ) {
 					mtrList.Insert( mtrName );
 				}
-
 			}
 		}
 	}
 
 	mtrList.Sort();
-	for( int i = 0 ; i < mtrList.Num() ; i++ )
-	{
-		common->Printf( "%s\n" , mtrList[i].c_str() );
+	for( int i = 0; i < mtrList.Num(); i++ ) {
+		common->Printf( "%s\n", mtrList[i].c_str() );
 	}
 
 	mtrFileName = currentmap;
-//	mtrFileName.ExtractFileName( mtrFileName );
+	//	mtrFileName.ExtractFileName( mtrFileName );
 	mtrFileName = mtrFileName.StripPath();
 
-	common->Printf( "Done...found %i unique materials\n" , mtrList.Num() );
+	common->Printf( "Done...found %i unique materials\n", mtrList.Num() );
 	mtrFileName = mtrFileName + idStr( "_Materials.txt" );
-	g_Inspectors->SetMode( W_CONSOLE , true );
-	g_Inspectors->consoleWnd.SetConsoleText( va( "condump %s" , mtrFileName.c_str() ) );
+	g_Inspectors->SetMode( W_CONSOLE, true );
+	g_Inspectors->consoleWnd.SetConsoleText( va( "condump %s", mtrFileName.c_str() ) );
 
 	Sys_EndWait();
 }
@@ -7680,7 +7019,6 @@ void CMainFrame::OnGenerateMaterialsList()
 =======================================================================================================================
 =======================================================================================================================
 */
-
 
 void CMainFrame::OnSplinesAddPoints()
 {

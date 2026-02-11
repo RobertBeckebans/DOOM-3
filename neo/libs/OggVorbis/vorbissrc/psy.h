@@ -33,8 +33,7 @@
 #define P_NOISECURVES 3
 
 #define NOISE_COMPAND_LEVELS 40
-typedef struct vorbis_info_psy
-{
+typedef struct vorbis_info_psy {
 	int   blockflag;
 
 	float ath_adjatt;
@@ -65,8 +64,7 @@ typedef struct vorbis_info_psy
 	double normal_thresh;
 } vorbis_info_psy;
 
-typedef struct
-{
+typedef struct {
 	int   eighth_octave_lines;
 
 	/* for block long/short tuning; encode only */
@@ -86,8 +84,7 @@ typedef struct
 
 } vorbis_info_psy_global;
 
-typedef struct
-{
+typedef struct {
 	float ampmax;
 	int   channels;
 
@@ -96,8 +93,7 @@ typedef struct
 } vorbis_look_psy_global;
 
 
-typedef struct
-{
+typedef struct {
 	int n;
 	struct vorbis_info_psy* vi;
 

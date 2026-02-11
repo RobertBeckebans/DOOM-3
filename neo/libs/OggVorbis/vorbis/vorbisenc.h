@@ -71,8 +71,7 @@ extern int vorbis_encode_ctl( vorbis_info* vi, int number, void* arg );
 #define OV_ECTL_IBLOCK_GET           0x30
 #define OV_ECTL_IBLOCK_SET           0x31
 
-struct ovectl_ratemanage_arg
-{
+struct ovectl_ratemanage_arg {
 	int    management_active;
 
 	long   bitrate_hard_min;

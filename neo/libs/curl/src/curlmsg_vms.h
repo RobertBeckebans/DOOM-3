@@ -20,8 +20,7 @@ int       vms_show = 0;
 #define   SEV_INFO      3
 #define   SEV_FATAL     4
 */
-long vms_cond[] =
-{
+long vms_cond[] = {
 	CURL_OK,
 	CURL_UNSUPPORTED_PROTOCOL,
 	CURL_FAILED_INIT,

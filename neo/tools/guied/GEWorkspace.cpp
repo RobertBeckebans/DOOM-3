@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -53,27 +54,28 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEHideModifier.h"
 #include "GEDeleteModifier.h"
 
-static float g_ZoomScales[rvGEWorkspace::ZOOM_MAX] = { 0, 0.25f, 0.33f, 0.50f, 0.66f, 1.0f, 1.5f, 2.0f, 3.0f };
+static float			   g_ZoomScales[rvGEWorkspace::ZOOM_MAX] = { 0, 0.25f, 0.33f, 0.50f, 0.66f, 1.0f, 1.5f, 2.0f, 3.0f };
 
-static const int ID_GUIED_SELECT_FIRST = 9800;
-static const int ID_GUIED_SELECT_LAST  = 9900;
+static const int		   ID_GUIED_SELECT_FIRST = 9800;
+static const int		   ID_GUIED_SELECT_LAST	 = 9900;
 
 idList<rvGEClipboardItem*> rvGEWorkspace::mClipboard;
 
-rvGEWorkspace::rvGEWorkspace( rvGEApp* app ) : mApplication( app )
+rvGEWorkspace::rvGEWorkspace( rvGEApp* app ) :
+	mApplication( app )
 {
-	mWnd	    		= 0;
-	mInterface  		= 0;
-	mZoom	    		= ZOOM_100;
-	mScrollHorz 		= false;
-	mScrollVert 		= false;
-	mModified   		= false;
+	mWnd				= 0;
+	mInterface			= 0;
+	mZoom				= ZOOM_100;
+	mScrollHorz			= false;
+	mScrollVert			= false;
+	mModified			= false;
 	mNew				= false;
-	mDragScroll 		= false;
+	mDragScroll			= false;
 	mSourceControlState = SCS_CHECKEDOUT;
-	mFilename   		= "guis/Untitled.gui";
+	mFilename			= "guis/Untitled.gui";
 	mDragType			= rvGESelectionMgr::HT_NONE;
-	mHandCursor 		= LoadCursor( app->GetInstance(), MAKEINTRESOURCE( IDC_GUIED_HAND ) );
+	mHandCursor			= LoadCursor( app->GetInstance(), MAKEINTRESOURCE( IDC_GUIED_HAND ) );
 	mDontAdd			= false;
 
 	mSelections.SetWorkspace( this );
@@ -100,8 +102,7 @@ bool rvGEWorkspace::CleanupEnumProc( rvGEWindowWrapper* wrapper, void* data )
 {
 	bool result;
 
-	if( !wrapper )
-	{
+	if( !wrapper ) {
 		return true;
 	}
 
@@ -122,7 +123,7 @@ Returns the scale of the current zoom level
 */
 float rvGEWorkspace::GetZoomScale()
 {
-	return g_ZoomScales [ mZoom ];
+	return g_ZoomScales[mZoom];
 }
 
 /*
@@ -144,7 +145,7 @@ bool rvGEWorkspace::Attach( HWND wnd )
 
 	// Jam the workspace pointer into the userdata window long so
 	// we can retrieve the workspace from the window later
-	SetWindowLong( mWnd, GWL_USERDATA, ( LONG ) this );
+	SetWindowLong( mWnd, GWL_USERDATA, ( LONG )this );
 
 	UpdateTitle();
 
@@ -175,19 +176,15 @@ Setup the pixel format for the opengl context
 */
 bool rvGEWorkspace::SetupPixelFormat()
 {
-	HDC	 hDC    = GetDC( mWnd );
+	HDC	 hDC	= GetDC( mWnd );
 	bool result = true;
 
-	int pixelFormat = ChoosePixelFormat( hDC, &win32.pfd );
-	if( pixelFormat > 0 )
-	{
-		if( SetPixelFormat( hDC, pixelFormat, &win32.pfd ) == NULL )
-		{
+	int	 pixelFormat = ChoosePixelFormat( hDC, &win32.pfd );
+	if( pixelFormat > 0 ) {
+		if( SetPixelFormat( hDC, pixelFormat, &win32.pfd ) == NULL ) {
 			result = false;
 		}
-	}
-	else
-	{
+	} else {
 		result = false;
 	}
 
@@ -208,11 +205,10 @@ void rvGEWorkspace::RenderGrid()
 	float	x;
 	float	y;
 	float	step;
-	idVec4&	color = mApplication->GetOptions().GetGridColor();
+	idVec4& color = mApplication->GetOptions().GetGridColor();
 
 	// See if the grid is off before rendering it
-	if( !mApplication->GetOptions().GetGridVisible() )
-	{
+	if( !mApplication->GetOptions().GetGridVisible() ) {
 		return;
 	}
 
@@ -223,14 +219,12 @@ void rvGEWorkspace::RenderGrid()
 
 	qglBegin( GL_LINES );
 	step = mApplication->GetOptions().GetGridWidth() * g_ZoomScales[mZoom];
-	for( x = mRect.x + mRect.w; x >= mRect.x ; x -= step )
-	{
+	for( x = mRect.x + mRect.w; x >= mRect.x; x -= step ) {
 		qglVertex2f( x, mRect.y );
 		qglVertex2f( x, mRect.y + mRect.h );
 	}
 	step = mApplication->GetOptions().GetGridHeight() * g_ZoomScales[mZoom];
-	for( y = mRect.y + mRect.h; y >= mRect.y ; y -= step )
-	{
+	for( y = mRect.y + mRect.h; y >= mRect.y; y -= step ) {
 		qglVertex2f( mRect.x, y );
 		qglVertex2f( mRect.x + mRect.w, y );
 	}
@@ -241,14 +235,12 @@ void rvGEWorkspace::RenderGrid()
 
 	qglBegin( GL_LINES );
 	step = mApplication->GetOptions().GetGridWidth() * g_ZoomScales[mZoom];
-	for( x = mRect.x + mRect.w; x >= mRect.x ; x -= step * 4 )
-	{
+	for( x = mRect.x + mRect.w; x >= mRect.x; x -= step * 4 ) {
 		qglVertex2f( x, mRect.y );
 		qglVertex2f( x, mRect.y + mRect.h );
 	}
 	step = mApplication->GetOptions().GetGridHeight() * g_ZoomScales[mZoom];
-	for( y = mRect.y + mRect.h; y >= mRect.y ; y -= step * 4 )
-	{
+	for( y = mRect.y + mRect.h; y >= mRect.y; y -= step * 4 ) {
 		qglVertex2f( mRect.x, y );
 		qglVertex2f( mRect.x + mRect.w, y );
 	}
@@ -264,15 +256,14 @@ Renders the workspace to the given DC
 */
 void rvGEWorkspace::Render( HDC hdc )
 {
-	int		front;
-	int		back;
-	float	scale;
+	int	  front;
+	int	  back;
+	float scale;
 
 	scale = g_ZoomScales[mZoom];
 
 	// Switch GL contexts to our dc
-	if( !qwglMakeCurrent( hdc, win32.hGLRC ) )
-	{
+	if( !qwglMakeCurrent( hdc, win32.hGLRC ) ) {
 		common->Printf( "ERROR: wglMakeCurrent failed.. Error:%i\n", qglGetError() );
 		common->Printf( "Please restart Q3Radiant if the Map view is not working\n" );
 		return;
@@ -306,33 +297,32 @@ void rvGEWorkspace::Render( HDC hdc )
 	// Prepare the renderSystem view to draw the GUI in
 	viewDef_t viewDef;
 	memset( &viewDef, 0, sizeof( viewDef ) );
-	tr.viewDef = &viewDef;
-	tr.viewDef->renderView.x = mRect.x;
-	tr.viewDef->renderView.y = mWindowHeight - mRect.y - mRect.h;
-	tr.viewDef->renderView.width = mRect.w;
+	tr.viewDef					  = &viewDef;
+	tr.viewDef->renderView.x	  = mRect.x;
+	tr.viewDef->renderView.y	  = mWindowHeight - mRect.y - mRect.h;
+	tr.viewDef->renderView.width  = mRect.w;
 	tr.viewDef->renderView.height = mRect.h;
-	tr.viewDef->scissor.x1 = 0;
-	tr.viewDef->scissor.y1 = 0;
-	tr.viewDef->scissor.x2 = mRect.w;
-	tr.viewDef->scissor.y2 = mRect.h;
-	tr.viewDef->isEditor = true;
+	tr.viewDef->scissor.x1		  = 0;
+	tr.viewDef->scissor.y1		  = 0;
+	tr.viewDef->scissor.x2		  = mRect.w;
+	tr.viewDef->scissor.y2		  = mRect.h;
+	tr.viewDef->isEditor		  = true;
 	renderSystem->BeginFrame( mWindowWidth, mWindowHeight );
 
 	// Draw the gui
-	mInterface->Redraw( 0 );  // eventLoop->Milliseconds() );
+	mInterface->Redraw( 0 ); // eventLoop->Milliseconds() );
 
 	// We are done using the renderSystem now
 	renderSystem->EndFrame( &front, &back );
 
-	if( mApplication->GetActiveWorkspace() == this )
-	{
+	if( mApplication->GetActiveWorkspace() == this ) {
 		mApplication->GetStatusBar().SetTriangles( backEnd.pc.c_drawIndexes / 3 );
 	}
 
 	// Prepare the viewport for drawing selections, etc.
 	GL_State( GLS_DEFAULT );
 	qglDisable( GL_TEXTURE_CUBE_MAP_EXT );
-//	qglDisable(GL_BLEND);
+	//	qglDisable(GL_BLEND);
 	qglDisable( GL_CULL_FACE );
 
 	qglViewport( 0, 0, mWindowWidth, mWindowHeight );
@@ -378,27 +368,26 @@ Updates the rectangle (not counting scrolling)
 */
 void rvGEWorkspace::UpdateRectangle( bool useScroll )
 {
-	RECT	rcClient;
-	float	x;
-	float	y;
-	float	scale;
+	RECT  rcClient;
+	float x;
+	float y;
+	float scale;
 
 	scale = g_ZoomScales[mZoom];
 
 	// Grab the current client rectangle of the window and cache off the width and height
 	GetClientRect( mWnd, &rcClient );
-	mWindowWidth = rcClient.right - rcClient.left;
+	mWindowWidth  = rcClient.right - rcClient.left;
 	mWindowHeight = rcClient.bottom - rcClient.top;
 
 	// The workspace is always centered in the window
 	x = mRect.x = mWindowWidth / 2 - ( SCREEN_WIDTH * scale ) / 2;
 	y = mRect.y = mWindowHeight / 2 - ( SCREEN_HEIGHT * scale ) / 2;
-	mRect.w = ( SCREEN_WIDTH * scale );
-	mRect.h = ( SCREEN_HEIGHT * scale );
+	mRect.w		= ( SCREEN_WIDTH * scale );
+	mRect.h		= ( SCREEN_HEIGHT * scale );
 
 	// When using the scroll position offset the rectangle based on the scrollbar positions
-	if( useScroll )
-	{
+	if( useScroll ) {
 		// Adjust the start of the rectangle for the scroll positiond
 		mRect.y -= ( float )GetScrollPos( mWnd, SB_VERT ) / 1000.0f;
 		mRect.x -= ( float )GetScrollPos( mWnd, SB_HORZ ) / 1000.0f;
@@ -416,12 +405,9 @@ void rvGEWorkspace::Scroll( int scrollbar, int offset )
 {
 	SCROLLINFO si;
 
-	if( scrollbar == SB_HORZ && !mScrollHorz )
-	{
+	if( scrollbar == SB_HORZ && !mScrollHorz ) {
 		return;
-	}
-	else if( scrollbar == SB_VERT && !mScrollVert )
-	{
+	} else if( scrollbar == SB_VERT && !mScrollVert ) {
 		return;
 	}
 
@@ -433,12 +419,10 @@ void rvGEWorkspace::Scroll( int scrollbar, int offset )
 	GetScrollInfo( mWnd, scrollbar, &si );
 
 	si.nPos += ( 1000 * offset );
-	if( si.nPos < si.nMin )
-	{
+	if( si.nPos < si.nMin ) {
 		si.nPos = si.nMin;
 	}
-	if( si.nPos > si.nMax )
-	{
+	if( si.nPos > si.nMax ) {
 		si.nPos = si.nMax;
 	}
 
@@ -460,8 +444,7 @@ int rvGEWorkspace::HandleScroll( int scrollbar, WPARAM wParam, LPARAM lParam )
 	// Save the position for comparison later on
 	GetScrollInfo( mWnd, scrollbar, &si );
 
-	switch( LOWORD( wParam ) )
-	{
+	switch( LOWORD( wParam ) ) {
 		// user clicked left or up arrow
 		case SB_LINELEFT:
 			si.nPos -= 1000;
@@ -487,7 +470,7 @@ int rvGEWorkspace::HandleScroll( int scrollbar, WPARAM wParam, LPARAM lParam )
 			si.nPos = si.nTrackPos;
 			break;
 
-		default :
+		default:
 			break;
 	}
 
@@ -519,43 +502,38 @@ void rvGEWorkspace::UpdateScrollbars()
 
 	// Setup the veritcal scrollbar
 	info.cbSize = sizeof( info );
-	info.fMask = SIF_RANGE | SIF_PAGE;
-	info.nMax = ( mRect.h - mWindowHeight + 10 ) * 1000 / 2;
-	info.nMin = -info.nMax;
-	info.nPage = ( int )( ( float )info.nMax * ( float )( ( float )mWindowHeight / mRect.h ) );
+	info.fMask	= SIF_RANGE | SIF_PAGE;
+	info.nMax	= ( mRect.h - mWindowHeight + 10 ) * 1000 / 2;
+	info.nMin	= -info.nMax;
+	info.nPage	= ( int )( ( float )info.nMax * ( float )( ( float )mWindowHeight / mRect.h ) );
 	info.nMax += info.nPage;
 
 	// If there is something to scroll then turn on the vertical scroll bar
 	// if its not on and update the scroll info.
-	if( info.nMax > 0 )
-	{
-		if( !mScrollVert )
-		{
+	if( info.nMax > 0 ) {
+		if( !mScrollVert ) {
 			mScrollVert = true;
 			ShowScrollBar( mWnd, SB_VERT, mScrollVert );
 		}
 		SetScrollInfo( mWnd, SB_VERT, &info, TRUE );
 	}
 	// Nothing to scroll, turn off the scrollbar if its on.
-	else if( mScrollVert )
-	{
+	else if( mScrollVert ) {
 		mScrollVert = false;
 		SetScrollPos( mWnd, SB_VERT, 0, FALSE );
 		ShowScrollBar( mWnd, SB_VERT, mScrollVert );
 	}
 
 	// Setup the horizontal scrollbar
-	info.nMax = ( mRect.w - mWindowWidth + 10 ) * 1000 / 2;
-	info.nMin = -info.nMax;
+	info.nMax  = ( mRect.w - mWindowWidth + 10 ) * 1000 / 2;
+	info.nMin  = -info.nMax;
 	info.nPage = ( int )( ( float )info.nMax * ( float )( ( float )mWindowWidth / mRect.w ) );
 	info.nMax += info.nPage;
 
 	// If there is something to scroll then turn on the vertical scroll bar
 	// if its not on and update the scroll info.
-	if( info.nMax > 0 )
-	{
-		if( !mScrollHorz )
-		{
+	if( info.nMax > 0 ) {
+		if( !mScrollHorz ) {
 			mScrollHorz = true;
 			ShowScrollBar( mWnd, SB_HORZ, mScrollHorz );
 		}
@@ -563,8 +541,7 @@ void rvGEWorkspace::UpdateScrollbars()
 		SetScrollInfo( mWnd, SB_HORZ, &info, TRUE );
 	}
 	// Nothing to scroll, turn off the scrollbar if its on.
-	else if( mScrollHorz )
-	{
+	else if( mScrollHorz ) {
 		mScrollHorz = false;
 		SetScrollPos( mWnd, SB_HORZ, 0, FALSE );
 		ShowScrollBar( mWnd, SB_HORZ, mScrollHorz );
@@ -583,8 +560,7 @@ Called to update the cursor when the mouse is within the workspace window
 */
 void rvGEWorkspace::UpdateCursor( rvGESelectionMgr::EHitTest type )
 {
-	switch( type )
-	{
+	switch( type ) {
 		case rvGESelectionMgr::HT_SELECT:
 			SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 			break;
@@ -617,8 +593,8 @@ void rvGEWorkspace::UpdateCursor( rvGESelectionMgr::EHitTest type )
 
 void rvGEWorkspace::UpdateCursor( float x, float y )
 {
-	idVec2						point;
-	rvGESelectionMgr::EHitTest	type;
+	idVec2					   point;
+	rvGESelectionMgr::EHitTest type;
 
 	// First convert the worspace coord to a window coord
 	point = WorkspaceToWindow( idVec2( x, y ) );
@@ -627,31 +603,25 @@ void rvGEWorkspace::UpdateCursor( float x, float y )
 	type = mSelections.HitTest( point.x, point.y );
 
 	// If it hits something then use it to update the cursor
-	if( rvGESelectionMgr::HT_NONE != type )
-	{
+	if( rvGESelectionMgr::HT_NONE != type ) {
 		UpdateCursor( type );
-	}
-	else
-	{
+	} else {
 		SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 	}
 }
 
 void rvGEWorkspace::UpdateCursor()
 {
-	if( mDragType == rvGESelectionMgr::HT_NONE )
-	{
-		POINT	point;
-		idVec2	cursor;
+	if( mDragType == rvGESelectionMgr::HT_NONE ) {
+		POINT  point;
+		idVec2 cursor;
 
 		GetCursorPos( &point );
 		cursor.Set( point.x, point.y );
 		WindowToWorkspace( cursor );
 
 		UpdateCursor( cursor.x, cursor.y );
-	}
-	else
-	{
+	} else {
 		UpdateCursor( mDragType );
 	}
 }
@@ -665,19 +635,13 @@ Handles window messages to the workspace
 */
 void rvGEWorkspace::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	switch( msg )
-	{
-		case WM_CLOSE:
-		{
-
-			if( IsModified() )
-			{
-				if( IDYES == gApp.MessageBox( va( "Save changes to the document \"%s\" before closing?", GetFilename() ), MB_YESNO | MB_ICONQUESTION ) )
-				{
+	switch( msg ) {
+		case WM_CLOSE: {
+			if( IsModified() ) {
+				if( IDYES == gApp.MessageBox( va( "Save changes to the document \"%s\" before closing?", GetFilename() ), MB_YESNO | MB_ICONQUESTION ) ) {
 					SendMessage( mApplication->GetMDIFrame(), WM_COMMAND, MAKELONG( ID_GUIED_FILE_SAVE, 0 ), 0 );
 				}
 			}
-
 
 			GetApplication()->GetNavigator().SetWorkspace( NULL );
 			GetApplication()->GetTransformer().SetWorkspace( NULL );
@@ -686,38 +650,30 @@ void rvGEWorkspace::HandleMessage( UINT msg, WPARAM wParam, LPARAM lParam )
 		}
 
 		case WM_CAPTURECHANGED:
-			if( ( HWND )lParam != mWnd )
-			{
+			if( ( HWND )lParam != mWnd ) {
 				mDragScroll = false;
 				mDragType	= rvGESelectionMgr::HT_NONE;
 			}
 			break;
 
-		case WM_SETCURSOR:
-		{
-			POINT point;
+		case WM_SETCURSOR: {
+			POINT  point;
 			idVec2 cursor;
 			GetCursorPos( &point );
 			cursor.Set( point.x, point.y );
 			WindowToWorkspace( cursor );
-			if( mDragType == rvGESelectionMgr::HT_NONE )
-			{
+			if( mDragType == rvGESelectionMgr::HT_NONE ) {
 				UpdateCursor( cursor.x, cursor.y );
-			}
-			else
-			{
+			} else {
 				UpdateCursor( mDragType );
 			}
 			break;
 		}
 
 		case WM_MOUSEWHEEL:
-			if( ( short )HIWORD( wParam ) > 0 )
-			{
+			if( ( short )HIWORD( wParam ) > 0 ) {
 				ZoomIn();
-			}
-			else if( ( short )HIWORD( wParam ) < 0 )
-			{
+			} else if( ( short )HIWORD( wParam ) < 0 ) {
 				ZoomOut();
 			}
 			break;
@@ -783,28 +739,21 @@ Handles command messages destined for the workspace window.  This is for
 special workspace commands, any unhandled commands are forwarded to the main window
 ================
 */
-int	rvGEWorkspace::HandleCommand( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleCommand( WPARAM wParam, LPARAM lParam )
 {
 	// Select command
-	if( LOWORD( wParam ) >= ID_GUIED_SELECT_FIRST && LOWORD( wParam ) <= ID_GUIED_SELECT_LAST )
-	{
-		idWindow*			window  = mSelectMenu[LOWORD( wParam ) - ID_GUIED_SELECT_FIRST];
-		rvGEWindowWrapper*	wrapper = rvGEWindowWrapper::GetWrapper( window );
+	if( LOWORD( wParam ) >= ID_GUIED_SELECT_FIRST && LOWORD( wParam ) <= ID_GUIED_SELECT_LAST ) {
+		idWindow*		   window  = mSelectMenu[LOWORD( wParam ) - ID_GUIED_SELECT_FIRST];
+		rvGEWindowWrapper* wrapper = rvGEWindowWrapper::GetWrapper( window );
 
 		// Handle multi select as well
-		if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-		{
-			if( wrapper->IsSelected() )
-			{
+		if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) {
+			if( wrapper->IsSelected() ) {
 				mSelections.Remove( window );
-			}
-			else
-			{
+			} else {
 				mSelections.Add( window );
 			}
-		}
-		else
-		{
+		} else {
 			mSelections.Set( window );
 		}
 	}
@@ -819,10 +768,9 @@ rvGEWorkspace::HandleMButtonDown
 Handles the middle mouse down message in the workspace
 ================
 */
-int	rvGEWorkspace::HandleMButtonDown( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleMButtonDown( WPARAM wParam, LPARAM lParam )
 {
-	if( mDragType != rvGESelectionMgr::HT_NONE )
-	{
+	if( mDragType != rvGESelectionMgr::HT_NONE ) {
 		return 0;
 	}
 
@@ -843,10 +791,9 @@ rvGEWorkspace::HandleMButtonUp
 Handles the middle mouse up message in the workspace
 ================
 */
-int	rvGEWorkspace::HandleMButtonUp( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleMButtonUp( WPARAM wParam, LPARAM lParam )
 {
-	if( mDragScroll )
-	{
+	if( mDragScroll ) {
 		mDragScroll = false;
 		ReleaseCapture();
 	}
@@ -861,7 +808,7 @@ rvGEWorkspace::HandleRButtonDown
 Handles the left mouse down message in the workspace
 ================
 */
-int	rvGEWorkspace::HandleRButtonDown( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleRButtonDown( WPARAM wParam, LPARAM lParam )
 {
 	POINT point = { LOWORD( lParam ), HIWORD( lParam ) };
 	HMENU menu;
@@ -886,14 +833,13 @@ int	rvGEWorkspace::HandleRButtonDown( WPARAM wParam, LPARAM lParam )
 
 	HMENU popup = CreatePopupMenu();
 
-	int i;
-	for( i = 0; i < mSelectMenu.Num(); i ++ )
-	{
+	int	  i;
+	for( i = 0; i < mSelectMenu.Num(); i++ ) {
 		rvGEWindowWrapper* wrapper = rvGEWindowWrapper::GetWrapper( mSelectMenu[i] );
 		AppendMenu( popup, MF_STRING | MF_ENABLED | ( wrapper->IsSelected() ? MF_CHECKED : 0 ), ID_GUIED_SELECT_FIRST + i, mSelectMenu[i]->GetName() );
 	}
 
-	InsertMenu( menu, 1, MF_POPUP | MF_BYPOSITION, ( LONG ) popup, "Select" );
+	InsertMenu( menu, 1, MF_POPUP | MF_BYPOSITION, ( LONG )popup, "Select" );
 
 	// Bring up the popup menu
 	ClientToScreen( mWnd, &point );
@@ -912,10 +858,9 @@ rvGEWorkspace::HandleLButtonDown
 Handles the left mouse down message in the workspace
 ================
 */
-int	rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
 {
-	if( mDragScroll )
-	{
+	if( mDragScroll ) {
 		return 0;
 	}
 
@@ -927,12 +872,11 @@ int	rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
 
 	mDragPoint.Set( LOWORD( lParam ), HIWORD( lParam ) );
 	mDragTime = Sys_Milliseconds();
-	mDragX    = true;
-	mDragY    = true;
+	mDragX	  = true;
+	mDragY	  = true;
 
 	// If we have selections then start a drag
-	if( mSelections.Num() )
-	{
+	if( mSelections.Num() ) {
 		mDragType = mSelections.HitTest( mDragPoint.x, mDragPoint.y );
 	}
 
@@ -942,50 +886,37 @@ int	rvGEWorkspace::HandleLButtonDown( WPARAM wParam, LPARAM lParam )
 	idWindow* window = wrapper->WindowFromPoint( point.x, point.y );
 
 	// dissallow selection of the desktop.
-	if( gApp.GetOptions().GetIgnoreDesktopSelect() && window == mInterface->GetDesktop() )
-	{
+	if( gApp.GetOptions().GetIgnoreDesktopSelect() && window == mInterface->GetDesktop() ) {
 		window = NULL;
 	}
 
-	if( mDragType == rvGESelectionMgr::HT_MOVE || mDragType == rvGESelectionMgr::HT_NONE )
-	{
-		if( window )
-		{
+	if( mDragType == rvGESelectionMgr::HT_MOVE || mDragType == rvGESelectionMgr::HT_NONE ) {
+		if( window ) {
 			bool selected;
 
 			selected = mSelections.IsSelected( window );
 
-			if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-			{
-				if( !selected )
-				{
+			if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) {
+				if( !selected ) {
 					mSelections.Add( window );
 					mDragType = rvGESelectionMgr::HT_MOVE;
-				}
-				else
-				{
+				} else {
 					mSelections.Remove( window );
 				}
-			}
-			else if( !selected && mDragType == rvGESelectionMgr::HT_NONE )
-			{
+			} else if( !selected && mDragType == rvGESelectionMgr::HT_NONE ) {
 				mSelections.Set( window );
 				mDragType = rvGESelectionMgr::HT_MOVE;
 			}
-		}
-		else
-		{
+		} else {
 			mSelections.Clear();
 		}
 	}
 
-	if( mSelections.IsExpression() )
-	{
+	if( mSelections.IsExpression() ) {
 		mDragType = rvGESelectionMgr::HT_SELECT;
 	}
 	// Windows capture
-	else if( mDragType != rvGESelectionMgr::HT_NONE )
-	{
+	else if( mDragType != rvGESelectionMgr::HT_NONE ) {
 		SetCapture( mWnd );
 	}
 
@@ -1001,10 +932,9 @@ rvGEWorkspace::HandleLButtonUp
 Handles the left mouse up message in the workspace
 ================
 */
-int	rvGEWorkspace::HandleLButtonUp( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleLButtonUp( WPARAM wParam, LPARAM lParam )
 {
-	if( mDragType != rvGESelectionMgr::HT_NONE )
-	{
+	if( mDragType != rvGESelectionMgr::HT_NONE ) {
 		ReleaseCapture();
 		mModifiers.BlockNextMerge();
 
@@ -1025,7 +955,7 @@ rvGEWorkspace::HandleLButtonDblClk
 Handle a double click by opening properties
 ================
 */
-int	rvGEWorkspace::HandleLButtonDblClk( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleLButtonDblClk( WPARAM wParam, LPARAM lParam )
 {
 	EditSelectedProperties();
 	return 0;
@@ -1038,9 +968,9 @@ rvGEWorkspace::HandleMouseMove
 Handles the moving of the mouse for dragging and cursor updating
 ================
 */
-int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 {
-	idVec2	cursor;
+	idVec2 cursor;
 
 	cursor.Set( ( short )LOWORD( lParam ), ( short )HIWORD( lParam ) );
 
@@ -1049,8 +979,7 @@ int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 	WindowToWorkspace( cursor );
 
 	// Scrolling the window around
-	if( mDragScroll )
-	{
+	if( mDragScroll ) {
 		Scroll( SB_HORZ, mDragPoint.x - cursor.x );
 		Scroll( SB_VERT, mDragPoint.y - cursor.y );
 
@@ -1062,33 +991,28 @@ int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 	}
 
 	// If not dragging then just update the cursor and return
-	if( mDragType == rvGESelectionMgr::HT_NONE )
-	{
+	if( mDragType == rvGESelectionMgr::HT_NONE ) {
 		UpdateCursor( cursor.x, cursor.y );
 		return 0;
 	}
 
 	// Dont allow a drag move start until the button has been down for 100 ms or so
-	if( mDragType == rvGESelectionMgr::HT_MOVE && Sys_Milliseconds() - mDragTime <= 50 )
-	{
+	if( mDragType == rvGESelectionMgr::HT_MOVE && Sys_Milliseconds() - mDragTime <= 50 ) {
 		return 0;
 	}
 
 	// Handle grid snapping
-	if( gApp.GetOptions().GetGridSnap() )
-	{
+	if( gApp.GetOptions().GetGridSnap() ) {
 		cursor.x = ( float )( ( ( int )cursor.x + gApp.GetOptions().GetGridWidth() / 2 ) / gApp.GetOptions().GetGridWidth() * gApp.GetOptions().GetGridWidth() );
 		cursor.y = ( float )( ( ( int )cursor.y + gApp.GetOptions().GetGridWidth() / 2 ) / gApp.GetOptions().GetGridWidth() * gApp.GetOptions().GetGridWidth() );
 	}
 
 	// If the cursor hasnt moved then there is nothing to update with the drag
-	if( ( int ) cursor.x == ( int ) mDragPoint.x && ( int ) cursor.y == ( int ) mDragPoint.y )
-	{
+	if( ( int )cursor.x == ( int )mDragPoint.x && ( int )cursor.y == ( int )mDragPoint.y ) {
 		return 0;
 	}
 
-	switch( mDragType )
-	{
+	switch( mDragType ) {
 		case rvGESelectionMgr::HT_MOVE:
 			AddModifierMove( "Move", cursor.x - mDragPoint.x, cursor.y - mDragPoint.y, mApplication->GetOptions().GetGridSnap() );
 			break;
@@ -1129,14 +1053,12 @@ int	rvGEWorkspace::HandleMouseMove( WPARAM wParam, LPARAM lParam )
 	UpdateCursor( mDragType );
 
 	// If the x coordinate has changed then update it
-	if( ( int )cursor.x != ( int )mDragPoint.x && mDragX )
-	{
+	if( ( int )cursor.x != ( int )mDragPoint.x && mDragX ) {
 		mDragPoint.x = cursor.x;
 	}
 
 	// If the y coordinate has changed then update it
-	if( ( int )cursor.y != ( int )mDragPoint.y && mDragY )
-	{
+	if( ( int )cursor.y != ( int )mDragPoint.y && mDragY ) {
 		mDragPoint.y = cursor.y;
 	}
 
@@ -1150,52 +1072,39 @@ rvGEWorkspace::HandleKeyDown
 Handles the the pressing of a key
 ================
 */
-int	rvGEWorkspace::HandleKeyDown( WPARAM wParam, LPARAM lParam )
+int rvGEWorkspace::HandleKeyDown( WPARAM wParam, LPARAM lParam )
 {
 	bool shift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ? true : false;
 
-	switch( wParam )
-	{
+	switch( wParam ) {
 		case VK_LEFT:
-			if( shift )
-			{
+			if( shift ) {
 				AddModifierSizeNudge( -1, 0, false );
-			}
-			else
-			{
+			} else {
 				AddModifierMoveNudge( -1, 0, false );
 			}
 			break;
 
 		case VK_RIGHT:
-			if( shift )
-			{
+			if( shift ) {
 				AddModifierSizeNudge( 1, 0, false );
-			}
-			else
-			{
+			} else {
 				AddModifierMoveNudge( 1, 0, false );
 			}
 			break;
 
 		case VK_DOWN:
-			if( shift )
-			{
+			if( shift ) {
 				AddModifierSizeNudge( 0, 1, false );
-			}
-			else
-			{
+			} else {
 				AddModifierMoveNudge( 0, 1, false );
 			}
 			break;
 
 		case VK_UP:
-			if( shift )
-			{
+			if( shift ) {
 				AddModifierSizeNudge( 0, -1, false );
-			}
-			else
-			{
+			} else {
 				AddModifierMoveNudge( 0, -1, false );
 			}
 			break;
@@ -1269,8 +1178,7 @@ Zooms the workspace in by one zoom level
 rvGEWorkspace::EZoomLevel rvGEWorkspace::ZoomIn()
 {
 	mZoom = mZoom + 1;
-	if( mZoom >= ZOOM_MAX )
-	{
+	if( mZoom >= ZOOM_MAX ) {
 		mZoom = ZOOM_MAX - 1;
 	}
 
@@ -1292,8 +1200,7 @@ Zooms the workspace out by one level
 rvGEWorkspace::EZoomLevel rvGEWorkspace::ZoomOut()
 {
 	mZoom--;
-	if( mZoom <= ZOOM_MIN )
-	{
+	if( mZoom <= ZOOM_MIN ) {
 		mZoom = ZOOM_MIN + 1;
 	}
 
@@ -1317,8 +1224,7 @@ rvGEModifier* rvGEWorkspace::CreateModifier( EModifierType type, idWindow* windo
 {
 	rvGEModifier* mod;
 
-	switch( type )
-	{
+	switch( type ) {
 		case MOD_DELETE:
 			mod = new rvGEDeleteModifier( "Delete", window );
 			break;
@@ -1366,9 +1272,9 @@ void rvGEWorkspace::AddModifiers( idWindow* window, EModifierType type, ... )
 {
 	va_list args;
 
-	va_start( args, type ) ;
+	va_start( args, type );
 	mModifiers.Append( CreateModifier( type, window, args ) );
-	va_end( args ) ;
+	va_end( args );
 
 	SetModified( true );
 }
@@ -1378,18 +1284,15 @@ void rvGEWorkspace::AddModifiers( EModifierType type, ... )
 	va_list args;
 
 	// Nothing to move if there is no selection
-	if( !mSelections.Num() )
-	{
+	if( !mSelections.Num() ) {
 		return;
 	}
 	// More than one selection requires a modifier group
-	else if( mSelections.Num() > 1 )
-	{
-		rvGEModifierGroup*	group = new rvGEModifierGroup;
-		int					i;
+	else if( mSelections.Num() > 1 ) {
+		rvGEModifierGroup* group = new rvGEModifierGroup;
+		int				   i;
 
-		for( i = 0; i < mSelections.Num(); i ++ )
-		{
+		for( i = 0; i < mSelections.Num(); i++ ) {
 			va_start( args, type );
 			group->Append( CreateModifier( type, mSelections[i], args ) );
 			va_end( args );
@@ -1398,11 +1301,10 @@ void rvGEWorkspace::AddModifiers( EModifierType type, ... )
 		mModifiers.Append( group );
 	}
 	// Single modifier
-	else
-	{
-		va_start( args, type ) ;
+	else {
+		va_start( args, type );
 		mModifiers.Append( CreateModifier( type, mSelections[0], args ) );
-		va_end( args ) ;
+		va_end( args );
 	}
 
 	SetModified( true );
@@ -1410,25 +1312,22 @@ void rvGEWorkspace::AddModifiers( EModifierType type, ... )
 
 bool rvGEWorkspace::BuildSelectMenuEnumProc( rvGEWindowWrapper* wrapper, void* data )
 {
-	rvGEWorkspace*	workspace;
+	rvGEWorkspace* workspace;
 
-	workspace = ( rvGEWorkspace* ) data;
+	workspace = ( rvGEWorkspace* )data;
 	assert( workspace );
 
-	if( !wrapper )
-	{
+	if( !wrapper ) {
 		return true;
 	}
 
 	wrapper->EnumChildren( BuildSelectMenuEnumProc, data );
 
-	if( wrapper->IsDeleted() || wrapper->IsHidden() )
-	{
+	if( wrapper->IsDeleted() || wrapper->IsHidden() ) {
 		return true;
 	}
 
-	if( wrapper->GetScreenRect().Contains( workspace->mSelectMenuPos[0], workspace->mSelectMenuPos[1] ) )
-	{
+	if( wrapper->GetScreenRect().Contains( workspace->mSelectMenuPos[0], workspace->mSelectMenuPos[1] ) ) {
 		workspace->mSelectMenu.Append( wrapper->GetWindow() );
 	}
 
@@ -1437,12 +1336,11 @@ bool rvGEWorkspace::BuildSelectMenuEnumProc( rvGEWindowWrapper* wrapper, void* d
 
 bool rvGEWorkspace::ShowAllEnumProc( rvGEWindowWrapper* wrapper, void* data )
 {
-	rvGEModifierGroup* group = ( rvGEModifierGroup* ) data;
+	rvGEModifierGroup* group = ( rvGEModifierGroup* )data;
 
 	wrapper->EnumChildren( ShowAllEnumProc, data );
 
-	if( wrapper->IsHidden() )
-	{
+	if( wrapper->IsHidden() ) {
 		group->Append( new rvGEHideModifier( "Show Hidden", wrapper->GetWindow(), false ) );
 	}
 
@@ -1455,12 +1353,9 @@ void rvGEWorkspace::AddModifierShowAll()
 
 	rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() )->EnumChildren( ShowAllEnumProc, group );
 
-	if( !group->GetCount() )
-	{
+	if( !group->GetCount() ) {
 		delete group;
-	}
-	else
-	{
+	} else {
 		mModifiers.Append( group );
 	}
 
@@ -1483,13 +1378,12 @@ Create a new window
 */
 idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowType type )
 {
-	idWindow*			window = new idWindow( mInterface->GetDesktop()->GetDC(), mInterface );
-	rvGEWindowWrapper*	wrapper;
-	int					count;
-	idStr				baseName;
+	idWindow*		   window = new idWindow( mInterface->GetDesktop()->GetDC(), mInterface );
+	rvGEWindowWrapper* wrapper;
+	int				   count;
+	idStr			   baseName;
 
-	switch( type )
-	{
+	switch( type ) {
 		case rvGEWindowWrapper::WT_NORMAL:
 			window = new idWindow( mInterface->GetDesktop()->GetDC(), mInterface );
 			break;
@@ -1519,20 +1413,16 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 	baseName.StripQuotes();
 
 	count = 0;
-	if( mInterface->GetDesktop()->FindChildByName( baseName ) )
-	{
+	if( mInterface->GetDesktop()->FindChildByName( baseName ) ) {
 		count = 1;
-		while( 1 )
-		{
+		while( 1 ) {
 			drawWin_t* dw = mInterface->GetDesktop()->FindChildByName( va( "%s%d", baseName.c_str(), count ) );
-			if( !dw )
-			{
+			if( !dw ) {
 				break;
 			}
 			assert( dw->win );
 			wrapper = rvGEWindowWrapper::GetWrapper( dw->win );
-			if( wrapper && wrapper->IsDeleted() )
-			{
+			if( wrapper && wrapper->IsDeleted() ) {
 				break;
 			}
 			count++;
@@ -1542,12 +1432,9 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 	idStr winName;
 	idStr winTemplate;
 
-	if( count )
-	{
+	if( count ) {
 		winName = va( "%s%d", baseName.c_str(), count );
-	}
-	else
-	{
+	} else {
 		winName = baseName;
 	}
 	winTemplate = winName + " { }";
@@ -1557,8 +1444,7 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 
 	wrapper = rvGEWindowWrapper::GetWrapper( window );
 
-	if( state )
-	{
+	if( state ) {
 		wrapper->SetState( *state );
 	}
 
@@ -1567,14 +1453,13 @@ idWindow* rvGEWorkspace::NewWindow( idDict* state, rvGEWindowWrapper::EWindowTyp
 
 	SetModified( true );
 
-
 	return window;
 }
 
 idWindow* rvGEWorkspace::AddWindow( rvGEWindowWrapper::EWindowType type )
 {
-	idWindow*	window;
-	idDict		state;
+	idWindow* window;
+	idDict	  state;
 
 	state.Set( "rect", "0,0,100,100" );
 	state.Set( "visible", "1" );
@@ -1594,14 +1479,12 @@ idWindow* rvGEWorkspace::AddWindow( rvGEWindowWrapper::EWindowType type )
 
 bool rvGEWorkspace::EditSelectedProperties()
 {
-	if( !mSelections.Num() || mSelections.Num() > 1 )
-	{
+	if( !mSelections.Num() || mSelections.Num() > 1 ) {
 		return false;
 	}
 
 	idDict dict;
-	if( GEItemPropsDlg_DoModal( mWnd, mSelections[0], dict ) )
-	{
+	if( GEItemPropsDlg_DoModal( mWnd, mSelections[0], dict ) ) {
 		mModifiers.Append( new rvGEStateModifier( "Item Properties", mSelections[0], dict ) );
 		SetModified( true );
 	}
@@ -1615,8 +1498,7 @@ bool rvGEWorkspace::EditSelectedProperties()
 
 bool rvGEWorkspace::EditSelectedScripts()
 {
-	if( GEItemScriptsDlg_DoModal( mWnd, mSelections[0] ) )
-	{
+	if( GEItemScriptsDlg_DoModal( mWnd, mSelections[0] ) ) {
 		gApp.GetNavigator().Refresh();
 		SetModified( true );
 	}
@@ -1657,29 +1539,26 @@ Align the selected items to the first one using the given align type
 */
 void rvGEWorkspace::MakeSelectedSameSize( bool changeWidth, bool changeHeight )
 {
-	rvGEModifierGroup*	group;
-	idRectangle			rectTo;
-	int					i;
+	rvGEModifierGroup* group;
+	idRectangle		   rectTo;
+	int				   i;
 
 	group = new rvGEModifierGroup();
 
 	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetClientRect();
 
-	for( i = 1; i < mSelections.Num(); i ++ )
-	{
-		idRectangle	rectFrom;
-		float		width = 0;
+	for( i = 1; i < mSelections.Num(); i++ ) {
+		idRectangle rectFrom;
+		float		width  = 0;
 		float		height = 0;
 
 		rectFrom = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetClientRect();
 
-		if( changeWidth )
-		{
+		if( changeWidth ) {
 			width = rectTo.w - rectFrom.w;
 		}
 
-		if( changeHeight )
-		{
+		if( changeHeight ) {
 			height = rectTo.h - rectFrom.h;
 		}
 
@@ -1703,32 +1582,30 @@ Align the selected items to the first one using the given align type
 */
 void rvGEWorkspace::AlignSelected( EItemAlign align )
 {
-	static const char*	alignNames[] = {"Lefts", "Centers", "Rights", "Tops", "Middles", "Bottoms" };
-	int					i;
-	idStr				modName;
-	rvGEModifierGroup*	group;
+	static const char* alignNames[] = { "Lefts", "Centers", "Rights", "Tops", "Middles", "Bottoms" };
+	int				   i;
+	idStr			   modName;
+	rvGEModifierGroup* group;
 
 	assert( mSelections.Num() > 1 );
 
 	modName = "Align " + idStr( alignNames[align] );
 
-	group   = new rvGEModifierGroup();
+	group = new rvGEModifierGroup();
 
 	idRectangle rectTo;
 	rectTo = rvGEWindowWrapper::GetWrapper( mSelections[0] )->GetScreenRect();
 
 	// Everything gets aligned to the first selection so run
 	// through all other selections and move them.
-	for( i = 1; i < mSelections.Num(); i ++ )
-	{
+	for( i = 1; i < mSelections.Num(); i++ ) {
 		float		x;
 		float		y;
-		idRectangle	rectFrom;
+		idRectangle rectFrom;
 
 		rectFrom = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect();
 
-		switch( align )
-		{
+		switch( align ) {
 			case ALIGN_LEFTS:
 				x = rectTo[0] - rectFrom[0];
 				y = 0;
@@ -1789,26 +1666,22 @@ void rvGEWorkspace::AddModifierMove( const char* modName, float x, float y, bool
 
 	scaleRect = mSelections.GetRect();
 	WindowToWorkspace( scaleRect );
-	newRect   = scaleRect;
+	newRect = scaleRect;
 	newRect.x += x;
 	newRect.y += y;
 
-	if( snap )
-	{
+	if( snap ) {
 		gApp.GetOptions().SnapRectToGrid( newRect, true, true, false, false );
 	}
 
-	rvGEModifierGroup*	group = new rvGEModifierGroup;
-	for( int i = 0; i < mSelections.Num(); i ++ )
-	{
-		if( !mSelections[i]->GetParent() )
-		{
+	rvGEModifierGroup* group = new rvGEModifierGroup;
+	for( int i = 0; i < mSelections.Num(); i++ ) {
+		if( !mSelections[i]->GetParent() ) {
 			continue;
 		}
 
 		// IF the parent window is being moved around as well then dont move this one.
-		if( rvGEWindowWrapper::GetWrapper( mSelections[i]->GetParent() )->IsSelected() )
-		{
+		if( rvGEWindowWrapper::GetWrapper( mSelections[i]->GetParent() )->IsSelected() ) {
 			// We still need the modifier there so the selection can be restored and
 			// so the rectangle gets updated
 			group->Append( new rvGEMoveModifier( modName, mSelections[i], 0, 0 ) );
@@ -1833,7 +1706,7 @@ Adds a size modifier with the given offsets
 void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, float r, float b, bool snap )
 {
 	idRectangle scaleRect;
-	idRectangle	sizeRect;
+	idRectangle sizeRect;
 	idRectangle newRect;
 
 	scaleRect = mSelections.GetRect();
@@ -1845,40 +1718,32 @@ void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, floa
 	newRect.h += ( b - t );
 
 	// Restrict sizing below 1 width
-	if( newRect.w <= 1 )
-	{
+	if( newRect.w <= 1 ) {
 		newRect.x	 = newRect.x - ( l ? ( 1 - newRect.w ) : 0 );
 		mDragPoint.x = newRect.x;
 		newRect.w	 = 1;
 		mDragX		 = false;
-	}
-	else
-	{
+	} else {
 		mDragX = true;
 	}
 
 	// Restrict sizing below 1 height
-	if( newRect.h <= 1 )
-	{
+	if( newRect.h <= 1 ) {
 		newRect.y	 = newRect.y - ( t ? ( 1 - newRect.h ) : 0 );
 		mDragPoint.y = newRect.y;
 		newRect.h	 = 1;
 		mDragY		 = false;
-	}
-	else
-	{
+	} else {
 		mDragY = true;
 	}
 
-	if( snap )
-	{
+	if( snap ) {
 		gApp.GetOptions().SnapRectToGrid( newRect, l != 0.0f, t != 0.0f, r != 0.0f, b != 0.0f );
 	}
 
-	rvGEModifierGroup*	group = new rvGEModifierGroup;
-	for( int i = 0; i < mSelections.Num(); i ++ )
-	{
-		sizeRect  = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect();
+	rvGEModifierGroup* group = new rvGEModifierGroup;
+	for( int i = 0; i < mSelections.Num(); i++ ) {
+		sizeRect = rvGEWindowWrapper::GetWrapper( mSelections[i] )->GetScreenRect();
 
 		l = ( newRect.x + ( ( sizeRect.x - scaleRect.x ) / scaleRect.w ) * newRect.w ) - sizeRect.x;
 		t = ( newRect.y + ( ( sizeRect.y - scaleRect.y ) / scaleRect.h ) * newRect.h ) - sizeRect.y;
@@ -1889,17 +1754,15 @@ void rvGEWorkspace::AddModifierSize( const char* modName, float l, float t, floa
 		// time as a child you will get double movement because the child is relative to the parent.  Therefore
 		// we need to subtract out the closest parents sizing.
 		idWindow* parent = mSelections[i];
-		while( NULL != ( parent = parent->GetParent() ) )
-		{
-			rvGEWindowWrapper*	pwrapper = rvGEWindowWrapper::GetWrapper( parent );
-			float				offset;
+		while( NULL != ( parent = parent->GetParent() ) ) {
+			rvGEWindowWrapper* pwrapper = rvGEWindowWrapper::GetWrapper( parent );
+			float			   offset;
 
-			if( !pwrapper->IsSelected() )
-			{
+			if( !pwrapper->IsSelected() ) {
 				continue;
 			}
 
-			sizeRect  = pwrapper->GetScreenRect();
+			sizeRect = pwrapper->GetScreenRect();
 
 			// Subtract out the left and right modifications
 			offset = ( ( newRect.x + ( ( sizeRect.x - scaleRect.x ) / scaleRect.w ) * newRect.w ) - sizeRect.x );
@@ -1931,26 +1794,22 @@ Makes the selected windows a child of the first selected window
 */
 void rvGEWorkspace::MakeSelectedAChild()
 {
-	rvGEModifierGroup*	group;
-	int					i;
+	rvGEModifierGroup* group;
+	int				   i;
 
-	if( !rvGEWindowWrapper::GetWrapper( mSelections[0] )->CanHaveChildren() )
-	{
+	if( !rvGEWindowWrapper::GetWrapper( mSelections[0] )->CanHaveChildren() ) {
 		gApp.MessageBox( "Cannot add children to an htmlDef item", MB_OK | MB_ICONERROR );
 		return;
 	}
 
 	group = new rvGEModifierGroup;
 
-	for( i = 1; i < mSelections.Num(); i ++ )
-	{
-		if( mSelections[i]->GetParent() == mSelections[0] )
-		{
+	for( i = 1; i < mSelections.Num(); i++ ) {
+		if( mSelections[i]->GetParent() == mSelections[0] ) {
 			continue;
 		}
 
-		if( !mSelections[i]->GetParent() )
-		{
+		if( !mSelections[i]->GetParent() ) {
 			continue;
 		}
 
@@ -1970,22 +1829,20 @@ void rvGEWorkspace::Copy()
 	int i;
 
 	// Clear the current clipboard
-	for( i = 0; i < mClipboard.Num(); i ++ )
-	{
+	for( i = 0; i < mClipboard.Num(); i++ ) {
 		delete mClipboard[i];
 	}
 
 	mClipboard.Clear();
 
-	for( i = 0; i < mSelections.Num(); i ++ )
-	{
+	for( i = 0; i < mSelections.Num(); i++ ) {
 		rvGEWindowWrapper* wrapper = rvGEWindowWrapper::GetWrapper( mSelections[i] );
 		assert( wrapper );
 
 		rvGEClipboardItem* item = new rvGEClipboardItem;
-		item->mStateDict  = wrapper->GetStateDict();
-		item->mScriptDict = wrapper->GetScriptDict();
-		item->mVarDict    = wrapper->GetVariableDict();
+		item->mStateDict		= wrapper->GetStateDict();
+		item->mScriptDict		= wrapper->GetScriptDict();
+		item->mVarDict			= wrapper->GetVariableDict();
 
 		item->mStateDict.Set( "windowType", rvGEWindowWrapper::WindowTypeToString( wrapper->GetWindowType() ) );
 
@@ -1995,16 +1852,15 @@ void rvGEWorkspace::Copy()
 
 void rvGEWorkspace::Paste()
 {
-	int i;
+	int				   i;
 
 	rvGEModifierGroup* group = new rvGEModifierGroup;
 
 	mSelections.Clear();
 
-	for( i = 0; i < mClipboard.Num(); i ++ )
-	{
-		idDict							state;
-		rvGEWindowWrapper::EWindowType	type;
+	for( i = 0; i < mClipboard.Num(); i++ ) {
+		idDict						   state;
+		rvGEWindowWrapper::EWindowType type;
 
 		state.Copy( mClipboard[i]->mStateDict );
 		type = rvGEWindowWrapper::StringToWindowType( state.GetString( "windowType", "windowDef" ) );
@@ -2014,7 +1870,7 @@ void rvGEWorkspace::Paste()
 		group->Append( new rvGEInsertModifier( "Paste", window, mInterface->GetDesktop(), NULL ) );
 		mSelections.Add( window );
 
-		rvGEWindowWrapper::GetWrapper( window )->GetScriptDict() = mClipboard[i]->mScriptDict;
+		rvGEWindowWrapper::GetWrapper( window )->GetScriptDict()   = mClipboard[i]->mScriptDict;
 		rvGEWindowWrapper::GetWrapper( window )->GetVariableDict() = mClipboard[i]->mVarDict;
 	}
 
@@ -2060,11 +1916,8 @@ will attempt to check out the file
 */
 void rvGEWorkspace::SetModified( bool mod )
 {
-	if( mModified != mod )
-	{
-
+	if( mModified != mod ) {
 		mModified = mod;
 		UpdateTitle();
-
 	}
 }

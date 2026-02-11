@@ -27,8 +27,7 @@
 
 /* this would all be simpler/shorter with templates, but.... */
 /* Floor backend generic *****************************************/
-typedef struct
-{
+typedef struct {
 	void ( *pack )( vorbis_info_floor*, oggpack_buffer* );
 	vorbis_info_floor*     ( *unpack )( vorbis_info*, oggpack_buffer* );
 	vorbis_look_floor*     ( *look )( vorbis_dsp_state*, vorbis_info_floor* );
@@ -39,8 +38,7 @@ typedef struct
 					   void* buffer, float* );
 } vorbis_func_floor;
 
-typedef struct
-{
+typedef struct {
 	int   order;
 	long  rate;
 	long  barkmap;
@@ -60,8 +58,7 @@ typedef struct
 #define VIF_POSIT 63
 #define VIF_CLASS 16
 #define VIF_PARTS 31
-typedef struct
-{
+typedef struct {
 	int   partitions;                /* 0 to 31 */
 	int   partitionclass[VIF_PARTS]; /* 0 to 15 */
 
@@ -88,8 +85,7 @@ typedef struct
 } vorbis_info_floor1;
 
 /* Residue backend generic *****************************************/
-typedef struct
-{
+typedef struct {
 	void ( *pack )( vorbis_info_residue*, oggpack_buffer* );
 	vorbis_info_residue* ( *unpack )( vorbis_info*, oggpack_buffer* );
 	vorbis_look_residue* ( *look )( vorbis_dsp_state*,
@@ -104,8 +100,7 @@ typedef struct
 					  float**, int*, int );
 } vorbis_func_residue;
 
-typedef struct vorbis_info_residue0
-{
+typedef struct vorbis_info_residue0 {
 	/* block-partitioned VQ coded straight residue */
 	long  begin;
 	long  end;
@@ -123,8 +118,7 @@ typedef struct vorbis_info_residue0
 } vorbis_info_residue0;
 
 /* Mapping backend generic *****************************************/
-typedef struct
-{
+typedef struct {
 	void ( *pack )( vorbis_info*, vorbis_info_mapping*,
 					oggpack_buffer* );
 	vorbis_info_mapping* ( *unpack )( vorbis_info*, oggpack_buffer* );
@@ -133,8 +127,7 @@ typedef struct
 	int ( *inverse )( struct vorbis_block* vb, vorbis_info_mapping* );
 } vorbis_func_mapping;
 
-typedef struct vorbis_info_mapping0
-{
+typedef struct vorbis_info_mapping0 {
 	int   submaps;  /* <= 16 */
 	int   chmuxlist[256];   /* up to 256 channels in a Vorbis stream */
 

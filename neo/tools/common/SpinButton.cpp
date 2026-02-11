@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -47,24 +48,22 @@ void SpinButton_HandleNotify( NMHDR* hdr )
 	NM_UPDOWN* udhdr = ( NM_UPDOWN* )hdr;
 
 	// Change with 0.1 on each click
-	char strValue[64];
-	float value;
+	char	   strValue[64];
+	float	   value;
 	GetWindowText( ( HWND )SendMessage( hdr->hwndFrom, UDM_GETBUDDY, 0, 0 ), strValue, 63 );
 
 	float inc = ( float )GetWindowLong( hdr->hwndFrom, GWL_USERDATA );
-	if( inc == 0 )
-	{
+	if( inc == 0 ) {
 		inc = 100.0f;
 		SetWindowLong( hdr->hwndFrom, GWL_USERDATA, 100 );
 	}
 	inc /= 100.0f;
 
-	if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
-	{
+	if( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) {
 		inc *= 10.0f;
 	}
 
-	value  = atof( strValue );
+	value = atof( strValue );
 	value += ( udhdr->iDelta ) * ( inc );
 
 	// Avoid round-off errors
@@ -73,16 +72,13 @@ void SpinButton_HandleNotify( NMHDR* hdr )
 	LONG minRange;
 	LONG maxRange;
 	SendMessage( hdr->hwndFrom, UDM_GETRANGE32, ( LONG )&minRange, ( LONG )&maxRange );
-	if( minRange !=  0 || maxRange != 0 )
-	{
+	if( minRange != 0 || maxRange != 0 ) {
 		float minRangef = ( float )( long )minRange / 100.0f;
 		float maxRangef = ( float )maxRange / 100.0f;
-		if( value > maxRangef )
-		{
+		if( value > maxRangef ) {
 			value = maxRangef;
 		}
-		if( value < minRangef )
-		{
+		if( value < minRangef ) {
 			value = minRangef;
 		}
 	}

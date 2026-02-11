@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,13 +38,7 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-typedef enum
-{
-	DS_FINISHED,
-	DS_RENDER,
-	DS_SOUND,
-	DS_VERSION
-} demoSystem_t;
+typedef enum { DS_FINISHED, DS_RENDER, DS_SOUND, DS_VERSION } demoSystem_t;
 
 class idDemoFile : public idFile
 {
@@ -51,46 +46,40 @@ public:
 	idDemoFile();
 	~idDemoFile();
 
-	const char* 	GetName()
-	{
-		return ( f ? f->GetName() : "" );
-	}
-	const char* 	GetFullPath()
-	{
-		return ( f ? f->GetFullPath() : "" );
-	}
+	const char* GetName() { return ( f ? f->GetName() : "" ); }
+	const char* GetFullPath() { return ( f ? f->GetFullPath() : "" ); }
 
-	void			SetLog( bool b, const char* p );
-	void			Log( const char* p );
-	bool			OpenForReading( const char* fileName );
-	bool			OpenForWriting( const char* fileName );
-	void			Close();
+	void		SetLog( bool b, const char* p );
+	void		Log( const char* p );
+	bool		OpenForReading( const char* fileName );
+	bool		OpenForWriting( const char* fileName );
+	void		Close();
 
-	const char* 	ReadHashString();
-	void			WriteHashString( const char* str );
+	const char* ReadHashString();
+	void		WriteHashString( const char* str );
 
-	void			ReadDict( idDict& dict );
-	void			WriteDict( const idDict& dict );
+	void		ReadDict( idDict& dict );
+	void		WriteDict( const idDict& dict );
 
-	int				Read( void* buffer, int len );
-	int				Write( const void* buffer, int len );
+	int			Read( void* buffer, int len );
+	int			Write( const void* buffer, int len );
 
 private:
 	static idCompressor* AllocCompressor( int type );
 
-	bool			writing;
-	byte* 			fileImage;
-	idFile* 		f;
-	idCompressor* 	compressor;
+	bool				 writing;
+	byte*				 fileImage;
+	idFile*				 f;
+	idCompressor*		 compressor;
 
-	idList<idStr*>	demoStrings;
-	idFile* 		fLog;
-	bool			log;
-	idStr			logStr;
+	idList<idStr*>		 demoStrings;
+	idFile*				 fLog;
+	bool				 log;
+	idStr				 logStr;
 
-	static idCVar	com_logDemos;
-	static idCVar	com_compressDemos;
-	static idCVar	com_preloadDemos;
+	static idCVar		 com_logDemos;
+	static idCVar		 com_compressDemos;
+	static idCVar		 com_preloadDemos;
 };
 
 #endif /* !__DEMOFILE_H__ */

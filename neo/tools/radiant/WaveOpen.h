@@ -19,18 +19,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
-#if !defined(AFX_WAVEOPEN_H__0FB9DA11_EB02_11D2_A50A_0020AFEB881A__INCLUDED_)
-#define AFX_WAVEOPEN_H__0FB9DA11_EB02_11D2_A50A_0020AFEB881A__INCLUDED_
+#if !defined( AFX_WAVEOPEN_H__0FB9DA11_EB02_11D2_A50A_0020AFEB881A__INCLUDED_ )
+	#define AFX_WAVEOPEN_H__0FB9DA11_EB02_11D2_A50A_0020AFEB881A__INCLUDED_
 
-#if _MSC_VER > 1000
-	#pragma once
-#endif // _MSC_VER > 1000
+	#if _MSC_VER > 1000
+		#pragma once
+	#endif // _MSC_VER > 1000
 // WaveOpen.h : header file
 //
 
@@ -43,13 +44,14 @@ class CWaveOpen : public CFileDialog
 
 public:
 	CWaveOpen( BOOL bOpenFileDialog, // TRUE for FileOpen, FALSE for FileSaveAs
-			   LPCTSTR lpszDefExt = NULL,
-			   LPCTSTR lpszFileName = NULL,
-			   DWORD dwFlags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-			   LPCTSTR lpszFilter = NULL,
-			   CWnd* pParentWnd = NULL );
+		LPCTSTR		lpszDefExt	 = NULL,
+		LPCTSTR		lpszFileName = NULL,
+		DWORD		dwFlags		 = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
+		LPCTSTR		lpszFilter	 = NULL,
+		CWnd*		pParentWnd	 = NULL );
 
 	virtual void OnFileNameChange();
+
 protected:
 	//{{AFX_MSG(CWaveOpen)
 	afx_msg void OnBtnPlay();

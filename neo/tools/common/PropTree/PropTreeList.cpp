@@ -16,7 +16,7 @@
 //	If you use this code, drop me an email.  I'd like to know if you find the code
 //	useful.
 
-//#include "stdafx.h"
+// #include "stdafx.h"
 #include "../../../idlib/precompiled.h"
 #pragma hdrstop
 
@@ -27,12 +27,12 @@
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
-#define PROPTREEITEM_EXPANDCOLUMN		16			// width of the expand column
-#define PROPTREEITEM_COLRNG				5			// width of splitter
-#define PROPTREEITEM_DEFHEIGHT			21			// default heigt of an item
+#define PROPTREEITEM_EXPANDCOLUMN 16 // width of the expand column
+#define PROPTREEITEM_COLRNG		  5	 // width of splitter
+#define PROPTREEITEM_DEFHEIGHT	  21 // default heigt of an item
 
 extern HINSTANCE ghInst;
 
@@ -51,23 +51,21 @@ CPropTreeList::~CPropTreeList()
 {
 }
 
-
 BEGIN_MESSAGE_MAP( CPropTreeList, CWnd )
-	//{{AFX_MSG_MAP(CPropTreeList)
-	ON_WM_SIZE()
-	ON_WM_PAINT()
-	ON_WM_SETCURSOR()
-	ON_WM_LBUTTONDOWN()
-	ON_WM_LBUTTONUP()
-	ON_WM_LBUTTONDBLCLK()
-	ON_WM_MOUSEMOVE()
-	ON_WM_MOUSEWHEEL()
-	ON_WM_KEYDOWN()
-	ON_WM_GETDLGCODE()
-	ON_WM_VSCROLL()
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropTreeList)
+ON_WM_SIZE()
+ON_WM_PAINT()
+ON_WM_SETCURSOR()
+ON_WM_LBUTTONDOWN()
+ON_WM_LBUTTONUP()
+ON_WM_LBUTTONDBLCLK()
+ON_WM_MOUSEMOVE()
+ON_WM_MOUSEWHEEL()
+ON_WM_KEYDOWN()
+ON_WM_GETDLGCODE()
+ON_WM_VSCROLL()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CPropTreeList message handlers
@@ -77,16 +75,14 @@ void CPropTreeList::SetPropOwner( CPropTree* pProp )
 	m_pProp = pProp;
 }
 
-
 BOOL CPropTreeList::Create( DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID )
 {
-	CWnd* pWnd = this;
+	CWnd*	pWnd = this;
 
 	LPCTSTR pszCreateClass = AfxRegisterWndClass( CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS, ::LoadCursor( NULL, IDC_ARROW ) );
 
 	return pWnd->Create( pszCreateClass, _T( "" ), dwStyle, rect, pParentWnd, nID );
 }
-
 
 void CPropTreeList::OnSize( UINT nType, int cx, int cy )
 {
@@ -94,8 +90,7 @@ void CPropTreeList::OnSize( UINT nType, int cx, int cy )
 
 	RecreateBackBuffer( cx, cy );
 
-	if( m_pProp )
-	{
+	if( m_pProp ) {
 		UpdateResize();
 		Invalidate();
 		UpdateWindow();
@@ -105,29 +100,26 @@ void CPropTreeList::OnSize( UINT nType, int cx, int cy )
 	}
 }
 
-
 void CPropTreeList::RecreateBackBuffer( int cx, int cy )
 {
-	if( m_BackBufferSize.cx < cx || m_BackBufferSize.cy < cy )
-	{
+	if( m_BackBufferSize.cx < cx || m_BackBufferSize.cy < cy ) {
 		m_BackBufferSize = CSize( cx, cy );
 
 		CWindowDC dc( NULL );
 
-		int nPlanes = dc.GetDeviceCaps( PLANES );
-		int nBitCount = dc.GetDeviceCaps( BITSPIXEL );
+		int		  nPlanes	= dc.GetDeviceCaps( PLANES );
+		int		  nBitCount = dc.GetDeviceCaps( BITSPIXEL );
 
 		m_BackBuffer.DeleteObject();
 		m_BackBuffer.CreateBitmap( cx, cy, nPlanes, nBitCount, NULL );
 	}
 }
 
-
 void CPropTreeList::UpdateResize()
 {
 	SCROLLINFO si;
-	LONG nHeight;
-	CRect rc;
+	LONG	   nHeight;
+	CRect	   rc;
 
 	ASSERT( m_pProp != NULL );
 
@@ -136,13 +128,12 @@ void CPropTreeList::UpdateResize()
 
 	ZeroMemory( &si, sizeof( SCROLLINFO ) );
 	si.cbSize = sizeof( SCROLLINFO );
-	si.fMask = SIF_RANGE | SIF_PAGE;
-	si.nMin = 0;
-	si.nMax = m_pProp->GetRootItem()->GetTotalHeight();
-	si.nPage = nHeight;
+	si.fMask  = SIF_RANGE | SIF_PAGE;
+	si.nMin	  = 0;
+	si.nMax	  = m_pProp->GetRootItem()->GetTotalHeight();
+	si.nPage  = nHeight;
 
-	if( ( int )si.nPage > si.nMax )
-	{
+	if( ( int )si.nPage > si.nMax ) {
 		m_pProp->SetOriginOffset( 0 );
 	}
 
@@ -152,11 +143,10 @@ void CPropTreeList::UpdateResize()
 	m_pProp->SetColumn( m_pProp->GetColumn() );
 }
 
-
 void CPropTreeList::OnPaint()
 {
 	CPaintDC dc( this );
-	CDC memdc;
+	CDC		 memdc;
 	CBitmap* pOldBitmap;
 
 	ASSERT( m_pProp != NULL );
@@ -186,7 +176,7 @@ void CPropTreeList::OnPaint()
 	memdc.DrawEdge( &rc, BDR_SUNKENOUTER, BF_RECT );
 
 	CPropTreeItem* pItem;
-	LONG nTotal = 0;
+	LONG		   nTotal = 0;
 
 	ASSERT( m_pProp->GetRootItem() != NULL );
 
@@ -197,8 +187,7 @@ void CPropTreeList::OnPaint()
 	SelectClipRgn( memdc.m_hDC, hRgn );
 
 	// draw all items
-	for( pItem = m_pProp->GetRootItem()->GetChild(); pItem; pItem = pItem->GetSibling() )
-	{
+	for( pItem = m_pProp->GetRootItem()->GetChild(); pItem; pItem = pItem->GetSibling() ) {
 		LONG nHeight = pItem->DrawItem( &memdc, rc, 0, nTotal );
 		nTotal += nHeight;
 	}
@@ -213,11 +202,9 @@ void CPropTreeList::OnPaint()
 	memdc.DeleteDC();
 }
 
-
 BOOL CPropTreeList::OnSetCursor( CWnd* pWnd, UINT nHitTest, UINT message )
 {
-	if( nHitTest == HTCLIENT )
-	{
+	if( nHitTest == HTCLIENT ) {
 		CPoint pt;
 
 		ASSERT( m_pProp != NULL );
@@ -225,8 +212,7 @@ BOOL CPropTreeList::OnSetCursor( CWnd* pWnd, UINT nHitTest, UINT message )
 		GetCursorPos( &pt );
 		ScreenToClient( &pt );
 
-		switch( m_pProp->HitTest( pt ) )
-		{
+		switch( m_pProp->HitTest( pt ) ) {
 			case HTCOLUMN:
 				SetCursor( LoadCursor( ghInst, MAKEINTRESOURCE( IDC_SPLITTER ) ) );
 				return TRUE;
@@ -242,36 +228,31 @@ BOOL CPropTreeList::OnSetCursor( CWnd* pWnd, UINT nHitTest, UINT message )
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-
 void CPropTreeList::OnLButtonDown( UINT, CPoint point )
 {
 	ASSERT( m_pProp != NULL );
 
-	if( m_pProp->IsDisableInput() )
-	{
+	if( m_pProp->IsDisableInput() ) {
 		return;
 	}
 
 	m_pProp->SendNotify( NM_CLICK );
 
-	if( !m_pProp->IsWindowEnabled() )
-	{
+	if( !m_pProp->IsWindowEnabled() ) {
 		return;
 	}
 
 	SetFocus();
 
-	LONG nHit = m_pProp->HitTest( point );
+	LONG		   nHit = m_pProp->HitTest( point );
 
 	CPropTreeItem* pItem;
-	CRect rc;
-	CDC* pDC;
+	CRect		   rc;
+	CDC*		   pDC;
 
-	switch( nHit )
-	{
+	switch( nHit ) {
 		case HTCOLUMN:
-			if( m_pProp->SendNotify( PTN_COLUMNCLICK ) )
-			{
+			if( m_pProp->SendNotify( PTN_COLUMNCLICK ) ) {
 				break;
 			}
 
@@ -288,26 +269,22 @@ void CPropTreeList::OnLButtonDown( UINT, CPoint point )
 			break;
 
 		case HTCHECKBOX:
-			if( ( pItem = m_pProp->FindItem( point ) ) != NULL )
-			{
+			if( ( pItem = m_pProp->FindItem( point ) ) != NULL ) {
 				pItem->Check( !pItem->IsChecked() );
 				m_pProp->SendNotify( PTN_CHECKCLICK, pItem );
 				Invalidate();
 			}
 			break;
 		case HTBUTTON:
-			if( ( pItem = m_pProp->FindItem( point ) ) != NULL )
-			{
+			if( ( pItem = m_pProp->FindItem( point ) ) != NULL ) {
 				pItem->Check();
 				m_pProp->SendNotify( PTN_ITEMBUTTONCLICK, pItem );
 				Invalidate();
 			}
 			break;
 		case HTEXPAND:
-			if( ( pItem = m_pProp->FindItem( point ) ) != NULL )
-			{
-				if( pItem->GetChild() && !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) )
-				{
+			if( ( pItem = m_pProp->FindItem( point ) ) != NULL ) {
+				if( pItem->GetChild() && !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) ) {
 					pItem->Expand( !pItem->IsExpanded() );
 
 					UpdateResize();
@@ -319,8 +296,7 @@ void CPropTreeList::OnLButtonDown( UINT, CPoint point )
 			break;
 
 		default:
-			if( ( pItem = m_pProp->FindItem( point ) ) != NULL )
-			{
+			if( ( pItem = m_pProp->FindItem( point ) ) != NULL ) {
 				CPropTreeItem* pOldFocus = m_pProp->GetFocusedItem();
 
 				m_pProp->SelectItems( NULL, FALSE );
@@ -330,21 +306,16 @@ void CPropTreeList::OnLButtonDown( UINT, CPoint point )
 
 				Invalidate();
 
-				if( pItem != pOldFocus )
-				{
+				if( pItem != pOldFocus ) {
 					m_pProp->SendNotify( PTN_SELCHANGE, pItem );
 				}
 
-				if( nHit == HTATTRIBUTE && !pItem->IsRootLevel() )
-				{
-					if( !m_pProp->SendNotify( PTN_PROPCLICK, pItem ) && !pItem->IsReadOnly() )
-					{
+				if( nHit == HTATTRIBUTE && !pItem->IsRootLevel() ) {
+					if( !m_pProp->SendNotify( PTN_PROPCLICK, pItem ) && !pItem->IsReadOnly() ) {
 						pItem->Activate( CPropTreeItem::ACTIVATE_TYPE_MOUSE, point );
 					}
 				}
-			}
-			else
-			{
+			} else {
 				m_pProp->SelectItems( NULL, FALSE );
 				m_pProp->SetFocusedItem( NULL );
 				m_pProp->SendNotify( PTN_SELCHANGE );
@@ -354,12 +325,10 @@ void CPropTreeList::OnLButtonDown( UINT, CPoint point )
 	}
 }
 
-
 void CPropTreeList::OnLButtonUp( UINT, CPoint point )
 {
-	if( m_bColDrag )
-	{
-		CDC* pDC = GetDC();
+	if( m_bColDrag ) {
+		CDC*  pDC = GetDC();
 		CRect rc;
 
 		GetClientRect( rc );
@@ -372,17 +341,13 @@ void CPropTreeList::OnLButtonUp( UINT, CPoint point )
 		m_pProp->SetColumn( point.x );
 		m_pProp->UpdateMoveAllItems();
 		Invalidate();
-	}
-	else
-	{
-		LONG nHit = m_pProp->HitTest( point );
+	} else {
+		LONG		   nHit = m_pProp->HitTest( point );
 		CPropTreeItem* pItem;
 
-		switch( nHit )
-		{
+		switch( nHit ) {
 			case HTBUTTON:
-				if( ( pItem = m_pProp->FindItem( point ) ) != NULL )
-				{
+				if( ( pItem = m_pProp->FindItem( point ) ) != NULL ) {
 					pItem->Check( FALSE );
 					Invalidate();
 				}
@@ -393,7 +358,6 @@ void CPropTreeList::OnLButtonUp( UINT, CPoint point )
 	}
 }
 
-
 void CPropTreeList::OnLButtonDblClk( UINT, CPoint point )
 {
 	ASSERT( m_pProp != NULL );
@@ -403,10 +367,8 @@ void CPropTreeList::OnLButtonDblClk( UINT, CPoint point )
 	CPropTreeItem* pItem;
 	CPropTreeItem* pOldFocus;
 
-	if( ( pItem = m_pProp->FindItem( point ) ) != NULL && pItem->GetChild() )
-	{
-		switch( m_pProp->HitTest( point ) )
-		{
+	if( ( pItem = m_pProp->FindItem( point ) ) != NULL && pItem->GetChild() ) {
+		switch( m_pProp->HitTest( point ) ) {
 			case HTCOLUMN:
 				break;
 
@@ -417,12 +379,11 @@ void CPropTreeList::OnLButtonDblClk( UINT, CPoint point )
 				break;
 
 			case HTATTRIBUTE:
-				if( !pItem->IsRootLevel() )
-				{
+				if( !pItem->IsRootLevel() ) {
 					break;
 				}
 
-			// pass thru to default
+				// pass thru to default
 
 			default:
 				pOldFocus = m_pProp->GetFocusedItem();
@@ -430,16 +391,14 @@ void CPropTreeList::OnLButtonDblClk( UINT, CPoint point )
 				m_pProp->SetFocusedItem( pItem );
 				pItem->Select();
 
-				if( pItem != pOldFocus )
-				{
+				if( pItem != pOldFocus ) {
 					m_pProp->SendNotify( PTN_SELCHANGE, pItem );
 				}
 
-			// pass thru to HTEXPAND
+				// pass thru to HTEXPAND
 
 			case HTEXPAND:
-				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) )
-				{
+				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) ) {
 					pItem->Expand( !pItem->IsExpanded() );
 
 					UpdateResize();
@@ -452,12 +411,10 @@ void CPropTreeList::OnLButtonDblClk( UINT, CPoint point )
 	}
 }
 
-
 void CPropTreeList::OnMouseMove( UINT, CPoint point )
 {
-	if( m_bColDrag )
-	{
-		CDC* pDC = GetDC();
+	if( m_bColDrag ) {
+		CDC*  pDC = GetDC();
 		CRect rc;
 
 		GetClientRect( rc );
@@ -468,22 +425,20 @@ void CPropTreeList::OnMouseMove( UINT, CPoint point )
 	}
 }
 
-
 BOOL CPropTreeList::OnMouseWheel( UINT, short zDelta, CPoint )
 {
 	SCROLLINFO si;
 
 	ZeroMemory( &si, sizeof( SCROLLINFO ) );
 	si.cbSize = sizeof( SCROLLINFO );
-	si.fMask = SIF_RANGE;
+	si.fMask  = SIF_RANGE;
 
 	GetScrollInfo( SB_VERT, &si );
 
 	CRect rc;
 	GetClientRect( rc );
 
-	if( si.nMax - si.nMin < rc.Height() )
-	{
+	if( si.nMax - si.nMin < rc.Height() ) {
 		return TRUE;
 	}
 
@@ -493,49 +448,39 @@ BOOL CPropTreeList::OnMouseWheel( UINT, short zDelta, CPoint )
 	return TRUE;
 }
 
-
 void CPropTreeList::OnKeyDown( UINT nChar, UINT, UINT )
 {
-
 	CPropTreeItem* pItem;
 
 	ASSERT( m_pProp != NULL );
 
-	if( m_pProp->IsDisableInput() || !m_pProp->IsWindowEnabled() )
-	{
+	if( m_pProp->IsDisableInput() || !m_pProp->IsWindowEnabled() ) {
 		return;
 	}
 
-	switch( nChar )
-	{
+	switch( nChar ) {
 		case VK_RETURN:
-			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL && !pItem->IsRootLevel() && !pItem->IsReadOnly() )
-			{
+			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL && !pItem->IsRootLevel() && !pItem->IsReadOnly() ) {
 				pItem->Activate( CPropTreeItem::ACTIVATE_TYPE_KEYBOARD, CPoint( 0, 0 ) );
 			}
 			break;
 
 		case VK_HOME:
-			if( m_pProp->FocusFirst() )
-			{
+			if( m_pProp->FocusFirst() ) {
 				Invalidate();
 			}
 			break;
 
 		case VK_END:
-			if( m_pProp->FocusLast() )
-			{
+			if( m_pProp->FocusLast() ) {
 				Invalidate();
 			}
 			break;
 
 		case VK_LEFT:
-			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL )
-			{
-				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) )
-				{
-					if( pItem->GetChild() && pItem->IsExpanded() )
-					{
+			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL ) {
+				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) ) {
+					if( pItem->GetChild() && pItem->IsExpanded() ) {
 						pItem->Expand( FALSE );
 						UpdateResize();
 						Invalidate();
@@ -544,26 +489,20 @@ void CPropTreeList::OnKeyDown( UINT nChar, UINT, UINT )
 						break;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				break;
 			}
 		// pass thru to next case VK_UP
 		case VK_UP:
-			if( m_pProp->FocusPrev() )
-			{
+			if( m_pProp->FocusPrev() ) {
 				Invalidate();
 			}
 			break;
 
 		case VK_RIGHT:
-			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL )
-			{
-				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) )
-				{
-					if( pItem->GetChild() && !pItem->IsExpanded() )
-					{
+			if( ( pItem = m_pProp->GetFocusedItem() ) != NULL ) {
+				if( !m_pProp->SendNotify( PTN_ITEMEXPANDING, pItem ) ) {
+					if( pItem->GetChild() && !pItem->IsExpanded() ) {
 						pItem->Expand();
 						UpdateResize();
 						Invalidate();
@@ -572,33 +511,28 @@ void CPropTreeList::OnKeyDown( UINT nChar, UINT, UINT )
 						break;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				break;
 			}
 		// pass thru to next case VK_DOWN
 		case VK_DOWN:
-			if( m_pProp->FocusNext() )
-			{
+			if( m_pProp->FocusNext() ) {
 				Invalidate();
 			}
 			break;
 	}
 }
 
-
 UINT CPropTreeList::OnGetDlgCode()
 {
 	return DLGC_WANTARROWS | DLGC_WANTCHARS | DLGC_WANTALLKEYS;
 }
 
-
 void CPropTreeList::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* )
 {
 	SCROLLINFO si;
-	CRect rc;
-	LONG nHeight;
+	CRect	   rc;
+	LONG	   nHeight;
 
 	SetFocus();
 
@@ -607,14 +541,13 @@ void CPropTreeList::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* )
 
 	ZeroMemory( &si, sizeof( SCROLLINFO ) );
 	si.cbSize = sizeof( SCROLLINFO );
-	si.fMask = SIF_RANGE;
+	si.fMask  = SIF_RANGE;
 
 	GetScrollInfo( SB_VERT, &si );
 
 	LONG ny = m_pProp->GetOrigin().y;
 
-	switch( nSBCode )
-	{
+	switch( nSBCode ) {
 		case SB_LINEDOWN:
 			ny += PROPTREEITEM_DEFHEIGHT;
 			break;
@@ -640,12 +573,11 @@ void CPropTreeList::OnVScroll( UINT nSBCode, UINT nPos, CScrollBar* )
 
 	m_pProp->SetOriginOffset( ny );
 	si.fMask = SIF_POS;
-	si.nPos = ny;
+	si.nPos	 = ny;
 
 	SetScrollInfo( SB_VERT, &si, TRUE );
 	Invalidate();
 }
-
 
 void CPropTreeList::CheckVisibleFocus()
 {
@@ -653,15 +585,12 @@ void CPropTreeList::CheckVisibleFocus()
 
 	CPropTreeItem* pItem;
 
-	if( ( pItem = m_pProp->GetFocusedItem() ) == NULL )
-	{
+	if( ( pItem = m_pProp->GetFocusedItem() ) == NULL ) {
 		return;
 	}
 
-	if( !m_pProp->IsItemVisible( pItem ) )
-	{
-		if( m_pProp->IsSingleSelection() )
-		{
+	if( !m_pProp->IsItemVisible( pItem ) ) {
+		if( m_pProp->IsSingleSelection() ) {
 			pItem->Select( FALSE );
 		}
 

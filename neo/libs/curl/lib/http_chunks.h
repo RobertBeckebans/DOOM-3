@@ -29,8 +29,7 @@
  */
 #define MAXNUM_SIZE 16
 
-typedef enum
-{
+typedef enum {
 	CHUNK_FIRST, /* never use */
 
 	/* In this we await and buffer all hexadecimal digits until we get one
@@ -66,8 +65,7 @@ typedef enum
 	CHUNK_LAST /* never use */
 } ChunkyState;
 
-typedef enum
-{
+typedef enum {
 	CHUNKE_STOP = -1,
 	CHUNKE_OK = 0,
 	CHUNKE_TOO_LONG_HEX = 1,
@@ -79,8 +77,7 @@ typedef enum
 	CHUNKE_LAST
 } CHUNKcode;
 
-struct Curl_chunker
-{
+struct Curl_chunker {
 	char hexbuffer[ MAXNUM_SIZE + 1];
 	int hexindex;
 	ChunkyState state;

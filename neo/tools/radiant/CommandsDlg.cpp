@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,21 +38,19 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CCommandsDlg dialog
 
-
-CCommandsDlg::CCommandsDlg( CWnd* pParent /*=NULL*/ )
-	: CDialog( CCommandsDlg::IDD, pParent )
+CCommandsDlg::CCommandsDlg( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CCommandsDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CCommandsDlg)
 	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
-
 
 void CCommandsDlg::DoDataExchange( CDataExchange* pDX )
 {
@@ -61,10 +60,9 @@ void CCommandsDlg::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CCommandsDlg, CDialog )
-	//{{AFX_MSG_MAP(CCommandsDlg)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CCommandsDlg)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,38 +72,31 @@ BOOL CCommandsDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	m_lstCommands.SetTabStops( 120 );
-	int nCount = g_nCommandCount;
+	int	  nCount = g_nCommandCount;
 
 	CFile fileout;
 	fileout.Open( "c:/commandlist.txt", CFile::modeCreate | CFile::modeWrite );
-	for( int n = 0; n < nCount; n++ )
-	{
+	for( int n = 0; n < nCount; n++ ) {
 		CString strLine;
-		char c = g_Commands[n].m_nKey;
+		char	c		= g_Commands[n].m_nKey;
 		CString strKeys = CString( c );
-		for( int k = 0; k < g_nKeyCount; k++ )
-		{
-			if( g_Keys[k].m_nVKKey == g_Commands[n].m_nKey )
-			{
+		for( int k = 0; k < g_nKeyCount; k++ ) {
+			if( g_Keys[k].m_nVKKey == g_Commands[n].m_nKey ) {
 				strKeys = g_Keys[k].m_strName;
 				break;
 			}
 		}
 		CString strMod( "" );
-		if( g_Commands[n].m_nModifiers & RAD_SHIFT )
-		{
+		if( g_Commands[n].m_nModifiers & RAD_SHIFT ) {
 			strMod = "Shift";
 		}
-		if( g_Commands[n].m_nModifiers & RAD_ALT )
-		{
+		if( g_Commands[n].m_nModifiers & RAD_ALT ) {
 			strMod += ( strMod.GetLength() > 0 ) ? " + Alt" : "Alt";
 		}
-		if( g_Commands[n].m_nModifiers & RAD_CONTROL )
-		{
+		if( g_Commands[n].m_nModifiers & RAD_CONTROL ) {
 			strMod += ( strMod.GetLength() > 0 ) ? " + Control" : "Control";
 		}
-		if( strMod.GetLength() > 0 )
-		{
+		if( strMod.GetLength() > 0 ) {
 			strMod += " + ";
 		}
 		strLine.Format( "%s \t%s%s", g_Commands[n].m_strCommand, strMod, strKeys );
@@ -119,4 +110,3 @@ BOOL CCommandsDlg::OnInitDialog()
 	fileout.Close();
 	return TRUE;
 }
-

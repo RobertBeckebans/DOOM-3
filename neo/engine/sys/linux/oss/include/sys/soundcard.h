@@ -50,7 +50,7 @@
 #define OPEN_SOUND_SYSTEM
 
 #if defined(__hpux) && !defined(_HPUX_SOURCE)
-	#	error "-D_HPUX_SOURCE must be used when compiling OSS applications"
+	#error "-D_HPUX_SOURCE must be used when compiling OSS applications"
 #endif
 
 #ifdef __hpux
@@ -179,21 +179,18 @@
 #define SNDCTL_SEQ_ACTSENSE_ENABLE	__SIO  ('Q', 24)	/* Enable incoming active sensing messages */
 #define SNDCTL_SEQ_RT_ENABLE		__SIO  ('Q', 25)	/* Enable other incoming realtime messages */
 
-typedef struct synth_control
-{
+typedef struct synth_control {
 	int devno;			/* Synthesizer # */
 	char data[4000];		/* Device spesific command/data record */
 } synth_control;
 
-typedef struct remove_sample
-{
+typedef struct remove_sample {
 	int devno;			/* Synthesizer # */
 	int bankno;			/* MIDI bank # (0=General MIDI) */
 	int instrno;			/* MIDI instrument number */
 } remove_sample;
 
-typedef struct seq_event_rec
-{
+typedef struct seq_event_rec {
 	unsigned char arr[8];
 } seq_event_rec;
 
@@ -246,8 +243,7 @@ typedef struct seq_event_rec
  * sample based patches but is probably too limited.
  */
 
-struct patch_info
-{
+struct patch_info {
 	unsigned short key;		/* Use WAVE_PATCH here */
 #define WAVE_PATCH	_PATCHKEY(0x04)
 #define GUS_PATCH	WAVE_PATCH
@@ -336,8 +332,7 @@ struct patch_info
 	char data[1];			/* The waveform data starts here */
 };
 
-struct sysex_info
-{
+struct sysex_info {
 	short key;			/* Use SYSEX_PATCH or MAUI_PATCH here */
 #define SYSEX_PATCH	_PATCHKEY(0x05)
 #define MAUI_PATCH	_PATCHKEY(0x06)
@@ -511,8 +506,7 @@ struct sysex_info
 
 typedef unsigned char sbi_instr_data[32];
 
-struct sbi_instrument
-{
+struct sbi_instrument {
 	unsigned short key;		/* FM_PATCH or OPL3_PATCH */
 #define FM_PATCH	_PATCHKEY(0x01)
 #define OPL3_PATCH	_PATCHKEY(0x03)
@@ -521,8 +515,7 @@ struct sbi_instrument
 	sbi_instr_data operators;	/*  Register settings for operator cells (.SBI format)  */
 };
 
-struct synth_info
-{
+struct synth_info {
 	/* Read only */
 	char name[30];
 	int device;			/* 0-N. INITIALIZE BEFORE CALLING */
@@ -551,16 +544,14 @@ struct synth_info
 	int dummies[19];		/* Reserve space */
 };
 
-struct sound_timer_info
-{
+struct sound_timer_info {
 	char name[32];
 	int caps;
 };
 
 #define MIDI_CAP_MPU401		1	/* MPU-401 intelligent mode */
 
-struct midi_info
-{
+struct midi_info {
 	char name[30];
 	int device;			/* 0-N. INITIALIZE BEFORE CALLING */
 	unsigned int capabilities;	/* To be defined later */
@@ -571,8 +562,7 @@ struct midi_info
 /***************************************
  * ioctl commands for the /dev/midi##  *
  ***************************************/
-typedef struct
-{
+typedef struct {
 	unsigned char cmd;
 	char nr_args, nr_returns;
 	unsigned char data[30];
@@ -643,8 +633,7 @@ typedef struct
 /*
  * Buffer status queries.
  */
-typedef struct audio_buf_info
-{
+typedef struct audio_buf_info {
 	int fragments;		/* # of available fragments (partially usend ones not counted) */
 	int fragstotal;		/* Total # of fragments allocated */
 	int fragsize;			/* Size of a fragment in bytes */
@@ -717,8 +706,7 @@ typedef struct audio_buf_info
 #	define PCM_ENABLE_INPUT		0x00000001
 #	define PCM_ENABLE_OUTPUT	0x00000002
 
-typedef struct count_info
-{
+typedef struct count_info {
 	unsigned int bytes;		/* Total # of bytes processed */
 	int blocks;			/* # of fragment transitions since last time */
 	int ptr;			/* Current DMA pointer value */
@@ -727,8 +715,7 @@ typedef struct count_info
 #define SNDCTL_DSP_GETIPTR		__SIOR ('P',17, count_info)
 #define SNDCTL_DSP_GETOPTR		__SIOR ('P',18, count_info)
 
-typedef struct buffmem_desc
-{
+typedef struct buffmem_desc {
 	unsigned* buffer;
 	int size;
 } buffmem_desc;
@@ -758,8 +745,7 @@ typedef struct buffmem_desc
 #define SNDCTL_DSP_GETOUTVOL		__SIOR ('P', 24, int)
 #define SNDCTL_DSP_SETOUTVOL		__SIOWR('P', 24, int)
 
-typedef struct audio_errinfo
-{
+typedef struct audio_errinfo {
 	int play_underruns;
 	int rec_overruns;
 	unsigned int play_ptradjust;
@@ -775,8 +761,7 @@ typedef struct audio_errinfo
 
 #define SNDCTL_DSP_GETERROR		__SIOR ('P', 25, audio_errinfo)
 
-typedef struct oss_digital_control
-{
+typedef struct oss_digital_control {
 	unsigned int caps;
 #define DIG_CBITIN_NONE			0x00000000
 #define DIG_CBITIN_LIMITED		0x00000001
@@ -866,8 +851,7 @@ typedef struct oss_digital_control
 #define SNDCTL_DSP_READCTL		__SIOWR('P', 26, oss_digital_control)
 #define SNDCTL_DSP_WRITECTL		__SIOWR('P', 27, oss_digital_control)
 
-typedef struct oss_syncgroup
-{
+typedef struct oss_syncgroup {
 	int id;
 	int mode;
 	int filler[16];
@@ -903,8 +887,7 @@ typedef struct oss_syncgroup
 #define SNDCTL_DSP_LOW_WATER		__SIOW ('P', 34, int)
 
 #ifndef OSS_NO_LONG_LONG
-typedef struct
-{
+typedef struct {
 	long long samples;
 	int fifo_samples;
 	int filler[32]; /* For future use */
@@ -1125,16 +1108,14 @@ typedef struct
 
 #define SOUND_MIXER_WRITE_RECSRC	MIXER_WRITE(SOUND_MIXER_RECSRC)
 
-typedef struct mixer_info
-{
+typedef struct mixer_info {
 	char id[16];
 	char name[32];
 	int modify_counter;
 	int fillers[10];
 } mixer_info;
 
-typedef struct _old_mixer_info
-{
+typedef struct _old_mixer_info {
 	/* Obsolete */
 	char id[16];
 	char name[32];
@@ -1176,8 +1157,7 @@ typedef unsigned char mixer_record[128];
  * are for internal use by the driver software only.
  */
 
-typedef struct mixer_vol_table
-{
+typedef struct mixer_vol_table {
 	int num;			/* Index to volume table */
 	char name[32];
 	int levels[32];
@@ -1218,8 +1198,7 @@ typedef unsigned char oss_reserved_t[512];
  ****************************************************/
 #define SYSINFO_FILL_SIZE 256
 
-typedef struct oss_sysinfo
-{
+typedef struct oss_sysinfo {
 	char product[32];		/* For example OSS/Free, OSS/Linux or OSS/Solaris */
 	char version[32];		/* For example 4.0a */
 	int versionnum;		/* See OSS_GETVERSION */
@@ -1236,8 +1215,7 @@ typedef struct oss_sysinfo
 	int filler[SYSINFO_FILL_SIZE];	/* For future expansion (set to -1) */
 } oss_sysinfo;
 
-typedef struct oss_mixext
-{
+typedef struct oss_mixext {
 	int dev;			/* Mixer device number */
 	int ctrl;			/* Controller number */
 	int type;			/* Entry type */
@@ -1289,14 +1267,12 @@ typedef struct oss_mixext
 	int filler[8];
 } oss_mixext;
 
-typedef struct oss_mixext_root
-{
+typedef struct oss_mixext_root {
 	char id[16];
 	char name[48];
 } oss_mixext_root;
 
-typedef struct oss_mixer_value
-{
+typedef struct oss_mixer_value {
 	int dev;
 	int ctrl;
 	int value;
@@ -1306,8 +1282,7 @@ typedef struct oss_mixer_value
 } oss_mixer_value;
 
 #define OSS_ENUM_MAXVALUE	255
-typedef struct oss_mixer_enuminfo
-{
+typedef struct oss_mixer_enuminfo {
 	int dev;
 	int ctrl;
 	int nvalues;
@@ -1319,8 +1294,7 @@ typedef struct oss_mixer_enuminfo
 #define OPEN_WRITE	PCM_ENABLE_OUTPUT
 #define OPEN_READWRITE	(OPEN_READ|OPEN_WRITE)
 
-typedef struct oss_audioinfo
-{
+typedef struct oss_audioinfo {
 	int dev;			/* Audio device number */
 	char name[64];
 	int busy;			/* 0, OPEN_READ, OPEN_WRITE or OPEN_READWRITE */

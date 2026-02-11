@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,36 +32,35 @@ If you have questions concerning this license or the applicable additional terms
 
 class DialogAFConstraintFixed : public CDialog
 {
-
 	DECLARE_DYNAMIC( DialogAFConstraintFixed )
 
 public:
 	DialogAFConstraintFixed( CWnd* pParent = NULL ); // standard constructor
-	virtual				~DialogAFConstraintFixed();
-	void				LoadFile( idDeclAF* af );
-	void				SaveFile();
-	void				LoadConstraint( idDeclAF_Constraint* c );
-	void				SaveConstraint();
-	void				UpdateFile();
+	virtual ~DialogAFConstraintFixed();
+	void LoadFile( idDeclAF* af );
+	void SaveFile();
+	void LoadConstraint( idDeclAF_Constraint* c );
+	void SaveConstraint();
+	void UpdateFile();
 
 	enum { IDD = IDD_DIALOG_AF_CONSTRAINT_FIXED };
 
 protected:
-	virtual void		DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
-	virtual int			OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
-	afx_msg BOOL		OnToolTipNotify( UINT id, NMHDR* pNMHDR, LRESULT* pResult );
+	virtual void DoDataExchange( CDataExchange* pDX ); // DDX/DDV support
+	virtual int	 OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
+	afx_msg BOOL OnToolTipNotify( UINT id, NMHDR* pNMHDR, LRESULT* pResult );
 
 	DECLARE_MESSAGE_MAP()
 
 private:
-	idDeclAF* 			file;
+	idDeclAF*			 file;
 	idDeclAF_Constraint* constraint;
 
 	//{{AFX_DATA(DialogAFConstraintHinge)
 	//}}AFX_DATA
 
-	static toolTip_t	toolTips[];
+	static toolTip_t	 toolTips[];
 
 private:
-	void				InitJointLists();
+	void InitJointLists();
 };

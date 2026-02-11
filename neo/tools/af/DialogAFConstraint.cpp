@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -47,31 +48,23 @@ If you have questions concerning this license or the applicable additional terms
 	#define DEBUG_NEW new
 #endif
 
-
-typedef struct
-{
+typedef struct {
 	declAFConstraintType_t type;
-	const char* name;
+	const char*			   name;
 } c_type_t;
 
-c_type_t constraintTypes[] =
-{
-	{ DECLAF_CONSTRAINT_FIXED, "fixed" },
-	{ DECLAF_CONSTRAINT_BALLANDSOCKETJOINT, "ball and socket" },
-	{ DECLAF_CONSTRAINT_UNIVERSALJOINT, "universal" },
-	{ DECLAF_CONSTRAINT_HINGE, "hinge" },
-	{ DECLAF_CONSTRAINT_SLIDER, "slider" },
-	{ DECLAF_CONSTRAINT_SPRING, "spring" },
-	{ DECLAF_CONSTRAINT_INVALID, NULL }
-};
-
+c_type_t	constraintTypes[] = { { DECLAF_CONSTRAINT_FIXED, "fixed" },
+	   { DECLAF_CONSTRAINT_BALLANDSOCKETJOINT, "ball and socket" },
+	   { DECLAF_CONSTRAINT_UNIVERSALJOINT, "universal" },
+	   { DECLAF_CONSTRAINT_HINGE, "hinge" },
+	   { DECLAF_CONSTRAINT_SLIDER, "slider" },
+	   { DECLAF_CONSTRAINT_SPRING, "spring" },
+	   { DECLAF_CONSTRAINT_INVALID, NULL } };
 
 const char* ConstraintTypeToString( declAFConstraintType_t type )
 {
-	for( int i = 0; constraintTypes[i].name; i++ )
-	{
-		if( constraintTypes[i].type == type )
-		{
+	for( int i = 0; constraintTypes[i].name; i++ ) {
+		if( constraintTypes[i].type == type ) {
 			return constraintTypes[i].name;
 		}
 	}
@@ -80,22 +73,17 @@ const char* ConstraintTypeToString( declAFConstraintType_t type )
 
 declAFConstraintType_t StringToConstraintType( const char* str )
 {
-	for( int i = 0; constraintTypes[i].name; i++ )
-	{
-		if( idStr::Icmp( constraintTypes[i].name, str ) == 0 )
-		{
+	for( int i = 0; constraintTypes[i].name; i++ ) {
+		if( idStr::Icmp( constraintTypes[i].name, str ) == 0 ) {
 			return constraintTypes[i].type;
 		}
 	}
 	return DECLAF_CONSTRAINT_INVALID;
 }
 
-
 // DialogAFConstraint dialog
 
-toolTip_t DialogAFConstraint::toolTips[] =
-{
-	{ IDC_COMBO_CONSTRAINTS, "select contraint for editing" },
+toolTip_t DialogAFConstraint::toolTips[] = { { IDC_COMBO_CONSTRAINTS, "select contraint for editing" },
 	{ IDC_BUTTON_NEWCONSTRAINT, "create a new constraint" },
 	{ IDC_BUTTON_RENAMECONSTRAINT, "rename the selected constraint" },
 	{ IDC_BUTTON_DELETECONSTRAINT, "delete the selected constraint" },
@@ -103,8 +91,7 @@ toolTip_t DialogAFConstraint::toolTips[] =
 	{ IDC_COMBO_CONSTRAINT_BODY1, "first constrained body" },
 	{ IDC_COMBO_CONSTRAINT_BODY2, "second constrained body" },
 	{ IDC_EDIT_CONSTRAINT_FRICTION, "constraint friction" },
-	{ 0, NULL }
-};
+	{ 0, NULL } };
 
 IMPLEMENT_DYNAMIC( DialogAFConstraint, CDialog )
 
@@ -113,12 +100,12 @@ IMPLEMENT_DYNAMIC( DialogAFConstraint, CDialog )
 DialogAFConstraint::DialogAFConstraint
 ================
 */
-DialogAFConstraint::DialogAFConstraint( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogAFConstraint::IDD, pParent )
-	, m_friction( 0 )
-	, constraint( NULL )
-	, file( NULL )
-	, constraintDlg( NULL )
+DialogAFConstraint::DialogAFConstraint( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogAFConstraint::IDD, pParent ),
+	m_friction( 0 ),
+	constraint( NULL ),
+	file( NULL ),
+	constraintDlg( NULL )
 {
 	Create( IDD_DIALOG_AF_CONSTRAINT, pParent );
 	EnableToolTips( TRUE );
@@ -160,16 +147,13 @@ void DialogAFConstraint::InitConstraintList()
 	CString str;
 
 	m_comboConstraintList.ResetContent();
-	if( !file )
-	{
+	if( !file ) {
 		return;
 	}
-	for( int i = 0; i < file->constraints.Num(); i++ )
-	{
+	for( int i = 0; i < file->constraints.Num(); i++ ) {
 		m_comboConstraintList.AddString( file->constraints[i]->name.c_str() );
 	}
-	if( m_comboConstraintList.GetCount() != 0 )
-	{
+	if( m_comboConstraintList.GetCount() != 0 ) {
 		m_comboConstraintList.SetCurSel( 0 );
 		m_comboConstraintList.GetLBText( 0, str );
 		LoadConstraint( str );
@@ -184,23 +168,20 @@ DialogAFConstraint::InitConstraintTypeDlg
 void DialogAFConstraint::InitConstraintTypeDlg()
 {
 	CString str;
-	RECT rect;
+	RECT	rect;
 
-	if( !file || !constraint )
-	{
+	if( !file || !constraint ) {
 		return;
 	}
 
 	UpdateData( TRUE );
 
-	if( constraintDlg )
-	{
+	if( constraintDlg ) {
 		constraintDlg->ShowWindow( SW_HIDE );
 	}
 
 	GetSafeComboBoxSelection( &m_comboConstraintType, str, -1 );
-	switch( StringToConstraintType( str ) )
-	{
+	switch( StringToConstraintType( str ) ) {
 		case DECLAF_CONSTRAINT_FIXED:
 			fixedDlg->LoadConstraint( constraint );
 			constraintDlg = fixedDlg;
@@ -227,8 +208,7 @@ void DialogAFConstraint::InitConstraintTypeDlg()
 			break;
 	}
 
-	if( constraintDlg )
-	{
+	if( constraintDlg ) {
 		constraintDlg->ShowWindow( SW_SHOW );
 		constraintDlg->GetWindowRect( &rect );
 		constraintDlg->MoveWindow( 0, 117, rect.right - rect.left, rect.bottom - rect.top );
@@ -244,17 +224,15 @@ void DialogAFConstraint::InitBodyLists()
 {
 	m_comboBody1List.ResetContent();
 	m_comboBody2List.ResetContent();
-	if( !file )
-	{
+	if( !file ) {
 		return;
 	}
-	for( int i = 0; i < file->bodies.Num(); i++ )
-	{
+	for( int i = 0; i < file->bodies.Num(); i++ ) {
 		m_comboBody1List.AddString( file->bodies[i]->name );
 		m_comboBody2List.AddString( file->bodies[i]->name );
 	}
 	// the second body may also be the world
-	m_comboBody2List.AddString( "world" );	// FIXME: we currently assume this is the last body in the list
+	m_comboBody2List.AddString( "world" ); // FIXME: we currently assume this is the last body in the list
 }
 
 /*
@@ -264,22 +242,16 @@ DialogAFConstraint::InitNewRenameDeleteButtons
 */
 void DialogAFConstraint::InitNewRenameDeleteButtons()
 {
-	if( file && file->bodies.Num() >= 1 )
-	{
+	if( file && file->bodies.Num() >= 1 ) {
 		GetDlgItem( IDC_BUTTON_NEWCONSTRAINT )->EnableWindow( true );
-	}
-	else
-	{
+	} else {
 		GetDlgItem( IDC_BUTTON_NEWCONSTRAINT )->EnableWindow( false );
 	}
 
-	if( file && m_comboConstraintList.GetCount() >= 1 )
-	{
+	if( file && m_comboConstraintList.GetCount() >= 1 ) {
 		GetDlgItem( IDC_BUTTON_RENAMECONSTRAINT )->EnableWindow( true );
 		GetDlgItem( IDC_BUTTON_DELETECONSTRAINT )->EnableWindow( true );
-	}
-	else
-	{
+	} else {
 		GetDlgItem( IDC_BUTTON_RENAMECONSTRAINT )->EnableWindow( false );
 		GetDlgItem( IDC_BUTTON_DELETECONSTRAINT )->EnableWindow( false );
 	}
@@ -292,7 +264,7 @@ DialogAFConstraint::LoadFile
 */
 void DialogAFConstraint::LoadFile( idDeclAF* af )
 {
-	file = af;
+	file	   = af;
 	constraint = NULL;
 	ballAndSocketDlg->LoadFile( af );
 	universalDlg->LoadFile( af );
@@ -323,19 +295,15 @@ void DialogAFConstraint::LoadConstraint( const char* name )
 {
 	int i, s1, s2;
 
-	if( !file )
-	{
+	if( !file ) {
 		return;
 	}
-	for( i = 0; i < file->constraints.Num(); i++ )
-	{
-		if( file->constraints[i]->name.Icmp( name ) == 0 )
-		{
+	for( i = 0; i < file->constraints.Num(); i++ ) {
+		if( file->constraints[i]->name.Icmp( name ) == 0 ) {
 			break;
 		}
 	}
-	if( i >= file->constraints.Num() )
-	{
+	if( i >= file->constraints.Num() ) {
 		return;
 	}
 	constraint = file->constraints[i];
@@ -355,8 +323,7 @@ void DialogAFConstraint::LoadConstraint( const char* name )
 
 	InitConstraintTypeDlg();
 
-	if( GetStyle() & WS_VISIBLE )
-	{
+	if( GetStyle() & WS_VISIBLE ) {
 		// highlight the current constraint ingame
 		cvarSystem->SetCVarString( "af_highlightConstraint", name );
 	}
@@ -369,11 +336,10 @@ DialogAFConstraint::SaveConstraint
 */
 void DialogAFConstraint::SaveConstraint()
 {
-	int s1, s2;
+	int		s1, s2;
 	CString str;
 
-	if( !file || !constraint )
-	{
+	if( !file || !constraint ) {
 		return;
 	}
 	UpdateData( TRUE );
@@ -383,9 +349,9 @@ void DialogAFConstraint::SaveConstraint()
 	constraint->type = StringToConstraintType( str );
 
 	// save constrained bodies to the current idDeclAF_Constraint
-	s1 = GetSafeComboBoxSelection( &m_comboBody1List, str, -1 );
+	s1				  = GetSafeComboBoxSelection( &m_comboBody1List, str, -1 );
 	constraint->body1 = str;
-	s2 = GetSafeComboBoxSelection( &m_comboBody2List, str, s1 );
+	s2				  = GetSafeComboBoxSelection( &m_comboBody2List, str, s1 );
 	constraint->body2 = str;
 
 	// save friction to the current idDeclAF_Constraint
@@ -402,8 +368,7 @@ DialogAFConstraint::UpdateFile
 void DialogAFConstraint::UpdateFile()
 {
 	SaveConstraint();
-	if( file )
-	{
+	if( file ) {
 		gameEdit->AF_UpdateEntities( file->GetName() );
 	}
 }
@@ -415,13 +380,11 @@ DialogAFConstraint::OnInitDialog
 */
 BOOL DialogAFConstraint::OnInitDialog()
 {
-
 	CDialog::OnInitDialog();
 
 	// initialize the constraint types
 	m_comboConstraintType.ResetContent();
-	for( int i = 0; constraintTypes[i].name; i++ )
-	{
+	for( int i = 0; constraintTypes[i].name; i++ ) {
 		m_comboConstraintType.AddString( constraintTypes[i].name );
 	}
 
@@ -447,8 +410,8 @@ BOOL DialogAFConstraint::OnInitDialog()
 
 	InitNewRenameDeleteButtons();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 /*
@@ -463,20 +426,19 @@ int DialogAFConstraint::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 }
 
 BEGIN_MESSAGE_MAP( DialogAFConstraint, CDialog )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
-	ON_WM_SHOWWINDOW()
-	ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINTS, OnCbnSelchangeComboConstraints )
-	ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_TYPE, OnCbnSelchangeComboConstraintType )
-	ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_BODY1, OnCbnSelchangeComboConstraintBody1 )
-	ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_BODY2, OnCbnSelchangeComboConstraintBody2 )
-	ON_EN_CHANGE( IDC_EDIT_CONSTRAINT_FRICTION, OnEnChangeEditConstraintFriction )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_CONSTRAINT_FRICTION, OnDeltaposSpinConstraintFriction )
-	ON_BN_CLICKED( IDC_BUTTON_NEWCONSTRAINT, OnBnClickedButtonNewconstraint )
-	ON_BN_CLICKED( IDC_BUTTON_RENAMECONSTRAINT, OnBnClickedButtonRenameconstraint )
-	ON_BN_CLICKED( IDC_BUTTON_DELETECONSTRAINT, OnBnClickedButtonDeleteconstraint )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
+ON_WM_SHOWWINDOW()
+ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINTS, OnCbnSelchangeComboConstraints )
+ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_TYPE, OnCbnSelchangeComboConstraintType )
+ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_BODY1, OnCbnSelchangeComboConstraintBody1 )
+ON_CBN_SELCHANGE( IDC_COMBO_CONSTRAINT_BODY2, OnCbnSelchangeComboConstraintBody2 )
+ON_EN_CHANGE( IDC_EDIT_CONSTRAINT_FRICTION, OnEnChangeEditConstraintFriction )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN_CONSTRAINT_FRICTION, OnDeltaposSpinConstraintFriction )
+ON_BN_CLICKED( IDC_BUTTON_NEWCONSTRAINT, OnBnClickedButtonNewconstraint )
+ON_BN_CLICKED( IDC_BUTTON_RENAMECONSTRAINT, OnBnClickedButtonRenameconstraint )
+ON_BN_CLICKED( IDC_BUTTON_DELETECONSTRAINT, OnBnClickedButtonDeleteconstraint )
 END_MESSAGE_MAP()
-
 
 // DialogAFConstraint message handlers
 
@@ -487,12 +449,9 @@ BOOL DialogAFConstraint::OnToolTipNotify( UINT id, NMHDR* pNMHDR, LRESULT* pResu
 
 void DialogAFConstraint::OnShowWindow( BOOL bShow, UINT nStatus )
 {
-	if( bShow && constraint )
-	{
+	if( bShow && constraint ) {
 		cvarSystem->SetCVarString( "af_highlightConstraint", constraint->name.c_str() );
-	}
-	else
-	{
+	} else {
 		cvarSystem->SetCVarString( "af_highlightConstraint", "" );
 	}
 	CDialog::OnShowWindow( bShow, nStatus );
@@ -509,11 +468,10 @@ void DialogAFConstraint::OnCbnSelchangeComboConstraints()
 void DialogAFConstraint::OnBnClickedButtonNewconstraint()
 {
 	DialogAFName nameDlg;
-	CString str;
+	CString		 str;
 
 	nameDlg.SetComboBox( &m_comboConstraintList );
-	if( nameDlg.DoModal() == IDOK )
-	{
+	if( nameDlg.DoModal() == IDOK ) {
 		nameDlg.GetName( str );
 		// create new constraint
 		file->NewConstraint( str );
@@ -527,23 +485,20 @@ void DialogAFConstraint::OnBnClickedButtonNewconstraint()
 
 void DialogAFConstraint::OnBnClickedButtonRenameconstraint()
 {
-	int i;
-	CString name, newName;
+	int			 i;
+	CString		 name, newName;
 	DialogAFName nameDlg;
 
-	if( !file || !constraint )
-	{
+	if( !file || !constraint ) {
 		return;
 	}
 
 	i = m_comboConstraintList.GetCurSel();
-	if( i != CB_ERR )
-	{
+	if( i != CB_ERR ) {
 		m_comboConstraintList.GetLBText( i, name );
 		nameDlg.SetName( name );
 		nameDlg.SetComboBox( &m_comboConstraintList );
-		if( nameDlg.DoModal() == IDOK )
-		{
+		if( nameDlg.DoModal() == IDOK ) {
 			nameDlg.GetName( newName );
 			// rename constraint;
 			file->RenameConstraint( name, newName );
@@ -558,19 +513,16 @@ void DialogAFConstraint::OnBnClickedButtonRenameconstraint()
 
 void DialogAFConstraint::OnBnClickedButtonDeleteconstraint()
 {
-	int i;
+	int		i;
 	CString str;
 
-	if( !file || !constraint )
-	{
+	if( !file || !constraint ) {
 		return;
 	}
 
 	i = m_comboConstraintList.GetCurSel();
-	if( i != CB_ERR )
-	{
-		if( MessageBox( "Are you sure you want to delete this constraint ?", "Delete Constraint", MB_YESNO | MB_ICONQUESTION ) == IDYES )
-		{
+	if( i != CB_ERR ) {
+		if( MessageBox( "Are you sure you want to delete this constraint ?", "Delete Constraint", MB_YESNO | MB_ICONQUESTION ) == IDYES ) {
 			m_comboConstraintList.GetLBText( i, str );
 			// delete current constraint
 			file->DeleteConstraint( str );
@@ -608,20 +560,17 @@ void DialogAFConstraint::OnCbnSelchangeComboConstraintBody2()
 
 void DialogAFConstraint::OnEnChangeEditConstraintFriction()
 {
-	if( EditControlEnterHit( ( CEdit* ) GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ) ) )
-	{
+	if( EditControlEnterHit( ( CEdit* )GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ) ) ) {
 		UpdateFile();
-	}
-	else
-	{
-		EditVerifyFloat( ( CEdit* ) GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ), false );
+	} else {
+		EditVerifyFloat( ( CEdit* )GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ), false );
 	}
 }
 
 void DialogAFConstraint::OnDeltaposSpinConstraintFriction( NMHDR* pNMHDR, LRESULT* pResult )
 {
 	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>( pNMHDR );
-	m_friction = EditSpinFloat( ( CEdit* )GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ), pNMUpDown->iDelta < 0 );
+	m_friction			 = EditSpinFloat( ( CEdit* )GetDlgItem( IDC_EDIT_CONSTRAINT_FRICTION ), pNMUpDown->iDelta < 0 );
 	UpdateFile();
 	*pResult = 0;
 }

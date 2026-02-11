@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,7 +39,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "GEApp.h"
 
-rvGEApp		gApp;
+rvGEApp gApp;
 
 /*
 ================
@@ -47,7 +48,7 @@ GUIEditorInit
 Start the gui editor
 ================
 */
-void GUIEditorInit()
+void	GUIEditorInit()
 {
 	gApp.Initialize();
 }
@@ -70,8 +71,7 @@ Handle translator messages
 */
 bool GUIEditorHandleMessage( void* msg )
 {
-	if( !gApp.IsActive() )
-	{
+	if( !gApp.IsActive() ) {
 		return false;
 	}
 
@@ -87,27 +87,21 @@ Run a frame
 */
 void GUIEditorRun()
 {
-	MSG			msg;
+	MSG msg;
 
 	// pump the message loop
-	while( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) )
-	{
-		if( !GetMessage( &msg, NULL, 0, 0 ) )
-		{
+	while( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) ) {
+		if( !GetMessage( &msg, NULL, 0, 0 ) ) {
 			common->Quit();
 		}
 
 		// save the msg time, because wndprocs don't have access to the timestamp
-		if( win32.sysMsgTime && win32.sysMsgTime > ( int )msg.time )
-		{
-		}
-		else
-		{
+		if( win32.sysMsgTime && win32.sysMsgTime > ( int )msg.time ) {
+		} else {
 			win32.sysMsgTime = msg.time;
 		}
 
-		if( gApp.TranslateAccelerator( &msg ) )
-		{
+		if( gApp.TranslateAccelerator( &msg ) ) {
 			continue;
 		}
 
@@ -130,11 +124,7 @@ Returns a clean string version of the given vec4
 */
 const char* StringFromVec4( idVec4& v )
 {
-	return va( "%s,%s,%s,%s",
-			   idStr::FloatArrayToString( &v[0], 1, 8 ),
-			   idStr::FloatArrayToString( &v[1], 1, 8 ),
-			   idStr::FloatArrayToString( &v[2], 1, 8 ),
-			   idStr::FloatArrayToString( &v[3], 1, 8 ) );
+	return va( "%s,%s,%s,%s", idStr::FloatArrayToString( &v[0], 1, 8 ), idStr::FloatArrayToString( &v[1], 1, 8 ), idStr::FloatArrayToString( &v[2], 1, 8 ), idStr::FloatArrayToString( &v[3], 1, 8 ) );
 }
 
 /*
@@ -146,33 +136,24 @@ Returns true if the given string is an expression
 */
 bool IsExpression( const char* s )
 {
-	idParser src( s, strlen( s ), "",
-				  LEXFL_ALLOWMULTICHARLITERALS		|
-				  LEXFL_NOSTRINGCONCAT				|
-				  LEXFL_ALLOWBACKSLASHSTRINGCONCAT	|
-				  LEXFL_NOFATALERRORS );
+	idParser src( s, strlen( s ), "", LEXFL_ALLOWMULTICHARLITERALS | LEXFL_NOSTRINGCONCAT | LEXFL_ALLOWBACKSLASHSTRINGCONCAT | LEXFL_NOFATALERRORS );
 
-	idToken token;
-	bool	needComma = false;
-	bool	needNumber = false;
-	while( src.ReadToken( &token ) )
-	{
-		switch( token.type )
-		{
+	idToken	 token;
+	bool	 needComma	= false;
+	bool	 needNumber = false;
+	while( src.ReadToken( &token ) ) {
+		switch( token.type ) {
 			case TT_NUMBER:
-				needComma = true;
+				needComma  = true;
 				needNumber = false;
 				break;
 
 			case TT_PUNCTUATION:
-				if( needNumber )
-				{
+				if( needNumber ) {
 					return true;
 				}
-				if( token[0] == ',' )
-				{
-					if( !needComma )
-					{
+				if( token[0] == ',' ) {
+					if( !needComma ) {
 						return true;
 					}
 
@@ -180,13 +161,11 @@ bool IsExpression( const char* s )
 					break;
 				}
 
-				if( needComma )
-				{
+				if( needComma ) {
 					return true;
 				}
 
-				if( token[0] == '-' )
-				{
+				if( token[0] == '-' ) {
 					needNumber = true;
 				}
 				break;

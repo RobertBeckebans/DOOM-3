@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -35,19 +36,18 @@ If you have questions concerning this license or the applicable additional terms
 rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWindow* parent, idWindow* before ) :
 	rvGEModifier( name, window )
 {
-	mParent  = parent;
-	mBefore  = before;
+	mParent = parent;
+	mBefore = before;
 
 	assert( mParent );
 
 	mUndoParent = window->GetParent();
 	mUndoBefore = NULL;
-	mUndoRect   = mWrapper->GetClientRect();
+	mUndoRect	= mWrapper->GetClientRect();
 	mRect		= mWrapper->GetClientRect();
 
 	// Find the child window the window being inserted is before
-	if( mUndoParent )
-	{
+	if( mUndoParent ) {
 		int				   index;
 		rvGEWindowWrapper* pwrapper;
 
@@ -55,8 +55,7 @@ rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWi
 
 		index = mUndoParent->GetChildIndex( mWindow );
 
-		if( index + 1 < pwrapper->GetChildCount() )
-		{
+		if( index + 1 < pwrapper->GetChildCount() ) {
 			mUndoBefore = pwrapper->GetChild( index + 1 );
 		}
 	}
@@ -65,8 +64,8 @@ rvGEInsertModifier::rvGEInsertModifier( const char* name, idWindow* window, idWi
 	// out the new x and y coordinate as if this window were a child
 	rvGEWindowWrapper* parentWrapper;
 	parentWrapper = rvGEWindowWrapper::GetWrapper( mParent );
-	mRect.x = mWrapper->GetScreenRect()[0] - parentWrapper->GetScreenRect()[0];
-	mRect.y = mWrapper->GetScreenRect()[1] - parentWrapper->GetScreenRect()[1];
+	mRect.x		  = mWrapper->GetScreenRect()[0] - parentWrapper->GetScreenRect()[0];
+	mRect.y		  = mWrapper->GetScreenRect()[1] - parentWrapper->GetScreenRect()[1];
 }
 
 /*
@@ -79,8 +78,7 @@ inserting it as a child of the new parent
 */
 bool rvGEInsertModifier::Apply()
 {
-	if( mUndoParent )
-	{
+	if( mUndoParent ) {
 		mUndoParent->RemoveChild( mWindow );
 	}
 
@@ -102,12 +100,10 @@ bool rvGEInsertModifier::Undo()
 {
 	mParent->RemoveChild( mWindow );
 
-	if( mUndoParent )
-	{
+	if( mUndoParent ) {
 		mUndoParent->InsertChild( mWindow, mUndoBefore );
 		mWrapper->SetRect( mUndoRect );
 	}
 
 	return true;
 }
-

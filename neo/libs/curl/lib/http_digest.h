@@ -23,8 +23,7 @@
  * $Id: http_digest.h,v 1.4 2004/01/07 09:19:35 bagder Exp $
  ***************************************************************************/
 
-typedef enum
-{
+typedef enum {
 	CURLDIGEST_NONE, /* not a digest */
 	CURLDIGEST_BAD,  /* a digest, but one we don't like */
 	CURLDIGEST_FINE, /* a digest we act on */
@@ -32,8 +31,7 @@ typedef enum
 	CURLDIGEST_LAST  /* last entry in this enum, don't use */
 } CURLdigest;
 
-enum
-{
+enum {
 	CURLDIGESTALGO_MD5,
 	CURLDIGESTALGO_MD5SESS
 };

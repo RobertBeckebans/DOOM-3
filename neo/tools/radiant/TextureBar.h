@@ -19,18 +19,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
-#if !defined(AFX_TEXTUREBAR_H__86220273_B656_11D1_B59F_00AA00A410FC__INCLUDED_)
-#define AFX_TEXTUREBAR_H__86220273_B656_11D1_B59F_00AA00A410FC__INCLUDED_
+#if !defined( AFX_TEXTUREBAR_H__86220273_B656_11D1_B59F_00AA00A410FC__INCLUDED_ )
+	#define AFX_TEXTUREBAR_H__86220273_B656_11D1_B59F_00AA00A410FC__INCLUDED_
 
-#if _MSC_VER >= 1000
-	#pragma once
-#endif // _MSC_VER >= 1000
+	#if _MSC_VER >= 1000
+		#pragma once
+	#endif // _MSC_VER >= 1000
 // TextureBar.h : header file
 //
 
@@ -39,37 +40,36 @@ If you have questions concerning this license or the applicable additional terms
 
 class CTextureBar : public CDialogBar
 {
-// Construction
+	// Construction
 public:
 	void GetSurfaceAttributes();
 	void SetSurfaceAttributes();
 	CTextureBar();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CTextureBar)
 	enum { IDD = IDD_TEXTUREBAR };
-	CSpinButtonCtrl	m_spinRotate;
-	CSpinButtonCtrl	m_spinVScale;
-	CSpinButtonCtrl	m_spinVShift;
-	CSpinButtonCtrl	m_spinHScale;
-	CSpinButtonCtrl	m_spinHShift;
-	int	m_nHShift;
-	int	m_nHScale;
-	int	m_nRotate;
-	int	m_nVShift;
-	int	m_nVScale;
-	int		m_nRotateAmt;
+	CSpinButtonCtrl m_spinRotate;
+	CSpinButtonCtrl m_spinVScale;
+	CSpinButtonCtrl m_spinVShift;
+	CSpinButtonCtrl m_spinHScale;
+	CSpinButtonCtrl m_spinHShift;
+	int				m_nHShift;
+	int				m_nHScale;
+	int				m_nRotate;
+	int				m_nVShift;
+	int				m_nVScale;
+	int				m_nRotateAmt;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CTextureBar)
 protected:
-	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual void DoDataExchange( CDataExchange* pDX ); // DDX/DDV support
+													   //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CTextureBar)
@@ -79,7 +79,7 @@ protected:
 	afx_msg void OnDeltaposSpinVScale( NMHDR* pNMHDR, LRESULT* pResult );
 	afx_msg void OnDeltaposSpinRotate( NMHDR* pNMHDR, LRESULT* pResult );
 	afx_msg void OnSelectionPrint();
-	afx_msg int OnCreate( LPCREATESTRUCT lpCreateStruct );
+	afx_msg int	 OnCreate( LPCREATESTRUCT lpCreateStruct );
 	afx_msg void OnBtnApplytexturestuff();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

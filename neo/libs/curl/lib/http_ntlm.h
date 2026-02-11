@@ -23,8 +23,7 @@
  * $Id: http_ntlm.h,v 1.6 2004/01/07 09:19:35 bagder Exp $
  ***************************************************************************/
 
-typedef enum
-{
+typedef enum {
 	CURLNTLM_NONE, /* not a ntlm */
 	CURLNTLM_BAD,  /* an ntlm, but one we don't like */
 	CURLNTLM_FIRST, /* the first 401-reply we got with NTLM */

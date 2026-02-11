@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -77,8 +78,7 @@ debugger server is used.
 bool rvDebuggerServer::Initialize()
 {
 	// Initialize the network connection
-	if( !mPort.InitForPort( 27980 ) )
-	{
+	if( !mPort.InitForPort( 27980 ) ) {
 		return false;
 	}
 
@@ -102,12 +102,9 @@ bool rvDebuggerServer::Initialize()
 
 void rvDebuggerServer::OSPathToRelativePath( const char* osPath, idStr& qpath )
 {
-	if( strchr( osPath, ':' ) )
-	{
+	if( strchr( osPath, ':' ) ) {
 		qpath = fileSystem->OSPathToRelativePath( osPath );
-	}
-	else
-	{
+	} else {
 		qpath = osPath;
 	}
 }
@@ -122,8 +119,7 @@ Shutdown the debugger server.
 void rvDebuggerServer::Shutdown()
 {
 	// Let the debugger client know we are shutting down
-	if( mConnected )
-	{
+	if( mConnected ) {
 		SendMessage( DBMSG_DISCONNECT );
 		mConnected = false;
 	}
@@ -150,20 +146,17 @@ bool rvDebuggerServer::ProcessMessages()
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 
 	// Check for pending udp packets on the debugger port
-	while( mPort.GetPacket( adrFrom, msg.data, msg.cursize, msg.maxsize ) )
-	{
+	while( mPort.GetPacket( adrFrom, msg.data, msg.cursize, msg.maxsize ) ) {
 		unsigned short command;
 
 		// Only accept packets from the debugger server for security reasons
-		if( !Sys_CompareNetAdrBase( adrFrom, mClientAdr ) )
-		{
+		if( !Sys_CompareNetAdrBase( adrFrom, mClientAdr ) ) {
 			continue;
 		}
 
-		command = ( unsigned short ) MSG_ReadShort( &msg );
+		command = ( unsigned short )MSG_ReadShort( &msg );
 
-		switch( command )
-		{
+		switch( command ) {
 			case DBMSG_CONNECT:
 				mConnected = true;
 				SendMessage( DBMSG_CONNECTED );
@@ -196,15 +189,12 @@ bool rvDebuggerServer::ProcessMessages()
 				break;
 
 			case DBMSG_STEPOVER:
-				mBreakStepOver = true;
+				mBreakStepOver		= true;
 				mBreakStepOverDepth = mBreakInterpreter->GetCallstackDepth();
 				mBreakStepOverFunc1 = mBreakInterpreter->GetCallstack()[mBreakInterpreter->GetCallstackDepth()].f;
-				if( mBreakInterpreter->GetCallstackDepth() > 0 )
-				{
+				if( mBreakInterpreter->GetCallstackDepth() > 0 ) {
 					mBreakStepOverFunc2 = mBreakInterpreter->GetCallstack()[mBreakInterpreter->GetCallstackDepth() - 1].f;
-				}
-				else
-				{
+				} else {
 					mBreakStepOverFunc2 = NULL;
 				}
 				Resume();
@@ -241,8 +231,8 @@ Send a message with no data to the debugger server.
 */
 void rvDebuggerServer::SendMessage( EDebuggerMessage dbmsg )
 {
-	msg_t	 msg;
-	byte	 buffer[MAX_MSGLEN];
+	msg_t msg;
+	byte  buffer[MAX_MSGLEN];
 
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )dbmsg );
@@ -302,10 +292,8 @@ void rvDebuggerServer::HandleRemoveBreakpoint( msg_t* msg )
 	EnterCriticalSection( &mCriticalSection );
 
 	// Find the breakpoint that matches the given id and remove it from the list
-	for( i = 0; i < mBreakpoints.Num(); i ++ )
-	{
-		if( mBreakpoints[i]->GetID() == id )
-		{
+	for( i = 0; i < mBreakpoints.Num(); i++ ) {
+		if( mBreakpoints[i]->GetID() == id ) {
 			delete mBreakpoints[i];
 			mBreakpoints.RemoveIndex( i );
 			break;
@@ -324,37 +312,31 @@ Writes a single callstack entry to the given message
 */
 void rvDebuggerServer::MSG_WriteCallstackFunc( msg_t* msg, const prstack_t* stack )
 {
-	const statement_t*	st;
-	const function_t*	func;
+	const statement_t* st;
+	const function_t*  func;
 
-	func  = stack->f;
+	func = stack->f;
 
 	// If the function is unknown then just fill in with default data.
-	if( !func )
-	{
+	if( !func ) {
 		MSG_WriteString( msg, "<UNKNOWN>" );
 		MSG_WriteString( msg, "<UNKNOWN>" );
 		MSG_WriteLong( msg, 0 );
 		return;
-	}
-	else
-	{
+	} else {
 		MSG_WriteString( msg, va( "%s( ??? )", func->Name() ) );
 	}
 
 	// Use the calling statement as the filename and linenumber where
 	// the call was made from
 	st = &mBreakProgram->GetStatement( stack->s );
-	if( st )
-	{
+	if( st ) {
 		idStr qpath;
 		OSPathToRelativePath( mBreakProgram->GetFilename( st->file ), qpath );
 		qpath.BackSlashesToSlashes();
 		MSG_WriteString( msg, qpath );
 		MSG_WriteLong( msg, st->linenumber );
-	}
-	else
-	{
+	} else {
 		MSG_WriteString( msg, "<UNKNOWN>" );
 		MSG_WriteLong( msg, 0 );
 	}
@@ -370,10 +352,10 @@ back to the client with the callstack data.
 */
 void rvDebuggerServer::HandleInspectCallstack( msg_t* in_msg )
 {
-	msg_t		 msg;
-	byte		 buffer[MAX_MSGLEN];
-	int			 i;
-	prstack_t	 temp;
+	msg_t	  msg;
+	byte	  buffer[MAX_MSGLEN];
+	int		  i;
+	prstack_t temp;
 
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )DBMSG_INSPECTCALLSTACK );
@@ -381,14 +363,13 @@ void rvDebuggerServer::HandleInspectCallstack( msg_t* in_msg )
 	MSG_WriteShort( &msg, ( int )mBreakInterpreter->GetCallstackDepth() );
 
 	// write out the current function
-	temp.f = mBreakInterpreter->GetCurrentFunction();
-	temp.s = 0;
+	temp.f		   = mBreakInterpreter->GetCurrentFunction();
+	temp.s		   = 0;
 	temp.stackbase = 0;
 	MSG_WriteCallstackFunc( &msg, &temp );
 
 	// Run through all of the callstack and write each to the msg
-	for( i = mBreakInterpreter->GetCallstackDepth() - 1; i > 0; i -- )
-	{
+	for( i = mBreakInterpreter->GetCallstackDepth() - 1; i > 0; i-- ) {
 		MSG_WriteCallstackFunc( &msg, mBreakInterpreter->GetCallstack() + i );
 	}
 
@@ -404,9 +385,9 @@ Send the list of the current threads in the interpreter back to the debugger cli
 */
 void rvDebuggerServer::HandleInspectThreads( msg_t* in_msg )
 {
-	msg_t		 msg;
-	byte		 buffer[MAX_MSGLEN];
-	int			 i;
+	msg_t msg;
+	byte  buffer[MAX_MSGLEN];
+	int	  i;
 
 	// Initialize the message
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
@@ -416,8 +397,7 @@ void rvDebuggerServer::HandleInspectThreads( msg_t* in_msg )
 	MSG_WriteShort( &msg, ( int )idThread::GetThreads().Num() );
 
 	// Loop through all of the threads and write their name and number to the message
-	for( i = 0; i < idThread::GetThreads().Num(); i ++ )
-	{
+	for( i = 0; i < idThread::GetThreads().Num(); i++ ) {
 		idThread* thread = idThread::GetThreads()[i];
 
 		MSG_WriteString( &msg, thread->GetThreadName() );
@@ -443,10 +423,9 @@ Respondes to a request from the debugger client to inspect the value of a given 
 void rvDebuggerServer::HandleInspectVariable( msg_t* in_msg )
 {
 	char varname[256];
-	int  scopeDepth;
+	int	 scopeDepth;
 
-	if( !mBreak )
-	{
+	if( !mBreak ) {
 		return;
 	}
 
@@ -455,15 +434,14 @@ void rvDebuggerServer::HandleInspectVariable( msg_t* in_msg )
 
 	idStr varvalue;
 
-	msg_t		 msg;
-	byte		 buffer[MAX_MSGLEN];
+	msg_t msg;
+	byte  buffer[MAX_MSGLEN];
 
 	// Initialize the message
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )DBMSG_INSPECTVARIABLE );
 
-	if( !mBreakInterpreter->GetRegisterValue( varname, varvalue, scopeDepth ) )
-	{
+	if( !mBreakInterpreter->GetRegisterValue( varname, varvalue, scopeDepth ) ) {
 		varvalue = "???";
 	}
 
@@ -484,22 +462,20 @@ Check to see if any breakpoints have been hit.  This includes "break next",
 */
 void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* program, int instructionPointer )
 {
-	const statement_t*	st;
-	const char*			filename;
-	int					i;
+	const statement_t* st;
+	const char*		   filename;
+	int				   i;
 
-	if( !mConnected )
-	{
+	if( !mConnected ) {
 		return;
 	}
 
 	// Grab the current statement and the filename that it came from
-	st       = &program->GetStatement( instructionPointer );
+	st		 = &program->GetStatement( instructionPointer );
 	filename = program->GetFilename( st->file );
 
 	// Operate on lines, not statements
-	if( mLastStatementLine == st->linenumber && mLastStatementFile == st->file )
-	{
+	if( mLastStatementLine == st->linenumber && mLastStatementFile == st->file ) {
 		return;
 	}
 
@@ -509,34 +485,27 @@ void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* 
 	mLastStatementLine = st->linenumber;
 
 	// Reset stepping when the last function on the callstack is returned from
-	if( st->op == OP_RETURN && interpreter->GetCallstackDepth() <= 1 )
-	{
+	if( st->op == OP_RETURN && interpreter->GetCallstackDepth() <= 1 ) {
 		mBreakStepOver = false;
 		mBreakStepInto = false;
 	}
 
 	// See if we are supposed to break on the next script line
-	if( mBreakNext )
-	{
+	if( mBreakNext ) {
 		Break( interpreter, program, instructionPointer );
 		return;
 	}
 
 	// Only break on the same callstack depth and thread as the break over
-	if( mBreakStepOver )
-	{
-		if( ( interpreter->GetCurrentFunction() == mBreakStepOverFunc1 ||
-				interpreter->GetCurrentFunction() == mBreakStepOverFunc2 ) &&
-				( interpreter->GetCallstackDepth()  <= mBreakStepOverDepth ) )
-		{
+	if( mBreakStepOver ) {
+		if( ( interpreter->GetCurrentFunction() == mBreakStepOverFunc1 || interpreter->GetCurrentFunction() == mBreakStepOverFunc2 ) && ( interpreter->GetCallstackDepth() <= mBreakStepOverDepth ) ) {
 			Break( interpreter, program, instructionPointer );
 			return;
 		}
 	}
 
 	// See if we are supposed to break on the next line
-	if( mBreakStepInto )
-	{
+	if( mBreakStepInto ) {
 		// Break
 		Break( interpreter, program, instructionPointer );
 		return;
@@ -549,19 +518,16 @@ void rvDebuggerServer::CheckBreakpoints( idInterpreter* interpreter, idProgram* 
 	EnterCriticalSection( &mCriticalSection );
 
 	// Check all the breakpoints
-	for( i = 0; i < mBreakpoints.Num(); i ++ )
-	{
+	for( i = 0; i < mBreakpoints.Num(); i++ ) {
 		rvDebuggerBreakpoint* bp = mBreakpoints[i];
 
 		// Skip if not match of the line number
-		if( st->linenumber != bp->GetLineNumber() )
-		{
+		if( st->linenumber != bp->GetLineNumber() ) {
 			continue;
 		}
 
 		// Skip if no match of the filename
-		if( idStr::Icmp( bp->GetFilename(), qpath ) )
-		{
+		if( idStr::Icmp( bp->GetFilename(), qpath ) ) {
 			continue;
 		}
 
@@ -590,18 +556,18 @@ the game has been halted
 */
 void rvDebuggerServer::Break( idInterpreter* interpreter, idProgram* program, int instructionPointer )
 {
-	msg_t				msg;
-	byte				buffer[MAX_MSGLEN];
-	const statement_t*	st;
-	const char*			filename;
+	msg_t			   msg;
+	byte			   buffer[MAX_MSGLEN];
+	const statement_t* st;
+	const char*		   filename;
 
 	// Clear all the break types
 	mBreakStepOver = false;
 	mBreakStepInto = false;
-	mBreakNext     = false;
+	mBreakNext	   = false;
 
 	// Grab the current statement and the filename that it came from
-	st       = &program->GetStatement( instructionPointer );
+	st		 = &program->GetStatement( instructionPointer );
 	filename = program->GetFilename( st->file );
 
 	idStr qpath;
@@ -612,9 +578,9 @@ void rvDebuggerServer::Break( idInterpreter* interpreter, idProgram* program, in
 	Sys_GrabMouseCursor( false );
 
 	// Set the break variable so we know the main thread is stopped
-	mBreak = true;
-	mBreakProgram = program;
-	mBreakInterpreter = interpreter;
+	mBreak					 = true;
+	mBreakProgram			 = program;
+	mBreakInterpreter		 = interpreter;
 	mBreakInstructionPointer = instructionPointer;
 
 	// Inform the debugger of the breakpoint hit
@@ -660,8 +626,7 @@ Resume execution of the game.
 void rvDebuggerServer::Resume()
 {
 	// Cant resume if not paused
-	if( !mBreak )
-	{
+	if( !mBreak ) {
 		return;
 	}
 
@@ -682,8 +647,7 @@ void rvDebuggerServer::ClearBreakpoints()
 {
 	int i;
 
-	for( i = 0; i < mBreakpoints.Num(); i ++ )
-	{
+	for( i = 0; i < mBreakpoints.Num(); i++ ) {
 		delete mBreakpoints[i];
 	}
 
@@ -699,13 +663,12 @@ Sends a console print message over to the debugger client
 */
 void rvDebuggerServer::Print( const char* text )
 {
-	if( !mConnected )
-	{
+	if( !mConnected ) {
 		return;
 	}
 
-	msg_t	 msg;
-	byte	 buffer[MAX_MSGLEN];
+	msg_t msg;
+	byte  buffer[MAX_MSGLEN];
 
 	MSG_Init( &msg, buffer, sizeof( buffer ) );
 	MSG_WriteShort( &msg, ( int )DBMSG_PRINT );

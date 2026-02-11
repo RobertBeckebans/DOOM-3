@@ -36,153 +36,123 @@ ALvoid( ALAPIENTRY* idalSourcePlay )( ALuint ) = NULL;
 const char* InitializeIDAL( HMODULE h )
 {
 	idalGetError = ( ALenum( ALAPIENTRY* )( ALvoid ) )GetProcAddress( h, "alGetError" );
-	if( !idalGetError )
-	{
+	if( !idalGetError ) {
 		return "alGetError";
 	}
 	idalGenBuffers = ( ALvoid( ALAPIENTRY* )( ALsizei, ALuint* ) )GetProcAddress( h, "alGenBuffers" );
-	if( !idalGenBuffers )
-	{
+	if( !idalGenBuffers ) {
 		return "alGenBuffers";
 	}
 	idalIsSource = ( ALboolean( ALAPIENTRY* )( ALuint ) )GetProcAddress( h, "alIsSource" );
-	if( !idalIsSource )
-	{
+	if( !idalIsSource ) {
 		return "alIsSource";
 	}
 	idalSourceStop = ( ALvoid( ALAPIENTRY* )( ALuint ) )GetProcAddress( h, "alSourceStop" );
-	if( !idalSourceStop )
-	{
+	if( !idalSourceStop ) {
 		return "alSourceStop";
 	}
 	idalGetSourcei = ( ALvoid( ALAPIENTRY* )( ALuint, ALenum, ALint* ) )GetProcAddress( h, "alGetSourcei" );
-	if( !idalGetSourcei )
-	{
+	if( !idalGetSourcei ) {
 		return "alGetSourcei";
 	}
 	idalGetInteger = ( ALint( ALAPIENTRY* )( ALenum ) )GetProcAddress( h, "alGetInteger" );
-	if( !idalGetInteger )
-	{
+	if( !idalGetInteger ) {
 		return "alGetInteger";
 	}
 	idalcSuspendContext = ( ALCvoid( ALAPIENTRY* )( ALCcontext* ) )GetProcAddress( h, "alcSuspendContext" );
-	if( !idalcSuspendContext )
-	{
+	if( !idalcSuspendContext ) {
 		return "alcSuspendContext";
 	}
 	idalcMakeContextCurrent = ( ALCboolean( ALAPIENTRY* )( ALCcontext* ) )GetProcAddress( h, "alcMakeContextCurrent" );
-	if( !idalcMakeContextCurrent )
-	{
+	if( !idalcMakeContextCurrent ) {
 		return "alcMakeContextCurrent";
 	}
 	idalcProcessContext = ( ALCvoid( ALAPIENTRY* )( ALCcontext* ) )GetProcAddress( h, "alcProcessContext" );
-	if( !idalcProcessContext )
-	{
+	if( !idalcProcessContext ) {
 		return "alcProcessContext";
 	}
 	idalcDestroyContext = ( ALCvoid( ALAPIENTRY* )( ALCcontext* ) )GetProcAddress( h, "alcDestroyContext" );
-	if( !idalcDestroyContext )
-	{
+	if( !idalcDestroyContext ) {
 		return "alcDestroyContext";
 	}
 	idalcGetString = ( ALCubyte * ( ALAPIENTRY* )( ALCdevice*, ALCenum ) )GetProcAddress( h, "alcGetString" );
-	if( !idalcGetString )
-	{
+	if( !idalcGetString ) {
 		return "alcGetString";
 	}
 	idalBufferData = ( ALvoid( ALAPIENTRY* )( ALuint, ALenum, ALvoid*, ALsizei, ALsizei ) )GetProcAddress( h, "alBufferData" );
-	if( !idalBufferData )
-	{
+	if( !idalBufferData ) {
 		return "alBufferData";
 	}
 	idalDeleteBuffers = ( ALvoid( ALAPIENTRY* )( ALsizei, ALuint* ) )GetProcAddress( h, "alDeleteBuffers" );
-	if( !idalDeleteBuffers )
-	{
+	if( !idalDeleteBuffers ) {
 		return "alDeleteBuffers";
 	}
 	idalIsExtensionPresent = ( ALboolean( ALAPIENTRY* )( ALubyte* ) )GetProcAddress( h, "alIsExtensionPresent" );
-	if( !idalIsExtensionPresent )
-	{
+	if( !idalIsExtensionPresent ) {
 		return "alIsExtensionPresent";
 	}
 	idalDeleteSources = ( ALvoid( ALAPIENTRY* )( ALsizei, ALuint* ) )GetProcAddress( h, "alDeleteSources" );
-	if( !idalDeleteSources )
-	{
+	if( !idalDeleteSources ) {
 		return "alDeleteSources";
 	}
 	idalGetEnumValue = ( ALenum( ALAPIENTRY* )( ALubyte* ) )GetProcAddress( h, "alGetEnumValue" );
-	if( !idalGetEnumValue )
-	{
+	if( !idalGetEnumValue ) {
 		return "alGetEnumValue";
 	}
 	idalGetProcAddress = ( ALvoid * ( ALAPIENTRY* )( ALubyte* ) )GetProcAddress( h, "alGetProcAddress" );
-	if( !idalGetProcAddress )
-	{
+	if( !idalGetProcAddress ) {
 		return "alGetProcAddress";
 	}
 	idalcCreateContext = ( ALCcontext * ( ALAPIENTRY* )( ALCdevice*, ALCint* ) )GetProcAddress( h, "alcCreateContext" );
-	if( !idalcCreateContext )
-	{
+	if( !idalcCreateContext ) {
 		return "alcCreateContext";
 	}
 	idalcOpenDevice = ( ALCdevice * ( ALAPIENTRY* )( ALubyte* ) )GetProcAddress( h, "alcOpenDevice" );
-	if( !idalcOpenDevice )
-	{
+	if( !idalcOpenDevice ) {
 		return "alcOpenDevice";
 	}
 	idalListenerfv = ( ALvoid( ALAPIENTRY* )( ALenum, ALfloat* ) )GetProcAddress( h, "alListenerfv" );
-	if( !idalListenerfv )
-	{
+	if( !idalListenerfv ) {
 		return "alListenerfv";
 	}
 	idalSourceQueueBuffers = ( ALvoid( ALAPIENTRY* )( ALuint, ALsizei, ALuint* ) )GetProcAddress( h, "alSourceQueueBuffers" );
-	if( !idalSourceQueueBuffers )
-	{
+	if( !idalSourceQueueBuffers ) {
 		return "alSourceQueueBuffers";
 	}
 	idalSourcei = ( ALvoid( ALAPIENTRY* )( ALuint, ALenum, ALint ) )GetProcAddress( h, "alSourcei" );
-	if( !idalSourcei )
-	{
+	if( !idalSourcei ) {
 		return "alSourcei";
 	}
 	idalListenerf = ( ALvoid( ALAPIENTRY* )( ALenum, ALfloat ) )GetProcAddress( h, "alListenerf" );
-	if( !idalListenerf )
-	{
+	if( !idalListenerf ) {
 		return "alListenerf";
 	}
 	idalcCloseDevice = ( ALCvoid( ALAPIENTRY* )( ALCdevice* ) )GetProcAddress( h, "alcCloseDevice" );
-	if( !idalcCloseDevice )
-	{
+	if( !idalcCloseDevice ) {
 		return "alcCloseDevice";
 	}
 	idalIsBuffer = ( ALboolean( ALAPIENTRY* )( ALuint ) )GetProcAddress( h, "alIsBuffer" );
-	if( !idalIsBuffer )
-	{
+	if( !idalIsBuffer ) {
 		return "alIsBuffer";
 	}
 	idalSource3f = ( ALvoid( ALAPIENTRY* )( ALuint, ALenum, ALfloat, ALfloat, ALfloat ) )GetProcAddress( h, "alSource3f" );
-	if( !idalSource3f )
-	{
+	if( !idalSource3f ) {
 		return "alSource3f";
 	}
 	idalGenSources = ( ALvoid( ALAPIENTRY* )( ALsizei, ALuint* ) )GetProcAddress( h, "alGenSources" );
-	if( !idalGenSources )
-	{
+	if( !idalGenSources ) {
 		return "alGenSources";
 	}
 	idalSourcef = ( ALvoid( ALAPIENTRY* )( ALuint, ALenum, ALfloat ) )GetProcAddress( h, "alSourcef" );
-	if( !idalSourcef )
-	{
+	if( !idalSourcef ) {
 		return "alSourcef";
 	}
 	idalSourceUnqueueBuffers = ( ALvoid( ALAPIENTRY* )( ALuint, ALsizei, ALuint* ) )GetProcAddress( h, "alSourceUnqueueBuffers" );
-	if( !idalSourceUnqueueBuffers )
-	{
+	if( !idalSourceUnqueueBuffers ) {
 		return "alSourceUnqueueBuffers";
 	}
 	idalSourcePlay = ( ALvoid( ALAPIENTRY* )( ALuint ) )GetProcAddress( h, "alSourcePlay" );
-	if( !idalSourcePlay )
-	{
+	if( !idalSourcePlay ) {
 		return "alSourcePlay";
 	}
 	return NULL;

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -44,64 +45,59 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "posix_public.h"
 
-#define					MAX_OSPATH 256
-#define					COMMAND_HISTORY 64
+#define MAX_OSPATH		256
+#define COMMAND_HISTORY 64
 
-static int				input_hide = 0;
+static int			  input_hide = 0;
 
-idEditField				input_field;
-static char				input_ret[256];
+idEditField			  input_field;
+static char			  input_ret[256];
 
-static idStr			history[ COMMAND_HISTORY ];	// cycle buffer
-static int				history_count = 0;			// buffer fill up
-static int				history_start = 0;			// current history start
-static int				history_current = 0;			// goes back in history
-idEditField				history_backup;				// the base edit line
+static idStr		  history[COMMAND_HISTORY]; // cycle buffer
+static int			  history_count	  = 0;		// buffer fill up
+static int			  history_start	  = 0;		// current history start
+static int			  history_current = 0;		// goes back in history
+idEditField			  history_backup;			// the base edit line
 
 // terminal support
-idCVar in_tty( "in_tty", "1", CVAR_BOOL | CVAR_INIT | CVAR_SYSTEM, "terminal tab-completion and history" );
+idCVar				  in_tty( "in_tty", "1", CVAR_BOOL | CVAR_INIT | CVAR_SYSTEM, "terminal tab-completion and history" );
 
-static bool				tty_enabled = false;
-static struct termios	tty_tc;
+static bool			  tty_enabled = false;
+static struct termios tty_tc;
 
 // pid - useful when you attach to gdb..
-idCVar com_pid( "com_pid", "0", CVAR_INTEGER | CVAR_INIT | CVAR_SYSTEM, "process id" );
+idCVar				  com_pid( "com_pid", "0", CVAR_INTEGER | CVAR_INIT | CVAR_SYSTEM, "process id" );
 
 // exit - quit - error --------------------------------------------------------
 
-static int set_exit = 0;
-static char exit_spawn[ 1024 ];
+static int			  set_exit = 0;
+static char			  exit_spawn[1024];
 
 /*
 ================
 Posix_Exit
 ================
 */
-void Posix_Exit( int ret )
+void				  Posix_Exit( int ret )
 {
-	if( tty_enabled )
-	{
+	if( tty_enabled ) {
 		Sys_Printf( "shutdown terminal support\n" );
-		if( tcsetattr( 0, TCSADRAIN, &tty_tc ) == -1 )
-		{
+		if( tcsetattr( 0, TCSADRAIN, &tty_tc ) == -1 ) {
 			Sys_Printf( "tcsetattr failed: %s\n", strerror( errno ) );
 		}
 	}
 	// at this point, too late to catch signals
 	Posix_ClearSigs();
-	if( asyncThread.threadHandle )
-	{
+	if( asyncThread.threadHandle ) {
 		Sys_DestroyThread( asyncThread );
 	}
 	// process spawning. it's best when it happens after everything has shut down
-	if( exit_spawn[0] )
-	{
+	if( exit_spawn[0] ) {
 		Sys_DoStartProcess( exit_spawn, false );
 	}
 	// in case of signal, handler tries a common->Quit
 	// we use set_exit to maintain a correct exit code
-	if( set_exit )
-	{
+	if( set_exit ) {
 		exit( set_exit );
 	}
 	exit( ret );
@@ -139,8 +135,7 @@ NOTE: might even want to add a small delay?
 */
 void idSysLocal::StartProcess( const char* exeName, bool quit )
 {
-	if( quit )
-	{
+	if( quit ) {
 		common->DPrintf( "Sys_StartProcess %s (delaying until final exit)\n", exeName );
 		Posix_SetExitSpawn( exeName );
 		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "quit\n" );
@@ -173,18 +168,17 @@ Sys_Milliseconds
 unsigned long sys_timeBase = 0;
 /* current time in ms, using sys_timeBase as origin
    NOTE: sys_timeBase*1000 + curtime -> ms since the Epoch
-     0x7fffffff ms - ~24 days
+	 0x7fffffff ms - ~24 days
 		 or is it 48 days? the specs say int, but maybe it's casted from unsigned int?
 */
-int Sys_Milliseconds()
+int			  Sys_Milliseconds()
 {
-	int curtime;
+	int			   curtime;
 	struct timeval tp;
 
 	gettimeofday( &tp, NULL );
 
-	if( !sys_timeBase )
-	{
+	if( !sys_timeBase ) {
 		sys_timeBase = tp.tv_sec;
 		return tp.tv_usec / 1000;
 	}
@@ -212,59 +206,49 @@ Sys_ListFiles
 int Sys_ListFiles( const char* directory, const char* extension, idStrList& list )
 {
 	struct dirent* d;
-	DIR* fdir;
-	bool dironly = false;
-	char search[MAX_OSPATH];
-	struct stat st;
-	bool debug;
+	DIR*		   fdir;
+	bool		   dironly = false;
+	char		   search[MAX_OSPATH];
+	struct stat	   st;
+	bool		   debug;
 
 	list.Clear();
 
 	debug = cvarSystem->GetCVarBool( "fs_debug" );
 
-	if( !extension )
-	{
+	if( !extension ) {
 		extension = "";
 	}
 
 	// passing a slash as extension will find directories
-	if( extension[0] == '/' && extension[1] == 0 )
-	{
+	if( extension[0] == '/' && extension[1] == 0 ) {
 		extension = "";
-		dironly = true;
+		dironly	  = true;
 	}
 
 	// search
 	// NOTE: case sensitivity of directory path can screw us up here
-	if( ( fdir = opendir( directory ) ) == NULL )
-	{
-		if( debug )
-		{
+	if( ( fdir = opendir( directory ) ) == NULL ) {
+		if( debug ) {
 			common->Printf( "Sys_ListFiles: opendir %s failed\n", directory );
 		}
 		return -1;
 	}
 
-	while( ( d = readdir( fdir ) ) != NULL )
-	{
+	while( ( d = readdir( fdir ) ) != NULL ) {
 		idStr::snPrintf( search, sizeof( search ), "%s/%s", directory, d->d_name );
-		if( stat( search, &st ) == -1 )
-		{
+		if( stat( search, &st ) == -1 ) {
 			continue;
 		}
-		if( !dironly )
-		{
+		if( !dironly ) {
 			idStr look( search );
 			idStr ext;
 			look.ExtractFileExtension( ext );
-			if( extension[0] != '\0' && ext.Icmp( &extension[1] ) != 0 )
-			{
+			if( extension[0] != '\0' && ext.Icmp( &extension[1] ) != 0 ) {
 				continue;
 			}
 		}
-		if( ( dironly && !( st.st_mode & S_IFDIR ) ) ||
-				( !dironly && ( st.st_mode & S_IFDIR ) ) )
-		{
+		if( ( dironly && !( st.st_mode & S_IFDIR ) ) || ( !dironly && ( st.st_mode & S_IFDIR ) ) ) {
 			continue;
 		}
 
@@ -273,8 +257,7 @@ int Sys_ListFiles( const char* directory, const char* extension, idStrList& list
 
 	closedir( fdir );
 
-	if( debug )
-	{
+	if( debug ) {
 		common->Printf( "Sys_ListFiles: %d entries in %s\n", list.Num(), directory );
 	}
 
@@ -287,11 +270,11 @@ EVENT LOOP
 ============================================================================
 */
 
-#define	MAX_QUED_EVENTS		256
-#define	MASK_QUED_EVENTS	( MAX_QUED_EVENTS - 1 )
+#define MAX_QUED_EVENTS	 256
+#define MASK_QUED_EVENTS ( MAX_QUED_EVENTS - 1 )
 
 static sysEvent_t eventQue[MAX_QUED_EVENTS];
-static int eventHead, eventTail;
+static int		  eventHead, eventTail;
 
 /*
 ================
@@ -300,19 +283,16 @@ Posix_QueEvent
 ptr should either be null, or point to a block of data that can be freed later
 ================
 */
-void Posix_QueEvent( sysEventType_t type, int value, int value2,
-					 int ptrLength, void* ptr )
+void			  Posix_QueEvent( sysEventType_t type, int value, int value2, int ptrLength, void* ptr )
 {
 	sysEvent_t* ev;
 
 	ev = &eventQue[eventHead & MASK_QUED_EVENTS];
-	if( eventHead - eventTail >= MAX_QUED_EVENTS )
-	{
+	if( eventHead - eventTail >= MAX_QUED_EVENTS ) {
 		common->Printf( "Posix_QueEvent: overflow\n" );
 		// we are discarding an event, but don't leak memory
 		// TTimo: verbose dropped event types?
-		if( ev->evPtr )
-		{
+		if( ev->evPtr ) {
 			Mem_Free( ev->evPtr );
 			ev->evPtr = NULL;
 		}
@@ -321,11 +301,11 @@ void Posix_QueEvent( sysEventType_t type, int value, int value2,
 
 	eventHead++;
 
-	ev->evType = type;
-	ev->evValue = value;
-	ev->evValue2 = value2;
+	ev->evType		= type;
+	ev->evValue		= value;
+	ev->evValue2	= value2;
 	ev->evPtrLength = ptrLength;
-	ev->evPtr = ptr;
+	ev->evPtr		= ptr;
 
 #if 0
 	common->Printf( "Event %d: %d %d\n", ev->evType, ev->evValue, ev->evValue2 );
@@ -342,8 +322,7 @@ sysEvent_t Sys_GetEvent()
 	static sysEvent_t ev;
 
 	// return if we have data
-	if( eventHead > eventTail )
-	{
+	if( eventHead > eventTail ) {
 		eventTail++;
 		return eventQue[( eventTail - 1 ) & MASK_QUED_EVENTS];
 	}
@@ -404,7 +383,9 @@ Sys_Init
 Posix_EarlyInit/Posix_LateInit is better
 =================
 */
-void Sys_Init() { }
+void Sys_Init()
+{
+}
 
 /*
 =================
@@ -413,9 +394,8 @@ Posix_Shutdown
 */
 void Posix_Shutdown()
 {
-	for( int i = 0; i < COMMAND_HISTORY; i++ )
-	{
-		history[ i ].Clear();
+	for( int i = 0; i < COMMAND_HISTORY; i++ ) {
+		history[i].Clear();
 	}
 }
 
@@ -428,8 +408,7 @@ TODO: OSX - use the native API instead? NSModule
 int Sys_DLL_Load( const char* path )
 {
 	void* handle = dlopen( path, RTLD_NOW );
-	if( !handle )
-	{
+	if( !handle ) {
 		Sys_Printf( "dlopen '%s' failed: %s\n", path, dlerror() );
 	}
 	return ( int )handle;
@@ -443,9 +422,8 @@ Sys_DLL_GetProcAddress
 void* Sys_DLL_GetProcAddress( int handle, const char* sym )
 {
 	const char* error;
-	void* ret = dlsym( ( void* )handle, sym );
-	if( ( error = dlerror() ) != NULL )
-	{
+	void*		ret = dlsym( ( void* )handle, sym );
+	if( ( error = dlerror() ) != NULL ) {
 		Sys_Printf( "dlsym '%s' failed: %s\n", sym, error );
 	}
 	return ret;
@@ -466,7 +444,9 @@ void Sys_DLL_Unload( int handle )
 Sys_ShowConsole
 ================
 */
-void Sys_ShowConsole( int visLevel, bool quitOnClose ) { }
+void Sys_ShowConsole( int visLevel, bool quitOnClose )
+{
+}
 
 // ---------------------------------------------------------------------------
 
@@ -485,12 +465,10 @@ long Sys_FileTimeStamp( FILE* fp )
 
 void Sys_Sleep( int msec )
 {
-	if( msec < 20 )
-	{
+	if( msec < 20 ) {
 		static int last = 0;
-		int now = Sys_Milliseconds();
-		if( now - last > 1000 )
-		{
+		int		   now	= Sys_Milliseconds();
+		if( now - last > 1000 ) {
 			Sys_Printf( "WARNING: Sys_Sleep - %d < 20 msec is not portable\n", msec );
 			last = now;
 		}
@@ -498,8 +476,7 @@ void Sys_Sleep( int msec )
 		return;
 	}
 	// use nanosleep? keep sleeping if signal interrupt?
-	if( usleep( msec * 1000 ) == -1 )
-	{
+	if( usleep( msec * 1000 ) == -1 ) {
 		Sys_Printf( "usleep: %s\n", strerror( errno ) );
 	}
 }
@@ -515,11 +492,10 @@ void Sys_SetClipboardData( const char* string )
 	Sys_Printf( "TODO: Sys_SetClipboardData\n" );
 }
 
-
 // stub pretty much everywhere - heavy calling
 void Sys_FlushCacheMemory( void* base, int bytes )
 {
-//  Sys_Printf("Sys_FlushCacheMemory stub\n");
+	//  Sys_Printf("Sys_FlushCacheMemory stub\n");
 }
 
 bool Sys_FPU_StackIsEmpty()
@@ -634,23 +610,19 @@ void Posix_InitConsoleInput()
 {
 	struct termios tc;
 
-	if( in_tty.GetBool() )
-	{
-		if( isatty( STDIN_FILENO ) != 1 )
-		{
+	if( in_tty.GetBool() ) {
+		if( isatty( STDIN_FILENO ) != 1 ) {
 			Sys_Printf( "terminal support disabled: stdin is not a tty\n" );
 			in_tty.SetBool( false );
 			return;
 		}
-		if( tcgetattr( 0, &tty_tc ) == -1 )
-		{
+		if( tcgetattr( 0, &tty_tc ) == -1 ) {
 			Sys_Printf( "tcgetattr failed. disabling terminal support: %s\n", strerror( errno ) );
 			in_tty.SetBool( false );
 			return;
 		}
 		// make the input non blocking
-		if( fcntl( STDIN_FILENO, F_SETFL, fcntl( STDIN_FILENO, F_GETFL, 0 ) | O_NONBLOCK ) == -1 )
-		{
+		if( fcntl( STDIN_FILENO, F_SETFL, fcntl( STDIN_FILENO, F_GETFL, 0 ) | O_NONBLOCK ) == -1 ) {
 			Sys_Printf( "fcntl STDIN non blocking failed.  disabling terminal support: %s\n", strerror( errno ) );
 			in_tty.SetBool( false );
 			return;
@@ -659,10 +631,10 @@ void Posix_InitConsoleInput()
 		/*
 		  ECHO: don't echo input characters
 		  ICANON: enable canonical mode.  This  enables  the  special
-		  	characters  EOF,  EOL,  EOL2, ERASE, KILL, REPRINT,
-		  	STATUS, and WERASE, and buffers by lines.
+			characters  EOF,  EOL,  EOL2, ERASE, KILL, REPRINT,
+			STATUS, and WERASE, and buffers by lines.
 		  ISIG: when any of the characters  INTR,  QUIT,  SUSP,  or
-		  	DSUSP are received, generate the corresponding signal
+			DSUSP are received, generate the corresponding signal
 		*/
 		tc.c_lflag &= ~( ECHO | ICANON );
 		/*
@@ -670,34 +642,28 @@ void Posix_InitConsoleInput()
 		  INPCK enable input parity checking
 		*/
 		tc.c_iflag &= ~( ISTRIP | INPCK );
-		tc.c_cc[VMIN] = 1;
+		tc.c_cc[VMIN]  = 1;
 		tc.c_cc[VTIME] = 0;
-		if( tcsetattr( 0, TCSADRAIN, &tc ) == -1 )
-		{
+		if( tcsetattr( 0, TCSADRAIN, &tc ) == -1 ) {
 			Sys_Printf( "tcsetattr failed: %s\n", strerror( errno ) );
 			Sys_Printf( "terminal support may not work correctly. Use +set in_tty 0 to disable it\n" );
 		}
 #if 0
 		// make the output non blocking
-		if( fcntl( STDOUT_FILENO, F_SETFL, fcntl( STDOUT_FILENO, F_GETFL, 0 ) | O_NONBLOCK ) == -1 )
-		{
+		if( fcntl( STDOUT_FILENO, F_SETFL, fcntl( STDOUT_FILENO, F_GETFL, 0 ) | O_NONBLOCK ) == -1 ) {
 			Sys_Printf( "fcntl STDOUT non blocking failed: %s\n", strerror( errno ) );
 		}
 #endif
 		tty_enabled = true;
 		// check the terminal type for the supported ones
 		char* term = getenv( "TERM" );
-		if( term )
-		{
-			if( strcmp( term, "linux" ) && strcmp( term, "xterm" ) && strcmp( term, "xterm-color" ) && strcmp( term, "screen" ) )
-			{
+		if( term ) {
+			if( strcmp( term, "linux" ) && strcmp( term, "xterm" ) && strcmp( term, "xterm-color" ) && strcmp( term, "screen" ) ) {
 				Sys_Printf( "WARNING: terminal type '%s' is unknown. terminal support may not work correctly\n", term );
 			}
 		}
 		Sys_Printf( "terminal support enabled ( use +set in_tty 0 to disabled )\n" );
-	}
-	else
-	{
+	} else {
 		Sys_Printf( "terminal support disabled\n" );
 	}
 }
@@ -737,25 +703,21 @@ void tty_Right()
 void tty_Hide()
 {
 	int len, buf_len;
-	if( !tty_enabled )
-	{
+	if( !tty_enabled ) {
 		return;
 	}
-	if( input_hide )
-	{
+	if( input_hide ) {
 		input_hide++;
 		return;
 	}
 	// clear after cursor
 	len = strlen( input_field.GetBuffer() ) - input_field.GetCursor();
-	while( len > 0 )
-	{
+	while( len > 0 ) {
 		tty_Right();
 		len--;
 	}
 	buf_len = strlen( input_field.GetBuffer() );
-	while( buf_len > 0 )
-	{
+	while( buf_len > 0 ) {
 		tty_Del();
 		buf_len--;
 	}
@@ -766,21 +728,17 @@ void tty_Hide()
 void tty_Show()
 {
 	//	int i;
-	if( !tty_enabled )
-	{
+	if( !tty_enabled ) {
 		return;
 	}
 	assert( input_hide > 0 );
 	input_hide--;
-	if( input_hide == 0 )
-	{
+	if( input_hide == 0 ) {
 		char* buf = input_field.GetBuffer();
-		if( buf[0] )
-		{
+		if( buf[0] ) {
 			write( STDOUT_FILENO, buf, strlen( buf ) );
 			int back = strlen( buf ) - input_field.GetCursor();
-			while( back > 0 )
-			{
+			while( back > 0 ) {
 				tty_Left();
 				back--;
 			}
@@ -791,8 +749,7 @@ void tty_Show()
 void tty_FlushIn()
 {
 	char key;
-	while( read( 0, &key, 1 ) != -1 )
-	{
+	while( read( 0, &key, 1 ) != -1 ) {
 		Sys_Printf( "'%d' ", key );
 	}
 	Sys_Printf( "\n" );
@@ -807,20 +764,16 @@ Return NULL if a complete line is not ready.
 */
 char* Posix_ConsoleInput()
 {
-	if( tty_enabled )
-	{
-		int		ret;
-		char	key;
-		bool	hidden = false;
-		while( ( ret = read( STDIN_FILENO, &key, 1 ) ) > 0 )
-		{
-			if( !hidden )
-			{
+	if( tty_enabled ) {
+		int	 ret;
+		char key;
+		bool hidden = false;
+		while( ( ret = read( STDIN_FILENO, &key, 1 ) ) > 0 ) {
+			if( !hidden ) {
 				tty_Hide();
 				hidden = true;
 			}
-			switch( key )
-			{
+			switch( key ) {
 				case 1:
 					input_field.SetCursor( 0 );
 					break;
@@ -837,14 +790,11 @@ char* Posix_ConsoleInput()
 					tty_Show();
 					write( STDOUT_FILENO, &key, 1 );
 					input_field.Clear();
-					if( history_count < COMMAND_HISTORY )
-					{
-						history[ history_count ] = input_ret;
+					if( history_count < COMMAND_HISTORY ) {
+						history[history_count] = input_ret;
 						history_count++;
-					}
-					else
-					{
-						history[ history_start ] = input_ret;
+					} else {
+						history[history_start] = input_ret;
 						history_start++;
 						history_start %= COMMAND_HISTORY;
 					}
@@ -853,32 +803,27 @@ char* Posix_ConsoleInput()
 				case '\t':
 					input_field.AutoComplete();
 					break;
-				case 27:
-				{
+				case 27: {
 					// enter escape sequence mode
 					ret = read( STDIN_FILENO, &key, 1 );
-					if( ret <= 0 )
-					{
+					if( ret <= 0 ) {
 						Sys_Printf( "dropping sequence: '27' " );
 						tty_FlushIn();
 						assert( hidden );
 						tty_Show();
 						return NULL;
 					}
-					switch( key )
-					{
+					switch( key ) {
 						case 79:
 							ret = read( STDIN_FILENO, &key, 1 );
-							if( ret <= 0 )
-							{
+							if( ret <= 0 ) {
 								Sys_Printf( "dropping sequence: '27' '79' " );
 								tty_FlushIn();
 								assert( hidden );
 								tty_Show();
 								return NULL;
 							}
-							switch( key )
-							{
+							switch( key ) {
 								case 72:
 									// xterm only
 									input_field.SetCursor( 0 );
@@ -895,24 +840,19 @@ char* Posix_ConsoleInput()
 									return NULL;
 							}
 							break;
-						case 91:
-						{
+						case 91: {
 							ret = read( STDIN_FILENO, &key, 1 );
-							if( ret <= 0 )
-							{
+							if( ret <= 0 ) {
 								Sys_Printf( "dropping sequence: '27' '91' " );
 								tty_FlushIn();
 								assert( hidden );
 								tty_Show();
 								return NULL;
 							}
-							switch( key )
-							{
-								case 49:
-								{
+							switch( key ) {
+								case 49: {
 									ret = read( STDIN_FILENO, &key, 1 );
-									if( ret <= 0 || key != 126 )
-									{
+									if( ret <= 0 || key != 126 ) {
 										Sys_Printf( "dropping sequence: '27' '91' '49' '%d' ", key );
 										tty_FlushIn();
 										assert( hidden );
@@ -923,11 +863,9 @@ char* Posix_ConsoleInput()
 									input_field.SetCursor( 0 );
 									break;
 								}
-								case 50:
-								{
+								case 50: {
 									ret = read( STDIN_FILENO, &key, 1 );
-									if( ret <= 0 || key != 126 )
-									{
+									if( ret <= 0 || key != 126 ) {
 										Sys_Printf( "dropping sequence: '27' '91' '50' '%d' ", key );
 										tty_FlushIn();
 										assert( hidden );
@@ -938,11 +876,9 @@ char* Posix_ConsoleInput()
 									input_field.KeyDownEvent( K_INS );
 									break;
 								}
-								case 52:
-								{
+								case 52: {
 									ret = read( STDIN_FILENO, &key, 1 );
-									if( ret <= 0 || key != 126 )
-									{
+									if( ret <= 0 || key != 126 ) {
 										Sys_Printf( "dropping sequence: '27' '91' '52' '%d' ", key );
 										tty_FlushIn();
 										assert( hidden );
@@ -953,19 +889,16 @@ char* Posix_ConsoleInput()
 									input_field.SetCursor( strlen( input_field.GetBuffer() ) );
 									break;
 								}
-								case 51:
-								{
+								case 51: {
 									ret = read( STDIN_FILENO, &key, 1 );
-									if( ret <= 0 )
-									{
+									if( ret <= 0 ) {
 										Sys_Printf( "dropping sequence: '27' '91' '51' " );
 										tty_FlushIn();
 										assert( hidden );
 										tty_Show();
 										return NULL;
 									}
-									if( key == 126 )
-									{
+									if( key == 126 ) {
 										input_field.KeyDownEvent( K_DEL );
 										break;
 									}
@@ -976,45 +909,34 @@ char* Posix_ConsoleInput()
 									return NULL;
 								}
 								case 65:
-								case 66:
-								{
+								case 66: {
 									// history
-									if( history_current == 0 )
-									{
+									if( history_current == 0 ) {
 										history_backup = input_field;
 									}
-									if( key == 65 )
-									{
+									if( key == 65 ) {
 										// up
 										history_current++;
-									}
-									else
-									{
+									} else {
 										// down
 										history_current--;
 									}
 									// history_current cycle:
 									// 0: current edit
 									// 1 .. Min( COMMAND_HISTORY, history_count ): back in history
-									if( history_current < 0 )
-									{
+									if( history_current < 0 ) {
 										history_current = Min( COMMAND_HISTORY, history_count );
-									}
-									else
-									{
+									} else {
 										history_current %= Min( COMMAND_HISTORY, history_count ) + 1;
 									}
 									int index = -1;
-									if( history_current == 0 )
-									{
+									if( history_current == 0 ) {
 										input_field = history_backup;
-									}
-									else
-									{
+									} else {
 										index = history_start + Min( COMMAND_HISTORY, history_count ) - history_current;
 										index %= COMMAND_HISTORY;
 										assert( index >= 0 && index < COMMAND_HISTORY );
-										input_field.SetBuffer( history[ index ] );
+										input_field.SetBuffer( history[index] );
 									}
 									assert( hidden );
 									tty_Show();
@@ -1045,8 +967,7 @@ char* Posix_ConsoleInput()
 					break;
 				}
 				default:
-					if( key >= ' ' )
-					{
+					if( key >= ' ' ) {
 						input_field.CharEvent( key );
 						break;
 					}
@@ -1057,50 +978,43 @@ char* Posix_ConsoleInput()
 					return NULL;
 			}
 		}
-		if( hidden )
-		{
+		if( hidden ) {
 			tty_Show();
 		}
 		return NULL;
-	}
-	else
-	{
+	} else {
 		// disabled on OSX. works fine from a terminal, but launching from Finder is causing trouble
 		// I'm pretty sure it could be re-enabled if needed, and just handling the Finder failure case right (TTimo)
 #ifndef MACOS_X
 		// no terminal support - read only complete lines
-		int				len;
-		fd_set			fdset;
-		struct timeval	timeout;
+		int			   len;
+		fd_set		   fdset;
+		struct timeval timeout;
 
 		FD_ZERO( &fdset );
 		FD_SET( STDIN_FILENO, &fdset );
-		timeout.tv_sec = 0;
+		timeout.tv_sec	= 0;
 		timeout.tv_usec = 0;
-		if( select( 1, &fdset, NULL, NULL, &timeout ) == -1 || !FD_ISSET( 0, &fdset ) )
-		{
+		if( select( 1, &fdset, NULL, NULL, &timeout ) == -1 || !FD_ISSET( 0, &fdset ) ) {
 			return NULL;
 		}
 
 		len = read( 0, input_ret, sizeof( input_ret ) );
-		if( len == 0 )
-		{
+		if( len == 0 ) {
 			// EOF
 			return NULL;
 		}
 
-		if( len < 1 )
-		{
-			Sys_Printf( "read failed: %s\n", strerror( errno ) );	// something bad happened, cancel this line and print an error
+		if( len < 1 ) {
+			Sys_Printf( "read failed: %s\n", strerror( errno ) ); // something bad happened, cancel this line and print an error
 			return NULL;
 		}
 
-		if( len == sizeof( input_ret ) )
-		{
-			Sys_Printf( "read overflow\n" );	// things are likely to break, as input will be cut into pieces
+		if( len == sizeof( input_ret ) ) {
+			Sys_Printf( "read overflow\n" ); // things are likely to break, as input will be cut into pieces
 		}
 
-		input_ret[ len - 1 ] = '\0';		// rip off the \n and terminate
+		input_ret[len - 1] = '\0'; // rip off the \n and terminate
 		return input_ret;
 #endif
 	}
@@ -1115,13 +1029,12 @@ the actual mouse and keyboard input is in the Sys_Poll logic
 void Sys_GenerateEvents()
 {
 	char* s;
-	if( ( s = Posix_ConsoleInput() ) )
-	{
+	if( ( s = Posix_ConsoleInput() ) ) {
 		char* b;
-		int len;
+		int	  len;
 
 		len = strlen( s ) + 1;
-		b = ( char* )Mem_Alloc( len );
+		b	= ( char* )Mem_Alloc( len );
 		strcpy( b, s );
 		Posix_QueEvent( SE_CONSOLE, 0, 0, len, b );
 	}
@@ -1192,4 +1105,6 @@ void Sys_Error( const char* error, ... )
 Sys_FreeOpenAL
 ===============
 */
-void Sys_FreeOpenAL() { }
+void Sys_FreeOpenAL()
+{
+}

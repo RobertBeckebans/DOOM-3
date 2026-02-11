@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,14 +39,13 @@ static unsigned short s_oldHardwareGamma[3][256];
 ** WG_GetOldGammaRamp
 **
 */
-void WG_GetOldGammaRamp()
+void				  WG_GetOldGammaRamp()
 {
-	HDC			hDC;
+	HDC hDC;
 
 	hDC = GetDC( GetDesktopWindow() );
 	GetDeviceGammaRamp( hDC, s_oldHardwareGamma );
 	ReleaseDC( GetDesktopWindow(), hDC );
-
 
 	/*
 	** GLimp_SetGamma
@@ -54,22 +54,19 @@ void WG_GetOldGammaRamp()
 	void GLimp_SetGamma( unsigned char red[256], unsigned char green[256], unsigned char blue[256] )
 	{
 		unsigned short table[3][256];
-		int i;
+		int			   i;
 
-		if( !glw_state.hDC )
-		{
+		if( !glw_state.hDC ) {
 			return;
 		}
 
-		for( i = 0; i < 256; i++ )
-		{
-			table[0][i] = ( ( ( unsigned short ) red[i] ) << 8 ) | red[i];
-			table[1][i] = ( ( ( unsigned short ) green[i] ) << 8 ) | green[i];
-			table[2][i] = ( ( ( unsigned short ) blue[i] ) << 8 ) | blue[i];
+		for( i = 0; i < 256; i++ ) {
+			table[0][i] = ( ( ( unsigned short )red[i] ) << 8 ) | red[i];
+			table[1][i] = ( ( ( unsigned short )green[i] ) << 8 ) | green[i];
+			table[2][i] = ( ( ( unsigned short )blue[i] ) << 8 ) | blue[i];
 		}
 
-		if( !SetDeviceGammaRamp( glw_state.hDC, table ) )
-		{
+		if( !SetDeviceGammaRamp( glw_state.hDC, table ) ) {
 			common->Printf( "WARNING: SetDeviceGammaRamp failed.\n" );
 		}
 	}
@@ -83,8 +80,7 @@ void WG_GetOldGammaRamp()
 
 		// if we never read in a reasonable looking
 		// table, don't write it out
-		if( s_oldHardwareGamma[0][255] == 0 )
-		{
+		if( s_oldHardwareGamma[0][255] == 0 ) {
 			return;
 		}
 
@@ -92,4 +88,3 @@ void WG_GetOldGammaRamp()
 		SetDeviceGammaRamp( hDC, s_oldHardwareGamma );
 		ReleaseDC( GetDesktopWindow(), hDC );
 	}
-

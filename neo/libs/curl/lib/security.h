@@ -28,8 +28,7 @@
 #include <stdarg.h>
 #include "urldata.h"  /* for struct connectdata * */
 
-struct Curl_sec_client_mech
-{
+struct Curl_sec_client_mech {
 	const char* name;
 	size_t size;
 	int ( *init )( void* );

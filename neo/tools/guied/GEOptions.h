@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,86 +39,84 @@ class idRectangle;
 class rvGEOptions
 {
 public:
-
 	static const int MAX_MRU_SIZE = rvRegistryOptions::MAX_MRU_SIZE;
 
 	rvGEOptions();
 
-	void			Init();
+	void		Init();
 
 	// Write the options to the registery
-	bool			Save();
+	bool		Save();
 
 	// Read the options from the registry
-	bool			Load();
+	bool		Load();
 
-	void			SetSelectionColor( idVec4& color );
-	void			SetSelectionColor( COLORREF color );
-	void			SetGridColor( idVec4& color );
-	void			SetGridColor( COLORREF color );
-	void			SetGridWidth( int width );
-	void			SetGridHeight( int height );
-	void			SetGridVisible( bool vis );
-	void			SetGridSnap( bool snap );
-	void			SetLastOptionsPage( int page );
-	void			SetNavigatorVisible( bool vis );
-	void			SetPropertiesVisible( bool vis );
-	void			SetTransformerVisible( bool vis );
-	void			SetIgnoreDesktopSelect( bool ignore );
-	void			SetStatusBarVisible( bool vis );
+	void		SetSelectionColor( idVec4& color );
+	void		SetSelectionColor( COLORREF color );
+	void		SetGridColor( idVec4& color );
+	void		SetGridColor( COLORREF color );
+	void		SetGridWidth( int width );
+	void		SetGridHeight( int height );
+	void		SetGridVisible( bool vis );
+	void		SetGridSnap( bool snap );
+	void		SetLastOptionsPage( int page );
+	void		SetNavigatorVisible( bool vis );
+	void		SetPropertiesVisible( bool vis );
+	void		SetTransformerVisible( bool vis );
+	void		SetIgnoreDesktopSelect( bool ignore );
+	void		SetStatusBarVisible( bool vis );
 
-	void			AddRecentFile( const char* filename );
-	int				GetRecentFileCount();
-	const char*		GetRecentFile( int index );
+	void		AddRecentFile( const char* filename );
+	int			GetRecentFileCount();
+	const char* GetRecentFile( int index );
 
-	idVec4&			GetGridColor();
-	int				GetGridWidth();
-	int				GetGridHeight();
-	bool			GetGridVisible();
-	bool			GetGridSnap();
-	int				GetLastOptionsPage();
-	idVec4&			GetWorkspaceColor();
-	bool			GetNavigatorVisible();
-	bool			GetTransformerVisible();
-	bool			GetPropertiesVisible();
-	idVec4&			GetSelectionColor();
-	COLORREF*		GetCustomColors();
-	bool			GetIgnoreDesktopSelect();
-	bool			GetStatusBarVisible();
+	idVec4&		GetGridColor();
+	int			GetGridWidth();
+	int			GetGridHeight();
+	bool		GetGridVisible();
+	bool		GetGridSnap();
+	int			GetLastOptionsPage();
+	idVec4&		GetWorkspaceColor();
+	bool		GetNavigatorVisible();
+	bool		GetTransformerVisible();
+	bool		GetPropertiesVisible();
+	idVec4&		GetSelectionColor();
+	COLORREF*	GetCustomColors();
+	bool		GetIgnoreDesktopSelect();
+	bool		GetStatusBarVisible();
 
-	void			SetWindowPlacement( const char* name, HWND hwnd );
-	bool			GetWindowPlacement( const char* name, HWND hwnd );
+	void		SetWindowPlacement( const char* name, HWND hwnd );
+	bool		GetWindowPlacement( const char* name, HWND hwnd );
 
-	void			SnapRectToGrid( idRectangle& rect, bool snapLeft = true, bool snapTop = true, bool snapWidth = true, bool snapHeight = true );
+	void		SnapRectToGrid( idRectangle& rect, bool snapLeft = true, bool snapTop = true, bool snapWidth = true, bool snapHeight = true );
 
 protected:
+	void			  ConvertColor( COLORREF src, idVec4& dest );
+	void			  SetModified( bool mod );
 
-	void				ConvertColor( COLORREF src, idVec4& dest );
-	void				SetModified( bool mod );
+	bool			  mModified;
+	int				  mLastOptionsPage;
 
-	bool				mModified;
-	int					mLastOptionsPage;
+	idVec4			  mGridColor;
+	int				  mGridWidth;
+	int				  mGridHeight;
+	bool			  mGridSnap;
+	bool			  mGridVisible;
 
-	idVec4				mGridColor;
-	int					mGridWidth;
-	int					mGridHeight;
-	bool				mGridSnap;
-	bool				mGridVisible;
+	idVec4			  mWorkspaceColor;
+	idVec4			  mSelectionColor;
 
-	idVec4				mWorkspaceColor;
-	idVec4				mSelectionColor;
+	bool			  mNavigatorVisible;
+	bool			  mPropertiesVisible;
+	bool			  mTransformerVisible;
+	bool			  mStatusBarVisible;
+	bool			  mIgnoreDesktopSelect;
 
-	bool				mNavigatorVisible;
-	bool				mPropertiesVisible;
-	bool				mTransformerVisible;
-	bool				mStatusBarVisible;
-	bool				mIgnoreDesktopSelect;
+	idList<idStr>	  mRecentFiles;
 
-	idList<idStr>		mRecentFiles;
+	COLORREF		  mCustomColors[16];
 
-	COLORREF			mCustomColors[16];
-
-	rvRegistryOptions	mRegistry;
+	rvRegistryOptions mRegistry;
 };
 
 ID_INLINE void rvGEOptions::SetModified( bool mod )
@@ -311,4 +310,3 @@ ID_INLINE const char* rvGEOptions::GetRecentFile( int index )
 }
 
 #endif // _GEOPTIONS_H_
-

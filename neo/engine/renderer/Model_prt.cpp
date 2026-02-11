@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -51,7 +52,7 @@ idRenderModelPrt::InitFromFile
 */
 void idRenderModelPrt::InitFromFile( const char* fileName )
 {
-	name = fileName;
+	name		   = fileName;
 	particleSystem = static_cast<const idDeclParticle*>( declManager->FindType( DECL_PARTICLE, fileName ) );
 }
 
@@ -73,23 +74,20 @@ idRenderModelPrt::InstantiateDynamicModel
 */
 idRenderModel* idRenderModelPrt::InstantiateDynamicModel( const struct renderEntity_s* renderEntity, const struct viewDef_s* viewDef, idRenderModel* cachedModel )
 {
-	idRenderModelStatic*	staticModel;
+	idRenderModelStatic* staticModel;
 
-	if( cachedModel && !r_useCachedDynamicModels.GetBool() )
-	{
+	if( cachedModel && !r_useCachedDynamicModels.GetBool() ) {
 		delete cachedModel;
 		cachedModel = NULL;
 	}
 
 	// this may be triggered by a model trace or other non-view related source, to which we should look like an empty model
-	if( renderEntity == NULL || viewDef == NULL )
-	{
+	if( renderEntity == NULL || viewDef == NULL ) {
 		delete cachedModel;
 		return NULL;
 	}
 
-	if( r_skipParticles.GetBool() )
-	{
+	if( r_skipParticles.GetBool() ) {
 		delete cachedModel;
 		return NULL;
 	}
@@ -102,83 +100,70 @@ idRenderModel* idRenderModelPrt::InstantiateDynamicModel( const struct renderEnt
 	}
 	*/
 
-	if( cachedModel != NULL )
-	{
-
+	if( cachedModel != NULL ) {
 		assert( dynamic_cast<idRenderModelStatic*>( cachedModel ) != NULL );
 		assert( idStr::Icmp( cachedModel->Name(), parametricParticle_SnapshotName ) == 0 );
 
 		staticModel = static_cast<idRenderModelStatic*>( cachedModel );
 
-	}
-	else
-	{
-
+	} else {
 		staticModel = new idRenderModelStatic;
 		staticModel->InitEmpty( parametricParticle_SnapshotName );
 	}
 
 	particleGen_t g;
 
-	g.renderEnt = renderEntity;
+	g.renderEnt	 = renderEntity;
 	g.renderView = &viewDef->renderView;
 	g.origin.Zero();
 	g.axis.Identity();
 
-	for( int stageNum = 0; stageNum < particleSystem->stages.Num(); stageNum++ )
-	{
+	for( int stageNum = 0; stageNum < particleSystem->stages.Num(); stageNum++ ) {
 		idParticleStage* stage = particleSystem->stages[stageNum];
 
-		if( !stage->material )
-		{
+		if( !stage->material ) {
 			continue;
 		}
-		if( !stage->cycleMsec )
-		{
+		if( !stage->cycleMsec ) {
 			continue;
 		}
-		if( stage->hidden )  		// just for gui particle editor use
-		{
+		if( stage->hidden ) { // just for gui particle editor use
 			staticModel->DeleteSurfaceWithId( stageNum );
 			continue;
 		}
 
 		idRandom steppingRandom, steppingRandom2;
 
-		int stageAge = g.renderView->time + renderEntity->shaderParms[SHADERPARM_TIMEOFFSET] * 1000 - stage->timeOffset * 1000;
-		int	stageCycle = stageAge / stage->cycleMsec;
-		int	inCycleTime = stageAge - stageCycle * stage->cycleMsec;
+		int		 stageAge	 = g.renderView->time + renderEntity->shaderParms[SHADERPARM_TIMEOFFSET] * 1000 - stage->timeOffset * 1000;
+		int		 stageCycle	 = stageAge / stage->cycleMsec;
+		int		 inCycleTime = stageAge - stageCycle * stage->cycleMsec;
 
 		// some particles will be in this cycle, some will be in the previous cycle
 		steppingRandom.SetSeed( ( ( stageCycle << 10 ) & idRandom::MAX_RAND ) ^ ( int )( renderEntity->shaderParms[SHADERPARM_DIVERSITY] * idRandom::MAX_RAND ) );
 		steppingRandom2.SetSeed( ( ( ( stageCycle - 1 ) << 10 ) & idRandom::MAX_RAND ) ^ ( int )( renderEntity->shaderParms[SHADERPARM_DIVERSITY] * idRandom::MAX_RAND ) );
 
-		int	count = stage->totalParticles * stage->NumQuadsPerParticle();
+		int				count = stage->totalParticles * stage->NumQuadsPerParticle();
 
-		int surfaceNum;
+		int				surfaceNum;
 		modelSurface_t* surf;
 
-		if( staticModel->FindSurfaceWithId( stageNum, surfaceNum ) )
-		{
+		if( staticModel->FindSurfaceWithId( stageNum, surfaceNum ) ) {
 			surf = &staticModel->surfaces[surfaceNum];
 			R_FreeStaticTriSurfVertexCaches( surf->geometry );
-		}
-		else
-		{
-			surf = &staticModel->surfaces.Alloc();
-			surf->id = stageNum;
-			surf->shader = stage->material;
+		} else {
+			surf		   = &staticModel->surfaces.Alloc();
+			surf->id	   = stageNum;
+			surf->shader   = stage->material;
 			surf->geometry = R_AllocStaticTriSurf();
 			R_AllocStaticTriSurfVerts( surf->geometry, 4 * count );
 			R_AllocStaticTriSurfIndexes( surf->geometry, 6 * count );
 			R_AllocStaticTriSurfPlanes( surf->geometry, 6 * count );
 		}
 
-		int numVerts = 0;
-		idDrawVert* verts = surf->geometry->verts;
+		int			numVerts = 0;
+		idDrawVert* verts	 = surf->geometry->verts;
 
-		for( int index = 0; index < stage->totalParticles; index++ )
-		{
+		for( int index = 0; index < stage->totalParticles; index++ ) {
 			g.index = index;
 
 			// bump the random
@@ -186,48 +171,39 @@ idRenderModel* idRenderModelPrt::InstantiateDynamicModel( const struct renderEnt
 			steppingRandom2.RandomInt();
 
 			// calculate local age for this index
-			int	bunchOffset = stage->particleLife * 1000 * stage->spawnBunching * index / stage->totalParticles;
+			int bunchOffset = stage->particleLife * 1000 * stage->spawnBunching * index / stage->totalParticles;
 
-			int particleAge = stageAge - bunchOffset;
-			int	particleCycle = particleAge / stage->cycleMsec;
-			if( particleCycle < 0 )
-			{
+			int particleAge	  = stageAge - bunchOffset;
+			int particleCycle = particleAge / stage->cycleMsec;
+			if( particleCycle < 0 ) {
 				// before the particleSystem spawned
 				continue;
 			}
-			if( stage->cycles && particleCycle >= stage->cycles )
-			{
+			if( stage->cycles && particleCycle >= stage->cycles ) {
 				// cycled systems will only run cycle times
 				continue;
 			}
 
-			if( particleCycle == stageCycle )
-			{
+			if( particleCycle == stageCycle ) {
 				g.random = steppingRandom;
-			}
-			else
-			{
+			} else {
 				g.random = steppingRandom2;
 			}
 
-			int	inCycleTime = particleAge - particleCycle * stage->cycleMsec;
+			int inCycleTime = particleAge - particleCycle * stage->cycleMsec;
 
-			if( renderEntity->shaderParms[SHADERPARM_PARTICLE_STOPTIME] &&
-					g.renderView->time - inCycleTime >= renderEntity->shaderParms[SHADERPARM_PARTICLE_STOPTIME] * 1000 )
-			{
+			if( renderEntity->shaderParms[SHADERPARM_PARTICLE_STOPTIME] && g.renderView->time - inCycleTime >= renderEntity->shaderParms[SHADERPARM_PARTICLE_STOPTIME] * 1000 ) {
 				// don't fire any more particles
 				continue;
 			}
 
 			// supress particles before or after the age clamp
 			g.frac = ( float )inCycleTime / ( stage->particleLife * 1000 );
-			if( g.frac < 0.0f )
-			{
+			if( g.frac < 0.0f ) {
 				// yet to be spawned
 				continue;
 			}
-			if( g.frac > 1.0f )
-			{
+			if( g.frac > 1.0f ) {
 				// this particle is in the deadTime band
 				continue;
 			}
@@ -245,10 +221,9 @@ idRenderModel* idRenderModelPrt::InstantiateDynamicModel( const struct renderEnt
 		assert( ( numVerts & 3 ) == 0 && numVerts <= 4 * count );
 
 		// build the indexes
-		int	numIndexes = 0;
-		glIndex_t* indexes = surf->geometry->indexes;
-		for( int i = 0; i < numVerts; i += 4 )
-		{
+		int		   numIndexes = 0;
+		glIndex_t* indexes	  = surf->geometry->indexes;
+		for( int i = 0; i < numVerts; i += 4 ) {
 			indexes[numIndexes + 0] = i;
 			indexes[numIndexes + 1] = i + 2;
 			indexes[numIndexes + 2] = i + 3;
@@ -258,11 +233,11 @@ idRenderModel* idRenderModelPrt::InstantiateDynamicModel( const struct renderEnt
 			numIndexes += 6;
 		}
 
-		surf->geometry->tangentsCalculated = false;
+		surf->geometry->tangentsCalculated	 = false;
 		surf->geometry->facePlanesCalculated = false;
-		surf->geometry->numVerts = numVerts;
-		surf->geometry->numIndexes = numIndexes;
-		surf->geometry->bounds = stage->bounds;		// just always draw the particles
+		surf->geometry->numVerts			 = numVerts;
+		surf->geometry->numIndexes			 = numIndexes;
+		surf->geometry->bounds				 = stage->bounds; // just always draw the particles
 	}
 
 	return staticModel;
@@ -309,12 +284,10 @@ int idRenderModelPrt::Memory() const
 
 	total += idRenderModelStatic::Memory();
 
-	if( particleSystem )
-	{
+	if( particleSystem ) {
 		total += sizeof( *particleSystem );
 
-		for( int i = 0; i < particleSystem->stages.Num(); i++ )
-		{
+		for( int i = 0; i < particleSystem->stages.Num(); i++ ) {
 			total += sizeof( particleSystem->stages[i] );
 		}
 	}

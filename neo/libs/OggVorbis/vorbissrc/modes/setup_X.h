@@ -15,14 +15,12 @@
 
  ********************************************************************/
 
-static double rate_mapping_X[11] =
-{
+static double rate_mapping_X[11] = {
 	-1., -1., -1., -1., -1.,
 	-1., -1., -1., -1., -1., -1.
 };
 
-ve_setup_data_template ve_setup_X_stereo =
-{
+ve_setup_data_template ve_setup_X_stereo = {
 	10,
 	rate_mapping_X,
 	quality_mapping_44,
@@ -73,8 +71,7 @@ ve_setup_data_template ve_setup_X_stereo =
 	_mapres_template_44_stereo
 };
 
-ve_setup_data_template ve_setup_X_uncoupled =
-{
+ve_setup_data_template ve_setup_X_uncoupled = {
 	10,
 	rate_mapping_X,
 	quality_mapping_44,
@@ -125,8 +122,7 @@ ve_setup_data_template ve_setup_X_uncoupled =
 	_mapres_template_44_uncoupled
 };
 
-ve_setup_data_template ve_setup_X_stereo_low =
-{
+ve_setup_data_template ve_setup_X_stereo_low = {
 	1,
 	rate_mapping_X,
 	quality_mapping_44_stereo_low,
@@ -178,8 +174,7 @@ ve_setup_data_template ve_setup_X_stereo_low =
 };
 
 
-ve_setup_data_template ve_setup_X_uncoupled_low =
-{
+ve_setup_data_template ve_setup_X_uncoupled_low = {
 	1,
 	rate_mapping_X,
 	quality_mapping_44_stereo_low,
@@ -230,8 +225,7 @@ ve_setup_data_template ve_setup_X_uncoupled_low =
 	_mapres_template_44_uncoupled
 };
 
-ve_setup_data_template ve_setup_XX_stereo =
-{
+ve_setup_data_template ve_setup_XX_stereo = {
 	2,
 	rate_mapping_X,
 	quality_mapping_8,
@@ -282,8 +276,7 @@ ve_setup_data_template ve_setup_XX_stereo =
 	_mapres_template_8_stereo
 };
 
-ve_setup_data_template ve_setup_XX_uncoupled =
-{
+ve_setup_data_template ve_setup_XX_uncoupled = {
 	2,
 	rate_mapping_X,
 	quality_mapping_8,

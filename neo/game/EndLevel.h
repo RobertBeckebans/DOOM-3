@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,14 +32,14 @@ class idTarget_EndLevel : public idEntity
 public:
 	CLASS_PROTOTYPE( idTarget_EndLevel );
 
-	void	Spawn();
+	void Spawn();
 	~idTarget_EndLevel();
 
-	void	Draw();
+	void		Draw();
 	// the endLevel will be responsible for drawing the entire screen
 	// when it is active
 
-	void	PlayerCommand( int buttons );
+	void		PlayerCommand( int buttons );
 	// when an endlevel is active, plauer buttons get sent here instead
 	// of doing anything to the player, which will allow moving to
 	// the next level
@@ -48,20 +49,19 @@ public:
 	// session when there is something to give
 
 private:
-	idStr	exitCommand;
+	idStr			 exitCommand;
 
-	idVec3	initialViewOrg;
-	idVec3	initialViewAngles;
+	idVec3			 initialViewOrg;
+	idVec3			 initialViewAngles;
 	// set when the player triggers the exit
 
-	idUserInterface*	gui;
+	idUserInterface* gui;
 
-	bool	buttonsReleased;
+	bool			 buttonsReleased;
 	// don't skip out until buttons are released, then pressed
 
-	bool	readyToExit;
-	bool	noGui;
+	bool			 readyToExit;
+	bool			 noGui;
 
-	void	Event_Trigger( idEntity* activator );
+	void			 Event_Trigger( idEntity* activator );
 };
-

@@ -75,8 +75,7 @@ extern "C" {
 
 typedef void CURLM;
 
-typedef enum
-{
+typedef enum {
 	CURLM_CALL_MULTI_PERFORM = -1, /* please call curl_multi_perform() soon */
 	CURLM_OK,
 	CURLM_BAD_HANDLE,      /* the passed-in handle is not a valid CURLM handle */
@@ -86,20 +85,17 @@ typedef enum
 	CURLM_LAST
 } CURLMcode;
 
-typedef enum
-{
+typedef enum {
 	CURLMSG_NONE, /* first, not used */
 	CURLMSG_DONE, /* This easy handle has completed. 'result' contains
                    the CURLcode of the transfer */
 	CURLMSG_LAST /* last, not used */
 } CURLMSG;
 
-struct CURLMsg
-{
+struct CURLMsg {
 	CURLMSG msg;       /* what this message means */
 	CURL* easy_handle; /* the handle it concerns */
-	union
-	{
+	union {
 		void* whatever;    /* message-specific data */
 		CURLcode result;   /* return code for transfer */
 	} data;

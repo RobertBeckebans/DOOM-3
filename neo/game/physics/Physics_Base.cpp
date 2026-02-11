@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -41,7 +42,7 @@ idPhysics_Base::idPhysics_Base
 */
 idPhysics_Base::idPhysics_Base()
 {
-	self = NULL;
+	self	 = NULL;
 	clipMask = 0;
 	SetGravity( gameLocal.GetGravity() );
 	ClearContacts();
@@ -54,8 +55,7 @@ idPhysics_Base::~idPhysics_Base
 */
 idPhysics_Base::~idPhysics_Base()
 {
-	if( self && self->GetPhysics() == this )
-	{
+	if( self && self->GetPhysics() == this ) {
 		self->SetPhysics( NULL );
 	}
 	idForce::DeletePhysics( this );
@@ -77,14 +77,12 @@ void idPhysics_Base::Save( idSaveGame* savefile ) const
 	savefile->WriteVec3( gravityNormal );
 
 	savefile->WriteInt( contacts.Num() );
-	for( i = 0; i < contacts.Num(); i++ )
-	{
+	for( i = 0; i < contacts.Num(); i++ ) {
 		savefile->WriteContactInfo( contacts[i] );
 	}
 
 	savefile->WriteInt( contactEntities.Num() );
-	for( i = 0; i < contactEntities.Num(); i++ )
-	{
+	for( i = 0; i < contactEntities.Num(); i++ ) {
 		contactEntities[i].Save( savefile );
 	}
 }
@@ -105,15 +103,13 @@ void idPhysics_Base::Restore( idRestoreGame* savefile )
 
 	savefile->ReadInt( num );
 	contacts.SetNum( num );
-	for( i = 0; i < contacts.Num(); i++ )
-	{
+	for( i = 0; i < contacts.Num(); i++ ) {
 		savefile->ReadContactInfo( contacts[i] );
 	}
 
 	savefile->ReadInt( num );
 	contactEntities.SetNum( num );
-	for( i = 0; i < contactEntities.Num(); i++ )
-	{
+	for( i = 0; i < contactEntities.Num(); i++ ) {
 		contactEntities[i].Restore( savefile );
 	}
 }
@@ -588,14 +584,12 @@ idPhysics_Base::ClearContacts
 */
 void idPhysics_Base::ClearContacts()
 {
-	int i;
+	int		  i;
 	idEntity* ent;
 
-	for( i = 0; i < contacts.Num(); i++ )
-	{
-		ent = gameLocal.entities[ contacts[i].entityNum ];
-		if( ent )
-		{
+	for( i = 0; i < contacts.Num(); i++ ) {
+		ent = gameLocal.entities[contacts[i].entityNum];
+		if( ent ) {
 			ent->RemoveContactEntity( self );
 		}
 	}
@@ -609,24 +603,20 @@ idPhysics_Base::AddContactEntity
 */
 void idPhysics_Base::AddContactEntity( idEntity* e )
 {
-	int i;
+	int		  i;
 	idEntity* ent;
-	bool found = false;
+	bool	  found = false;
 
-	for( i = 0; i < contactEntities.Num(); i++ )
-	{
+	for( i = 0; i < contactEntities.Num(); i++ ) {
 		ent = contactEntities[i].GetEntity();
-		if( ent == NULL )
-		{
+		if( ent == NULL ) {
 			contactEntities.RemoveIndex( i-- );
 		}
-		if( ent == e )
-		{
+		if( ent == e ) {
 			found = true;
 		}
 	}
-	if( !found )
-	{
+	if( !found ) {
 		contactEntities.Alloc() = e;
 	}
 }
@@ -638,19 +628,16 @@ idPhysics_Base::RemoveContactEntity
 */
 void idPhysics_Base::RemoveContactEntity( idEntity* e )
 {
-	int i;
+	int		  i;
 	idEntity* ent;
 
-	for( i = 0; i < contactEntities.Num(); i++ )
-	{
+	for( i = 0; i < contactEntities.Num(); i++ ) {
 		ent = contactEntities[i].GetEntity();
-		if( !ent )
-		{
+		if( !ent ) {
 			contactEntities.RemoveIndex( i-- );
 			continue;
 		}
-		if( ent == e )
-		{
+		if( ent == e ) {
 			contactEntities.RemoveIndex( i-- );
 			return;
 		}
@@ -666,10 +653,8 @@ bool idPhysics_Base::HasGroundContacts() const
 {
 	int i;
 
-	for( i = 0; i < contacts.Num(); i++ )
-	{
-		if( contacts[i].normal * -gravityNormal > 0.0f )
-		{
+	for( i = 0; i < contacts.Num(); i++ ) {
+		if( contacts[i].normal * -gravityNormal > 0.0f ) {
 			return true;
 		}
 	}
@@ -685,10 +670,8 @@ bool idPhysics_Base::IsGroundEntity( int entityNum ) const
 {
 	int i;
 
-	for( i = 0; i < contacts.Num(); i++ )
-	{
-		if( contacts[i].entityNum == entityNum && ( contacts[i].normal * -gravityNormal > 0.0f ) )
-		{
+	for( i = 0; i < contacts.Num(); i++ ) {
+		if( contacts[i].entityNum == entityNum && ( contacts[i].normal * -gravityNormal > 0.0f ) ) {
 			return true;
 		}
 	}
@@ -704,10 +687,8 @@ bool idPhysics_Base::IsGroundClipModel( int entityNum, int id ) const
 {
 	int i;
 
-	for( i = 0; i < contacts.Num(); i++ )
-	{
-		if( contacts[i].entityNum == entityNum && contacts[i].id == id && ( contacts[i].normal * -gravityNormal > 0.0f ) )
-		{
+	for( i = 0; i < contacts.Num(); i++ ) {
+		if( contacts[i].entityNum == entityNum && contacts[i].id == id && ( contacts[i].normal * -gravityNormal > 0.0f ) ) {
 			return true;
 		}
 	}
@@ -800,15 +781,14 @@ idPhysics_Base::AddGroundContacts
 void idPhysics_Base::AddGroundContacts( const idClipModel* clipModel )
 {
 	idVec6 dir;
-	int index, num;
+	int	   index, num;
 
 	index = contacts.Num();
 	contacts.SetNum( index + 10, false );
 
 	dir.SubVec3( 0 ) = gravityNormal;
 	dir.SubVec3( 1 ) = vec3_origin;
-	num = gameLocal.clip.Contacts( &contacts[index], 10, clipModel->GetOrigin(),
-								   dir, CONTACT_EPSILON, clipModel, clipModel->GetAxis(), clipMask, self );
+	num				 = gameLocal.clip.Contacts( &contacts[index], 10, clipModel->GetOrigin(), dir, CONTACT_EPSILON, clipModel, clipModel->GetAxis(), clipMask, self );
 	contacts.SetNum( index + num, false );
 }
 
@@ -819,14 +799,12 @@ idPhysics_Base::AddContactEntitiesForContacts
 */
 void idPhysics_Base::AddContactEntitiesForContacts()
 {
-	int i;
+	int		  i;
 	idEntity* ent;
 
-	for( i = 0; i < contacts.Num(); i++ )
-	{
-		ent = gameLocal.entities[ contacts[i].entityNum ];
-		if( ent && ent != self )
-		{
+	for( i = 0; i < contacts.Num(); i++ ) {
+		ent = gameLocal.entities[contacts[i].entityNum];
+		if( ent && ent != self ) {
 			ent->AddContactEntity( self );
 		}
 	}
@@ -839,18 +817,14 @@ idPhysics_Base::ActivateContactEntities
 */
 void idPhysics_Base::ActivateContactEntities()
 {
-	int i;
+	int		  i;
 	idEntity* ent;
 
-	for( i = 0; i < contactEntities.Num(); i++ )
-	{
+	for( i = 0; i < contactEntities.Num(); i++ ) {
 		ent = contactEntities[i].GetEntity();
-		if( ent )
-		{
+		if( ent ) {
 			ent->ActivatePhysics( self );
-		}
-		else
-		{
+		} else {
 			contactEntities.RemoveIndex( i-- );
 		}
 	}
@@ -863,8 +837,7 @@ idPhysics_Base::IsOutsideWorld
 */
 bool idPhysics_Base::IsOutsideWorld() const
 {
-	if( !gameLocal.clip.GetWorldBounds().Expand( 128.0f ).IntersectsBounds( GetAbsBounds() ) )
-	{
+	if( !gameLocal.clip.GetWorldBounds().Expand( 128.0f ).IntersectsBounds( GetAbsBounds() ) ) {
 		return true;
 	}
 	return false;
@@ -879,42 +852,35 @@ void idPhysics_Base::DrawVelocity( int id, float linearScale, float angularScale
 {
 	idVec3 dir, org, vec, start, end;
 	idMat3 axis;
-	float length, a;
+	float  length, a;
 
 	dir = GetLinearVelocity( id );
 	dir *= linearScale;
-	if( dir.LengthSqr() > Square( 0.1f ) )
-	{
+	if( dir.LengthSqr() > Square( 0.1f ) ) {
 		dir.Truncate( 10.0f );
 		org = GetOrigin( id );
 		gameRenderWorld->DebugArrow( colorRed, org, org + dir, 1 );
 	}
 
-	dir = GetAngularVelocity( id );
+	dir	   = GetAngularVelocity( id );
 	length = dir.Normalize();
 	length *= angularScale;
-	if( length > 0.1f )
-	{
-		if( length < 60.0f )
-		{
+	if( length > 0.1f ) {
+		if( length < 60.0f ) {
 			length = 60.0f;
-		}
-		else if( length > 360.0f )
-		{
+		} else if( length > 360.0f ) {
 			length = 360.0f;
 		}
 		axis = GetAxis( id );
-		vec = axis[2];
-		if( idMath::Fabs( dir * vec ) > 0.99f )
-		{
+		vec	 = axis[2];
+		if( idMath::Fabs( dir * vec ) > 0.99f ) {
 			vec = axis[0];
 		}
 		vec -= vec * dir * vec;
 		vec.Normalize();
 		vec *= 4.0f;
 		start = org + vec;
-		for( a = 20.0f; a < length; a += 20.0f )
-		{
+		for( a = 20.0f; a < length; a += 20.0f ) {
 			end = org + idRotation( vec3_origin, dir, -a ).ToMat3() * vec;
 			gameRenderWorld->DebugLine( colorBlue, start, end, 1 );
 			start = end;

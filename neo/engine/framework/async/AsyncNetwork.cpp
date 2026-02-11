@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,44 +32,58 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "AsyncNetwork.h"
 
-idAsyncServer		idAsyncNetwork::server;
-idAsyncClient		idAsyncNetwork::client;
+idAsyncServer idAsyncNetwork::server;
+idAsyncClient idAsyncNetwork::client;
 
-idCVar				idAsyncNetwork::verbose( "net_verbose", "0", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "1 = verbose output, 2 = even more verbose output", 0, 2, idCmdSystem::ArgCompletion_Integer<0, 2> );
-idCVar				idAsyncNetwork::allowCheats( "net_allowCheats", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NETWORKSYNC, "Allow cheats in network game" );
+idCVar idAsyncNetwork::verbose( "net_verbose", "0", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "1 = verbose output, 2 = even more verbose output", 0, 2, idCmdSystem::ArgCompletion_Integer<0, 2> );
+idCVar idAsyncNetwork::allowCheats( "net_allowCheats", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NETWORKSYNC, "Allow cheats in network game" );
 #ifdef ID_DEDICATED
-	// dedicated executable can only have a value of 1 for net_serverDedicated
-	idCVar				idAsyncNetwork::serverDedicated( "net_serverDedicated", "1", CVAR_SERVERINFO | CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT | CVAR_ROM, "" );
+// dedicated executable can only have a value of 1 for net_serverDedicated
+idCVar idAsyncNetwork::serverDedicated( "net_serverDedicated", "1", CVAR_SERVERINFO | CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT | CVAR_ROM, "" );
 #else
-	idCVar				idAsyncNetwork::serverDedicated( "net_serverDedicated", "0", CVAR_SERVERINFO | CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "1 = text console dedicated server, 2 = graphical dedicated server", 0, 2, idCmdSystem::ArgCompletion_Integer<0, 2> );
+idCVar idAsyncNetwork::serverDedicated( "net_serverDedicated",
+	"0",
+	CVAR_SERVERINFO | CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT,
+	"1 = text console dedicated server, 2 = graphical dedicated server",
+	0,
+	2,
+	idCmdSystem::ArgCompletion_Integer<0, 2> );
 #endif
-idCVar				idAsyncNetwork::serverSnapshotDelay( "net_serverSnapshotDelay", "50", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "delay between snapshots in milliseconds" );
-idCVar				idAsyncNetwork::serverMaxClientRate( "net_serverMaxClientRate", "16000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE | CVAR_NOCHEAT, "maximum rate to a client in bytes/sec" );
-idCVar				idAsyncNetwork::clientMaxRate( "net_clientMaxRate", "16000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE | CVAR_NOCHEAT, "maximum rate requested by client from server in bytes/sec" );
-idCVar				idAsyncNetwork::serverMaxUsercmdRelay( "net_serverMaxUsercmdRelay", "5", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "maximum number of usercmds from other clients the server relays to a client", 1, MAX_USERCMD_RELAY, idCmdSystem::ArgCompletion_Integer<1, MAX_USERCMD_RELAY> );
-idCVar				idAsyncNetwork::serverZombieTimeout( "net_serverZombieTimeout", "5", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "disconnected client timeout in seconds" );
-idCVar				idAsyncNetwork::serverClientTimeout( "net_serverClientTimeout", "40", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "client time out in seconds" );
-idCVar				idAsyncNetwork::clientServerTimeout( "net_clientServerTimeout", "40", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "server time out in seconds" );
-idCVar				idAsyncNetwork::serverDrawClient( "net_serverDrawClient", "-1", CVAR_SYSTEM | CVAR_INTEGER, "number of client for which to draw view on server" );
-idCVar				idAsyncNetwork::serverRemoteConsolePassword( "net_serverRemoteConsolePassword", "", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console password" );
-idCVar				idAsyncNetwork::clientPrediction( "net_clientPrediction", "16", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "additional client side prediction in milliseconds" );
-idCVar				idAsyncNetwork::clientMaxPrediction( "net_clientMaxPrediction", "1000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "maximum number of milliseconds a client can predict ahead of server." );
-idCVar				idAsyncNetwork::clientUsercmdBackup( "net_clientUsercmdBackup", "5", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "number of usercmds to resend" );
-idCVar				idAsyncNetwork::clientRemoteConsoleAddress( "net_clientRemoteConsoleAddress", "localhost", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console address" );
-idCVar				idAsyncNetwork::clientRemoteConsolePassword( "net_clientRemoteConsolePassword", "", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console password" );
-idCVar				idAsyncNetwork::master0( "net_master0", IDNET_HOST ":" IDNET_MASTER_PORT, CVAR_SYSTEM | CVAR_ROM, "idnet master server address" );
-idCVar				idAsyncNetwork::master1( "net_master1", "", CVAR_SYSTEM | CVAR_ARCHIVE, "1st master server address" );
-idCVar				idAsyncNetwork::master2( "net_master2", "", CVAR_SYSTEM | CVAR_ARCHIVE, "2nd master server address" );
-idCVar				idAsyncNetwork::master3( "net_master3", "", CVAR_SYSTEM | CVAR_ARCHIVE, "3rd master server address" );
-idCVar				idAsyncNetwork::master4( "net_master4", "", CVAR_SYSTEM | CVAR_ARCHIVE, "4th master server address" );
-idCVar				idAsyncNetwork::LANServer( "net_LANServer", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NOCHEAT, "config LAN games only - affects clients and servers" );
-idCVar				idAsyncNetwork::serverReloadEngine( "net_serverReloadEngine", "0", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "perform a full reload on next map restart (including flushing referenced pak files) - decreased if > 0" );
-idCVar				idAsyncNetwork::serverAllowServerMod( "net_serverAllowServerMod", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NOCHEAT, "allow server-side mods" );
-idCVar				idAsyncNetwork::idleServer( "si_idleServer", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_INIT | CVAR_SERVERINFO, "game clients are idle" );
-idCVar				idAsyncNetwork::clientDownload( "net_clientDownload", "1", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE, "client pk4 downloads policy: 0 - never, 1 - ask, 2 - always (will still prompt for binary code)" );
+idCVar idAsyncNetwork::serverSnapshotDelay( "net_serverSnapshotDelay", "50", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "delay between snapshots in milliseconds" );
+idCVar idAsyncNetwork::serverMaxClientRate( "net_serverMaxClientRate", "16000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE | CVAR_NOCHEAT, "maximum rate to a client in bytes/sec" );
+idCVar idAsyncNetwork::clientMaxRate( "net_clientMaxRate", "16000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE | CVAR_NOCHEAT, "maximum rate requested by client from server in bytes/sec" );
+idCVar idAsyncNetwork::serverMaxUsercmdRelay( "net_serverMaxUsercmdRelay",
+	"5",
+	CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT,
+	"maximum number of usercmds from other clients the server relays to a client",
+	1,
+	MAX_USERCMD_RELAY,
+	idCmdSystem::ArgCompletion_Integer<1, MAX_USERCMD_RELAY> );
+idCVar idAsyncNetwork::serverZombieTimeout( "net_serverZombieTimeout", "5", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "disconnected client timeout in seconds" );
+idCVar idAsyncNetwork::serverClientTimeout( "net_serverClientTimeout", "40", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "client time out in seconds" );
+idCVar idAsyncNetwork::clientServerTimeout( "net_clientServerTimeout", "40", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "server time out in seconds" );
+idCVar idAsyncNetwork::serverDrawClient( "net_serverDrawClient", "-1", CVAR_SYSTEM | CVAR_INTEGER, "number of client for which to draw view on server" );
+idCVar idAsyncNetwork::serverRemoteConsolePassword( "net_serverRemoteConsolePassword", "", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console password" );
+idCVar idAsyncNetwork::clientPrediction( "net_clientPrediction", "16", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "additional client side prediction in milliseconds" );
+idCVar idAsyncNetwork::clientMaxPrediction( "net_clientMaxPrediction", "1000", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "maximum number of milliseconds a client can predict ahead of server." );
+idCVar idAsyncNetwork::clientUsercmdBackup( "net_clientUsercmdBackup", "5", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "number of usercmds to resend" );
+idCVar idAsyncNetwork::clientRemoteConsoleAddress( "net_clientRemoteConsoleAddress", "localhost", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console address" );
+idCVar idAsyncNetwork::clientRemoteConsolePassword( "net_clientRemoteConsolePassword", "", CVAR_SYSTEM | CVAR_NOCHEAT, "remote console password" );
+idCVar idAsyncNetwork::master0( "net_master0", IDNET_HOST ":" IDNET_MASTER_PORT, CVAR_SYSTEM | CVAR_ROM, "idnet master server address" );
+idCVar idAsyncNetwork::master1( "net_master1", "", CVAR_SYSTEM | CVAR_ARCHIVE, "1st master server address" );
+idCVar idAsyncNetwork::master2( "net_master2", "", CVAR_SYSTEM | CVAR_ARCHIVE, "2nd master server address" );
+idCVar idAsyncNetwork::master3( "net_master3", "", CVAR_SYSTEM | CVAR_ARCHIVE, "3rd master server address" );
+idCVar idAsyncNetwork::master4( "net_master4", "", CVAR_SYSTEM | CVAR_ARCHIVE, "4th master server address" );
+idCVar idAsyncNetwork::LANServer( "net_LANServer", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NOCHEAT, "config LAN games only - affects clients and servers" );
+idCVar idAsyncNetwork::serverReloadEngine(
+	"net_serverReloadEngine", "0", CVAR_SYSTEM | CVAR_INTEGER | CVAR_NOCHEAT, "perform a full reload on next map restart (including flushing referenced pak files) - decreased if > 0" );
+idCVar idAsyncNetwork::serverAllowServerMod( "net_serverAllowServerMod", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_NOCHEAT, "allow server-side mods" );
+idCVar idAsyncNetwork::idleServer( "si_idleServer", "0", CVAR_SYSTEM | CVAR_BOOL | CVAR_INIT | CVAR_SERVERINFO, "game clients are idle" );
+idCVar idAsyncNetwork::clientDownload(
+	"net_clientDownload", "1", CVAR_SYSTEM | CVAR_INTEGER | CVAR_ARCHIVE, "client pk4 downloads policy: 0 - never, 1 - ask, 2 - always (will still prompt for binary code)" );
 
-int					idAsyncNetwork::realTime;
-master_t			idAsyncNetwork::masters[ MAX_MASTER_SERVERS ];
+int		 idAsyncNetwork::realTime;
+master_t idAsyncNetwork::masters[MAX_MASTER_SERVERS];
 
 /*
 ==================
@@ -86,7 +101,6 @@ idAsyncNetwork::Init
 */
 void idAsyncNetwork::Init()
 {
-
 	realTime = 0;
 
 	memset( masters, 0, sizeof( masters ) );
@@ -96,7 +110,7 @@ void idAsyncNetwork::Init()
 	masters[3].var = &master3;
 	masters[4].var = &master4;
 
-#ifndef	ID_DEMO_BUILD
+#ifndef ID_DEMO_BUILD
 	cmdSystem->AddCommand( "spawnServer", SpawnServer_f, CMD_FL_SYSTEM, "spawns a server", idCmdSystem::ArgCompletion_MapName );
 	cmdSystem->AddCommand( "nextMap", NextMap_f, CMD_FL_SYSTEM, "loads the next map on the server" );
 	cmdSystem->AddCommand( "connect", Connect_f, CMD_FL_SYSTEM, "connects to a server" );
@@ -121,7 +135,7 @@ netadr_t idAsyncNetwork::GetMasterAddress()
 {
 	netadr_t ret;
 	GetMasterAddress( 0, ret );
-	return masters[ 0 ].address;
+	return masters[0].address;
 }
 
 /*
@@ -131,31 +145,26 @@ idAsyncNetwork::GetMasterAddress
 */
 bool idAsyncNetwork::GetMasterAddress( int index, netadr_t& adr )
 {
-	if( !masters[ index ].var )
-	{
+	if( !masters[index].var ) {
 		return false;
 	}
-	if( masters[ index ].var->GetString()[0] == '\0' )
-	{
+	if( masters[index].var->GetString()[0] == '\0' ) {
 		return false;
 	}
-	if( !masters[ index ].resolved || masters[ index ].var->IsModified() )
-	{
-		masters[ index ].var->ClearModified();
-		if( !Sys_StringToNetAdr( masters[ index ].var->GetString(), &masters[ index ].address, true ) )
-		{
-			common->Printf( "Failed to resolve master%d: %s\n", index, masters[ index ].var->GetString() );
-			memset( &masters[ index ].address, 0, sizeof( netadr_t ) );
-			masters[ index ].resolved = true;
+	if( !masters[index].resolved || masters[index].var->IsModified() ) {
+		masters[index].var->ClearModified();
+		if( !Sys_StringToNetAdr( masters[index].var->GetString(), &masters[index].address, true ) ) {
+			common->Printf( "Failed to resolve master%d: %s\n", index, masters[index].var->GetString() );
+			memset( &masters[index].address, 0, sizeof( netadr_t ) );
+			masters[index].resolved = true;
 			return false;
 		}
-		if( masters[ index ].address.port == 0 )
-		{
-			masters[ index ].address.port = atoi( IDNET_MASTER_PORT );
+		if( masters[index].address.port == 0 ) {
+			masters[index].address.port = atoi( IDNET_MASTER_PORT );
 		}
-		masters[ index ].resolved = true;
+		masters[index].resolved = true;
 	}
-	adr = masters[ index ].address;
+	adr = masters[index].address;
 	return true;
 }
 
@@ -181,13 +190,10 @@ idAsyncNetwork::RunFrame
 */
 void idAsyncNetwork::RunFrame()
 {
-	if( console->Active() )
-	{
+	if( console->Active() ) {
 		Sys_GrabMouseCursor( false );
 		usercmdGen->InhibitUsercmd( INHIBIT_ASYNC, true );
-	}
-	else
-	{
+	} else {
 		Sys_GrabMouseCursor( true );
 		usercmdGen->InhibitUsercmd( INHIBIT_ASYNC, false );
 	}
@@ -202,8 +208,7 @@ idAsyncNetwork::WriteUserCmdDelta
 */
 void idAsyncNetwork::WriteUserCmdDelta( idBitMsg& msg, const usercmd_t& cmd, const usercmd_t* base )
 {
-	if( base )
-	{
+	if( base ) {
 		msg.WriteDeltaLongCounter( base->gameTime, cmd.gameTime );
 		msg.WriteDeltaByte( base->buttons, cmd.buttons );
 		msg.WriteDeltaShort( base->mx, cmd.mx );
@@ -238,31 +243,30 @@ void idAsyncNetwork::ReadUserCmdDelta( const idBitMsg& msg, usercmd_t& cmd, cons
 {
 	memset( &cmd, 0, sizeof( cmd ) );
 
-	if( base )
-	{
-		cmd.gameTime = msg.ReadDeltaLongCounter( base->gameTime );
-		cmd.buttons = msg.ReadDeltaByte( base->buttons );
-		cmd.mx = msg.ReadDeltaShort( base->mx );
-		cmd.my = msg.ReadDeltaShort( base->my );
+	if( base ) {
+		cmd.gameTime	= msg.ReadDeltaLongCounter( base->gameTime );
+		cmd.buttons		= msg.ReadDeltaByte( base->buttons );
+		cmd.mx			= msg.ReadDeltaShort( base->mx );
+		cmd.my			= msg.ReadDeltaShort( base->my );
 		cmd.forwardmove = msg.ReadDeltaChar( base->forwardmove );
-		cmd.rightmove = msg.ReadDeltaChar( base->rightmove );
-		cmd.upmove = msg.ReadDeltaChar( base->upmove );
-		cmd.angles[0] = msg.ReadDeltaShort( base->angles[0] );
-		cmd.angles[1] = msg.ReadDeltaShort( base->angles[1] );
-		cmd.angles[2] = msg.ReadDeltaShort( base->angles[2] );
+		cmd.rightmove	= msg.ReadDeltaChar( base->rightmove );
+		cmd.upmove		= msg.ReadDeltaChar( base->upmove );
+		cmd.angles[0]	= msg.ReadDeltaShort( base->angles[0] );
+		cmd.angles[1]	= msg.ReadDeltaShort( base->angles[1] );
+		cmd.angles[2]	= msg.ReadDeltaShort( base->angles[2] );
 		return;
 	}
 
-	cmd.gameTime = msg.ReadLong();
-	cmd.buttons = msg.ReadByte();
-	cmd.mx = msg.ReadShort();
-	cmd.my = msg.ReadShort();
+	cmd.gameTime	= msg.ReadLong();
+	cmd.buttons		= msg.ReadByte();
+	cmd.mx			= msg.ReadShort();
+	cmd.my			= msg.ReadShort();
 	cmd.forwardmove = msg.ReadChar();
-	cmd.rightmove = msg.ReadChar();
-	cmd.upmove = msg.ReadChar();
-	cmd.angles[0] = msg.ReadShort();
-	cmd.angles[1] = msg.ReadShort();
-	cmd.angles[2] = msg.ReadShort();
+	cmd.rightmove	= msg.ReadChar();
+	cmd.upmove		= msg.ReadChar();
+	cmd.angles[0]	= msg.ReadShort();
+	cmd.angles[1]	= msg.ReadShort();
+	cmd.angles[2]	= msg.ReadShort();
 }
 
 /*
@@ -272,28 +276,21 @@ idAsyncNetwork::DuplicateUsercmd
 */
 bool idAsyncNetwork::DuplicateUsercmd( const usercmd_t& previousUserCmd, usercmd_t& currentUserCmd, int frame, int time )
 {
-
-	if( currentUserCmd.gameTime <= previousUserCmd.gameTime )
-	{
-
-		currentUserCmd = previousUserCmd;
+	if( currentUserCmd.gameTime <= previousUserCmd.gameTime ) {
+		currentUserCmd			 = previousUserCmd;
 		currentUserCmd.gameFrame = frame;
-		currentUserCmd.gameTime = time;
+		currentUserCmd.gameTime	 = time;
 		currentUserCmd.duplicateCount++;
 
-		if( currentUserCmd.duplicateCount > MAX_USERCMD_DUPLICATION )
-		{
+		if( currentUserCmd.duplicateCount > MAX_USERCMD_DUPLICATION ) {
 			currentUserCmd.buttons &= ~BUTTON_ATTACK;
-			if( abs( currentUserCmd.forwardmove ) > 2 )
-			{
+			if( abs( currentUserCmd.forwardmove ) > 2 ) {
 				currentUserCmd.forwardmove >>= 1;
 			}
-			if( abs( currentUserCmd.rightmove ) > 2 )
-			{
+			if( abs( currentUserCmd.rightmove ) > 2 ) {
 				currentUserCmd.rightmove >>= 1;
 			}
-			if( abs( currentUserCmd.upmove ) > 2 )
-			{
+			if( abs( currentUserCmd.upmove ) > 2 ) {
 				currentUserCmd.upmove >>= 1;
 			}
 		}
@@ -310,13 +307,9 @@ idAsyncNetwork::UsercmdInputChanged
 */
 bool idAsyncNetwork::UsercmdInputChanged( const usercmd_t& previousUserCmd, const usercmd_t& currentUserCmd )
 {
-	return	previousUserCmd.buttons != currentUserCmd.buttons ||
-			previousUserCmd.forwardmove != currentUserCmd.forwardmove ||
-			previousUserCmd.rightmove != currentUserCmd.rightmove ||
-			previousUserCmd.upmove != currentUserCmd.upmove ||
-			previousUserCmd.angles[0] != currentUserCmd.angles[0] ||
-			previousUserCmd.angles[1] != currentUserCmd.angles[1] ||
-			previousUserCmd.angles[2] != currentUserCmd.angles[2];
+	return previousUserCmd.buttons != currentUserCmd.buttons || previousUserCmd.forwardmove != currentUserCmd.forwardmove || previousUserCmd.rightmove != currentUserCmd.rightmove ||
+		   previousUserCmd.upmove != currentUserCmd.upmove || previousUserCmd.angles[0] != currentUserCmd.angles[0] || previousUserCmd.angles[1] != currentUserCmd.angles[1] ||
+		   previousUserCmd.angles[2] != currentUserCmd.angles[2];
 }
 
 /*
@@ -326,31 +319,25 @@ idAsyncNetwork::SpawnServer_f
 */
 void idAsyncNetwork::SpawnServer_f( const idCmdArgs& args )
 {
-
-	if( args.Argc() > 1 )
-	{
+	if( args.Argc() > 1 ) {
 		cvarSystem->SetCVarString( "si_map", args.Argv( 1 ) );
 	}
 
 	// don't let a server spawn with singleplayer game type - it will crash
-	if( idStr::Icmp( cvarSystem->GetCVarString( "si_gameType" ), "singleplayer" ) == 0 )
-	{
+	if( idStr::Icmp( cvarSystem->GetCVarString( "si_gameType" ), "singleplayer" ) == 0 ) {
 		cvarSystem->SetCVarString( "si_gameType", "deathmatch" );
 	}
 	com_asyncInput.SetBool( false );
 	// make sure the current system state is compatible with net_serverDedicated
-	switch( cvarSystem->GetCVarInteger( "net_serverDedicated" ) )
-	{
+	switch( cvarSystem->GetCVarInteger( "net_serverDedicated" ) ) {
 		case 0:
 		case 2:
-			if( !renderSystem->IsOpenGLRunning() )
-			{
+			if( !renderSystem->IsOpenGLRunning() ) {
 				common->Warning( "OpenGL is not running, net_serverDedicated == %d", cvarSystem->GetCVarInteger( "net_serverDedicated" ) );
 			}
 			break;
 		case 1:
-			if( renderSystem->IsOpenGLRunning() )
-			{
+			if( renderSystem->IsOpenGLRunning() ) {
 				Sys_ShowConsole( 1, false );
 				renderSystem->ShutdownOpenGL();
 			}
@@ -359,12 +346,9 @@ void idAsyncNetwork::SpawnServer_f( const idCmdArgs& args )
 			break;
 	}
 	// use serverMapRestart if we already have a running server
-	if( server.IsActive() )
-	{
+	if( server.IsActive() ) {
 		cmdSystem->BufferCommandText( CMD_EXEC_NOW, "serverMapRestart" );
-	}
-	else
-	{
+	} else {
 		server.Spawn();
 	}
 }
@@ -386,13 +370,11 @@ idAsyncNetwork::Connect_f
 */
 void idAsyncNetwork::Connect_f( const idCmdArgs& args )
 {
-	if( server.IsActive() )
-	{
+	if( server.IsActive() ) {
 		common->Printf( "already running a server\n" );
 		return;
 	}
-	if( args.Argc() != 2 )
-	{
+	if( args.Argc() != 2 ) {
 		common->Printf( "USAGE: connect <serverName>\n" );
 		return;
 	}
@@ -457,8 +439,7 @@ idAsyncNetwork::Heartbeat_f
 */
 void idAsyncNetwork::Heartbeat_f( const idCmdArgs& args )
 {
-	if( !server.IsActive() )
-	{
+	if( !server.IsActive() ) {
 		common->Printf( "server is not running\n" );
 		return;
 	}
@@ -473,24 +454,21 @@ idAsyncNetwork::Kick_f
 void idAsyncNetwork::Kick_f( const idCmdArgs& args )
 {
 	idStr clientId;
-	int iclient;
+	int	  iclient;
 
-	if( !server.IsActive() )
-	{
+	if( !server.IsActive() ) {
 		common->Printf( "server is not running\n" );
 		return;
 	}
 
 	clientId = args.Argv( 1 );
-	if( !clientId.IsNumeric() )
-	{
+	if( !clientId.IsNumeric() ) {
 		common->Printf( "usage: kick <client number>\n" );
 		return;
 	}
 	iclient = atoi( clientId );
 
-	if( server.GetLocalClientNum() == iclient )
-	{
+	if( server.GetLocalClientNum() == iclient ) {
 		common->Printf( "can't kick the host\n" );
 		return;
 	}
@@ -525,10 +503,8 @@ idAsyncNetwork::ExecuteSessionCommand
 */
 void idAsyncNetwork::ExecuteSessionCommand( const char* sessCmd )
 {
-	if( sessCmd[ 0 ] )
-	{
-		if( !idStr::Icmp( sessCmd, "game_startmenu" ) )
-		{
+	if( sessCmd[0] ) {
+		if( !idStr::Icmp( sessCmd, "game_startmenu" ) ) {
 			session->SetGUI( game->StartMenu(), NULL );
 		}
 	}
@@ -541,13 +517,11 @@ idAsyncNetwork::UpdateUI_f
 */
 void idAsyncNetwork::UpdateUI_f( const idCmdArgs& args )
 {
-	if( args.Argc() != 2 )
-	{
+	if( args.Argc() != 2 ) {
 		common->Warning( "idAsyncNetwork::UpdateUI_f: wrong arguments\n" );
 		return;
 	}
-	if( !server.IsActive() )
-	{
+	if( !server.IsActive() ) {
 		common->Warning( "idAsyncNetwork::UpdateUI_f: server is not active\n" );
 		return;
 	}
@@ -560,16 +534,13 @@ void idAsyncNetwork::UpdateUI_f( const idCmdArgs& args )
 idAsyncNetwork::BuildInvalidKeyMsg
 ===============
 */
-void idAsyncNetwork::BuildInvalidKeyMsg( idStr& msg, bool valid[ 2 ] )
+void idAsyncNetwork::BuildInvalidKeyMsg( idStr& msg, bool valid[2] )
 {
-	if( !valid[ 0 ] )
-	{
+	if( !valid[0] ) {
 		msg += common->GetLanguageDict()->GetString( "#str_07194" );
 	}
-	if( fileSystem->HasD3XP() && !valid[ 1 ] )
-	{
-		if( msg.Length() )
-		{
+	if( fileSystem->HasD3XP() && !valid[1] ) {
+		if( msg.Length() ) {
 			msg += "\n";
 		}
 		msg += common->GetLanguageDict()->GetString( "#str_07195" );
@@ -577,4 +548,3 @@ void idAsyncNetwork::BuildInvalidKeyMsg( idStr& msg, bool valid[ 2 ] )
 	msg += "\n";
 	msg += common->GetLanguageDict()->GetString( "#str_04304" );
 }
-

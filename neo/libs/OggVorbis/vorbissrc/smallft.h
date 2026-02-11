@@ -20,8 +20,7 @@
 
 #include "../vorbis/codec.h"
 
-typedef struct
-{
+typedef struct {
 	int n;
 	float* trigcache;
 	int* splitcache;

@@ -15,16 +15,14 @@
 
  ********************************************************************/
 
-typedef struct highlevel_byblocktype
-{
+typedef struct highlevel_byblocktype {
 	double tone_mask_setting;
 	double tone_peaklimit_setting;
 	double noise_bias_setting;
 	double noise_compand_setting;
 } highlevel_byblocktype;
 
-typedef struct highlevel_encode_setup
-{
+typedef struct highlevel_encode_setup {
 	void* setup;
 	int   set_in_stone;
 

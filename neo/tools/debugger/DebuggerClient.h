@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,106 +32,101 @@ If you have questions concerning this license or the applicable additional terms
 class rvDebuggerCallstack
 {
 public:
-
-	idStr	mFilename;
-	int		mLineNumber;
-	idStr	mFunction;
+	idStr mFilename;
+	int	  mLineNumber;
+	idStr mFunction;
 };
 
 class rvDebuggerThread
 {
 public:
-
-	idStr	mName;
-	int		mID;
-	bool	mCurrent;
-	bool	mDying;
-	bool	mWaiting;
-	bool	mDoneProcessing;
+	idStr mName;
+	int	  mID;
+	bool  mCurrent;
+	bool  mDying;
+	bool  mWaiting;
+	bool  mDoneProcessing;
 };
 
 #ifndef DEBUGGERBREAKPOINT_H_
 	#include "DebuggerBreakpoint.h"
 #endif
 
-typedef idList<rvDebuggerCallstack*>	rvDebuggerCallstackList;
-typedef idList<rvDebuggerThread*>		rvDebuggerThreadList;
-typedef idList<rvDebuggerBreakpoint*>	rvDebuggerBreakpointList;
+typedef idList<rvDebuggerCallstack*>  rvDebuggerCallstackList;
+typedef idList<rvDebuggerThread*>	  rvDebuggerThreadList;
+typedef idList<rvDebuggerBreakpoint*> rvDebuggerBreakpointList;
 
 class rvDebuggerClient
 {
 public:
-
 	rvDebuggerClient();
 	~rvDebuggerClient();
 
-	bool						Initialize();
-	void						Shutdown();
-	bool						ProcessMessages();
-	bool						WaitFor( EDebuggerMessage msg, int time );
+	bool					 Initialize();
+	void					 Shutdown();
+	bool					 ProcessMessages();
+	bool					 WaitFor( EDebuggerMessage msg, int time );
 
-	bool						IsConnected();
-	bool						IsStopped();
+	bool					 IsConnected();
+	bool					 IsStopped();
 
-	int							GetActiveBreakpointID();
-	const char*					GetBreakFilename();
-	int							GetBreakLineNumber();
-	rvDebuggerCallstackList&	GetCallstack();
-	rvDebuggerThreadList&		GetThreads();
-	const char*					GetVariableValue( const char* name, int stackDepth );
+	int						 GetActiveBreakpointID();
+	const char*				 GetBreakFilename();
+	int						 GetBreakLineNumber();
+	rvDebuggerCallstackList& GetCallstack();
+	rvDebuggerThreadList&	 GetThreads();
+	const char*				 GetVariableValue( const char* name, int stackDepth );
 
-	void						InspectVariable( const char* name, int callstackDepth );
+	void					 InspectVariable( const char* name, int callstackDepth );
 
-	void						Break();
-	void						Resume();
-	void						StepInto();
-	void						StepOver();
+	void					 Break();
+	void					 Resume();
+	void					 StepInto();
+	void					 StepOver();
 
 	// Breakpoints
-	int							AddBreakpoint( const char* filename, int lineNumber, bool onceOnly = false );
-	bool						RemoveBreakpoint( int bpID );
-	void						ClearBreakpoints();
-	int							GetBreakpointCount();
-	rvDebuggerBreakpoint*		GetBreakpoint( int index );
-	rvDebuggerBreakpoint*		FindBreakpoint( const char* filename, int linenumber );
+	int						 AddBreakpoint( const char* filename, int lineNumber, bool onceOnly = false );
+	bool					 RemoveBreakpoint( int bpID );
+	void					 ClearBreakpoints();
+	int						 GetBreakpointCount();
+	rvDebuggerBreakpoint*	 GetBreakpoint( int index );
+	rvDebuggerBreakpoint*	 FindBreakpoint( const char* filename, int linenumber );
 
 protected:
+	void					 SendMessage( EDebuggerMessage dbmsg );
+	void					 SendBreakpoints();
+	void					 SendAddBreakpoint( rvDebuggerBreakpoint& bp, bool onceOnly = false );
+	void					 SendRemoveBreakpoint( rvDebuggerBreakpoint& bp );
+	void					 SendPacket( void* data, int datasize );
 
-	void						SendMessage( EDebuggerMessage dbmsg );
-	void						SendBreakpoints();
-	void						SendAddBreakpoint( rvDebuggerBreakpoint& bp, bool onceOnly = false );
-	void						SendRemoveBreakpoint( rvDebuggerBreakpoint& bp );
-	void						SendPacket( void* data, int datasize );
+	bool					 mConnected;
+	netadr_t				 mServerAdr;
+	idPort					 mPort;
 
-	bool						mConnected;
-	netadr_t					mServerAdr;
-	idPort						mPort;
+	bool					 mBreak;
+	int						 mBreakID;
+	int						 mBreakLineNumber;
+	idStr					 mBreakFilename;
 
-	bool						mBreak;
-	int							mBreakID;
-	int							mBreakLineNumber;
-	idStr						mBreakFilename;
+	idDict					 mVariables;
 
-	idDict						mVariables;
+	rvDebuggerCallstackList	 mCallstack;
+	rvDebuggerThreadList	 mThreads;
+	rvDebuggerBreakpointList mBreakpoints;
 
-	rvDebuggerCallstackList		mCallstack;
-	rvDebuggerThreadList		mThreads;
-	rvDebuggerBreakpointList	mBreakpoints;
-
-	EDebuggerMessage			mWaitFor;
+	EDebuggerMessage		 mWaitFor;
 
 private:
+	void ClearCallstack();
+	void ClearThreads();
 
-	void		ClearCallstack();
-	void		ClearThreads();
-
-	void		UpdateWatches();
+	void UpdateWatches();
 
 	// Network message handlers
-	void		HandleBreak( msg_t* msg );
-	void		HandleInspectCallstack( msg_t* msg );
-	void		HandleInspectThreads( msg_t* msg );
-	void		HandleInspectVariable( msg_t* msg );
+	void HandleBreak( msg_t* msg );
+	void HandleInspectCallstack( msg_t* msg );
+	void HandleInspectThreads( msg_t* msg );
+	void HandleInspectVariable( msg_t* msg );
 };
 
 /*

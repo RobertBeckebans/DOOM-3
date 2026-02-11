@@ -62,8 +62,7 @@ void GUSISetupDevices()
 	#error GUSISetupConfig() needs to be written in C++
 #endif
 
-GUSIConfiguration::FileSuffix	sSuffices[] =
-{
+GUSIConfiguration::FileSuffix	sSuffices[] = {
 	"", '????', '????'
 };
 

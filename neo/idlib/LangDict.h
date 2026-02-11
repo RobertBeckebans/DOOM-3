@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -40,8 +41,8 @@ If you have questions concerning this license or the applicable additional terms
 class idLangKeyValue
 {
 public:
-	idStr					key;
-	idStr					value;
+	idStr key;
+	idStr value;
 };
 
 class idLangDict
@@ -50,33 +51,30 @@ public:
 	idLangDict();
 	~idLangDict();
 
-	void					Clear();
-	bool					Load( const char* fileName, bool clear = true );
-	void					Save( const char* fileName );
+	void				  Clear();
+	bool				  Load( const char* fileName, bool clear = true );
+	void				  Save( const char* fileName );
 
-	const char* 			AddString( const char* str );
-	const char* 			GetString( const char* str ) const;
+	const char*			  AddString( const char* str );
+	const char*			  GetString( const char* str ) const;
 
 	// adds the value and key as passed (doesn't generate a "#str_xxxxx" key or ensure the key/value pair is unique)
-	void					AddKeyVal( const char* key, const char* val );
+	void				  AddKeyVal( const char* key, const char* val );
 
-	int						GetNumKeyVals() const;
-	const idLangKeyValue* 	GetKeyVal( int i ) const;
+	int					  GetNumKeyVals() const;
+	const idLangKeyValue* GetKeyVal( int i ) const;
 
-	void					SetBaseID( int id )
-	{
-		baseID = id;
-	};
+	void				  SetBaseID( int id ) { baseID = id; };
 
 private:
-	idList<idLangKeyValue>	args;
-	idHashIndex				hash;
+	idList<idLangKeyValue> args;
+	idHashIndex			   hash;
 
-	bool					ExcludeString( const char* str ) const;
-	int						GetNextId() const;
-	int						GetHashKey( const char* str ) const;
+	bool				   ExcludeString( const char* str ) const;
+	int					   GetNextId() const;
+	int					   GetHashKey( const char* str ) const;
 
-	int						baseID;
+	int					   baseID;
 };
 
 #endif /* !__LANGDICT_H__ */

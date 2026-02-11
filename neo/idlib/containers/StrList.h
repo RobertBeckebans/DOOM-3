@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,9 +38,9 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-typedef idList<idStr> idStrList;
+typedef idList<idStr>  idStrList;
 typedef idList<idStr*> idStrPtrList;
-typedef idStr* idStrPtr;
+typedef idStr*		   idStrPtr;
 
 /*
 ================
@@ -67,27 +68,22 @@ ID_INLINE void idStrList::Sort( cmp_t* compare )
 {
 	int i;
 
-	if( !num )
-	{
-		return;
-	}
+	if( !num ) { return; }
 
-	idList<idStr>		other;
-	idList<idStrPtr>	pointerList;
+	idList<idStr>	 other;
+	idList<idStrPtr> pointerList;
 
 	pointerList.SetNum( num );
-	for( i = 0; i < num; i++ )
-	{
-		pointerList[ i ] = &( *this )[ i ];
+	for( i = 0; i < num; i++ ) {
+		pointerList[i] = &( *this )[i];
 	}
 
 	pointerList.Sort();
 
 	other.SetNum( num );
 	other.SetGranularity( granularity );
-	for( i = 0; i < other.Num(); i++ )
-	{
-		other[ i ] = *pointerList[ i ];
+	for( i = 0; i < other.Num(); i++ ) {
+		other[i] = *pointerList[i];
 	}
 
 	this->Swap( other );
@@ -105,40 +101,26 @@ ID_INLINE void idStrList::SortSubSection( int startIndex, int endIndex, cmp_t* c
 {
 	int i, s;
 
-	if( !num )
-	{
-		return;
-	}
-	if( startIndex < 0 )
-	{
-		startIndex = 0;
-	}
-	if( endIndex >= num )
-	{
-		endIndex = num - 1;
-	}
-	if( startIndex >= endIndex )
-	{
-		return;
-	}
+	if( !num ) { return; }
+	if( startIndex < 0 ) { startIndex = 0; }
+	if( endIndex >= num ) { endIndex = num - 1; }
+	if( startIndex >= endIndex ) { return; }
 
-	idList<idStr>		other;
-	idList<idStrPtr>	pointerList;
+	idList<idStr>	 other;
+	idList<idStrPtr> pointerList;
 
 	s = endIndex - startIndex + 1;
 	other.SetNum( s );
 	pointerList.SetNum( s );
-	for( i = 0; i < s; i++ )
-	{
-		other[ i ] = ( *this )[ startIndex + i ];
-		pointerList[ i ] = &other[ i ];
+	for( i = 0; i < s; i++ ) {
+		other[i]	   = ( *this )[startIndex + i];
+		pointerList[i] = &other[i];
 	}
 
 	pointerList.Sort();
 
-	for( i = 0; i < s; i++ )
-	{
-		( *this )[ startIndex + i ] = *pointerList[ i ];
+	for( i = 0; i < s; i++ ) {
+		( *this )[startIndex + i] = *pointerList[i];
 	}
 }
 
@@ -151,12 +133,11 @@ template<>
 ID_INLINE size_t idStrList::Size() const
 {
 	size_t s;
-	int i;
+	int	   i;
 
 	s = sizeof( *this );
-	for( i = 0; i < Num(); i++ )
-	{
-		s += ( *this )[ i ].Size();
+	for( i = 0; i < Num(); i++ ) {
+		s += ( *this )[i].Size();
 	}
 
 	return s;
@@ -194,27 +175,22 @@ ID_INLINE void idStrListSortPaths( idStrList& list )
 {
 	int i;
 
-	if( !list.Num() )
-	{
-		return;
-	}
+	if( !list.Num() ) { return; }
 
-	idList<idStr>		other;
-	idList<idStrPtr>	pointerList;
+	idList<idStr>	 other;
+	idList<idStrPtr> pointerList;
 
 	pointerList.SetNum( list.Num() );
-	for( i = 0; i < list.Num(); i++ )
-	{
-		pointerList[ i ] = &list[ i ];
+	for( i = 0; i < list.Num(); i++ ) {
+		pointerList[i] = &list[i];
 	}
 
 	pointerList.Sort( idListSortComparePaths<idStrPtr> );
 
 	other.SetNum( list.Num() );
 	other.SetGranularity( list.GetGranularity() );
-	for( i = 0; i < other.Num(); i++ )
-	{
-		other[ i ] = *pointerList[ i ];
+	for( i = 0; i < other.Num(); i++ ) {
+		other[i] = *pointerList[i];
 	}
 
 	list.Swap( other );

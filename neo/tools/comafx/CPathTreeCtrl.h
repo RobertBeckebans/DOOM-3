@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -40,38 +41,20 @@ If you have questions concerning this license or the applicable additional terms
 class idPathTreeStack
 {
 public:
-	idPathTreeStack()
-	{
-		size = 0;
-	}
+	idPathTreeStack() { size = 0; }
 
-	void				PushRoot( HTREEITEM root );
-	void				Push( HTREEITEM item, const char* name );
-	void				Pop()
-	{
-		size--;
-	}
-	HTREEITEM			TopItem() const
-	{
-		return stackItem[size - 1];
-	}
-	const char* 		TopName() const
-	{
-		return stackName[size - 1];
-	}
-	int					TopNameLength() const
-	{
-		return stackName[size - 1].Length();
-	}
-	int					Num() const
-	{
-		return size;
-	}
+	void		PushRoot( HTREEITEM root );
+	void		Push( HTREEITEM item, const char* name );
+	void		Pop() { size--; }
+	HTREEITEM	TopItem() const { return stackItem[size - 1]; }
+	const char* TopName() const { return stackName[size - 1]; }
+	int			TopNameLength() const { return stackName[size - 1].Length(); }
+	int			Num() const { return size; }
 
 private:
-	int					size;
-	HTREEITEM			stackItem[128];
-	idStr				stackName[128];
+	int		  size;
+	HTREEITEM stackItem[128];
+	idStr	  stackName[128];
 };
 
 ID_INLINE void idPathTreeStack::PushRoot( HTREEITEM root )
@@ -92,22 +75,21 @@ ID_INLINE void idPathTreeStack::Push( HTREEITEM item, const char* name )
 
 typedef bool ( *treeItemCompare_t )( void* data, HTREEITEM item, const char* name );
 
-
 class CPathTreeCtrl : public CTreeCtrl
 {
 public:
 	CPathTreeCtrl();
 	~CPathTreeCtrl();
 
-	HTREEITEM			FindItem( const idStr& pathName );
-	HTREEITEM			InsertPathIntoTree( const idStr& pathName, const int id );
-	HTREEITEM			AddPathToTree( const idStr& pathName, const int id, idPathTreeStack& stack );
-	int					SearchTree( treeItemCompare_t compare, void* data, CPathTreeCtrl& result );
+	HTREEITEM FindItem( const idStr& pathName );
+	HTREEITEM InsertPathIntoTree( const idStr& pathName, const int id );
+	HTREEITEM AddPathToTree( const idStr& pathName, const int id, idPathTreeStack& stack );
+	int		  SearchTree( treeItemCompare_t compare, void* data, CPathTreeCtrl& result );
 
 protected:
-	virtual void		PreSubclassWindow();
-	virtual int			OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
-	afx_msg BOOL		OnToolTipText( UINT id, NMHDR* pNMHDR, LRESULT* pResult );
+	virtual void PreSubclassWindow();
+	virtual int	 OnToolHitTest( CPoint point, TOOLINFO* pTI ) const;
+	afx_msg BOOL OnToolTipText( UINT id, NMHDR* pNMHDR, LRESULT* pResult );
 
 	DECLARE_MESSAGE_MAP()
 };

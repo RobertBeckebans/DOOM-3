@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -53,7 +54,7 @@ bool rvDebuggerQuickWatchDlg::DoModal( rvDebuggerWindow* window, int callstackDe
 {
 	mCallstackDepth = callstackDepth;
 	mDebuggerWindow = window;
-	mVariable       = variable ? variable : "";
+	mVariable		= variable ? variable : "";
 
 	DialogBoxParam( window->GetInstance(), MAKEINTRESOURCE( IDD_DBG_QUICKWATCH ), window->GetWindow(), DlgProc, ( LONG )this );
 
@@ -69,13 +70,11 @@ Dialog Procedure for the quick watch dialog
 */
 INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam )
 {
-	rvDebuggerQuickWatchDlg* dlg = ( rvDebuggerQuickWatchDlg* ) GetWindowLong( wnd, GWL_USERDATA );
+	rvDebuggerQuickWatchDlg* dlg = ( rvDebuggerQuickWatchDlg* )GetWindowLong( wnd, GWL_USERDATA );
 
-	switch( msg )
-	{
-		case WM_GETMINMAXINFO:
-		{
-			MINMAXINFO* mmi = ( MINMAXINFO* )lparam;
+	switch( msg ) {
+		case WM_GETMINMAXINFO: {
+			MINMAXINFO* mmi		  = ( MINMAXINFO* )lparam;
 			mmi->ptMinTrackSize.x = 300;
 			mmi->ptMinTrackSize.y = 200;
 			break;
@@ -87,8 +86,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 			EndDialog( wnd, 0 );
 			break;
 
-		case WM_SIZE:
-		{
+		case WM_SIZE: {
 			RECT client;
 			RECT button;
 
@@ -121,13 +119,12 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 			break;
 		}
 
-		case WM_INITDIALOG:
-		{
-			RECT  client;
-			RECT  button;
+		case WM_INITDIALOG: {
+			RECT client;
+			RECT button;
 
 			// Attach the dialog class pointer to the window
-			dlg = ( rvDebuggerQuickWatchDlg* ) lparam;
+			dlg = ( rvDebuggerQuickWatchDlg* )lparam;
 			SetWindowLong( wnd, GWL_USERDATA, lparam );
 			dlg->mWnd = wnd;
 
@@ -139,7 +136,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 
 			GetWindowRect( GetDlgItem( wnd, IDC_DBG_CURVALUE ), &button );
 			ScreenToClient( wnd, ( POINT* )&button.right );
-			dlg->mEditFromRight = client.right - button.right;
+			dlg->mEditFromRight	 = client.right - button.right;
 			dlg->mEditFromBottom = client.bottom - button.bottom;
 
 			// Disable the value controls until a variable is entered
@@ -150,17 +147,16 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 
 			// Add the columns to the list control
 			LVCOLUMN col;
-			col.mask = LVCF_WIDTH | LVCF_TEXT;
-			col.cx = 100;
+			col.mask	= LVCF_WIDTH | LVCF_TEXT;
+			col.cx		= 100;
 			col.pszText = "Name";
 			ListView_InsertColumn( GetDlgItem( wnd, IDC_DBG_CURVALUE ), 0, &col );
-			col.cx = 150;
+			col.cx		= 150;
 			col.pszText = "Value";
 			ListView_InsertColumn( GetDlgItem( wnd, IDC_DBG_CURVALUE ), 1, &col );
 
 			// Set the initial variable if one was given
-			if( dlg->mVariable.Length() )
-			{
+			if( dlg->mVariable.Length() ) {
 				dlg->SetVariable( dlg->mVariable, true );
 				SetWindowText( GetDlgItem( wnd, IDC_DBG_VARIABLE ), dlg->mVariable );
 			}
@@ -172,8 +168,7 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 		}
 
 		case WM_COMMAND:
-			switch( LOWORD( wparam ) )
-			{
+			switch( LOWORD( wparam ) ) {
 				case IDC_DBG_CLOSE:
 					SendMessage( wnd, WM_CLOSE, 0, 0 );
 					break;
@@ -181,24 +176,21 @@ INT_PTR CALLBACK rvDebuggerQuickWatchDlg::DlgProc( HWND wnd, UINT msg, WPARAM wp
 				case IDC_DBG_VARIABLE:
 					// When the variable text changes to something other than empty
 					// we can enable the addwatch and recalc buttons
-					if( HIWORD( wparam ) == EN_CHANGE )
-					{
+					if( HIWORD( wparam ) == EN_CHANGE ) {
 						bool enable = GetWindowTextLength( GetDlgItem( wnd, IDC_DBG_VARIABLE ) ) ? true : false;
 						EnableWindow( GetDlgItem( wnd, IDC_DBG_ADDWATCH ), enable );
 						EnableWindow( GetDlgItem( wnd, IDC_DBG_RECALC ), enable );
 					}
 					break;
 
-				case IDC_DBG_ADDWATCH:
-				{
+				case IDC_DBG_ADDWATCH: {
 					char varname[1024];
 					GetWindowText( GetDlgItem( wnd, IDC_DBG_VARIABLE ), varname, 1023 );
 					dlg->mDebuggerWindow->AddWatch( varname );
 					break;
 				}
 
-				case IDC_DBG_RECALC:
-				{
+				case IDC_DBG_RECALC: {
 					char varname[1024];
 					GetWindowText( GetDlgItem( wnd, IDC_DBG_VARIABLE ), varname, 1023 );
 					dlg->SetVariable( varname );
@@ -221,8 +213,7 @@ Sets the current variable being inspected
 void rvDebuggerQuickWatchDlg::SetVariable( const char* varname, bool force )
 {
 	// See if the variable has changed
-	if( !force && !mVariable.Icmp( varname ) )
-	{
+	if( !force && !mVariable.Icmp( varname ) ) {
 		return;
 	}
 
@@ -236,14 +227,12 @@ void rvDebuggerQuickWatchDlg::SetVariable( const char* varname, bool force )
 	gDebuggerApp.GetClient().InspectVariable( varname, mCallstackDepth );
 
 	// Wait for the variable value to be sent over from the debugger server
-	if( !gDebuggerApp.GetClient().WaitFor( DBMSG_INSPECTVARIABLE, 2500 ) )
-	{
+	if( !gDebuggerApp.GetClient().WaitFor( DBMSG_INSPECTVARIABLE, 2500 ) ) {
 		return;
 	}
 
 	// Make sure we got the value of the variable
-	if( !gDebuggerApp.GetClient().GetVariableValue( varname, mCallstackDepth )[0] )
-	{
+	if( !gDebuggerApp.GetClient().GetVariableValue( varname, mCallstackDepth )[0] ) {
 		return;
 	}
 
@@ -254,9 +243,9 @@ void rvDebuggerQuickWatchDlg::SetVariable( const char* varname, bool force )
 
 	// Add the variablae value to the list control
 	LVITEM item;
-	item.mask = LVIF_TEXT;
-	item.pszText = ( LPSTR )varname;
-	item.iItem = 0;
+	item.mask	  = LVIF_TEXT;
+	item.pszText  = ( LPSTR )varname;
+	item.iItem	  = 0;
 	item.iSubItem = 0;
 	ListView_InsertItem( GetDlgItem( mWnd, IDC_DBG_CURVALUE ), &item );
 	ListView_SetItemText( GetDlgItem( mWnd, IDC_DBG_CURVALUE ), 0, 1, ( LPSTR )gDebuggerApp.GetClient().GetVariableValue( varname, mCallstackDepth ) );

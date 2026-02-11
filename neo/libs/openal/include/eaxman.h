@@ -21,24 +21,21 @@ extern "C" {
 #define EMFLAG_LOADFROMMEMORY 2
 #define EMFLAG_NODIFFRACTION 4
 
-typedef struct _EMPOINT
-{
+typedef struct _EMPOINT {
 	float fX;
 	float fY;
 	float fZ;
 } EMPOINT;
 typedef EMPOINT FAR* LPEMPOINT;
 
-typedef struct _LISTENERATTRIBUTES
-{
+typedef struct _LISTENERATTRIBUTES {
 	float fDistanceFactor;
 	float fRolloffFactor;
 	float fDopplerFactor;
 } LISTENERATTRIBUTES;
 typedef LISTENERATTRIBUTES FAR* LPLISTENERATTRIBUTES;
 
-typedef struct _SOURCEATTRIBUTES
-{
+typedef struct _SOURCEATTRIBUTES {
 	EAXBUFFERPROPERTIES eaxAttributes;
 	unsigned long       ulInsideConeAngle;
 	unsigned long       ulOutsideConeAngle;
@@ -53,8 +50,7 @@ typedef struct _SOURCEATTRIBUTES
 } SOURCEATTRIBUTES;
 typedef SOURCEATTRIBUTES FAR* LPSOURCEATTRIBUTES;
 
-typedef struct _MATERIALATTRIBUTES
-{
+typedef struct _MATERIALATTRIBUTES {
 	long  lLevel;
 	float fLFRatio;
 	float fRoomRatio;
@@ -65,8 +61,7 @@ typedef MATERIALATTRIBUTES FAR* LPMATERIALATTRIBUTES;
 #define EMMATERIAL_OBSTRUCTS 1
 #define EMMATERIAL_OCCLUDES 3
 
-typedef struct _DIFFRACTIONBOX
-{
+typedef struct _DIFFRACTIONBOX {
 	long    lSubspaceID;
 	EMPOINT empMin;
 	EMPOINT empMax;
@@ -93,7 +88,7 @@ typedef HRESULT( __stdcall* LPEAXMANAGERCREATE )( LPEAXMANAGER* );
 
 DECLARE_INTERFACE_( IEaxManager, IUnknown )
 {
-// IUnknown methods
+	// IUnknown methods
 	STDMETHOD( QueryInterface )( THIS_ REFIID, LPVOID* ) PURE;
 	STDMETHOD_( ULONG, AddRef )( THIS ) PURE;
 	STDMETHOD_( ULONG, Release )( THIS ) PURE;
@@ -113,7 +108,7 @@ DECLARE_INTERFACE_( IEaxManager, IUnknown )
 	STDMETHOD( GetGeometrySetID )( THIS_ char*, long* ) PURE;
 	STDMETHOD( GetListenerDynamicAttributes )( THIS_ long, LPEMPOINT, long*, DWORD ) PURE;
 	STDMETHOD( GetSourceDynamicAttributes )( THIS_ long, LPEMPOINT, long*, float*, long*, float*, float*, LPEMPOINT, DWORD ) PURE;
-// STDMETHOD(GetSubSpaceID) (THIS_ long, LPEMPOINT, long *) PURE;
+	// STDMETHOD(GetSubSpaceID) (THIS_ long, LPEMPOINT, long *) PURE;
 	STDMETHOD( GetEnvironmentName )( THIS_ long, char* szString, long lStrlen ) PURE;
 };
 

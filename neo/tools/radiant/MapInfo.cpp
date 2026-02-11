@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,23 +37,21 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CMapInfo dialog
 
-
-CMapInfo::CMapInfo( CWnd* pParent /*=NULL*/ )
-	: CDialog( CMapInfo::IDD, pParent )
+CMapInfo::CMapInfo( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CMapInfo::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CMapInfo)
-	m_nNet = 0;
-	m_nTotalBrushes = 0;
+	m_nNet			 = 0;
+	m_nTotalBrushes	 = 0;
 	m_nTotalEntities = 0;
 	//}}AFX_DATA_INIT
 }
-
 
 void CMapInfo::DoDataExchange( CDataExchange* pDX )
 {
@@ -65,10 +64,9 @@ void CMapInfo::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CMapInfo, CDialog )
-	//{{AFX_MSG_MAP(CMapInfo)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CMapInfo)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,37 +76,32 @@ BOOL CMapInfo::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	m_nTotalBrushes = 0;
+	m_nTotalBrushes	 = 0;
 	m_nTotalEntities = 0;
-	m_nNet = 0;
-	for( brush_t* pBrush = active_brushes.next ; pBrush != &active_brushes ; pBrush = pBrush->next )
-	{
+	m_nNet			 = 0;
+	for( brush_t* pBrush = active_brushes.next; pBrush != &active_brushes; pBrush = pBrush->next ) {
 		m_nTotalBrushes++;
-		if( pBrush->owner == world_entity )
-		{
+		if( pBrush->owner == world_entity ) {
 			m_nNet++;
 		}
 	}
 
-
 	CMapStringToPtr mapEntity;
 
-	int nValue = 0;
-	for( entity_t* pEntity = entities.next ; pEntity != &entities ; pEntity = pEntity->next )
-	{
+	int				nValue = 0;
+	for( entity_t* pEntity = entities.next; pEntity != &entities; pEntity = pEntity->next ) {
 		m_nTotalEntities++;
 		nValue = 0;
 		mapEntity.Lookup( pEntity->eclass->name, reinterpret_cast<void*&>( nValue ) );
-		nValue++ ;
+		nValue++;
 		mapEntity.SetAt( pEntity->eclass->name, reinterpret_cast<void*>( nValue ) );
 	}
 
 	m_lstEntity.ResetContent();
 	m_lstEntity.SetTabStops( 96 );
-	CString strKey;
+	CString	 strKey;
 	POSITION pos = mapEntity.GetStartPosition();
-	while( pos )
-	{
+	while( pos ) {
 		mapEntity.GetNextAssoc( pos, strKey, reinterpret_cast<void*&>( nValue ) );
 		CString strList;
 		strList.Format( "%s\t%i", strKey, nValue );
@@ -117,6 +110,6 @@ BOOL CMapInfo::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }

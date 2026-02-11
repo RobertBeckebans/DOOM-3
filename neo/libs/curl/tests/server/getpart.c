@@ -1,8 +1,8 @@
 /***************************************************************************
- *                                  _   _ ____  _     
- *  Project                     ___| | | |  _ \| |    
- *                             / __| | | | |_) | |    
- *                            | (__| |_| |  _ <| |___ 
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
@@ -10,7 +10,7 @@
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
  * are also available at http://curl.haxx.se/docs/copyright.html.
- * 
+ *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
  * furnished to do so, under the terms of the COPYING file.
@@ -31,159 +31,156 @@
 #define EAT_WORD(ptr) while( ptr && *ptr && !isspace((int)*ptr) && ('>' != *ptr)) ptr++
 
 #ifdef DEBUG
-#define show(x) printf x
+	#define show(x) printf x
 #else
-#define show(x)
+	#define show(x)
 #endif
 
 static
-char *appendstring(char *string, /* original string */
-                   char *buffer, /* to append */
-                   size_t *stringlen, /* length of string */
-                   size_t *stralloc)  /* allocated size */
+char* appendstring( char* string, /* original string */
+					char* buffer, /* to append */
+					size_t* stringlen, /* length of string */
+					size_t* stralloc ) /* allocated size */
 {
-  size_t len = strlen(buffer);
-  size_t needed_len = len + *stringlen;
+	size_t len = strlen( buffer );
+	size_t needed_len = len + *stringlen;
 
-  if(needed_len >= *stralloc) {
-    char *newptr;
-    size_t newsize = needed_len*2; /* get twice the needed size */
+	if( needed_len >= *stralloc ) {
+		char* newptr;
+		size_t newsize = needed_len * 2; /* get twice the needed size */
 
-    newptr = realloc(string, newsize);
-    if(newptr) {
-      string = newptr;
-      *stralloc = newsize;
-    }
-    else
-      return NULL;
-  }
-  strcpy(&string[*stringlen], buffer);
-  *stringlen += len;
+		newptr = realloc( string, newsize );
+		if( newptr ) {
+			string = newptr;
+			*stralloc = newsize;
+		} else {
+			return NULL;
+		}
+	}
+	strcpy( &string[*stringlen], buffer );
+	*stringlen += len;
 
-  return string;
+	return string;
 }
 
-const char *spitout(FILE *stream,
-                    const char *main,
-                    const char *sub, int *size)
+const char* spitout( FILE *stream,
+					 const char* main,
+					 const char* sub, int* size )
 {
-  char buffer[8192]; /* big enough for anything */
-  char cmain[128]=""; /* current main section */
-  char csub[128]="";  /* current sub section */
-  char *ptr;
-  char *end;
-  char display = 0;
+	char buffer[8192]; /* big enough for anything */
+	char cmain[128] = ""; /* current main section */
+	char csub[128] = ""; /* current sub section */
+	char* ptr;
+	char* end;
+	char display = 0;
 
-  char *string;
-  size_t stringlen=0;
-  size_t stralloc=256;
+	char* string;
+	size_t stringlen = 0;
+	size_t stralloc = 256;
 
-  enum {
-    STATE_OUTSIDE,
-    STATE_INMAIN,
-    STATE_INSUB,
-    STATE_ILLEGAL
-  } state = STATE_OUTSIDE;
+	enum {
+		STATE_OUTSIDE,
+		STATE_INMAIN,
+		STATE_INSUB,
+		STATE_ILLEGAL
+	} state = STATE_OUTSIDE;
 
-  string = (char *)malloc(stralloc);
-  if(!string)
-    return NULL;
+	string = ( char* )malloc( stralloc );
+	if( !string ) {
+		return NULL;
+	}
 
-  string[0] = 0; /* zero first byte in case of no data */
-  
-  while(fgets(buffer, sizeof(buffer), stream)) {
+	string[0] = 0; /* zero first byte in case of no data */
 
-    ptr = buffer;
+	while( fgets( buffer, sizeof( buffer ), stream ) ) {
 
-    /* pass white spaces */
-    EAT_SPACE(ptr);
+		ptr = buffer;
 
-    if('<' != *ptr) {
-      if(display) {
-        show(("=> %s", buffer));
-        string = appendstring(string, buffer, &stringlen, &stralloc);
-        show(("* %s\n", buffer));
-      }
-      continue;
-    }
+		/* pass white spaces */
+		EAT_SPACE( ptr );
 
-    ptr++;
-    EAT_SPACE(ptr);
+		if( '<' != *ptr ) {
+			if( display ) {
+				show( ( "=> %s", buffer ) );
+				string = appendstring( string, buffer, &stringlen, &stralloc );
+				show( ( "* %s\n", buffer ) );
+			}
+			continue;
+		}
 
-    if('/' == *ptr) {
-      /* end of a section */
-      ptr++;
-      EAT_SPACE(ptr);
+		ptr++;
+		EAT_SPACE( ptr );
 
-      end = ptr;
-      EAT_WORD(end);
-      *end = 0;
+		if( '/' == *ptr ) {
+			/* end of a section */
+			ptr++;
+			EAT_SPACE( ptr );
 
-      if((state == STATE_INSUB) &&
-         !strcmp(csub, ptr)) {
-        /* this is the end of the currently read sub section */
-        state--;
-        csub[0]=0; /* no sub anymore */
-        display=0;
-      }
-      else if((state == STATE_INMAIN) &&
-              !strcmp(cmain, ptr)) {
-        /* this is the end of the currently read main section */
-        state--;
-        cmain[0]=0; /* no main anymore */
-        display=0;
-      }
-    }
-    else if(!display) {
-      /* this is the beginning of a section */
-      end = ptr;
-      EAT_WORD(end);
-      
-      *end = 0;
-      switch(state) {
-      case STATE_OUTSIDE:
-        strcpy(cmain, ptr);
-        state = STATE_INMAIN;
-        break;
-      case STATE_INMAIN:
-        strcpy(csub, ptr);
-        state = STATE_INSUB;
-        break;
-      default:
-        break;
-      }
-    }
-    if(display) {
-      string = appendstring(string, buffer, &stringlen, &stralloc);
-      show(("* %s\n", buffer));
-    }
+			end = ptr;
+			EAT_WORD( end );
+			*end = 0;
 
-    if((STATE_INSUB == state) &&
-       !strcmp(cmain, main) &&
-       !strcmp(csub, sub)) {
-      show(("* (%d bytes) %s\n", stringlen, buffer));
-      display = 1; /* start displaying */
-    }
-    else {
-      show(("%d (%s/%s): %s\n", state, cmain, csub, buffer));
-      display = 0; /* no display */
-    }
-  }
+			if( ( state == STATE_INSUB ) &&
+					!strcmp( csub, ptr ) ) {
+				/* this is the end of the currently read sub section */
+				state--;
+				csub[0] = 0; /* no sub anymore */
+				display = 0;
+			} else if( ( state == STATE_INMAIN ) &&
+					   !strcmp( cmain, ptr ) ) {
+				/* this is the end of the currently read main section */
+				state--;
+				cmain[0] = 0; /* no main anymore */
+				display = 0;
+			}
+		} else if( !display ) {
+			/* this is the beginning of a section */
+			end = ptr;
+			EAT_WORD( end );
 
-  *size = stringlen;
-  return string;
+			*end = 0;
+			switch( state ) {
+				case STATE_OUTSIDE:
+					strcpy( cmain, ptr );
+					state = STATE_INMAIN;
+					break;
+				case STATE_INMAIN:
+					strcpy( csub, ptr );
+					state = STATE_INSUB;
+					break;
+				default:
+					break;
+			}
+		}
+		if( display ) {
+			string = appendstring( string, buffer, &stringlen, &stralloc );
+			show( ( "* %s\n", buffer ) );
+		}
+
+		if( ( STATE_INSUB == state ) &&
+				!strcmp( cmain, main ) &&
+				!strcmp( csub, sub ) ) {
+			show( ( "* (%d bytes) %s\n", stringlen, buffer ) );
+			display = 1; /* start displaying */
+		} else {
+			show( ( "%d (%s/%s): %s\n", state, cmain, csub, buffer ) );
+			display = 0; /* no display */
+		}
+	}
+
+	*size = stringlen;
+	return string;
 }
 
 #ifdef TEST
-int main(int argc, char **argv)
+int main( int argc, char** argv )
 {
-  if(argc< 3) {
-    printf("./moo main sub\n");
-  }
-  else {
-    int size;
-    char *buffer = spitout(stdin, argv[1], argv[2], &size);
-  }
-  return 0;
+	if( argc < 3 ) {
+		printf( "./moo main sub\n" );
+	} else {
+		int size;
+		char* buffer = spitout( stdin, argv[1], argv[2], &size );
+	}
+	return 0;
 }
 #endif

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,21 +37,19 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CNewProjDlg dialog
 
-
-CNewProjDlg::CNewProjDlg( CWnd* pParent /*=NULL*/ )
-	: CDialog( CNewProjDlg::IDD, pParent )
+CNewProjDlg::CNewProjDlg( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CNewProjDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CNewProjDlg)
 	m_strName = _T( "" );
 	//}}AFX_DATA_INIT
 }
-
 
 void CNewProjDlg::DoDataExchange( CDataExchange* pDX )
 {
@@ -60,11 +59,10 @@ void CNewProjDlg::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CNewProjDlg, CDialog )
-	//{{AFX_MSG_MAP(CNewProjDlg)
-	// NOTE: the ClassWizard will add message map macros here
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CNewProjDlg)
+// NOTE: the ClassWizard will add message map macros here
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

@@ -38,8 +38,7 @@ If you have questions concerning this license or the applicable additional terms
 	#define MAXSIZEMRUITEM  128     // Default max size of an entry
 #endif
 
-typedef struct
-{
+typedef struct {
 	WORD wNbItemFill;
 	WORD wNbLruShow;
 	WORD wNbLruMenu;
@@ -80,8 +79,7 @@ BOOL            LoadMruInIni( LPMRUMENU lpMruMenu, LPSTR lpszSection, LPSTR lpsz
 BOOL            SaveMruInReg( LPMRUMENU lpMruMenu, LPSTR lpszKey );
 BOOL            LoadMruInReg( LPMRUMENU lpMruMenu, LPSTR lpszKey );
 
-typedef enum
-{
+typedef enum {
 	WIN32S,
 	WINNT,
 	WIN95ORGREATHER

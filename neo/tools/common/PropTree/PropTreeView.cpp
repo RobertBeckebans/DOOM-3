@@ -1,10 +1,9 @@
 // CPropTreeView.cpp : implementation file
 //
 
-//#include "stdafx.h"
+// #include "stdafx.h"
 #include "../../../idlib/precompiled.h"
 #pragma hdrstop
-
 
 #include "PropTreeView.h"
 
@@ -12,8 +11,8 @@
 
 IMPLEMENT_DYNCREATE( CPropTreeView, CFormView )
 
-CPropTreeView::CPropTreeView()
-	: CFormView( ( LPCTSTR ) NULL )
+CPropTreeView::CPropTreeView() :
+	CFormView( ( LPCTSTR )NULL )
 {
 }
 
@@ -22,11 +21,10 @@ CPropTreeView::~CPropTreeView()
 }
 
 BEGIN_MESSAGE_MAP( CPropTreeView, CView )
-	ON_WM_CREATE()
-	ON_WM_SIZE()
-	ON_WM_PAINT()
+ON_WM_CREATE()
+ON_WM_SIZE()
+ON_WM_PAINT()
 END_MESSAGE_MAP()
-
 
 // CPropTreeView drawing
 
@@ -35,7 +33,6 @@ void CPropTreeView::OnDraw( CDC* pDC )
 	CDocument* pDoc = GetDocument();
 	// TODO: add draw code here
 }
-
 
 // CPropTreeView diagnostics
 
@@ -51,16 +48,11 @@ void CPropTreeView::Dump( CDumpContext& dc ) const
 }
 #endif //_DEBUG
 
-
-BOOL CPropTreeView::Create( LPCTSTR lpszClassName, LPCTSTR lpszWindowName,
-							DWORD dwStyle, const RECT& rect, CWnd* pParentWnd,
-							UINT nID, CCreateContext* pContext )
+BOOL CPropTreeView::Create( LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext )
 {
 	// create the view window itself
 	m_pCreateContext = pContext;
-	if( !CView::Create( lpszClassName, lpszWindowName,
-						dwStyle, rect, pParentWnd,  nID, pContext ) )
-	{
+	if( !CView::Create( lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext ) ) {
 		return FALSE;
 	}
 
@@ -70,8 +62,7 @@ BOOL CPropTreeView::Create( LPCTSTR lpszClassName, LPCTSTR lpszWindowName,
 
 int CPropTreeView::OnCreate( LPCREATESTRUCT lpCreateStruct )
 {
-	if( CView::OnCreate( lpCreateStruct ) == -1 )
-	{
+	if( CView::OnCreate( lpCreateStruct ) == -1 ) {
 		return -1;
 	}
 
@@ -94,12 +85,10 @@ void CPropTreeView::OnSize( UINT nType, int cx, int cy )
 {
 	CView::OnSize( nType, cx, cy );
 
-	if( ::IsWindow( m_Tree.GetSafeHwnd() ) )
-	{
+	if( ::IsWindow( m_Tree.GetSafeHwnd() ) ) {
 		m_Tree.SetWindowPos( NULL, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOZORDER );
 	}
 }
-
 
 void CPropTreeView::OnPaint()
 {

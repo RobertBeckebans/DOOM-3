@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -38,19 +39,18 @@ If you have questions concerning this license or the applicable additional terms
 // Also, a bunch of Radiant fields no longer exist in this codebase, likewise the whole point of passing in the bool
 //	to this code, but I've just left it as-is. A designer tested it and pronounced it fine.
 
-//#pragma warning( disable : 4786)
-//#include <list>
-//using namespace std;
-//#pragma warning( disable : 4786)
+// #pragma warning( disable : 4786)
+// #include <list>
+// using namespace std;
+// #pragma warning( disable : 4786)
 
 #undef strnicmp
-#define strnicmp		idStr::Icmpn
+#define strnicmp idStr::Icmpn
 
 #if 1
 
-
-//extern void ClearBounds (idVec3 mins, idVec3 maxs);
-//extern void AddPointToBounds (const idVec3 v, idVec3 mins, idVec3 maxs);
+// extern void ClearBounds (idVec3 mins, idVec3 maxs);
+// extern void AddPointToBounds (const idVec3 v, idVec3 mins, idVec3 maxs);
 void ClearBounds( idVec3& mins, idVec3& maxs )
 {
 	mins[0] = mins[1] = mins[2] = 99999;
@@ -59,160 +59,134 @@ void ClearBounds( idVec3& mins, idVec3& maxs )
 
 void AddPointToBounds( const idVec3& v, idVec3& mins, idVec3& maxs )
 {
-	int		i;
-	float	val;
+	int	  i;
+	float val;
 
-	for( i = 0 ; i < 3 ; i++ )
-	{
+	for( i = 0; i < 3; i++ ) {
 		val = v[i];
-		if( val < mins[i] )
-		{
+		if( val < mins[i] ) {
 			mins[i] = val;
 		}
-		if( val > maxs[i] )
-		{
+		if( val > maxs[i] ) {
 			maxs[i] = val;
 		}
 	}
 }
 
-
 static void FloorBounds( idVec3& mins, idVec3& maxs )
 {
-	for( int i = 0 ; i < 3 ; i++ )
-	{
+	for( int i = 0; i < 3; i++ ) {
 		mins[i] = floor( mins[i] + 0.5 );
 		maxs[i] = floor( maxs[i] + 0.5 );
 	}
 }
 
-
 static LPCSTR vtos( idVec3& v3 )
 {
 	return va( "%.3ff,%.3f,%.3f", v3[0], v3[1], v3[2] );
 }
-struct PairBrushFace_t
-{
-	face_t*		pFace;
-	brush_t*	pBrush;
+struct PairBrushFace_t {
+	face_t*	 pFace;
+	brush_t* pBrush;
 };
-idList < PairBrushFace_t > FacesToCaulk;
-void Select_AutoCaulk()
+idList<PairBrushFace_t> FacesToCaulk;
+void					Select_AutoCaulk()
 {
-	/*Sys_Printf*/common->Printf( "Caulking...\n" );
+	/*Sys_Printf*/ common->Printf( "Caulking...\n" );
 
 	FacesToCaulk.Clear();
 
-	int iSystemBrushesSkipped = 0;
-	face_t* pSelectedFace;
+	int		 iSystemBrushesSkipped = 0;
+	face_t*	 pSelectedFace;
 
 	brush_t* next;
-	for( brush_t* pSelectedBrush = selected_brushes.next ; pSelectedBrush != &selected_brushes ; pSelectedBrush = next )
-	{
+	for( brush_t* pSelectedBrush = selected_brushes.next; pSelectedBrush != &selected_brushes; pSelectedBrush = next ) {
 		next = pSelectedBrush->next;
 
-		if( pSelectedBrush->owner->eclass->fixedsize )
-		{
-			continue;    // apparently this means it's a model, so skip it...
+		if( pSelectedBrush->owner->eclass->fixedsize ) {
+			continue; // apparently this means it's a model, so skip it...
 		}
 
 		// new check, we can't caulk a brush that has any "system/" faces...
 		//
 		bool bSystemFacePresent = false;
-		for( pSelectedFace = pSelectedBrush->brush_faces; pSelectedFace; pSelectedFace = pSelectedFace->next )
-		{
-			if( !strnicmp( pSelectedFace->d_texture->GetName(), "system/", 7 ) )
-			{
+		for( pSelectedFace = pSelectedBrush->brush_faces; pSelectedFace; pSelectedFace = pSelectedFace->next ) {
+			if( !strnicmp( pSelectedFace->d_texture->GetName(), "system/", 7 ) ) {
 				bSystemFacePresent = true;
 				break;
 			}
 		}
-		if( bSystemFacePresent )
-		{
+		if( bSystemFacePresent ) {
 			iSystemBrushesSkipped++;
-			continue;	// verboten to caulk this.
+			continue; // verboten to caulk this.
 		}
 
-		for( int iBrushListToScan = 0; iBrushListToScan < 2; iBrushListToScan++ )
-		{
-			brush_t*	snext;
-			for( brush_t* pScannedBrush = ( iBrushListToScan ? active_brushes.next : selected_brushes.next ); pScannedBrush != ( iBrushListToScan ? &active_brushes : &selected_brushes ) ; pScannedBrush = snext )
-			{
+		for( int iBrushListToScan = 0; iBrushListToScan < 2; iBrushListToScan++ ) {
+			brush_t* snext;
+			for( brush_t* pScannedBrush = ( iBrushListToScan ? active_brushes.next : selected_brushes.next ); pScannedBrush != ( iBrushListToScan ? &active_brushes : &selected_brushes );
+				 pScannedBrush			= snext ) {
 				snext = pScannedBrush->next;
 
-				if( pScannedBrush == pSelectedBrush )
-				{
+				if( pScannedBrush == pSelectedBrush ) {
 					continue;
 				}
 
-				if( pScannedBrush->owner->eclass->fixedsize || pScannedBrush->pPatch || pScannedBrush->hiddenBrush )
-				{
+				if( pScannedBrush->owner->eclass->fixedsize || pScannedBrush->pPatch || pScannedBrush->hiddenBrush ) {
 					continue;
 				}
 
-				if( FilterBrush( pScannedBrush ) )
-				{
+				if( FilterBrush( pScannedBrush ) ) {
 					continue;
 				}
 
-// idMaterial stuff no longer support this, not sure what else to do.
-//   Searching for other occurences of QER_NOCARVE just shows people REMing the code and ignoring ths issue...
-//
-//				if (pScannedBrush->brush_faces->d_texture->bFromShader && (pScannedBrush->brush_faces->d_texture->TestMaterialFlag(QER_NOCARVE)))
-//					continue;
+				// idMaterial stuff no longer support this, not sure what else to do.
+				//   Searching for other occurences of QER_NOCARVE just shows people REMing the code and ignoring ths issue...
+				//
+				//				if (pScannedBrush->brush_faces->d_texture->bFromShader && (pScannedBrush->brush_faces->d_texture->TestMaterialFlag(QER_NOCARVE)))
+				//					continue;
 
 				// basic-reject first to see if brushes can even possibly touch (coplanar counts as touching)
 				//
 				int i;
-				for( i = 0 ; i < 3 ; i++ )
-				{
-					if( pSelectedBrush->mins[i] > pScannedBrush->maxs[i] ||
-							pSelectedBrush->maxs[i] < pScannedBrush->mins[i] )
-					{
+				for( i = 0; i < 3; i++ ) {
+					if( pSelectedBrush->mins[i] > pScannedBrush->maxs[i] || pSelectedBrush->maxs[i] < pScannedBrush->mins[i] ) {
 						break;
 					}
 				}
-				if( i != 3 )
-				{
-					continue;    // can't be touching
+				if( i != 3 ) {
+					continue; // can't be touching
 				}
 
 				// ok, now for the clever stuff, we need to detect only those faces that are both coplanar and smaller
 				//	or equal to the face they're coplanar with...
 				//
-				for( pSelectedFace = pSelectedBrush->brush_faces; pSelectedFace; pSelectedFace = pSelectedFace->next )
-				{
+				for( pSelectedFace = pSelectedBrush->brush_faces; pSelectedFace; pSelectedFace = pSelectedFace->next ) {
 					idWinding* pSelectedWinding = pSelectedFace->face_winding;
 
-					if( !pSelectedWinding )
-					{
-						continue;    // freed face, probably won't happen here, but who knows with this program?
+					if( !pSelectedWinding ) {
+						continue; // freed face, probably won't happen here, but who knows with this program?
 					}
 
 					//				SquaredFace_t SelectedSquaredFace;
 					//				WindingToSquaredFace( &SelectedSquaredFace, pSelectedWinding);
 
-					for( face_t* pScannedFace = pScannedBrush->brush_faces; pScannedFace; pScannedFace = pScannedFace->next )
-					{
+					for( face_t* pScannedFace = pScannedBrush->brush_faces; pScannedFace; pScannedFace = pScannedFace->next ) {
 						// don't even try caulking against a system face, because these are often transparent and will leave holes
 						//
-						if( !strnicmp( pScannedFace->d_texture->GetName(), "system/", 7 ) )
-						{
+						if( !strnicmp( pScannedFace->d_texture->GetName(), "system/", 7 ) ) {
 							continue;
 						}
 
 						// and don't try caulking against something inherently transparent...
 						//
-						if( pScannedFace->d_texture->TestMaterialFlag( QER_TRANS ) )
-						{
+						if( pScannedFace->d_texture->TestMaterialFlag( QER_TRANS ) ) {
 							continue;
 						}
 
 						idWinding* pScannedWinding = pScannedFace->face_winding;
 
-						if( !pScannedWinding )
-						{
-							continue;    // freed face, probably won't happen here, but who knows with this program?
+						if( !pScannedWinding ) {
+							continue; // freed face, probably won't happen here, but who knows with this program?
 						}
 
 						//					SquaredFace_t ScannedSquaredFace;
@@ -230,27 +204,21 @@ void Select_AutoCaulk()
 							//
 							idVec3 v3ZeroTest;
 							idVec3 v3Zero;
-							v3Zero.Zero();	//static idVec3 v3Zero={0,0,0};
+							v3Zero.Zero(); // static idVec3 v3Zero={0,0,0};
 
 							VectorAdd( pSelectedFace->plane.Normal(), pScannedFace->plane.Normal(), v3ZeroTest );
-							if( v3ZeroTest == v3Zero )
-							{
+							if( v3ZeroTest == v3Zero ) {
 								// planes are facing each other...
 								//
 								// coplanar? (this is some maths of Gil's, which I don't even pretend to understand)
 								//
 								float fTotalDist = 0;
-								for( int _i = 0; _i < 3; _i++ )
-								{
-									fTotalDist += fabs(	DotProduct( pSelectedFace->plane.Normal(), ( *pSelectedWinding )[0] )
-														-
-														DotProduct( pSelectedFace->plane.Normal(), ( *pScannedWinding )[i] )
-													  );
+								for( int _i = 0; _i < 3; _i++ ) {
+									fTotalDist += fabs( DotProduct( pSelectedFace->plane.Normal(), ( *pSelectedWinding )[0] ) - DotProduct( pSelectedFace->plane.Normal(), ( *pScannedWinding )[i] ) );
 								}
-								//OutputDebugString(va("Dist = %g\n",fTotalDist));
+								// OutputDebugString(va("Dist = %g\n",fTotalDist));
 
-								if( fTotalDist > 0.01 )
-								{
+								if( fTotalDist > 0.01 ) {
 									continue;
 								}
 
@@ -262,40 +230,28 @@ void Select_AutoCaulk()
 								idVec3 v3ScannedBoundsMins, v3ScannedBoundsMaxs;
 								ClearBounds( v3ScannedBoundsMins, v3ScannedBoundsMaxs );
 								int iPoint;
-								for( iPoint = 0; iPoint < pScannedWinding->GetNumPoints(); iPoint++ )
-								{
+								for( iPoint = 0; iPoint < pScannedWinding->GetNumPoints(); iPoint++ ) {
 									AddPointToBounds( ( *pScannedWinding )[iPoint].ToVec3(), v3ScannedBoundsMins, v3ScannedBoundsMaxs );
 								}
 								// floor 'em... (or .001 differences mess things up...
 								//
 								FloorBounds( v3ScannedBoundsMins, v3ScannedBoundsMaxs );
 
-
 								// now check points from selected face...
 								//
 								bool bWithin = true;
-								for( iPoint = 0; iPoint < pSelectedWinding->GetNumPoints(); iPoint++ )
-								{
-									for( int iXYZ = 0; iXYZ < 3; iXYZ++ )
-									{
+								for( iPoint = 0; iPoint < pSelectedWinding->GetNumPoints(); iPoint++ ) {
+									for( int iXYZ = 0; iXYZ < 3; iXYZ++ ) {
 										float f = floor( ( *pSelectedWinding )[iPoint][iXYZ] + 0.5 );
-										if( !
-												(
-													f >= v3ScannedBoundsMins[iXYZ]
-													&&
-													f <= v3ScannedBoundsMaxs[iXYZ]
-												)
-										  )
-										{
+										if( !( f >= v3ScannedBoundsMins[iXYZ] && f <= v3ScannedBoundsMaxs[iXYZ] ) ) {
 											bWithin = false;
 										}
 									}
 								}
 
-								if( bWithin )
-								{
+								if( bWithin ) {
 									PairBrushFace_t PairBrushFace;
-									PairBrushFace.pFace = pSelectedFace;
+									PairBrushFace.pFace	 = pSelectedFace;
 									PairBrushFace.pBrush = pSelectedBrush;
 									FacesToCaulk.Append( PairBrushFace );
 								}
@@ -307,17 +263,14 @@ void Select_AutoCaulk()
 		}
 	}
 
-
 	// apply caulk...
 	//
 	int iFacesCaulked = 0;
-	if( FacesToCaulk.Num() )
-	{
-		LPCSTR psCaulkName = "textures/common/caulk";
-		const idMaterial* pCaulk = Texture_ForName( psCaulkName );
+	if( FacesToCaulk.Num() ) {
+		LPCSTR			  psCaulkName = "textures/common/caulk";
+		const idMaterial* pCaulk	  = Texture_ForName( psCaulkName );
 
-		if( pCaulk )
-		{
+		if( pCaulk ) {
 			//
 			// and call some other junk that Radiant wants so so we can use it later...
 			//
@@ -325,39 +278,35 @@ void Select_AutoCaulk()
 			memset( &tex, 0, sizeof( tex ) );
 			tex.scale[0] = 1;
 			tex.scale[1] = 1;
-			//tex.flags = pCaulk->flags;	// field missing in Q4
-			//tex.value = pCaulk->value;	// ditto
-			//tex.contents = pCaulk->contents;	// ditto
+			// tex.flags = pCaulk->flags;	// field missing in Q4
+			// tex.value = pCaulk->value;	// ditto
+			// tex.contents = pCaulk->contents;	// ditto
 			tex.SetName( pCaulk->GetName() );
 
-			//Texture_SetTexture (&tex);
+			// Texture_SetTexture (&tex);
 
-			for( int iListEntry = 0; iListEntry < FacesToCaulk.Num(); iListEntry++ )
-			{
+			for( int iListEntry = 0; iListEntry < FacesToCaulk.Num(); iListEntry++ ) {
 				PairBrushFace_t& PairBrushFace = FacesToCaulk[iListEntry];
-				face_t* pFace = PairBrushFace.pFace;
-				brush_t* pBrush = PairBrushFace.pBrush;
+				face_t*			 pFace		   = PairBrushFace.pFace;
+				brush_t*		 pBrush		   = PairBrushFace.pBrush;
 
 				pFace->d_texture = pCaulk;
-				pFace->texdef = tex;
+				pFace->texdef	 = tex;
 
-				Face_FitTexture( pFace, 1, 1 );	// this doesn't work here for some reason... duh.
+				Face_FitTexture( pFace, 1, 1 ); // this doesn't work here for some reason... duh.
 				Brush_Build( pBrush );
 
 				iFacesCaulked++;
 			}
-		}
-		else
-		{
-			/*Sys_Printf*/common->Printf( " Unable to locate caulk texture at: \"%s\"!\n", psCaulkName );
+		} else {
+			/*Sys_Printf*/ common->Printf( " Unable to locate caulk texture at: \"%s\"!\n", psCaulkName );
 		}
 	}
 
-	/*Sys_Printf*/common->Printf( "( %d faces caulked )\n", iFacesCaulked );
+	/*Sys_Printf*/ common->Printf( "( %d faces caulked )\n", iFacesCaulked );
 
-	if( iSystemBrushesSkipped )
-	{
-		/*Sys_Printf*/common->Printf( "( %d system-faced brushes skipped )\n", iSystemBrushesSkipped );
+	if( iSystemBrushesSkipped ) {
+		/*Sys_Printf*/ common->Printf( "( %d system-faced brushes skipped )\n", iSystemBrushesSkipped );
 	}
 
 	Sys_UpdateWindows( W_ALL );

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -35,13 +36,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "DialogAFConstraint.h"
 #include "DialogAFConstraintFixed.h"
 
-
 // DialogAFConstraintFixed dialog
 
-toolTip_t DialogAFConstraintFixed::toolTips[] =
-{
-	{ 0, NULL }
-};
+toolTip_t DialogAFConstraintFixed::toolTips[] = { { 0, NULL } };
 
 IMPLEMENT_DYNAMIC( DialogAFConstraintFixed, CDialog )
 
@@ -50,10 +47,10 @@ IMPLEMENT_DYNAMIC( DialogAFConstraintFixed, CDialog )
 DialogAFConstraintFixed::DialogAFConstraintFixed
 ================
 */
-DialogAFConstraintFixed::DialogAFConstraintFixed( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogAFConstraintFixed::IDD, pParent )
-	, constraint( NULL )
-	, file( NULL )
+DialogAFConstraintFixed::DialogAFConstraintFixed( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogAFConstraintFixed::IDD, pParent ),
+	constraint( NULL ),
+	file( NULL )
 {
 	Create( IDD_DIALOG_AF_CONSTRAINT_FIXED, pParent );
 	EnableToolTips( TRUE );
@@ -96,7 +93,7 @@ DialogAFConstraintFixed::LoadFile
 */
 void DialogAFConstraintFixed::LoadFile( idDeclAF* af )
 {
-	file = af;
+	file	   = af;
 	constraint = NULL;
 	InitJointLists();
 }
@@ -118,7 +115,6 @@ DialogAFConstraintFixed::LoadConstraint
 */
 void DialogAFConstraintFixed::LoadConstraint( idDeclAF_Constraint* c )
 {
-
 	constraint = c;
 
 	// update displayed values
@@ -132,9 +128,7 @@ DialogAFConstraintFixed::SaveConstraint
 */
 void DialogAFConstraintFixed::SaveConstraint()
 {
-
-	if( !file || !constraint )
-	{
+	if( !file || !constraint ) {
 		return;
 	}
 	UpdateData( TRUE );
@@ -150,8 +144,7 @@ DialogAFConstraintFixed::UpdateFile
 void DialogAFConstraintFixed::UpdateFile()
 {
 	SaveConstraint();
-	if( file )
-	{
+	if( file ) {
 		gameEdit->AF_UpdateEntities( file->GetName() );
 	}
 }
@@ -167,12 +160,10 @@ int DialogAFConstraintFixed::OnToolHitTest( CPoint point, TOOLINFO* pTI ) const
 	return DefaultOnToolHitTest( toolTips, this, point, pTI );
 }
 
-
 BEGIN_MESSAGE_MAP( DialogAFConstraintFixed, CDialog )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
 END_MESSAGE_MAP()
-
 
 // DialogAFConstraintFixed message handlers
 

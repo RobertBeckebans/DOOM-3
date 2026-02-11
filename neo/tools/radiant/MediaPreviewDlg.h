@@ -19,14 +19,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
 #pragma once
-
 
 // CMediaPreviewDlg dialog
 
@@ -39,25 +39,22 @@ public:
 	CMediaPreviewDlg( CWnd* pParent = NULL ); // standard constructor
 	virtual ~CMediaPreviewDlg();
 
-	void SetMode( int _mode )
-	{
-		mode = _mode;
-	}
+	void SetMode( int _mode ) { mode = _mode; }
 
 	void SetMedia( const char* _media );
 	void Refresh();
 
-// Dialog Data
+	// Dialog Data
 	enum { IDD = IDD_DIALOG_EDITPREVIEW };
 
 protected:
-	idGLDrawable testDrawable;
+	idGLDrawable		 testDrawable;
 	idGLDrawableMaterial drawMaterial;
-	idGLWidget wndPreview;
-	int mode;
-	idStr media;
+	idGLWidget			 wndPreview;
+	int					 mode;
+	idStr				 media;
 
-	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
+	virtual void		 DoDataExchange( CDataExchange* pDX ); // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 public:

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,26 +32,24 @@ If you have questions concerning this license or the applicable additional terms
 #include "roq.h"
 #include "codec.h"
 
-roq*		theRoQ;				// current roq file
+roq* theRoQ; // current roq file
 
 roq::roq()
 {
-	image = 0;
-	quietMode = false;
-	encoder = 0;
+	image		 = 0;
+	quietMode	 = false;
+	encoder		 = 0;
 	previousSize = 0;
-	lastFrame = false;
-	dataStuff = false;
+	lastFrame	 = false;
+	dataStuff	 = false;
 }
 
 roq::~roq()
 {
-	if( image )
-	{
+	if( image ) {
 		delete image;
 	}
-	if( encoder )
-	{
+	if( encoder ) {
 		delete encoder;
 	}
 	return;
@@ -83,22 +82,22 @@ bool roq::ParamNoAlpha()
 
 bool roq::MakingVideo()
 {
-	return true;	//paramFile->timecode];
+	return true; // paramFile->timecode];
 }
 
 bool roq::SearchType()
 {
-	return	paramFile->SearchType();
+	return paramFile->SearchType();
 }
 
 bool roq::HasSound()
 {
-	return	paramFile->HasSound();
+	return paramFile->HasSound();
 }
 
 int roq::PreviousFrameSize()
 {
-	return	previousSize;
+	return previousSize;
 }
 
 int roq::FirstFrameSize()
@@ -108,7 +107,7 @@ int roq::FirstFrameSize()
 
 int roq::NormalFrameSize()
 {
-	return	paramFile->NormalFrameSize();
+	return paramFile->NormalFrameSize();
 }
 
 const char* roq::CurrentFilename()
@@ -118,20 +117,19 @@ const char* roq::CurrentFilename()
 
 void roq::EncodeStream( const char* paramInputFile )
 {
-	int		onFrame;
-	idStr	f0, f1, f2;
-	int		morestuff;
+	int	  onFrame;
+	idStr f0, f1, f2;
+	int	  morestuff;
 
 	onFrame = 1;
 
-	encoder = new codec;
-	paramFile = new roqParam;
+	encoder					 = new codec;
+	paramFile				 = new roqParam;
 	paramFile->numInputFiles = 0;
 
 	paramFile->InitFromFile( paramInputFile );
 
-	if( !paramFile->NumberOfFrames() )
-	{
+	if( !paramFile->NumberOfFrames() ) {
 		return;
 	}
 
@@ -139,36 +137,27 @@ void roq::EncodeStream( const char* paramInputFile )
 
 	numberOfFrames = paramFile->NumberOfFrames();
 
-	if( paramFile->NoAlpha() == true )
-	{
+	if( paramFile->NoAlpha() == true ) {
 		common->Printf( "encodeStream: eluding alpha\n" );
 	}
 
 	f0 = "";
 	f1 = paramFile->GetNextImageFilename();
-	if( ( paramFile->MoreFrames() == true ) )
-	{
+	if( ( paramFile->MoreFrames() == true ) ) {
 		f2 = paramFile->GetNextImageFilename();
 	}
 	morestuff = numberOfFrames;
 
-	while( morestuff )
-	{
+	while( morestuff ) {
 		LoadAndDisplayImage( f1 );
 
-		if( onFrame == 1 )
-		{
+		if( onFrame == 1 ) {
 			encoder->SparseEncode();
-//			WriteLossless();
-		}
-		else
-		{
-			if( !strcmp( f0, f1 ) && strcmp( f1, f2 ) )
-			{
+			//			WriteLossless();
+		} else {
+			if( !strcmp( f0, f1 ) && strcmp( f1, f2 ) ) {
 				WriteHangFrame();
-			}
-			else
-			{
+			} else {
 				encoder->SparseEncode();
 			}
 		}
@@ -176,28 +165,27 @@ void roq::EncodeStream( const char* paramInputFile )
 		onFrame++;
 		f0 = f1;
 		f1 = f2;
-		if( paramFile->MoreFrames() == true )
-		{
+		if( paramFile->MoreFrames() == true ) {
 			f2 = paramFile->GetNextImageFilename();
 		}
 		morestuff--;
 		session->UpdateScreen();
 	}
 
-//	if (numberOfFrames != 1) {
-//		if (image->hasAlpha() && paramFile->NoAlpha()==false) {
-//			lastFrame = true;
-//			encoder->SparseEncode();
-//		} else {
-//			WriteLossless();
-//		}
-//	}
+	//	if (numberOfFrames != 1) {
+	//		if (image->hasAlpha() && paramFile->NoAlpha()==false) {
+	//			lastFrame = true;
+	//			encoder->SparseEncode();
+	//		} else {
+	//			WriteLossless();
+	//		}
+	//	}
 	CloseRoQFile();
 }
 
 void roq::Write16Word( word* aWord, idFile* stream )
 {
-	byte	a, b;
+	byte a, b;
 
 	a = *aWord & 0xff;
 	b = *aWord >> 8;
@@ -208,7 +196,7 @@ void roq::Write16Word( word* aWord, idFile* stream )
 
 void roq::Write32Word( unsigned int* aWord, idFile* stream )
 {
-	byte	a, b, c, d;
+	byte a, b, c, d;
 
 	a = *aWord & 0xff;
 	b = ( *aWord >> 8 ) & 0xff;
@@ -228,30 +216,27 @@ int roq::SizeFile( idFile* ftosize )
 
 /* Expanded data destination object for stdio output */
 
-typedef struct
-{
+typedef struct {
 	struct jpeg_destination_mgr pub; /* public fields */
 
-	byte* outfile;		/* target stream */
-	int	size;
+	byte*						outfile; /* target stream */
+	int							size;
 } my_destination_mgr;
 
 typedef my_destination_mgr* my_dest_ptr;
-
 
 /*
  * Initialize destination --- called by jpeg_start_compress
  * before any data is actually written.
  */
 
-void roq::JPEGInitDestination( j_compress_ptr cinfo )
+void						roq::JPEGInitDestination( j_compress_ptr cinfo )
 {
-	my_dest_ptr dest = ( my_dest_ptr ) cinfo->dest;
+	my_dest_ptr dest = ( my_dest_ptr )cinfo->dest;
 
 	dest->pub.next_output_byte = dest->outfile;
-	dest->pub.free_in_buffer = dest->size;
+	dest->pub.free_in_buffer   = dest->size;
 }
-
 
 /*
  * Empty the output buffer --- called whenever buffer fills up.
@@ -281,7 +266,6 @@ boolean roq::JPEGEmptyOutputBuffer( j_compress_ptr cinfo )
 	return true;
 }
 
-
 /*
  * Compression initialization.
  * Before calling this, all parameters and a data destination must be set up.
@@ -299,18 +283,16 @@ boolean roq::JPEGEmptyOutputBuffer( j_compress_ptr cinfo )
 
 void roq::JPEGStartCompress( j_compress_ptr cinfo, bool write_all_tables )
 {
-	if( cinfo->global_state != CSTATE_START )
-	{
+	if( cinfo->global_state != CSTATE_START ) {
 		ERREXIT1( cinfo, JERR_BAD_STATE, cinfo->global_state );
 	}
 
-	if( write_all_tables )
-	{
-		jpeg_suppress_tables( cinfo, FALSE );    /* mark all tables to be written */
+	if( write_all_tables ) {
+		jpeg_suppress_tables( cinfo, FALSE ); /* mark all tables to be written */
 	}
 
 	/* (Re)initialize error mgr and destination modules */
-	( *cinfo->err->reset_error_mgr )( ( j_common_ptr ) cinfo );
+	( *cinfo->err->reset_error_mgr )( ( j_common_ptr )cinfo );
 	( *cinfo->dest->init_destination )( cinfo );
 	/* Perform master selection of active modules */
 	jinit_compress_master( cinfo );
@@ -320,9 +302,8 @@ void roq::JPEGStartCompress( j_compress_ptr cinfo, bool write_all_tables )
 	 * or jpeg_write_raw_data.
 	 */
 	cinfo->next_scanline = 0;
-	cinfo->global_state = ( cinfo->raw_data_in ? CSTATE_RAW_OK : CSTATE_SCANNING );
+	cinfo->global_state	 = ( cinfo->raw_data_in ? CSTATE_RAW_OK : CSTATE_SCANNING );
 }
-
 
 /*
  * Write some scanlines of data to the JPEG compressor.
@@ -343,21 +324,18 @@ JDIMENSION roq::JPEGWriteScanlines( j_compress_ptr cinfo, JSAMPARRAY scanlines, 
 {
 	JDIMENSION row_ctr, rows_left;
 
-	if( cinfo->global_state != CSTATE_SCANNING )
-	{
+	if( cinfo->global_state != CSTATE_SCANNING ) {
 		ERREXIT1( cinfo, JERR_BAD_STATE, cinfo->global_state );
 	}
-	if( cinfo->next_scanline >= cinfo->image_height )
-	{
+	if( cinfo->next_scanline >= cinfo->image_height ) {
 		WARNMS( cinfo, JWRN_TOO_MUCH_DATA );
 	}
 
 	/* Call progress monitor hook if present */
-	if( cinfo->progress != NULL )
-	{
-		cinfo->progress->pass_counter = ( long ) cinfo->next_scanline;
-		cinfo->progress->pass_limit = ( long ) cinfo->image_height;
-		( *cinfo->progress->progress_monitor )( ( j_common_ptr ) cinfo );
+	if( cinfo->progress != NULL ) {
+		cinfo->progress->pass_counter = ( long )cinfo->next_scanline;
+		cinfo->progress->pass_limit	  = ( long )cinfo->image_height;
+		( *cinfo->progress->progress_monitor )( ( j_common_ptr )cinfo );
 	}
 
 	/* Give master control module another chance if this is first call to
@@ -365,15 +343,13 @@ JDIMENSION roq::JPEGWriteScanlines( j_compress_ptr cinfo, JSAMPARRAY scanlines, 
 	 * delayed so that application can write COM, etc, markers between
 	 * jpeg_start_compress and jpeg_write_scanlines.
 	 */
-	if( cinfo->master->call_pass_startup )
-	{
+	if( cinfo->master->call_pass_startup ) {
 		( *cinfo->master->pass_startup )( cinfo );
 	}
 
 	/* Ignore any extra scanlines at bottom of image. */
 	rows_left = cinfo->image_height - cinfo->next_scanline;
-	if( num_lines > rows_left )
-	{
+	if( num_lines > rows_left ) {
 		num_lines = rows_left;
 	}
 
@@ -394,13 +370,12 @@ JDIMENSION roq::JPEGWriteScanlines( j_compress_ptr cinfo, JSAMPARRAY scanlines, 
 
 static int hackSize;
 
-void roq::JPEGTermDestination( j_compress_ptr cinfo )
+void	   roq::JPEGTermDestination( j_compress_ptr cinfo )
 {
-	my_dest_ptr dest = ( my_dest_ptr ) cinfo->dest;
-	size_t datacount = dest->size - dest->pub.free_in_buffer;
-	hackSize = datacount;
+	my_dest_ptr dest	  = ( my_dest_ptr )cinfo->dest;
+	size_t		datacount = dest->size - dest->pub.free_in_buffer;
+	hackSize			  = datacount;
 }
-
 
 /*
  * Prepare for output to a stdio stream.
@@ -418,29 +393,24 @@ void roq::JPEGDest( j_compress_ptr cinfo, byte* outfile, int size )
 	 * manager serially with the same JPEG object, because their private object
 	 * sizes may be different.  Caveat programmer.
 	 */
-	if( cinfo->dest == NULL )  	/* first time for this JPEG object? */
-	{
-		cinfo->dest = ( struct jpeg_destination_mgr* )
-					  ( *cinfo->mem->alloc_small )( ( j_common_ptr ) cinfo, JPOOL_PERMANENT,
-							  sizeof( my_destination_mgr ) );
+	if( cinfo->dest == NULL ) { /* first time for this JPEG object? */
+		cinfo->dest = ( struct jpeg_destination_mgr* )( *cinfo->mem->alloc_small )( ( j_common_ptr )cinfo, JPOOL_PERMANENT, sizeof( my_destination_mgr ) );
 	}
 
-	dest = ( my_dest_ptr ) cinfo->dest;
-	dest->pub.init_destination = JPEGInitDestination;
+	dest						  = ( my_dest_ptr )cinfo->dest;
+	dest->pub.init_destination	  = JPEGInitDestination;
 	dest->pub.empty_output_buffer = JPEGEmptyOutputBuffer;
-	dest->pub.term_destination = JPEGTermDestination;
-	dest->outfile = outfile;
-	dest->size = size;
+	dest->pub.term_destination	  = JPEGTermDestination;
+	dest->outfile				  = outfile;
+	dest->size					  = size;
 }
 
 void roq::WriteLossless()
 {
-
 	word direct;
 	uint directdw;
 
-	if( !dataStuff )
-	{
+	if( !dataStuff ) {
 		InitRoQPatterns();
 		dataStuff = true;
 	}
@@ -448,33 +418,33 @@ void roq::WriteLossless()
 	Write16Word( &direct, RoQFile );
 
 	/* This struct contains the JPEG compression parameters and pointers to
-	* working space (which is allocated as needed by the JPEG library).
-	* It is possible to have several such structures, representing multiple
-	* compression/decompression processes, in existence at once.  We refer
-	* to any one struct (and its associated working data) as a "JPEG object".
-	*/
+	 * working space (which is allocated as needed by the JPEG library).
+	 * It is possible to have several such structures, representing multiple
+	 * compression/decompression processes, in existence at once.  We refer
+	 * to any one struct (and its associated working data) as a "JPEG object".
+	 */
 	struct jpeg_compress_struct cinfo;
 	/* This struct represents a JPEG error handler.  It is declared separately
-	* because applications often want to supply a specialized error handler
-	* (see the second half of this file for an example).  But here we just
-	* take the easy way out and use the standard error handler, which will
-	* print a message on stderr and call exit() if compression fails.
-	* Note that this struct must live as long as the main JPEG parameter
-	* struct, to avoid dangling-pointer problems.
-	*/
-	struct jpeg_error_mgr jerr;
+	 * because applications often want to supply a specialized error handler
+	 * (see the second half of this file for an example).  But here we just
+	 * take the easy way out and use the standard error handler, which will
+	 * print a message on stderr and call exit() if compression fails.
+	 * Note that this struct must live as long as the main JPEG parameter
+	 * struct, to avoid dangling-pointer problems.
+	 */
+	struct jpeg_error_mgr		jerr;
 	/* More stuff */
-	JSAMPROW row_pointer[1];	/* pointer to JSAMPLE row[s] */
-	int row_stride;		/* physical row width in image buffer */
-	byte* out;
+	JSAMPROW					row_pointer[1]; /* pointer to JSAMPLE row[s] */
+	int							row_stride;		/* physical row width in image buffer */
+	byte*						out;
 
 	/* Step 1: allocate and initialize JPEG compression object */
 
 	/* We have to set up the error handler first, in case the initialization
-	* step fails.  (Unlikely, but it could happen if you are out of memory.)
-	* This routine fills in the contents of struct jerr, and returns jerr's
-	* address which we place into the link field in cinfo.
-	*/
+	 * step fails.  (Unlikely, but it could happen if you are out of memory.)
+	 * This routine fills in the contents of struct jerr, and returns jerr's
+	 * address which we place into the link field in cinfo.
+	 */
 	cinfo.err = jpeg_std_error( &jerr );
 	/* Now we can initialize the JPEG compression object. */
 	jpeg_create_compress( &cinfo );
@@ -483,52 +453,51 @@ void roq::WriteLossless()
 	/* Note: steps 2 and 3 can be done in either order. */
 
 	/* Here we use the library-supplied code to send compressed data to a
-	* stdio stream.  You can also write your own code to do something else.
-	* VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
-	* requires it in order to write binary files.
-	*/
+	 * stdio stream.  You can also write your own code to do something else.
+	 * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
+	 * requires it in order to write binary files.
+	 */
 	out = ( byte* )Mem_Alloc( image->pixelsWide() * image->pixelsHigh() * 4 );
-	JPEGDest( &cinfo, out, image->pixelsWide()*image->pixelsHigh() * 4 );
+	JPEGDest( &cinfo, out, image->pixelsWide() * image->pixelsHigh() * 4 );
 
 	/* Step 3: set parameters for compression */
 
 	/* First we supply a description of the input image.
-	* Four fields of the cinfo struct must be filled in:
-	*/
-	cinfo.image_width = image->pixelsWide(); 	/* image width and height, in pixels */
-	cinfo.image_height = image->pixelsHigh();
-	cinfo.input_components = 4;		/* # of color components per pixel */
-	cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
+	 * Four fields of the cinfo struct must be filled in:
+	 */
+	cinfo.image_width	   = image->pixelsWide(); /* image width and height, in pixels */
+	cinfo.image_height	   = image->pixelsHigh();
+	cinfo.input_components = 4;		  /* # of color components per pixel */
+	cinfo.in_color_space   = JCS_RGB; /* colorspace of input image */
 	/* Now use the library's routine to set default compression parameters.
-	* (You must set at least cinfo.in_color_space before calling this,
-	* since the defaults depend on the source color space.)
-	*/
+	 * (You must set at least cinfo.in_color_space before calling this,
+	 * since the defaults depend on the source color space.)
+	 */
 	jpeg_set_defaults( &cinfo );
 	/* Now you can set any non-default parameters you wish to.
-	* Here we just illustrate the use of quality (quantization table) scaling:
-	*/
+	 * Here we just illustrate the use of quality (quantization table) scaling:
+	 */
 	jpeg_set_quality( &cinfo, paramFile->JpegQuality(), true /* limit to baseline-JPEG values */ );
 
 	/* Step 4: Start compressor */
 
 	/* true ensures that we will write a complete interchange-JPEG file.
-	* Pass true unless you are very sure of what you're doing.
-	*/
+	 * Pass true unless you are very sure of what you're doing.
+	 */
 	JPEGStartCompress( &cinfo, true );
 
 	/* Step 5: while (scan lines remain to be written) */
 	/*           jpeg_write_scanlines(...); */
 
 	/* Here we use the library's state variable cinfo.next_scanline as the
-	* loop counter, so that we don't have to keep track ourselves.
-	* To keep things simple, we pass one scanline per call; you can pass
-	* more if you wish, though.
-	*/
-	row_stride = image->pixelsWide() * 4;	/* JSAMPLEs per row in image_buffer */
+	 * loop counter, so that we don't have to keep track ourselves.
+	 * To keep things simple, we pass one scanline per call; you can pass
+	 * more if you wish, though.
+	 */
+	row_stride = image->pixelsWide() * 4; /* JSAMPLEs per row in image_buffer */
 
 	byte* pixbuf = image->bitmapData();
-	while( cinfo.next_scanline < cinfo.image_height )
-	{
+	while( cinfo.next_scanline < cinfo.image_height ) {
 		/* jpeg_write_scanlines expects an array of pointers to scanlines.
 		 * Here the array is only one element long, but you could pass
 		 * more than one scanline at a time if that's more convenient.
@@ -545,7 +514,7 @@ void roq::WriteLossless()
 	directdw = hackSize;
 	common->Printf( "writeLossless: writing %d bytes to RoQ_QUAD_JPEG\n", hackSize );
 	Write32Word( &directdw, RoQFile );
-	direct = 0;		// flags
+	direct = 0; // flags
 	Write16Word( &direct, RoQFile );
 
 	RoQFile->Write( out, hackSize );
@@ -562,17 +531,15 @@ void roq::WriteLossless()
 
 void roq::InitRoQFile( const char* RoQFilename )
 {
-	word i;
+	word	   i;
 	static int finit = 0;
 
-	if( !finit )
-	{
+	if( !finit ) {
 		finit++;
 		common->Printf( "initRoQFile: %s\n", RoQFilename );
 		RoQFile = fileSystem->OpenFileWrite( RoQFilename );
-//		chmod(RoQFilename, S_IREAD|S_IWRITE|S_ISUID|S_ISGID|0070|0007 );
-		if( !RoQFile )
-		{
+		//		chmod(RoQFilename, S_IREAD|S_IWRITE|S_ISUID|S_ISGID|0070|0007 );
+		if( !RoQFile ) {
 			common->Error( "Unable to open output file %s.\n", RoQFilename );
 		}
 
@@ -587,7 +554,7 @@ void roq::InitRoQFile( const char* RoQFilename )
 		// on loading this will be noted and converted to 1000 / 30
 		// as with any new sound dump avi demos we need to playback
 		// at the speed the sound engine dumps the audio
-		i = 30;						// framerate
+		i = 30; // framerate
 		Write16Word( &i, RoQFile );
 	}
 	roqOutfile = RoQFilename;
@@ -606,8 +573,7 @@ void roq::InitRoQPatterns()
 	Write32Word( &j, RoQFile );
 	common->Printf( "initRoQPatterns: outputting %d bytes to RoQ_INFO\n", j );
 	direct = image->hasAlpha();
-	if( ParamNoAlpha() == true )
-	{
+	if( ParamNoAlpha() == true ) {
 		direct = 0;
 	}
 
@@ -647,8 +613,7 @@ void roq::WriteCodeBookToStream( byte* codebook, int csize, word cflags )
 	uint j;
 	word direct;
 
-	if( !csize )
-	{
+	if( !csize ) {
 		common->Printf( "writeCodeBook: false VQ DATA!!!!\n" );
 		return;
 	}
@@ -675,60 +640,53 @@ void roq::WriteCodeBook( byte* codebook )
 
 void roq::WriteFrame( quadcel* pquad )
 {
-	word action, direct;
-	int	onCCC, onAction, i, code;
-	uint j;
+	word  action, direct;
+	int	  onCCC, onAction, i, code;
+	uint  j;
 	byte* cccList;
-	bool* use2, *use4;
-	int dx, dy, dxMean, dyMean, index2[256], index4[256], dimension;
+	bool *use2, *use4;
+	int	  dx, dy, dxMean, dyMean, index2[256], index4[256], dimension;
 
-	cccList = ( byte* )Mem_Alloc( numQuadCels * 8 );					// maximum length
-	use2 = ( bool* )Mem_Alloc( 256 * sizeof( bool ) );
-	use4 = ( bool* )Mem_Alloc( 256 * sizeof( bool ) );
+	cccList = ( byte* )Mem_Alloc( numQuadCels * 8 ); // maximum length
+	use2	= ( bool* )Mem_Alloc( 256 * sizeof( bool ) );
+	use4	= ( bool* )Mem_Alloc( 256 * sizeof( bool ) );
 
-	for( i = 0; i < 256; i++ )
-	{
+	for( i = 0; i < 256; i++ ) {
 		use2[i] = false;
 		use4[i] = false;
 	}
 
 	action = 0;
 	j = onAction = 0;
-	onCCC = 2;											// onAction going to go at zero
+	onCCC		 = 2; // onAction going to go at zero
 
 	dxMean = encoder->MotMeanX();
 	dyMean = encoder->MotMeanY();
 
-	if( image->hasAlpha() )
-	{
+	if( image->hasAlpha() ) {
 		dimension = 10;
-	}
-	else
-	{
+	} else {
 		dimension = 6;
 	}
 
-	for( i = 0; i < numQuadCels; i++ )
-	{
-		if( pquad[i].size && pquad[i].size < 16 )
-		{
-			switch( pquad[i].status )
-			{
-				case	SLD:
-					use4[pquad[i].patten[0]] = true;
+	for( i = 0; i < numQuadCels; i++ ) {
+		if( pquad[i].size && pquad[i].size < 16 ) {
+			switch( pquad[i].status ) {
+				case SLD:
+					use4[pquad[i].patten[0]]									  = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 0]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 1]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 2]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 3]] = true;
 					break;
-				case	PAT:
-					use4[pquad[i].patten[0]] = true;
+				case PAT:
+					use4[pquad[i].patten[0]]									  = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 0]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 1]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 2]] = true;
 					use2[codes[dimension * 256 + ( pquad[i].patten[0] * 4 ) + 3]] = true;
 					break;
-				case	CCC:
+				case CCC:
 					use2[pquad[i].patten[1]] = true;
 					use2[pquad[i].patten[2]] = true;
 					use2[pquad[i].patten[3]] = true;
@@ -737,51 +695,38 @@ void roq::WriteFrame( quadcel* pquad )
 		}
 	}
 
-	if( !dataStuff )
-	{
+	if( !dataStuff ) {
 		dataStuff = true;
 		InitRoQPatterns();
-		if( image->hasAlpha() )
-		{
+		if( image->hasAlpha() ) {
 			i = 3584;
-		}
-		else
-		{
+		} else {
 			i = 2560;
 		}
 		WriteCodeBookToStream( codes, i, 0 );
-		for( i = 0; i < 256; i++ )
-		{
+		for( i = 0; i < 256; i++ ) {
 			index2[i] = i;
 			index4[i] = i;
 		}
-	}
-	else
-	{
+	} else {
 		j = 0;
-		for( i = 0; i < 256; i++ )
-		{
-			if( use2[i] )
-			{
+		for( i = 0; i < 256; i++ ) {
+			if( use2[i] ) {
 				index2[i] = j;
-				for( dx = 0; dx < dimension; dx++ )
-				{
+				for( dx = 0; dx < dimension; dx++ ) {
 					cccList[j * dimension + dx] = codes[i * dimension + dx];
 				}
 				j++;
 			}
 		}
-		code = j * dimension;
+		code   = j * dimension;
 		direct = j;
 		common->Printf( "writeFrame: really used %d 2x2 cels\n", j );
 		j = 0;
-		for( i = 0; i < 256; i++ )
-		{
-			if( use4[i] )
-			{
+		for( i = 0; i < 256; i++ ) {
+			if( use4[i] ) {
 				index4[i] = j;
-				for( dx = 0; dx < 4; dx++ )
-				{
+				for( dx = 0; dx < 4; dx++ ) {
 					cccList[j * 4 + code + dx] = index2[codes[i * 4 + ( dimension * 256 ) + dx]];
 				}
 				j++;
@@ -790,20 +735,14 @@ void roq::WriteFrame( quadcel* pquad )
 		code += j * 4;
 		direct = ( direct << 8 ) + j;
 		common->Printf( "writeFrame: really used %d 4x4 cels\n", j );
-		if( image->hasAlpha() )
-		{
+		if( image->hasAlpha() ) {
 			i = 3584;
-		}
-		else
-		{
+		} else {
 			i = 2560;
 		}
-		if( code == i || j == 256 )
-		{
+		if( code == i || j == 256 ) {
 			WriteCodeBookToStream( codes, i, 0 );
-		}
-		else
-		{
+		} else {
 			WriteCodeBookToStream( cccList, code, direct );
 		}
 	}
@@ -811,68 +750,61 @@ void roq::WriteFrame( quadcel* pquad )
 	action = 0;
 	j = onAction = 0;
 
-	for( i = 0; i < numQuadCels; i++ )
-	{
-		if( pquad[i].size && pquad[i].size < 16 )
-		{
+	for( i = 0; i < numQuadCels; i++ ) {
+		if( pquad[i].size && pquad[i].size < 16 ) {
 			code = -1;
-			switch( pquad[i].status )
-			{
-				case	DEP:
+			switch( pquad[i].status ) {
+				case DEP:
 					code = 3;
 					break;
-				case	SLD:
-					code = 2;
+				case SLD:
+					code			 = 2;
 					cccList[onCCC++] = index4[pquad[i].patten[0]];
 					break;
-				case	MOT:
+				case MOT:
 					code = 0;
 					break;
-				case	FCC:
+				case FCC:
 					code = 1;
-					dx = ( ( pquad[i].domain >> 8 ) ) - 128 - dxMean + 8;
-					dy = ( ( pquad[i].domain & 0xff ) ) - 128 - dyMean + 8;
-					if( dx > 15 || dx < 0 || dy > 15 || dy < 0 )
-					{
+					dx	 = ( ( pquad[i].domain >> 8 ) ) - 128 - dxMean + 8;
+					dy	 = ( ( pquad[i].domain & 0xff ) ) - 128 - dyMean + 8;
+					if( dx > 15 || dx < 0 || dy > 15 || dy < 0 ) {
 						common->Error( "writeFrame: FCC error %d,%d mean %d,%d at %d,%d,%d rmse %f\n", dx, dy, dxMean, dyMean, pquad[i].xat, pquad[i].yat, pquad[i].size, pquad[i].snr[FCC] );
 					}
 					cccList[onCCC++] = ( dx << 4 ) + dy;
 					break;
-				case	PAT:
-					code = 2;
+				case PAT:
+					code			 = 2;
 					cccList[onCCC++] = index4[pquad[i].patten[0]];
 					break;
-				case	CCC:
-					code = 3;
+				case CCC:
+					code			 = 3;
 					cccList[onCCC++] = index2[pquad[i].patten[1]];
 					cccList[onCCC++] = index2[pquad[i].patten[2]];
 					cccList[onCCC++] = index2[pquad[i].patten[3]];
 					cccList[onCCC++] = index2[pquad[i].patten[4]];
 					break;
-				case	DEAD:
+				case DEAD:
 					common->Error( "dead cels in picture\n" );
 					break;
 			}
-			if( code == -1 )
-			{
+			if( code == -1 ) {
 				common->Error( "writeFrame: an error occurred writing the frame\n" );
 			}
 
 			action = ( action << 2 ) | code;
 			j++;
-			if( j == 8 )
-			{
-				j = 0;
+			if( j == 8 ) {
+				j					  = 0;
 				cccList[onAction + 0] = ( action & 0xff );
 				cccList[onAction + 1] = ( ( action >> 8 ) & 0xff );
-				onAction = onCCC;
+				onAction			  = onCCC;
 				onCCC += 2;
 			}
 		}
 	}
 
-	if( j )
-	{
+	if( j ) {
 		action <<= ( ( 8 - j ) * 2 );
 		cccList[onAction + 0] = ( action & 0xff );
 		cccList[onAction + 1] = ( ( action >> 8 ) & 0xff );
@@ -885,9 +817,9 @@ void roq::WriteFrame( quadcel* pquad )
 	j = onCCC;
 	Write32Word( &j, RoQFile );
 
-	direct  = dyMean;
+	direct = dyMean;
 	direct &= 0xff;
-	direct += ( dxMean << 8 );		// flags
+	direct += ( dxMean << 8 ); // flags
 
 	Write16Word( &direct, RoQFile );
 
@@ -907,8 +839,7 @@ void roq::WriteFrame( quadcel* pquad )
 //
 void roq::LoadAndDisplayImage( const char* filename )
 {
-	if( image )
-	{
+	if( image ) {
 		delete image;
 	}
 
@@ -918,17 +849,16 @@ void roq::LoadAndDisplayImage( const char* filename )
 
 	image = new NSBitmapImageRep( filename );
 
-	numQuadCels  = ( ( image->pixelsWide() & 0xfff0 ) * ( image->pixelsHigh() & 0xfff0 ) ) / ( MINSIZE * MINSIZE );
+	numQuadCels = ( ( image->pixelsWide() & 0xfff0 ) * ( image->pixelsHigh() & 0xfff0 ) ) / ( MINSIZE * MINSIZE );
 	numQuadCels += numQuadCels / 4 + numQuadCels / 16;
 
-//	if (paramFile->deltaFrames] == true && cleared == false && [image isPlanar] == false) {
-//		cleared = true;
-//		imageData = [image data];
-//		memset( imageData, 0, image->pixelsWide()*image->pixelsHigh()*[image samplesPerPixel]);
-//	}
+	//	if (paramFile->deltaFrames] == true && cleared == false && [image isPlanar] == false) {
+	//		cleared = true;
+	//		imageData = [image data];
+	//		memset( imageData, 0, image->pixelsWide()*image->pixelsHigh()*[image samplesPerPixel]);
+	//	}
 
-	if( !quietMode )
-	{
+	if( !quietMode ) {
 		common->Printf( "loadAndDisplayImage: %dx%d\n", image->pixelsWide(), image->pixelsHigh() );
 	}
 }
@@ -939,7 +869,7 @@ void roq::MarkQuadx( int xat, int yat, int size, float cerror, int choice )
 
 NSBitmapImageRep* roq::CurrentImage()
 {
-	return	image;
+	return image;
 }
 
 int roq::NumberOfFrames()
@@ -949,15 +879,13 @@ int roq::NumberOfFrames()
 
 void RoQFileEncode_f( const idCmdArgs& args )
 {
-	if( args.Argc() != 2 )
-	{
+	if( args.Argc() != 2 ) {
 		common->Printf( "Usage: roq <paramfile>\n" );
 		return;
 	}
-	theRoQ = new roq;
-	int		startMsec = Sys_Milliseconds();
+	theRoQ		  = new roq;
+	int startMsec = Sys_Milliseconds();
 	theRoQ->EncodeStream( args.Argv( 1 ) );
-	int		stopMsec = Sys_Milliseconds();
+	int stopMsec = Sys_Milliseconds();
 	common->Printf( "total encoding time: %i second\n", ( stopMsec - startMsec ) / 1000 );
-
 }

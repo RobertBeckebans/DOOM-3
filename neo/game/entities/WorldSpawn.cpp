@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -45,8 +46,8 @@ Every map should have exactly one worldspawn.
 ================
 */
 CLASS_DECLARATION( idEntity, idWorldspawn )
-EVENT( EV_Remove,				idWorldspawn::Event_Remove )
-EVENT( EV_SafeRemove,			idWorldspawn::Event_Remove )
+EVENT( EV_Remove, idWorldspawn::Event_Remove )
+EVENT( EV_SafeRemove, idWorldspawn::Event_Remove )
 END_CLASS
 
 /*
@@ -56,10 +57,10 @@ idWorldspawn::Spawn
 */
 void idWorldspawn::Spawn()
 {
-	idStr				scriptname;
-	idThread*			thread;
-	const function_t*	func;
-	const idKeyValue*	kv;
+	idStr			  scriptname;
+	idThread*		  thread;
+	const function_t* func;
+	const idKeyValue* kv;
 
 	assert( gameLocal.world == NULL );
 	gameLocal.world = this;
@@ -67,22 +68,19 @@ void idWorldspawn::Spawn()
 	g_gravity.SetFloat( spawnArgs.GetFloat( "gravity", va( "%f", DEFAULT_GRAVITY ) ) );
 
 	// disable stamina on hell levels
-	if( spawnArgs.GetBool( "no_stamina" ) )
-	{
+	if( spawnArgs.GetBool( "no_stamina" ) ) {
 		pm_stamina.SetFloat( 0.0f );
 	}
 
 	// load script
 	scriptname = gameLocal.GetMapName();
 	scriptname.SetFileExtension( ".script" );
-	if( fileSystem->ReadFile( scriptname, NULL, NULL ) > 0 )
-	{
+	if( fileSystem->ReadFile( scriptname, NULL, NULL ) > 0 ) {
 		gameLocal.program.CompileFile( scriptname );
 
 		// call the main function by default
 		func = gameLocal.program.FindFunction( "main" );
-		if( func != NULL )
-		{
+		if( func != NULL ) {
 			thread = new idThread( func );
 			thread->DelayedStart( 0 );
 		}
@@ -90,11 +88,9 @@ void idWorldspawn::Spawn()
 
 	// call any functions specified in worldspawn
 	kv = spawnArgs.MatchPrefix( "call" );
-	while( kv != NULL )
-	{
+	while( kv != NULL ) {
 		func = gameLocal.program.FindFunction( kv->GetValue() );
-		if( func == NULL )
-		{
+		if( func == NULL ) {
 			gameLocal.Error( "Function '%s' not found in script for '%s' key on worldspawn", kv->GetValue().c_str(), kv->GetKey().c_str() );
 		}
 
@@ -125,8 +121,7 @@ void idWorldspawn::Restore( idRestoreGame* savefile )
 	g_gravity.SetFloat( spawnArgs.GetFloat( "gravity", va( "%f", DEFAULT_GRAVITY ) ) );
 
 	// disable stamina on hell levels
-	if( spawnArgs.GetBool( "no_stamina" ) )
-	{
+	if( spawnArgs.GetBool( "no_stamina" ) ) {
 		pm_stamina.SetFloat( 0.0f );
 	}
 }
@@ -138,8 +133,7 @@ idWorldspawn::~idWorldspawn
 */
 idWorldspawn::~idWorldspawn()
 {
-	if( gameLocal.world == this )
-	{
+	if( gameLocal.world == this ) {
 		gameLocal.world = NULL;
 	}
 }

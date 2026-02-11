@@ -23,8 +23,7 @@
 #include "os.h"
 
 /* encode side bitrate tracking */
-typedef struct bitrate_manager_state
-{
+typedef struct bitrate_manager_state {
 	ogg_uint32_t*  queue_binned;
 	ogg_uint32_t*  queue_actual;
 	int            queue_size;
@@ -61,8 +60,7 @@ typedef struct bitrate_manager_state
 
 } bitrate_manager_state;
 
-typedef struct bitrate_manager_info
-{
+typedef struct bitrate_manager_info {
 	/* detailed bitrate management setup */
 	double queue_avg_time;
 	double queue_avg_center;

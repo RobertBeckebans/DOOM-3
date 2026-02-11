@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -68,12 +69,9 @@ void rvDebuggerScript::Unload()
 {
 	delete[] mContents;
 
-	if( mInterface )
-	{
+	if( mInterface ) {
 		delete mInterface;
-	}
-	else
-	{
+	} else {
 		delete mProgram;
 	}
 
@@ -104,13 +102,12 @@ bool rvDebuggerScript::Load( const char* filename )
 
 	// Read in the file
 	size = fileSystem->ReadFile( filename, &buffer, &mModifiedTime );
-	if( buffer == NULL )
-	{
+	if( buffer == NULL ) {
 		return false;
 	}
 
 	// Copy the buffer over
-	mContents = new char [ size + 1 ];
+	mContents = new char[size + 1];
 	memcpy( mContents, buffer, size );
 	mContents[size] = 0;
 
@@ -120,47 +117,37 @@ bool rvDebuggerScript::Load( const char* filename )
 	// Now compile the script so we can tell what a valid line is, etc..  If its
 	// a gui file then we need to parse it using the userinterface system rather
 	// than the normal script compiler.
-	try
-	{
+	try {
 		// Parse the script using the script compiler
 		mProgram = new idProgram;
 		mProgram->BeginCompilation();
 		mProgram->CompileFile( SCRIPT_DEFAULT );
 
-		//BSM Nerve: Loads a game specific main script file
+		// BSM Nerve: Loads a game specific main script file
 		idStr gamedir = cvarSystem->GetCVarString( "fs_game" );
-		if( gamedir.Length() > 0 )
-		{
-
+		if( gamedir.Length() > 0 ) {
 			idStr scriptFile = va( "script/%s_main.script", gamedir.c_str() );
-			if( fileSystem->ReadFile( scriptFile.c_str(), NULL ) > 0 )
-			{
+			if( fileSystem->ReadFile( scriptFile.c_str(), NULL ) > 0 ) {
 				mProgram.CompileFile( scriptFile.c_str() );
 			}
-
 		}
 
 		// Make sure the file isnt already compiled before trying to compile it again
-		for( int f = mProgram->NumFilenames() - 1; f >= 0; f -- )
-		{
+		for( int f = mProgram->NumFilenames() - 1; f >= 0; f-- ) {
 			idStr qpath;
 			qpath = fileSystem->OSPathToRelativePath( mProgram->GetFilename( f ) );
 			qpath.BackSlashesToSlashes();
-			if( !qpath.Cmp( filename ) )
-			{
+			if( !qpath.Cmp( filename ) ) {
 				break;
 			}
 		}
 
-		if( f < 0 )
-		{
+		if( f < 0 ) {
 			mProgram->CompileText( filename, mContents, false );
 		}
 
 		mProgram->FinishCompilation();
-	}
-	catch( idException& )
-	{
+	} catch( idException& ) {
 		// Failed to parse the script so fail to load the file
 		delete mProgram;
 		mProgram = NULL;
@@ -202,10 +189,8 @@ bool rvDebuggerScript::IsLineCode( int linenumber )
 
 	// Run through all the statements in the program and see if any match the
 	// linenumber that we are checking.
-	for( i	= 0; i < mProgram->NumStatements(); i ++ )
-	{
-		if( mProgram->GetStatement( i ).linenumber == linenumber )
-		{
+	for( i = 0; i < mProgram->NumStatements(); i++ ) {
+		if( mProgram->GetStatement( i ).linenumber == linenumber ) {
 			return true;
 		}
 	}
@@ -223,22 +208,20 @@ it was loaded.
 */
 bool rvDebuggerScript::IsFileModified( bool updateTime )
 {
-	ID_TIME_T	t;
-	bool	result = false;
+	ID_TIME_T t;
+	bool	  result = false;
 
 	// Grab the filetime and shut the file down
 	fileSystem->ReadFile( mFilename, NULL, &t );
 
 	// Has the file been modified?
-	if( t > mModifiedTime )
-	{
+	if( t > mModifiedTime ) {
 		result = true;
 	}
 
 	// If updateTime is true then we will update the modified time
 	// stored in the script with the files current modified time
-	if( updateTime )
-	{
+	if( updateTime ) {
 		mModifiedTime = t;
 	}
 

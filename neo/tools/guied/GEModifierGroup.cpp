@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -40,8 +41,7 @@ rvGEModifierGroup::~rvGEModifierGroup()
 {
 	int i;
 
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
 		delete mModifiers[i];
 	}
 
@@ -53,8 +53,7 @@ bool rvGEModifierGroup::Append( rvGEModifier* mod )
 	// All modifiers must be the same type
 	assert( !mModifiers.Num() || !idStr::Icmp( mod->GetName(), mModifiers[0]->GetName() ) );
 
-	if( !mModifiers.Num() )
-	{
+	if( !mModifiers.Num() ) {
 		mName = mod->GetName();
 	}
 
@@ -66,10 +65,8 @@ bool rvGEModifierGroup::IsValid()
 {
 	int i;
 
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
-		if( !mModifiers[i]->IsValid() )
-		{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
+		if( !mModifiers[i]->IsValid() ) {
 			return false;
 		}
 	}
@@ -81,8 +78,7 @@ bool rvGEModifierGroup::Apply()
 {
 	int i;
 
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
 		mModifiers[i]->Apply();
 	}
 
@@ -93,8 +89,7 @@ bool rvGEModifierGroup::Undo()
 {
 	int i;
 
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
 		mModifiers[i]->Undo();
 	}
 
@@ -103,29 +98,24 @@ bool rvGEModifierGroup::Undo()
 
 bool rvGEModifierGroup::CanMerge( rvGEModifier* mergebase )
 {
-	rvGEModifierGroup*	merge = ( rvGEModifierGroup* ) mergebase;
-	int					i;
+	rvGEModifierGroup* merge = ( rvGEModifierGroup* )mergebase;
+	int				   i;
 
-	if( mModifiers.Num() != merge->mModifiers.Num() )
-	{
+	if( mModifiers.Num() != merge->mModifiers.Num() ) {
 		return false;
 	}
 
 	// Double check the merge is possible
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
-		if( mModifiers[i]->GetWindow() != merge->mModifiers[i]->GetWindow() )
-		{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
+		if( mModifiers[i]->GetWindow() != merge->mModifiers[i]->GetWindow() ) {
 			return false;
 		}
 
-		if( idStr::Icmp( mModifiers[i]->GetName(), merge->mModifiers[i]->GetName() ) )
-		{
+		if( idStr::Icmp( mModifiers[i]->GetName(), merge->mModifiers[i]->GetName() ) ) {
 			return false;
 		}
 
-		if( !mModifiers[i]->CanMerge( merge->mModifiers[i] ) )
-		{
+		if( !mModifiers[i]->CanMerge( merge->mModifiers[i] ) ) {
 			return false;
 		}
 	}
@@ -135,12 +125,11 @@ bool rvGEModifierGroup::CanMerge( rvGEModifier* mergebase )
 
 bool rvGEModifierGroup::Merge( rvGEModifier* mergebase )
 {
-	rvGEModifierGroup*	merge = ( rvGEModifierGroup* ) mergebase;
-	int					i;
+	rvGEModifierGroup* merge = ( rvGEModifierGroup* )mergebase;
+	int				   i;
 
 	// Double check the merge is possible
-	for( i = 0; i < mModifiers.Num(); i ++ )
-	{
+	for( i = 0; i < mModifiers.Num(); i++ ) {
 		mModifiers[i]->Merge( merge->mModifiers[i] );
 	}
 

@@ -33,8 +33,7 @@
 
 */
 
-typedef struct static_codebook
-{
+typedef struct static_codebook {
 	long   dim;            /* codebook dimensions (elements per vector) */
 	long   entries;        /* codebook entries */
 	long*  lengthlist;     /* codeword lengths in bits */
@@ -64,8 +63,7 @@ typedef struct static_codebook
 
 /* this structures an arbitrary trained book to quickly find the
    nearest cell match */
-typedef struct encode_aux_nearestmatch
-{
+typedef struct encode_aux_nearestmatch {
 	/* pre-calculated partitioning tree */
 	long*   ptr0;
 	long*   ptr1;
@@ -77,16 +75,14 @@ typedef struct encode_aux_nearestmatch
 } encode_aux_nearestmatch;
 
 /* assumes a maptype of 1; encode side only, so that's OK */
-typedef struct encode_aux_threshmatch
-{
+typedef struct encode_aux_threshmatch {
 	float* quantthresh;
 	long*   quantmap;
 	int     quantvals;
 	int     threshvals;
 } encode_aux_threshmatch;
 
-typedef struct encode_aux_pigeonhole
-{
+typedef struct encode_aux_pigeonhole {
 	float min;
 	float del;
 
@@ -100,8 +96,7 @@ typedef struct encode_aux_pigeonhole
 	long* fitlength;
 } encode_aux_pigeonhole;
 
-typedef struct codebook
-{
+typedef struct codebook {
 	long dim;           /* codebook dimensions (elements per vector) */
 	long entries;       /* codebook entries */
 	long used_entries;  /* populated codebook entries */

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -28,53 +29,50 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef OPENFILEDIALOG_H_
 #define OPENFILEDIALOG_H_
 
-#define OFD_MUSTEXIST	0x00000001
+#define OFD_MUSTEXIST 0x00000001
 
 class rvOpenFileDialog
 {
 public:
-
 	rvOpenFileDialog();
 	~rvOpenFileDialog();
 
-	bool			DoModal( HWND parent );
-	const char*		GetFilename();
+	bool		DoModal( HWND parent );
+	const char* GetFilename();
 
-	void			SetFilter( const char* filter );
-	void			SetTitle( const char* title );
-	void			SetOKTitle( const char* title );
-	void			SetInitialPath( const char* path );
-	void			SetFlags( int flags );
+	void		SetFilter( const char* filter );
+	void		SetTitle( const char* title );
+	void		SetOKTitle( const char* title );
+	void		SetInitialPath( const char* path );
+	void		SetFlags( int flags );
 
-	const char*		GetInitialPath();
+	const char* GetInitialPath();
 
 protected:
+	void		UpdateFileList();
+	void		UpdateLookIn();
 
-	void			UpdateFileList();
-	void			UpdateLookIn();
+	HWND		mWnd;
+	HWND		mWndFileList;
+	HWND		mWndLookin;
 
-	HWND			mWnd;
-	HWND			mWndFileList;
-	HWND			mWndLookin;
+	HINSTANCE	mInstance;
 
-	HINSTANCE		mInstance;
+	HIMAGELIST	mImageList;
+	HBITMAP		mBackBitmap;
 
-	HIMAGELIST		mImageList;
-	HBITMAP			mBackBitmap;
+	static char mLookin[MAX_OSPATH];
+	idStr		mFilename;
+	idStr		mTitle;
+	idStr		mOKTitle;
+	idStrList	mFilters;
 
-	static char		mLookin[ MAX_OSPATH ];
-	idStr			mFilename;
-	idStr			mTitle;
-	idStr			mOKTitle;
-	idStrList		mFilters;
-
-	int				mFlags;
+	int			mFlags;
 
 private:
-
-	void	HandleCommandOK();
-	void	HandleLookInChange();
-	void	HandleInitDialog();
+	void					HandleCommandOK();
+	void					HandleLookInChange();
+	void					HandleInitDialog();
 
 	static INT_PTR CALLBACK DlgProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam );
 };
@@ -96,10 +94,7 @@ ID_INLINE void rvOpenFileDialog::SetOKTitle( const char* title )
 
 ID_INLINE void rvOpenFileDialog::SetInitialPath( const char* path )
 {
-	if( !idStr::Cmpn( mLookin, path, strlen( path ) ) )
-	{
-		return;
-	}
+	if( !idStr::Cmpn( mLookin, path, strlen( path ) ) ) { return; }
 
 	idStr::Copynz( mLookin, path, sizeof( mLookin ) );
 }

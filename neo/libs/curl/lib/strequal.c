@@ -1,8 +1,8 @@
 /***************************************************************************
- *                                  _   _ ____  _     
- *  Project                     ___| | | |  _ \| |    
- *                             / __| | | | |_) | |    
- *                            | (__| |_| |  _ <| |___ 
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
@@ -10,7 +10,7 @@
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
  * are also available at http://curl.haxx.se/docs/copyright.html.
- * 
+ *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
  * furnished to do so, under the terms of the COPYING file.
@@ -29,52 +29,53 @@
 #include "strequal.h"
 
 #ifdef HAVE_STRCASECMP
-/* this is for "-ansi -Wall -pedantic" to stop complaining! */
-extern int (strcasecmp)(const char *s1, const char *s2);
-extern int (strncasecmp)(const char *s1, const char *s2, size_t n);
+	/* this is for "-ansi -Wall -pedantic" to stop complaining! */
+	extern int ( strcasecmp )( const char* s1, const char* s2 );
+	extern int ( strncasecmp )( const char* s1, const char* s2, size_t n );
 #endif
 
-int curl_strequal(const char *first, const char *second)
+int curl_strequal( const char* first, const char* second )
 {
 #if defined(HAVE_STRCASECMP)
-  return !(strcasecmp)(first, second);
+	return !( strcasecmp )( first, second );
 #elif defined(HAVE_STRCMPI)
-  return !(strcmpi)(first, second);
+	return !( strcmpi )( first, second );
 #elif defined(HAVE_STRICMP)
-  return !(stricmp)(first, second);
+	return !( stricmp )( first, second );
 #else
-  while (*first && *second) {
-    if (toupper(*first) != toupper(*second)) {
-      break;
-    }
-    first++;
-    second++;
-  }
-  return toupper(*first) == toupper(*second);
+	while( *first && *second ) {
+		if( toupper( *first ) != toupper( *second ) ) {
+			break;
+		}
+		first++;
+		second++;
+	}
+	return toupper( *first ) == toupper( *second );
 #endif
 }
 
-int curl_strnequal(const char *first, const char *second, size_t max)
+int curl_strnequal( const char* first, const char* second, size_t max )
 {
 #if defined(HAVE_STRCASECMP)
-  return !strncasecmp(first, second, max);
+	return !strncasecmp( first, second, max );
 #elif defined(HAVE_STRCMPI)
-  return !strncmpi(first, second, max);
+	return !strncmpi( first, second, max );
 #elif defined(HAVE_STRICMP)
-  return !strnicmp(first, second, max);
+	return !strnicmp( first, second, max );
 #else
-  while (*first && *second && max) {
-    if (toupper(*first) != toupper(*second)) {
-      break;
-    }
-    max--;
-    first++;
-    second++;
-  }
-  if(0 == max)
-    return 1; /* they are equal this far */
+	while( *first && *second && max ) {
+		if( toupper( *first ) != toupper( *second ) ) {
+			break;
+		}
+		max--;
+		first++;
+		second++;
+	}
+	if( 0 == max ) {
+		return 1;    /* they are equal this far */
+	}
 
-  return toupper(*first) == toupper(*second);
+	return toupper( *first ) == toupper( *second );
 #endif
 }
 
@@ -90,32 +91,34 @@ int curl_strnequal(const char *first, const char *second, size_t max)
  * src. While this may seem somewhat confusing it was done to make trunca-
  * tion detection simple.
  *
- * 
+ *
  */
-size_t Curl_strlcat(char *dst, const char *src, size_t siz)
+size_t Curl_strlcat( char* dst, const char* src, size_t siz )
 {
-  char *d = dst;
-  const char *s = src;
-  size_t n = siz;
-  size_t dlen;
+	char* d = dst;
+	const char* s = src;
+	size_t n = siz;
+	size_t dlen;
 
-  /* Find the end of dst and adjust bytes left but don't go past end */
-  while (n-- != 0 && *d != '\0')
-    d++;
-  dlen = d - dst;
-  n = siz - dlen;
+	/* Find the end of dst and adjust bytes left but don't go past end */
+	while( n-- != 0 && *d != '\0' ) {
+		d++;
+	}
+	dlen = d - dst;
+	n = siz - dlen;
 
-  if (n == 0)
-    return(dlen + strlen(s));
-  while (*s != '\0') {
-    if (n != 1) {
-      *d++ = *s;
-      n--;
-    }
-    s++;
-  }
-  *d = '\0';
+	if( n == 0 ) {
+		return( dlen + strlen( s ) );
+	}
+	while( *s != '\0' ) {
+		if( n != 1 ) {
+			*d++ = *s;
+			n--;
+		}
+		s++;
+	}
+	*d = '\0';
 
-  return(dlen + (s - src));	/* count does not include NUL */
+	return( dlen + ( s - src ) );	/* count does not include NUL */
 }
 #endif

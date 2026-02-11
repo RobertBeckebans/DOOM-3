@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -42,8 +43,8 @@ Writes the contents of the open gui file to disk
 */
 bool rvGEWorkspace::SaveFile( const char* filename )
 {
-	idFile*		file;
-	idWindow*	window;
+	idFile*	  file;
+	idWindow* window;
 
 	SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_WAIT ) ) );
 
@@ -54,11 +55,10 @@ bool rvGEWorkspace::SaveFile( const char* filename )
 	idStr ospath;
 
 	tempfile = "guis/temp.guied";
-	ospath = fileSystem->RelativePathToOSPath( tempfile, "fs_basepath" );
+	ospath	 = fileSystem->RelativePathToOSPath( tempfile, "fs_basepath" );
 
 	// Open the output file for write
-	if( !( file = fileSystem->OpenFileWrite( tempfile ) ) )
-	{
+	if( !( file = fileSystem->OpenFileWrite( tempfile ) ) ) {
 		int error = GetLastError();
 		SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 		return false;
@@ -70,8 +70,7 @@ bool rvGEWorkspace::SaveFile( const char* filename )
 
 	fileSystem->CloseFile( file );
 
-	if( !CopyFile( ospath, filename, FALSE ) )
-	{
+	if( !CopyFile( ospath, filename, FALSE ) ) {
 		DeleteFile( ospath );
 		SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
 		return false;
@@ -81,7 +80,7 @@ bool rvGEWorkspace::SaveFile( const char* filename )
 
 	mFilename = filename;
 	mModified = false;
-	mNew      = false;
+	mNew	  = false;
 	UpdateTitle();
 
 	SetCursor( LoadCursor( NULL, MAKEINTRESOURCE( IDC_ARROW ) ) );
@@ -100,8 +99,7 @@ void rvGEWorkspace::WriteTabs( idFile* file, int depth )
 {
 	int i;
 
-	for( i = 0; i < depth; i ++ )
-	{
+	for( i = 0; i < depth; i++ ) {
 		file->Write( "\t", 1 );
 	}
 }
@@ -115,18 +113,16 @@ Writes the contents of the given window to the file
 */
 bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 {
-	idStr				out;
-	rvGEWindowWrapper*	wrapper;
-	int					i;
+	idStr			   out;
+	rvGEWindowWrapper* wrapper;
+	int				   i;
 
 	wrapper = rvGEWindowWrapper::GetWrapper( window );
-	if( !wrapper )
-	{
+	if( !wrapper ) {
 		return true;
 	}
 
-	if( wrapper->IsDeleted() )
-	{
+	if( wrapper->IsDeleted() ) {
 		return true;
 	}
 
@@ -147,13 +143,11 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 	file->Write( out, out.Length() );
 	file->ForceFlush();
 
-	for( i = 0; i < wrapper->GetStateDict().GetNumKeyVals(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetStateDict().GetNumKeyVals(); i++ ) {
 		const idKeyValue* key = wrapper->GetStateDict().GetKeyVal( i );
 
 		// Dont write name to the files
-		if( !key->GetKey().Icmp( "name" ) )
-		{
+		if( !key->GetKey().Icmp( "name" ) ) {
 			continue;
 		}
 
@@ -164,10 +158,8 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 		file->Write( out, out.Length() );
 
 		const char* p;
-		for( p = key->GetValue().c_str(); *p; p ++ )
-		{
-			switch( *p )
-			{
+		for( p = key->GetValue().c_str(); *p; p++ ) {
+			switch( *p ) {
 				case '\n':
 					file->Write( "\\n", 2 );
 					break;
@@ -181,8 +173,7 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 		file->Write( "\r\n", 2 );
 	}
 
-	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetVariableDict().GetNumKeyVals(); i++ ) {
 		const idKeyValue* key = wrapper->GetVariableDict().GetKeyVal( i );
 
 		WriteTabs( file, depth );
@@ -195,13 +186,11 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 		file->Write( out, out.Length() );
 	}
 
-	if( wrapper->GetScriptDict().GetNumKeyVals() )
-	{
+	if( wrapper->GetScriptDict().GetNumKeyVals() ) {
 		file->Write( "\r\n", 2 );
 	}
 
-	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetScriptDict().GetNumKeyVals(); i++ ) {
 		const idKeyValue* key = wrapper->GetScriptDict().GetKeyVal( i );
 
 		WriteTabs( file, depth );
@@ -217,8 +206,7 @@ bool rvGEWorkspace::WriteWindow( idFile* file, int depth, idWindow* window )
 		file->Write( "\r\n", 2 );
 	}
 
-	for( i = 0; i < wrapper->GetChildCount(); i ++ )
-	{
+	for( i = 0; i < wrapper->GetChildCount(); i++ ) {
 		idWindow* child = wrapper->GetChild( i );
 
 		WriteWindow( file, depth + 1, child );
@@ -245,7 +233,7 @@ bool rvGEWorkspace::NewFile()
 {
 	idStr	empty;
 	idStr	ospath;
-	idFile*	file;
+	idFile* file;
 
 	// Make a temporary file with nothing in it so we can just use
 	// load to do all the work
@@ -253,8 +241,7 @@ bool rvGEWorkspace::NewFile()
 	DeleteFile( ospath );
 
 	file = fileSystem->OpenFileWrite( "guis/Untitled.guiednew" );
-	if( NULL == file )
-	{
+	if( NULL == file ) {
 		return false;
 	}
 
@@ -263,8 +250,7 @@ bool rvGEWorkspace::NewFile()
 	fileSystem->CloseFile( file );
 
 	// Load the temporary file
-	if( !LoadFile( ospath, NULL ) )
-	{
+	if( !LoadFile( ospath, NULL ) ) {
 		// Ensure the temp file doesnt hang around
 		DeleteFile( ospath );
 		return false;
@@ -300,7 +286,7 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 	bool  result;
 
 	tempfile = "guis/temp.guied";
-	ospath = fileSystem->RelativePathToOSPath( tempfile, "fs_basepath" );
+	ospath	 = fileSystem->RelativePathToOSPath( tempfile, "fs_basepath" );
 
 	// Make sure the gui directory exists
 	idStr createDir = ospath;
@@ -309,10 +295,8 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 
 	SetFileAttributes( ospath, FILE_ATTRIBUTE_NORMAL );
 	DeleteFile( ospath );
-	if( !CopyFile( filename, ospath, FALSE ) )
-	{
-		if( error )
-		{
+	if( !CopyFile( filename, ospath, FALSE ) ) {
+		if( error ) {
 			*error = "File not found";
 		}
 		return false;
@@ -325,31 +309,23 @@ bool rvGEWorkspace::LoadFile( const char* filename, idStr* error )
 
 	// Let the real window system parse it first
 	mInterface = NULL;
-	result     = true;
-	try
-	{
-		mInterface = reinterpret_cast< idUserInterfaceLocal* >( uiManager->FindGui( tempfile, true, true ) );
-		if( !mInterface && error )
-		{
+	result	   = true;
+	try {
+		mInterface = reinterpret_cast<idUserInterfaceLocal*>( uiManager->FindGui( tempfile, true, true ) );
+		if( !mInterface && error ) {
 			*error = "File not found";
 		}
-	}
-	catch( idException& e )
-	{
+	} catch( idException& e ) {
 		result = false;
-		if( error )
-		{
+		if( error ) {
 			*error = e.error;
 		}
 		return false;
 	}
 
-	if( result )
-	{
+	if( result ) {
 		rvGEWindowWrapper::GetWrapper( mInterface->GetDesktop() )->Expand();
-	}
-	else
-	{
+	} else {
 		DeleteFile( ospath );
 	}
 
@@ -366,7 +342,6 @@ Checks in the current workspace file into source control
 bool rvGEWorkspace::CheckIn()
 {
 	return false;
-
 }
 
 /*
@@ -392,4 +367,3 @@ bool rvGEWorkspace::UndoCheckout()
 {
 	return false;
 }
-

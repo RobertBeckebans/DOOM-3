@@ -18,28 +18,23 @@
 #include "psych_8.h"
 #include "residue_8.h"
 
-static int blocksize_8[2] =
-{
+static int blocksize_8[2] = {
 	512, 512
 };
 
-static int _floor_mapping_8[2] =
-{
+static int _floor_mapping_8[2] = {
 	1, 1,
 };
 
-static double rate_mapping_8[3] =
-{
+static double rate_mapping_8[3] = {
 	6000., 9000., 32000.,
 };
 
-static double rate_mapping_8_uncoupled[3] =
-{
+static double rate_mapping_8_uncoupled[3] = {
 	8000., 14000., 42000.,
 };
 
-static double quality_mapping_8[3] =
-{
+static double quality_mapping_8[3] = {
 	-.1, .0, 1.
 };
 
@@ -47,8 +42,7 @@ static double _psy_compand_8_mapping[3] = { 0., 1., 1.};
 
 static double _global_mapping_8[3] = { 1., 2., 3. };
 
-ve_setup_data_template ve_setup_8_stereo =
-{
+ve_setup_data_template ve_setup_8_stereo = {
 	2,
 	rate_mapping_8,
 	quality_mapping_8,
@@ -99,8 +93,7 @@ ve_setup_data_template ve_setup_8_stereo =
 	_mapres_template_8_stereo
 };
 
-ve_setup_data_template ve_setup_8_uncoupled =
-{
+ve_setup_data_template ve_setup_8_uncoupled = {
 	2,
 	rate_mapping_8_uncoupled,
 	quality_mapping_8,

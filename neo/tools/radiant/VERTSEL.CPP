@@ -41,25 +41,20 @@ int FindPoint( idVec3 point )
 {
 	int i, j;
 
-	for( i = 0; i < g_qeglobals.d_numpoints; i++ )
-	{
-		for( j = 0; j < 3; j++ )
-		{
-			if( idMath::Fabs( point[j] - g_qeglobals.d_points[i][j] ) > 0.1 )
-			{
+	for( i = 0; i < g_qeglobals.d_numpoints; i++ ) {
+		for( j = 0; j < 3; j++ ) {
+			if( idMath::Fabs( point[j] - g_qeglobals.d_points[i][j] ) > 0.1 ) {
 				break;
 			}
 		}
 
-		if( j == 3 )
-		{
+		if( j == 3 ) {
 			return i;
 		}
 	}
 
 	VectorCopy( point, g_qeglobals.d_points[g_qeglobals.d_numpoints] );
-	if( g_qeglobals.d_numpoints < MAX_POINTS - 1 )
-	{
+	if( g_qeglobals.d_numpoints < MAX_POINTS - 1 ) {
 		g_qeglobals.d_numpoints++;
 	}
 
@@ -74,10 +69,8 @@ int FindEdge( int p1, int p2, face_t* f )
 {
 	int i;
 
-	for( i = 0; i < g_qeglobals.d_numedges; i++ )
-	{
-		if( g_qeglobals.d_edges[i].p1 == p2 && g_qeglobals.d_edges[i].p2 == p1 )
-		{
+	for( i = 0; i < g_qeglobals.d_numedges; i++ ) {
+		if( g_qeglobals.d_edges[i].p1 == p2 && g_qeglobals.d_edges[i].p2 == p1 ) {
 			g_qeglobals.d_edges[i].f2 = f;
 			return i;
 		}
@@ -87,8 +80,7 @@ int FindEdge( int p1, int p2, face_t* f )
 	g_qeglobals.d_edges[g_qeglobals.d_numedges].p2 = p2;
 	g_qeglobals.d_edges[g_qeglobals.d_numedges].f1 = f;
 
-	if( g_qeglobals.d_numedges < MAX_EDGES - 1 )
-	{
+	if( g_qeglobals.d_numedges < MAX_EDGES - 1 ) {
 		g_qeglobals.d_numedges++;
 	}
 
@@ -110,16 +102,13 @@ int FindEdge( int p1, int p2, face_t* f )
 #else
 	w = Brush_MakeFaceWinding( selected_brushes.next, f );
 #endif
-	if( !w )
-	{
+	if( !w ) {
 		return;
 	}
-	for( i = 0; i < w->GetNumPoints(); i++ )
-	{
+	for( i = 0; i < w->GetNumPoints(); i++ ) {
 		pnum[i] = FindPoint( ( *w )[i].ToVec3() );
 	}
-	for( i = 0; i < w->GetNumPoints(); i++ )
-	{
+	for( i = 0; i < w->GetNumPoints(); i++ ) {
 		FindEdge( pnum[i], pnum[( i + 1 ) % w->GetNumPoints()], f );
 	}
 	delete w;
@@ -138,23 +127,19 @@ void SetupVertexSelection()
 	g_qeglobals.d_numedges = 0;
 
 #ifdef NEWEDGESEL
-	for( b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		for( f = b->brush_faces; f; f = f->next )
-		{
+	for( b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		for( f = b->brush_faces; f; f = f->next ) {
 			MakeFace( b, f );
 		}
 	}
 
 #else
-	if( !QE_SingleBrush() )
-	{
+	if( !QE_SingleBrush() ) {
 		return;
 	}
 
 	b = selected_brushes.next;
-	for( f = b->brush_faces; f; f = f->next )
-	{
+	for( f = b->brush_faces; f; f = f->next ) {
 		MakeFace( b, f );
 	}
 #endif
@@ -175,25 +160,19 @@ void SetupVertexSelection()
 #else
 	w = Brush_MakeFaceWinding( selected_brushes.next, f );
 #endif
-	if( !w )
-	{
+	if( !w ) {
 		return;
 	}
-	for( i = 0; i < w->GetNumPoints(); i++ )
-	{
+	for( i = 0; i < w->GetNumPoints(); i++ ) {
 		pnum[i] = FindPoint( ( *w )[i].ToVec3() );
 	}
-	for( i = 0; i < w->GetNumPoints(); i++ )
-	{
-		if( pnum[i] == p1 && pnum[( i + 1 ) % w->GetNumPoints()] == p2 )
-		{
+	for( i = 0; i < w->GetNumPoints(); i++ ) {
+		if( pnum[i] == p1 && pnum[( i + 1 ) % w->GetNumPoints()] == p2 ) {
 			VectorCopy( g_qeglobals.d_points[pnum[i]], f->planepts[0] );
 			VectorCopy( g_qeglobals.d_points[pnum[( i + 1 ) % w->GetNumPoints()]], f->planepts[1] );
 			VectorCopy( g_qeglobals.d_points[pnum[( i + 2 ) % w->GetNumPoints()]], f->planepts[2] );
-			for( j = 0; j < 3; j++ )
-			{
-				for( k = 0; k < 3; k++ )
-				{
+			for( j = 0; j < 3; j++ ) {
+				for( k = 0; k < 3; k++ ) {
 					f->planepts[j][k] =
 						floor( f->planepts[j][k] / g_qeglobals.d_gridsize + 0.5 ) * g_qeglobals.d_gridsize;
 				}
@@ -203,8 +182,7 @@ void SetupVertexSelection()
 			break;
 		}
 	}
-	if( i == w->GetNumPoints() )
-	{
+	if( i == w->GetNumPoints() ) {
 		Sys_Status( "SelectFaceEdge: failed\n" );
 	}
 	delete w;
@@ -222,27 +200,20 @@ void SelectVertex( int p1 )
 	face_t*		f;
 
 #ifdef NEWEDGESEL
-	for( b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
-		for( f = b->brush_faces; f; f = f->next )
-		{
+	for( b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
+		for( f = b->brush_faces; f; f = f->next ) {
 			w = Brush_MakeFaceWinding( b, f );
-			if( !w )
-			{
+			if( !w ) {
 				continue;
 			}
 
-			for( i = 0; i < w->GetNumPoints(); i++ )
-			{
-				if( FindPoint( ( *w )[i].ToVec3() ) == p1 )
-				{
+			for( i = 0; i < w->GetNumPoints(); i++ ) {
+				if( FindPoint( ( *w )[i].ToVec3() ) == p1 ) {
 					VectorCopy( ( *w )[( i + w->GetNumPoints() - 1 ) % w->GetNumPoints()], f->planepts[0] );
 					VectorCopy( ( *w )[i], f->planepts[1] );
 					VectorCopy( ( *w )[( i + 1 ) % w->GetNumPoints()], f->planepts[2] );
-					for( j = 0; j < 3; j++ )
-					{
-						for( k = 0; k < 3; k++ )
-						{
+					for( j = 0; j < 3; j++ ) {
+						for( k = 0; k < 3; k++ ) {
 							// f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
 						}
 					}
@@ -260,25 +231,19 @@ void SelectVertex( int p1 )
 
 #else
 	b = selected_brushes.next;
-	for( f = b->brush_faces; f; f = f->next )
-	{
+	for( f = b->brush_faces; f; f = f->next ) {
 		w = Brush_MakeFaceWinding( b, f );
-		if( !w )
-		{
+		if( !w ) {
 			continue;
 		}
 
-		for( i = 0; i < w->GetNumPoints(); i++ )
-		{
-			if( FindPoint( w[i] ) == p1 )
-			{
+		for( i = 0; i < w->GetNumPoints(); i++ ) {
+			if( FindPoint( w[i] ) == p1 ) {
 				VectorCopy( w[( i + w->GetNumPoints() - 1 ) % w->GetNumPoints()], f->planepts[0] );
 				VectorCopy( w[i], f->planepts[1] );
 				VectorCopy( w[( i + 1 ) % w->GetNumPoints()], f->planepts[2] );
-				for( j = 0; j < 3; j++ )
-				{
-					for( k = 0; k < 3; k++ )
-					{
+				for( j = 0; j < 3; j++ ) {
+					for( k = 0; k < 3; k++ ) {
 						// f->planepts[j][k] = floor(f->planepts[j][k]/g_qeglobals.d_gridsize+0.5)*g_qeglobals.d_gridsize;
 					}
 				}
@@ -310,10 +275,8 @@ void SelectEdgeByRay( idVec3 org, idVec3 dir )
 	besti = -1;
 	bestd = 8;
 
-	for( i = 0; i < g_qeglobals.d_numedges; i++ )
-	{
-		for( j = 0; j < 3; j++ )
-		{
+	for( i = 0; i < g_qeglobals.d_numedges; i++ ) {
+		for( j = 0; j < 3; j++ ) {
 			mid[j] = 0.5 * ( g_qeglobals.d_points[g_qeglobals.d_edges[i].p1][j] + g_qeglobals.d_points[g_qeglobals.d_edges[i].p2][j] );
 		}
 
@@ -322,15 +285,13 @@ void SelectEdgeByRay( idVec3 org, idVec3 dir )
 		temp = org + d * dir;
 		temp = mid - temp;
 		d = temp.Length();
-		if( d < bestd )
-		{
+		if( d < bestd ) {
 			bestd = d;
 			besti = i;
 		}
 	}
 
-	if( besti == -1 )
-	{
+	if( besti == -1 ) {
 		Sys_Status( "Click didn't hit an edge\n" );
 		return;
 	}
@@ -344,8 +305,7 @@ void SelectEdgeByRay( idVec3 org, idVec3 dir )
 	g_qeglobals.d_num_move_points = 0;
 	e = &g_qeglobals.d_edges[besti];
 #ifdef NEWEDGESEL
-	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next )
-	{
+	for( brush_t* b = selected_brushes.next; b != &selected_brushes; b = b->next ) {
 		SelectFaceEdge( b, e->f1, e->p1, e->p2 );
 		SelectFaceEdge( b, e->f2, e->p2, e->p1 );
 	}
@@ -371,22 +331,19 @@ void SelectVertexByRay( idVec3 org, idVec3 dir )
 	besti = -1;
 	bestd = 8 / scale / 2;
 
-	for( i = 0; i < g_qeglobals.d_numpoints; i++ )
-	{
+	for( i = 0; i < g_qeglobals.d_numpoints; i++ ) {
 		temp = g_qeglobals.d_points[i] - org;
 		d = temp * dir;
 		temp = org + d * dir;
 		temp = g_qeglobals.d_points[i] - temp;
 		d = temp.Length();
-		if( d < bestd )
-		{
+		if( d < bestd ) {
 			bestd = d;
 			besti = i;
 		}
 	}
 
-	if( besti == -1 || bestd > 8 / scale / 2 )
-	{
+	if( besti == -1 || bestd > 8 / scale / 2 ) {
 		Sys_Status( "Click didn't hit a vertex\n" );
 		return;
 	}
@@ -415,24 +372,20 @@ void SelectCurvePointByRay( const idVec3& org, const idVec3& dir, int buttons )
 	bestd = 8 / scale / 2;
 	//bestd = 8;
 
-	for( i = 0; i < g_qeglobals.d_numpoints; i++ )
-	{
+	for( i = 0; i < g_qeglobals.d_numpoints; i++ ) {
 		temp = g_qeglobals.d_points[i] - org;
 		d = temp * dir;
 		temp = org + d * dir;
 		temp = g_qeglobals.d_points[i] - temp;
 		d = temp.Length();
-		if( d <= bestd )
-		{
+		if( d <= bestd ) {
 			bestd = d;
 			besti = i;
 		}
 	}
 
-	if( besti == -1 )
-	{
-		if( g_pParentWnd->ActiveXY()->AreaSelectOK() )
-		{
+	if( besti == -1 ) {
+		if( g_pParentWnd->ActiveXY()->AreaSelectOK() ) {
 			g_qeglobals.d_select_mode = sel_area;
 			VectorCopy( org, g_qeglobals.d_vAreaTL );
 			VectorCopy( org, g_qeglobals.d_vAreaBR );
@@ -459,22 +412,19 @@ void SelectSplinePointByRay( const idVec3& org, const idVec3& dir, int buttons )
 	besti = -1;
 	bestd = 8;
 
-	for( i = 0; i < g_qeglobals.d_numpoints; i++ )
-	{
+	for( i = 0; i < g_qeglobals.d_numpoints; i++ ) {
 		temp = g_qeglobals.d_points[i] - org;
 		d = temp * dir;
 		temp = org + d * dir;
 		temp = g_qeglobals.d_points[i] - temp;
 		d = temp.Length();
-		if( d <= bestd )
-		{
+		if( d <= bestd ) {
 			bestd = d;
 			besti = i;
 		}
 	}
 
-	if( besti == -1 )
-	{
+	if( besti == -1 ) {
 		return;
 	}
 

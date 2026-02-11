@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,13 +32,13 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "qe3.h"
 
-#define	MAX_POINTFILE	8192
-static idVec3	s_pointvecs[MAX_POINTFILE];
-static int		s_num_points, s_check_point;
+#define MAX_POINTFILE 8192
+static idVec3 s_pointvecs[MAX_POINTFILE];
+static int	  s_num_points, s_check_point;
 
-void Pointfile_Delete()
+void		  Pointfile_Delete()
 {
-	char	name[1024];
+	char name[1024];
 
 	strcpy( name, currentmap );
 	StripExtension( name );
@@ -49,10 +50,9 @@ void Pointfile_Delete()
 // advance camera to next point
 void Pointfile_Next()
 {
-	idVec3	dir;
+	idVec3 dir;
 
-	if( s_check_point >= s_num_points - 2 )
-	{
+	if( s_check_point >= s_num_points - 2 ) {
 		Sys_Status( "End of pointfile", 0 );
 		return;
 	}
@@ -70,10 +70,9 @@ void Pointfile_Next()
 // advance camera to previous point
 void Pointfile_Prev()
 {
-	idVec3	dir;
+	idVec3 dir;
 
-	if( s_check_point == 0 )
-	{
+	if( s_check_point == 0 ) {
 		Sys_Status( "Start of pointfile", 0 );
 		return;
 	}
@@ -90,55 +89,49 @@ void Pointfile_Prev()
 
 void WINAPI Pointfile_Check()
 {
-	char	name[1024];
-	FILE*	f;
-	idVec3	v;
+	char   name[1024];
+	FILE*  f;
+	idVec3 v;
 
 	strcpy( name, currentmap );
 	StripExtension( name );
 	strcat( name, ".lin" );
 
 	f = fopen( name, "r" );
-	if( !f )
-	{
+	if( !f ) {
 		return;
 	}
 
 	common->Printf( "Reading pointfile %s\n", name );
 
-	if( !g_qeglobals.d_pointfile_display_list )
-	{
+	if( !g_qeglobals.d_pointfile_display_list ) {
 		g_qeglobals.d_pointfile_display_list = qglGenLists( 1 );
 	}
 
 	s_num_points = 0;
-	qglNewList( g_qeglobals.d_pointfile_display_list,  GL_COMPILE );
+	qglNewList( g_qeglobals.d_pointfile_display_list, GL_COMPILE );
 	qglColor3f( 1, 0, 0 );
 	qglDisable( GL_TEXTURE_2D );
 	qglDisable( GL_TEXTURE_1D );
 	qglLineWidth( 2 );
 	qglBegin( GL_LINE_STRIP );
-	do
-	{
-		if( fscanf( f, "%f %f %f\n", &v[0], &v[1], &v[2] ) != 3 )
-		{
+	do {
+		if( fscanf( f, "%f %f %f\n", &v[0], &v[1], &v[2] ) != 3 ) {
 			break;
 		}
-		if( s_num_points < MAX_POINTFILE )
-		{
+		if( s_num_points < MAX_POINTFILE ) {
 			VectorCopy( v, s_pointvecs[s_num_points] );
 			s_num_points++;
 		}
 		qglVertex3fv( v.ToFloatPtr() );
-	}
-	while( 1 );
+	} while( 1 );
 	qglEnd();
 	qglLineWidth( 0.5 );
 	qglEndList();
 
 	s_check_point = 0;
 	fclose( f );
-	//Pointfile_Next ();
+	// Pointfile_Next ();
 }
 
 void Pointfile_Draw()
@@ -150,8 +143,7 @@ void Pointfile_Draw()
 	qglDisable( GL_TEXTURE_1D );
 	qglLineWidth( 2 );
 	qglBegin( GL_LINE_STRIP );
-	for( i = 0; i < s_num_points; i++ )
-	{
+	for( i = 0; i < s_num_points; i++ ) {
 		qglVertex3fv( s_pointvecs[i].ToFloatPtr() );
 	}
 	qglEnd();
@@ -160,8 +152,7 @@ void Pointfile_Draw()
 
 void Pointfile_Clear()
 {
-	if( !g_qeglobals.d_pointfile_display_list )
-	{
+	if( !g_qeglobals.d_pointfile_display_list ) {
 		return;
 	}
 
@@ -169,4 +160,3 @@ void Pointfile_Clear()
 	g_qeglobals.d_pointfile_display_list = 0;
 	Sys_UpdateWindows( W_ALL );
 }
-

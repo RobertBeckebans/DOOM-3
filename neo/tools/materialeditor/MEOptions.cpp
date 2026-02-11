@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,35 +32,32 @@ If you have questions concerning this license or the applicable additional terms
 #include "MEOptions.h"
 
 /**
-* Constructor for MEOptions.
-*/
+ * Constructor for MEOptions.
+ */
 MEOptions::MEOptions()
 {
-
 	registry.Init( "Software\\id Software\\DOOM3\\Tools\\MaterialEditor" );
 
-	materialTreeWidth = 0;
-	stageWidth = 0;
-	previewPropertiesWidth = 0;
-	materialEditHeight = 0;
+	materialTreeWidth		 = 0;
+	stageWidth				 = 0;
+	previewPropertiesWidth	 = 0;
+	materialEditHeight		 = 0;
 	materialPropHeadingWidth = 0;
-	previewPropHeadingWidth = 0;
-
+	previewPropHeadingWidth	 = 0;
 }
 
 /**
-* Destructor for MEOptions.
-*/
+ * Destructor for MEOptions.
+ */
 MEOptions::~MEOptions()
 {
 }
 
 /**
-* Saves the material editor options to the registry.
-*/
+ * Saves the material editor options to the registry.
+ */
 bool MEOptions::Save()
 {
-
 	registry.SetFloat( "materialTreeWidth", materialTreeWidth );
 	registry.SetFloat( "stageWidth", stageWidth );
 	registry.SetFloat( "previewPropertiesWidth", previewPropertiesWidth );
@@ -71,23 +69,20 @@ bool MEOptions::Save()
 }
 
 /**
-* Loads the material editor options from the registry.
-*/
+ * Loads the material editor options from the registry.
+ */
 bool MEOptions::Load()
 {
-
-	if( !registry.Load() )
-	{
+	if( !registry.Load() ) {
 		return false;
 	}
 
-	materialTreeWidth = ( int )registry.GetFloat( "materialTreeWidth" );
-	stageWidth = ( int )registry.GetFloat( "stageWidth" );
-	previewPropertiesWidth = ( int )registry.GetFloat( "previewPropertiesWidth" );
-	materialEditHeight = ( int )registry.GetFloat( "materialEditHeight" );
+	materialTreeWidth		 = ( int )registry.GetFloat( "materialTreeWidth" );
+	stageWidth				 = ( int )registry.GetFloat( "stageWidth" );
+	previewPropertiesWidth	 = ( int )registry.GetFloat( "previewPropertiesWidth" );
+	materialEditHeight		 = ( int )registry.GetFloat( "materialEditHeight" );
 	materialPropHeadingWidth = ( int )registry.GetFloat( "materialPropHeadingWidth" );
-	previewPropHeadingWidth = ( int )registry.GetFloat( "previewPropHeadingWidth" );
+	previewPropHeadingWidth	 = ( int )registry.GetFloat( "previewPropHeadingWidth" );
 
 	return true;
-
 }

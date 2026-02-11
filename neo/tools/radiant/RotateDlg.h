@@ -19,18 +19,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
-#if !defined(AFX_ROTATEDLG_H__D4B79152_7A7E_11D1_B541_00AA00A410FC__INCLUDED_)
-#define AFX_ROTATEDLG_H__D4B79152_7A7E_11D1_B541_00AA00A410FC__INCLUDED_
+#if !defined( AFX_ROTATEDLG_H__D4B79152_7A7E_11D1_B541_00AA00A410FC__INCLUDED_ )
+	#define AFX_ROTATEDLG_H__D4B79152_7A7E_11D1_B541_00AA00A410FC__INCLUDED_
 
-#if _MSC_VER >= 1000
-	#pragma once
-#endif // _MSC_VER >= 1000
+	#if _MSC_VER >= 1000
+		#pragma once
+	#endif // _MSC_VER >= 1000
 // RotateDlg.h : header file
 //
 
@@ -39,32 +40,31 @@ If you have questions concerning this license or the applicable additional terms
 
 class CRotateDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
 	CRotateDlg( CWnd* pParent = NULL ); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CRotateDlg)
 	enum { IDD = IDD_ROTATE };
-	CSpinButtonCtrl	m_wndSpin3;
-	CSpinButtonCtrl	m_wndSpin2;
-	CSpinButtonCtrl	m_wndSpin1;
-	CString	m_strX;
-	CString	m_strY;
-	CString	m_strZ;
+	CSpinButtonCtrl m_wndSpin3;
+	CSpinButtonCtrl m_wndSpin2;
+	CSpinButtonCtrl m_wndSpin1;
+	CString			m_strX;
+	CString			m_strY;
+	CString			m_strZ;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRotateDlg)
 protected:
-	virtual void DoDataExchange( CDataExchange* pDX );  // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual void DoDataExchange( CDataExchange* pDX ); // DDX/DDV support
+													   //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
-	void ApplyNoPaint();
+	void		 ApplyNoPaint();
 
 	// Generated message map functions
 	//{{AFX_MSG(CRotateDlg)

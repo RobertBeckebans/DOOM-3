@@ -18,8 +18,7 @@
 
 /* preecho trigger settings *****************************************/
 
-static vorbis_info_psy_global _psy_global_44[5] =
-{
+static vorbis_info_psy_global _psy_global_44[5] = {
 
 	{
 		8,   /* lines per eighth octave */
@@ -59,8 +58,7 @@ static vorbis_info_psy_global _psy_global_44[5] =
 };
 
 /* noise compander lookups * low, mid, high quality ****************/
-static compandblock _psy_compand_44[6] =
-{
+static compandblock _psy_compand_44[6] = {
 	/* sub-mode Z short */
 	{{
 			0, 1, 2, 3, 4, 5, 6,  7,     /* 7dB */
@@ -118,8 +116,7 @@ static compandblock _psy_compand_44[6] =
 };
 
 /* tonal masking curve level adjustments *************************/
-static vp_adjblock _vp_tonemask_adj_longblock[11] =
-{
+static vp_adjblock _vp_tonemask_adj_longblock[11] = {
 	/* adjust for mode zero */
 	/* 63     125     250     500     1     2     4     8    16 */
 	{{ -15, -15, -15, -15, -10, -8, -4, -2, 0, 0, 0, 10, 0, 0, 0, 0, 0}}, /* 0 */
@@ -134,8 +131,7 @@ static vp_adjblock _vp_tonemask_adj_longblock[11] =
 	{{ -15, -15, -15, -15, -15, -12, -10, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0}}, /* 9 */
 	{{ -15, -15, -15, -15, -15, -12, -10, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0}}, /* 10 */
 };
-static vp_adjblock _vp_tonemask_adj_otherblock[11] =
-{
+static vp_adjblock _vp_tonemask_adj_otherblock[11] = {
 	/* adjust for mode zero */
 	/* 63     125     250     500       1     2     4     8    16 */
 	{{ -20, -20, -20, -20, -14, -12, -10, -8, -4, 0, 0, 10, 0, 0, 0, 0, 0}}, /* 0 */
@@ -151,8 +147,7 @@ static vp_adjblock _vp_tonemask_adj_otherblock[11] =
 	{{ -20, -20, -20, -20, -20, -18, -16, -14, -10, 0, 0, 0, 0, 0, 0, 0, 0}}, /* 10 */
 };
 
-static noise3 _psy_noisebias_trans_low[2] =
-{
+static noise3 _psy_noisebias_trans_low[2] = {
 	/*  63     125     250     500      1k       2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -10, -10, -10, -10, -10, -4,  0,  0,  4,  8,  8,  8,  8, 10, 12, 14, 20},
@@ -163,12 +158,11 @@ static noise3 _psy_noisebias_trans_low[2] =
 	/* 1 */
 	{	{	{ -15, -15, -15, -15, -15, -10, -5,  0,  2,  2,  6,  6,  6,  8, 10, 12, 15},
 			{ -30, -30, -30, -30, -26, -22, -20, -14, -10, -4, -2,  0,  0,  0,  2,  4,  10},
-			{ -30, -30, -30, -30, -26, -22, -20, -14, -10, -6, -6, -6, -6, -4, -4, -4,  -2}
+			{ -30, -30, -30, -30, -26, -22, -20, -14, -10, -6, -6, -6, -6, -4, -4, -4, -2}
 		}
 	},
 };
-static noise3 _psy_noisebias_long_low[2] =
-{
+static noise3 _psy_noisebias_long_low[2] = {
 	/*63     125     250     500      1k       2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -10, -10, -10, -10, -10, -4,  0,  0,  0,  6,  6,  6,  6, 10, 10, 12,  20},
@@ -184,13 +178,12 @@ static noise3 _psy_noisebias_long_low[2] =
 	},
 };
 
-static noise3 _psy_noisebias_trans[11] =
-{
+static noise3 _psy_noisebias_trans[11] = {
 	/*  63     125     250     500      1k       2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -15, -15, -15, -15, -15, -12, -10, -8,  0,  2,  4,  4,  5,  5,  5,  8,  10},
 			{ -30, -30, -30, -30, -26, -22, -20, -14, -8, -4,  0,  0,  0,  0,  2,  4,  10},
-			{ -30, -30, -30, -30, -26, -22, -20, -14, -10, -6, -6, -6, -6, -4, -4, -4,  -2}
+			{ -30, -30, -30, -30, -26, -22, -20, -14, -10, -6, -6, -6, -6, -4, -4, -4, -2}
 		}
 	},
 	/* 1 */
@@ -255,8 +248,7 @@ static noise3 _psy_noisebias_trans[11] =
 	},
 };
 
-static noise3 _psy_noisebias_long[11] =
-{
+static noise3 _psy_noisebias_long[11] = {
 	/*63     125     250     500      1k       2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -10, -10, -10, -10, -10, -10, -8,  2,  2,  2,  4,  4,  5,  5,  5,  8,  10},
@@ -326,8 +318,7 @@ static noise3 _psy_noisebias_long[11] =
 	},
 };
 
-static noise3 _psy_noisebias_impulse[11] =
-{
+static noise3 _psy_noisebias_impulse[11] = {
 	/*  63     125     250     500      1k      2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -10, -10, -10, -10, -10, -4,  0,  0,  4,  4,  8,  8,  8, 10, 12, 14, 20},
@@ -398,8 +389,7 @@ static noise3 _psy_noisebias_impulse[11] =
 };
 
 
-static noise3 _psy_noisebias_padding[11] =
-{
+static noise3 _psy_noisebias_padding[11] = {
 	/*  63     125     250     500      1k       2k      4k      8k     16k*/
 	/* 0 */
 	{	{	{ -10, -10, -10, -10, -10, -4,  0,  0,  4,  8,  8,  8,  8, 10, 12, 14, 20},
@@ -469,38 +459,33 @@ static noise3 _psy_noisebias_padding[11] =
 	},
 };
 
-static noiseguard _psy_noiseguards_44[4] =
-{
+static noiseguard _psy_noiseguards_44[4] = {
 	{3, 3, 15},
 	{3, 3, 15},
 	{10, 10, 100},
 	{10, 10, 100},
 };
 
-static int _psy_tone_suppress[11] =
-{
+static int _psy_tone_suppress[11] = {
 	-20, -20, -20, -20, -24, -30, -40, -40, -45, -45, -45,
 };
 
-static int _psy_tone_0dB[11] =
-{
+static int _psy_tone_0dB[11] = {
 	90, 95, 95, 95, 95, 105, 105, 105, 105, 105, 105,
 };
 
-static int _psy_noise_suppress[11] =
-{
+static int _psy_noise_suppress[11] = {
 	-20, -24, -24, -24, -24, -30, -40, -40, -45, -45, -45,
 };
 
-static vorbis_info_psy _psy_info_template =
-{
+static vorbis_info_psy _psy_info_template = {
 	-1,
 	-140., -140.,
 	/* tonemask att boost/decay,suppr,curves */
-	{0.f, 0.f, 0.f},     0., 0.,    -40.f, {0.},
+	{0.f, 0.f, 0.f},     0., 0., -40.f, {0.},
 
 	/*noisemaskp,supp, low/high window, low/hi guard, minimum */
-	1,          -0.f,         .5f, .5f,         0, 0, 0,
+	1, -0.f,         .5f, .5f,         0, 0, 0,
 	{{ -1}, { -1}, { -1}}, { -1}, 105.f,
 
 	0, 0, -1, -1, 0.,
@@ -508,13 +493,11 @@ static vorbis_info_psy _psy_info_template =
 
 /* ath ****************/
 
-static int _psy_ath_floater[11] =
-{
+static int _psy_ath_floater[11] = {
 	-100, -100, -100, -100, -100, -105, -105, -105, -105, -110, -120,
 };
 
-static int _psy_ath_abs[11] =
-{
+static int _psy_ath_abs[11] = {
 	-130, -130, -130, -140, -140, -140, -140, -140, -140, -140, -150,
 };
 
@@ -527,8 +510,7 @@ static int _psy_ath_abs[11] =
 /* various stereo possibilities */
 
 /* stereo mode by base quality level */
-static adj_stereo _psy_stereo_modes_44_low[2] =
-{
+static adj_stereo _psy_stereo_modes_44_low[2] = {
 	/*  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14         0  */
 	{	{  4,  4,  4,  4,  4,  4,  4,  3,  2,  2,  1,  0,  0,  0,  0},
 		{  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5,  4,  3},
@@ -543,8 +525,7 @@ static adj_stereo _psy_stereo_modes_44_low[2] =
 	},
 };
 
-static adj_stereo _psy_stereo_modes_44[11] =
-{
+static adj_stereo _psy_stereo_modes_44[11] = {
 	/*  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14         0  */
 	{	{  4,  4,  4,  4,  4,  4,  4,  3,  2,  2,  1,  0,  0,  0,  0},
 		{  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  5,  4,  3},
@@ -615,69 +596,57 @@ static adj_stereo _psy_stereo_modes_44[11] =
 
 /* tone master attenuation by base quality mode and bitrate tweak */
 
-static att3 _psy_tone_masteratt_44_low[2] =
-{
+static att3 _psy_tone_masteratt_44_low[2] = {
 	{{ 34,  20,   8},  0, 1.25}, /* 0 */
 	{{ 34,  20,   8}, -2, 1.25}, /* 1 */
 };
-static att3 _psy_tone_masteratt_44[11] =
-{
+static att3 _psy_tone_masteratt_44[11] = {
 	{{ 30,  20,   8}, -2, 1.25}, /* 0 */
 	{{ 25,  14,   4},  0,    0}, /* 1 */
-	{{ 20,  10,  -2},  0,    0}, /* 2 */
-	{{ 20,   9,  -4},  0,    0}, /* 3 */
-	{{ 20,   9,  -4},  0,    0}, /* 4 */
-	{{ 20,   6,  -6},  0,    0}, /* 5 */
+	{{ 20,  10, -2},  0,    0}, /* 2 */
+	{{ 20,   9, -4},  0,    0}, /* 3 */
+	{{ 20,   9, -4},  0,    0}, /* 4 */
+	{{ 20,   6, -6},  0,    0}, /* 5 */
 	{{ 20,   3, -10},  0,    0}, /* 6 */
 	{{ 18,   1, -14},  0,    0}, /* 7 */
 	{{ 18,   0, -16},  0,    0}, /* 8 */
-	{{ 18,  -2, -16},  0,    0}, /* 9 */
-	{{ 12,  -2, -20},  0,    0}, /* 10 */
+	{{ 18, -2, -16},  0,    0}, /* 9 */
+	{{ 12, -2, -20},  0,    0}, /* 10 */
 };
 
 /* lowpass by mode **************/
-static double _psy_lowpass_44_low[2] =
-{
+static double _psy_lowpass_44_low[2] = {
 	15.1, 15.1,
 };
-static double _psy_lowpass_44[11] =
-{
+static double _psy_lowpass_44[11] = {
 	15.1, 15.8, 16.5, 17.9, 20.5, 48., 999., 999., 999., 999., 999.
 };
 
 /* noise normalization **********/
 
-static int _noise_start_short_44[10] =
-{
+static int _noise_start_short_44[10] = {
 	16, 16, 16, 16, 32, 32, 9999, 9999, 9999, 9999
 };
-static int _noise_start_long_44[10] =
-{
+static int _noise_start_long_44[10] = {
 	128, 128, 128, 256, 512, 512, 9999, 9999, 9999, 9999
 };
-static int _noise_part_short_44[10] =
-{
+static int _noise_part_short_44[10] = {
 	8, 8, 8, 8, 8, 8, 8, 8, 8, 8
 };
-static int _noise_part_long_44[10] =
-{
+static int _noise_part_long_44[10] = {
 	32, 32, 32, 32, 32, 32, 32, 32, 32, 32
 };
-static double _noise_thresh_44[10] =
-{
+static double _noise_thresh_44[10] = {
 	.2, .2, .3, .4, .5, .5, 9999., 9999., 9999., 9999.,
 };
-static double _noise_thresh_44_2[2] =
-{
+static double _noise_thresh_44_2[2] = {
 	.5, .5,
 };
 
 
-static int _noise_start_short_44_low[2] =
-{
+static int _noise_start_short_44_low[2] = {
 	32, 32
 };
-static int _noise_start_long_44_low[2] =
-{
+static int _noise_start_long_44_low[2] = {
 	256, 256
 };

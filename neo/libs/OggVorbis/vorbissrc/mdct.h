@@ -53,8 +53,7 @@
 #endif
 
 
-typedef struct
-{
+typedef struct {
 	int n;
 	int log2n;
 

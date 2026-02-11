@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -61,42 +62,39 @@ bool rvGEProperties::Create( HWND parent, bool visible )
 {
 	WNDCLASSEX wndClass;
 	memset( &wndClass, 0, sizeof( wndClass ) );
-	wndClass.cbSize = sizeof( WNDCLASSEX );
+	wndClass.cbSize		   = sizeof( WNDCLASSEX );
 	wndClass.lpszClassName = "GUIEDITOR_PROPERTIES_CLASS";
 	wndClass.lpfnWndProc   = WndProc;
 	wndClass.hbrBackground = ( HBRUSH )GetSysColorBrush( COLOR_3DFACE );
-	wndClass.hCursor       = LoadCursor( ( HINSTANCE ) NULL, IDC_ARROW );
+	wndClass.hCursor	   = LoadCursor( ( HINSTANCE )NULL, IDC_ARROW );
 	wndClass.lpszMenuName  = NULL;
-	wndClass.hInstance     = win32.hInstance;
+	wndClass.hInstance	   = win32.hInstance;
 	RegisterClassEx( &wndClass );
 
 	mWnd = CreateWindowEx( WS_EX_TOOLWINDOW,
-						   "GUIEDITOR_PROPERTIES_CLASS",
-						   "Properties",
-						   WS_SYSMENU | WS_THICKFRAME | WS_CAPTION | WS_POPUP | WS_OVERLAPPED | WS_BORDER | WS_CLIPSIBLINGS | WS_CHILD,
-						   0, 0, 200, 300,
-						   parent,
-						   NULL,
-						   win32.hInstance,
-						   this );
+		"GUIEDITOR_PROPERTIES_CLASS",
+		"Properties",
+		WS_SYSMENU | WS_THICKFRAME | WS_CAPTION | WS_POPUP | WS_OVERLAPPED | WS_BORDER | WS_CLIPSIBLINGS | WS_CHILD,
+		0,
+		0,
+		200,
+		300,
+		parent,
+		NULL,
+		win32.hInstance,
+		this );
 
-	if( !mWnd )
-	{
+	if( !mWnd ) {
 		return false;
 	}
 
-	if( !gApp.GetOptions().GetWindowPlacement( "properties", mWnd ) )
-	{
+	if( !gApp.GetOptions().GetWindowPlacement( "properties", mWnd ) ) {
 		RECT rParent;
 		RECT rClient;
 
 		GetWindowRect( parent, &rParent );
 		GetWindowRect( mWnd, &rClient );
-		SetWindowPos( mWnd, NULL,
-					  rParent.right - 10 - ( rClient.right - rClient.left ),
-					  rParent.bottom - 10 - ( rClient.bottom - rClient.top ),
-					  0, 0,
-					  SWP_NOZORDER | SWP_NOSIZE );
+		SetWindowPos( mWnd, NULL, rParent.right - 10 - ( rClient.right - rClient.left ), rParent.bottom - 10 - ( rClient.bottom - rClient.top ), 0, 0, SWP_NOZORDER | SWP_NOSIZE );
 	}
 
 	Show( visible );
@@ -128,12 +126,9 @@ void rvGEProperties::Update()
 {
 	int i;
 
-	if( mWorkspace && mWorkspace->GetSelectionMgr().Num() == 1 )
-	{
+	if( mWorkspace && mWorkspace->GetSelectionMgr().Num() == 1 ) {
 		mWrapper = rvGEWindowWrapper::GetWrapper( mWorkspace->GetSelectionMgr()[0] );
-	}
-	else
-	{
+	} else {
 		mWrapper = NULL;
 	}
 
@@ -141,12 +136,10 @@ void rvGEProperties::Update()
 
 	mGrid.RemoveAllItems();
 
-	if( mWrapper )
-	{
-		for( i = 0; i < ( int )mWrapper->GetStateDict().GetNumKeyVals(); i ++ )
-		{
+	if( mWrapper ) {
+		for( i = 0; i < ( int )mWrapper->GetStateDict().GetNumKeyVals(); i++ ) {
 			const idKeyValue* kv = mWrapper->GetStateDict().GetKeyVal( i );
-			idStr temp;
+			idStr			  temp;
 			temp = kv->GetValue();
 			temp.StripQuotes();
 			mGrid.AddItem( kv->GetKey(), temp );
@@ -167,13 +160,11 @@ bool rvGEProperties::AddModifier( const char* name, const char* value )
 	idStr  tempvalue;
 
 	tempvalue = value;
-	if( !mWrapper->VerfiyStateKey( name, tempvalue ) )
-	{
+	if( !mWrapper->VerfiyStateKey( name, tempvalue ) ) {
 		tempvalue = "\"";
 		tempvalue += value;
 		tempvalue += "\"";
-		if( !mWrapper->VerfiyStateKey( name, tempvalue ) )
-		{
+		if( !mWrapper->VerfiyStateKey( name, tempvalue ) ) {
 			gApp.MessageBox( va( "Invalid property value '%s' for property '%s'", value, name ), MB_OK );
 			return false;
 		}
@@ -199,28 +190,23 @@ Window Procedure for the properties window
 */
 LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	rvGEProperties* kv = ( rvGEProperties* ) GetWindowLong( hWnd, GWL_USERDATA );
+	rvGEProperties* kv = ( rvGEProperties* )GetWindowLong( hWnd, GWL_USERDATA );
 
-	if( kv && kv->mGrid.ReflectMessage( hWnd, msg, wParam, lParam ) )
-	{
+	if( kv && kv->mGrid.ReflectMessage( hWnd, msg, wParam, lParam ) ) {
 		return 0;
 	}
 
-	switch( msg )
-	{
+	switch( msg ) {
 		case WM_ACTIVATE:
 			common->ActivateTool( LOWORD( wParam ) != WA_INACTIVE );
 			break;
 
-		case WM_NOTIFY:
-		{
+		case WM_NOTIFY: {
 			NMHDR* hdr;
 			hdr = ( NMHDR* )lParam;
-			if( hdr->idFrom == 999 )
-			{
+			if( hdr->idFrom == 999 ) {
 				NMPROPGRID* nmpg = ( NMPROPGRID* )hdr;
-				switch( hdr->code )
-				{
+				switch( hdr->code ) {
 					case PGN_ITEMCHANGED:
 						return ( int )kv->AddModifier( nmpg->mName, nmpg->mValue );
 						/*
@@ -264,13 +250,12 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 			break;
 		}
 
-		case WM_CREATE:
-		{
-			LPCREATESTRUCT	cs;
+		case WM_CREATE: {
+			LPCREATESTRUCT cs;
 
 			// Attach the class to the window first
-			cs = ( LPCREATESTRUCT ) lParam;
-			kv = ( rvGEProperties* ) cs->lpCreateParams;
+			cs = ( LPCREATESTRUCT )lParam;
+			kv = ( rvGEProperties* )cs->lpCreateParams;
 			SetWindowLong( hWnd, GWL_USERDATA, ( LONG )kv );
 
 			kv->mGrid.Create( hWnd, 999, PGS_ALLOWINSERT );
@@ -282,8 +267,7 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 		}
 
 		case WM_ERASEBKGND:
-			if( kv->mWrapper )
-			{
+			if( kv->mWrapper ) {
 				return FALSE;
 			}
 			break;
@@ -307,5 +291,3 @@ LRESULT CALLBACK rvGEProperties::WndProc( HWND hWnd, UINT msg, WPARAM wParam, LP
 
 	return DefWindowProc( hWnd, msg, wParam, lParam );
 }
-
-

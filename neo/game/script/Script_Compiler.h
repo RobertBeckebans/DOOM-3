@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -30,23 +31,21 @@ If you have questions concerning this license or the applicable additional terms
 
 const char* const RESULT_STRING = "<RESULT>";
 
-typedef struct opcode_s
-{
-	char*		name;
-	char*		opname;
-	int			priority;
-	bool		rightAssociative;
-	idVarDef*	type_a;
-	idVarDef*	type_b;
-	idVarDef*	type_c;
+typedef struct opcode_s {
+	char*	  name;
+	char*	  opname;
+	int		  priority;
+	bool	  rightAssociative;
+	idVarDef* type_a;
+	idVarDef* type_b;
+	idVarDef* type_c;
 } opcode_t;
 
 // These opcodes are no longer necessary:
 // OP_PUSH_OBJ:
 // OP_PUSH_OBJENT:
 
-enum
-{
+enum {
 	OP_RETURN,
 
 	OP_UINC_F,
@@ -190,8 +189,8 @@ enum
 	OP_BITAND,
 	OP_BITOR,
 
-	OP_BREAK,			// placeholder op.  not used in final code
-	OP_CONTINUE,		// placeholder op.  not used in final code
+	OP_BREAK,	 // placeholder op.  not used in final code
+	OP_CONTINUE, // placeholder op.  not used in final code
 
 	NUM_OPCODES
 };
@@ -199,8 +198,8 @@ enum
 class idCompiler
 {
 private:
-	static bool		punctuationValid[ 256 ];
-	static char*		punctuation[];
+	static bool		punctuationValid[256];
+	static char*	punctuation[];
 
 	idParser		parser;
 	idParser*		parserPtr;
@@ -218,8 +217,8 @@ private:
 	int				currentFileNumber;
 	int				errorCount;
 
-	idVarDef*		scope;				// the function being parsed, or NULL
-	const idVarDef*	basetype;			// for accessing fields
+	idVarDef*		scope;	  // the function being parsed, or NULL
+	const idVarDef* basetype; // for accessing fields
 
 	float			Divide( float numerator, float denominator );
 	void			Error( const char* error, ... ) const id_attribute( ( format( printf, 2, 3 ) ) );
@@ -271,11 +270,11 @@ private:
 	void			ParseDefs();
 	void			ParseNamespace( idVarDef* newScope );
 
-public :
-	static opcode_t	opcodes[];
+public:
+	static opcode_t opcodes[];
 
 	idCompiler();
-	void			CompileFile( const char* text, const char* filename, bool console );
+	void CompileFile( const char* text, const char* filename, bool console );
 };
 
 #endif /* !__SCRIPT_COMPILER_H__ */

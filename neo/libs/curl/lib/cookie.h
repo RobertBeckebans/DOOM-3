@@ -32,8 +32,7 @@
 
 #include <curl/curl.h>
 
-struct Cookie
-{
+struct Cookie {
 	struct Cookie* next; /* next in the chain */
 	char* name;        /* <this> = value */
 	char* value;       /* name = <this> */
@@ -51,8 +50,7 @@ struct Cookie
 	bool livecookie;   /* updated from a server, not a stored file */
 };
 
-struct CookieInfo
-{
+struct CookieInfo {
 	/* linked list of cookies we know of */
 	struct Cookie* cookies;
 

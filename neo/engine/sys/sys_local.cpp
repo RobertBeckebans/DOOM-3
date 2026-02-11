@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -30,18 +31,14 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 #include "sys_local.h"
 
-const char* sysLanguageNames[] =
-{
-	"english", "spanish", "italian", "german", "french", "russian",
-	"polish", "korean", "japanese", "chinese", NULL
-};
+const char* sysLanguageNames[] = { "english", "spanish", "italian", "german", "french", "russian", "polish", "korean", "japanese", "chinese", NULL };
 
-idCVar sys_lang( "sys_lang", "english", CVAR_SYSTEM | CVAR_ARCHIVE,  "", sysLanguageNames, idCmdSystem::ArgCompletion_String<sysLanguageNames> );
+idCVar		sys_lang( "sys_lang", "english", CVAR_SYSTEM | CVAR_ARCHIVE, "", sysLanguageNames, idCmdSystem::ArgCompletion_String<sysLanguageNames> );
 
-idSysLocal			sysLocal;
-idSys* 				sys = &sysLocal;
+idSysLocal	sysLocal;
+idSys*		sys = &sysLocal;
 
-void idSysLocal::DebugPrintf( const char* fmt, ... )
+void		idSysLocal::DebugPrintf( const char* fmt, ... )
 {
 	va_list argptr;
 
@@ -147,31 +144,35 @@ void idSysLocal::DLL_GetFileName( const char* baseName, char* dllName, int maxLe
 #elif defined( __linux__ )
 	idStr::snPrintf( dllName, maxLength, "%s" CPUSTRING ".so", baseName );
 #elif defined( MACOS_X )
-	idStr::snPrintf( dllName, maxLength, "%s" ".dylib", baseName );
+	idStr::snPrintf( dllName,
+		maxLength,
+		"%s"
+		".dylib",
+		baseName );
 #else
-#error OS define is required
+	#error OS define is required
 #endif
 }
 
 sysEvent_t idSysLocal::GenerateMouseButtonEvent( int button, bool down )
 {
 	sysEvent_t ev;
-	ev.evType = SE_KEY;
-	ev.evValue = K_MOUSE1 + button - 1;
-	ev.evValue2 = down;
+	ev.evType	   = SE_KEY;
+	ev.evValue	   = K_MOUSE1 + button - 1;
+	ev.evValue2	   = down;
 	ev.evPtrLength = 0;
-	ev.evPtr = NULL;
+	ev.evPtr	   = NULL;
 	return ev;
 }
 
 sysEvent_t idSysLocal::GenerateMouseMoveEvent( int deltax, int deltay )
 {
 	sysEvent_t ev;
-	ev.evType = SE_MOUSE;
-	ev.evValue = deltax;
-	ev.evValue2 = deltay;
+	ev.evType	   = SE_MOUSE;
+	ev.evValue	   = deltax;
+	ev.evValue2	   = deltay;
 	ev.evPtrLength = 0;
-	ev.evPtr = NULL;
+	ev.evPtr	   = NULL;
 	return ev;
 }
 
@@ -190,12 +191,11 @@ const char* Sys_TimeStampToStr( ID_TIME_T timeStamp )
 	static char timeString[MAX_STRING_CHARS];
 	timeString[0] = '\0';
 
-	tm*	time = localtime( &timeStamp );
+	tm*	  time = localtime( &timeStamp );
 	idStr out;
 
 	idStr lang = cvarSystem->GetCVarString( "sys_lang" );
-	if( lang.Icmp( "english" ) == 0 )
-	{
+	if( lang.Icmp( "english" ) == 0 ) {
 		// english gets "month/day/year  hour:min" + "am" or "pm"
 		out = va( "%02d", time->tm_mon + 1 );
 		out += "/";
@@ -203,31 +203,21 @@ const char* Sys_TimeStampToStr( ID_TIME_T timeStamp )
 		out += "/";
 		out += va( "%d", time->tm_year + 1900 );
 		out += "\t";
-		if( time->tm_hour > 12 )
-		{
+		if( time->tm_hour > 12 ) {
 			out += va( "%02d", time->tm_hour - 12 );
-		}
-		else if( time->tm_hour == 0 )
-		{
+		} else if( time->tm_hour == 0 ) {
 			out += "12";
-		}
-		else
-		{
+		} else {
 			out += va( "%02d", time->tm_hour );
 		}
 		out += ":";
 		out += va( "%02d", time->tm_min );
-		if( time->tm_hour >= 12 )
-		{
+		if( time->tm_hour >= 12 ) {
 			out += "pm";
-		}
-		else
-		{
+		} else {
 			out += "am";
 		}
-	}
-	else
-	{
+	} else {
 		// europeans get "day/month/year  24hour:min"
 		out = va( "%02d", time->tm_mday );
 		out += "/";
@@ -243,4 +233,3 @@ const char* Sys_TimeStampToStr( ID_TIME_T timeStamp )
 
 	return timeString;
 }
-

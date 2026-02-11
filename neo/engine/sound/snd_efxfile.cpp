@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -35,7 +36,9 @@ If you have questions concerning this license or the applicable additional terms
 idEFXFile::idEFXFile
 ===============
 */
-idEFXFile::idEFXFile() { }
+idEFXFile::idEFXFile()
+{
+}
 
 /*
 ===============
@@ -66,12 +69,10 @@ bool idEFXFile::FindEffect( idStr& name, idSoundEffect** effect, int* index )
 {
 	int i;
 
-	for( i = 0; i < effects.Num(); i++ )
-	{
-		if( ( effects[i] ) && ( effects[i]->name == name ) )
-		{
+	for( i = 0; i < effects.Num(); i++ ) {
+		if( ( effects[i] ) && ( effects[i]->name == name ) ) {
 			*effect = effects[i];
-			*index = i;
+			*index	= i;
 			return true;
 		}
 	}
@@ -87,173 +88,112 @@ bool idEFXFile::ReadEffect( idLexer& src, idSoundEffect* effect )
 {
 	idToken name, token;
 
-	if( !src.ReadToken( &token ) )
-	{
+	if( !src.ReadToken( &token ) ) {
 		return false;
 	}
 
 	// reverb effect
-	if( token == "reverb" )
-	{
+	if( token == "reverb" ) {
 		EAXREVERBPROPERTIES* reverb = ( EAXREVERBPROPERTIES* )Mem_Alloc( sizeof( EAXREVERBPROPERTIES ) );
-		if( reverb )
-		{
+		if( reverb ) {
 			src.ReadTokenOnLine( &token );
 			name = token;
 
-			if( !src.ReadToken( &token ) )
-			{
+			if( !src.ReadToken( &token ) ) {
 				Mem_Free( reverb );
 				return false;
 			}
 
-			if( token != "{" )
-			{
+			if( token != "{" ) {
 				src.Error( "idEFXFile::ReadEffect: { not found, found %s", token.c_str() );
 				Mem_Free( reverb );
 				return false;
 			}
 
-			do
-			{
-				if( !src.ReadToken( &token ) )
-				{
+			do {
+				if( !src.ReadToken( &token ) ) {
 					src.Error( "idEFXFile::ReadEffect: EOF without closing brace" );
 					Mem_Free( reverb );
 					return false;
 				}
 
-				if( token == "}" )
-				{
-					effect->name = name;
-					effect->data = ( void* )reverb;
+				if( token == "}" ) {
+					effect->name	 = name;
+					effect->data	 = ( void* )reverb;
 					effect->datasize = sizeof( EAXREVERBPROPERTIES );
 					break;
 				}
 
-				if( token == "environment" )
-				{
+				if( token == "environment" ) {
 					src.ReadTokenOnLine( &token );
 					reverb->ulEnvironment = token.GetUnsignedLongValue();
-				}
-				else if( token == "environment size" )
-				{
+				} else if( token == "environment size" ) {
 					reverb->flEnvironmentSize = src.ParseFloat();
-				}
-				else if( token == "environment diffusion" )
-				{
+				} else if( token == "environment diffusion" ) {
 					reverb->flEnvironmentDiffusion = src.ParseFloat();
-				}
-				else if( token == "room" )
-				{
+				} else if( token == "room" ) {
 					reverb->lRoom = src.ParseInt();
-				}
-				else if( token == "room hf" )
-				{
+				} else if( token == "room hf" ) {
 					reverb->lRoomHF = src.ParseInt();
-				}
-				else if( token == "room lf" )
-				{
+				} else if( token == "room lf" ) {
 					reverb->lRoomLF = src.ParseInt();
-				}
-				else if( token == "decay time" )
-				{
+				} else if( token == "decay time" ) {
 					reverb->flDecayTime = src.ParseFloat();
-				}
-				else if( token == "decay hf ratio" )
-				{
+				} else if( token == "decay hf ratio" ) {
 					reverb->flDecayHFRatio = src.ParseFloat();
-				}
-				else if( token == "decay lf ratio" )
-				{
+				} else if( token == "decay lf ratio" ) {
 					reverb->flDecayLFRatio = src.ParseFloat();
-				}
-				else if( token == "reflections" )
-				{
+				} else if( token == "reflections" ) {
 					reverb->lReflections = src.ParseInt();
-				}
-				else if( token == "reflections delay" )
-				{
+				} else if( token == "reflections delay" ) {
 					reverb->flReflectionsDelay = src.ParseFloat();
-				}
-				else if( token == "reflections pan" )
-				{
+				} else if( token == "reflections pan" ) {
 					reverb->vReflectionsPan.x = src.ParseFloat();
 					reverb->vReflectionsPan.y = src.ParseFloat();
 					reverb->vReflectionsPan.z = src.ParseFloat();
-				}
-				else if( token == "reverb" )
-				{
+				} else if( token == "reverb" ) {
 					reverb->lReverb = src.ParseInt();
-				}
-				else if( token == "reverb delay" )
-				{
+				} else if( token == "reverb delay" ) {
 					reverb->flReverbDelay = src.ParseFloat();
-				}
-				else if( token == "reverb pan" )
-				{
+				} else if( token == "reverb pan" ) {
 					reverb->vReverbPan.x = src.ParseFloat();
 					reverb->vReverbPan.y = src.ParseFloat();
 					reverb->vReverbPan.z = src.ParseFloat();
-				}
-				else if( token == "echo time" )
-				{
+				} else if( token == "echo time" ) {
 					reverb->flEchoTime = src.ParseFloat();
-				}
-				else if( token == "echo depth" )
-				{
+				} else if( token == "echo depth" ) {
 					reverb->flEchoDepth = src.ParseFloat();
-				}
-				else if( token == "modulation time" )
-				{
+				} else if( token == "modulation time" ) {
 					reverb->flModulationTime = src.ParseFloat();
-				}
-				else if( token == "modulation depth" )
-				{
+				} else if( token == "modulation depth" ) {
 					reverb->flModulationDepth = src.ParseFloat();
-				}
-				else if( token == "air absorption hf" )
-				{
+				} else if( token == "air absorption hf" ) {
 					reverb->flAirAbsorptionHF = src.ParseFloat();
-				}
-				else if( token == "hf reference" )
-				{
+				} else if( token == "hf reference" ) {
 					reverb->flHFReference = src.ParseFloat();
-				}
-				else if( token == "lf reference" )
-				{
+				} else if( token == "lf reference" ) {
 					reverb->flLFReference = src.ParseFloat();
-				}
-				else if( token == "room rolloff factor" )
-				{
+				} else if( token == "room rolloff factor" ) {
 					reverb->flRoomRolloffFactor = src.ParseFloat();
-				}
-				else if( token == "flags" )
-				{
+				} else if( token == "flags" ) {
 					src.ReadTokenOnLine( &token );
 					reverb->ulFlags = token.GetUnsignedLongValue();
-				}
-				else
-				{
+				} else {
 					src.ReadTokenOnLine( &token );
 					src.Error( "idEFXFile::ReadEffect: Invalid parameter in reverb definition" );
 					Mem_Free( reverb );
 				}
-			}
-			while( 1 );
+			} while( 1 );
 
 			return true;
 		}
-	}
-	else
-	{
+	} else {
 		// other effect (not supported at the moment)
 		src.Error( "idEFXFile::ReadEffect: Unknown effect definition" );
 	}
 
 	return false;
 }
-
 
 /*
 ===============
@@ -266,34 +206,28 @@ bool idEFXFile::LoadFile( const char* filename, bool OSPath )
 	idToken token;
 
 	src.LoadFile( filename, OSPath );
-	if( !src.IsLoaded() )
-	{
+	if( !src.IsLoaded() ) {
 		return false;
 	}
 
-	if( !src.ExpectTokenString( "Version" ) )
-	{
+	if( !src.ExpectTokenString( "Version" ) ) {
 		return NULL;
 	}
 
-	if( src.ParseInt() != 1 )
-	{
+	if( src.ParseInt() != 1 ) {
 		src.Error( "idEFXFile::LoadFile: Unknown file version" );
 		return false;
 	}
 
-	while( !src.EndOfFile() )
-	{
+	while( !src.EndOfFile() ) {
 		idSoundEffect* effect = new idSoundEffect;
-		if( ReadEffect( src, effect ) )
-		{
+		if( ReadEffect( src, effect ) ) {
 			effects.Append( effect );
 		}
 	};
 
 	return true;
 }
-
 
 /*
 ===============

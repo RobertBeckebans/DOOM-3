@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,15 +37,13 @@ If you have questions concerning this license or the applicable additional terms
 /////////////////////////////////////////////////////////////////////////////
 // CDialogSoundGroup dialog
 
-
-CDialogSoundGroup::CDialogSoundGroup( CWnd* pParent /*=NULL*/ )
-	: CDialog( CDialogSoundGroup::IDD, pParent )
+CDialogSoundGroup::CDialogSoundGroup( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CDialogSoundGroup::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CDialogSoundGroup)
 	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
-
 
 void CDialogSoundGroup::DoDataExchange( CDataExchange* pDX )
 {
@@ -54,10 +53,9 @@ void CDialogSoundGroup::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CDialogSoundGroup, CDialog )
-	//{{AFX_MSG_MAP(CDialogSoundGroup)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CDialogSoundGroup)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -66,9 +64,8 @@ END_MESSAGE_MAP()
 void CDialogSoundGroup::OnOK()
 {
 	CString str;
-	int count = lstGroups.GetSelCount();
-	for( int i = 0; i < count; i++ )
-	{
+	int		count = lstGroups.GetSelCount();
+	for( int i = 0; i < count; i++ ) {
 		lstGroups.GetText( i, str );
 		list.Append( str.GetBuffer( 0 ) );
 	}
@@ -81,11 +78,10 @@ BOOL CDialogSoundGroup::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	int count = list.Num();
-	for( int i = 0; i < count; i++ )
-	{
+	for( int i = 0; i < count; i++ ) {
 		lstGroups.AddString( list[i] );
 	}
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }

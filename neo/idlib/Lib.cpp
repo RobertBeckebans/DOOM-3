@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -43,20 +44,19 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-idSys* 			idLib::sys			= NULL;
-idCommon* 		idLib::common		= NULL;
-idCVarSystem* 	idLib::cvarSystem	= NULL;
-idFileSystem* 	idLib::fileSystem	= NULL;
-int				idLib::frameNumber	= 0;
+idSys*		  idLib::sys		 = NULL;
+idCommon*	  idLib::common		 = NULL;
+idCVarSystem* idLib::cvarSystem	 = NULL;
+idFileSystem* idLib::fileSystem	 = NULL;
+int			  idLib::frameNumber = 0;
 
 /*
 ================
 idLib::Init
 ================
 */
-void idLib::Init()
+void		  idLib::Init()
 {
-
 	assert( sizeof( bool ) == 1 );
 
 	// initialize little/big endian conversion
@@ -75,7 +75,7 @@ void idLib::Init()
 	idMath::Init();
 
 	// test idMatX
-	//idMatX::Test();
+	// idMatX::Test();
 
 	// test idPolynomial
 	idPolynomial::Test();
@@ -91,7 +91,6 @@ idLib::ShutDown
 */
 void idLib::ShutDown()
 {
-
 	// shut down the dictionary string pools
 	idDict::Shutdown();
 
@@ -105,7 +104,6 @@ void idLib::ShutDown()
 	Mem_Shutdown();
 }
 
-
 /*
 ===============================================================================
 
@@ -114,23 +112,23 @@ void idLib::ShutDown()
 ===============================================================================
 */
 
-idVec4	colorBlack	= idVec4( 0.00f, 0.00f, 0.00f, 1.00f );
-idVec4	colorWhite	= idVec4( 1.00f, 1.00f, 1.00f, 1.00f );
-idVec4	colorRed	= idVec4( 1.00f, 0.00f, 0.00f, 1.00f );
-idVec4	colorGreen	= idVec4( 0.00f, 1.00f, 0.00f, 1.00f );
-idVec4	colorBlue	= idVec4( 0.00f, 0.00f, 1.00f, 1.00f );
-idVec4	colorYellow	= idVec4( 1.00f, 1.00f, 0.00f, 1.00f );
-idVec4	colorMagenta = idVec4( 1.00f, 0.00f, 1.00f, 1.00f );
-idVec4	colorCyan	= idVec4( 0.00f, 1.00f, 1.00f, 1.00f );
-idVec4	colorOrange	= idVec4( 1.00f, 0.50f, 0.00f, 1.00f );
-idVec4	colorPurple	= idVec4( 0.60f, 0.00f, 0.60f, 1.00f );
-idVec4	colorPink	= idVec4( 0.73f, 0.40f, 0.48f, 1.00f );
-idVec4	colorBrown	= idVec4( 0.40f, 0.35f, 0.08f, 1.00f );
-idVec4	colorLtGrey	= idVec4( 0.75f, 0.75f, 0.75f, 1.00f );
-idVec4	colorMdGrey	= idVec4( 0.50f, 0.50f, 0.50f, 1.00f );
-idVec4	colorDkGrey	= idVec4( 0.25f, 0.25f, 0.25f, 1.00f );
+idVec4				  colorBlack   = idVec4( 0.00f, 0.00f, 0.00f, 1.00f );
+idVec4				  colorWhite   = idVec4( 1.00f, 1.00f, 1.00f, 1.00f );
+idVec4				  colorRed	   = idVec4( 1.00f, 0.00f, 0.00f, 1.00f );
+idVec4				  colorGreen   = idVec4( 0.00f, 1.00f, 0.00f, 1.00f );
+idVec4				  colorBlue	   = idVec4( 0.00f, 0.00f, 1.00f, 1.00f );
+idVec4				  colorYellow  = idVec4( 1.00f, 1.00f, 0.00f, 1.00f );
+idVec4				  colorMagenta = idVec4( 1.00f, 0.00f, 1.00f, 1.00f );
+idVec4				  colorCyan	   = idVec4( 0.00f, 1.00f, 1.00f, 1.00f );
+idVec4				  colorOrange  = idVec4( 1.00f, 0.50f, 0.00f, 1.00f );
+idVec4				  colorPurple  = idVec4( 0.60f, 0.00f, 0.60f, 1.00f );
+idVec4				  colorPink	   = idVec4( 0.73f, 0.40f, 0.48f, 1.00f );
+idVec4				  colorBrown   = idVec4( 0.40f, 0.35f, 0.08f, 1.00f );
+idVec4				  colorLtGrey  = idVec4( 0.75f, 0.75f, 0.75f, 1.00f );
+idVec4				  colorMdGrey  = idVec4( 0.50f, 0.50f, 0.50f, 1.00f );
+idVec4				  colorDkGrey  = idVec4( 0.25f, 0.25f, 0.25f, 1.00f );
 
-static dword colorMask[2] = { 255, 0 };
+static dword		  colorMask[2] = { 255, 0 };
 
 /*
 ================
@@ -156,12 +154,12 @@ dword PackColor( const idVec4& color )
 	dz = ColorFloatToByte( color.z );
 	dw = ColorFloatToByte( color.w );
 
-#if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
+#if defined( _WIN32 ) || defined( __linux__ ) || ( defined( MACOS_X ) && defined( __i386__ ) )
 	return ( dx << 0 ) | ( dy << 8 ) | ( dz << 16 ) | ( dw << 24 );
-#elif (defined(MACOS_X) && defined(__ppc__))
+#elif( defined( MACOS_X ) && defined( __ppc__ ) )
 	return ( dx << 24 ) | ( dy << 16 ) | ( dz << 8 ) | ( dw << 0 );
 #else
-#error OS define is required!
+	#error OS define is required!
 #endif
 }
 
@@ -172,18 +170,14 @@ UnpackColor
 */
 void UnpackColor( const dword color, idVec4& unpackedColor )
 {
-#if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
-	unpackedColor.Set( ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ) );
-#elif (defined(MACOS_X) && defined(__ppc__))
-	unpackedColor.Set( ( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ) );
+#if defined( _WIN32 ) || defined( __linux__ ) || ( defined( MACOS_X ) && defined( __i386__ ) )
+	unpackedColor.Set(
+		( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ) );
+#elif( defined( MACOS_X ) && defined( __ppc__ ) )
+	unpackedColor.Set(
+		( ( color >> 24 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ) );
 #else
-#error OS define is required!
+	#error OS define is required!
 #endif
 }
 
@@ -200,12 +194,12 @@ dword PackColor( const idVec3& color )
 	dy = ColorFloatToByte( color.y );
 	dz = ColorFloatToByte( color.z );
 
-#if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
+#if defined( _WIN32 ) || defined( __linux__ ) || ( defined( MACOS_X ) && defined( __i386__ ) )
 	return ( dx << 0 ) | ( dy << 8 ) | ( dz << 16 );
-#elif (defined(MACOS_X) && defined(__ppc__))
+#elif( defined( MACOS_X ) && defined( __ppc__ ) )
 	return ( dy << 16 ) | ( dz << 8 ) | ( dx << 0 );
 #else
-#error OS define is required!
+	#error OS define is required!
 #endif
 }
 
@@ -216,16 +210,12 @@ UnpackColor
 */
 void UnpackColor( const dword color, idVec3& unpackedColor )
 {
-#if defined(_WIN32) || defined(__linux__) || (defined(MACOS_X) && defined(__i386__))
-	unpackedColor.Set( ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ) );
-#elif (defined(MACOS_X) && defined(__ppc__))
-	unpackedColor.Set( ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ),
-					   ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ) );
+#if defined( _WIN32 ) || defined( __linux__ ) || ( defined( MACOS_X ) && defined( __i386__ ) )
+	unpackedColor.Set( ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ) );
+#elif( defined( MACOS_X ) && defined( __ppc__ ) )
+	unpackedColor.Set( ( ( color >> 16 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 8 ) & 255 ) * ( 1.0f / 255.0f ), ( ( color >> 0 ) & 255 ) * ( 1.0f / 255.0f ) );
 #else
-#error OS define is required!
+	#error OS define is required!
 #endif
 }
 
@@ -236,8 +226,8 @@ idLib::Error
 */
 void idLib::Error( const char* fmt, ... )
 {
-	va_list		argptr;
-	char		text[MAX_STRING_CHARS];
+	va_list argptr;
+	char	text[MAX_STRING_CHARS];
 
 	va_start( argptr, fmt );
 	idStr::vsnPrintf( text, sizeof( text ), fmt, argptr );
@@ -253,8 +243,8 @@ idLib::Warning
 */
 void idLib::Warning( const char* fmt, ... )
 {
-	va_list		argptr;
-	char		text[MAX_STRING_CHARS];
+	va_list argptr;
+	char	text[MAX_STRING_CHARS];
 
 	va_start( argptr, fmt );
 	idStr::vsnPrintf( text, sizeof( text ), fmt, argptr );
@@ -272,60 +262,60 @@ void idLib::Warning( const char* fmt, ... )
 */
 
 // can't just use function pointers, or dll linkage can mess up
-static short( *_BigShort )( short l );
-static short( *_LittleShort )( short l );
-static int	( *_BigLong )( int l );
-static int	( *_LittleLong )( int l );
-static float	( *_BigFloat )( float l );
-static float	( *_LittleFloat )( float l );
-static void	( *_BigRevBytes )( void* bp, int elsize, int elcount );
-static void	( *_LittleRevBytes )( void* bp, int elsize, int elcount );
+static short ( *_BigShort )( short l );
+static short ( *_LittleShort )( short l );
+static int ( *_BigLong )( int l );
+static int ( *_LittleLong )( int l );
+static float ( *_BigFloat )( float l );
+static float ( *_LittleFloat )( float l );
+static void ( *_BigRevBytes )( void* bp, int elsize, int elcount );
+static void ( *_LittleRevBytes )( void* bp, int elsize, int elcount );
 static void ( *_LittleBitField )( void* bp, int elsize );
-static void	( *_SixtetsForInt )( byte* out, int src );
-static int	( *_IntForSixtets )( byte* in );
+static void ( *_SixtetsForInt )( byte* out, int src );
+static int ( *_IntForSixtets )( byte* in );
 
-short	BigShort( short l )
+short BigShort( short l )
 {
 	return _BigShort( l );
 }
-short	LittleShort( short l )
+short LittleShort( short l )
 {
 	return _LittleShort( l );
 }
-int		BigLong( int l )
+int BigLong( int l )
 {
 	return _BigLong( l );
 }
-int		LittleLong( int l )
+int LittleLong( int l )
 {
 	return _LittleLong( l );
 }
-float	BigFloat( float l )
+float BigFloat( float l )
 {
 	return _BigFloat( l );
 }
-float	LittleFloat( float l )
+float LittleFloat( float l )
 {
 	return _LittleFloat( l );
 }
-void	BigRevBytes( void* bp, int elsize, int elcount )
+void BigRevBytes( void* bp, int elsize, int elcount )
 {
 	_BigRevBytes( bp, elsize, elcount );
 }
-void	LittleRevBytes( void* bp, int elsize, int elcount )
+void LittleRevBytes( void* bp, int elsize, int elcount )
 {
 	_LittleRevBytes( bp, elsize, elcount );
 }
-void	LittleBitField( void* bp, int elsize )
+void LittleBitField( void* bp, int elsize )
 {
 	_LittleBitField( bp, elsize );
 }
 
-void	SixtetsForInt( byte* out, int src )
+void SixtetsForInt( byte* out, int src )
 {
 	_SixtetsForInt( out, src );
 }
-int		IntForSixtets( byte* in )
+int IntForSixtets( byte* in )
 {
 	return _IntForSixtets( in );
 }
@@ -337,7 +327,7 @@ ShortSwap
 */
 short ShortSwap( short l )
 {
-	byte    b1, b2;
+	byte b1, b2;
 
 	b1 = l & 255;
 	b2 = ( l >> 8 ) & 255;
@@ -362,7 +352,7 @@ LongSwap
 */
 int LongSwap( int l )
 {
-	byte    b1, b2, b3, b4;
+	byte b1, b2, b3, b4;
 
 	b1 = l & 255;
 	b2 = ( l >> 8 ) & 255;
@@ -377,7 +367,7 @@ int LongSwap( int l )
 LongNoSwap
 ================
 */
-int	LongNoSwap( int l )
+int LongNoSwap( int l )
 {
 	return l;
 }
@@ -389,14 +379,12 @@ FloatSwap
 */
 float FloatSwap( float f )
 {
-	union
-	{
-		float	f;
-		byte	b[4];
+	union {
+		float f;
+		byte  b[4];
 	} dat1, dat2;
 
-
-	dat1.f = f;
+	dat1.f	  = f;
 	dat2.b[0] = dat1.b[3];
 	dat2.b[1] = dat1.b[2];
 	dat2.b[2] = dat1.b[1];
@@ -430,15 +418,13 @@ RESULTS
 ===================================================================== */
 void RevBytesSwap( void* bp, int elsize, int elcount )
 {
-	register unsigned char* p, *q;
+	register unsigned char *p, *q;
 
-	p = ( unsigned char* ) bp;
+	p = ( unsigned char* )bp;
 
-	if( elsize == 2 )
-	{
+	if( elsize == 2 ) {
 		q = p + 1;
-		while( elcount-- )
-		{
+		while( elcount-- ) {
 			*p ^= *q;
 			*q ^= *p;
 			*p ^= *q;
@@ -448,11 +434,9 @@ void RevBytesSwap( void* bp, int elsize, int elcount )
 		return;
 	}
 
-	while( elcount-- )
-	{
+	while( elcount-- ) {
 		q = p + elsize - 1;
-		while( p < q )
-		{
+		while( p < q ) {
 			*p ^= *q;
 			*q ^= *p;
 			*p ^= *q;
@@ -478,18 +462,16 @@ void RevBytesSwap( void* bp, int elsize, int elcount )
  ===================================================================== */
 void RevBitFieldSwap( void* bp, int elsize )
 {
-	int i;
-	unsigned char* p, t, v;
+	int			   i;
+	unsigned char *p, t, v;
 
 	LittleRevBytes( bp, elsize, 1 );
 
-	p = ( unsigned char* ) bp;
-	while( elsize-- )
-	{
+	p = ( unsigned char* )bp;
+	while( elsize-- ) {
 		v = *p;
 		t = 0;
-		for( i = 7; i; i-- )
-		{
+		for( i = 7; i; i-- ) {
 			t <<= 1;
 			v >>= 1;
 			t |= v & 1;
@@ -526,10 +508,10 @@ SixtetsForIntLittle
 void SixtetsForIntLittle( byte* out, int src )
 {
 	byte* b = ( byte* )&src;
-	out[0] = ( b[0] & 0xfc ) >> 2;
-	out[1] = ( ( b[0] & 0x3 ) << 4 ) + ( ( b[1] & 0xf0 ) >> 4 );
-	out[2] = ( ( b[1] & 0xf ) << 2 ) + ( ( b[2] & 0xc0 ) >> 6 );
-	out[3] = b[2] & 0x3f;
+	out[0]	= ( b[0] & 0xfc ) >> 2;
+	out[1]	= ( ( b[0] & 0x3 ) << 4 ) + ( ( b[1] & 0xf0 ) >> 4 );
+	out[2]	= ( ( b[1] & 0xf ) << 2 ) + ( ( b[2] & 0xc0 ) >> 6 );
+	out[3]	= b[2] & 0x3f;
 }
 
 /*
@@ -540,8 +522,7 @@ TTimo: untested - that's the version from initial base64 encode
 */
 void SixtetsForIntBig( byte* out, int src )
 {
-	for( int i = 0 ; i < 4 ; i++ )
-	{
+	for( int i = 0; i < 4; i++ ) {
 		out[i] = src & 0x3f;
 		src >>= 6;
 	}
@@ -554,8 +535,8 @@ IntForSixtetsLittle
 */
 int IntForSixtetsLittle( byte* in )
 {
-	int ret = 0;
-	byte* b = ( byte* )&ret;
+	int	  ret = 0;
+	byte* b	  = ( byte* )&ret;
 	b[0] |= in[0] << 2;
 	b[0] |= ( in[1] & 0x30 ) >> 4;
 	b[1] |= ( in[1] & 0xf ) << 4;
@@ -588,38 +569,35 @@ Swap_Init
 */
 void Swap_Init()
 {
-	byte	swaptest[2] = {1, 0};
+	byte swaptest[2] = { 1, 0 };
 
 	// set the byte swapping variables in a portable manner
-	if( *( short* )swaptest == 1 )
-	{
+	if( *( short* )swaptest == 1 ) {
 		// little endian ex: x86
-		_BigShort = ShortSwap;
-		_LittleShort = ShortNoSwap;
-		_BigLong = LongSwap;
-		_LittleLong = LongNoSwap;
-		_BigFloat = FloatSwap;
-		_LittleFloat = FloatNoSwap;
-		_BigRevBytes = RevBytesSwap;
+		_BigShort		= ShortSwap;
+		_LittleShort	= ShortNoSwap;
+		_BigLong		= LongSwap;
+		_LittleLong		= LongNoSwap;
+		_BigFloat		= FloatSwap;
+		_LittleFloat	= FloatNoSwap;
+		_BigRevBytes	= RevBytesSwap;
 		_LittleRevBytes = RevBytesNoSwap;
 		_LittleBitField = RevBitFieldNoSwap;
-		_SixtetsForInt = SixtetsForIntLittle;
-		_IntForSixtets = IntForSixtetsLittle;
-	}
-	else
-	{
+		_SixtetsForInt	= SixtetsForIntLittle;
+		_IntForSixtets	= IntForSixtetsLittle;
+	} else {
 		// big endian ex: ppc
-		_BigShort = ShortNoSwap;
-		_LittleShort = ShortSwap;
-		_BigLong = LongNoSwap;
-		_LittleLong = LongSwap;
-		_BigFloat = FloatNoSwap;
-		_LittleFloat = FloatSwap;
-		_BigRevBytes = RevBytesNoSwap;
+		_BigShort		= ShortNoSwap;
+		_LittleShort	= ShortSwap;
+		_BigLong		= LongNoSwap;
+		_LittleLong		= LongSwap;
+		_BigFloat		= FloatNoSwap;
+		_LittleFloat	= FloatSwap;
+		_BigRevBytes	= RevBytesNoSwap;
 		_LittleRevBytes = RevBytesSwap;
 		_LittleBitField = RevBitFieldSwap;
-		_SixtetsForInt = SixtetsForIntBig;
-		_IntForSixtets = IntForSixtetsBig;
+		_SixtetsForInt	= SixtetsForIntBig;
+		_IntForSixtets	= IntForSixtetsBig;
 	}
 }
 
@@ -630,7 +608,7 @@ Swap_IsBigEndian
 */
 bool Swap_IsBigEndian()
 {
-	byte	swaptest[2] = {1, 0};
+	byte swaptest[2] = { 1, 0 };
 	return *( short* )swaptest != 1;
 }
 

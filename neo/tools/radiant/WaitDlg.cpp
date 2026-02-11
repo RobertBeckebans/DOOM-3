@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -35,22 +36,21 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CWaitDlg dialog
 
-
-CWaitDlg::CWaitDlg( CWnd* pParent, const char* msg )
-	: CDialog( CWaitDlg::IDD, pParent )
+CWaitDlg::CWaitDlg( CWnd* pParent, const char* msg ) :
+	CDialog( CWaitDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CWaitDlg)
 	waitStr = msg;
 	//}}AFX_DATA_INIT
 	cancelPressed = false;
 	Create( CWaitDlg::IDD );
-	//g_pParentWnd->SetBusy(true);
+	// g_pParentWnd->SetBusy(true);
 }
 
 CWaitDlg::~CWaitDlg()
@@ -66,10 +66,9 @@ void CWaitDlg::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CWaitDlg, CDialog )
-	//{{AFX_MSG_MAP(CWaitDlg)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CWaitDlg)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,7 +77,7 @@ END_MESSAGE_MAP()
 BOOL CWaitDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	//GetDlgItem(IDC_WAITSTR)->SetWindowText(waitStr);
+	// GetDlgItem(IDC_WAITSTR)->SetWindowText(waitStr);
 	GetDlgItem( IDC_WAITSTR )->SetFocus();
 	UpdateData( FALSE );
 	ShowWindow( SW_SHOW );
@@ -88,22 +87,19 @@ BOOL CWaitDlg::OnInitDialog()
 
 	// TODO: Add extra initialization here
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CWaitDlg::SetText( const char* msg, bool append )
 {
-	if( append )
-	{
+	if( append ) {
 		waitStr = text;
 		waitStr += "\r\n";
 		waitStr += msg;
-	}
-	else
-	{
+	} else {
 		waitStr = msg;
-		text = msg;
+		text	= msg;
 	}
 	UpdateData( FALSE );
 	Invalidate();
@@ -116,12 +112,9 @@ void CWaitDlg::AllowCancel( bool enable )
 	// this shows or hides the Cancel button
 	CWnd* pCancelButton = GetDlgItem( IDCANCEL );
 	ASSERT( pCancelButton );
-	if( enable )
-	{
+	if( enable ) {
 		pCancelButton->ShowWindow( SW_NORMAL );
-	}
-	else
-	{
+	} else {
 		pCancelButton->ShowWindow( SW_HIDE );
 	}
 }
@@ -129,16 +122,14 @@ void CWaitDlg::AllowCancel( bool enable )
 bool CWaitDlg::CancelPressed()
 {
 #if _MSC_VER >= 1300
-	MSG* msg = AfxGetCurrentMessage();			// TODO Robert fix me!!
+	MSG* msg = AfxGetCurrentMessage(); // TODO Robert fix me!!
 #else
 	MSG* msg = &m_msgCur;
 #endif
 
-	while( ::PeekMessage( msg, NULL, NULL, NULL, PM_NOREMOVE ) )
-	{
+	while( ::PeekMessage( msg, NULL, NULL, NULL, PM_NOREMOVE ) ) {
 		// pump message
-		if( !AfxGetApp()->PumpMessage() )
-		{
+		if( !AfxGetApp()->PumpMessage() ) {
 		}
 	}
 

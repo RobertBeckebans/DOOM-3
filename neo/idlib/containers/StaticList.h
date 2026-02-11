@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -42,42 +43,41 @@ template<class type, int size>
 class idStaticList
 {
 public:
-
 	idStaticList();
 	idStaticList( const idStaticList<type, size>& other );
 	~idStaticList<type, size>();
 
-	void				Clear();										// marks the list as empty.  does not deallocate or intialize data.
-	int					Num() const;									// returns number of elements in list
-	int					Max() const;									// returns the maximum number of elements in the list
-	void				SetNum( int newnum );								// set number of elements in list
+	void		Clear();			  // marks the list as empty.  does not deallocate or intialize data.
+	int			Num() const;		  // returns number of elements in list
+	int			Max() const;		  // returns the maximum number of elements in the list
+	void		SetNum( int newnum ); // set number of elements in list
 
-	size_t				Allocated() const;							// returns total size of allocated memory
-	size_t				Size() const;									// returns total size of allocated memory including size of list type
-	size_t				MemoryUsed() const;							// returns size of the used elements in the list
+	size_t		Allocated() const;	// returns total size of allocated memory
+	size_t		Size() const;		// returns total size of allocated memory including size of list type
+	size_t		MemoryUsed() const; // returns size of the used elements in the list
 
-	const type& 		operator[]( int index ) const;
-	type& 				operator[]( int index );
+	const type& operator[]( int index ) const;
+	type&		operator[]( int index );
 
-	type* 				Ptr();										// returns a pointer to the list
-	const type* 		Ptr() const;									// returns a pointer to the list
-	type* 				Alloc();										// returns reference to a new data element at the end of the list.  returns NULL when full.
-	int					Append( const type& obj );							// append element
-	int					Append( const idStaticList<type, size>& other );		// append list
-	int					AddUnique( const type& obj );						// add unique element
-	int					Insert( const type& obj, int index );				// insert the element at the given index
-	int					FindIndex( const type& obj ) const;				// find the index for the given element
-	type* 				Find( type const& obj ) const;						// find pointer to the given element
-	int					FindNull() const;								// find the index for the first NULL pointer in the list
-	int					IndexOf( const type* obj ) const;					// returns the index for the pointer to an element in the list
-	bool				RemoveIndex( int index );							// remove the element at the given index
-	bool				Remove( const type& obj );							// remove the element
-	void				Swap( idStaticList<type, size>& other );				// swap the contents of the lists
-	void				DeleteContents( bool clear );						// delete the contents of the list
+	type*		Ptr();											 // returns a pointer to the list
+	const type* Ptr() const;									 // returns a pointer to the list
+	type*		Alloc();										 // returns reference to a new data element at the end of the list.  returns NULL when full.
+	int			Append( const type& obj );						 // append element
+	int			Append( const idStaticList<type, size>& other ); // append list
+	int			AddUnique( const type& obj );					 // add unique element
+	int			Insert( const type& obj, int index );			 // insert the element at the given index
+	int			FindIndex( const type& obj ) const;				 // find the index for the given element
+	type*		Find( type const& obj ) const;					 // find pointer to the given element
+	int			FindNull() const;								 // find the index for the first NULL pointer in the list
+	int			IndexOf( const type* obj ) const;				 // returns the index for the pointer to an element in the list
+	bool		RemoveIndex( int index );						 // remove the element at the given index
+	bool		Remove( const type& obj );						 // remove the element
+	void		Swap( idStaticList<type, size>& other );		 // swap the contents of the lists
+	void		DeleteContents( bool clear );					 // delete the contents of the list
 
 private:
-	int					num;
-	type 				list[ size ];
+	int	 num;
+	type list[size];
 };
 
 /*
@@ -122,7 +122,7 @@ Sets the number of elements in the list to 0.  Assumes that type automatically h
 template<class type, int size>
 ID_INLINE void idStaticList<type, size>::Clear()
 {
-	num	= 0;
+	num = 0;
 }
 
 /*
@@ -142,18 +142,14 @@ ID_INLINE void idStaticList<type, size>::DeleteContents( bool clear )
 {
 	int i;
 
-	for( i = 0; i < size; i++ )
-	{
-		delete list[ i ];
-		list[ i ] = NULL;
+	for( i = 0; i < size; i++ ) {
+		delete list[i];
+		list[i] = NULL;
 	}
 
-	if( clear )
-	{
+	if( clear ) {
 		Clear();
-	}
-	else
-	{
+	} else {
 		memset( list, 0, sizeof( list ) );
 	}
 }
@@ -214,7 +210,7 @@ idStaticList<type,size>::Num
 template<class type, int size>
 ID_INLINE size_t idStaticList<type, size>::MemoryUsed() const
 {
-	return num * sizeof( list[ 0 ] );
+	return num * sizeof( list[0] );
 }
 
 /*
@@ -246,7 +242,7 @@ ID_INLINE const type& idStaticList<type, size>::operator[]( int index ) const
 	assert( index >= 0 );
 	assert( index < num );
 
-	return list[ index ];
+	return list[index];
 }
 
 /*
@@ -263,7 +259,7 @@ ID_INLINE type& idStaticList<type, size>::operator[]( int index )
 	assert( index >= 0 );
 	assert( index < num );
 
-	return list[ index ];
+	return list[index];
 }
 
 /*
@@ -280,7 +276,7 @@ FIXME: Create an iterator template for this kind of thing.
 template<class type, int size>
 ID_INLINE type* idStaticList<type, size>::Ptr()
 {
-	return &list[ 0 ];
+	return &list[0];
 }
 
 /*
@@ -297,7 +293,7 @@ FIXME: Create an iterator template for this kind of thing.
 template<class type, int size>
 ID_INLINE const type* idStaticList<type, size>::Ptr() const
 {
-	return &list[ 0 ];
+	return &list[0];
 }
 
 /*
@@ -310,12 +306,9 @@ Returns a pointer to a new data element at the end of the list.
 template<class type, int size>
 ID_INLINE type* idStaticList<type, size>::Alloc()
 {
-	if( num >= size )
-	{
-		return NULL;
-	}
+	if( num >= size ) { return NULL; }
 
-	return &list[ num++ ];
+	return &list[num++];
 }
 
 /*
@@ -331,16 +324,14 @@ template<class type, int size>
 ID_INLINE int idStaticList<type, size>::Append( type const& obj )
 {
 	assert( num < size );
-	if( num < size )
-	{
-		list[ num ] = obj;
+	if( num < size ) {
+		list[num] = obj;
 		num++;
 		return num - 1;
 	}
 
 	return -1;
 }
-
 
 /*
 ================
@@ -358,23 +349,16 @@ ID_INLINE int idStaticList<type, size>::Insert( type const& obj, int index )
 	int i;
 
 	assert( num < size );
-	if( num >= size )
-	{
-		return -1;
-	}
+	if( num >= size ) { return -1; }
 
 	assert( index >= 0 );
-	if( index < 0 )
-	{
+	if( index < 0 ) {
 		index = 0;
-	}
-	else if( index > num )
-	{
+	} else if( index > num ) {
 		index = num;
 	}
 
-	for( i = num; i > index; --i )
-	{
+	for( i = num; i > index; --i ) {
 		list[i] = list[i - 1];
 	}
 
@@ -398,12 +382,8 @@ ID_INLINE int idStaticList<type, size>::Append( const idStaticList<type, size>& 
 	int i;
 	int n = other.Num();
 
-	if( num + n > size )
-	{
-		n = size - num;
-	}
-	for( i = 0; i < n; i++ )
-	{
+	if( num + n > size ) { n = size - num; }
+	for( i = 0; i < n; i++ ) {
 		list[i + num] = other.list[i];
 	}
 	num += n;
@@ -423,10 +403,7 @@ ID_INLINE int idStaticList<type, size>::AddUnique( type const& obj )
 	int index;
 
 	index = FindIndex( obj );
-	if( index < 0 )
-	{
-		index = Append( obj );
-	}
+	if( index < 0 ) { index = Append( obj ); }
 
 	return index;
 }
@@ -443,12 +420,8 @@ ID_INLINE int idStaticList<type, size>::FindIndex( type const& obj ) const
 {
 	int i;
 
-	for( i = 0; i < num; i++ )
-	{
-		if( list[ i ] == obj )
-		{
-			return i;
-		}
+	for( i = 0; i < num; i++ ) {
+		if( list[i] == obj ) { return i; }
 	}
 
 	// Not found
@@ -468,10 +441,7 @@ ID_INLINE type* idStaticList<type, size>::Find( type const& obj ) const
 	int i;
 
 	i = FindIndex( obj );
-	if( i >= 0 )
-	{
-		return &list[ i ];
-	}
+	if( i >= 0 ) { return &list[i]; }
 
 	return NULL;
 }
@@ -491,12 +461,8 @@ ID_INLINE int idStaticList<type, size>::FindNull() const
 {
 	int i;
 
-	for( i = 0; i < num; i++ )
-	{
-		if( list[ i ] == NULL )
-		{
-			return i;
-		}
+	for( i = 0; i < num; i++ ) {
+		if( list[i] == NULL ) { return i; }
 	}
 
 	// Not found
@@ -543,15 +509,11 @@ ID_INLINE bool idStaticList<type, size>::RemoveIndex( int index )
 	assert( index >= 0 );
 	assert( index < num );
 
-	if( ( index < 0 ) || ( index >= num ) )
-	{
-		return false;
-	}
+	if( ( index < 0 ) || ( index >= num ) ) { return false; }
 
 	num--;
-	for( i = index; i < num; i++ )
-	{
-		list[ i ] = list[ i + 1 ];
+	for( i = index; i < num; i++ ) {
+		list[i] = list[i + 1];
 	}
 
 	return true;
@@ -572,10 +534,7 @@ ID_INLINE bool idStaticList<type, size>::Remove( type const& obj )
 	int index;
 
 	index = FindIndex( obj );
-	if( index >= 0 )
-	{
-		return RemoveIndex( index );
-	}
+	if( index >= 0 ) { return RemoveIndex( index ); }
 
 	return false;
 }
@@ -591,8 +550,8 @@ template<class type, int size>
 ID_INLINE void idStaticList<type, size>::Swap( idStaticList<type, size>& other )
 {
 	idStaticList<type, size> temp = *this;
-	*this = other;
-	other = temp;
+	*this						  = other;
+	other						  = temp;
 }
 
 #endif /* !__STATICLIST_H__ */

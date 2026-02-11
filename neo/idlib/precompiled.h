@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,23 +38,23 @@ If you have questions concerning this license or the applicable additional terms
 
 	#ifdef _WIN32
 
-		#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// prevent auto literal to string conversion
+		#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS // prevent auto literal to string conversion
 
 		#ifndef _D3SDK
 			#ifndef GAME_DLL
 
-				#define WINVER				0x501
+				#define WINVER 0x501
 
 				#if 0
 					// Dedicated server hits unresolved when trying to link this way now. Likely because of the 2010/Win7 transition? - TTimo
 
-					#ifdef	ID_DEDICATED
+					#ifdef ID_DEDICATED
 						// dedicated sets windows version here
-						#define	_WIN32_WINNT WINVER
-						#define	WIN32_LEAN_AND_MEAN
+						#define _WIN32_WINNT WINVER
+						#define WIN32_LEAN_AND_MEAN
 					#else
 						// non-dedicated includes MFC and sets windows version here
-						#include "../tools/comafx/StdAfx.h"			// this will go away when MFC goes away
+						#include "../tools/comafx/StdAfx.h" // this will go away when MFC goes away
 					#endif
 
 				#else
@@ -66,25 +67,25 @@ If you have questions concerning this license or the applicable additional terms
 				#include <mmsystem.h>
 				#include <mmreg.h>
 
-				#define DIRECTINPUT_VERSION  0x0800			// was 0x0700 with the old mssdk
-				#define DIRECTSOUND_VERSION  0x0800
+				#define DIRECTINPUT_VERSION 0x0800 // was 0x0700 with the old mssdk
+				#define DIRECTSOUND_VERSION 0x0800
 
 				#include <dsound.h>
 				#include <dinput.h>
 
 			#endif /* !GAME_DLL */
-		#endif /* !_D3SDK */
+		#endif	   /* !_D3SDK */
 
-		#pragma warning(disable : 4100)				// unreferenced formal parameter
-		#pragma warning(disable : 4244)				// conversion to smaller type, possible loss of data
-		#pragma warning(disable : 4714)				// function marked as __forceinline not inlined
-		#pragma warning(disable : 4996)				// unsafe string operations
-		#pragma warning(disable : 4458)				// RB declaration of 'value' hides class member
-		#pragma warning(disable : 4189)				// RB local variable is initialized but not referenced
+		#pragma warning( disable : 4100 ) // unreferenced formal parameter
+		#pragma warning( disable : 4244 ) // conversion to smaller type, possible loss of data
+		#pragma warning( disable : 4714 ) // function marked as __forceinline not inlined
+		#pragma warning( disable : 4996 ) // unsafe string operations
+		#pragma warning( disable : 4458 ) // RB declaration of 'value' hides class member
+		#pragma warning( disable : 4189 ) // RB local variable is initialized but not referenced
 
-		#include <malloc.h>							// no malloc.h on mac or unix
-		#include <windows.h>						// for qgl.h
-		#undef FindText								// stupid namespace poluting Microsoft monkeys
+		#include <malloc.h>	 // no malloc.h on mac or unix
+		#include <windows.h> // for qgl.h
+		#undef FindText		 // stupid namespace poluting Microsoft monkeys
 
 	#endif /* _WIN32 */
 
@@ -135,10 +136,10 @@ If you have questions concerning this license or the applicable additional terms
 	#include "../framework/DeclAF.h"
 	#include "../framework/DeclPDA.h"
 
-	// We have expression parsing and evaluation code in multiple places:
-	// materials, sound shaders, and guis. We should unify them.
-	const int MAX_EXPRESSION_OPS = 4096;
-	const int MAX_EXPRESSION_REGISTERS = 4096;
+// We have expression parsing and evaluation code in multiple places:
+// materials, sound shaders, and guis. We should unify them.
+const int MAX_EXPRESSION_OPS	   = 4096;
+const int MAX_EXPRESSION_REGISTERS = 4096;
 
 	// renderer
 	#include "../renderer/qgl.h"
@@ -167,7 +168,7 @@ If you have questions concerning this license or the applicable additional terms
 	#include "../tools/compilers/aas/AASFileManager.h"
 
 	// game
-	#if defined(_D3XP)
+	#if defined( _D3XP )
 		#include "../d3xp/Game.h"
 	#else
 		#include "../game/Game.h"
@@ -179,7 +180,7 @@ If you have questions concerning this license or the applicable additional terms
 
 		#ifdef GAME_DLL
 
-			#if defined(_D3XP)
+			#if defined( _D3XP )
 				#include "../d3xp/Game_local.h"
 			#else
 				#include "../game/Game_local.h"
@@ -214,6 +215,6 @@ If you have questions concerning this license or the applicable additional terms
 
 	//-----------------------------------------------------
 
-#endif	/* __cplusplus */
+#endif /* __cplusplus */
 
 #endif /* !__PRECOMPILED_H__ */

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
-#define MAX_POLYTOPE_PLANES		6
+#define MAX_POLYTOPE_PLANES 6
 
 /*
 =====================
@@ -43,38 +44,32 @@ The positive sides of the planes will be visible.
 */
 srfTriangles_t* R_PolytopeSurface( int numPlanes, const idPlane* planes, idWinding** windings )
 {
-	int i, j;
+	int				i, j;
 	srfTriangles_t* tri;
-	idFixedWinding planeWindings[MAX_POLYTOPE_PLANES];
-	int numVerts, numIndexes;
+	idFixedWinding	planeWindings[MAX_POLYTOPE_PLANES];
+	int				numVerts, numIndexes;
 
-	if( numPlanes > MAX_POLYTOPE_PLANES )
-	{
+	if( numPlanes > MAX_POLYTOPE_PLANES ) {
 		common->Error( "R_PolytopeSurface: more than %d planes", MAX_POLYTOPE_PLANES );
 	}
 
-	numVerts = 0;
+	numVerts   = 0;
 	numIndexes = 0;
-	for( i = 0; i < numPlanes; i++ )
-	{
-		const idPlane& plane = planes[i];
-		idFixedWinding& w = planeWindings[i];
+	for( i = 0; i < numPlanes; i++ ) {
+		const idPlane&	plane = planes[i];
+		idFixedWinding& w	  = planeWindings[i];
 
 		w.BaseForPlane( plane );
-		for( j = 0; j < numPlanes; j++ )
-		{
+		for( j = 0; j < numPlanes; j++ ) {
 			const idPlane& plane2 = planes[j];
-			if( j == i )
-			{
+			if( j == i ) {
 				continue;
 			}
-			if( !w.ClipInPlace( -plane2, ON_EPSILON ) )
-			{
+			if( !w.ClipInPlace( -plane2, ON_EPSILON ) ) {
 				break;
 			}
 		}
-		if( w.GetNumPoints() <= 2 )
-		{
+		if( w.GetNumPoints() <= 2 ) {
 			continue;
 		}
 		numVerts += w.GetNumPoints();
@@ -87,32 +82,27 @@ srfTriangles_t* R_PolytopeSurface( int numPlanes, const idPlane* planes, idWindi
 	R_AllocStaticTriSurfIndexes( tri, numIndexes );
 
 	// copy the data from the windings
-	for( i = 0; i < numPlanes; i++ )
-	{
+	for( i = 0; i < numPlanes; i++ ) {
 		idFixedWinding& w = planeWindings[i];
-		if( !w.GetNumPoints() )
-		{
+		if( !w.GetNumPoints() ) {
 			continue;
 		}
-		for( j = 0 ; j < w.GetNumPoints() ; j++ )
-		{
-			tri->verts[tri->numVerts + j ].Clear();
-			tri->verts[tri->numVerts + j ].xyz = w[j].ToVec3();
+		for( j = 0; j < w.GetNumPoints(); j++ ) {
+			tri->verts[tri->numVerts + j].Clear();
+			tri->verts[tri->numVerts + j].xyz = w[j].ToVec3();
 		}
 
-		for( j = 1 ; j < w.GetNumPoints() - 1 ; j++ )
-		{
-			tri->indexes[ tri->numIndexes + 0 ] = tri->numVerts;
-			tri->indexes[ tri->numIndexes + 1 ] = tri->numVerts + j;
-			tri->indexes[ tri->numIndexes + 2 ] = tri->numVerts + j + 1;
+		for( j = 1; j < w.GetNumPoints() - 1; j++ ) {
+			tri->indexes[tri->numIndexes + 0] = tri->numVerts;
+			tri->indexes[tri->numIndexes + 1] = tri->numVerts + j;
+			tri->indexes[tri->numIndexes + 2] = tri->numVerts + j + 1;
 			tri->numIndexes += 3;
 		}
 		tri->numVerts += w.GetNumPoints();
 
 		// optionally save the winding
-		if( windings )
-		{
-			windings[i] = new idWinding( w.GetNumPoints() );
+		if( windings ) {
+			windings[i]	 = new idWinding( w.GetNumPoints() );
 			*windings[i] = w;
 		}
 	}

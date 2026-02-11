@@ -20,8 +20,7 @@ REGISTER_MAIN_END
 int main()
 {
 	::MaxApplZone();
-	for( int i = 1; i <= 10; i++ )
-	{
+	for( int i = 1; i <= 10; i++ ) {
 		::MoreMasters();
 	}
 	() exec_commands();

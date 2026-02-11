@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,20 +37,18 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CPatchDensityDlg dialog
 
-
-CPatchDensityDlg::CPatchDensityDlg( CWnd* pParent /*=NULL*/ )
-	: CDialog( CPatchDensityDlg::IDD, pParent )
+CPatchDensityDlg::CPatchDensityDlg( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CPatchDensityDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CPatchDensityDlg)
 	//}}AFX_DATA_INIT
 }
-
 
 void CPatchDensityDlg::DoDataExchange( CDataExchange* pDX )
 {
@@ -60,24 +59,22 @@ void CPatchDensityDlg::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CPatchDensityDlg, CDialog )
-	//{{AFX_MSG_MAP(CPatchDensityDlg)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPatchDensityDlg)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPatchDensityDlg message handlers
 
-int g_nXLat[] = {3, 5, 7, 9, 11, 13, 15};
+int	 g_nXLat[] = { 3, 5, 7, 9, 11, 13, 15 };
 
 void CPatchDensityDlg::OnOK()
 {
-	int nWidth = m_wndWidth.GetCurSel();
+	int nWidth	= m_wndWidth.GetCurSel();
 	int nHeight = m_wndHeight.GetCurSel();
 
-	if( nWidth >= 0 && nWidth <= 6 && nHeight >= 0 && nHeight <= 6 )
-	{
+	if( nWidth >= 0 && nWidth <= 6 && nHeight >= 0 && nHeight <= 6 ) {
 		Patch_GenericMesh( g_nXLat[nWidth], g_nXLat[nHeight], g_pParentWnd->ActiveXY()->GetViewType() );
 		Sys_UpdateWindows( W_ALL );
 	}
@@ -91,6 +88,6 @@ BOOL CPatchDensityDlg::OnInitDialog()
 
 	m_wndWidth.SetCurSel( 0 );
 	m_wndHeight.SetCurSel( 0 );
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }

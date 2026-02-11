@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -31,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "Unzip.h"
 
-#define	MAX_PRINT_MSG		4096
+#define MAX_PRINT_MSG 4096
 
 /*
 =================
@@ -40,46 +41,38 @@ FS_WriteFloatString
 */
 int FS_WriteFloatString( char* buf, const char* fmt, va_list argPtr )
 {
-	long i;
+	long		  i;
 	unsigned long u;
-	double f;
-	char* str;
-	int index;
-	idStr tmp, format;
+	double		  f;
+	char*		  str;
+	int			  index;
+	idStr		  tmp, format;
 
 	index = 0;
 
-	while( *fmt )
-	{
-		switch( *fmt )
-		{
+	while( *fmt ) {
+		switch( *fmt ) {
 			case '%':
 				format = "";
 				format += *fmt++;
-				while( ( *fmt >= '0' && *fmt <= '9' ) ||
-						*fmt == '.' || *fmt == '-' || *fmt == '+' || *fmt == '#' )
-				{
+				while( ( *fmt >= '0' && *fmt <= '9' ) || *fmt == '.' || *fmt == '-' || *fmt == '+' || *fmt == '#' ) {
 					format += *fmt++;
 				}
 				format += *fmt;
-				switch( *fmt )
-				{
+				switch( *fmt ) {
 					case 'f':
 					case 'e':
 					case 'E':
 					case 'g':
 					case 'G':
 						f = va_arg( argPtr, double );
-						if( format.Length() <= 2 )
-						{
+						if( format.Length() <= 2 ) {
 							// high precision floating point number without trailing zeros
 							sprintf( tmp, "%1.10f", f );
 							tmp.StripTrailing( '0' );
 							tmp.StripTrailing( '.' );
 							index += sprintf( buf + index, "%s", tmp.c_str() );
-						}
-						else
-						{
+						} else {
 							index += sprintf( buf + index, format.c_str(), f );
 						}
 						break;
@@ -106,7 +99,7 @@ int FS_WriteFloatString( char* buf, const char* fmt, va_list argPtr )
 						break;
 					case 'c':
 						i = va_arg( argPtr, long );
-						index += sprintf( buf + index, format.c_str(), ( char ) i );
+						index += sprintf( buf + index, format.c_str(), ( char )i );
 						break;
 					case 's':
 						str = va_arg( argPtr, char* );
@@ -123,8 +116,7 @@ int FS_WriteFloatString( char* buf, const char* fmt, va_list argPtr )
 				break;
 			case '\\':
 				fmt++;
-				switch( *fmt )
-				{
+				switch( *fmt ) {
 					case 't':
 						index += sprintf( buf + index, "\t" );
 						break;
@@ -278,8 +270,8 @@ idFile::Printf
 */
 int idFile::Printf( const char* fmt, ... )
 {
-	char buf[MAX_PRINT_MSG];
-	int length;
+	char	buf[MAX_PRINT_MSG];
+	int		length;
 	va_list argptr;
 
 	va_start( argptr, fmt );
@@ -287,7 +279,7 @@ int idFile::Printf( const char* fmt, ... )
 	va_end( argptr );
 
 	// so notepad formats the lines correctly
-	idStr	work( buf );
+	idStr work( buf );
 	work.Replace( "\n", "\r\n" );
 
 	return Write( work.c_str(), work.Length() );
@@ -301,7 +293,7 @@ idFile::VPrintf
 int idFile::VPrintf( const char* fmt, va_list args )
 {
 	char buf[MAX_PRINT_MSG];
-	int length;
+	int	 length;
 
 	length = idStr::vsnPrintf( buf, MAX_PRINT_MSG - 1, fmt, args );
 	return Write( buf, length );
@@ -314,8 +306,8 @@ idFile::WriteFloatString
 */
 int idFile::WriteFloatString( const char* fmt, ... )
 {
-	char buf[MAX_PRINT_MSG];
-	int len;
+	char	buf[MAX_PRINT_MSG];
+	int		len;
 	va_list argPtr;
 
 	va_start( argPtr, fmt );
@@ -333,7 +325,7 @@ int idFile::WriteFloatString( const char* fmt, ... )
 int idFile::ReadInt( int& value )
 {
 	int result = Read( &value, sizeof( value ) );
-	value = LittleLong( value );
+	value	   = LittleLong( value );
 	return result;
 }
 
@@ -345,7 +337,7 @@ int idFile::ReadInt( int& value )
 int idFile::ReadUnsignedInt( unsigned int& value )
 {
 	int result = Read( &value, sizeof( value ) );
-	value = LittleLong( value );
+	value	   = LittleLong( value );
 	return result;
 }
 
@@ -357,7 +349,7 @@ int idFile::ReadUnsignedInt( unsigned int& value )
 int idFile::ReadShort( short& value )
 {
 	int result = Read( &value, sizeof( value ) );
-	value = LittleShort( value );
+	value	   = LittleShort( value );
 	return result;
 }
 
@@ -369,7 +361,7 @@ int idFile::ReadShort( short& value )
 int idFile::ReadUnsignedShort( unsigned short& value )
 {
 	int result = Read( &value, sizeof( value ) );
-	value = LittleShort( value );
+	value	   = LittleShort( value );
 	return result;
 }
 
@@ -401,7 +393,7 @@ int idFile::ReadUnsignedChar( unsigned char& value )
 int idFile::ReadFloat( float& value )
 {
 	int result = Read( &value, sizeof( value ) );
-	value = LittleFloat( value );
+	value	   = LittleFloat( value );
 	return result;
 }
 
@@ -413,8 +405,8 @@ int idFile::ReadFloat( float& value )
 int idFile::ReadBool( bool& value )
 {
 	unsigned char c;
-	int result = ReadUnsignedChar( c );
-	value = c ? true : false;
+	int			  result = ReadUnsignedChar( c );
+	value				 = c ? true : false;
 	return result;
 }
 
@@ -429,10 +421,9 @@ int idFile::ReadString( idStr& string )
 	int result = 0;
 
 	ReadInt( len );
-	if( len >= 0 )
-	{
+	if( len >= 0 ) {
 		string.Fill( ' ', len );
-		result = Read( &string[ 0 ], len );
+		result = Read( &string[0], len );
 	}
 	return result;
 }
@@ -665,7 +656,6 @@ idFile_Memory
 =================================================================================
 */
 
-
 /*
 =================
 idFile_Memory::idFile_Memory
@@ -673,15 +663,15 @@ idFile_Memory::idFile_Memory
 */
 idFile_Memory::idFile_Memory()
 {
-	name = "*unknown*";
-	maxSize = 0;
-	fileSize = 0;
-	allocated = 0;
+	name		= "*unknown*";
+	maxSize		= 0;
+	fileSize	= 0;
+	allocated	= 0;
 	granularity = 16384;
 
-	mode = ( 1 << FS_WRITE );
+	mode	= ( 1 << FS_WRITE );
 	filePtr = NULL;
-	curPtr = NULL;
+	curPtr	= NULL;
 }
 
 /*
@@ -691,15 +681,15 @@ idFile_Memory::idFile_Memory
 */
 idFile_Memory::idFile_Memory( const char* name )
 {
-	this->name = name;
-	maxSize = 0;
-	fileSize = 0;
-	allocated = 0;
+	this->name	= name;
+	maxSize		= 0;
+	fileSize	= 0;
+	allocated	= 0;
 	granularity = 16384;
 
-	mode = ( 1 << FS_WRITE );
+	mode	= ( 1 << FS_WRITE );
 	filePtr = NULL;
-	curPtr = NULL;
+	curPtr	= NULL;
 }
 
 /*
@@ -709,15 +699,15 @@ idFile_Memory::idFile_Memory
 */
 idFile_Memory::idFile_Memory( const char* name, char* data, int length )
 {
-	this->name = name;
-	maxSize = length;
-	fileSize = 0;
-	allocated = length;
+	this->name	= name;
+	maxSize		= length;
+	fileSize	= 0;
+	allocated	= length;
 	granularity = 16384;
 
-	mode = ( 1 << FS_WRITE );
+	mode	= ( 1 << FS_WRITE );
 	filePtr = data;
-	curPtr = data;
+	curPtr	= data;
 }
 
 /*
@@ -727,15 +717,15 @@ idFile_Memory::idFile_Memory
 */
 idFile_Memory::idFile_Memory( const char* name, const char* data, int length )
 {
-	this->name = name;
-	maxSize = 0;
-	fileSize = length;
-	allocated = 0;
+	this->name	= name;
+	maxSize		= 0;
+	fileSize	= length;
+	allocated	= 0;
 	granularity = 16384;
 
-	mode = ( 1 << FS_READ );
+	mode	= ( 1 << FS_READ );
 	filePtr = const_cast<char*>( data );
-	curPtr = const_cast<char*>( data );
+	curPtr	= const_cast<char*>( data );
 }
 
 /*
@@ -745,8 +735,7 @@ idFile_Memory::~idFile_Memory
 */
 idFile_Memory::~idFile_Memory()
 {
-	if( filePtr && allocated > 0 && maxSize == 0 )
-	{
+	if( filePtr && allocated > 0 && maxSize == 0 ) {
 		Mem_Free( filePtr );
 	}
 }
@@ -758,15 +747,12 @@ idFile_Memory::Read
 */
 int idFile_Memory::Read( void* buffer, int len )
 {
-
-	if( !( mode & ( 1 << FS_READ ) ) )
-	{
+	if( !( mode & ( 1 << FS_READ ) ) ) {
 		common->FatalError( "idFile_Memory::Read: %s not opened in read mode", name.c_str() );
 		return 0;
 	}
 
-	if( curPtr + len > filePtr + fileSize )
-	{
+	if( curPtr + len > filePtr + fileSize ) {
 		len = filePtr + fileSize - curPtr;
 	}
 	memcpy( buffer, curPtr, len );
@@ -781,31 +767,25 @@ idFile_Memory::Write
 */
 int idFile_Memory::Write( const void* buffer, int len )
 {
-
-	if( !( mode & ( 1 << FS_WRITE ) ) )
-	{
+	if( !( mode & ( 1 << FS_WRITE ) ) ) {
 		common->FatalError( "idFile_Memory::Write: %s not opened in write mode", name.c_str() );
 		return 0;
 	}
 
 	int alloc = curPtr + len + 1 - filePtr - allocated; // need room for len+1
-	if( alloc > 0 )
-	{
-		if( maxSize != 0 )
-		{
+	if( alloc > 0 ) {
+		if( maxSize != 0 ) {
 			common->Error( "idFile_Memory::Write: exceeded maximum size %d", maxSize );
 			return 0;
 		}
-		int extra = granularity * ( 1 + alloc / granularity );
-		char* newPtr = ( char* ) Mem_Alloc( allocated + extra );
-		if( allocated )
-		{
+		int	  extra	 = granularity * ( 1 + alloc / granularity );
+		char* newPtr = ( char* )Mem_Alloc( allocated + extra );
+		if( allocated ) {
 			memcpy( newPtr, filePtr, allocated );
 		}
 		allocated += extra;
 		curPtr = newPtr + ( curPtr - filePtr );
-		if( filePtr )
-		{
+		if( filePtr ) {
 			Mem_Free( filePtr );
 		}
 		filePtr = newPtr;
@@ -813,7 +793,7 @@ int idFile_Memory::Write( const void* buffer, int len )
 	memcpy( curPtr, buffer, len );
 	curPtr += len;
 	fileSize += len;
-	filePtr[ fileSize ] = 0; // len + 1
+	filePtr[fileSize] = 0; // len + 1
 	return len;
 }
 
@@ -874,37 +854,29 @@ idFile_Memory::Seek
 */
 int idFile_Memory::Seek( long offset, fsOrigin_t origin )
 {
-
-	switch( origin )
-	{
-		case FS_SEEK_CUR:
-		{
+	switch( origin ) {
+		case FS_SEEK_CUR: {
 			curPtr += offset;
 			break;
 		}
-		case FS_SEEK_END:
-		{
+		case FS_SEEK_END: {
 			curPtr = filePtr + fileSize - offset;
 			break;
 		}
-		case FS_SEEK_SET:
-		{
+		case FS_SEEK_SET: {
 			curPtr = filePtr + offset;
 			break;
 		}
-		default:
-		{
+		default: {
 			common->FatalError( "idFile_Memory::Seek: bad origin for %s\n", name.c_str() );
 			return -1;
 		}
 	}
-	if( curPtr < filePtr )
-	{
+	if( curPtr < filePtr ) {
 		curPtr = filePtr;
 		return -1;
 	}
-	if( curPtr > filePtr + fileSize )
-	{
+	if( curPtr > filePtr + fileSize ) {
 		curPtr = filePtr + fileSize;
 		return -1;
 	}
@@ -929,17 +901,14 @@ idFile_Memory::Clear
 */
 void idFile_Memory::Clear( bool freeMemory )
 {
-	fileSize = 0;
+	fileSize	= 0;
 	granularity = 16384;
-	if( freeMemory )
-	{
+	if( freeMemory ) {
 		allocated = 0;
 		Mem_Free( filePtr );
 		filePtr = NULL;
-		curPtr = NULL;
-	}
-	else
-	{
+		curPtr	= NULL;
+	} else {
 		curPtr = filePtr;
 	}
 }
@@ -951,16 +920,15 @@ idFile_Memory::SetData
 */
 void idFile_Memory::SetData( const char* data, int length )
 {
-	maxSize = 0;
-	fileSize = length;
-	allocated = 0;
+	maxSize		= 0;
+	fileSize	= length;
+	allocated	= 0;
 	granularity = 16384;
 
-	mode = ( 1 << FS_READ );
+	mode	= ( 1 << FS_READ );
 	filePtr = const_cast<char*>( data );
-	curPtr = const_cast<char*>( data );
+	curPtr	= const_cast<char*>( data );
 }
-
 
 /*
 =================================================================================
@@ -977,8 +945,8 @@ idFile_BitMsg::idFile_BitMsg
 */
 idFile_BitMsg::idFile_BitMsg( idBitMsg& msg )
 {
-	name = "*unknown*";
-	mode = ( 1 << FS_WRITE );
+	name	  = "*unknown*";
+	mode	  = ( 1 << FS_WRITE );
 	this->msg = &msg;
 }
 
@@ -989,8 +957,8 @@ idFile_BitMsg::idFile_BitMsg
 */
 idFile_BitMsg::idFile_BitMsg( const idBitMsg& msg )
 {
-	name = "*unknown*";
-	mode = ( 1 << FS_READ );
+	name	  = "*unknown*";
+	mode	  = ( 1 << FS_READ );
 	this->msg = const_cast<idBitMsg*>( &msg );
 }
 
@@ -1010,9 +978,7 @@ idFile_BitMsg::Read
 */
 int idFile_BitMsg::Read( void* buffer, int len )
 {
-
-	if( !( mode & ( 1 << FS_READ ) ) )
-	{
+	if( !( mode & ( 1 << FS_READ ) ) ) {
 		common->FatalError( "idFile_BitMsg::Read: %s not opened in read mode", name.c_str() );
 		return 0;
 	}
@@ -1027,9 +993,7 @@ idFile_BitMsg::Write
 */
 int idFile_BitMsg::Write( const void* buffer, int len )
 {
-
-	if( !( mode & ( 1 << FS_WRITE ) ) )
-	{
+	if( !( mode & ( 1 << FS_WRITE ) ) ) {
 		common->FatalError( "idFile_Memory::Write: %s not opened in write mode", name.c_str() );
 		return 0;
 	}
@@ -1065,12 +1029,9 @@ idFile_BitMsg::Tell
 */
 int idFile_BitMsg::Tell()
 {
-	if( mode & FS_READ )
-	{
+	if( mode & FS_READ ) {
 		return msg->GetReadCount();
-	}
-	else
-	{
+	} else {
 		return msg->GetSize();
 	}
 }
@@ -1105,7 +1066,6 @@ int idFile_BitMsg::Seek( long offset, fsOrigin_t origin )
 	return -1;
 }
 
-
 /*
 =================================================================================
 
@@ -1121,10 +1081,10 @@ idFile_Permanent::idFile_Permanent
 */
 idFile_Permanent::idFile_Permanent()
 {
-	name = "invalid";
-	o = NULL;
-	mode = 0;
-	fileSize = 0;
+	name	   = "invalid";
+	o		   = NULL;
+	mode	   = 0;
+	fileSize   = 0;
 	handleSync = false;
 }
 
@@ -1135,8 +1095,7 @@ idFile_Permanent::~idFile_Permanent
 */
 idFile_Permanent::~idFile_Permanent()
 {
-	if( o )
-	{
+	if( o ) {
 		fclose( o );
 	}
 }
@@ -1150,47 +1109,39 @@ Properly handles partial reads
 */
 int idFile_Permanent::Read( void* buffer, int len )
 {
-	int		block, remaining;
-	int		read;
-	byte* 	buf;
-	int		tries;
+	int	  block, remaining;
+	int	  read;
+	byte* buf;
+	int	  tries;
 
-	if( !( mode & ( 1 << FS_READ ) ) )
-	{
+	if( !( mode & ( 1 << FS_READ ) ) ) {
 		common->FatalError( "idFile_Permanent::Read: %s not opened in read mode", name.c_str() );
 		return 0;
 	}
 
-	if( !o )
-	{
+	if( !o ) {
 		return 0;
 	}
 
 	buf = ( byte* )buffer;
 
 	remaining = len;
-	tries = 0;
-	while( remaining )
-	{
+	tries	  = 0;
+	while( remaining ) {
 		block = remaining;
-		read = fread( buf, 1, block, o );
-		if( read == 0 )
-		{
+		read  = fread( buf, 1, block, o );
+		if( read == 0 ) {
 			// we might have been trying to read from a CD, which
 			// sometimes returns a 0 read on windows
-			if( !tries )
-			{
+			if( !tries ) {
 				tries = 1;
-			}
-			else
-			{
+			} else {
 				fileSystem->AddToReadCount( len - remaining );
 				return len - remaining;
 			}
 		}
 
-		if( read == -1 )
-		{
+		if( read == -1 ) {
 			common->FatalError( "idFile_Permanent::Read: -1 bytes read from %s", name.c_str() );
 		}
 
@@ -1210,45 +1161,37 @@ Properly handles partial writes
 */
 int idFile_Permanent::Write( const void* buffer, int len )
 {
-	int		block, remaining;
-	int		written;
-	byte* 	buf;
-	int		tries;
+	int	  block, remaining;
+	int	  written;
+	byte* buf;
+	int	  tries;
 
-	if( !( mode & ( 1 << FS_WRITE ) ) )
-	{
+	if( !( mode & ( 1 << FS_WRITE ) ) ) {
 		common->FatalError( "idFile_Permanent::Write: %s not opened in write mode", name.c_str() );
 		return 0;
 	}
 
-	if( !o )
-	{
+	if( !o ) {
 		return 0;
 	}
 
 	buf = ( byte* )buffer;
 
 	remaining = len;
-	tries = 0;
-	while( remaining )
-	{
-		block = remaining;
+	tries	  = 0;
+	while( remaining ) {
+		block	= remaining;
 		written = fwrite( buf, 1, block, o );
-		if( written == 0 )
-		{
-			if( !tries )
-			{
+		if( written == 0 ) {
+			if( !tries ) {
 				tries = 1;
-			}
-			else
-			{
+			} else {
 				common->Printf( "idFile_Permanent::Write: 0 bytes written to %s\n", name.c_str() );
 				return 0;
 			}
 		}
 
-		if( written == -1 )
-		{
+		if( written == -1 ) {
 			common->Printf( "idFile_Permanent::Write: -1 bytes written to %s\n", name.c_str() );
 			return 0;
 		}
@@ -1257,8 +1200,7 @@ int idFile_Permanent::Write( const void* buffer, int len )
 		buf += written;
 		fileSize += written;
 	}
-	if( handleSync )
-	{
+	if( handleSync ) {
 		fflush( o );
 	}
 	return len;
@@ -1325,25 +1267,20 @@ int idFile_Permanent::Seek( long offset, fsOrigin_t origin )
 {
 	int _origin;
 
-	switch( origin )
-	{
-		case FS_SEEK_CUR:
-		{
+	switch( origin ) {
+		case FS_SEEK_CUR: {
 			_origin = SEEK_CUR;
 			break;
 		}
-		case FS_SEEK_END:
-		{
+		case FS_SEEK_END: {
 			_origin = SEEK_END;
 			break;
 		}
-		case FS_SEEK_SET:
-		{
+		case FS_SEEK_SET: {
 			_origin = SEEK_SET;
 			break;
 		}
-		default:
-		{
+		default: {
 			_origin = SEEK_CUR;
 			common->FatalError( "idFile_Permanent::Seek: bad origin for %s\n", name.c_str() );
 			break;
@@ -1352,7 +1289,6 @@ int idFile_Permanent::Seek( long offset, fsOrigin_t origin )
 
 	return fseek( o, offset, _origin );
 }
-
 
 /*
 =================================================================================
@@ -1369,9 +1305,9 @@ idFile_InZip::idFile_InZip
 */
 idFile_InZip::idFile_InZip()
 {
-	name = "invalid";
+	name	   = "invalid";
 	zipFilePos = 0;
-	fileSize = 0;
+	fileSize   = 0;
 	memset( &z, 0, sizeof( z ) );
 }
 
@@ -1468,45 +1404,37 @@ idFile_InZip::Seek
   returns zero on success and -1 on failure
 =================
 */
-#define ZIP_SEEK_BUF_SIZE	(1<<15)
+#define ZIP_SEEK_BUF_SIZE ( 1 << 15 )
 
 int idFile_InZip::Seek( long offset, fsOrigin_t origin )
 {
-	int res, i;
+	int	  res, i;
 	char* buf;
 
-	switch( origin )
-	{
-		case FS_SEEK_END:
-		{
+	switch( origin ) {
+		case FS_SEEK_END: {
 			offset = fileSize - offset;
 		}
-		case FS_SEEK_SET:
-		{
+		case FS_SEEK_SET: {
 			// set the file position in the zip file (also sets the current file info)
 			unzSetCurrentFileInfoPosition( z, zipFilePos );
 			unzOpenCurrentFile( z );
-			if( offset <= 0 )
-			{
+			if( offset <= 0 ) {
 				return 0;
 			}
 		}
-		case FS_SEEK_CUR:
-		{
-			buf = ( char* ) _alloca16( ZIP_SEEK_BUF_SIZE );
-			for( i = 0; i < ( offset - ZIP_SEEK_BUF_SIZE ); i += ZIP_SEEK_BUF_SIZE )
-			{
+		case FS_SEEK_CUR: {
+			buf = ( char* )_alloca16( ZIP_SEEK_BUF_SIZE );
+			for( i = 0; i < ( offset - ZIP_SEEK_BUF_SIZE ); i += ZIP_SEEK_BUF_SIZE ) {
 				res = unzReadCurrentFile( z, buf, ZIP_SEEK_BUF_SIZE );
-				if( res < ZIP_SEEK_BUF_SIZE )
-				{
+				if( res < ZIP_SEEK_BUF_SIZE ) {
 					return -1;
 				}
 			}
 			res = i + unzReadCurrentFile( z, buf, offset - i );
 			return ( res == offset ) ? 0 : -1;
 		}
-		default:
-		{
+		default: {
 			common->FatalError( "idFile_InZip::Seek: bad origin for %s\n", name.c_str() );
 			break;
 		}

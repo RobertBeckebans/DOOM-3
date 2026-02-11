@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -28,7 +29,6 @@ If you have questions concerning this license or the applicable additional terms
 
 #ifndef __MSGCHANNEL_H__
 #define __MSGCHANNEL_H__
-
 
 /*
 ===============================================================================
@@ -45,189 +45,157 @@ If you have questions concerning this license or the applicable additional terms
 ===============================================================================
 */
 
-#define	MAX_MESSAGE_SIZE				16384		// max length of a message, which may
+#define MAX_MESSAGE_SIZE			   16384 // max length of a message, which may
 // be fragmented into multiple packets
-#define CONNECTIONLESS_MESSAGE_ID		-1			// id for connectionless messages
-#define CONNECTIONLESS_MESSAGE_ID_MASK	0x7FFF		// value to mask away connectionless message id
+#define CONNECTIONLESS_MESSAGE_ID	   -1	  // id for connectionless messages
+#define CONNECTIONLESS_MESSAGE_ID_MASK 0x7FFF // value to mask away connectionless message id
 
-#define MAX_MSG_QUEUE_SIZE				16384		// must be a power of 2
-
+#define MAX_MSG_QUEUE_SIZE			   16384 // must be a power of 2
 
 class idMsgQueue
 {
 public:
 	idMsgQueue();
 
-	void			Init( int sequence );
+	void Init( int sequence );
 
-	bool			Add( const byte* data, const int size );
-	bool			Get( byte* data, int& size );
-	int				GetTotalSize() const;
-	int				GetSpaceLeft() const;
-	int				GetFirst() const
-	{
-		return first;
-	}
-	int				GetLast() const
-	{
-		return last;
-	}
-	void			CopyToBuffer( byte* buf ) const;
+	bool Add( const byte* data, const int size );
+	bool Get( byte* data, int& size );
+	int	 GetTotalSize() const;
+	int	 GetSpaceLeft() const;
+	int	 GetFirst() const { return first; }
+	int	 GetLast() const { return last; }
+	void CopyToBuffer( byte* buf ) const;
 
 private:
-	byte			buffer[MAX_MSG_QUEUE_SIZE];
-	int				first;			// sequence number of first message in queue
-	int				last;			// sequence number of last message in queue
-	int				startIndex;		// index pointing to the first byte of the first message
-	int				endIndex;		// index pointing to the first byte after the last message
+	byte buffer[MAX_MSG_QUEUE_SIZE];
+	int	 first;		 // sequence number of first message in queue
+	int	 last;		 // sequence number of last message in queue
+	int	 startIndex; // index pointing to the first byte of the first message
+	int	 endIndex;	 // index pointing to the first byte after the last message
 
-	void			WriteByte( byte b );
-	byte			ReadByte();
-	void			WriteShort( int s );
-	int				ReadShort();
-	void			WriteLong( int l );
-	int				ReadLong();
-	void			WriteData( const byte* data, const int size );
-	void			ReadData( byte* data, const int size );
+	void WriteByte( byte b );
+	byte ReadByte();
+	void WriteShort( int s );
+	int	 ReadShort();
+	void WriteLong( int l );
+	int	 ReadLong();
+	void WriteData( const byte* data, const int size );
+	void ReadData( byte* data, const int size );
 };
-
 
 class idMsgChannel
 {
 public:
 	idMsgChannel();
 
-	void			Init( const netadr_t adr, const int id );
-	void			Shutdown();
-	void			ResetRate();
+	void	 Init( const netadr_t adr, const int id );
+	void	 Shutdown();
+	void	 ResetRate();
 
 	// Sets the maximum outgoing rate.
-	void			SetMaxOutgoingRate( int rate )
-	{
-		maxRate = rate;
-	}
+	void	 SetMaxOutgoingRate( int rate ) { maxRate = rate; }
 
 	// Gets the maximum outgoing rate.
-	int				GetMaxOutgoingRate()
-	{
-		return maxRate;
-	}
+	int		 GetMaxOutgoingRate() { return maxRate; }
 
 	// Returns the address of the entity at the other side of the channel.
-	netadr_t		GetRemoteAddress() const
-	{
-		return remoteAddress;
-	}
+	netadr_t GetRemoteAddress() const { return remoteAddress; }
 
 	// Returns the average outgoing rate over the last second.
-	int				GetOutgoingRate() const
-	{
-		return outgoingRateBytes;
-	}
+	int		 GetOutgoingRate() const { return outgoingRateBytes; }
 
 	// Returns the average incoming rate over the last second.
-	int				GetIncomingRate() const
-	{
-		return incomingRateBytes;
-	}
+	int		 GetIncomingRate() const { return incomingRateBytes; }
 
 	// Returns the average outgoing compression ratio over the last second.
-	float			GetOutgoingCompression() const
-	{
-		return outgoingCompression;
-	}
+	float	 GetOutgoingCompression() const { return outgoingCompression; }
 
 	// Returns the average incoming compression ratio over the last second.
-	float			GetIncomingCompression() const
-	{
-		return incomingCompression;
-	}
+	float	 GetIncomingCompression() const { return incomingCompression; }
 
 	// Returns the average incoming packet loss over the last 5 seconds.
-	float			GetIncomingPacketLoss() const;
+	float	 GetIncomingPacketLoss() const;
 
 	// Returns true if the channel is ready to send new data based on the maximum rate.
-	bool			ReadyToSend( const int time ) const;
+	bool	 ReadyToSend( const int time ) const;
 
 	// Sends an unreliable message, in order and without duplicates.
-	int				SendMessage( idPort& port, const int time, const idBitMsg& msg );
+	int		 SendMessage( idPort& port, const int time, const idBitMsg& msg );
 
 	// Sends the next fragment if the last message was too large to send at once.
-	void			SendNextFragment( idPort& port, const int time );
+	void	 SendNextFragment( idPort& port, const int time );
 
 	// Returns true if there are unsent fragments left.
-	bool			UnsentFragmentsLeft() const
-	{
-		return unsentFragments;
-	}
+	bool	 UnsentFragmentsLeft() const { return unsentFragments; }
 
 	// Processes the incoming message. Returns true when a complete message
 	// is ready for further processing. In that case the read pointer of msg
 	// points to the first byte ready for reading, and sequence is set to
 	// the sequence number of the message.
-	bool			Process( const netadr_t from, int time, idBitMsg& msg, int& sequence );
+	bool	 Process( const netadr_t from, int time, idBitMsg& msg, int& sequence );
 
 	// Sends a reliable message, in order and without duplicates.
-	bool			SendReliableMessage( const idBitMsg& msg );
+	bool	 SendReliableMessage( const idBitMsg& msg );
 
 	// Returns true if a new reliable message is available and stores the message.
-	bool			GetReliableMessage( idBitMsg& msg );
+	bool	 GetReliableMessage( idBitMsg& msg );
 
 	// Removes any pending outgoing or incoming reliable messages.
-	void			ClearReliableMessages();
+	void	 ClearReliableMessages();
 
 private:
-	netadr_t		remoteAddress;	// address of remote host
-	int				id;				// our identification used instead of port number
-	int				maxRate;		// maximum number of bytes that may go out per second
-	idCompressor* 	compressor;		// compressor used for data compression
+	netadr_t	  remoteAddress; // address of remote host
+	int			  id;			 // our identification used instead of port number
+	int			  maxRate;		 // maximum number of bytes that may go out per second
+	idCompressor* compressor;	 // compressor used for data compression
 
 	// variables to control the outgoing rate
-	int				lastSendTime;	// last time data was sent out
-	int				lastDataBytes;	// bytes left to send at last send time
+	int			  lastSendTime;	 // last time data was sent out
+	int			  lastDataBytes; // bytes left to send at last send time
 
 	// variables to keep track of the rate
-	int				outgoingRateTime;
-	int				outgoingRateBytes;
-	int				incomingRateTime;
-	int				incomingRateBytes;
+	int			  outgoingRateTime;
+	int			  outgoingRateBytes;
+	int			  incomingRateTime;
+	int			  incomingRateBytes;
 
 	// variables to keep track of the compression ratio
-	float			outgoingCompression;
-	float			incomingCompression;
+	float		  outgoingCompression;
+	float		  incomingCompression;
 
 	// variables to keep track of the incoming packet loss
-	float			incomingReceivedPackets;
-	float			incomingDroppedPackets;
-	int				incomingPacketLossTime;
+	float		  incomingReceivedPackets;
+	float		  incomingDroppedPackets;
+	int			  incomingPacketLossTime;
 
 	// sequencing variables
-	int				outgoingSequence;
-	int				incomingSequence;
+	int			  outgoingSequence;
+	int			  incomingSequence;
 
 	// outgoing fragment buffer
-	bool			unsentFragments;
-	int				unsentFragmentStart;
-	byte			unsentBuffer[MAX_MESSAGE_SIZE];
-	idBitMsg		unsentMsg;
+	bool		  unsentFragments;
+	int			  unsentFragmentStart;
+	byte		  unsentBuffer[MAX_MESSAGE_SIZE];
+	idBitMsg	  unsentMsg;
 
 	// incoming fragment assembly buffer
-	int				fragmentSequence;
-	int				fragmentLength;
-	byte			fragmentBuffer[MAX_MESSAGE_SIZE];
+	int			  fragmentSequence;
+	int			  fragmentLength;
+	byte		  fragmentBuffer[MAX_MESSAGE_SIZE];
 
 	// reliable messages
-	idMsgQueue		reliableSend;
-	idMsgQueue		reliableReceive;
+	idMsgQueue	  reliableSend;
+	idMsgQueue	  reliableReceive;
 
 private:
-	void			WriteMessageData( idBitMsg& out, const idBitMsg& msg );
-	bool			ReadMessageData( idBitMsg& out, const idBitMsg& msg );
+	void WriteMessageData( idBitMsg& out, const idBitMsg& msg );
+	bool ReadMessageData( idBitMsg& out, const idBitMsg& msg );
 
-	void			UpdateOutgoingRate( const int time, const int size );
-	void			UpdateIncomingRate( const int time, const int size );
+	void UpdateOutgoingRate( const int time, const int size );
+	void UpdateIncomingRate( const int time, const int size );
 
-	void			UpdatePacketLoss( const int time, const int numReceived, const int numDropped );
+	void UpdatePacketLoss( const int time, const int numReceived, const int numDropped );
 };
 
 #endif /* !__MSGCHANNEL_H__ */

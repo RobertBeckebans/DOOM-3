@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,18 +37,26 @@ input
 ==========
 */
 
-void Sys_InitInput() { }
+void Sys_InitInput()
+{
+}
 
-void Sys_ShutdownInput() { }
+void Sys_ShutdownInput()
+{
+}
 
-void Sys_GrabMouseCursor( bool ) { }
+void Sys_GrabMouseCursor( bool )
+{
+}
 
 int Sys_PollMouseInputEvents()
 {
 	return 0;
 }
 
-void Sys_EndMouseInputEvents() { }
+void Sys_EndMouseInputEvents()
+{
+}
 
 int Sys_ReturnMouseInputEvent( const int n, int& action, int& value )
 {
@@ -59,7 +68,9 @@ int Sys_PollKeyboardInputEvents()
 	return 0;
 }
 
-void Sys_EndKeyboardInputEvents() { }
+void Sys_EndKeyboardInputEvents()
+{
+}
 
 int Sys_ReturnKeyboardInputEvent( const int n, int& action, bool& state )
 {
@@ -88,27 +99,36 @@ GL
 ==========
 */
 
-void GLimp_EnableLogging( bool enable ) { }
+void GLimp_EnableLogging( bool enable )
+{
+}
 
 bool GLimp_Init( glimpParms_t a )
 {
 	return true;
 }
 
-void GLimp_SetGamma( unsigned short red[256],
-					 unsigned short green[256],
-					 unsigned short blue[256] ) { }
+void GLimp_SetGamma( unsigned short red[256], unsigned short green[256], unsigned short blue[256] )
+{
+}
 
-void GLimp_Shutdown() { }
+void GLimp_Shutdown()
+{
+}
 
-void GLimp_SwapBuffers() { }
+void GLimp_SwapBuffers()
+{
+}
 
-void GLimp_DeactivateContext() { }
+void GLimp_DeactivateContext()
+{
+}
 
-void GLimp_ActivateContext() { }
+void GLimp_ActivateContext()
+{
+}
 
 bool GLimp_SetScreenParms( glimpParms_t parms )
 {
 	return true;
 }
-

@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -34,54 +35,39 @@ class rvGEWorkspace;
 class rvGESelectionMgr
 {
 public:
-
-	enum EHitTest
-	{
-		HT_NONE,
-		HT_SELECT,
-		HT_MOVE,
-		HT_SIZE_TOPLEFT,
-		HT_SIZE_TOP,
-		HT_SIZE_TOPRIGHT,
-		HT_SIZE_RIGHT,
-		HT_SIZE_BOTTOMRIGHT,
-		HT_SIZE_BOTTOM,
-		HT_SIZE_BOTTOMLEFT,
-		HT_SIZE_LEFT
-	};
+	enum EHitTest { HT_NONE, HT_SELECT, HT_MOVE, HT_SIZE_TOPLEFT, HT_SIZE_TOP, HT_SIZE_TOPRIGHT, HT_SIZE_RIGHT, HT_SIZE_BOTTOMRIGHT, HT_SIZE_BOTTOM, HT_SIZE_BOTTOMLEFT, HT_SIZE_LEFT };
 
 	rvGESelectionMgr();
 
-	void			SetWorkspace( rvGEWorkspace* workspace );
+	void		 SetWorkspace( rvGEWorkspace* workspace );
 
-	void			Set( idWindow* );
-	void			Add( idWindow* window, bool expand = true );
-	void			Remove( idWindow* );
-	void			Clear();
+	void		 Set( idWindow* );
+	void		 Add( idWindow* window, bool expand = true );
+	void		 Remove( idWindow* );
+	void		 Clear();
 
-	int				Num();
+	int			 Num();
 
-	void			Render();
+	void		 Render();
 
-	EHitTest		HitTest( float x, float y );
+	EHitTest	 HitTest( float x, float y );
 
-	bool			IsSelected( idWindow* window );
-	bool			IsExpression();
+	bool		 IsSelected( idWindow* window );
+	bool		 IsExpression();
 
-	idRectangle&	GetRect();
-	idWindow*		GetBottomMost();
+	idRectangle& GetRect();
+	idWindow*	 GetBottomMost();
 
-	idWindow*&		operator[]( int index );
+	idWindow*&	 operator[]( int index );
 
 protected:
+	void			  UpdateRectangle();
+	void			  UpdateExpression();
 
-	void		UpdateRectangle();
-	void		UpdateExpression();
-
-	idList<idWindow*>	mSelections;
-	idRectangle			mRect;
-	rvGEWorkspace*		mWorkspace;
-	bool				mExpression;
+	idList<idWindow*> mSelections;
+	idRectangle		  mRect;
+	rvGEWorkspace*	  mWorkspace;
+	bool			  mExpression;
 };
 
 ID_INLINE int rvGESelectionMgr::Num()
@@ -94,7 +80,7 @@ ID_INLINE idWindow*& rvGESelectionMgr::operator[]( int index )
 	assert( index >= 0 );
 	assert( index < mSelections.Num() );
 
-	return mSelections[ index ];
+	return mSelections[index];
 }
 
 ID_INLINE void rvGESelectionMgr::SetWorkspace( rvGEWorkspace* workspace )

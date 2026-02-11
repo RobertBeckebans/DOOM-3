@@ -28,16 +28,14 @@
 
 typedef void ( *curl_llist_dtor )( void*, void* );
 
-typedef struct _curl_llist_element
-{
+typedef struct _curl_llist_element {
 	void* ptr;
 
 	struct _curl_llist_element* prev;
 	struct _curl_llist_element* next;
 } curl_llist_element;
 
-typedef struct _curl_llist
-{
+typedef struct _curl_llist {
 	curl_llist_element* head;
 	curl_llist_element* tail;
 

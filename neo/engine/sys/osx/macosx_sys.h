@@ -24,8 +24,7 @@ void Sys_AnnoyingBanner();
 bool Sys_Hide();
 bool Sys_Unhide();
 
-typedef struct
-{
+typedef struct {
 	CGDirectDisplayID     display;
 	CGTableCount          tableSize;
 	CGGammaValue* 	red;
@@ -33,8 +32,7 @@ typedef struct
 	CGGammaValue* 	green;
 } glwgamma_t;
 
-typedef struct
-{
+typedef struct {
 	CGDirectDisplayID	display;
 	NSDictionary*		desktopMode;
 	NSDictionary*		gameMode;

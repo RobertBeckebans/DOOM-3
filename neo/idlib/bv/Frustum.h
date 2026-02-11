@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -42,109 +43,108 @@ class idFrustum
 public:
 	idFrustum();
 
-	void			SetOrigin( const idVec3& origin );
-	void			SetAxis( const idMat3& axis );
-	void			SetSize( float dNear, float dFar, float dLeft, float dUp );
-	void			SetPyramid( float dNear, float dFar );
-	void			MoveNearDistance( float dNear );
-	void			MoveFarDistance( float dFar );
+	void		  SetOrigin( const idVec3& origin );
+	void		  SetAxis( const idMat3& axis );
+	void		  SetSize( float dNear, float dFar, float dLeft, float dUp );
+	void		  SetPyramid( float dNear, float dFar );
+	void		  MoveNearDistance( float dNear );
+	void		  MoveFarDistance( float dFar );
 
-	const idVec3& 	GetOrigin() const;						// returns frustum origin
-	const idMat3& 	GetAxis() const;							// returns frustum orientation
-	idVec3			GetCenter() const;						// returns center of frustum
+	const idVec3& GetOrigin() const; // returns frustum origin
+	const idMat3& GetAxis() const;	 // returns frustum orientation
+	idVec3		  GetCenter() const; // returns center of frustum
 
-	bool			IsValid() const;							// returns true if the frustum is valid
-	float			GetNearDistance() const;					// returns distance to near plane
-	float			GetFarDistance() const;					// returns distance to far plane
-	float			GetLeft() const;							// returns left vector length
-	float			GetUp() const;							// returns up vector length
+	bool		  IsValid() const;		   // returns true if the frustum is valid
+	float		  GetNearDistance() const; // returns distance to near plane
+	float		  GetFarDistance() const;  // returns distance to far plane
+	float		  GetLeft() const;		   // returns left vector length
+	float		  GetUp() const;		   // returns up vector length
 
-	idFrustum		Expand( const float d ) const;					// returns frustum expanded in all directions with the given value
-	idFrustum& 		ExpandSelf( const float d );					// expands frustum in all directions with the given value
-	idFrustum		Translate( const idVec3& translation ) const;	// returns translated frustum
-	idFrustum& 		TranslateSelf( const idVec3& translation );		// translates frustum
-	idFrustum		Rotate( const idMat3& rotation ) const;			// returns rotated frustum
-	idFrustum& 		RotateSelf( const idMat3& rotation );			// rotates frustum
+	idFrustum	  Expand( const float d ) const;				// returns frustum expanded in all directions with the given value
+	idFrustum&	  ExpandSelf( const float d );					// expands frustum in all directions with the given value
+	idFrustum	  Translate( const idVec3& translation ) const; // returns translated frustum
+	idFrustum&	  TranslateSelf( const idVec3& translation );	// translates frustum
+	idFrustum	  Rotate( const idMat3& rotation ) const;		// returns rotated frustum
+	idFrustum&	  RotateSelf( const idMat3& rotation );			// rotates frustum
 
-	float			PlaneDistance( const idPlane& plane ) const;
-	int				PlaneSide( const idPlane& plane, const float epsilon = ON_EPSILON ) const;
+	float		  PlaneDistance( const idPlane& plane ) const;
+	int			  PlaneSide( const idPlane& plane, const float epsilon = ON_EPSILON ) const;
 
 	// fast culling but might not cull everything outside the frustum
-	bool			CullPoint( const idVec3& point ) const;
-	bool			CullBounds( const idBounds& bounds ) const;
-	bool			CullBox( const idBox& box ) const;
-	bool			CullSphere( const idSphere& sphere ) const;
-	bool			CullFrustum( const idFrustum& frustum ) const;
-	bool			CullWinding( const class idWinding& winding ) const;
+	bool		  CullPoint( const idVec3& point ) const;
+	bool		  CullBounds( const idBounds& bounds ) const;
+	bool		  CullBox( const idBox& box ) const;
+	bool		  CullSphere( const idSphere& sphere ) const;
+	bool		  CullFrustum( const idFrustum& frustum ) const;
+	bool		  CullWinding( const class idWinding& winding ) const;
 
 	// exact intersection tests
-	bool			ContainsPoint( const idVec3& point ) const;
-	bool			IntersectsBounds( const idBounds& bounds ) const;
-	bool			IntersectsBox( const idBox& box ) const;
-	bool			IntersectsSphere( const idSphere& sphere ) const;
-	bool			IntersectsFrustum( const idFrustum& frustum ) const;
-	bool			IntersectsWinding( const idWinding& winding ) const;
-	bool			LineIntersection( const idVec3& start, const idVec3& end ) const;
-	bool			RayIntersection( const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
+	bool		  ContainsPoint( const idVec3& point ) const;
+	bool		  IntersectsBounds( const idBounds& bounds ) const;
+	bool		  IntersectsBox( const idBox& box ) const;
+	bool		  IntersectsSphere( const idSphere& sphere ) const;
+	bool		  IntersectsFrustum( const idFrustum& frustum ) const;
+	bool		  IntersectsWinding( const idWinding& winding ) const;
+	bool		  LineIntersection( const idVec3& start, const idVec3& end ) const;
+	bool		  RayIntersection( const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
 
 	// returns true if the projection origin is far enough away from the bounding volume to create a valid frustum
-	bool			FromProjection( const idBounds& bounds, const idVec3& projectionOrigin, const float dFar );
-	bool			FromProjection( const idBox& box, const idVec3& projectionOrigin, const float dFar );
-	bool			FromProjection( const idSphere& sphere, const idVec3& projectionOrigin, const float dFar );
+	bool		  FromProjection( const idBounds& bounds, const idVec3& projectionOrigin, const float dFar );
+	bool		  FromProjection( const idBox& box, const idVec3& projectionOrigin, const float dFar );
+	bool		  FromProjection( const idSphere& sphere, const idVec3& projectionOrigin, const float dFar );
 
 	// moves the far plane so it extends just beyond the bounding volume
-	bool			ConstrainToBounds( const idBounds& bounds );
-	bool			ConstrainToBox( const idBox& box );
-	bool			ConstrainToSphere( const idSphere& sphere );
-	bool			ConstrainToFrustum( const idFrustum& frustum );
+	bool		  ConstrainToBounds( const idBounds& bounds );
+	bool		  ConstrainToBox( const idBox& box );
+	bool		  ConstrainToSphere( const idSphere& sphere );
+	bool		  ConstrainToFrustum( const idFrustum& frustum );
 
-	void			ToPlanes( idPlane planes[6] ) const;			// planes point outwards
-	void			ToPoints( idVec3 points[8] ) const;				// 8 corners of the frustum
+	void		  ToPlanes( idPlane planes[6] ) const; // planes point outwards
+	void		  ToPoints( idVec3 points[8] ) const;  // 8 corners of the frustum
 
 	// calculates the projection of this frustum onto the given axis
-	void			AxisProjection( const idVec3& dir, float& min, float& max ) const;
-	void			AxisProjection( const idMat3& ax, idBounds& bounds ) const;
+	void		  AxisProjection( const idVec3& dir, float& min, float& max ) const;
+	void		  AxisProjection( const idMat3& ax, idBounds& bounds ) const;
 
 	// calculates the bounds for the projection in this frustum
-	bool			ProjectionBounds( const idBounds& bounds, idBounds& projectionBounds ) const;
-	bool			ProjectionBounds( const idBox& box, idBounds& projectionBounds ) const;
-	bool			ProjectionBounds( const idSphere& sphere, idBounds& projectionBounds ) const;
-	bool			ProjectionBounds( const idFrustum& frustum, idBounds& projectionBounds ) const;
-	bool			ProjectionBounds( const idWinding& winding, idBounds& projectionBounds ) const;
+	bool		  ProjectionBounds( const idBounds& bounds, idBounds& projectionBounds ) const;
+	bool		  ProjectionBounds( const idBox& box, idBounds& projectionBounds ) const;
+	bool		  ProjectionBounds( const idSphere& sphere, idBounds& projectionBounds ) const;
+	bool		  ProjectionBounds( const idFrustum& frustum, idBounds& projectionBounds ) const;
+	bool		  ProjectionBounds( const idWinding& winding, idBounds& projectionBounds ) const;
 
 	// calculates the bounds for the projection in this frustum of the given frustum clipped to the given box
-	bool			ClippedProjectionBounds( const idFrustum& frustum, const idBox& clipBox, idBounds& projectionBounds ) const;
+	bool		  ClippedProjectionBounds( const idFrustum& frustum, const idBox& clipBox, idBounds& projectionBounds ) const;
 
 private:
-	idVec3			origin;		// frustum origin
-	idMat3			axis;		// frustum orientation
-	float			dNear;		// distance of near plane, dNear >= 0.0f
-	float			dFar;		// distance of far plane, dFar > dNear
-	float			dLeft;		// half the width at the far plane
-	float			dUp;		// half the height at the far plane
-	float			invFar;		// 1.0f / dFar
+	idVec3 origin; // frustum origin
+	idMat3 axis;   // frustum orientation
+	float  dNear;  // distance of near plane, dNear >= 0.0f
+	float  dFar;   // distance of far plane, dFar > dNear
+	float  dLeft;  // half the width at the far plane
+	float  dUp;	   // half the height at the far plane
+	float  invFar; // 1.0f / dFar
 
 private:
-	bool			CullLocalBox( const idVec3& localOrigin, const idVec3& extents, const idMat3& localAxis ) const;
-	bool			CullLocalFrustum( const idFrustum& localFrustum, const idVec3 indexPoints[8], const idVec3 cornerVecs[4] ) const;
-	bool			CullLocalWinding( const idVec3* points, const int numPoints, int* pointCull ) const;
-	bool			BoundsCullLocalFrustum( const idBounds& bounds, const idFrustum& localFrustum, const idVec3 indexPoints[8], const idVec3 cornerVecs[4] ) const;
-	bool			LocalLineIntersection( const idVec3& start, const idVec3& end ) const;
-	bool			LocalRayIntersection( const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
-	bool			LocalFrustumIntersectsFrustum( const idVec3 points[8], const bool testFirstSide ) const;
-	bool			LocalFrustumIntersectsBounds( const idVec3 points[8], const idBounds& bounds ) const;
-	void			ToClippedPoints( const float fractions[4], idVec3 points[8] ) const;
-	void			ToIndexPoints( idVec3 indexPoints[8] ) const;
-	void			ToIndexPointsAndCornerVecs( idVec3 indexPoints[8], idVec3 cornerVecs[4] ) const;
-	void			AxisProjection( const idVec3 indexPoints[8], const idVec3 cornerVecs[4], const idVec3& dir, float& min, float& max ) const;
-	void			AddLocalLineToProjectionBoundsSetCull( const idVec3& start, const idVec3& end, int& startCull, int& endCull, idBounds& bounds ) const;
-	void			AddLocalLineToProjectionBoundsUseCull( const idVec3& start, const idVec3& end, int startCull, int endCull, idBounds& bounds ) const;
-	bool			AddLocalCapsToProjectionBounds( const idVec3 endPoints[4], const int endPointCull[4], const idVec3& point, int pointCull, int pointClip, idBounds& projectionBounds ) const;
-	bool			BoundsRayIntersection( const idBounds& bounds, const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
-	void			ClipFrustumToBox( const idBox& box, float clipFractions[4], int clipPlanes[4] ) const;
-	bool			ClipLine( const idVec3 localPoints[8], const idVec3 points[8], int startIndex, int endIndex, idVec3& start, idVec3& end, int& startClip, int& endClip ) const;
+	bool CullLocalBox( const idVec3& localOrigin, const idVec3& extents, const idMat3& localAxis ) const;
+	bool CullLocalFrustum( const idFrustum& localFrustum, const idVec3 indexPoints[8], const idVec3 cornerVecs[4] ) const;
+	bool CullLocalWinding( const idVec3* points, const int numPoints, int* pointCull ) const;
+	bool BoundsCullLocalFrustum( const idBounds& bounds, const idFrustum& localFrustum, const idVec3 indexPoints[8], const idVec3 cornerVecs[4] ) const;
+	bool LocalLineIntersection( const idVec3& start, const idVec3& end ) const;
+	bool LocalRayIntersection( const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
+	bool LocalFrustumIntersectsFrustum( const idVec3 points[8], const bool testFirstSide ) const;
+	bool LocalFrustumIntersectsBounds( const idVec3 points[8], const idBounds& bounds ) const;
+	void ToClippedPoints( const float fractions[4], idVec3 points[8] ) const;
+	void ToIndexPoints( idVec3 indexPoints[8] ) const;
+	void ToIndexPointsAndCornerVecs( idVec3 indexPoints[8], idVec3 cornerVecs[4] ) const;
+	void AxisProjection( const idVec3 indexPoints[8], const idVec3 cornerVecs[4], const idVec3& dir, float& min, float& max ) const;
+	void AddLocalLineToProjectionBoundsSetCull( const idVec3& start, const idVec3& end, int& startCull, int& endCull, idBounds& bounds ) const;
+	void AddLocalLineToProjectionBoundsUseCull( const idVec3& start, const idVec3& end, int startCull, int endCull, idBounds& bounds ) const;
+	bool AddLocalCapsToProjectionBounds( const idVec3 endPoints[4], const int endPointCull[4], const idVec3& point, int pointCull, int pointClip, idBounds& projectionBounds ) const;
+	bool BoundsRayIntersection( const idBounds& bounds, const idVec3& start, const idVec3& dir, float& scale1, float& scale2 ) const;
+	void ClipFrustumToBox( const idBox& box, float clipFractions[4], int clipPlanes[4] ) const;
+	bool ClipLine( const idVec3 localPoints[8], const idVec3 points[8], int startIndex, int endIndex, idVec3& start, idVec3& end, int& startClip, int& endClip ) const;
 };
-
 
 ID_INLINE idFrustum::idFrustum()
 {
@@ -164,20 +164,20 @@ ID_INLINE void idFrustum::SetAxis( const idMat3& axis )
 ID_INLINE void idFrustum::SetSize( float dNear, float dFar, float dLeft, float dUp )
 {
 	assert( dNear >= 0.0f && dFar > dNear && dLeft > 0.0f && dUp > 0.0f );
-	this->dNear = dNear;
-	this->dFar = dFar;
-	this->dLeft = dLeft;
-	this->dUp = dUp;
+	this->dNear	 = dNear;
+	this->dFar	 = dFar;
+	this->dLeft	 = dLeft;
+	this->dUp	 = dUp;
 	this->invFar = 1.0f / dFar;
 }
 
 ID_INLINE void idFrustum::SetPyramid( float dNear, float dFar )
 {
 	assert( dNear >= 0.0f && dFar > dNear );
-	this->dNear = dNear;
-	this->dFar = dFar;
-	this->dLeft = dFar;
-	this->dUp = dFar;
+	this->dNear	 = dNear;
+	this->dFar	 = dFar;
+	this->dLeft	 = dFar;
+	this->dUp	 = dFar;
 	this->invFar = 1.0f / dFar;
 }
 
@@ -191,7 +191,7 @@ ID_INLINE void idFrustum::MoveFarDistance( float dFar )
 {
 	assert( dFar > this->dNear );
 	float scale = dFar / this->dFar;
-	this->dFar = dFar;
+	this->dFar	= dFar;
 	this->dLeft *= scale;
 	this->dUp *= scale;
 	this->invFar = 1.0f / dFar;
@@ -242,8 +242,8 @@ ID_INLINE idFrustum idFrustum::Expand( const float d ) const
 	idFrustum f = *this;
 	f.origin -= d * f.axis[0];
 	f.dFar += 2.0f * d;
-	f.dLeft = f.dFar * dLeft * invFar;
-	f.dUp = f.dFar * dUp * invFar;
+	f.dLeft	 = f.dFar * dLeft * invFar;
+	f.dUp	 = f.dFar * dUp * invFar;
 	f.invFar = 1.0f / dFar;
 	return f;
 }
@@ -252,8 +252,8 @@ ID_INLINE idFrustum& idFrustum::ExpandSelf( const float d )
 {
 	origin -= d * axis[0];
 	dFar += 2.0f * d;
-	dLeft = dFar * dLeft * invFar;
-	dUp = dFar * dUp * invFar;
+	dLeft  = dFar * dLeft * invFar;
+	dUp	   = dFar * dUp * invFar;
 	invFar = 1.0f / dFar;
 	return *this;
 }

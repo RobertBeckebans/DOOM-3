@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -35,16 +36,14 @@ If you have questions concerning this license or the applicable additional terms
 /////////////////////////////////////////////////////////////////////////////
 // DialogName dialog
 
-
-DialogName::DialogName( const char* pName, CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogName::IDD, pParent )
+DialogName::DialogName( const char* pName, CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogName::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(DialogName)
 	m_strName = _T( "" );
 	//}}AFX_DATA_INIT
 	m_strCaption = pName;
 }
-
 
 void DialogName::DoDataExchange( CDataExchange* pDX )
 {
@@ -60,13 +59,13 @@ BOOL DialogName::OnInitDialog()
 
 	SetWindowText( m_strCaption );
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 BEGIN_MESSAGE_MAP( DialogName, CDialog )
-	//{{AFX_MSG_MAP(DialogName)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(DialogName)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

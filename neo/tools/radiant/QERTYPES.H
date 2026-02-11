@@ -43,8 +43,7 @@ public:
 	}
 	~texdef_t()
 	{
-		if( name && name[0] )
-		{
+		if( name && name[0] ) {
 			delete []name;
 		}
 		name = NULL;
@@ -52,24 +51,19 @@ public:
 
 	void SetName( const char* p )
 	{
-		if( name && name[0] )
-		{
+		if( name && name[0] ) {
 			delete []name;
 		}
-		if( p && p[0] )
-		{
+		if( p && p[0] ) {
 			name = strcpy( new char[strlen( p ) + 1], p );
-		}
-		else
-		{
+		} else {
 			name = "";
 		}
 	}
 
 	texdef_t& operator =( const texdef_t& rhs )
 	{
-		if( &rhs != this )
-		{
+		if( &rhs != this ) {
 			SetName( rhs.name );
 			shift[0] = rhs.shift[0];
 			shift[1] = rhs.shift[1];
@@ -133,8 +127,7 @@ public:
 #define QER_TRANS     0x00000001
 #define QER_NOCARVE   0x00000002
 
-typedef struct qtexture_s
-{
+typedef struct qtexture_s {
 	struct	qtexture_s* next;
 	char	name[64];		// includes partial directory and extension
 	int		width,  height;
@@ -164,8 +157,7 @@ typedef struct qtexture_s
 
 //++timo texdef and brushprimit_texdef are static
 // TODO : do dynamic ?
-typedef struct face_s
-{
+typedef struct face_s {
 	struct face_s*			next;
 	struct face_s*			original;		//used for vertex movement
 	idVec3					planepts[3];
@@ -190,15 +182,13 @@ typedef struct face_s
 	void*					pData;
 } face_t;
 
-typedef struct
-{
+typedef struct {
 	idVec3	xyz;
 	float	sideST[2];
 	float	capST[2];
 } curveVertex_t;
 
-typedef struct
-{
+typedef struct {
 	curveVertex_t	v[2];
 } sideVertex_t;
 
@@ -239,8 +229,7 @@ typedef struct
 struct brush_s;
 typedef struct brush_s brush_t;
 
-typedef struct
-{
+typedef struct {
 	int			width, height;		// in control points, not patches
 	int			horzSubdivisions;
 	int			vertSubdivisions;
@@ -263,20 +252,16 @@ typedef struct
 	void* 		pData;
 	ID_INLINE idDrawVert& ctrl( int col, int row )
 	{
-		if( col < 0 || col >= width || row < 0 || row >= height )
-		{
+		if( col < 0 || col >= width || row < 0 || row >= height ) {
 			common->Warning( "patchMesh_t::ctrl: control point out of range" );
 			return verts[0];
-		}
-		else
-		{
+		} else {
 			return verts[row * width + col];
 		}
 	}
 } patchMesh_t;
 
-enum
-{
+enum {
 	LIGHT_TARGET,
 	LIGHT_RIGHT,
 	LIGHT_UP,
@@ -290,10 +275,9 @@ enum
 };
 
 
-typedef struct brush_s
-{
-	struct brush_s*	prev, *next;	// links in active/selected
-	struct brush_s*	oprev, *onext;	// links in entity
+typedef struct brush_s {
+	struct brush_s*	prev, * next;	// links in active/selected
+	struct brush_s*	oprev, * onext;	// links in entity
 	brush_t*    list;				//keep a handy link to the list its in
 	struct entity_s*	owner;
 	idVec3 mins, maxs;
@@ -351,8 +335,7 @@ typedef struct brush_s
 #define	MAX_FLAGS	8
 
 
-typedef struct trimodel_t
-{
+typedef struct trimodel_t {
 	idVec3 v[3];
 	float  st[3][2];
 } trimodel;
@@ -376,8 +359,7 @@ typedef struct trimodel_t
 #define		ECLASS_COMBATNODE		0x00002000
 #define		ECLASS_LIQUID			0x00004000
 
-enum EVAR_TYPES
-{
+enum EVAR_TYPES {
 	EVAR_STRING,
 	EVAR_INT,
 	EVAR_FLOAT,
@@ -389,15 +371,13 @@ enum EVAR_TYPES
 	EVAR_SOUND
 };
 
-typedef struct evar_s
-{
+typedef struct evar_s {
 	int	type;
 	idStr name;
 	idStr desc;
 } evar_t;
 
-typedef struct eclass_s
-{
+typedef struct eclass_s {
 	struct eclass_s* next;
 	idStr	name;
 	bool	fixedsize;
@@ -416,7 +396,7 @@ typedef struct eclass_s
 	idStr	defMaterial;
 	idDict	args;
 	idDict	defArgs;
-	idList<evar_t> vars;
+	idList < evar_t > vars;
 
 	HMODULE	hPlug;
 } eclass_t;

@@ -16,7 +16,7 @@
 //	If you use this code, drop me an email.  I'd like to know if you find the code
 //	useful.
 
-//#include "stdafx.h"
+// #include "stdafx.h"
 #include "../../../idlib/precompiled.h"
 #pragma hdrstop
 
@@ -26,7 +26,7 @@
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,13 +44,12 @@ CPropTreeItemEdit::~CPropTreeItemEdit()
 {
 }
 
-
 BEGIN_MESSAGE_MAP( CPropTreeItemEdit, CEdit )
-	//{{AFX_MSG_MAP(CPropTreeItemEdit)
-	ON_WM_GETDLGCODE()
-	ON_WM_KEYDOWN()
-	ON_CONTROL_REFLECT( EN_KILLFOCUS, OnKillfocus )
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropTreeItemEdit)
+ON_WM_GETDLGCODE()
+ON_WM_KEYDOWN()
+ON_CONTROL_REFLECT( EN_KILLFOCUS, OnKillfocus )
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,42 +70,33 @@ void CPropTreeItemEdit::DrawAttribute( CDC* pDC, const RECT& rc )
 	// can't use GetPasswordChar(), because window may not be created yet
 	ch = ( m_bPassword ) ? '*' : '\0';
 
-	if( ch )
-	{
+	if( ch ) {
 		CString s;
 
 		s = m_sEdit;
-		for( LONG i = 0; i < s.GetLength(); i++ )
-		{
+		for( LONG i = 0; i < s.GetLength(); i++ ) {
 			s.SetAt( i, ch );
 		}
 
 		pDC->DrawText( s, r, DT_SINGLELINE | DT_VCENTER );
-	}
-	else
-	{
+	} else {
 		pDC->DrawText( m_sEdit, r, DT_SINGLELINE | DT_VCENTER );
 	}
 }
-
-
 
 void CPropTreeItemEdit::SetAsPassword( BOOL bPassword )
 {
 	m_bPassword = bPassword;
 }
 
-
 void CPropTreeItemEdit::SetValueFormat( ValueFormat nFormat )
 {
 	m_nFormat = nFormat;
 }
 
-
 LPARAM CPropTreeItemEdit::GetItemValue()
 {
-	switch( m_nFormat )
-	{
+	switch( m_nFormat ) {
 		case ValueFormatNumber:
 			return _ttoi( m_sEdit );
 
@@ -118,27 +108,23 @@ LPARAM CPropTreeItemEdit::GetItemValue()
 	return ( LPARAM )( LPCTSTR )m_sEdit;
 }
 
-
 void CPropTreeItemEdit::SetItemValue( LPARAM lParam )
 {
-	switch( m_nFormat )
-	{
+	switch( m_nFormat ) {
 		case ValueFormatNumber:
 			m_sEdit.Format( _T( "%d" ), lParam );
 			return;
 
-		case ValueFormatFloatPointer:
-		{
+		case ValueFormatFloatPointer: {
 			TCHAR tmp[MAX_PATH];
 			m_fValue = *( float* )lParam;
 			_stprintf( tmp, _T( "%f" ), m_fValue );
 			m_sEdit = tmp;
 		}
-		return;
+			return;
 	}
 
-	if( lParam == 0L )
-	{
+	if( lParam == 0L ) {
 		TRACE0( "CPropTreeItemEdit::SetItemValue - Invalid lParam value\n" );
 		return;
 	}
@@ -146,24 +132,19 @@ void CPropTreeItemEdit::SetItemValue( LPARAM lParam )
 	m_sEdit = ( LPCTSTR )lParam;
 }
 
-
 void CPropTreeItemEdit::OnMove()
 {
-	if( IsWindow( m_hWnd ) )
-	{
+	if( IsWindow( m_hWnd ) ) {
 		SetWindowPos( NULL, m_rc.left, m_rc.top, m_rc.Width(), m_rc.Height(), SWP_NOZORDER | SWP_NOACTIVATE );
 	}
 }
 
-
 void CPropTreeItemEdit::OnRefresh()
 {
-	if( IsWindow( m_hWnd ) )
-	{
+	if( IsWindow( m_hWnd ) ) {
 		SetWindowText( m_sEdit );
 	}
 }
-
 
 void CPropTreeItemEdit::OnCommit()
 {
@@ -174,12 +155,10 @@ void CPropTreeItemEdit::OnCommit()
 	GetWindowText( m_sEdit );
 }
 
-
 void CPropTreeItemEdit::OnActivate( int activateType, CPoint point )
 {
 	// Check if the edit control needs creation
-	if( !IsWindow( m_hWnd ) )
-	{
+	if( !IsWindow( m_hWnd ) ) {
 		DWORD dwStyle;
 
 		dwStyle = WS_CHILD | ES_AUTOHSCROLL;
@@ -196,23 +175,19 @@ void CPropTreeItemEdit::OnActivate( int activateType, CPoint point )
 	SetFocus();
 }
 
-
 UINT CPropTreeItemEdit::OnGetDlgCode()
 {
 	return CEdit::OnGetDlgCode() | DLGC_WANTALLKEYS;
 }
 
-
 void CPropTreeItemEdit::OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags )
 {
-	if( nChar == VK_RETURN )
-	{
+	if( nChar == VK_RETURN ) {
 		CommitChanges();
 	}
 
 	CEdit::OnKeyDown( nChar, nRepCnt, nFlags );
 }
-
 
 void CPropTreeItemEdit::OnKillfocus()
 {

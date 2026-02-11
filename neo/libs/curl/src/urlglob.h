@@ -22,31 +22,25 @@
  *
  * $Id: urlglob.h,v 1.15 2004/03/08 12:51:33 bagder Exp $
  ***************************************************************************/
-typedef enum
-{
+typedef enum {
 	UPTSet = 1,
 	UPTCharRange,
 	UPTNumRange
 } URLPatternType;
 
-typedef struct
-{
+typedef struct {
 	URLPatternType type;
-	union
-	{
-		struct
-		{
+	union {
+		struct {
 			char** elements;
 			short size;
 			short ptr_s;
 		} Set;
-		struct
-		{
+		struct {
 			char min_c, max_c;
 			char ptr_c;
 		} CharRange;
-		struct
-		{
+		struct {
 			int min_n, max_n;
 			short padlength;
 			int ptr_n;
@@ -54,8 +48,7 @@ typedef struct
 	} content;
 } URLPattern;
 
-typedef struct
-{
+typedef struct {
 	char* literal[10];
 	URLPattern pattern[9];
 	int size;

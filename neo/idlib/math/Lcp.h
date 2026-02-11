@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -40,17 +41,17 @@ If you have questions concerning this license or the applicable additional terms
   complementarity condition: (x[i] - lo[i]) * (x[i] - hi[i]) * t[i] = 0
   such that for each 0 <= i < n one of the following holds:
 
-    1. lo[i] < x[i] < hi[i], t[i] == 0
-    2. x[i] == lo[i], t[i] >= 0
-    3. x[i] == hi[i], t[i] <= 0
+	1. lo[i] < x[i] < hi[i], t[i] == 0
+	2. x[i] == lo[i], t[i] >= 0
+	3. x[i] == hi[i], t[i] <= 0
 
   Partly bounded or unbounded variables can have lo[i] and/or hi[i]
   set to negative/positive idMath::INFITITY respectively.
 
   If boxIndex != NULL and boxIndex[i] != -1 then
 
-    lo[i] = - fabs( lo[i] * x[boxIndex[i]] )
-    hi[i] = fabs( hi[i] * x[boxIndex[i]] )
+	lo[i] = - fabs( lo[i] * x[boxIndex[i]] )
+	hi[i] = fabs( hi[i] * x[boxIndex[i]] )
 	boxIndex[boxIndex[i]] must be -1
 
   Before calculating any of the bounded x[i] with boxIndex[i] != -1 the
@@ -62,17 +63,17 @@ If you have questions concerning this license or the applicable additional terms
 class idLCP
 {
 public:
-	static idLCP* 	AllocSquare();		// A must be a square matrix
-	static idLCP* 	AllocSymmetric();		// A must be a symmetric matrix
+	static idLCP* AllocSquare();	// A must be a square matrix
+	static idLCP* AllocSymmetric(); // A must be a symmetric matrix
 
-	virtual			~idLCP();
+	virtual ~idLCP();
 
-	virtual bool	Solve( const idMatX& A, idVecX& x, const idVecX& b, const idVecX& lo, const idVecX& hi, const int* boxIndex = NULL ) = 0;
-	virtual void	SetMaxIterations( int max );
-	virtual int		GetMaxIterations();
+	virtual bool Solve( const idMatX& A, idVecX& x, const idVecX& b, const idVecX& lo, const idVecX& hi, const int* boxIndex = NULL ) = 0;
+	virtual void SetMaxIterations( int max );
+	virtual int	 GetMaxIterations();
 
 protected:
-	int				maxIterations;
+	int maxIterations;
 };
 
 #endif /* !__MATH_LCP_H__ */

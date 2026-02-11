@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -28,7 +29,6 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "../idlib/precompiled.h"
 #pragma hdrstop
-
 
 /*
 =================
@@ -58,7 +58,7 @@ idDeclSkin::Parse
 bool idDeclSkin::Parse( const char* text, const int textLength )
 {
 	idLexer src;
-	idToken	token, token2;
+	idToken token, token2;
 
 	src.LoadMemory( text, textLength, GetFileName(), GetLineNum() );
 	src.SetFlags( DECL_LEXER_FLAGS );
@@ -66,39 +66,31 @@ bool idDeclSkin::Parse( const char* text, const int textLength )
 
 	associatedModels.Clear();
 
-	while( 1 )
-	{
-		if( !src.ReadToken( &token ) )
-		{
+	while( 1 ) {
+		if( !src.ReadToken( &token ) ) {
 			break;
 		}
 
-		if( !token.Icmp( "}" ) )
-		{
+		if( !token.Icmp( "}" ) ) {
 			break;
 		}
-		if( !src.ReadToken( &token2 ) )
-		{
+		if( !src.ReadToken( &token2 ) ) {
 			src.Warning( "Unexpected end of file" );
 			MakeDefault();
 			return false;
 		}
 
-		if( !token.Icmp( "model" ) )
-		{
+		if( !token.Icmp( "model" ) ) {
 			associatedModels.Append( token2 );
 			continue;
 		}
 
-		skinMapping_t	map;
+		skinMapping_t map;
 
-		if( !token.Icmp( "*" ) )
-		{
+		if( !token.Icmp( "*" ) ) {
 			// wildcard
 			map.from = NULL;
-		}
-		else
-		{
+		} else {
 			map.from = declManager->FindMaterial( token );
 		}
 
@@ -118,20 +110,20 @@ idDeclSkin::SetDefaultText
 bool idDeclSkin::SetDefaultText()
 {
 	// if there exists a material with the same name
-	if( declManager->FindType( DECL_MATERIAL, GetName(), false ) )
-	{
+	if( declManager->FindType( DECL_MATERIAL, GetName(), false ) ) {
 		char generated[2048];
 
-		idStr::snPrintf( generated, sizeof( generated ),
-						 "skin %s // IMPLICITLY GENERATED\n"
-						 "{\n"
-						 "_default %s\n"
-						 "}\n", GetName(), GetName() );
+		idStr::snPrintf( generated,
+			sizeof( generated ),
+			"skin %s // IMPLICITLY GENERATED\n"
+			"{\n"
+			"_default %s\n"
+			"}\n",
+			GetName(),
+			GetName() );
 		SetText( generated );
 		return true;
-	}
-	else
-	{
+	} else {
 		return false;
 	}
 }
@@ -143,10 +135,10 @@ idDeclSkin::DefaultDefinition
 */
 const char* idDeclSkin::DefaultDefinition() const
 {
-	return
-		"{\n"
-		"\t"	"\"*\"\t\"_default\"\n"
-		"}";
+	return "{\n"
+		   "\t"
+		   "\"*\"\t\"_default\"\n"
+		   "}";
 }
 
 /*
@@ -166,9 +158,8 @@ idDeclSkin::GetAssociatedModel
 */
 const char* idDeclSkin::GetAssociatedModel( int index ) const
 {
-	if( index >= 0 && index < associatedModels.Num() )
-	{
-		return associatedModels[ index ];
+	if( index >= 0 && index < associatedModels.Num() ) {
+		return associatedModels[index];
 	}
 	return "";
 }
@@ -180,26 +171,22 @@ RemapShaderBySkin
 */
 const idMaterial* idDeclSkin::RemapShaderBySkin( const idMaterial* shader ) const
 {
-	int		i;
+	int i;
 
-	if( !shader )
-	{
+	if( !shader ) {
 		return NULL;
 	}
 
 	// never remap surfaces that were originally nodraw, like collision hulls
-	if( !shader->IsDrawn() )
-	{
+	if( !shader->IsDrawn() ) {
 		return shader;
 	}
 
-	for( i = 0; i < mappings.Num() ; i++ )
-	{
-		const skinMapping_t*	map = &mappings[i];
+	for( i = 0; i < mappings.Num(); i++ ) {
+		const skinMapping_t* map = &mappings[i];
 
 		// NULL = wildcard match
-		if( !map->from || map->from == shader )
-		{
+		if( !map->from || map->from == shader ) {
 			return map->to;
 		}
 	}

@@ -241,10 +241,10 @@ ALAPI ALboolean ALAPIENTRY alIsBuffer( ALuint buffer );
  * Specify the data to be filled into a buffer.
  */
 ALAPI ALvoid	ALAPIENTRY alBufferData( ALuint   buffer,
-		ALenum   format,
-		ALvoid*  data,
-		ALsizei  size,
-		ALsizei  freq );
+									   ALenum   format,
+									   ALvoid*  data,
+									   ALsizei  size,
+									   ALsizei  freq );
 
 
 ALAPI ALvoid	ALAPIENTRY alGetBufferi( ALuint buffer, ALenum param, ALint*   value );

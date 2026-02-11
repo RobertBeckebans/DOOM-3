@@ -31,16 +31,14 @@
 
 typedef void ( *curl_hash_dtor )( void* );
 
-typedef struct _curl_hash
-{
+typedef struct _curl_hash {
 	curl_llist**     table;
 	curl_hash_dtor   dtor;
 	int              slots;
 	size_t           size;
 } curl_hash;
 
-typedef struct _curl_hash_element
-{
+typedef struct _curl_hash_element {
 	void*   ptr;
 	char*   key;
 	size_t key_len;

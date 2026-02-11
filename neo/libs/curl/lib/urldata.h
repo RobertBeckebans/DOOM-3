@@ -116,15 +116,13 @@
 
 #ifdef HAVE_KRB4
 /* Types needed for krb4-ftp connections */
-struct krb4buffer
-{
+struct krb4buffer {
 	void* data;
 	size_t size;
 	size_t index;
 	int eof_flag;
 };
-enum protection_level
-{
+enum protection_level {
 	prot_clear,
 	prot_safe,
 	prot_confidential,
@@ -133,8 +131,7 @@ enum protection_level
 #endif
 
 /* struct for data related to each SSL connection */
-struct ssl_connect_data
-{
+struct ssl_connect_data {
 	bool use;        /* use ssl encrypted communications TRUE/FALSE */
 #ifdef USE_SSLEAY
 	/* these ones requires specific SSL-types */
@@ -144,8 +141,7 @@ struct ssl_connect_data
 #endif /* USE_SSLEAY */
 };
 
-struct ssl_config_data
-{
+struct ssl_config_data {
 	long version;          /* what version the client wants to use */
 	long certverifyresult; /* result from the certificate verification */
 	long verifypeer;       /* set TRUE if this is desired */
@@ -163,8 +159,7 @@ struct ssl_config_data
 };
 
 /* information stored about one single SSL session */
-struct curl_ssl_session
-{
+struct curl_ssl_session {
 	char* name;       /* host name for which this ID was used */
 	void* sessionid;  /* as returned from the SSL layer */
 	long age;         /* just a number, the higher the more recent */
@@ -173,16 +168,14 @@ struct curl_ssl_session
 };
 
 /* Struct used for Digest challenge-response authentication */
-struct digestdata
-{
+struct digestdata {
 	char* nonce;
 	char* cnonce;
 	char* realm;
 	int algo;
 };
 
-typedef enum
-{
+typedef enum {
 	NTLMSTATE_NONE,
 	NTLMSTATE_TYPE1,
 	NTLMSTATE_TYPE2,
@@ -191,15 +184,13 @@ typedef enum
 } curlntlm;
 
 /* Struct used for NTLM challenge-response authentication */
-struct ntlmdata
-{
+struct ntlmdata {
 	curlntlm state;
 	unsigned char nonce[8];
 };
 
 #ifdef HAVE_GSSAPI
-struct negotiatedata
-{
+struct negotiatedata {
 	bool gss; /* Whether we're processing GSS-Negotiate or Negotiate */
 	const char* protocol; /* "GSS-Negotiate" or "Negotiate" */
 	OM_uint32 status;
@@ -212,8 +203,7 @@ struct negotiatedata
 /****************************************************************************
  * HTTP unique setup
  ***************************************************************************/
-struct HTTP
-{
+struct HTTP {
 	struct FormData* sendit;
 	curl_off_t postsize; /* off_t to handle large file sizes */
 	char* postdata;
@@ -227,16 +217,14 @@ struct HTTP
 	struct Form form;
 	struct Curl_chunker chunk;
 
-	struct back
-	{
+	struct back {
 		curl_read_callback fread; /* backup storage for fread pointer */
 		void* fread_in;           /* backup storage for fread_in pointer */
 		char* postdata;
 		curl_off_t postsize;
 	} backup;
 
-	enum
-	{
+	enum {
 		HTTPSEND_NADA,    /* init */
 		HTTPSEND_REQUEST, /* sending a request */
 		HTTPSEND_BODY,    /* sending body */
@@ -250,8 +238,7 @@ struct HTTP
 /****************************************************************************
  * FTP unique setup
  ***************************************************************************/
-struct FTP
-{
+struct FTP {
 	curl_off_t* bytecountp;
 	char* user;    /* user name string */
 	char* passwd;  /* password string */
@@ -280,16 +267,14 @@ struct FTP
 /****************************************************************************
  * FILE unique setup
  ***************************************************************************/
-struct FILEPROTO
-{
+struct FILEPROTO {
 	int fd; /* open file descriptor to read from! */
 };
 
 /*
  * Boolean values that concerns this connection.
  */
-struct ConnectBits
-{
+struct ConnectBits {
 	bool close; /* if set, we close the connection after this request */
 	bool reuse; /* if set, this is a re-used connection */
 	bool chunk; /* if set, this is a chunked transfer-encoding */
@@ -324,15 +309,13 @@ struct ConnectBits
  * losing state.
  */
 
-struct Curl_transfer_keeper
-{
+struct Curl_transfer_keeper {
 	curl_off_t bytecount;                /* total number of bytes read */
 	int writebytecount;           /* number of bytes written */
 	struct timeval start;         /* transfer started at this time */
 	struct timeval now;           /* current time */
 	bool header;	                /* incoming data has HTTP header */
-	enum
-	{
+	enum {
 		HEADER_NORMAL,      /* no bad header at all */
 		HEADER_PARTHEADER,  /* part of the chunk is a bad header, the rest is
                            normal data */
@@ -398,8 +381,7 @@ struct Curl_transfer_keeper
 };
 
 #if defined(USE_ARES) || defined(USE_THREADING_GETHOSTBYNAME)
-struct Curl_async
-{
+struct Curl_async {
 	char* hostname;
 	int port;
 	struct Curl_dns_entry* dns;
@@ -416,8 +398,7 @@ struct Curl_async
  * The connectdata struct contains all fields and variables that should be
  * unique for an entire connection.
  */
-struct connectdata
-{
+struct connectdata {
 	/**** Fields set when inited and not modified again */
 	struct SessionHandle* data; /* link to the root CURL struct */
 	int connectindex; /* what index in the connects index this particular
@@ -521,8 +502,7 @@ struct connectdata
 
 	/** Dynamicly allocated strings, may need to be freed before this **/
 	/** struct is killed.                                             **/
-	struct dynamically_allocated_data
-	{
+	struct dynamically_allocated_data {
 		char* proxyuserpwd; /* free later if not NULL! */
 		char* uagent; /* free later if not NULL! */
 		char* accept_encoding; /* free later if not NULL! */
@@ -555,8 +535,7 @@ struct connectdata
 
 	/*************** Request - specific items ************/
 	/* previously this was in the urldata struct */
-	union
-	{
+	union {
 		struct HTTP* http;
 		struct HTTP* gopher; /* alias, just for the sake of being more readable */
 		struct HTTP* https;  /* alias, just for the sake of being more readable */
@@ -604,8 +583,7 @@ struct connectdata
 /*
  * Struct to keep statistical and informational data.
  */
-struct PureInfo
-{
+struct PureInfo {
 	int httpcode;  /* Recent HTTP or FTP response code */
 	int httpproxycode;
 	int httpversion;
@@ -623,8 +601,7 @@ struct PureInfo
 };
 
 
-struct Progress
-{
+struct Progress {
 	long lastshow; /* time() of the last displayed progress meter or NULL to
                     force redraw at next call */
 	curl_off_t size_dl; /* total expected size */
@@ -658,8 +635,7 @@ struct Progress
 	int speeder_c;
 };
 
-typedef enum
-{
+typedef enum {
 	HTTPREQ_NONE, /* first in list */
 	HTTPREQ_GET,
 	HTTPREQ_POST,
@@ -682,10 +658,8 @@ typedef enum
 #define MAX_CURL_USER_LENGTH_TXT "255"
 #define MAX_CURL_PASSWORD_LENGTH_TXT "255"
 
-struct UrlState
-{
-	enum
-	{
+struct UrlState {
+	enum {
 		Curl_if_none,
 		Curl_if_easy,
 		Curl_if_multi
@@ -756,8 +730,7 @@ struct UrlState
  * copy these, but each one indicate a special action on other data.
  */
 
-struct DynamicStatic
-{
+struct DynamicStatic {
 	char* url;        /* work URL, copied from UserDefined */
 	bool url_alloc;   /* URL string is malloc()'ed */
 	bool url_changed; /* set on CURL_OPT_URL, used to detect if the URL was
@@ -780,8 +753,7 @@ struct DynamicStatic
  * the 'DynamicStatic' struct.
  */
 
-struct UserDefined
-{
+struct UserDefined {
 	FILE* err;         /* the stderr user data goes here */
 	void* debugdata;   /* the data that will be passed to fdebug */
 	char* errorbuffer; /* store failure messages in here */
@@ -920,8 +892,7 @@ struct UserDefined
  * calculated internally for the "session handle" must be defined within the
  * 'struct urlstate' instead.  */
 
-struct SessionHandle
-{
+struct SessionHandle {
 	curl_hash* hostcache;
 	struct Curl_share* share;    /* Share, handles global variable mutexing */
 	struct UserDefined set;      /* values set by the libcurl user */

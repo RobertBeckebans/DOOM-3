@@ -1335,7 +1335,8 @@ break;
 
 case 32895 :
 typedef void ( idClass::*eventCallback_fffffff_t )( const float, const float, const float, const float, const float, const float, const float );
-( this->*( eventCallback_fffffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ] );
+( this->*( eventCallback_fffffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ],
+		*( float* )&data[ 6 ] );
 break;
 
 /*******************************************************
@@ -1661,7 +1662,8 @@ break;
 
 case 65599 :
 typedef void ( idClass::*eventCallback_ffffffii_t )( const float, const float, const float, const float, const float, const float, const int, const int );
-( this->*( eventCallback_ffffffii_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_ffffffii_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65600 :
@@ -1821,7 +1823,8 @@ break;
 
 case 65631 :
 typedef void ( idClass::*eventCallback_fffffifi_t )( const float, const float, const float, const float, const float, const int, const float, const int );
-( this->*( eventCallback_fffffifi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_fffffifi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65632 :
@@ -1901,7 +1904,8 @@ break;
 
 case 65647 :
 typedef void ( idClass::*eventCallback_ffffiffi_t )( const float, const float, const float, const float, const int, const float, const float, const int );
-( this->*( eventCallback_ffffiffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_ffffiffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65648 :
@@ -1941,7 +1945,8 @@ break;
 
 case 65655 :
 typedef void ( idClass::*eventCallback_fffifffi_t )( const float, const float, const float, const int, const float, const float, const float, const int );
-( this->*( eventCallback_fffifffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_fffifffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65656 :
@@ -1961,7 +1966,8 @@ break;
 
 case 65659 :
 typedef void ( idClass::*eventCallback_ffiffffi_t )( const float, const float, const int, const float, const float, const float, const float, const int );
-( this->*( eventCallback_ffiffffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_ffiffffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65660 :
@@ -1971,17 +1977,20 @@ break;
 
 case 65661 :
 typedef void ( idClass::*eventCallback_fifffffi_t )( const float, const int, const float, const float, const float, const float, const float, const int );
-( this->*( eventCallback_fifffffi_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_fifffffi_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65662 :
 typedef void ( idClass::*eventCallback_iffffffi_t )( const int, const float, const float, const float, const float, const float, const float, const int );
-( this->*( eventCallback_iffffffi_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_iffffffi_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		data[ 7 ] );
 break;
 
 case 65663 :
 typedef void ( idClass::*eventCallback_fffffffi_t )( const float, const float, const float, const float, const float, const float, const float, const int );
-( this->*( eventCallback_fffffffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], data[ 7 ] );
+( this->*( eventCallback_fffffffi_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ],
+		*( float* )&data[ 6 ], data[ 7 ] );
 break;
 
 case 65664 :
@@ -2141,7 +2150,8 @@ break;
 
 case 65695 :
 typedef void ( idClass::*eventCallback_fffffiif_t )( const float, const float, const float, const float, const float, const int, const int, const float );
-( this->*( eventCallback_fffffiif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffffiif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65696 :
@@ -2221,7 +2231,8 @@ break;
 
 case 65711 :
 typedef void ( idClass::*eventCallback_ffffifif_t )( const float, const float, const float, const float, const int, const float, const int, const float );
-( this->*( eventCallback_ffffifif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffffifif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65712 :
@@ -2261,7 +2272,8 @@ break;
 
 case 65719 :
 typedef void ( idClass::*eventCallback_fffiffif_t )( const float, const float, const float, const int, const float, const float, const int, const float );
-( this->*( eventCallback_fffiffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffiffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65720 :
@@ -2281,7 +2293,8 @@ break;
 
 case 65723 :
 typedef void ( idClass::*eventCallback_ffifffif_t )( const float, const float, const int, const float, const float, const float, const int, const float );
-( this->*( eventCallback_ffifffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffifffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65724 :
@@ -2291,17 +2304,20 @@ break;
 
 case 65725 :
 typedef void ( idClass::*eventCallback_fiffffif_t )( const float, const int, const float, const float, const float, const float, const int, const float );
-( this->*( eventCallback_fiffffif_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fiffffif_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65726 :
 typedef void ( idClass::*eventCallback_ifffffif_t )( const int, const float, const float, const float, const float, const float, const int, const float );
-( this->*( eventCallback_ifffffif_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ifffffif_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65727 :
 typedef void ( idClass::*eventCallback_ffffffif_t )( const float, const float, const float, const float, const float, const float, const int, const float );
-( this->*( eventCallback_ffffffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffffffif_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65728 :
@@ -2381,7 +2397,8 @@ break;
 
 case 65743 :
 typedef void ( idClass::*eventCallback_ffffiiff_t )( const float, const float, const float, const float, const int, const int, const float, const float );
-( this->*( eventCallback_ffffiiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffffiiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65744 :
@@ -2421,7 +2438,8 @@ break;
 
 case 65751 :
 typedef void ( idClass::*eventCallback_fffififf_t )( const float, const float, const float, const int, const float, const int, const float, const float );
-( this->*( eventCallback_fffififf_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffififf_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65752 :
@@ -2441,7 +2459,8 @@ break;
 
 case 65755 :
 typedef void ( idClass::*eventCallback_ffiffiff_t )( const float, const float, const int, const float, const float, const int, const float, const float );
-( this->*( eventCallback_ffiffiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffiffiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65756 :
@@ -2451,17 +2470,20 @@ break;
 
 case 65757 :
 typedef void ( idClass::*eventCallback_fifffiff_t )( const float, const int, const float, const float, const float, const int, const float, const float );
-( this->*( eventCallback_fifffiff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fifffiff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65758 :
 typedef void ( idClass::*eventCallback_iffffiff_t )( const int, const float, const float, const float, const float, const int, const float, const float );
-( this->*( eventCallback_iffffiff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_iffffiff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65759 :
 typedef void ( idClass::*eventCallback_fffffiff_t )( const float, const float, const float, const float, const float, const int, const float, const float );
-( this->*( eventCallback_fffffiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffffiff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65760 :
@@ -2501,7 +2523,8 @@ break;
 
 case 65767 :
 typedef void ( idClass::*eventCallback_fffiifff_t )( const float, const float, const float, const int, const int, const float, const float, const float );
-( this->*( eventCallback_fffiifff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffiifff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65768 :
@@ -2521,7 +2544,8 @@ break;
 
 case 65771 :
 typedef void ( idClass::*eventCallback_ffififff_t )( const float, const float, const int, const float, const int, const float, const float, const float );
-( this->*( eventCallback_ffififff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffififff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65772 :
@@ -2531,17 +2555,20 @@ break;
 
 case 65773 :
 typedef void ( idClass::*eventCallback_fiffifff_t )( const float, const int, const float, const float, const int, const float, const float, const float );
-( this->*( eventCallback_fiffifff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fiffifff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65774 :
 typedef void ( idClass::*eventCallback_ifffifff_t )( const int, const float, const float, const float, const int, const float, const float, const float );
-( this->*( eventCallback_ifffifff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ifffifff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65775 :
 typedef void ( idClass::*eventCallback_ffffifff_t )( const float, const float, const float, const float, const int, const float, const float, const float );
-( this->*( eventCallback_ffffifff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffffifff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65776 :
@@ -2561,7 +2588,8 @@ break;
 
 case 65779 :
 typedef void ( idClass::*eventCallback_ffiiffff_t )( const float, const float, const int, const int, const float, const float, const float, const float );
-( this->*( eventCallback_ffiiffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffiiffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65780 :
@@ -2571,17 +2599,20 @@ break;
 
 case 65781 :
 typedef void ( idClass::*eventCallback_fififfff_t )( const float, const int, const float, const int, const float, const float, const float, const float );
-( this->*( eventCallback_fififfff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fififfff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65782 :
 typedef void ( idClass::*eventCallback_iffiffff_t )( const int, const float, const float, const int, const float, const float, const float, const float );
-( this->*( eventCallback_iffiffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_iffiffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65783 :
 typedef void ( idClass::*eventCallback_fffiffff_t )( const float, const float, const float, const int, const float, const float, const float, const float );
-( this->*( eventCallback_fffiffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fffiffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65784 :
@@ -2591,36 +2622,43 @@ break;
 
 case 65785 :
 typedef void ( idClass::*eventCallback_fiifffff_t )( const float, const int, const int, const float, const float, const float, const float, const float );
-( this->*( eventCallback_fiifffff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fiifffff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65786 :
 typedef void ( idClass::*eventCallback_ififffff_t )( const int, const float, const int, const float, const float, const float, const float, const float );
-( this->*( eventCallback_ififffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ififffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65787 :
 typedef void ( idClass::*eventCallback_ffifffff_t )( const float, const float, const int, const float, const float, const float, const float, const float );
-( this->*( eventCallback_ffifffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffifffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65788 :
 typedef void ( idClass::*eventCallback_iiffffff_t )( const int, const int, const float, const float, const float, const float, const float, const float );
-( this->*( eventCallback_iiffffff_t )callback )( data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_iiffffff_t )callback )( data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65789 :
 typedef void ( idClass::*eventCallback_fiffffff_t )( const float, const int, const float, const float, const float, const float, const float, const float );
-( this->*( eventCallback_fiffffff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_fiffffff_t )callback )( *( float* )&data[ 0 ], data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65790 :
 typedef void ( idClass::*eventCallback_ifffffff_t )( const int, const float, const float, const float, const float, const float, const float, const float );
-( this->*( eventCallback_ifffffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ifffffff_t )callback )( data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ],
+		*( float* )&data[ 7 ] );
 break;
 
 case 65791 :
 typedef void ( idClass::*eventCallback_ffffffff_t )( const float, const float, const float, const float, const float, const float, const float, const float );
-( this->*( eventCallback_ffffffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ], *( float* )&data[ 6 ], *( float* )&data[ 7 ] );
+( this->*( eventCallback_ffffffff_t )callback )( *( float* )&data[ 0 ], *( float* )&data[ 1 ], *( float* )&data[ 2 ], *( float* )&data[ 3 ], *( float* )&data[ 4 ], *( float* )&data[ 5 ],
+		*( float* )&data[ 6 ], *( float* )&data[ 7 ] );
 break;
 

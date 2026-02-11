@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -32,39 +33,20 @@ If you have questions concerning this license or the applicable additional terms
 class rvDialogItem
 {
 public:
+	HWND mWindow;
+	int	 mID;
 
-	HWND	mWindow;
-	int		mID;
+	rvDialogItem( int id ) { mID = id; }
 
-	rvDialogItem( int id )
-	{
-		mID = id;
-	}
+	void Cache( HWND parent ) { mWindow = GetDlgItem( parent, mID ); }
 
-	void Cache( HWND parent )
-	{
-		mWindow = GetDlgItem( parent, mID );
-	}
+	void Check( bool checked ) { SendMessage( mWindow, BM_SETCHECK, checked ? BST_CHECKED : BST_UNCHECKED, 0 ); }
 
-	void Check( bool checked )
-	{
-		SendMessage( mWindow, BM_SETCHECK, checked ? BST_CHECKED : BST_UNCHECKED, 0 );
-	}
+	void Enable( bool enable ) { EnableWindow( mWindow, enable ); }
 
-	void Enable( bool enable )
-	{
-		EnableWindow( mWindow, enable );
-	}
+	bool IsChecked() { return SendMessage( mWindow, BM_GETCHECK, 0, 0 ) == BST_CHECKED ? true : false; }
 
-	bool IsChecked()
-	{
-		return SendMessage( mWindow, BM_GETCHECK, 0, 0 ) == BST_CHECKED ? true : false;
-	}
-
-	void SetText( const char* text )
-	{
-		SetWindowText( mWindow, text );
-	}
+	void SetText( const char* text ) { SetWindowText( mWindow, text ); }
 
 	void GetText( idStr& out )
 	{
@@ -80,55 +62,54 @@ public:
 		return atof( text );
 	}
 
-	void SetFloat( float f )
-	{
-		SetText( va( "%g", f ) );
-	}
+	void SetFloat( float f ) { SetText( va( "%g", f ) ); }
 
-	operator HWND() const
-	{
-		return mWindow;
-	}
+	operator HWND() const { return mWindow; }
 };
 
 class rvDialogItemContainer
 {
 protected:
-
 	void Cache( HWND parent, int count )
 	{
-		int				i;
-		unsigned char*	ptr;
+		int			   i;
+		unsigned char* ptr;
 
 		ptr = ( unsigned char* )this;
-		for( i = 0; i < count; i ++, ptr += sizeof( rvDialogItem ) )
-		{
+		for( i = 0; i < count; i++, ptr += sizeof( rvDialogItem ) ) {
 			( ( rvDialogItem* )ptr )->Cache( parent );
 		}
 	}
 };
 
-#define DIALOGITEM_BEGIN(name)									\
-class name : public rvDialogItemContainer						\
-{																\
-public:															\
-	name () { }											\
-	name ( HWND hwnd ) { Cache ( hwnd ); }						\
-	void Cache ( HWND parent )									\
-	{															\
-		rvDialogItemContainer::Cache ( parent, sizeof(*this)/sizeof(rvDialogItem) );	\
-	}
+#define DIALOGITEM_BEGIN( name )                                                              \
+	class name : public rvDialogItemContainer                                                 \
+	{                                                                                         \
+	public:                                                                                   \
+		name()                                                                                \
+		{                                                                                     \
+		}                                                                                     \
+		name( HWND hwnd )                                                                     \
+		{                                                                                     \
+			Cache( hwnd );                                                                    \
+		}                                                                                     \
+		void Cache( HWND parent )                                                             \
+		{                                                                                     \
+			rvDialogItemContainer::Cache( parent, sizeof( *this ) / sizeof( rvDialogItem ) ); \
+		}
 
+#define DIALOGITEM( id, name )          \
+	class c##name : public rvDialogItem \
+	{                                   \
+	public:                             \
+		c##name( int localid = id ) :   \
+			rvDialogItem( localid )     \
+		{                               \
+		}                               \
+	} name;
 
-#define DIALOGITEM(id,name)										\
-class c##name : public rvDialogItem								\
-{																\
-public:															\
-	c##name(int localid=id) : rvDialogItem ( localid ) { }		\
-} name;
-
-#define DIALOGITEM_END()										\
-};
-
+#define DIALOGITEM_END() \
+	}                    \
+	;
 
 #endif // DIALOGHELPERS_H_

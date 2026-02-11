@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -67,77 +68,72 @@ If you have questions concerning this license or the applicable additional terms
 const char* StringFromVec4( idVec4& vec );
 bool		IsExpression( const char* s );
 
-
 class rvGEViewer;
 
 class rvGEApp
 {
 public:
-
 	rvGEApp();
 	~rvGEApp();
 
-	bool				Initialize();
-	void				RunFrame();
-//	bool				Uninitialize			();
+	bool			 Initialize();
+	void			 RunFrame();
+	//	bool				Uninitialize			();
 
-	bool				TranslateAccelerator( LPMSG msg );
+	bool			 TranslateAccelerator( LPMSG msg );
 
-	rvGEWorkspace*		GetActiveWorkspace( HWND* retwnd = NULL );
-	rvGENavigator&		GetNavigator();
-	rvGEProperties&		GetProperties();
-	rvGETransformer&	GetTransformer();
-	rvGEOptions&		GetOptions();
-	HINSTANCE			GetInstance();
-	HWND				GetMDIFrame();
-	HWND				GetMDIClient();
-	rvGEStatusBar&		GetStatusBar();
+	rvGEWorkspace*	 GetActiveWorkspace( HWND* retwnd = NULL );
+	rvGENavigator&	 GetNavigator();
+	rvGEProperties&	 GetProperties();
+	rvGETransformer& GetTransformer();
+	rvGEOptions&	 GetOptions();
+	HINSTANCE		 GetInstance();
+	HWND			 GetMDIFrame();
+	HWND			 GetMDIClient();
+	rvGEStatusBar&	 GetStatusBar();
 
-	bool				OpenFile( const char* filename );
-	bool				SaveFile( const char* filename );
-	bool				NewFile();
+	bool			 OpenFile( const char* filename );
+	bool			 SaveFile( const char* filename );
+	bool			 NewFile();
 
-	bool				IsActive();
+	bool			 IsActive();
 
-	void				CloseViewer();
+	void			 CloseViewer();
 
-	int					ToolWindowActivate( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
+	int				 ToolWindowActivate( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
-	int					MessageBox( const char* text, int flags );
+	int				 MessageBox( const char* text, int flags );
 
 protected:
+	int					   HandleCommand( WPARAM wParam, LPARAM lParam );
+	int					   HandleInitMenu( WPARAM wParam, LPARAM lParam );
 
-	int						HandleCommand( WPARAM wParam, LPARAM lParam );
-	int						HandleInitMenu( WPARAM wParam, LPARAM lParam );
+	void				   HandleCommandSave( rvGEWorkspace* workspace, const char* filename );
 
-	void					HandleCommandSave( rvGEWorkspace* workspace, const char* filename );
+	bool				   InitRecentFiles();
+	void				   UpdateRecentFiles();
 
-	bool					InitRecentFiles();
-	void					UpdateRecentFiles();
+	HWND				   mMDIFrame;
+	HWND				   mMDIClient;
+	HINSTANCE			   mInstance;
+	rvGEOptions			   mOptions;
+	HACCEL				   mAccelerators;
+	rvGENavigator		   mNavigator;
+	rvGETransformer		   mTransformer;
+	rvGEStatusBar		   mStatusBar;
+	rvGEProperties		   mProperties;
 
-	HWND					mMDIFrame;
-	HWND					mMDIClient;
-	HINSTANCE				mInstance;
-	rvGEOptions				mOptions;
-	HACCEL					mAccelerators;
-	rvGENavigator			mNavigator;
-	rvGETransformer			mTransformer;
-	rvGEStatusBar			mStatusBar;
-	rvGEProperties			mProperties;
+	HMENU				   mRecentFileMenu;
+	int					   mRecentFileInsertPos;
 
-	HMENU					mRecentFileMenu;
-	int						mRecentFileInsertPos;
+	rvGEViewer*			   mViewer;
 
-	rvGEViewer*				mViewer;
-
-	idList<rvGEWorkspace*>	mWorkspaces;
-	idList<HWND>			mToolWindows;
+	idList<rvGEWorkspace*> mWorkspaces;
+	idList<HWND>		   mToolWindows;
 
 private:
-
-	static LRESULT CALLBACK	FrameWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-	static LRESULT CALLBACK	MDIChildProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-
+	static LRESULT CALLBACK FrameWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+	static LRESULT CALLBACK MDIChildProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 };
 
 ID_INLINE bool rvGEApp::IsActive()
@@ -184,7 +180,6 @@ ID_INLINE HWND rvGEApp::GetMDIClient()
 {
 	return mMDIClient;
 }
-
 
 extern rvGEApp gApp;
 

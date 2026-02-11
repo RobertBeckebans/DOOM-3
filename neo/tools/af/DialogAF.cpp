@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -46,14 +47,12 @@ If you have questions concerning this license or the applicable additional terms
 
 // DialogAF
 
-#define AFTAB_VIEW				0x01
-#define AFTAB_PROPERTIES		0x02
-#define AFTAB_BODIES			0x03
-#define AFTAB_CONSTRAINTS		0x04
+#define AFTAB_VIEW		  0x01
+#define AFTAB_PROPERTIES  0x02
+#define AFTAB_BODIES	  0x03
+#define AFTAB_CONSTRAINTS 0x04
 
-toolTip_t DialogAF::toolTips[] =
-{
-	{ IDC_COMBO_AF, "select an articulated figure for editing" },
+toolTip_t DialogAF::toolTips[] = { { IDC_COMBO_AF, "select an articulated figure for editing" },
 	{ IDC_BUTTON_AF_NEW, "create a new articulated figure" },
 	{ IDC_BUTTON_AF_DELETE, "delete the selected articulated figure" },
 	{ IDC_BUTTON_AF_SPAWN, "spawn ingame entity using the selected articulated figure" },
@@ -61,12 +60,9 @@ toolTip_t DialogAF::toolTips[] =
 	{ IDC_BUTTON_AF_KILL, "kill ingame entity using the selected articulated figure" },
 	{ IDC_BUTTON_AF_SAVE, "save the selected articulated figure" },
 	{ IDCANCEL, "cancel all changes to all articulated figures" },
-	{ 0, NULL }
-};
-
+	{ 0, NULL } };
 
 DialogAF* g_AFDialog = NULL;
-
 
 IMPLEMENT_DYNAMIC( DialogAF, CDialog )
 
@@ -75,11 +71,11 @@ IMPLEMENT_DYNAMIC( DialogAF, CDialog )
 DialogAF::DialogAF
 ================
 */
-DialogAF::DialogAF( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogAF::IDD, pParent )
-	, file( NULL )
+DialogAF::DialogAF( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogAF::IDD, pParent ),
+	file( NULL )
 {
-	wndTabs = NULL;
+	wndTabs		  = NULL;
 	wndTabDisplay = NULL;
 }
 
@@ -117,19 +113,15 @@ void DialogAF::LoadFile( idDeclAF* af )
 	bodyDlg->LoadFile( af );
 	constraintDlg->LoadFile( af );
 
-	if( file )
-	{
+	if( file ) {
 		// select file in AFList
 		int i = AFList.FindString( -1, file->GetName() );
-		if( i != AFList.GetCurSel() )
-		{
+		if( i != AFList.GetCurSel() ) {
 			AFList.SetCurSel( i );
 		}
 		GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( file->modified );
 		GetDlgItem( IDC_BUTTON_AF_DELETE )->EnableWindow( true );
-	}
-	else
-	{
+	} else {
 		AFList.SetCurSel( -1 );
 		GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( false );
 		GetDlgItem( IDC_BUTTON_AF_DELETE )->EnableWindow( false );
@@ -143,8 +135,7 @@ DialogAF::LoadFile
 */
 void DialogAF::SaveFile()
 {
-	if( !file )
-	{
+	if( !file ) {
 		return;
 	}
 	propertiesDlg->SaveFile();
@@ -160,8 +151,7 @@ DialogAF::SetFileModified
 */
 void DialogAF::SetFileModified()
 {
-	if( file )
-	{
+	if( file ) {
 		file->modified = true;
 		GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( true );
 	}
@@ -188,8 +178,7 @@ void DialogAF::InitAFList()
 
 	AFList.ResetContent();
 	c = declManager->GetNumDecls( DECL_AF );
-	for( i = 0; i < c; i++ )
-	{
+	for( i = 0; i < c; i++ ) {
 		AFList.AddString( static_cast<const idDeclAF*>( declManager->DeclByIndex( DECL_AF, i, false ) )->GetName() );
 	}
 }
@@ -202,9 +191,9 @@ DialogAF::AddTabItem
 void DialogAF::AddTabItem( int id, const char* name )
 {
 	TCITEM item;
-	item.mask = TCIF_PARAM;
+	item.mask	= TCIF_PARAM;
 	item.lParam = id;
-	int tab = wndTabs->InsertItem( wndTabs->GetItemCount(), name );
+	int tab		= wndTabs->InsertItem( wndTabs->GetItemCount(), name );
 	wndTabs->SetItem( tab, &item );
 }
 
@@ -216,13 +205,11 @@ DialogAF::SetTab
 void DialogAF::SetTab( int id )
 {
 	int c = wndTabs->GetItemCount();
-	for( int i = 0; i < c; i++ )
-	{
+	for( int i = 0; i < c; i++ ) {
 		TCITEM item;
 		item.mask = TCIF_PARAM;
 		wndTabs->GetItem( i, &item );
-		if( item.lParam == id )
-		{
+		if( item.lParam == id ) {
 			wndTabs->SetCurSel( i );
 			return;
 		}
@@ -239,8 +226,7 @@ DialogAF::SetTabChildPos
 */
 void DialogAF::SetTabChildPos()
 {
-	if( wndTabDisplay )
-	{
+	if( wndTabDisplay ) {
 		wndTabDisplay->ShowWindow( SW_SHOW );
 		wndTabDisplay->SetWindowPos( wndTabs, 12, 60, 0, 0, SWP_NOSIZE );
 	}
@@ -261,7 +247,7 @@ BOOL DialogAF::OnInitDialog()
 	InitAFList();
 
 	// initialize tabs
-	wndTabs = ( CTabCtrl* ) GetDlgItem( IDC_DIALOG_AF_TAB_MODE );
+	wndTabs = ( CTabCtrl* )GetDlgItem( IDC_DIALOG_AF_TAB_MODE );
 	AddTabItem( AFTAB_VIEW, "View" );
 	AddTabItem( AFTAB_PROPERTIES, "Properties" );
 	AddTabItem( AFTAB_BODIES, "Bodies" );
@@ -269,16 +255,16 @@ BOOL DialogAF::OnInitDialog()
 	SetTab( AFTAB_VIEW );
 
 	// create child dialog windows
-	viewDlg = new DialogAFView( this );
+	viewDlg		  = new DialogAFView( this );
 	propertiesDlg = new DialogAFProperties( this );
-	bodyDlg = new DialogAFBody( this );
+	bodyDlg		  = new DialogAFBody( this );
 	constraintDlg = new DialogAFConstraint( this );
 
 	// the body dialog may force the constraint dialog to reload the file
 	bodyDlg->constraintDlg = constraintDlg;
 
 	// the properties dialog may force the body or constraint dialog to reload the file
-	propertiesDlg->bodyDlg = bodyDlg;
+	propertiesDlg->bodyDlg		 = bodyDlg;
 	propertiesDlg->constraintDlg = constraintDlg;
 
 	// set active child dialog
@@ -290,29 +276,27 @@ BOOL DialogAF::OnInitDialog()
 	GetDlgItem( IDC_BUTTON_AF_DELETE )->EnableWindow( false );
 	GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( false );
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-
 BEGIN_MESSAGE_MAP( DialogAF, CDialog )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
-	ON_NOTIFY( TCN_SELCHANGE, IDC_DIALOG_AF_TAB_MODE, OnTcnSelchangeTabMode )
-	ON_WM_DESTROY()
-	ON_WM_ACTIVATE()
-	ON_WM_MOVE()
-	ON_WM_SETFOCUS()
-	ON_CBN_SELCHANGE( IDC_COMBO_AF, OnCbnSelchangeComboAf )
-	ON_BN_CLICKED( IDC_BUTTON_AF_NEW, OnBnClickedButtonAfNew )
-	ON_BN_CLICKED( IDC_BUTTON_AF_DELETE, OnBnClickedButtonAfDelete )
-	ON_BN_CLICKED( IDC_BUTTON_AF_SAVE, OnBnClickedButtonAfSave )
-	ON_BN_CLICKED( IDC_BUTTON_AF_SPAWN, OnBnClickedButtonAfSpawn )
-	ON_BN_CLICKED( IDCANCEL, OnBnClickedCancel )
-	ON_BN_CLICKED( IDC_BUTTON_AF_KILL, OnBnClickedButtonAfKill )
-	ON_BN_CLICKED( IDC_BUTTON_AF_TPOSE, OnBnClickedButtonAfTpose )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY_EX_RANGE( TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipNotify )
+ON_NOTIFY( TCN_SELCHANGE, IDC_DIALOG_AF_TAB_MODE, OnTcnSelchangeTabMode )
+ON_WM_DESTROY()
+ON_WM_ACTIVATE()
+ON_WM_MOVE()
+ON_WM_SETFOCUS()
+ON_CBN_SELCHANGE( IDC_COMBO_AF, OnCbnSelchangeComboAf )
+ON_BN_CLICKED( IDC_BUTTON_AF_NEW, OnBnClickedButtonAfNew )
+ON_BN_CLICKED( IDC_BUTTON_AF_DELETE, OnBnClickedButtonAfDelete )
+ON_BN_CLICKED( IDC_BUTTON_AF_SAVE, OnBnClickedButtonAfSave )
+ON_BN_CLICKED( IDC_BUTTON_AF_SPAWN, OnBnClickedButtonAfSpawn )
+ON_BN_CLICKED( IDCANCEL, OnBnClickedCancel )
+ON_BN_CLICKED( IDC_BUTTON_AF_KILL, OnBnClickedButtonAfKill )
+ON_BN_CLICKED( IDC_BUTTON_AF_TPOSE, OnBnClickedButtonAfTpose )
 END_MESSAGE_MAP()
-
 
 /*
 ================
@@ -321,22 +305,18 @@ AFEditorInit
 */
 void AFEditorInit( const idDict* spawnArgs )
 {
-
-	if( renderSystem->IsFullScreen() )
-	{
+	if( renderSystem->IsFullScreen() ) {
 		common->Printf( "Cannot run the articulated figure editor in fullscreen mode.\n"
 						"Set r_fullscreen to 0 and vid_restart.\n" );
 		return;
 	}
 
-	if( g_AFDialog == NULL )
-	{
+	if( g_AFDialog == NULL ) {
 		InitAfx();
 		g_AFDialog = new DialogAF();
 	}
 
-	if( g_AFDialog->GetSafeHwnd() == NULL )
-	{
+	if( g_AFDialog->GetSafeHwnd() == NULL ) {
 		g_AFDialog->Create( IDD_DIALOG_AF );
 		/*
 				// FIXME: restore position
@@ -350,17 +330,14 @@ void AFEditorInit( const idDict* spawnArgs )
 	g_AFDialog->ShowWindow( SW_SHOW );
 	g_AFDialog->SetFocus();
 
-	if( spawnArgs )
-	{
+	if( spawnArgs ) {
 		// select AF based on spawn args
 		const char* name = spawnArgs->GetString( "articulatedFigure" );
-		if( name[0] == '\0' )
-		{
+		if( name[0] == '\0' ) {
 			name = spawnArgs->GetString( "ragdoll" );
 		}
 		idDeclAF* decl = static_cast<idDeclAF*>( const_cast<idDecl*>( declManager->FindType( DECL_AF, name ) ) );
-		if( decl )
-		{
+		if( decl ) {
 			g_AFDialog->LoadFile( decl );
 		}
 	}
@@ -374,16 +351,14 @@ AFEditorRun
 void AFEditorRun()
 {
 #if _MSC_VER >= 1300
-	MSG* msg = AfxGetCurrentMessage();			// TODO Robert fix me!!
+	MSG* msg = AfxGetCurrentMessage(); // TODO Robert fix me!!
 #else
 	MSG* msg = &m_msgCur;
 #endif
 
-	while( ::PeekMessage( msg, NULL, NULL, NULL, PM_NOREMOVE ) )
-	{
+	while( ::PeekMessage( msg, NULL, NULL, NULL, PM_NOREMOVE ) ) {
 		// pump message
-		if( !AfxGetApp()->PumpMessage() )
-		{
+		if( !AfxGetApp()->PumpMessage() ) {
 		}
 	}
 }
@@ -398,7 +373,6 @@ void AFEditorShutdown()
 	delete g_AFDialog;
 	g_AFDialog = NULL;
 }
-
 
 // DialogAF message handlers
 
@@ -429,7 +403,7 @@ DialogAF::OnSetFocus
 */
 void DialogAF::OnSetFocus( CWnd* pOldWnd )
 {
-	//SetActiveWindow();
+	// SetActiveWindow();
 	CDialog::OnSetFocus( pOldWnd );
 }
 
@@ -440,7 +414,6 @@ DialogAF::OnDestroy
 */
 void DialogAF::OnDestroy()
 {
-
 	com_editors &= ~EDITOR_AF;
 
 	return CDialog::OnDestroy();
@@ -453,8 +426,7 @@ DialogAF::OnMove
 */
 void DialogAF::OnMove( int x, int y )
 {
-	if( GetSafeHwnd() )
-	{
+	if( GetSafeHwnd() ) {
 		CRect rct;
 		GetWindowRect( rct );
 		// FIXME: save position
@@ -474,8 +446,7 @@ void DialogAF::OnTcnSelchangeTabMode( NMHDR* pNMHDR, LRESULT* pResult )
 	*pResult = 0;
 
 	// hide the current tab child dialog box, if any.
-	if( wndTabDisplay != NULL )
-	{
+	if( wndTabDisplay != NULL ) {
 		wndTabDisplay->ShowWindow( SW_HIDE );
 	}
 
@@ -484,8 +455,7 @@ void DialogAF::OnTcnSelchangeTabMode( NMHDR* pNMHDR, LRESULT* pResult )
 	wndTabs->GetItem( wndTabs->GetCurSel(), &item );
 
 	// show the new tab child dialog box.
-	switch( item.lParam )
-	{
+	switch( item.lParam ) {
 		case AFTAB_VIEW:
 			wndTabDisplay = viewDlg;
 			break;
@@ -511,13 +481,11 @@ DialogAF::OnCbnSelchangeComboAf
 void DialogAF::OnCbnSelchangeComboAf()
 {
 	int index = AFList.GetCurSel();
-	if( index < 0 || index >= declManager->GetNumDecls( DECL_AF ) )
-	{
+	if( index < 0 || index >= declManager->GetNumDecls( DECL_AF ) ) {
 		InitAFList();
 		return;
 	}
-	if( index != CB_ERR )
-	{
+	if( index != CB_ERR ) {
 		CString str;
 		AFList.GetLBText( index, str );
 		LoadFile( static_cast<idDeclAF*>( const_cast<idDecl*>( declManager->FindType( DECL_AF, str ) ) ) );
@@ -532,19 +500,17 @@ DialogAF::OnBnClickedButtonAfNew
 void DialogAF::OnBnClickedButtonAfNew()
 {
 	DialogAFName nameDlg;
-	CString name;
-	idStr fileName;
+	CString		 name;
+	idStr		 fileName;
 
 	nameDlg.SetComboBox( &AFList );
-	if( nameDlg.DoModal() != IDOK )
-	{
+	if( nameDlg.DoModal() != IDOK ) {
 		return;
 	}
 	nameDlg.GetName( name );
 
 	CFileDialog dlgSave( FALSE, "map", NULL, OFN_OVERWRITEPROMPT, "AF Files (*.af)|*.af|All Files (*.*)|*.*||", AfxGetMainWnd() );
-	if( dlgSave.DoModal() != IDOK )
-	{
+	if( dlgSave.DoModal() != IDOK ) {
 		return;
 	}
 	fileName = fileSystem->OSPathToRelativePath( dlgSave.m_ofn.lpstrFile );
@@ -567,10 +533,8 @@ void DialogAF::OnBnClickedButtonAfDelete()
 	int i;
 
 	i = AFList.GetCurSel();
-	if( i != CB_ERR )
-	{
-		if( MessageBox( "Are you sure you want to delete the articulated figure file ?", "Delete Articulated Figure", MB_YESNO | MB_ICONQUESTION ) == IDYES )
-		{
+	if( i != CB_ERR ) {
+		if( MessageBox( "Are you sure you want to delete the articulated figure file ?", "Delete Articulated Figure", MB_YESNO | MB_ICONQUESTION ) == IDYES ) {
 			// FIXME: delete the currently selected .af file
 		}
 	}
@@ -584,8 +548,7 @@ DialogAF::OnBnClickedButtonAfSpawn
 void DialogAF::OnBnClickedButtonAfSpawn()
 {
 	int index = AFList.GetCurSel();
-	if( index != CB_ERR )
-	{
+	if( index != CB_ERR ) {
 		CString str;
 		AFList.GetLBText( index, str );
 		gameEdit->AF_SpawnEntity( str );
@@ -599,8 +562,7 @@ DialogAF::OnBnClickedButtonAfTpose
 */
 void DialogAF::OnBnClickedButtonAfTpose()
 {
-	if( file )
-	{
+	if( file ) {
 		gameEdit->AF_UpdateEntities( file->GetName() );
 	}
 }
@@ -623,14 +585,10 @@ DialogAF::OnBnClickedButtonAfSave
 void DialogAF::OnBnClickedButtonAfSave()
 {
 	// save the selected .af file
-	if( file )
-	{
-		if( file->Save() )
-		{
+	if( file ) {
+		if( file->Save() ) {
 			GetDlgItem( IDC_BUTTON_AF_SAVE )->EnableWindow( false );
-		}
-		else
-		{
+		} else {
 			MessageBox( "Saving the file failed. Make sure the file is not read-only.", "Delete Articulated Figure", MB_OK );
 		}
 	}
@@ -647,12 +605,9 @@ void DialogAF::OnBnClickedCancel()
 
 	// check if there are modified .af files and come up with a warning if so
 	c = declManager->GetNumDecls( DECL_AF );
-	for( i = 0; i < c; i++ )
-	{
-		if( static_cast<const idDeclAF*>( declManager->DeclByIndex( DECL_AF, i ) )->modified )
-		{
-			if( MessageBox( "Some articulated figures have been modified.\nCancel all changes ?", "Cancel", MB_YESNO | MB_ICONQUESTION ) != IDYES )
-			{
+	for( i = 0; i < c; i++ ) {
+		if( static_cast<const idDeclAF*>( declManager->DeclByIndex( DECL_AF, i ) )->modified ) {
+			if( MessageBox( "Some articulated figures have been modified.\nCancel all changes ?", "Cancel", MB_YESNO | MB_ICONQUESTION ) != IDYES ) {
 				return;
 			}
 			break;
@@ -665,7 +620,6 @@ void DialogAF::OnBnClickedCancel()
 	OnCancel();
 }
 
-
 // General convenience routines
 
 /*
@@ -675,8 +629,7 @@ AFDialogSetFileModified
 */
 void AFDialogSetFileModified()
 {
-	if( g_AFDialog )
-	{
+	if( g_AFDialog ) {
 		g_AFDialog->SetFileModified();
 	}
 }
@@ -688,8 +641,7 @@ AFDialogReloadFile
 */
 void AFDialogReloadFile()
 {
-	if( g_AFDialog )
-	{
+	if( g_AFDialog ) {
 		g_AFDialog->ReloadFile();
 	}
 }

@@ -29,8 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #ifndef __SELECT_H_
 #define __SELECT_H_
 
-typedef enum
-{
+typedef enum {
 	sel_brush,
 	// sel_sticky_brush,
 	// sel_face,
@@ -70,8 +69,7 @@ public:
 };
 
 
-typedef struct
-{
+typedef struct {
 	brush_t*		brush;
 	face_t*		face;
 	CDragPoint* point;

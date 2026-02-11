@@ -128,8 +128,7 @@ typedef off_t curl_off_t;
 #undef FILESIZEBITS
 #endif
 
-struct curl_httppost
-{
+struct curl_httppost {
 	struct curl_httppost* next;       /* next entry in the list */
 	char* name;                       /* pointer to allocated name */
 	long namelength;                  /* length of name length */
@@ -184,8 +183,7 @@ typedef int ( *curl_passwd_callback )( void* clientp,
 									   int buflen );
 
 /* the kind of data that is passed to information_callback*/
-typedef enum
-{
+typedef enum {
 	CURLINFO_TEXT = 0,
 	CURLINFO_HEADER_IN,    /* 1 */
 	CURLINFO_HEADER_OUT,   /* 2 */
@@ -208,8 +206,7 @@ typedef int ( *curl_debug_callback )
    codes must remain the same!
  */
 
-typedef enum
-{
+typedef enum {
 	CURLE_OK = 0,
 	CURLE_UNSUPPORTED_PROTOCOL,    /* 1 */
 	CURLE_FAILED_INIT,             /* 2 */
@@ -257,9 +254,9 @@ typedef enum
 	CURLE_BAD_CALLING_ORDER,       /* 44 */
 	CURLE_HTTP_PORT_FAILED,        /* 45 - HTTP Interface operation failed */
 	CURLE_BAD_PASSWORD_ENTERED,    /* 46 - my_getpass() returns fail */
-	CURLE_TOO_MANY_REDIRECTS ,     /* 47 - catch endless re-direct loops */
+	CURLE_TOO_MANY_REDIRECTS,      /* 47 - catch endless re-direct loops */
 	CURLE_UNKNOWN_TELNET_OPTION,   /* 48 - User specified an unknown option */
-	CURLE_TELNET_OPTION_SYNTAX ,   /* 49 - Malformed telnet option */
+	CURLE_TELNET_OPTION_SYNTAX,    /* 49 - Malformed telnet option */
 	CURLE_OBSOLETE,	         /* 50 - removed after 7.7.3 */
 	CURLE_SSL_PEER_CERTIFICATE,    /* 51 - peer's certificate wasn't ok */
 	CURLE_GOT_NOTHING,             /* 52 - when this is a specific error */
@@ -289,8 +286,7 @@ typedef CURLcode( *curl_ssl_ctx_callback )( CURL* curl,  /* easy handle */
 #define CURLE_OPERATION_TIMEDOUT CURLE_OPERATION_TIMEOUTED
 #define CURLE_HTTP_NOT_FOUND CURLE_HTTP_RETURNED_ERROR
 
-typedef enum
-{
+typedef enum {
 	CURLPROXY_HTTP = 0,
 	CURLPROXY_SOCKS4 = 4,
 	CURLPROXY_SOCKS5 = 5
@@ -315,8 +311,7 @@ typedef enum
 
 #define CURL_ERROR_SIZE 256
 
-typedef enum
-{
+typedef enum {
 	CURLFTPSSL_NONE,    /* do not attempt to use SSL */
 	CURLFTPSSL_TRY,     /* try using SSL, proceed anyway otherwise */
 	CURLFTPSSL_CONTROL, /* SSL for the control connection or fail */
@@ -370,8 +365,7 @@ typedef enum
  * word.
  */
 
-typedef enum
-{
+typedef enum {
 	/* This is the FILE * or void * the regular output should be written to. */
 	CINIT( FILE, OBJECTPOINT, 1 ),
 
@@ -444,7 +438,7 @@ typedef enum
 	 */
 
 	/* Set the "low speed limit" */
-	CINIT( LOW_SPEED_LIMIT, LONG , 19 ),
+	CINIT( LOW_SPEED_LIMIT, LONG, 19 ),
 
 	/* Set the "low speed time" */
 	CINIT( LOW_SPEED_TIME, LONG, 20 ),
@@ -751,7 +745,7 @@ typedef enum
 	   getting a response.  This is different from transfer timeout time and
 	   essentially places a demand on the FTP server to acknowledge commands
 	   in a timely manner. */
-	CINIT( FTP_RESPONSE_TIMEOUT, LONG , 112 ),
+	CINIT( FTP_RESPONSE_TIMEOUT, LONG, 112 ),
 
 	/* Set this option to one of the CURL_IPRESOLVE_* defines (see below) to
 	   tell libcurl to resolve names to those IP versions only. This only has
@@ -829,8 +823,7 @@ typedef enum
 
 
 /* These enums are for use with the CURLOPT_HTTP_VERSION option. */
-enum
-{
+enum {
 	CURL_HTTP_VERSION_NONE, /* setting this means we don't care, and that we'd
                              like the library to choose the best possible
                              for us! */
@@ -841,8 +834,7 @@ enum
 };
 
 /* These enums are for use with the CURLOPT_NETRC option. */
-enum CURL_NETRC_OPTION
-{
+enum CURL_NETRC_OPTION {
 	CURL_NETRC_IGNORED,     /* The .netrc will never be read.
                            * This is the default. */
 	CURL_NETRC_OPTIONAL,    /* A user:password in the URL will be preferred
@@ -853,8 +845,7 @@ enum CURL_NETRC_OPTION
 	CURL_NETRC_LAST
 };
 
-enum
-{
+enum {
 	CURL_SSLVERSION_DEFAULT,
 	CURL_SSLVERSION_TLSv1,
 	CURL_SSLVERSION_SSLv2,
@@ -864,8 +855,7 @@ enum
 };
 
 
-typedef enum
-{
+typedef enum {
 	CURL_TIMECOND_NONE,
 
 	CURL_TIMECOND_IFMODSINCE,
@@ -909,8 +899,7 @@ int curl_formparse( char*, struct curl_httppost**,
 #define CFINIT(name) CURLFORM_/**/name
 #endif
 
-typedef enum
-{
+typedef enum {
 	CFINIT( NOTHING ),      /********* the first one is unused ************/
 
 	/*  */
@@ -941,8 +930,7 @@ typedef enum
 #undef CFINIT /* done */
 
 /* structure to be used as parameter for CURLFORM_ARRAY */
-struct curl_forms
-{
+struct curl_forms {
 	CURLformoption		option;
 	const char*		value;
 };
@@ -963,8 +951,7 @@ struct curl_forms
  * CURL_FORMADD_ILLEGAL_ARRAY  if an illegal option is used in an array
  *
  ***************************************************************************/
-typedef enum
-{
+typedef enum {
 	CURL_FORMADD_OK, /* first, no error */
 
 	CURL_FORMADD_MEMORY,
@@ -1071,8 +1058,7 @@ CURLcode curl_global_init( long flags );
 void curl_global_cleanup();
 
 /* linked-list structure for the CURLOPT_QUOTE option (and other) */
-struct curl_slist
-{
+struct curl_slist {
 	char* data;
 	struct curl_slist* next;
 };
@@ -1115,8 +1101,7 @@ time_t curl_getdate( const char* p, const time_t* now );
 #define CURLINFO_MASK     0x0fffff
 #define CURLINFO_TYPEMASK 0xf00000
 
-typedef enum
-{
+typedef enum {
 	CURLINFO_NONE, /* first, never use this */
 	CURLINFO_EFFECTIVE_URL    = CURLINFO_STRING + 1,
 	CURLINFO_RESPONSE_CODE    = CURLINFO_LONG   + 2,
@@ -1151,8 +1136,7 @@ typedef enum
    CURLINFO_HTTP_CODE */
 #define CURLINFO_HTTP_CODE CURLINFO_RESPONSE_CODE
 
-typedef enum
-{
+typedef enum {
 	CURLCLOSEPOLICY_NONE, /* first, never use this */
 
 	CURLCLOSEPOLICY_OLDEST,
@@ -1176,8 +1160,7 @@ typedef enum
  */
 
 /* Different data locks for a single share */
-typedef enum
-{
+typedef enum {
 	CURL_LOCK_DATA_NONE = 0,
 	/*  CURL_LOCK_DATA_SHARE is used internaly to say that
 	 *  the locking is just made to change the internal state of the share
@@ -1192,8 +1175,7 @@ typedef enum
 } curl_lock_data;
 
 /* Different lock access types */
-typedef enum
-{
+typedef enum {
 	CURL_LOCK_ACCESS_NONE = 0,   /* unspecified action */
 	CURL_LOCK_ACCESS_SHARED = 1, /* for read perhaps */
 	CURL_LOCK_ACCESS_SINGLE = 2, /* for write perhaps */
@@ -1210,8 +1192,7 @@ typedef void ( *curl_unlock_function )( CURL* handle,
 
 typedef void CURLSH;
 
-typedef enum
-{
+typedef enum {
 	CURLSHE_OK,  /* all is fine */
 	CURLSHE_BAD_OPTION, /* 1 */
 	CURLSHE_IN_USE,     /* 2 */
@@ -1219,8 +1200,7 @@ typedef enum
 	CURLSHE_LAST /* never use */
 } CURLSHcode;
 
-typedef enum
-{
+typedef enum {
 	CURLSHOPT_NONE,  /* don't use */
 	CURLSHOPT_SHARE,   /* specify a data type to share */
 	CURLSHOPT_UNSHARE, /* specify shich data type to stop sharing */
@@ -1239,8 +1219,7 @@ CURLSHcode curl_share_cleanup( CURLSH* );
  * Structures for querying information about the curl library at runtime.
  */
 
-typedef enum
-{
+typedef enum {
 	CURLVERSION_FIRST,
 	CURLVERSION_SECOND,
 	CURLVERSION_LAST /* never actually use this */
@@ -1253,8 +1232,7 @@ typedef enum
    from above. */
 #define CURLVERSION_NOW CURLVERSION_SECOND
 
-typedef struct
-{
+typedef struct {
 	CURLversion age;          /* age of the returned struct */
 	const char* version;      /* LIBCURL_VERSION */
 	unsigned int version_num; /* LIBCURL_VERSION_NUM */

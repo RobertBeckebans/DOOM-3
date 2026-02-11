@@ -16,7 +16,7 @@
 //	If you use this code, drop me an email.  I'd like to know if you find the code
 //	useful.
 
-//#include "stdafx.h"
+// #include "stdafx.h"
 #include "../../../idlib/precompiled.h"
 #pragma hdrstop
 
@@ -27,7 +27,7 @@
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -42,11 +42,10 @@ CPropTreeInfo::~CPropTreeInfo()
 {
 }
 
-
 BEGIN_MESSAGE_MAP( CPropTreeInfo, CStatic )
-	//{{AFX_MSG_MAP(CPropTreeInfo)
-	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropTreeInfo)
+ON_WM_PAINT()
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -60,7 +59,7 @@ void CPropTreeInfo::SetPropOwner( CPropTree* pProp )
 void CPropTreeInfo::OnPaint()
 {
 	CPaintDC dc( this );
-	CRect rc;
+	CRect	 rc;
 
 	GetClientRect( rc );
 
@@ -74,12 +73,9 @@ void CPropTreeInfo::OnPaint()
 
 	CPropTreeItem* pItem = m_pProp->GetFocusedItem();
 
-	if( !m_pProp->IsWindowEnabled() )
-	{
+	if( !m_pProp->IsWindowEnabled() ) {
 		dc.SetTextColor( GetSysColor( COLOR_GRAYTEXT ) );
-	}
-	else
-	{
+	} else {
 		dc.SetTextColor( GetSysColor( COLOR_BTNTEXT ) );
 	}
 
@@ -88,12 +84,9 @@ void CPropTreeInfo::OnPaint()
 
 	CString txt;
 
-	if( !pItem )
-	{
+	if( !pItem ) {
 		txt.LoadString( IDS_NOITEMSEL );
-	}
-	else
-	{
+	} else {
 		txt = pItem->GetLabelText();
 	}
 
@@ -104,16 +97,13 @@ void CPropTreeInfo::OnPaint()
 	dc.DrawText( txt, &ir, DT_SINGLELINE | DT_CALCRECT );
 	dc.DrawText( txt, &ir, DT_SINGLELINE );
 
-	ir.top = ir.bottom;
+	ir.top	  = ir.bottom;
 	ir.bottom = rc.bottom;
-	ir.right = rc.right;
+	ir.right  = rc.right;
 
-	if( pItem )
-	{
+	if( pItem ) {
 		txt = pItem->GetInfoText();
-	}
-	else
-	{
+	} else {
 		txt.LoadString( IDS_SELFORINFO );
 	}
 

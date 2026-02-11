@@ -21,19 +21,19 @@
 #ifndef HAVE_INET_PTON
 
 #ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
+	#include <sys/param.h>
 #endif
 #ifdef HAVE_SYS_TYPES_H
-#include <sys/types.h>
+	#include <sys/types.h>
 #endif
 #ifdef HAVE_SYS_SOCKET_H
-#include <sys/socket.h>
+	#include <sys/socket.h>
 #endif
 #ifdef HAVE_NETINET_IN_H
-#include <netinet/in.h>
+	#include <netinet/in.h>
 #endif
 #ifdef HAVE_ARPA_INET_H
-#include <arpa/inet.h>
+	#include <arpa/inet.h>
 #endif
 #include <string.h>
 #include <errno.h>
@@ -45,7 +45,7 @@
 #define	INT16SZ		 2
 
 #ifdef WIN32
-#define EAFNOSUPPORT    WSAEAFNOSUPPORT
+	#define EAFNOSUPPORT    WSAEAFNOSUPPORT
 #endif
 
 /*
@@ -53,9 +53,9 @@
  * sizeof(int) < 4.  sizeof(int) > 4 is fine; all the world's not a VAX.
  */
 
-static int	inet_pton4(const char *src, unsigned char *dst);
+static int	inet_pton4( const char* src, unsigned char* dst );
 #ifdef ENABLE_IPV6
-static int	inet_pton6(const char *src, unsigned char *dst);
+	static int	inet_pton6( const char* src, unsigned char* dst );
 #endif
 
 /* int
@@ -70,21 +70,21 @@ static int	inet_pton6(const char *src, unsigned char *dst);
  *	Paul Vixie, 1996.
  */
 int
-Curl_inet_pton(int af, const char *src, void *dst)
+Curl_inet_pton( int af, const char* src, void* dst )
 {
-	switch (af) {
-	case AF_INET:
-		return (inet_pton4(src, dst));
+	switch( af ) {
+		case AF_INET:
+			return ( inet_pton4( src, dst ) );
 #ifdef ENABLE_IPV6
 #ifndef	AF_INET6
 #define	AF_INET6	AF_MAX+1	/* just to let this compile */
 #endif
-	case AF_INET6:
-		return (inet_pton6(src, dst));
+		case AF_INET6:
+			return ( inet_pton6( src, dst ) );
 #endif
-	default:
-		errno = EAFNOSUPPORT;
-		return (-1);
+		default:
+			errno = EAFNOSUPPORT;
+			return ( -1 );
 	}
 	/* NOTREACHED */
 }
@@ -100,42 +100,47 @@ Curl_inet_pton(int af, const char *src, void *dst)
  *	Paul Vixie, 1996.
  */
 static int
-inet_pton4(const char *src, unsigned char *dst)
+inet_pton4( const char* src, unsigned char* dst )
 {
 	static const char digits[] = "0123456789";
 	int saw_digit, octets, ch;
-	unsigned char tmp[INADDRSZ], *tp;
+	unsigned char tmp[INADDRSZ], * tp;
 
 	saw_digit = 0;
 	octets = 0;
-	*(tp = tmp) = 0;
-	while ((ch = *src++) != '\0') {
-		const char *pch;
+	*( tp = tmp ) = 0;
+	while( ( ch = *src++ ) != '\0' ) {
+		const char* pch;
 
-		if ((pch = strchr(digits, ch)) != NULL) {
-			u_int new = *tp * 10 + (pch - digits);
+		if( ( pch = strchr( digits, ch ) ) != NULL ) {
+			u_int new = *tp * 10 + ( pch - digits );
 
-			if (new > 255)
-				return (0);
+			if( new > 255 ) {
+				return ( 0 );
+			}
 			*tp = new;
-			if (! saw_digit) {
-				if (++octets > 4)
-					return (0);
+			if( ! saw_digit ) {
+				if( ++octets > 4 ) {
+					return ( 0 );
+				}
 				saw_digit = 1;
 			}
-		} else if (ch == '.' && saw_digit) {
-			if (octets == 4)
-				return (0);
+		} else if( ch == '.' && saw_digit ) {
+			if( octets == 4 ) {
+				return ( 0 );
+			}
 			*++tp = 0;
 			saw_digit = 0;
-		} else
-			return (0);
+		} else {
+			return ( 0 );
+		}
 	}
-	if (octets < 4)
-		return (0);
+	if( octets < 4 ) {
+		return ( 0 );
+	}
 	/* bcopy(tmp, dst, INADDRSZ); */
-	memcpy(dst, tmp, INADDRSZ);
-	return (1);
+	memcpy( dst, tmp, INADDRSZ );
+	return ( 1 );
 }
 
 #ifdef ENABLE_IPV6
@@ -153,69 +158,75 @@ inet_pton4(const char *src, unsigned char *dst)
  *	Paul Vixie, 1996.
  */
 static int
-inet_pton6(const char *src, unsigned char *dst)
+inet_pton6( const char* src, unsigned char* dst )
 {
 	static const char xdigits_l[] = "0123456789abcdef",
-			  xdigits_u[] = "0123456789ABCDEF";
-	unsigned char tmp[IN6ADDRSZ], *tp, *endp, *colonp;
-	const char *xdigits, *curtok;
+									xdigits_u[] = "0123456789ABCDEF";
+	unsigned char tmp[IN6ADDRSZ], * tp, * endp, * colonp;
+	const char* xdigits, * curtok;
 	int ch, saw_xdigit;
 	u_int val;
 
-	memset((tp = tmp), 0, IN6ADDRSZ);
+	memset( ( tp = tmp ), 0, IN6ADDRSZ );
 	endp = tp + IN6ADDRSZ;
 	colonp = NULL;
 	/* Leading :: requires some special handling. */
-	if (*src == ':')
-		if (*++src != ':')
-			return (0);
+	if( *src == ':' )
+		if( *++src != ':' ) {
+			return ( 0 );
+		}
 	curtok = src;
 	saw_xdigit = 0;
 	val = 0;
-	while ((ch = *src++) != '\0') {
-		const char *pch;
+	while( ( ch = *src++ ) != '\0' ) {
+		const char* pch;
 
-		if ((pch = strchr((xdigits = xdigits_l), ch)) == NULL)
-			pch = strchr((xdigits = xdigits_u), ch);
-		if (pch != NULL) {
+		if( ( pch = strchr( ( xdigits = xdigits_l ), ch ) ) == NULL ) {
+			pch = strchr( ( xdigits = xdigits_u ), ch );
+		}
+		if( pch != NULL ) {
 			val <<= 4;
-			val |= (pch - xdigits);
-			if (val > 0xffff)
-				return (0);
+			val |= ( pch - xdigits );
+			if( val > 0xffff ) {
+				return ( 0 );
+			}
 			saw_xdigit = 1;
 			continue;
 		}
-		if (ch == ':') {
+		if( ch == ':' ) {
 			curtok = src;
-			if (!saw_xdigit) {
-				if (colonp)
-					return (0);
+			if( !saw_xdigit ) {
+				if( colonp ) {
+					return ( 0 );
+				}
 				colonp = tp;
 				continue;
 			}
-			if (tp + INT16SZ > endp)
-				return (0);
-			*tp++ = (unsigned char) (val >> 8) & 0xff;
-			*tp++ = (unsigned char) val & 0xff;
+			if( tp + INT16SZ > endp ) {
+				return ( 0 );
+			}
+			*tp++ = ( unsigned char )( val >> 8 ) & 0xff;
+			*tp++ = ( unsigned char ) val & 0xff;
 			saw_xdigit = 0;
 			val = 0;
 			continue;
 		}
-		if (ch == '.' && ((tp + INADDRSZ) <= endp) &&
-		    inet_pton4(curtok, tp) > 0) {
+		if( ch == '.' && ( ( tp + INADDRSZ ) <= endp ) &&
+				inet_pton4( curtok, tp ) > 0 ) {
 			tp += INADDRSZ;
 			saw_xdigit = 0;
 			break;	/* '\0' was seen by inet_pton4(). */
 		}
-		return (0);
+		return ( 0 );
 	}
-	if (saw_xdigit) {
-		if (tp + INT16SZ > endp)
-			return (0);
-		*tp++ = (unsigned char) (val >> 8) & 0xff;
-		*tp++ = (unsigned char) val & 0xff;
+	if( saw_xdigit ) {
+		if( tp + INT16SZ > endp ) {
+			return ( 0 );
+		}
+		*tp++ = ( unsigned char )( val >> 8 ) & 0xff;
+		*tp++ = ( unsigned char ) val & 0xff;
 	}
-	if (colonp != NULL) {
+	if( colonp != NULL ) {
 		/*
 		 * Since some memmove()'s erroneously fail to handle
 		 * overlapping regions, we'll do the shift by hand.
@@ -223,17 +234,18 @@ inet_pton6(const char *src, unsigned char *dst)
 		const int n = tp - colonp;
 		int i;
 
-		for (i = 1; i <= n; i++) {
+		for( i = 1; i <= n; i++ ) {
 			endp[- i] = colonp[n - i];
 			colonp[n - i] = 0;
 		}
 		tp = endp;
 	}
-	if (tp != endp)
-		return (0);
+	if( tp != endp ) {
+		return ( 0 );
+	}
 	/* bcopy(tmp, dst, IN6ADDRSZ); */
-	memcpy(dst, tmp, IN6ADDRSZ);
-	return (1);
+	memcpy( dst, tmp, IN6ADDRSZ );
+	return ( 1 );
 }
 #endif /* ENABLE_IPV6 */
 

@@ -28,8 +28,7 @@
 
 #define PACKETBLOBS 15
 
-typedef struct vorbis_block_internal
-{
+typedef struct vorbis_block_internal {
 	float**  pcmdelay;  /* this is a pointer into local storage */
 	float  ampmax;
 	int    blocktype;
@@ -42,8 +41,7 @@ typedef void vorbis_look_residue;
 typedef void vorbis_look_transform;
 
 /* mode ************************************************************/
-typedef struct
-{
+typedef struct {
 	int blockflag;
 	int windowtype;
 	int transformtype;
@@ -57,8 +55,7 @@ typedef void vorbis_info_mapping;
 #include "psy.h"
 #include "bitrate.h"
 
-typedef struct private_state
-{
+typedef struct private_state {
 	/* local lookup storage */
 	envelope_lookup*        ve; /* envelope lookup */
 	int                     window[2];
@@ -91,8 +88,7 @@ typedef struct private_state
 *********************************************************************/
 
 #include "highlevel.h"
-typedef struct codec_setup_info
-{
+typedef struct codec_setup_info {
 
 	/* Vorbis supports only short and long blocks, but allows the
 	   encoder to choose the sizes */

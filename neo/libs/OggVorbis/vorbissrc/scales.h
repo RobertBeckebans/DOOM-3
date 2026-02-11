@@ -55,8 +55,7 @@ static float todB( const float* x )
 
 static float unitnorm( float x )
 {
-	if( x < 0 )
-	{
+	if( x < 0 ) {
 		return( -1.f );
 	}
 	return( 1.f );

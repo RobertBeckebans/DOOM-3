@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -33,16 +34,15 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "../Session_local.h"
 
-const int MIN_RECONNECT_TIME			= 2000;
-const int EMPTY_RESEND_TIME				= 500;
-const int PING_RESEND_TIME				= 500;
-const int NOINPUT_IDLE_TIME				= 30000;
+const int	MIN_RECONNECT_TIME = 2000;
+const int	EMPTY_RESEND_TIME  = 500;
+const int	PING_RESEND_TIME   = 500;
+const int	NOINPUT_IDLE_TIME  = 30000;
 
-const int HEARTBEAT_MSEC				= 5 * 60 * 1000;
+const int	HEARTBEAT_MSEC = 5 * 60 * 1000;
 
 // must be kept in sync with authReplyMsg_t
-const char* authReplyMsg[] =
-{
+const char* authReplyMsg[] = {
 	//	"Waiting for authorization",
 	"#str_07204",
 	//	"Client unknown to auth",
@@ -55,13 +55,7 @@ const char* authReplyMsg[] =
 	"#str_07208"
 };
 
-const char* authReplyStr[] =
-{
-	"AUTH_NONE",
-	"AUTH_OK",
-	"AUTH_WAIT",
-	"AUTH_DENY"
-};
+const char* authReplyStr[] = { "AUTH_NONE", "AUTH_OK", "AUTH_WAIT", "AUTH_DENY" };
 
 /*
 ==================
@@ -72,33 +66,32 @@ idAsyncServer::idAsyncServer()
 {
 	int i;
 
-	active = false;
-	realTime = 0;
-	serverTime = 0;
-	serverId = 0;
+	active			   = false;
+	realTime		   = 0;
+	serverTime		   = 0;
+	serverId		   = 0;
 	serverDataChecksum = 0;
-	localClientNum = -1;
-	gameInitId = 0;
-	gameFrame = 0;
-	gameTime = 0;
-	gameTimeResidual = 0;
+	localClientNum	   = -1;
+	gameInitId		   = 0;
+	gameFrame		   = 0;
+	gameTime		   = 0;
+	gameTimeResidual   = 0;
 	memset( challenges, 0, sizeof( challenges ) );
 	memset( userCmds, 0, sizeof( userCmds ) );
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		ClearClient( i );
 	}
 	serverReloadingEngine = false;
-	nextHeartbeatTime = 0;
-	nextAsyncStatsTime = 0;
-	noRconOutput = true;
-	lastAuthTime = 0;
+	nextHeartbeatTime	  = 0;
+	nextAsyncStatsTime	  = 0;
+	noRconOutput		  = true;
+	lastAuthTime		  = 0;
 
 	memset( stats_outrate, 0, sizeof( stats_outrate ) );
-	stats_current = 0;
+	stats_current	  = 0;
 	stats_average_sum = 0;
-	stats_max = 0;
-	stats_max_index = 0;
+	stats_max		  = 0;
+	stats_max_index	  = 0;
 }
 
 /*
@@ -111,28 +104,20 @@ bool idAsyncServer::InitPort()
 	int lastPort;
 
 	// if this is the first time we have spawned a server, open the UDP port
-	if( !serverPort.GetPort() )
-	{
-		if( cvarSystem->GetCVarInteger( "net_port" ) != 0 )
-		{
-			if( !serverPort.InitForPort( cvarSystem->GetCVarInteger( "net_port" ) ) )
-			{
+	if( !serverPort.GetPort() ) {
+		if( cvarSystem->GetCVarInteger( "net_port" ) != 0 ) {
+			if( !serverPort.InitForPort( cvarSystem->GetCVarInteger( "net_port" ) ) ) {
 				common->Printf( "Unable to open server on port %d (net_port)\n", cvarSystem->GetCVarInteger( "net_port" ) );
 				return false;
 			}
-		}
-		else
-		{
+		} else {
 			// scan for multiple ports, in case other servers are running on this IP already
-			for( lastPort = 0; lastPort < NUM_SERVER_PORTS; lastPort++ )
-			{
-				if( serverPort.InitForPort( PORT_SERVER + lastPort ) )
-				{
+			for( lastPort = 0; lastPort < NUM_SERVER_PORTS; lastPort++ ) {
+				if( serverPort.InitForPort( PORT_SERVER + lastPort ) ) {
 					break;
 				}
 			}
-			if( lastPort >= NUM_SERVER_PORTS )
-			{
+			if( lastPort >= NUM_SERVER_PORTS ) {
 				common->Printf( "Unable to open server network port.\n" );
 				return false;
 			}
@@ -152,9 +137,8 @@ void idAsyncServer::ClosePort()
 	int i;
 
 	serverPort.Close();
-	for( i = 0; i < MAX_CHALLENGES; i++ )
-	{
-		challenges[ i ].authReplyPrint.Clear();
+	for( i = 0; i < MAX_CHALLENGES; i++ ) {
+		challenges[i].authReplyPrint.Clear();
 	}
 }
 
@@ -165,38 +149,33 @@ idAsyncServer::Spawn
 */
 void idAsyncServer::Spawn()
 {
-	int			i, size;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	netadr_t	from;
+	int		 i, size;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	netadr_t from;
 
 	// shutdown any current game
 	session->Stop();
 
-	if( active )
-	{
+	if( active ) {
 		return;
 	}
 
-	if( !InitPort() )
-	{
+	if( !InitPort() ) {
 		return;
 	}
 
 	// trash any currently pending packets
-	while( serverPort.GetPacket( from, msgBuf, size, sizeof( msgBuf ) ) )
-	{
+	while( serverPort.GetPacket( from, msgBuf, size, sizeof( msgBuf ) ) ) {
 	}
 
 	// reset cheats cvars
-	if( !idAsyncNetwork::allowCheats.GetBool() )
-	{
+	if( !idAsyncNetwork::allowCheats.GetBool() ) {
 		cvarSystem->ResetFlaggedVariables( CVAR_CHEAT );
 	}
 
 	memset( challenges, 0, sizeof( challenges ) );
 	memset( userCmds, 0, sizeof( userCmds ) );
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		ClearClient( i );
 	}
 
@@ -210,7 +189,7 @@ void idAsyncServer::Spawn()
 
 	active = true;
 
-	nextHeartbeatTime = 0;
+	nextHeartbeatTime  = 0;
 	nextAsyncStatsTime = 0;
 
 	ExecuteMapChange();
@@ -225,30 +204,22 @@ void idAsyncServer::Kill()
 {
 	int i, j;
 
-	if( !active )
-	{
+	if( !active ) {
 		return;
 	}
 
 	// drop all clients
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		DropClient( i, "#str_07135" );
 	}
 
 	// send some empty messages to the zombie clients to make sure they disconnect
-	for( j = 0; j < 4; j++ )
-	{
-		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-		{
-			if( clients[i].clientState == SCS_ZOMBIE )
-			{
-				if( clients[i].channel.UnsentFragmentsLeft() )
-				{
+	for( j = 0; j < 4; j++ ) {
+		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+			if( clients[i].clientState == SCS_ZOMBIE ) {
+				if( clients[i].channel.UnsentFragmentsLeft() ) {
 					clients[i].channel.SendNextFragment( serverPort, serverTime );
-				}
-				else
-				{
+				} else {
 					SendEmptyToClient( i, true );
 				}
 			}
@@ -272,13 +243,13 @@ idAsyncServer::ExecuteMapChange
 */
 void idAsyncServer::ExecuteMapChange()
 {
-	int			i;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	idStr		mapName;
-	findFile_t	ff;
-	bool		addonReload = false;
-	char		bestGameType[ MAX_STRING_CHARS ];
+	int		   i;
+	idBitMsg   msg;
+	byte	   msgBuf[MAX_MESSAGE_SIZE];
+	idStr	   mapName;
+	findFile_t ff;
+	bool	   addonReload = false;
+	char	   bestGameType[MAX_STRING_CHARS];
 
 	assert( active );
 
@@ -295,8 +266,7 @@ void idAsyncServer::ExecuteMapChange()
 	sprintf( mapName, "maps/%s", sessLocal.mapSpawnData.serverInfo.GetString( "si_map" ) );
 	mapName.SetFileExtension( ".map" );
 	ff = fileSystem->FindFile( mapName, !serverReloadingEngine );
-	switch( ff )
-	{
+	switch( ff ) {
 		case FIND_NO:
 			common->Printf( "Can't find map %s\n", mapName.c_str() );
 			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "disconnect\n" );
@@ -312,10 +282,8 @@ void idAsyncServer::ExecuteMapChange()
 	}
 
 	// if we are asked to do a full reload, the strategy is completely different
-	if( !serverReloadingEngine && ( addonReload || idAsyncNetwork::serverReloadEngine.GetInteger() != 0 ) )
-	{
-		if( idAsyncNetwork::serverReloadEngine.GetInteger() != 0 )
-		{
+	if( !serverReloadingEngine && ( addonReload || idAsyncNetwork::serverReloadEngine.GetInteger() != 0 ) ) {
+		if( idAsyncNetwork::serverReloadEngine.GetInteger() != 0 ) {
 			common->Printf( "net_serverReloadEngine enabled - doing a full reload\n" );
 		}
 		// tell the clients to reconnect
@@ -323,22 +291,19 @@ void idAsyncServer::ExecuteMapChange()
 		// in a lot of cases this is going to trigger two reloadEngines for the clients
 		// one to restart, the other one to set paks right ( with addon for instance )
 		// can fix by reconnecting without reloading and waiting for the server to tell..
-		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-		{
-			if( clients[ i ].clientState >= SCS_PUREWAIT && i != localClientNum )
-			{
+		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+			if( clients[i].clientState >= SCS_PUREWAIT && i != localClientNum ) {
 				msg.Init( msgBuf, sizeof( msgBuf ) );
 				msg.WriteByte( SERVER_RELIABLE_MESSAGE_RELOAD );
 				SendReliableMessage( i, msg );
-				clients[ i ].clientState = SCS_ZOMBIE; // so we don't bother sending a disconnect
+				clients[i].clientState = SCS_ZOMBIE; // so we don't bother sending a disconnect
 			}
 		}
 		cmdSystem->BufferCommandText( CMD_EXEC_NOW, "reloadEngine" );
 		serverReloadingEngine = true; // don't get caught in endless loop
 		cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "spawnServer\n" );
 		// decrease feature
-		if( idAsyncNetwork::serverReloadEngine.GetInteger() > 0 )
-		{
+		if( idAsyncNetwork::serverReloadEngine.GetInteger() > 0 ) {
 			idAsyncNetwork::serverReloadEngine.SetInteger( idAsyncNetwork::serverReloadEngine.GetInteger() - 1 );
 		}
 		return;
@@ -348,44 +313,35 @@ void idAsyncServer::ExecuteMapChange()
 	serverTime = 0;
 
 	// initialize game id and time
-	gameInitId ^= Sys_Milliseconds();	// NOTE: make sure the gameInitId is always a positive number because negative numbers have special meaning
-	gameFrame = 0;
-	gameTime = 0;
+	gameInitId ^= Sys_Milliseconds(); // NOTE: make sure the gameInitId is always a positive number because negative numbers have special meaning
+	gameFrame		 = 0;
+	gameTime		 = 0;
 	gameTimeResidual = 0;
 	memset( userCmds, 0, sizeof( userCmds ) );
 
-	if( idAsyncNetwork::serverDedicated.GetInteger() == 0 )
-	{
+	if( idAsyncNetwork::serverDedicated.GetInteger() == 0 ) {
 		InitLocalClient( 0 );
-	}
-	else
-	{
+	} else {
 		localClientNum = -1;
 	}
 
 	// re-initialize all connected clients for the new map
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState >= SCS_PUREWAIT && i != localClientNum )
-		{
-
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_PUREWAIT && i != localClientNum ) {
 			InitClient( i, clients[i].clientId, clients[i].clientRate );
 
 			SendGameInitToClient( i );
 
-			if( sessLocal.mapSpawnData.serverInfo.GetBool( "si_pure" ) )
-			{
-				clients[ i ].clientState = SCS_PUREWAIT;
+			if( sessLocal.mapSpawnData.serverInfo.GetBool( "si_pure" ) ) {
+				clients[i].clientState = SCS_PUREWAIT;
 			}
 		}
 	}
 
 	// setup the game pak checksums
 	// since this is not dependant on si_pure we catch anything bad before loading map
-	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) )
-	{
-		if( !fileSystem->UpdateGamePakChecksums() )
-		{
+	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) ) {
+		if( !fileSystem->UpdateGamePakChecksums() ) {
 			session->MessageBox( MSG_OK, common->GetLanguageDict()->GetString( "#str_04337" ), common->GetLanguageDict()->GetString( "#str_04338" ), true );
 			cmdSystem->BufferCommandText( CMD_EXEC_APPEND, "disconnect\n" );
 			return;
@@ -395,27 +351,20 @@ void idAsyncServer::ExecuteMapChange()
 	// load map
 	sessLocal.ExecuteMapChange();
 
-	if( localClientNum >= 0 )
-	{
+	if( localClientNum >= 0 ) {
 		BeginLocalClient();
-	}
-	else
-	{
+	} else {
 		game->SetLocalClient( -1 );
 	}
 
-	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) )
-	{
+	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) ) {
 		// lock down the pak list
 		fileSystem->UpdatePureServerChecksums();
 		// tell the clients so they can work out their pure lists
-		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-		{
-			if( clients[ i ].clientState == SCS_PUREWAIT )
-			{
-				if( !SendReliablePureToClient( i ) )
-				{
-					clients[ i ].clientState = SCS_CONNECTED;
+		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+			if( clients[i].clientState == SCS_PUREWAIT ) {
+				if( !SendReliablePureToClient( i ) ) {
+					clients[i].clientState = SCS_CONNECTED;
 				}
 			}
 		}
@@ -455,12 +404,10 @@ int idAsyncServer::GetOutgoingRate() const
 	int i, rate;
 
 	rate = 0;
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		const serverClient_t& client = clients[i];
 
-		if( client.clientState >= SCS_CONNECTED )
-		{
+		if( client.clientState >= SCS_CONNECTED ) {
 			rate += client.channel.GetOutgoingRate();
 		}
 	}
@@ -477,12 +424,10 @@ int idAsyncServer::GetIncomingRate() const
 	int i, rate;
 
 	rate = 0;
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		const serverClient_t& client = clients[i];
 
-		if( client.clientState >= SCS_CONNECTED )
-		{
+		if( client.clientState >= SCS_CONNECTED ) {
 			rate += client.channel.GetIncomingRate();
 		}
 	}
@@ -508,12 +453,9 @@ int idAsyncServer::GetClientPing( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 99999;
-	}
-	else
-	{
+	} else {
 		return client.clientPing;
 	}
 }
@@ -527,12 +469,9 @@ int idAsyncServer::GetClientPrediction( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 99999;
-	}
-	else
-	{
+	} else {
 		return client.clientPrediction;
 	}
 }
@@ -546,12 +485,9 @@ int idAsyncServer::GetClientTimeSinceLastPacket( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 99999;
-	}
-	else
-	{
+	} else {
 		return serverTime - client.lastPacketTime;
 	}
 }
@@ -565,12 +501,9 @@ int idAsyncServer::GetClientTimeSinceLastInput( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 99999;
-	}
-	else
-	{
+	} else {
 		return serverTime - client.lastInputTime;
 	}
 }
@@ -584,12 +517,9 @@ int idAsyncServer::GetClientOutgoingRate( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return -1;
-	}
-	else
-	{
+	} else {
 		return client.channel.GetOutgoingRate();
 	}
 }
@@ -603,12 +533,9 @@ int idAsyncServer::GetClientIncomingRate( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return -1;
-	}
-	else
-	{
+	} else {
 		return client.channel.GetIncomingRate();
 	}
 }
@@ -622,12 +549,9 @@ float idAsyncServer::GetClientOutgoingCompression( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 0.0f;
-	}
-	else
-	{
+	} else {
 		return client.channel.GetOutgoingCompression();
 	}
 }
@@ -641,12 +565,9 @@ float idAsyncServer::GetClientIncomingCompression( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 0.0f;
-	}
-	else
-	{
+	} else {
 		return client.channel.GetIncomingCompression();
 	}
 }
@@ -660,12 +581,9 @@ float idAsyncServer::GetClientIncomingPacketLoss( int clientNum ) const
 {
 	const serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return 0.0f;
-	}
-	else
-	{
+	} else {
 		return client.channel.GetIncomingPacketLoss();
 	}
 }
@@ -678,10 +596,8 @@ idAsyncServer::GetNumClients
 int idAsyncServer::GetNumClients() const
 {
 	int ret = 0;
-	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[ i ].clientState >= SCS_CONNECTED )
-		{
+	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_CONNECTED ) {
 			ret++;
 		}
 	}
@@ -696,12 +612,9 @@ idAsyncServer::GetNumIdleClients
 int idAsyncServer::GetNumIdleClients() const
 {
 	int ret = 0;
-	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[ i ].clientState >= SCS_CONNECTED )
-		{
-			if( serverTime - clients[ i ].lastInputTime > NOINPUT_IDLE_TIME )
-			{
+	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_CONNECTED ) {
+			if( serverTime - clients[i].lastInputTime > NOINPUT_IDLE_TIME ) {
 				ret++;
 			}
 		}
@@ -719,18 +632,15 @@ void idAsyncServer::DuplicateUsercmds( int frame, int time )
 	int i, previousIndex, currentIndex;
 
 	previousIndex = ( frame - 1 ) & ( MAX_USERCMD_BACKUP - 1 );
-	currentIndex = frame & ( MAX_USERCMD_BACKUP - 1 );
+	currentIndex  = frame & ( MAX_USERCMD_BACKUP - 1 );
 
 	// duplicate previous user commands if no new commands are available for a client
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState == SCS_FREE )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState == SCS_FREE ) {
 			continue;
 		}
 
-		if( idAsyncNetwork::DuplicateUsercmd( userCmds[previousIndex][i], userCmds[currentIndex][i], frame, time ) )
-		{
+		if( idAsyncNetwork::DuplicateUsercmd( userCmds[previousIndex][i], userCmds[currentIndex][i], frame, time ) ) {
 			clients[i].numDuplicatedUsercmds++;
 		}
 	}
@@ -743,26 +653,26 @@ idAsyncServer::ClearClient
 */
 void idAsyncServer::ClearClient( int clientNum )
 {
-	serverClient_t& client = clients[clientNum];
-	client.clientId = 0;
-	client.clientState = SCS_FREE;
+	serverClient_t& client	= clients[clientNum];
+	client.clientId			= 0;
+	client.clientState		= SCS_FREE;
 	client.clientPrediction = 0;
-	client.clientAheadTime = 0;
-	client.clientRate = 0;
-	client.clientPing = 0;
+	client.clientAheadTime	= 0;
+	client.clientRate		= 0;
+	client.clientPing		= 0;
 	client.gameInitSequence = 0;
-	client.gameFrame = 0;
-	client.gameTime = 0;
+	client.gameFrame		= 0;
+	client.gameTime			= 0;
 	client.channel.Shutdown();
-	client.lastConnectTime = 0;
-	client.lastEmptyTime = 0;
-	client.lastPingTime = 0;
-	client.lastSnapshotTime = 0;
-	client.lastPacketTime = 0;
-	client.lastInputTime = 0;
-	client.snapshotSequence = 0;
+	client.lastConnectTime			   = 0;
+	client.lastEmptyTime			   = 0;
+	client.lastPingTime				   = 0;
+	client.lastSnapshotTime			   = 0;
+	client.lastPacketTime			   = 0;
+	client.lastInputTime			   = 0;
+	client.snapshotSequence			   = 0;
 	client.acknowledgeSnapshotSequence = 0;
-	client.numDuplicatedUsercmds = 0;
+	client.numDuplicatedUsercmds	   = 0;
 }
 
 /*
@@ -775,33 +685,32 @@ void idAsyncServer::InitClient( int clientNum, int clientId, int clientRate )
 	int i;
 
 	// clear the user info
-	sessLocal.mapSpawnData.userInfo[ clientNum ].Clear();	// always start with a clean base
+	sessLocal.mapSpawnData.userInfo[clientNum].Clear(); // always start with a clean base
 
 	// clear the server client
-	serverClient_t& client = clients[clientNum];
-	client.clientId = clientId;
-	client.clientState = SCS_CONNECTED;
+	serverClient_t& client	= clients[clientNum];
+	client.clientId			= clientId;
+	client.clientState		= SCS_CONNECTED;
 	client.clientPrediction = 0;
-	client.clientAheadTime = 0;
+	client.clientAheadTime	= 0;
 	client.gameInitSequence = -1;
-	client.gameFrame = 0;
-	client.gameTime = 0;
+	client.gameFrame		= 0;
+	client.gameTime			= 0;
 	client.channel.ResetRate();
 	client.clientRate = clientRate ? clientRate : idAsyncNetwork::serverMaxClientRate.GetInteger();
 	client.channel.SetMaxOutgoingRate( Min( idAsyncNetwork::serverMaxClientRate.GetInteger(), client.clientRate ) );
-	client.clientPing = 0;
-	client.lastConnectTime = serverTime;
-	client.lastEmptyTime = serverTime;
-	client.lastPingTime = serverTime;
-	client.lastSnapshotTime = serverTime;
-	client.lastPacketTime = serverTime;
-	client.lastInputTime = serverTime;
+	client.clientPing				   = 0;
+	client.lastConnectTime			   = serverTime;
+	client.lastEmptyTime			   = serverTime;
+	client.lastPingTime				   = serverTime;
+	client.lastSnapshotTime			   = serverTime;
+	client.lastPacketTime			   = serverTime;
+	client.lastInputTime			   = serverTime;
 	client.acknowledgeSnapshotSequence = 0;
-	client.numDuplicatedUsercmds = 0;
+	client.numDuplicatedUsercmds	   = 0;
 
 	// clear the user commands
-	for( i = 0; i < MAX_USERCMD_BACKUP; i++ )
-	{
+	for( i = 0; i < MAX_USERCMD_BACKUP; i++ ) {
 		memset( &userCmds[i][clientNum], 0, sizeof( userCmds[i][clientNum] ) );
 	}
 
@@ -823,7 +732,7 @@ void idAsyncServer::InitLocalClient( int clientNum )
 	memset( &badAddress, 0, sizeof( badAddress ) );
 	badAddress.type = NA_BAD;
 	clients[clientNum].channel.Init( badAddress, serverId );
-	clients[clientNum].clientState = SCS_INGAME;
+	clients[clientNum].clientState			   = SCS_INGAME;
 	sessLocal.mapSpawnData.userInfo[clientNum] = *cvarSystem->MoveCVarsToDict( CVAR_USERINFO );
 }
 
@@ -848,21 +757,19 @@ void idAsyncServer::LocalClientInput()
 {
 	int index;
 
-	if( localClientNum < 0 )
-	{
+	if( localClientNum < 0 ) {
 		return;
 	}
 
-	index = gameFrame & ( MAX_USERCMD_BACKUP - 1 );
-	userCmds[index][localClientNum] = usercmdGen->GetDirectUsercmd();
+	index									  = gameFrame & ( MAX_USERCMD_BACKUP - 1 );
+	userCmds[index][localClientNum]			  = usercmdGen->GetDirectUsercmd();
 	userCmds[index][localClientNum].gameFrame = gameFrame;
-	userCmds[index][localClientNum].gameTime = gameTime;
-	if( idAsyncNetwork::UsercmdInputChanged( userCmds[( gameFrame - 1 ) & ( MAX_USERCMD_BACKUP - 1 )][localClientNum], userCmds[index][localClientNum] ) )
-	{
+	userCmds[index][localClientNum].gameTime  = gameTime;
+	if( idAsyncNetwork::UsercmdInputChanged( userCmds[( gameFrame - 1 ) & ( MAX_USERCMD_BACKUP - 1 )][localClientNum], userCmds[index][localClientNum] ) ) {
 		clients[localClientNum].lastInputTime = serverTime;
 	}
-	clients[localClientNum].gameFrame = gameFrame;
-	clients[localClientNum].gameTime = gameTime;
+	clients[localClientNum].gameFrame	   = gameFrame;
+	clients[localClientNum].gameTime	   = gameTime;
 	clients[localClientNum].lastPacketTime = serverTime;
 }
 
@@ -873,28 +780,24 @@ idAsyncServer::DropClient
 */
 void idAsyncServer::DropClient( int clientNum, const char* reason )
 {
-	int			i;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int				i;
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
 
 	serverClient_t& client = clients[clientNum];
 
-	if( client.clientState <= SCS_ZOMBIE )
-	{
+	if( client.clientState <= SCS_ZOMBIE ) {
 		return;
 	}
 
-	if( client.clientState >= SCS_PUREWAIT && clientNum != localClientNum )
-	{
+	if( client.clientState >= SCS_PUREWAIT && clientNum != localClientNum ) {
 		msg.Init( msgBuf, sizeof( msgBuf ) );
 		msg.WriteByte( SERVER_RELIABLE_MESSAGE_DISCONNECT );
 		msg.WriteLong( clientNum );
 		msg.WriteString( reason );
-		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-		{
+		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 			// clientNum so SCS_PUREWAIT client gets it's own disconnect msg
-			if( i == clientNum || clients[i].clientState >= SCS_CONNECTED )
-			{
+			if( i == clientNum || clients[i].clientState >= SCS_CONNECTED ) {
 				SendReliableMessage( i, msg );
 			}
 		}
@@ -902,7 +805,7 @@ void idAsyncServer::DropClient( int clientNum, const char* reason )
 
 	reason = common->GetLanguageDict()->GetString( reason );
 	common->Printf( "client %d %s\n", clientNum, reason );
-	cmdSystem->BufferCommandText( CMD_EXEC_NOW, va( "addChatLine \"%s^0 %s\"", sessLocal.mapSpawnData.userInfo[ clientNum ].GetString( "ui_name" ), reason ) );
+	cmdSystem->BufferCommandText( CMD_EXEC_NOW, va( "addChatLine \"%s^0 %s\"", sessLocal.mapSpawnData.userInfo[clientNum].GetString( "ui_name" ), reason ) );
 
 	// remove the player from the game
 	game->ServerClientDisconnect( clientNum );
@@ -917,13 +820,11 @@ idAsyncServer::SendReliableMessage
 */
 void idAsyncServer::SendReliableMessage( int clientNum, const idBitMsg& msg )
 {
-	if( clientNum == localClientNum )
-	{
+	if( clientNum == localClientNum ) {
 		return;
 	}
-	if( !clients[ clientNum ].channel.SendReliableMessage( msg ) )
-	{
-		clients[ clientNum ].channel.ClearReliableMessages();
+	if( !clients[clientNum].channel.SendReliableMessage( msg ) ) {
+		clients[clientNum].channel.ClearReliableMessages();
 		DropClient( clientNum, "#str_07136" );
 	}
 }
@@ -940,30 +841,25 @@ void idAsyncServer::CheckClientTimeouts()
 	zombieTimeout = serverTime - idAsyncNetwork::serverZombieTimeout.GetInteger() * 1000;
 	clientTimeout = serverTime - idAsyncNetwork::serverClientTimeout.GetInteger() * 1000;
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
 
-		if( i == localClientNum )
-		{
+		if( i == localClientNum ) {
 			continue;
 		}
 
-		if( client.lastPacketTime > serverTime )
-		{
+		if( client.lastPacketTime > serverTime ) {
 			client.lastPacketTime = serverTime;
 			continue;
 		}
 
-		if( client.clientState == SCS_ZOMBIE && client.lastPacketTime < zombieTimeout )
-		{
+		if( client.clientState == SCS_ZOMBIE && client.lastPacketTime < zombieTimeout ) {
 			client.channel.Shutdown();
 			client.clientState = SCS_FREE;
 			continue;
 		}
 
-		if( client.clientState >= SCS_PUREWAIT && client.lastPacketTime < clientTimeout )
-		{
+		if( client.clientState >= SCS_PUREWAIT && client.lastPacketTime < clientTimeout ) {
 			DropClient( i, "#str_07137" );
 			continue;
 		}
@@ -977,18 +873,16 @@ idAsyncServer::SendPrintBroadcast
 */
 void idAsyncServer::SendPrintBroadcast( const char* string )
 {
-	int			i;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i;
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 	msg.WriteByte( SERVER_RELIABLE_MESSAGE_PRINT );
 	msg.WriteString( string );
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState >= SCS_CONNECTED )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_CONNECTED ) {
 			SendReliableMessage( i, msg );
 		}
 	}
@@ -1001,13 +895,12 @@ idAsyncServer::SendPrintToClient
 */
 void idAsyncServer::SendPrintToClient( int clientNum, const char* string )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
 
 	serverClient_t& client = clients[clientNum];
 
-	if( client.clientState < SCS_CONNECTED )
-	{
+	if( client.clientState < SCS_CONNECTED ) {
 		return;
 	}
 
@@ -1025,24 +918,20 @@ idAsyncServer::SendUserInfoBroadcast
 */
 void idAsyncServer::SendUserInfoBroadcast( int userInfoNum, const idDict& info, bool sendToAll )
 {
-	idBitMsg		msg;
-	byte			msgBuf[MAX_MESSAGE_SIZE];
-	const idDict*	gameInfo;
-	bool			gameModifiedInfo;
+	idBitMsg	  msg;
+	byte		  msgBuf[MAX_MESSAGE_SIZE];
+	const idDict* gameInfo;
+	bool		  gameModifiedInfo;
 
 	gameInfo = game->SetUserInfo( userInfoNum, info, false, true );
-	if( gameInfo )
-	{
+	if( gameInfo ) {
 		gameModifiedInfo = true;
-	}
-	else
-	{
+	} else {
 		gameModifiedInfo = false;
-		gameInfo = &info;
+		gameInfo		 = &info;
 	}
 
-	if( userInfoNum == localClientNum )
-	{
+	if( userInfoNum == localClientNum ) {
 		common->DPrintf( "local user info modified by server\n" );
 		cvarSystem->SetCVarsFromDict( *gameInfo );
 		cvarSystem->ClearModifiedFlags( CVAR_USERINFO ); // don't emit back
@@ -1051,12 +940,9 @@ void idAsyncServer::SendUserInfoBroadcast( int userInfoNum, const idDict& info, 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 	msg.WriteByte( SERVER_RELIABLE_MESSAGE_CLIENTINFO );
 	msg.WriteByte( userInfoNum );
-	if( gameModifiedInfo || sendToAll )
-	{
+	if( gameModifiedInfo || sendToAll ) {
 		msg.WriteBits( 0, 1 );
-	}
-	else
-	{
+	} else {
 		msg.WriteBits( 1, 1 );
 	}
 
@@ -1066,19 +952,14 @@ void idAsyncServer::SendUserInfoBroadcast( int userInfoNum, const idDict& info, 
 	sessLocal.mapSpawnData.userInfo[userInfoNum].Print();
 #endif
 
-	if( gameModifiedInfo || sendToAll )
-	{
+	if( gameModifiedInfo || sendToAll ) {
 		msg.WriteDeltaDict( *gameInfo, NULL );
-	}
-	else
-	{
+	} else {
 		msg.WriteDeltaDict( *gameInfo, &sessLocal.mapSpawnData.userInfo[userInfoNum] );
 	}
 
-	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState >= SCS_CONNECTED && ( sendToAll || i != userInfoNum || gameModifiedInfo ) )
-		{
+	for( int i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_CONNECTED && ( sendToAll || i != userInfoNum || gameModifiedInfo ) ) {
 			SendReliableMessage( i, msg );
 		}
 	}
@@ -1096,10 +977,9 @@ we then need to get the info from the game, and broadcast to clients
 */
 void idAsyncServer::UpdateUI( int clientNum )
 {
-	const idDict*	info = game->GetUserInfo( clientNum );
+	const idDict* info = game->GetUserInfo( clientNum );
 
-	if( !info )
-	{
+	if( !info ) {
 		common->Warning( "idAsyncServer::UpdateUI: no info from game\n" );
 		return;
 	}
@@ -1114,11 +994,10 @@ idAsyncServer::SendUserInfoToClient
 */
 void idAsyncServer::SendUserInfoToClient( int clientNum, int userInfoNum, const idDict& info )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
-	if( clients[clientNum].clientState < SCS_CONNECTED )
-	{
+	if( clients[clientNum].clientState < SCS_CONNECTED ) {
 		return;
 	}
 
@@ -1144,18 +1023,16 @@ idAsyncServer::SendSyncedCvarsBroadcast
 */
 void idAsyncServer::SendSyncedCvarsBroadcast( const idDict& cvars )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	int			i;
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	int		 i;
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 	msg.WriteByte( SERVER_RELIABLE_MESSAGE_SYNCEDCVARS );
 	msg.WriteDeltaDict( cvars, &sessLocal.mapSpawnData.syncedCVars );
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState >= SCS_CONNECTED )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_CONNECTED ) {
 			SendReliableMessage( i, msg );
 		}
 	}
@@ -1170,11 +1047,10 @@ idAsyncServer::SendSyncedCvarsToClient
 */
 void idAsyncServer::SendSyncedCvarsToClient( int clientNum, const idDict& cvars )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
-	if( clients[clientNum].clientState < SCS_CONNECTED )
-	{
+	if( clients[clientNum].clientState < SCS_CONNECTED ) {
 		return;
 	}
 
@@ -1192,8 +1068,8 @@ idAsyncServer::SendApplySnapshotToClient
 */
 void idAsyncServer::SendApplySnapshotToClient( int clientNum, int sequence )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 	msg.WriteByte( SERVER_RELIABLE_MESSAGE_APPLYSNAPSHOT );
@@ -1209,23 +1085,20 @@ idAsyncServer::SendEmptyToClient
 */
 bool idAsyncServer::SendEmptyToClient( int clientNum, bool force )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
 
 	serverClient_t& client = clients[clientNum];
 
-	if( client.lastEmptyTime > realTime )
-	{
+	if( client.lastEmptyTime > realTime ) {
 		client.lastEmptyTime = realTime;
 	}
 
-	if( !force && ( realTime - client.lastEmptyTime < EMPTY_RESEND_TIME ) )
-	{
+	if( !force && ( realTime - client.lastEmptyTime < EMPTY_RESEND_TIME ) ) {
 		return false;
 	}
 
-	if( idAsyncNetwork::verbose.GetInteger() )
-	{
+	if( idAsyncNetwork::verbose.GetInteger() ) {
 		common->Printf( "sending empty to client %d: gameInitId = %d, gameFrame = %d, gameTime = %d\n", clientNum, gameInitId, gameFrame, gameTime );
 	}
 
@@ -1247,23 +1120,20 @@ idAsyncServer::SendPingToClient
 */
 bool idAsyncServer::SendPingToClient( int clientNum )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
 
 	serverClient_t& client = clients[clientNum];
 
-	if( client.lastPingTime > realTime )
-	{
+	if( client.lastPingTime > realTime ) {
 		client.lastPingTime = realTime;
 	}
 
-	if( realTime - client.lastPingTime < PING_RESEND_TIME )
-	{
+	if( realTime - client.lastPingTime < PING_RESEND_TIME ) {
 		return false;
 	}
 
-	if( idAsyncNetwork::verbose.GetInteger() == 2 )
-	{
+	if( idAsyncNetwork::verbose.GetInteger() == 2 ) {
 		common->Printf( "pinging client %d: gameInitId = %d, gameFrame = %d, gameTime = %d\n", clientNum, gameInitId, gameFrame, gameTime );
 	}
 
@@ -1286,19 +1156,17 @@ idAsyncServer::SendGameInitToClient
 */
 void idAsyncServer::SendGameInitToClient( int clientNum )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
-	if( idAsyncNetwork::verbose.GetInteger() )
-	{
+	if( idAsyncNetwork::verbose.GetInteger() ) {
 		common->Printf( "sending gameinit to client %d: gameInitId = %d, gameFrame = %d, gameTime = %d\n", clientNum, gameInitId, gameFrame, gameTime );
 	}
 
 	serverClient_t& client = clients[clientNum];
 
 	// clear the unsent fragments. might flood winsock but that's ok
-	while( client.channel.UnsentFragmentsLeft() )
-	{
+	while( client.channel.UnsentFragmentsLeft() ) {
 		client.channel.SendNextFragment( serverPort, serverTime );
 	}
 
@@ -1318,21 +1186,19 @@ idAsyncServer::SendSnapshotToClient
 */
 bool idAsyncServer::SendSnapshotToClient( int clientNum )
 {
-	int			i, j, index, numUsercmds;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	usercmd_t* 	last;
-	byte		clientInPVS[MAX_ASYNC_CLIENTS >> 3];
+	int				i, j, index, numUsercmds;
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
+	usercmd_t*		last;
+	byte			clientInPVS[MAX_ASYNC_CLIENTS >> 3];
 
 	serverClient_t& client = clients[clientNum];
 
-	if( serverTime - client.lastSnapshotTime < idAsyncNetwork::serverSnapshotDelay.GetInteger() )
-	{
+	if( serverTime - client.lastSnapshotTime < idAsyncNetwork::serverSnapshotDelay.GetInteger() ) {
 		return false;
 	}
 
-	if( idAsyncNetwork::verbose.GetInteger() == 2 )
-	{
+	if( idAsyncNetwork::verbose.GetInteger() == 2 ) {
 		common->Printf( "sending snapshot to client %d: gameInitId = %d, gameFrame = %d, gameTime = %d\n", clientNum, gameInitId, gameFrame, gameTime );
 	}
 
@@ -1353,18 +1219,15 @@ bool idAsyncServer::SendSnapshotToClient( int clientNum )
 	game->ServerWriteSnapshot( clientNum, client.snapshotSequence, msg, clientInPVS, MAX_ASYNC_CLIENTS );
 
 	// write the latest user commands from the other clients in the PVS to the snapshot
-	for( last = NULL, i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( last = NULL, i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
 
-		if( client.clientState == SCS_FREE || i == clientNum )
-		{
+		if( client.clientState == SCS_FREE || i == clientNum ) {
 			continue;
 		}
 
 		// if the client is not in the PVS
-		if( !( clientInPVS[i >> 3] & ( 1 << ( i & 7 ) ) ) )
-		{
+		if( !( clientInPVS[i >> 3] & ( 1 << ( i & 7 ) ) ) ) {
 			continue;
 		}
 
@@ -1374,8 +1237,7 @@ bool idAsyncServer::SendSnapshotToClient( int clientNum )
 		numUsercmds = Max( 1, Min( client.gameFrame, gameFrame + maxRelay ) - gameFrame );
 		msg.WriteByte( i );
 		msg.WriteByte( numUsercmds );
-		for( j = 0; j < numUsercmds; j++ )
-		{
+		for( j = 0; j < numUsercmds; j++ ) {
 			index = ( gameFrame + j ) & ( MAX_USERCMD_BACKUP - 1 );
 			idAsyncNetwork::WriteUserCmdDelta( msg, userCmds[index][i], last );
 			last = &userCmds[index][i];
@@ -1399,51 +1261,42 @@ idAsyncServer::ProcessUnreliableClientMessage
 */
 void idAsyncServer::ProcessUnreliableClientMessage( int clientNum, const idBitMsg& msg )
 {
-	int i, id, acknowledgeSequence, clientGameInitId, clientGameFrame, numUsercmds, index;
-	usercmd_t* last;
+	int				i, id, acknowledgeSequence, clientGameInitId, clientGameFrame, numUsercmds, index;
+	usercmd_t*		last;
 
 	serverClient_t& client = clients[clientNum];
 
-	if( client.clientState == SCS_ZOMBIE )
-	{
+	if( client.clientState == SCS_ZOMBIE ) {
 		return;
 	}
 
 	acknowledgeSequence = msg.ReadLong();
-	clientGameInitId = msg.ReadLong();
+	clientGameInitId	= msg.ReadLong();
 
 	// while loading a map the client may send empty messages to keep the connection alive
-	if( clientGameInitId == GAME_INIT_ID_MAP_LOAD )
-	{
-		if( idAsyncNetwork::verbose.GetInteger() )
-		{
+	if( clientGameInitId == GAME_INIT_ID_MAP_LOAD ) {
+		if( idAsyncNetwork::verbose.GetInteger() ) {
 			common->Printf( "ignore unreliable msg from client %d, gameInitId == ID_MAP_LOAD\n", clientNum );
 		}
 		return;
 	}
 
 	// check if the client is in the right game
-	if( clientGameInitId != gameInitId )
-	{
-		if( acknowledgeSequence > client.gameInitSequence )
-		{
+	if( clientGameInitId != gameInitId ) {
+		if( acknowledgeSequence > client.gameInitSequence ) {
 			// the client is connected but not in the right game
 			client.clientState = SCS_CONNECTED;
 
 			// send game init to client
 			SendGameInitToClient( clientNum );
 
-			if( sessLocal.mapSpawnData.serverInfo.GetBool( "si_pure" ) )
-			{
+			if( sessLocal.mapSpawnData.serverInfo.GetBool( "si_pure" ) ) {
 				client.clientState = SCS_PUREWAIT;
-				if( !SendReliablePureToClient( clientNum ) )
-				{
+				if( !SendReliablePureToClient( clientNum ) ) {
 					client.clientState = SCS_CONNECTED;
 				}
 			}
-		}
-		else if( idAsyncNetwork::verbose.GetInteger() )
-		{
+		} else if( idAsyncNetwork::verbose.GetInteger() ) {
 			common->Printf( "ignore unreliable msg from client %d, wrong gameInit, old sequence\n", clientNum );
 		}
 		return;
@@ -1451,17 +1304,13 @@ void idAsyncServer::ProcessUnreliableClientMessage( int clientNum, const idBitMs
 
 	client.acknowledgeSnapshotSequence = msg.ReadLong();
 
-	if( client.clientState == SCS_CONNECTED )
-	{
-
+	if( client.clientState == SCS_CONNECTED ) {
 		// the client is in the right game
 		client.clientState = SCS_INGAME;
 
 		// send the user info of other clients
-		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-		{
-			if( clients[i].clientState >= SCS_CONNECTED && i != clientNum )
-			{
+		for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+			if( clients[i].clientState >= SCS_CONNECTED && i != clientNum ) {
 				SendUserInfoToClient( clientNum, i, sessLocal.mapSpawnData.userInfo[i] );
 			}
 		}
@@ -1476,69 +1325,54 @@ void idAsyncServer::ProcessUnreliableClientMessage( int clientNum, const idBitMs
 
 		// write any reliable messages to initialize the client game state
 		game->ServerWriteInitialReliableMessages( clientNum );
-	}
-	else if( client.clientState == SCS_INGAME )
-	{
-
+	} else if( client.clientState == SCS_INGAME ) {
 		// apply the last snapshot the client received
-		if( game->ServerApplySnapshot( clientNum, client.acknowledgeSnapshotSequence ) )
-		{
+		if( game->ServerApplySnapshot( clientNum, client.acknowledgeSnapshotSequence ) ) {
 			SendApplySnapshotToClient( clientNum, client.acknowledgeSnapshotSequence );
 		}
 	}
 
 	// process the unreliable message
 	id = msg.ReadByte();
-	switch( id )
-	{
-		case CLIENT_UNRELIABLE_MESSAGE_EMPTY:
-		{
-			if( idAsyncNetwork::verbose.GetInteger() )
-			{
+	switch( id ) {
+		case CLIENT_UNRELIABLE_MESSAGE_EMPTY: {
+			if( idAsyncNetwork::verbose.GetInteger() ) {
 				common->Printf( "received empty message for client %d\n", clientNum );
 			}
 			break;
 		}
-		case CLIENT_UNRELIABLE_MESSAGE_PINGRESPONSE:
-		{
+		case CLIENT_UNRELIABLE_MESSAGE_PINGRESPONSE: {
 			client.clientPing = realTime - msg.ReadLong();
 			break;
 		}
-		case CLIENT_UNRELIABLE_MESSAGE_USERCMD:
-		{
-
+		case CLIENT_UNRELIABLE_MESSAGE_USERCMD: {
 			client.clientPrediction = msg.ReadShort();
 
 			// read user commands
 			clientGameFrame = msg.ReadLong();
-			numUsercmds = msg.ReadByte();
-			for( last = NULL, i = clientGameFrame - numUsercmds + 1; i <= clientGameFrame; i++ )
-			{
+			numUsercmds		= msg.ReadByte();
+			for( last = NULL, i = clientGameFrame - numUsercmds + 1; i <= clientGameFrame; i++ ) {
 				index = i & ( MAX_USERCMD_BACKUP - 1 );
 				idAsyncNetwork::ReadUserCmdDelta( msg, userCmds[index][clientNum], last );
-				userCmds[index][clientNum].gameFrame = i;
+				userCmds[index][clientNum].gameFrame	  = i;
 				userCmds[index][clientNum].duplicateCount = 0;
-				if( idAsyncNetwork::UsercmdInputChanged( userCmds[( i - 1 ) & ( MAX_USERCMD_BACKUP - 1 )][clientNum], userCmds[index][clientNum] ) )
-				{
+				if( idAsyncNetwork::UsercmdInputChanged( userCmds[( i - 1 ) & ( MAX_USERCMD_BACKUP - 1 )][clientNum], userCmds[index][clientNum] ) ) {
 					client.lastInputTime = serverTime;
 				}
 				last = &userCmds[index][clientNum];
 			}
 
-			if( last )
-			{
+			if( last ) {
 				client.gameFrame = last->gameFrame;
-				client.gameTime = last->gameTime;
+				client.gameTime	 = last->gameTime;
 			}
 
-			if( idAsyncNetwork::verbose.GetInteger() == 2 )
-			{
+			if( idAsyncNetwork::verbose.GetInteger() == 2 ) {
 				common->Printf( "received user command for client %d, gameInitId = %d, gameFrame, %d gameTime %d\n", clientNum, clientGameInitId, client.gameFrame, client.gameTime );
 			}
 			break;
 		}
-		default:
-		{
+		default: {
 			common->Printf( "unknown unreliable message %d from client %d\n", id, clientNum );
 			break;
 		}
@@ -1552,46 +1386,39 @@ idAsyncServer::ProcessReliableClientMessages
 */
 void idAsyncServer::ProcessReliableClientMessages( int clientNum )
 {
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	byte		id;
+	idBitMsg		msg;
+	byte			msgBuf[MAX_MESSAGE_SIZE];
+	byte			id;
 
 	serverClient_t& client = clients[clientNum];
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 
-	while( client.channel.GetReliableMessage( msg ) )
-	{
+	while( client.channel.GetReliableMessage( msg ) ) {
 		id = msg.ReadByte();
-		switch( id )
-		{
-			case CLIENT_RELIABLE_MESSAGE_CLIENTINFO:
-			{
+		switch( id ) {
+			case CLIENT_RELIABLE_MESSAGE_CLIENTINFO: {
 				idDict info;
 				msg.ReadDeltaDict( info, &sessLocal.mapSpawnData.userInfo[clientNum] );
 				SendUserInfoBroadcast( clientNum, info );
 				break;
 			}
-			case CLIENT_RELIABLE_MESSAGE_PRINT:
-			{
+			case CLIENT_RELIABLE_MESSAGE_PRINT: {
 				char string[MAX_STRING_CHARS];
 				msg.ReadString( string, sizeof( string ) );
 				common->Printf( "%s\n", string );
 				break;
 			}
-			case CLIENT_RELIABLE_MESSAGE_DISCONNECT:
-			{
+			case CLIENT_RELIABLE_MESSAGE_DISCONNECT: {
 				DropClient( clientNum, "#str_07138" );
 				break;
 			}
-			case CLIENT_RELIABLE_MESSAGE_PURE:
-			{
+			case CLIENT_RELIABLE_MESSAGE_PURE: {
 				// we get this message once the client has successfully updated it's pure list
 				ProcessReliablePure( clientNum, msg );
 				break;
 			}
-			default:
-			{
+			default: {
 				// pass reliable message on to game code
 				game->ServerProcessReliableMessage( clientNum, msg );
 				break;
@@ -1607,32 +1434,28 @@ idAsyncServer::ProcessAuthMessage
 */
 void idAsyncServer::ProcessAuthMessage( const idBitMsg& msg )
 {
-	netadr_t		client_from;
-	char			client_guid[ 12 ], string[ MAX_STRING_CHARS ];
-	int				i, clientId;
-	authReply_t		reply;
-	authReplyMsg_t	replyMsg = AUTH_REPLY_WAITING;
-	idStr			replyPrintMsg;
+	netadr_t	   client_from;
+	char		   client_guid[12], string[MAX_STRING_CHARS];
+	int			   i, clientId;
+	authReply_t	   reply;
+	authReplyMsg_t replyMsg = AUTH_REPLY_WAITING;
+	idStr		   replyPrintMsg;
 
 	reply = ( authReply_t )msg.ReadByte();
-	if( reply <= 0 || reply >= AUTH_MAXSTATES )
-	{
+	if( reply <= 0 || reply >= AUTH_MAXSTATES ) {
 		common->DPrintf( "auth: invalid reply %d\n", reply );
 		return;
 	}
 	clientId = msg.ReadShort();
 	msg.ReadNetadr( &client_from );
 	msg.ReadString( client_guid, sizeof( client_guid ) );
-	if( reply != AUTH_OK )
-	{
+	if( reply != AUTH_OK ) {
 		replyMsg = ( authReplyMsg_t )msg.ReadByte();
-		if( replyMsg <= 0 || replyMsg >= AUTH_REPLY_MAXSTATES )
-		{
+		if( replyMsg <= 0 || replyMsg >= AUTH_REPLY_MAXSTATES ) {
 			common->DPrintf( "auth: invalid reply msg %d\n", replyMsg );
 			return;
 		}
-		if( replyMsg == AUTH_REPLY_PRINT )
-		{
+		if( replyMsg == AUTH_REPLY_PRINT ) {
 			msg.ReadString( string, MAX_STRING_CHARS );
 			replyPrintMsg = string;
 		}
@@ -1642,65 +1465,52 @@ void idAsyncServer::ProcessAuthMessage( const idBitMsg& msg )
 
 	// no message parsing below
 
-	for( i = 0; i < MAX_CHALLENGES; i++ )
-	{
-		if( !challenges[i].connected && challenges[ i ].clientId == clientId )
-		{
+	for( i = 0; i < MAX_CHALLENGES; i++ ) {
+		if( !challenges[i].connected && challenges[i].clientId == clientId ) {
 			// return if something is wrong
 			// break if we have found a valid auth
-			if( !strlen( challenges[ i ].guid ) )
-			{
-				common->DPrintf( "auth: client %s has no guid yet\n", Sys_NetAdrToString( challenges[ i ].address ) );
+			if( !strlen( challenges[i].guid ) ) {
+				common->DPrintf( "auth: client %s has no guid yet\n", Sys_NetAdrToString( challenges[i].address ) );
 				return;
 			}
-			if( idStr::Cmp( challenges[ i ].guid, client_guid ) )
-			{
-				common->DPrintf( "auth: client %s %s not matched, auth server says guid %s\n", Sys_NetAdrToString( challenges[ i ].address ), challenges[i].guid, client_guid );
+			if( idStr::Cmp( challenges[i].guid, client_guid ) ) {
+				common->DPrintf( "auth: client %s %s not matched, auth server says guid %s\n", Sys_NetAdrToString( challenges[i].address ), challenges[i].guid, client_guid );
 				return;
 			}
-			if( !Sys_CompareNetAdrBase( client_from, challenges[i].address ) )
-			{
+			if( !Sys_CompareNetAdrBase( client_from, challenges[i].address ) ) {
 				// let auth work when server and master don't see the same IP
 				common->DPrintf( "auth: matched guid '%s' for != IPs %s and %s\n", client_guid, Sys_NetAdrToString( client_from ), Sys_NetAdrToString( challenges[i].address ) );
 			}
 			break;
 		}
 	}
-	if( i >= MAX_CHALLENGES )
-	{
+	if( i >= MAX_CHALLENGES ) {
 		common->DPrintf( "auth: failed client lookup %s %s\n", Sys_NetAdrToString( client_from ), client_guid );
 		return;
 	}
 
-	if( challenges[ i ].authState != CDK_WAIT )
-	{
-		common->DWarning( "auth: challenge 0x%x %s authState %d != CDK_WAIT", challenges[ i ].challenge, Sys_NetAdrToString( challenges[ i ].address ), challenges[ i ].authState );
+	if( challenges[i].authState != CDK_WAIT ) {
+		common->DWarning( "auth: challenge 0x%x %s authState %d != CDK_WAIT", challenges[i].challenge, Sys_NetAdrToString( challenges[i].address ), challenges[i].authState );
 		return;
 	}
 
-	idStr::snPrintf( challenges[ i ].guid, 12, client_guid );
-	if( reply == AUTH_OK )
-	{
-		challenges[ i ].authState = CDK_OK;
+	idStr::snPrintf( challenges[i].guid, 12, client_guid );
+	if( reply == AUTH_OK ) {
+		challenges[i].authState = CDK_OK;
 		common->Printf( "client %s %s is authed\n", Sys_NetAdrToString( client_from ), client_guid );
-	}
-	else
-	{
+	} else {
 		const char* msg;
-		if( replyMsg != AUTH_REPLY_PRINT )
-		{
-			msg = authReplyMsg[ replyMsg ];
-		}
-		else
-		{
+		if( replyMsg != AUTH_REPLY_PRINT ) {
+			msg = authReplyMsg[replyMsg];
+		} else {
 			msg = replyPrintMsg.c_str();
 		}
 		// maybe localize it
 		const char* l_msg = common->GetLanguageDict()->GetString( msg );
-		common->DPrintf( "auth: client %s %s - %s %s\n", Sys_NetAdrToString( client_from ), client_guid, authReplyStr[ reply ], l_msg );
-		challenges[ i ].authReply = reply;
-		challenges[ i ].authReplyMsg = replyMsg;
-		challenges[ i ].authReplyPrint = replyPrintMsg;
+		common->DPrintf( "auth: client %s %s - %s %s\n", Sys_NetAdrToString( client_from ), client_guid, authReplyStr[reply], l_msg );
+		challenges[i].authReply		 = reply;
+		challenges[i].authReplyMsg	 = replyMsg;
+		challenges[i].authReplyPrint = replyPrintMsg;
 	}
 }
 
@@ -1711,43 +1521,39 @@ idAsyncServer::ProcessChallengeMessage
 */
 void idAsyncServer::ProcessChallengeMessage( const netadr_t from, const idBitMsg& msg )
 {
-	int			i, clientId, oldest, oldestTime;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i, clientId, oldest, oldestTime;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	clientId = msg.ReadLong();
 
-	oldest = 0;
+	oldest	   = 0;
 	oldestTime = 0x7fffffff;
 
 	// see if we already have a challenge for this ip
-	for( i = 0; i < MAX_CHALLENGES; i++ )
-	{
-		if( !challenges[i].connected && Sys_CompareNetAdrBase( from, challenges[i].address ) && clientId == challenges[i].clientId )
-		{
+	for( i = 0; i < MAX_CHALLENGES; i++ ) {
+		if( !challenges[i].connected && Sys_CompareNetAdrBase( from, challenges[i].address ) && clientId == challenges[i].clientId ) {
 			break;
 		}
-		if( challenges[i].time < oldestTime )
-		{
+		if( challenges[i].time < oldestTime ) {
 			oldestTime = challenges[i].time;
-			oldest = i;
+			oldest	   = i;
 		}
 	}
 
-	if( i >= MAX_CHALLENGES )
-	{
+	if( i >= MAX_CHALLENGES ) {
 		// this is the first time this client has asked for a challenge
-		i = oldest;
-		challenges[i].address = from;
-		challenges[i].clientId = clientId;
-		challenges[i].challenge = ( ( rand() << 16 ) ^ rand() ) ^ serverTime;
-		challenges[i].time = serverTime;
-		challenges[i].connected = false;
-		challenges[i].authState = CDK_WAIT;
-		challenges[i].authReply = AUTH_NONE;
-		challenges[i].authReplyMsg = AUTH_REPLY_WAITING;
+		i							 = oldest;
+		challenges[i].address		 = from;
+		challenges[i].clientId		 = clientId;
+		challenges[i].challenge		 = ( ( rand() << 16 ) ^ rand() ) ^ serverTime;
+		challenges[i].time			 = serverTime;
+		challenges[i].connected		 = false;
+		challenges[i].authState		 = CDK_WAIT;
+		challenges[i].authReply		 = AUTH_NONE;
+		challenges[i].authReplyMsg	 = AUTH_REPLY_WAITING;
 		challenges[i].authReplyPrint = "";
-		challenges[i].guid[0] = '\0';
+		challenges[i].guid[0]		 = '\0';
 	}
 	challenges[i].pingTime = serverTime;
 
@@ -1763,20 +1569,14 @@ void idAsyncServer::ProcessChallengeMessage( const netadr_t from, const idBitMsg
 
 	serverPort.SendPacket( from, outMsg.GetData(), outMsg.GetSize() );
 
-	if( Sys_IsLANAddress( from ) )
-	{
+	if( Sys_IsLANAddress( from ) ) {
 		// no CD Key check for LAN clients
 		challenges[i].authState = CDK_OK;
-	}
-	else
-	{
-		if( idAsyncNetwork::LANServer.GetBool() )
-		{
+	} else {
+		if( idAsyncNetwork::LANServer.GetBool() ) {
 			common->Printf( "net_LANServer is enabled. Client %s is not a LAN address, will be rejected\n", Sys_NetAdrToString( from ) );
-			challenges[ i ].authState = CDK_ONLYLAN;
-		}
-		else
-		{
+			challenges[i].authState = CDK_ONLYLAN;
+		} else {
 			// emit a cd key confirmation request
 			outMsg.BeginWriting();
 			outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
@@ -1798,15 +1598,14 @@ idAsyncServer::SendPureServerMessage
 */
 bool idAsyncServer::SendPureServerMessage( const netadr_t to, int OS )
 {
-	idBitMsg	outMsg;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
-	int			serverChecksums[ MAX_PURE_PAKS ];
-	int			gamePakChecksum;
-	int			i;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	int		 serverChecksums[MAX_PURE_PAKS];
+	int		 gamePakChecksum;
+	int		 i;
 
 	fileSystem->GetPureServerChecksums( serverChecksums, OS, &gamePakChecksum );
-	if( !serverChecksums[ 0 ] )
-	{
+	if( !serverChecksums[0] ) {
 		// happens if you run fully expanded assets with si_pure 1
 		common->Warning( "pure server has no pak files referenced" );
 		return false;
@@ -1819,9 +1618,8 @@ bool idAsyncServer::SendPureServerMessage( const netadr_t to, int OS )
 	outMsg.WriteString( "pureServer" );
 
 	i = 0;
-	while( serverChecksums[ i ] )
-	{
-		outMsg.WriteLong( serverChecksums[ i++ ] );
+	while( serverChecksums[i] ) {
+		outMsg.WriteLong( serverChecksums[i++] );
 	}
 	outMsg.WriteLong( 0 );
 
@@ -1839,15 +1637,14 @@ idAsyncServer::SendReliablePureToClient
 */
 bool idAsyncServer::SendReliablePureToClient( int clientNum )
 {
-	idBitMsg	msg;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
-	int			serverChecksums[ MAX_PURE_PAKS ];
-	int			i;
-	int			gamePakChecksum;
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	int		 serverChecksums[MAX_PURE_PAKS];
+	int		 i;
+	int		 gamePakChecksum;
 
-	fileSystem->GetPureServerChecksums( serverChecksums, clients[ clientNum ].OS, &gamePakChecksum );
-	if( !serverChecksums[ 0 ] )
-	{
+	fileSystem->GetPureServerChecksums( serverChecksums, clients[clientNum].OS, &gamePakChecksum );
+	if( !serverChecksums[0] ) {
 		// happens if you run fully expanded assets with si_pure 1
 		common->Warning( "pure server has no pak files referenced" );
 		return false;
@@ -1861,9 +1658,8 @@ bool idAsyncServer::SendReliablePureToClient( int clientNum )
 	msg.WriteLong( gameInitId );
 
 	i = 0;
-	while( serverChecksums[ i ] )
-	{
-		msg.WriteLong( serverChecksums[ i++ ] );
+	while( serverChecksums[i] ) {
+		msg.WriteLong( serverChecksums[i++] );
 	}
 	msg.WriteLong( 0 );
 	msg.WriteLong( gamePakChecksum );
@@ -1881,19 +1677,14 @@ idAsyncServer::ValidateChallenge
 int idAsyncServer::ValidateChallenge( const netadr_t from, int challenge, int clientId )
 {
 	int i;
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		const serverClient_t& client = clients[i];
 
-		if( client.clientState == SCS_FREE )
-		{
+		if( client.clientState == SCS_FREE ) {
 			continue;
 		}
-		if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) &&
-				( clientId == client.clientId || from.port == client.channel.GetRemoteAddress().port ) )
-		{
-			if( serverTime - client.lastConnectTime < MIN_RECONNECT_TIME )
-			{
+		if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) && ( clientId == client.clientId || from.port == client.channel.GetRemoteAddress().port ) ) {
+			if( serverTime - client.lastConnectTime < MIN_RECONNECT_TIME ) {
 				common->Printf( "%s: reconnect rejected : too soon\n", Sys_NetAdrToString( from ) );
 				return -1;
 			}
@@ -1901,18 +1692,14 @@ int idAsyncServer::ValidateChallenge( const netadr_t from, int challenge, int cl
 		}
 	}
 
-	for( i = 0; i < MAX_CHALLENGES; i++ )
-	{
-		if( Sys_CompareNetAdrBase( from, challenges[i].address ) && from.port == challenges[i].address.port )
-		{
-			if( challenge == challenges[i].challenge )
-			{
+	for( i = 0; i < MAX_CHALLENGES; i++ ) {
+		if( Sys_CompareNetAdrBase( from, challenges[i].address ) && from.port == challenges[i].address.port ) {
+			if( challenge == challenges[i].challenge ) {
 				break;
 			}
 		}
 	}
-	if( i == MAX_CHALLENGES )
-	{
+	if( i == MAX_CHALLENGES ) {
 		PrintOOB( from, SERVER_PRINT_BADCHALLENGE, "#str_04840" );
 		return -1;
 	}
@@ -1926,46 +1713,42 @@ idAsyncServer::ProcessConnectMessage
 */
 void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& msg )
 {
-	int			clientNum, protocol, clientDataChecksum, challenge, clientId, ping, clientRate;
-	idBitMsg	outMsg;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
-	char		guid[ 12 ];
-	char		password[ 17 ];
-	int			i, ichallenge, islot, OS, numClients;
+	int		 clientNum, protocol, clientDataChecksum, challenge, clientId, ping, clientRate;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	char	 guid[12];
+	char	 password[17];
+	int		 i, ichallenge, islot, OS, numClients;
 
 	protocol = msg.ReadLong();
-	OS = msg.ReadShort();
+	OS		 = msg.ReadShort();
 
 	// check the protocol version
-	if( protocol != ASYNC_PROTOCOL_VERSION )
-	{
+	if( protocol != ASYNC_PROTOCOL_VERSION ) {
 		// that's a msg back to a client, we don't know about it's localization, so send english
 		PrintOOB( from, SERVER_PRINT_BADPROTOCOL, va( "server uses protocol %d.%d\n", ASYNC_PROTOCOL_MAJOR, ASYNC_PROTOCOL_MINOR ) );
 		return;
 	}
 
 	clientDataChecksum = msg.ReadLong();
-	challenge = msg.ReadLong();
-	clientId = msg.ReadShort();
-	clientRate = msg.ReadLong();
+	challenge		   = msg.ReadLong();
+	clientId		   = msg.ReadShort();
+	clientRate		   = msg.ReadLong();
 
 	// check the client data - only for non pure servers
-	if( !sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && clientDataChecksum != serverDataChecksum )
-	{
+	if( !sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && clientDataChecksum != serverDataChecksum ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04842" );
 		return;
 	}
 
-	if( ( ichallenge = ValidateChallenge( from, challenge, clientId ) ) == -1 )
-	{
+	if( ( ichallenge = ValidateChallenge( from, challenge, clientId ) ) == -1 ) {
 		return;
 	}
-	challenges[ ichallenge ].OS = OS;
+	challenges[ichallenge].OS = OS;
 
 	msg.ReadString( guid, sizeof( guid ) );
 
-	switch( challenges[ ichallenge ].authState )
-	{
+	switch( challenges[ichallenge].authState ) {
 		case CDK_PUREWAIT:
 			SendPureServerMessage( from, OS );
 			return;
@@ -1974,30 +1757,25 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 			PrintOOB( from, SERVER_PRINT_MISC, "#str_04843" );
 			return;
 		case CDK_WAIT:
-			if( challenges[ ichallenge ].authReply == AUTH_NONE && Min( serverTime - lastAuthTime, serverTime - challenges[ ichallenge ].time ) > AUTHORIZE_TIMEOUT )
-			{
+			if( challenges[ichallenge].authReply == AUTH_NONE && Min( serverTime - lastAuthTime, serverTime - challenges[ichallenge].time ) > AUTHORIZE_TIMEOUT ) {
 				common->DPrintf( "%s: Authorize server timed out\n", Sys_NetAdrToString( from ) );
 				break; // will continue with the connecting process
 			}
-			const char* msg, *l_msg;
-			if( challenges[ ichallenge ].authReplyMsg != AUTH_REPLY_PRINT )
-			{
-				msg = authReplyMsg[ challenges[ ichallenge ].authReplyMsg ];
-			}
-			else
-			{
-				msg = challenges[ ichallenge ].authReplyPrint.c_str();
+			const char *msg, *l_msg;
+			if( challenges[ichallenge].authReplyMsg != AUTH_REPLY_PRINT ) {
+				msg = authReplyMsg[challenges[ichallenge].authReplyMsg];
+			} else {
+				msg = challenges[ichallenge].authReplyPrint.c_str();
 			}
 			l_msg = common->GetLanguageDict()->GetString( msg );
 
 			common->DPrintf( "%s: %s\n", Sys_NetAdrToString( from ), l_msg );
 
-			if( challenges[ ichallenge ].authReplyMsg == AUTH_REPLY_UNKNOWN || challenges[ ichallenge ].authReplyMsg == AUTH_REPLY_WAITING )
-			{
+			if( challenges[ichallenge].authReplyMsg == AUTH_REPLY_UNKNOWN || challenges[ichallenge].authReplyMsg == AUTH_REPLY_WAITING ) {
 				// the client may be trying to connect to us in LAN mode, and the server disagrees
 				// let the client know so it would switch to authed connection
 				idBitMsg outMsg;
-				byte msgBuf[ MAX_MESSAGE_SIZE ];
+				byte	 msgBuf[MAX_MESSAGE_SIZE];
 				outMsg.Init( msgBuf, sizeof( msgBuf ) );
 				outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
 				outMsg.WriteString( "authrequired" );
@@ -2007,11 +1785,10 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 			PrintOOB( from, SERVER_PRINT_MISC, msg );
 
 			// update the guid in the challenges
-			idStr::snPrintf( challenges[ ichallenge ].guid, sizeof( challenges[ ichallenge ].guid ), guid );
+			idStr::snPrintf( challenges[ichallenge].guid, sizeof( challenges[ichallenge].guid ), guid );
 
 			// once auth replied denied, stop sending further requests
-			if( challenges[ ichallenge ].authReply != AUTH_DENY )
-			{
+			if( challenges[ichallenge].authReply != AUTH_DENY ) {
 				// emit a cd key confirmation request
 				outMsg.Init( msgBuf, sizeof( msgBuf ) );
 				outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
@@ -2026,15 +1803,13 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 			}
 			return;
 		default:
-			assert( challenges[ ichallenge ].authState == CDK_OK || challenges[ ichallenge ].authState == CDK_PUREOK );
+			assert( challenges[ichallenge].authState == CDK_OK || challenges[ichallenge].authState == CDK_PUREOK );
 	}
 
 	numClients = 0;
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		serverClient_t& client = clients[ i ];
-		if( client.clientState >= SCS_PUREWAIT )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		serverClient_t& client = clients[i];
+		if( client.clientState >= SCS_PUREWAIT ) {
 			numClients++;
 		}
 	}
@@ -2043,10 +1818,9 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 	// if authState == CDK_PUREOK, the check was already performed once before entering pure checks
 	// but meanwhile, the max players may have been reached
 	msg.ReadString( password, sizeof( password ) );
-	char reason[MAX_STRING_CHARS];
+	char		 reason[MAX_STRING_CHARS];
 	allowReply_t reply = game->ServerAllowClient( numClients, Sys_NetAdrToString( from ), guid, password, reason );
-	if( reply != ALLOW_YES )
-	{
+	if( reply != ALLOW_YES ) {
 		common->DPrintf( "game denied connection for %s\n", Sys_NetAdrToString( from ) );
 
 		// SERVER_PRINT_GAMEDENY passes the game opcode through. Don't use PrintOOB
@@ -2062,78 +1836,61 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 	}
 
 	// enter pure checks if necessary
-	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && challenges[ ichallenge ].authState != CDK_PUREOK )
-	{
-		if( SendPureServerMessage( from, OS ) )
-		{
-			challenges[ ichallenge ].authState = CDK_PUREWAIT;
+	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && challenges[ichallenge].authState != CDK_PUREOK ) {
+		if( SendPureServerMessage( from, OS ) ) {
+			challenges[ichallenge].authState = CDK_PUREWAIT;
 			return;
 		}
 	}
 
 	// push back decl checksum here when running pure. just an additional safe check
-	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && clientDataChecksum != serverDataChecksum )
-	{
+	if( sessLocal.mapSpawnData.serverInfo.GetInt( "si_pure" ) && clientDataChecksum != serverDataChecksum ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04844" );
 		return;
 	}
 
-	ping = serverTime - challenges[ ichallenge ].pingTime;
+	ping = serverTime - challenges[ichallenge].pingTime;
 	common->Printf( "challenge from %s connecting with %d ping\n", Sys_NetAdrToString( from ), ping );
-	challenges[ ichallenge ].connected = true;
+	challenges[ichallenge].connected = true;
 
 	// find a slot for the client
-	for( islot = 0; islot < 3; islot++ )
-	{
-		for( clientNum = 0; clientNum < MAX_ASYNC_CLIENTS; clientNum++ )
-		{
-			serverClient_t& client = clients[ clientNum ];
+	for( islot = 0; islot < 3; islot++ ) {
+		for( clientNum = 0; clientNum < MAX_ASYNC_CLIENTS; clientNum++ ) {
+			serverClient_t& client = clients[clientNum];
 
-			if( islot == 0 )
-			{
+			if( islot == 0 ) {
 				// if this slot uses the same IP and port
-				if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) &&
-						( clientId == client.clientId || from.port == client.channel.GetRemoteAddress().port ) )
-				{
+				if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) && ( clientId == client.clientId || from.port == client.channel.GetRemoteAddress().port ) ) {
 					break;
 				}
-			}
-			else if( islot == 1 )
-			{
+			} else if( islot == 1 ) {
 				// if this client is not connected and the slot uses the same IP
-				if( client.clientState >= SCS_PUREWAIT )
-				{
+				if( client.clientState >= SCS_PUREWAIT ) {
 					continue;
 				}
-				if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) )
-				{
+				if( Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) ) {
 					break;
 				}
-			}
-			else if( islot == 2 )
-			{
+			} else if( islot == 2 ) {
 				// if this slot is free
-				if( client.clientState == SCS_FREE )
-				{
+				if( client.clientState == SCS_FREE ) {
 					break;
 				}
 			}
 		}
 
-		if( clientNum < MAX_ASYNC_CLIENTS )
-		{
+		if( clientNum < MAX_ASYNC_CLIENTS ) {
 			// initialize
-			clients[ clientNum ].channel.Init( from, serverId );
-			clients[ clientNum ].OS = OS;
-			strncpy( clients[ clientNum ].guid, guid, 12 );
-			clients[ clientNum ].guid[11] = 0;
+			clients[clientNum].channel.Init( from, serverId );
+			clients[clientNum].OS = OS;
+			strncpy( clients[clientNum].guid, guid, 12 );
+			clients[clientNum].guid[11] = 0;
 			break;
 		}
 	}
 
 	// if no free spots available
-	if( clientNum >= MAX_ASYNC_CLIENTS )
-	{
+	if( clientNum >= MAX_ASYNC_CLIENTS ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04845" );
 		return;
 	}
@@ -2158,7 +1915,7 @@ void idAsyncServer::ProcessConnectMessage( const netadr_t from, const idBitMsg& 
 	clients[clientNum].snapshotSequence = 1;
 
 	// clear the challenge struct so a reconnect from this client IP starts clean
-	memset( &challenges[ ichallenge ], 0, sizeof( challenge_t ) );
+	memset( &challenges[ichallenge], 0, sizeof( challenge_t ) );
 }
 
 /*
@@ -2168,55 +1925,48 @@ idAsyncServer::VerifyChecksumMessage
 */
 bool idAsyncServer::VerifyChecksumMessage( int clientNum, const netadr_t* from, const idBitMsg& msg, idStr& reply, int OS )
 {
-	int		i, numChecksums;
-	int		checksums[ MAX_PURE_PAKS ];
-	int		gamePakChecksum;
-	int		serverChecksums[ MAX_PURE_PAKS ];
-	int		serverGamePakChecksum;
+	int i, numChecksums;
+	int checksums[MAX_PURE_PAKS];
+	int gamePakChecksum;
+	int serverChecksums[MAX_PURE_PAKS];
+	int serverGamePakChecksum;
 
 	// pak checksums, in a 0-terminated list
 	numChecksums = 0;
-	do
-	{
-		i = msg.ReadLong();
-		checksums[ numChecksums++ ] = i;
+	do {
+		i						  = msg.ReadLong();
+		checksums[numChecksums++] = i;
 		// just to make sure a broken client doesn't crash us
-		if( numChecksums >= MAX_PURE_PAKS )
-		{
+		if( numChecksums >= MAX_PURE_PAKS ) {
 			common->Warning( "MAX_PURE_PAKS ( %d ) exceeded in idAsyncServer::ProcessPureMessage\n", MAX_PURE_PAKS );
 			sprintf( reply, "#str_07144" );
 			return false;
 		}
-	}
-	while( i );
+	} while( i );
 	numChecksums--;
 
 	// code pak checksum
 	gamePakChecksum = msg.ReadLong();
 
 	fileSystem->GetPureServerChecksums( serverChecksums, OS, &serverGamePakChecksum );
-	assert( serverChecksums[ 0 ] );
+	assert( serverChecksums[0] );
 
 	// compare the lists
-	if( serverGamePakChecksum != gamePakChecksum )
-	{
+	if( serverGamePakChecksum != gamePakChecksum ) {
 		common->Printf( "client %s: invalid game code pak ( 0x%x )\n", from ? Sys_NetAdrToString( *from ) : va( "%d", clientNum ), gamePakChecksum );
 		sprintf( reply, "#str_07145" );
 		return false;
 	}
-	for( i = 0; serverChecksums[ i ] != 0; i++ )
-	{
-		if( checksums[ i ] != serverChecksums[ i ] )
-		{
-			common->DPrintf( "client %s: pak missing ( 0x%x )\n", from ? Sys_NetAdrToString( *from ) : va( "%d", clientNum ), serverChecksums[ i ] );
-			sprintf( reply, "pak missing ( 0x%x )\n", serverChecksums[ i ] );
+	for( i = 0; serverChecksums[i] != 0; i++ ) {
+		if( checksums[i] != serverChecksums[i] ) {
+			common->DPrintf( "client %s: pak missing ( 0x%x )\n", from ? Sys_NetAdrToString( *from ) : va( "%d", clientNum ), serverChecksums[i] );
+			sprintf( reply, "pak missing ( 0x%x )\n", serverChecksums[i] );
 			return false;
 		}
 	}
-	if( checksums[ i ] != 0 )
-	{
-		common->DPrintf( "client %s: extra pak file referenced ( 0x%x )\n", from ? Sys_NetAdrToString( *from ) : va( "%d", clientNum ), checksums[ i ] );
-		sprintf( reply, "extra pak file referenced ( 0x%x )\n", checksums[ i ] );
+	if( checksums[i] != 0 ) {
+		common->DPrintf( "client %s: extra pak file referenced ( 0x%x )\n", from ? Sys_NetAdrToString( *from ) : va( "%d", clientNum ), checksums[i] );
+		sprintf( reply, "extra pak file referenced ( 0x%x )\n", checksums[i] );
 		return false;
 	}
 	return true;
@@ -2229,31 +1979,28 @@ idAsyncServer::ProcessPureMessage
 */
 void idAsyncServer::ProcessPureMessage( const netadr_t from, const idBitMsg& msg )
 {
-	int		iclient, challenge, clientId;
-	idStr	reply;
+	int	  iclient, challenge, clientId;
+	idStr reply;
 
 	challenge = msg.ReadLong();
-	clientId = msg.ReadShort();
+	clientId  = msg.ReadShort();
 
-	if( ( iclient = ValidateChallenge( from, challenge, clientId ) ) == -1 )
-	{
+	if( ( iclient = ValidateChallenge( from, challenge, clientId ) ) == -1 ) {
 		return;
 	}
 
-	if( challenges[ iclient ].authState != CDK_PUREWAIT )
-	{
+	if( challenges[iclient].authState != CDK_PUREWAIT ) {
 		common->DPrintf( "client %s: got pure message, not in CDK_PUREWAIT\n", Sys_NetAdrToString( from ) );
 		return;
 	}
 
-	if( !VerifyChecksumMessage( iclient, &from, msg, reply, challenges[ iclient ].OS ) )
-	{
+	if( !VerifyChecksumMessage( iclient, &from, msg, reply, challenges[iclient].OS ) ) {
 		PrintOOB( from, SERVER_PRINT_MISC, reply );
 		return;
 	}
 
 	common->DPrintf( "client %s: passed pure checks\n", Sys_NetAdrToString( from ) );
-	challenges[ iclient ].authState = CDK_PUREOK; // next connect message will get the client through completely
+	challenges[iclient].authState = CDK_PUREOK; // next connect message will get the client through completely
 }
 
 /*
@@ -2263,37 +2010,34 @@ idAsyncServer::ProcessReliablePure
 */
 void idAsyncServer::ProcessReliablePure( int clientNum, const idBitMsg& msg )
 {
-	idStr		reply;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	int			clientGameInitId;
+	idStr	 reply;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	int		 clientGameInitId;
 
 	clientGameInitId = msg.ReadLong();
-	if( clientGameInitId != gameInitId )
-	{
+	if( clientGameInitId != gameInitId ) {
 		common->DPrintf( "client %d: ignoring reliable pure from an old gameInit (%d)\n", clientNum, clientGameInitId );
 		return;
 	}
 
-	if( clients[ clientNum ].clientState != SCS_PUREWAIT )
-	{
+	if( clients[clientNum].clientState != SCS_PUREWAIT ) {
 		// should not happen unless something is very wrong. still, don't let this crash us, just get rid of the client
 		common->DPrintf( "client %d: got reliable pure while != SCS_PUREWAIT, sending a reload\n", clientNum );
 		outMsg.Init( msgBuf, sizeof( msgBuf ) );
 		outMsg.WriteByte( SERVER_RELIABLE_MESSAGE_RELOAD );
 		SendReliableMessage( clientNum, msg );
 		// go back to SCS_CONNECTED to sleep on the client until it goes away for a reconnect
-		clients[ clientNum ].clientState = SCS_CONNECTED;
+		clients[clientNum].clientState = SCS_CONNECTED;
 		return;
 	}
 
-	if( !VerifyChecksumMessage( clientNum, NULL, msg, reply, clients[ clientNum ].OS ) )
-	{
+	if( !VerifyChecksumMessage( clientNum, NULL, msg, reply, clients[clientNum].OS ) ) {
 		DropClient( clientNum, reply );
 		return;
 	}
 	common->DPrintf( "client %d: passed pure checks (reliable channel)\n", clientNum );
-	clients[ clientNum ].clientState = SCS_CONNECTED;
+	clients[clientNum].clientState = SCS_CONNECTED;
 }
 
 /*
@@ -2324,20 +2068,18 @@ idAsyncServer::ProcessRemoteConsoleMessage
 */
 void idAsyncServer::ProcessRemoteConsoleMessage( const netadr_t from, const idBitMsg& msg )
 {
-	idBitMsg	outMsg;
-	byte		msgBuf[952];
-	char		string[MAX_STRING_CHARS];
+	idBitMsg outMsg;
+	byte	 msgBuf[952];
+	char	 string[MAX_STRING_CHARS];
 
-	if( idAsyncNetwork::serverRemoteConsolePassword.GetString()[0] == '\0' )
-	{
+	if( idAsyncNetwork::serverRemoteConsolePassword.GetString()[0] == '\0' ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04846" );
 		return;
 	}
 
 	msg.ReadString( string, sizeof( string ) );
 
-	if( idStr::Icmp( string, idAsyncNetwork::serverRemoteConsolePassword.GetString() ) != 0 )
-	{
+	if( idStr::Icmp( string, idAsyncNetwork::serverRemoteConsolePassword.GetString() ) != 0 ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04847" );
 		return;
 	}
@@ -2346,7 +2088,7 @@ void idAsyncServer::ProcessRemoteConsoleMessage( const netadr_t from, const idBi
 
 	common->Printf( "rcon from %s: %s\n", Sys_NetAdrToString( from ), string );
 
-	rconAddress = from;
+	rconAddress	 = from;
 	noRconOutput = true;
 	common->BeginRedirect( ( char* )msgBuf, sizeof( msgBuf ), RConRedirect );
 
@@ -2354,8 +2096,7 @@ void idAsyncServer::ProcessRemoteConsoleMessage( const netadr_t from, const idBi
 
 	common->EndRedirect();
 
-	if( noRconOutput )
-	{
+	if( noRconOutput ) {
 		PrintOOB( rconAddress, SERVER_PRINT_RCON, "#str_04848" );
 	}
 }
@@ -2367,12 +2108,11 @@ idAsyncServer::ProcessGetInfoMessage
 */
 void idAsyncServer::ProcessGetInfoMessage( const netadr_t from, const idBitMsg& msg )
 {
-	int			i, challenge;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i, challenge;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
-	if( !IsActive() )
-	{
+	if( !IsActive() ) {
 		return;
 	}
 
@@ -2387,12 +2127,10 @@ void idAsyncServer::ProcessGetInfoMessage( const netadr_t from, const idBitMsg& 
 	outMsg.WriteLong( ASYNC_PROTOCOL_VERSION );
 	outMsg.WriteDeltaDict( sessLocal.mapSpawnData.serverInfo, NULL );
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
 
-		if( client.clientState < SCS_CONNECTED )
-		{
+		if( client.clientState < SCS_CONNECTED ) {
 			continue;
 		}
 
@@ -2418,22 +2156,18 @@ void idAsyncServer::PrintLocalServerInfo()
 	int i;
 
 	common->Printf( "server '%s' IP = %s\nprotocol %d.%d OS mask 0x%x\n",
-					sessLocal.mapSpawnData.serverInfo.GetString( "si_name" ),
-					Sys_NetAdrToString( serverPort.GetAdr() ),
-					ASYNC_PROTOCOL_MAJOR,
-					ASYNC_PROTOCOL_MINOR,
-					fileSystem->GetOSMask() );
+		sessLocal.mapSpawnData.serverInfo.GetString( "si_name" ),
+		Sys_NetAdrToString( serverPort.GetAdr() ),
+		ASYNC_PROTOCOL_MAJOR,
+		ASYNC_PROTOCOL_MINOR,
+		fileSystem->GetOSMask() );
 	sessLocal.mapSpawnData.serverInfo.Print();
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
-		if( client.clientState < SCS_CONNECTED )
-		{
+		if( client.clientState < SCS_CONNECTED ) {
 			continue;
 		}
-		common->Printf( "client %2d: %s, ping = %d, rate = %d\n", i,
-						sessLocal.mapSpawnData.userInfo[i].GetString( "ui_name", "Player" ),
-						client.clientPing, client.channel.GetMaxOutgoingRate() );
+		common->Printf( "client %2d: %s, ping = %d, rate = %d\n", i, sessLocal.mapSpawnData.userInfo[i].GetString( "ui_name", "Player" ), client.clientPing, client.channel.GetMaxOutgoingRate() );
 	}
 }
 
@@ -2444,67 +2178,57 @@ idAsyncServer::ConnectionlessMessage
 */
 bool idAsyncServer::ConnectionlessMessage( const netadr_t from, const idBitMsg& msg )
 {
-	char		string[MAX_STRING_CHARS * 2]; // M. Quinn - Even Balance - PB Packets need more than 1024
+	char string[MAX_STRING_CHARS * 2]; // M. Quinn - Even Balance - PB Packets need more than 1024
 
 	msg.ReadString( string, sizeof( string ) );
 
 	// info request
-	if( idStr::Icmp( string, "getInfo" ) == 0 )
-	{
+	if( idStr::Icmp( string, "getInfo" ) == 0 ) {
 		ProcessGetInfoMessage( from, msg );
 		return false;
 	}
 
 	// remote console
-	if( idStr::Icmp( string, "rcon" ) == 0 )
-	{
+	if( idStr::Icmp( string, "rcon" ) == 0 ) {
 		ProcessRemoteConsoleMessage( from, msg );
 		return true;
 	}
 
-	if( !active )
-	{
+	if( !active ) {
 		PrintOOB( from, SERVER_PRINT_MISC, "#str_04849" );
 		return false;
 	}
 
 	// challenge from a client
-	if( idStr::Icmp( string, "challenge" ) == 0 )
-	{
+	if( idStr::Icmp( string, "challenge" ) == 0 ) {
 		ProcessChallengeMessage( from, msg );
 		return false;
 	}
 
 	// connect from a client
-	if( idStr::Icmp( string, "connect" ) == 0 )
-	{
+	if( idStr::Icmp( string, "connect" ) == 0 ) {
 		ProcessConnectMessage( from, msg );
 		return false;
 	}
 
 	// pure mesasge from a client
-	if( idStr::Icmp( string, "pureClient" ) == 0 )
-	{
+	if( idStr::Icmp( string, "pureClient" ) == 0 ) {
 		ProcessPureMessage( from, msg );
 		return false;
 	}
 
 	// download request
-	if( idStr::Icmp( string, "downloadRequest" ) == 0 )
-	{
+	if( idStr::Icmp( string, "downloadRequest" ) == 0 ) {
 		ProcessDownloadRequestMessage( from, msg );
 	}
 
 	// auth server
-	if( idStr::Icmp( string, "auth" ) == 0 )
-	{
-		if( !Sys_CompareNetAdrBase( from, idAsyncNetwork::GetMasterAddress() ) )
-		{
+	if( idStr::Icmp( string, "auth" ) == 0 ) {
+		if( !Sys_CompareNetAdrBase( from, idAsyncNetwork::GetMasterAddress() ) ) {
 			common->Printf( "auth: bad source %s\n", Sys_NetAdrToString( from ) );
 			return false;
 		}
-		if( idAsyncNetwork::LANServer.GetBool() )
-		{
+		if( idAsyncNetwork::LANServer.GetBool() ) {
 			common->Printf( "auth message from master. net_LANServer is enabled, ignored.\n" );
 		}
 		ProcessAuthMessage( msg );
@@ -2521,51 +2245,44 @@ idAsyncServer::ProcessMessage
 */
 bool idAsyncServer::ProcessMessage( const netadr_t from, idBitMsg& msg )
 {
-	int			i, id, sequence;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i, id, sequence;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	id = msg.ReadShort();
 
 	// check for a connectionless message
-	if( id == CONNECTIONLESS_MESSAGE_ID )
-	{
+	if( id == CONNECTIONLESS_MESSAGE_ID ) {
 		return ConnectionlessMessage( from, msg );
 	}
 
-	if( msg.GetRemaingData() < 4 )
-	{
+	if( msg.GetRemaingData() < 4 ) {
 		common->DPrintf( "%s: tiny packet\n", Sys_NetAdrToString( from ) );
 		return false;
 	}
 
 	// find out which client the message is from
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
 
-		if( client.clientState == SCS_FREE )
-		{
+		if( client.clientState == SCS_FREE ) {
 			continue;
 		}
 
 		// This does not compare the UDP port, because some address translating
 		// routers will change that at arbitrary times.
-		if( !Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) || id != client.clientId )
-		{
+		if( !Sys_CompareNetAdrBase( from, client.channel.GetRemoteAddress() ) || id != client.clientId ) {
 			continue;
 		}
 
 		// make sure it is a valid, in sequence packet
-		if( !client.channel.Process( from, serverTime, msg, sequence ) )
-		{
-			return false;		// out of order, duplicated, fragment, etc.
+		if( !client.channel.Process( from, serverTime, msg, sequence ) ) {
+			return false; // out of order, duplicated, fragment, etc.
 		}
 
 		// zombie clients still need to do the channel processing to make sure they don't
 		// need to retransmit the final reliable message, but they don't do any other processing
-		if( client.clientState == SCS_ZOMBIE )
-		{
+		if( client.clientState == SCS_ZOMBIE ) {
 			return false;
 		}
 
@@ -2594,27 +2311,23 @@ idAsyncServer::SendReliableGameMessage
 */
 void idAsyncServer::SendReliableGameMessage( int clientNum, const idBitMsg& msg )
 {
-	int			i;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	outMsg.Init( msgBuf, sizeof( msgBuf ) );
 	outMsg.WriteByte( SERVER_RELIABLE_MESSAGE_GAME );
 	outMsg.WriteData( msg.GetData(), msg.GetSize() );
 
-	if( clientNum >= 0 && clientNum < MAX_ASYNC_CLIENTS )
-	{
-		if( clients[clientNum].clientState == SCS_INGAME )
-		{
+	if( clientNum >= 0 && clientNum < MAX_ASYNC_CLIENTS ) {
+		if( clients[clientNum].clientState == SCS_INGAME ) {
 			SendReliableMessage( clientNum, outMsg );
 		}
 		return;
 	}
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState != SCS_INGAME )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState != SCS_INGAME ) {
 			continue;
 		}
 		SendReliableMessage( i, outMsg );
@@ -2628,9 +2341,9 @@ idAsyncServer::LocalClientSendReliableMessageExcluding
 */
 void idAsyncServer::SendReliableGameMessageExcluding( int clientNum, const idBitMsg& msg )
 {
-	int			i;
-	idBitMsg	outMsg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
+	int		 i;
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	assert( clientNum >= 0 && clientNum < MAX_ASYNC_CLIENTS );
 
@@ -2638,14 +2351,11 @@ void idAsyncServer::SendReliableGameMessageExcluding( int clientNum, const idBit
 	outMsg.WriteByte( SERVER_RELIABLE_MESSAGE_GAME );
 	outMsg.WriteData( msg.GetData(), msg.GetSize() );
 
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( i == clientNum )
-		{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( i == clientNum ) {
 			continue;
 		}
-		if( clients[i].clientState != SCS_INGAME )
-		{
+		if( clients[i].clientState != SCS_INGAME ) {
 			continue;
 		}
 		SendReliableMessage( i, outMsg );
@@ -2659,8 +2369,7 @@ idAsyncServer::LocalClientSendReliableMessage
 */
 void idAsyncServer::LocalClientSendReliableMessage( const idBitMsg& msg )
 {
-	if( localClientNum < 0 )
-	{
+	if( localClientNum < 0 ) {
 		common->Printf( "LocalClientSendReliableMessage: no local client\n" );
 		return;
 	}
@@ -2674,24 +2383,21 @@ idAsyncServer::ProcessConnectionLessMessages
 */
 void idAsyncServer::ProcessConnectionLessMessages()
 {
-	int			size, id;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	netadr_t	from;
+	int		 size, id;
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	netadr_t from;
 
-	if( !serverPort.GetPort() )
-	{
+	if( !serverPort.GetPort() ) {
 		return;
 	}
 
-	while( serverPort.GetPacket( from, msgBuf, size, sizeof( msgBuf ) ) )
-	{
+	while( serverPort.GetPacket( from, msgBuf, size, sizeof( msgBuf ) ) ) {
 		msg.Init( msgBuf, sizeof( msgBuf ) );
 		msg.SetSize( size );
 		msg.BeginReading();
 		id = msg.ReadShort();
-		if( id == CONNECTIONLESS_MESSAGE_ID )
-		{
+		if( id == CONNECTIONLESS_MESSAGE_ID ) {
 			ConnectionlessMessage( from, msg );
 		}
 	}
@@ -2706,8 +2412,8 @@ int idAsyncServer::UpdateTime( int clamp )
 {
 	int time, msec;
 
-	time = Sys_Milliseconds();
-	msec = idMath::ClampInt( 0, clamp, time - realTime );
+	time	 = Sys_Milliseconds();
+	msec	 = idMath::ClampInt( 0, clamp, time - realTime );
 	realTime = time;
 	serverTime += msec;
 	return msec;
@@ -2720,23 +2426,21 @@ idAsyncServer::RunFrame
 */
 void idAsyncServer::RunFrame()
 {
-	int			i, msec, size;
-	bool		newPacket;
-	idBitMsg	msg;
-	byte		msgBuf[MAX_MESSAGE_SIZE];
-	netadr_t	from;
-	int			outgoingRate, incomingRate;
-	float		outgoingCompression, incomingCompression;
+	int		 i, msec, size;
+	bool	 newPacket;
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
+	netadr_t from;
+	int		 outgoingRate, incomingRate;
+	float	 outgoingCompression, incomingCompression;
 
 	msec = UpdateTime( 100 );
 
-	if( !serverPort.GetPort() )
-	{
+	if( !serverPort.GetPort() ) {
 		return;
 	}
 
-	if( !active )
-	{
+	if( !active ) {
 		ProcessConnectionLessMessages();
 		return;
 	}
@@ -2744,33 +2448,25 @@ void idAsyncServer::RunFrame()
 	gameTimeResidual += msec;
 
 	// spin in place processing incoming packets until enough time lapsed to run a new game frame
-	do
-	{
-
-		do
-		{
-
+	do {
+		do {
 			// blocking read with game time residual timeout
 			newPacket = serverPort.GetPacketBlocking( from, msgBuf, size, sizeof( msgBuf ), USERCMD_MSEC - gameTimeResidual - 1 );
-			if( newPacket )
-			{
+			if( newPacket ) {
 				msg.Init( msgBuf, sizeof( msgBuf ) );
 				msg.SetSize( size );
 				msg.BeginReading();
-				if( ProcessMessage( from, msg ) )
-				{
-					return;	// return because rcon was used
+				if( ProcessMessage( from, msg ) ) {
+					return; // return because rcon was used
 				}
 			}
 
 			msec = UpdateTime( 100 );
 			gameTimeResidual += msec;
 
-		}
-		while( newPacket );
+		} while( newPacket );
 
-	}
-	while( gameTimeResidual < USERCMD_MSEC );
+	} while( gameTimeResidual < USERCMD_MSEC );
 
 	// send heart beat to master servers
 	MasterHeartbeat();
@@ -2778,8 +2474,7 @@ void idAsyncServer::RunFrame()
 	// check for clients that timed out
 	CheckClientTimeouts();
 
-	if( idAsyncNetwork::idleServer.GetBool() == ( !GetNumClients() || GetNumIdleClients() != GetNumClients() ) )
-	{
+	if( idAsyncNetwork::idleServer.GetBool() == ( !GetNumClients() || GetNumIdleClients() != GetNumClients() ) ) {
 		idAsyncNetwork::idleServer.SetBool( !idAsyncNetwork::idleServer.GetBool() );
 		// the need to propagate right away, only this
 		sessLocal.mapSpawnData.serverInfo.Set( "si_idleServer", idAsyncNetwork::idleServer.GetString() );
@@ -2787,15 +2482,13 @@ void idAsyncServer::RunFrame()
 	}
 
 	// make sure the time doesn't wrap
-	if( serverTime > 0x70000000 )
-	{
+	if( serverTime > 0x70000000 ) {
 		ExecuteMapChange();
 		return;
 	}
 
 	// check for synchronized cvar changes
-	if( cvarSystem->GetModifiedFlags() & CVAR_NETWORKSYNC )
-	{
+	if( cvarSystem->GetModifiedFlags() & CVAR_NETWORKSYNC ) {
 		idDict newCvars;
 		newCvars = *cvarSystem->MoveCVarsToDict( CVAR_NETWORKSYNC );
 		SendSyncedCvarsBroadcast( newCvars );
@@ -2803,10 +2496,8 @@ void idAsyncServer::RunFrame()
 	}
 
 	// check for user info changes of the local client
-	if( cvarSystem->GetModifiedFlags() & CVAR_USERINFO )
-	{
-		if( localClientNum >= 0 )
-		{
+	if( cvarSystem->GetModifiedFlags() & CVAR_USERINFO ) {
+		if( localClientNum >= 0 ) {
 			idDict newInfo;
 			game->ThrottleUserInfo();
 			newInfo = *cvarSystem->MoveCVarsToDict( CVAR_USERINFO );
@@ -2816,9 +2507,7 @@ void idAsyncServer::RunFrame()
 	}
 
 	// advance the server game
-	while( gameTimeResidual >= USERCMD_MSEC )
-	{
-
+	while( gameTimeResidual >= USERCMD_MSEC ) {
 		// sample input for the local client
 		LocalClientInput();
 
@@ -2826,7 +2515,7 @@ void idAsyncServer::RunFrame()
 		DuplicateUsercmds( gameFrame, gameTime );
 
 		// advance game
-		gameReturn_t ret = game->RunFrame( userCmds[gameFrame & ( MAX_USERCMD_BACKUP - 1 ) ] );
+		gameReturn_t ret = game->RunFrame( userCmds[gameFrame & ( MAX_USERCMD_BACKUP - 1 )] );
 
 		idAsyncNetwork::ExecuteSessionCommand( ret.sessionCommand );
 
@@ -2840,70 +2529,53 @@ void idAsyncServer::RunFrame()
 	DuplicateUsercmds( gameFrame, gameTime );
 
 	// send snapshots to connected clients
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
 		serverClient_t& client = clients[i];
 
-		if( client.clientState == SCS_FREE || i == localClientNum )
-		{
+		if( client.clientState == SCS_FREE || i == localClientNum ) {
 			continue;
 		}
 
 		// modify maximum rate if necesary
-		if( idAsyncNetwork::serverMaxClientRate.IsModified() )
-		{
+		if( idAsyncNetwork::serverMaxClientRate.IsModified() ) {
 			client.channel.SetMaxOutgoingRate( Min( client.clientRate, idAsyncNetwork::serverMaxClientRate.GetInteger() ) );
 		}
 
 		// if the channel is not yet ready to send new data
-		if( !client.channel.ReadyToSend( serverTime ) )
-		{
+		if( !client.channel.ReadyToSend( serverTime ) ) {
 			continue;
 		}
 
 		// send additional message fragments if the last message was too large to send at once
-		if( client.channel.UnsentFragmentsLeft() )
-		{
+		if( client.channel.UnsentFragmentsLeft() ) {
 			client.channel.SendNextFragment( serverPort, serverTime );
 			continue;
 		}
 
-		if( client.clientState == SCS_INGAME )
-		{
-			if( !SendSnapshotToClient( i ) )
-			{
+		if( client.clientState == SCS_INGAME ) {
+			if( !SendSnapshotToClient( i ) ) {
 				SendPingToClient( i );
 			}
-		}
-		else
-		{
+		} else {
 			SendEmptyToClient( i );
 		}
 	}
 
-	if( com_showAsyncStats.GetBool() )
-	{
-
+	if( com_showAsyncStats.GetBool() ) {
 		UpdateAsyncStatsAvg();
 
 		// dedicated will verbose to console
-		if( idAsyncNetwork::serverDedicated.GetBool() && serverTime >= nextAsyncStatsTime )
-		{
-			common->Printf( "delay = %d msec, total outgoing rate = %d KB/s, total incoming rate = %d KB/s\n", GetDelay(),
-							GetOutgoingRate() >> 10, GetIncomingRate() >> 10 );
+		if( idAsyncNetwork::serverDedicated.GetBool() && serverTime >= nextAsyncStatsTime ) {
+			common->Printf( "delay = %d msec, total outgoing rate = %d KB/s, total incoming rate = %d KB/s\n", GetDelay(), GetOutgoingRate() >> 10, GetIncomingRate() >> 10 );
 
-			for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-			{
-
-				outgoingRate = GetClientOutgoingRate( i );
-				incomingRate = GetClientIncomingRate( i );
+			for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+				outgoingRate		= GetClientOutgoingRate( i );
+				incomingRate		= GetClientIncomingRate( i );
 				outgoingCompression = GetClientOutgoingCompression( i );
 				incomingCompression = GetClientIncomingCompression( i );
 
-				if( outgoingRate != -1 && incomingRate != -1 )
-				{
-					common->Printf( "client %d: out rate = %d B/s (% -2.1f%%), in rate = %d B/s (% -2.1f%%)\n",
-									i, outgoingRate, outgoingCompression, incomingRate, incomingCompression );
+				if( outgoingRate != -1 && incomingRate != -1 ) {
+					common->Printf( "client %d: out rate = %d B/s (% -2.1f%%), in rate = %d B/s (% -2.1f%%)\n", i, outgoingRate, outgoingCompression, incomingRate, incomingCompression );
 				}
 			}
 
@@ -2927,22 +2599,16 @@ void idAsyncServer::PacifierUpdate()
 {
 	int i;
 
-	if( !IsActive() )
-	{
+	if( !IsActive() ) {
 		return;
 	}
 	realTime = Sys_Milliseconds();
 	ProcessConnectionLessMessages();
-	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ )
-	{
-		if( clients[i].clientState >= SCS_PUREWAIT )
-		{
-			if( clients[i].channel.UnsentFragmentsLeft() )
-			{
+	for( i = 0; i < MAX_ASYNC_CLIENTS; i++ ) {
+		if( clients[i].clientState >= SCS_PUREWAIT ) {
+			if( clients[i].channel.UnsentFragmentsLeft() ) {
 				clients[i].channel.SendNextFragment( serverPort, serverTime );
-			}
-			else
-			{
+			} else {
 				SendEmptyToClient( i );
 			}
 		}
@@ -2956,8 +2622,8 @@ idAsyncServer::PrintOOB
 */
 void idAsyncServer::PrintOOB( const netadr_t to, int opcode, const char* string )
 {
-	idBitMsg	outMsg;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
+	idBitMsg outMsg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	outMsg.Init( msgBuf, sizeof( msgBuf ) );
 	outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
@@ -2974,32 +2640,26 @@ idAsyncServer::MasterHeartbeat
 */
 void idAsyncServer::MasterHeartbeat( bool force )
 {
-	if( idAsyncNetwork::LANServer.GetBool() )
-	{
-		if( force )
-		{
+	if( idAsyncNetwork::LANServer.GetBool() ) {
+		if( force ) {
 			common->Printf( "net_LANServer is enabled. Not sending heartbeats\n" );
 		}
 		return;
 	}
-	if( force )
-	{
+	if( force ) {
 		nextHeartbeatTime = 0;
 	}
 	// not yet
-	if( serverTime < nextHeartbeatTime )
-	{
+	if( serverTime < nextHeartbeatTime ) {
 		return;
 	}
 	nextHeartbeatTime = serverTime + HEARTBEAT_MSEC;
-	for( int i = 0 ; i < MAX_MASTER_SERVERS ; i++ )
-	{
+	for( int i = 0; i < MAX_MASTER_SERVERS; i++ ) {
 		netadr_t adr;
-		if( idAsyncNetwork::GetMasterAddress( i, adr ) )
-		{
+		if( idAsyncNetwork::GetMasterAddress( i, adr ) ) {
 			common->Printf( "Sending heartbeat to %s\n", Sys_NetAdrToString( adr ) );
 			idBitMsg outMsg;
-			byte msgBuf[ MAX_MESSAGE_SIZE ];
+			byte	 msgBuf[MAX_MESSAGE_SIZE];
 			outMsg.Init( msgBuf, sizeof( msgBuf ) );
 			outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
 			outMsg.WriteString( "heartbeat" );
@@ -3015,8 +2675,8 @@ idAsyncServer::SendEnterGameToClient
 */
 void idAsyncServer::SendEnterGameToClient( int clientNum )
 {
-	idBitMsg	msg;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
+	idBitMsg msg;
+	byte	 msgBuf[MAX_MESSAGE_SIZE];
 
 	msg.Init( msgBuf, sizeof( msgBuf ) );
 	msg.WriteByte( SERVER_RELIABLE_MESSAGE_ENTERGAME );
@@ -3030,28 +2690,23 @@ idAsyncServer::UpdateAsyncStatsAvg
 */
 void idAsyncServer::UpdateAsyncStatsAvg()
 {
-	stats_average_sum -= stats_outrate[ stats_current ];
-	stats_outrate[ stats_current ] = idAsyncNetwork::server.GetOutgoingRate();
-	if( stats_outrate[ stats_current ] > stats_max )
-	{
-		stats_max = stats_outrate[ stats_current ];
+	stats_average_sum -= stats_outrate[stats_current];
+	stats_outrate[stats_current] = idAsyncNetwork::server.GetOutgoingRate();
+	if( stats_outrate[stats_current] > stats_max ) {
+		stats_max		= stats_outrate[stats_current];
 		stats_max_index = stats_current;
-	}
-	else if( stats_current == stats_max_index )
-	{
+	} else if( stats_current == stats_max_index ) {
 		// find the new max
 		int i;
 		stats_max = 0;
-		for( i = 0; i < stats_numsamples ; i++ )
-		{
-			if( stats_outrate[ i ] > stats_max )
-			{
-				stats_max = stats_outrate[ i ];
+		for( i = 0; i < stats_numsamples; i++ ) {
+			if( stats_outrate[i] > stats_max ) {
+				stats_max		= stats_outrate[i];
 				stats_max_index = i;
 			}
 		}
 	}
-	stats_average_sum += stats_outrate[ stats_current ];
+	stats_average_sum += stats_outrate[stats_current];
 	stats_current++;
 	stats_current %= stats_numsamples;
 }
@@ -3073,49 +2728,43 @@ idAsyncServer::ProcessDownloadRequestMessage
 */
 void idAsyncServer::ProcessDownloadRequestMessage( const netadr_t from, const idBitMsg& msg )
 {
-	int			challenge, clientId, iclient, numPaks, i;
-	int			dlGamePak;
-	int			dlPakChecksum;
-	int			dlSize[ MAX_PURE_PAKS ];	// sizes
-	idStrList	pakNames;					// relative path
-	idStrList	pakURLs;					// game URLs
-	char		pakbuf[ MAX_STRING_CHARS ];
-	idStr		paklist;
-	byte		msgBuf[ MAX_MESSAGE_SIZE ];
-	byte		tmpBuf[ MAX_MESSAGE_SIZE ];
-	idBitMsg	outMsg, tmpMsg;
-	int			dlRequest;
-	int			voidSlots = 0;				// to count and verbose the right number of paks requested for downloads
+	int		  challenge, clientId, iclient, numPaks, i;
+	int		  dlGamePak;
+	int		  dlPakChecksum;
+	int		  dlSize[MAX_PURE_PAKS]; // sizes
+	idStrList pakNames;				 // relative path
+	idStrList pakURLs;				 // game URLs
+	char	  pakbuf[MAX_STRING_CHARS];
+	idStr	  paklist;
+	byte	  msgBuf[MAX_MESSAGE_SIZE];
+	byte	  tmpBuf[MAX_MESSAGE_SIZE];
+	idBitMsg  outMsg, tmpMsg;
+	int		  dlRequest;
+	int		  voidSlots = 0; // to count and verbose the right number of paks requested for downloads
 
 	challenge = msg.ReadLong();
-	clientId = msg.ReadShort();
+	clientId  = msg.ReadShort();
 	dlRequest = msg.ReadLong();
 
-	if( ( iclient = ValidateChallenge( from, challenge, clientId ) ) == -1 )
-	{
+	if( ( iclient = ValidateChallenge( from, challenge, clientId ) ) == -1 ) {
 		return;
 	}
 
-	if( challenges[ iclient ].authState != CDK_PUREWAIT )
-	{
+	if( challenges[iclient].authState != CDK_PUREWAIT ) {
 		common->DPrintf( "client %s: got download request message, not in CDK_PUREWAIT\n", Sys_NetAdrToString( from ) );
 		return;
 	}
 
 	// the first token of the pak names list passed to the game will be empty if no game pak is requested
 	dlGamePak = msg.ReadLong();
-	if( dlGamePak )
-	{
-		if( !( dlSize[ 0 ] = fileSystem->ValidateDownloadPakForChecksum( dlGamePak, pakbuf, true ) ) )
-		{
+	if( dlGamePak ) {
+		if( !( dlSize[0] = fileSystem->ValidateDownloadPakForChecksum( dlGamePak, pakbuf, true ) ) ) {
 			common->Warning( "client requested unknown game pak 0x%x", dlGamePak );
-			pakbuf[ 0 ] = '\0';
+			pakbuf[0] = '\0';
 			voidSlots++;
 		}
-	}
-	else
-	{
-		pakbuf[ 0 ] = '\0';
+	} else {
+		pakbuf[0] = '\0';
 		voidSlots++;
 	}
 	pakNames.Append( pakbuf );
@@ -3123,13 +2772,11 @@ void idAsyncServer::ProcessDownloadRequestMessage( const netadr_t from, const id
 
 	// read the checksums, build path names and pass that to the game code
 	dlPakChecksum = msg.ReadLong();
-	while( dlPakChecksum )
-	{
-		if( !( dlSize[ numPaks ] = fileSystem->ValidateDownloadPakForChecksum( dlPakChecksum, pakbuf, false ) ) )
-		{
+	while( dlPakChecksum ) {
+		if( !( dlSize[numPaks] = fileSystem->ValidateDownloadPakForChecksum( dlPakChecksum, pakbuf, false ) ) ) {
 			// we pass an empty token to the game so our list doesn't get offset
 			common->Warning( "client requested an unknown pak 0x%x", dlPakChecksum );
-			pakbuf[ 0 ] = '\0';
+			pakbuf[0] = '\0';
 			voidSlots++;
 		}
 		pakNames.Append( pakbuf );
@@ -3137,13 +2784,11 @@ void idAsyncServer::ProcessDownloadRequestMessage( const netadr_t from, const id
 		dlPakChecksum = msg.ReadLong();
 	}
 
-	for( i = 0; i < pakNames.Num(); i++ )
-	{
-		if( i > 0 )
-		{
+	for( i = 0; i < pakNames.Num(); i++ ) {
+		if( i > 0 ) {
 			paklist += ";";
 		}
-		paklist += pakNames[ i ].c_str();
+		paklist += pakNames[i].c_str();
 	}
 
 	// read the message and pass it to the game code
@@ -3153,62 +2798,48 @@ void idAsyncServer::ProcessDownloadRequestMessage( const netadr_t from, const id
 	outMsg.WriteShort( CONNECTIONLESS_MESSAGE_ID );
 	outMsg.WriteString( "downloadInfo" );
 	outMsg.WriteLong( dlRequest );
-	if( !game->DownloadRequest( Sys_NetAdrToString( from ), challenges[ iclient ].guid, paklist.c_str(), pakbuf ) )
-	{
+	if( !game->DownloadRequest( Sys_NetAdrToString( from ), challenges[iclient].guid, paklist.c_str(), pakbuf ) ) {
 		common->DPrintf( "game: no downloads\n" );
 		outMsg.WriteByte( SERVER_DL_NONE );
 		serverPort.SendPacket( from, outMsg.GetData(), outMsg.GetSize() );
 		return;
 	}
 
-	char* token, *next;
-	int type = 0;
+	char *token, *next;
+	int	  type = 0;
 
 	token = pakbuf;
-	next = strchr( token, ';' );
-	while( token )
-	{
-		if( next )
-		{
+	next  = strchr( token, ';' );
+	while( token ) {
+		if( next ) {
 			*next = '\0';
 		}
 
-		if( type == 0 )
-		{
+		if( type == 0 ) {
 			type = atoi( token );
-		}
-		else if( type == SERVER_DL_REDIRECT )
-		{
+		} else if( type == SERVER_DL_REDIRECT ) {
 			common->DPrintf( "download request: redirect to URL %s\n", token );
 			outMsg.WriteByte( SERVER_DL_REDIRECT );
 			outMsg.WriteString( token );
 			serverPort.SendPacket( from, outMsg.GetData(), outMsg.GetSize() );
 			return;
-		}
-		else if( type == SERVER_DL_LIST )
-		{
+		} else if( type == SERVER_DL_LIST ) {
 			pakURLs.Append( token );
-		}
-		else
-		{
+		} else {
 			common->DPrintf( "wrong op type %d\n", type );
 			next = token = NULL;
 		}
 
-		if( next )
-		{
+		if( next ) {
 			token = next + 1;
-			next = strchr( token, ';' );
-		}
-		else
-		{
+			next  = strchr( token, ';' );
+		} else {
 			token = NULL;
 		}
 	}
 
-	if( type == SERVER_DL_LIST )
-	{
-		int totalDlSize = 0;
+	if( type == SERVER_DL_LIST ) {
+		int totalDlSize	  = 0;
 		int numActualPaks = 0;
 
 		// put the answer packet together
@@ -3216,38 +2847,30 @@ void idAsyncServer::ProcessDownloadRequestMessage( const netadr_t from, const id
 
 		tmpMsg.Init( tmpBuf, MAX_MESSAGE_SIZE );
 
-		for( i = 0; i < pakURLs.Num(); i++ )
-		{
+		for( i = 0; i < pakURLs.Num(); i++ ) {
 			tmpMsg.BeginWriting();
-			if( !dlSize[ i ] || !pakURLs[ i ].Length() )
-			{
+			if( !dlSize[i] || !pakURLs[i].Length() ) {
 				// still send the relative path so the client knows what it missed
 				tmpMsg.WriteByte( SERVER_PAK_NO );
-				tmpMsg.WriteString( pakNames[ i ] );
-			}
-			else
-			{
-				totalDlSize += dlSize[ i ];
+				tmpMsg.WriteString( pakNames[i] );
+			} else {
+				totalDlSize += dlSize[i];
 				numActualPaks++;
 				tmpMsg.WriteByte( SERVER_PAK_YES );
-				tmpMsg.WriteString( pakNames[ i ] );
-				tmpMsg.WriteString( pakURLs[ i ] );
-				tmpMsg.WriteLong( dlSize[ i ] );
+				tmpMsg.WriteString( pakNames[i] );
+				tmpMsg.WriteString( pakURLs[i] );
+				tmpMsg.WriteLong( dlSize[i] );
 			}
 
 			// keep last 5 bytes for an 'end of message' - SERVER_PAK_END and the totalDlSize long
-			if( outMsg.GetRemainingSpace() - tmpMsg.GetSize() > 5 )
-			{
+			if( outMsg.GetRemainingSpace() - tmpMsg.GetSize() > 5 ) {
 				outMsg.WriteData( tmpMsg.GetData(), tmpMsg.GetSize() );
-			}
-			else
-			{
+			} else {
 				outMsg.WriteByte( SERVER_PAK_END );
 				break;
 			}
 		}
-		if( i == pakURLs.Num() )
-		{
+		if( i == pakURLs.Num() ) {
 			// put a closure even if size not exceeded
 			outMsg.WriteByte( SERVER_PAK_END );
 		}

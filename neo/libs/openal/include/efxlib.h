@@ -19,8 +19,7 @@ public:
 	};
 	~idSoundEffect()
 	{
-		if( data && datasize )
-		{
+		if( data && datasize ) {
 			Mem_Free( data );
 			data = NULL;
 		}

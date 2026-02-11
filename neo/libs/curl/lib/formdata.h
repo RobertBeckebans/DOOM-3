@@ -24,23 +24,20 @@
  * $Id: formdata.h,v 1.19 2004/03/12 14:22:16 bagder Exp $
  ***************************************************************************/
 /* plain and simple linked list with lines to send */
-struct FormData
-{
+struct FormData {
 	struct FormData* next;
 	char* line;
 	size_t length;
 };
 
-struct Form
-{
+struct Form {
 	struct FormData* data; /* current form line to send */
 	unsigned int sent; /* number of bytes of the current line that has already
                         been sent in a previous invoke */
 };
 
 /* used by FormAdd for temporary storage */
-typedef struct FormInfo
-{
+typedef struct FormInfo {
 	char* name;
 	size_t namelength;
 	char* value;

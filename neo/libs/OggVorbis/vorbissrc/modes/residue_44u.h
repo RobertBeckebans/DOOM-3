@@ -22,46 +22,41 @@
 /***** residue backends *********************************************/
 
 
-static vorbis_info_residue0 _residue_44_low_un =
-{
+static vorbis_info_residue0 _residue_44_low_un = {
 	0, -1, -1, 8, -1,
 	{0},
 	{ -1},
 	{  .5,  1.5,  1.5,  2.5,  2.5,  4.5, 28.5},
-	{  -1,   25,   -1,   45,   -1,   -1,   -1}
+	{  -1,   25, -1,   45, -1, -1, -1}
 };
 
-static vorbis_info_residue0 _residue_44_mid_un =
-{
+static vorbis_info_residue0 _residue_44_mid_un = {
 	0, -1, -1, 10, -1,
 	/*  0     1     2     3     4     5     6     7     8     9 */
 	{0},
 	{ -1},
 	{  .5,  1.5,  1.5,  2.5,  2.5,  4.5,  4.5, 16.5, 60.5},
-	{  -1,   30,   -1,   50,   -1,   80,   -1,   -1,   -1}
+	{  -1,   30, -1,   50, -1,   80, -1, -1, -1}
 };
 
-static vorbis_info_residue0 _residue_44_hi_un =
-{
+static vorbis_info_residue0 _residue_44_hi_un = {
 	0, -1, -1, 10, -1,
 	/*  0     1     2     3     4     5     6     7     8     9 */
 	{0},
 	{ -1},
 	{  .5,  1.5,  2.5,  4.5,  8.5, 16.5, 32.5, 71.5, 157.5},
-	{  -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1}
+	{  -1, -1, -1, -1, -1, -1, -1, -1, -1}
 };
 
 /* mapping conventions:
    only one submap (this would change for efficient 5.1 support for example)*/
 /* Four psychoacoustic profiles are used, one for each blocktype */
-static vorbis_info_mapping0 _map_nominal_u[2] =
-{
+static vorbis_info_mapping0 _map_nominal_u[2] = {
 	{1, {0, 0}, {0}, {0}, 0, {0}, {0}},
 	{1, {0, 0}, {1}, {1}, 0, {0}, {0}}
 };
 
-static static_bookblock _resbook_44u_0 =
-{
+static static_bookblock _resbook_44u_0 = {
 	{
 		{0},
 		{0, 0, &_44u0__p1_0},
@@ -73,8 +68,7 @@ static static_bookblock _resbook_44u_0 =
 		{&_44u0__p7_0, &_44u0__p7_1, &_44u0__p7_2}
 	}
 };
-static static_bookblock _resbook_44u_1 =
-{
+static static_bookblock _resbook_44u_1 = {
 	{
 		{0},
 		{0, 0, &_44u1__p1_0},
@@ -86,8 +80,7 @@ static static_bookblock _resbook_44u_1 =
 		{&_44u1__p7_0, &_44u1__p7_1, &_44u1__p7_2}
 	}
 };
-static static_bookblock _resbook_44u_2 =
-{
+static static_bookblock _resbook_44u_2 = {
 	{
 		{0},
 		{0, 0, &_44u2__p1_0},
@@ -99,8 +92,7 @@ static static_bookblock _resbook_44u_2 =
 		{&_44u2__p7_0, &_44u2__p7_1, &_44u2__p7_2}
 	}
 };
-static static_bookblock _resbook_44u_3 =
-{
+static static_bookblock _resbook_44u_3 = {
 	{
 		{0},
 		{0, 0, &_44u3__p1_0},
@@ -112,8 +104,7 @@ static static_bookblock _resbook_44u_3 =
 		{&_44u3__p7_0, &_44u3__p7_1, &_44u3__p7_2}
 	}
 };
-static static_bookblock _resbook_44u_4 =
-{
+static static_bookblock _resbook_44u_4 = {
 	{
 		{0},
 		{0, 0, &_44u4__p1_0},
@@ -125,8 +116,7 @@ static static_bookblock _resbook_44u_4 =
 		{&_44u4__p7_0, &_44u4__p7_1, &_44u4__p7_2}
 	}
 };
-static static_bookblock _resbook_44u_5 =
-{
+static static_bookblock _resbook_44u_5 = {
 	{
 		{0},
 		{0, 0, &_44u5__p1_0},
@@ -140,8 +130,7 @@ static static_bookblock _resbook_44u_5 =
 		{&_44u5__p9_0, &_44u5__p9_1, &_44u5__p9_2}
 	}
 };
-static static_bookblock _resbook_44u_6 =
-{
+static static_bookblock _resbook_44u_6 = {
 	{
 		{0},
 		{0, 0, &_44u6__p1_0},
@@ -155,8 +144,7 @@ static static_bookblock _resbook_44u_6 =
 		{&_44u6__p9_0, &_44u6__p9_1, &_44u6__p9_2}
 	}
 };
-static static_bookblock _resbook_44u_7 =
-{
+static static_bookblock _resbook_44u_7 = {
 	{
 		{0},
 		{0, 0, &_44u7__p1_0},
@@ -170,8 +158,7 @@ static static_bookblock _resbook_44u_7 =
 		{&_44u7__p9_0, &_44u7__p9_1, &_44u7__p9_2}
 	}
 };
-static static_bookblock _resbook_44u_8 =
-{
+static static_bookblock _resbook_44u_8 = {
 	{
 		{0},
 		{0, 0, &_44u8_p1_0},
@@ -185,8 +172,7 @@ static static_bookblock _resbook_44u_8 =
 		{&_44u8_p9_0, &_44u8_p9_1, &_44u8_p9_2}
 	}
 };
-static static_bookblock _resbook_44u_9 =
-{
+static static_bookblock _resbook_44u_9 = {
 	{
 		{0},
 		{0, 0, &_44u9_p1_0},
@@ -201,153 +187,142 @@ static static_bookblock _resbook_44u_9 =
 	}
 };
 
-static vorbis_residue_template _res_44u_0[] =
-{
+static vorbis_residue_template _res_44u_0[] = {
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u0__short, &_huff_book__44u0__short,
 		&_resbook_44u_0, &_resbook_44u_0
 	},
 
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u0__long, &_huff_book__44u0__long,
 		&_resbook_44u_0, &_resbook_44u_0
 	}
 };
-static vorbis_residue_template _res_44u_1[] =
-{
+static vorbis_residue_template _res_44u_1[] = {
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u1__short, &_huff_book__44u1__short,
 		&_resbook_44u_1, &_resbook_44u_1
 	},
 
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u1__long, &_huff_book__44u1__long,
 		&_resbook_44u_1, &_resbook_44u_1
 	}
 };
-static vorbis_residue_template _res_44u_2[] =
-{
+static vorbis_residue_template _res_44u_2[] = {
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u2__short, &_huff_book__44u2__short,
 		&_resbook_44u_2, &_resbook_44u_2
 	},
 
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u2__long, &_huff_book__44u2__long,
 		&_resbook_44u_2, &_resbook_44u_2
 	}
 };
-static vorbis_residue_template _res_44u_3[] =
-{
+static vorbis_residue_template _res_44u_3[] = {
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u3__short, &_huff_book__44u3__short,
 		&_resbook_44u_3, &_resbook_44u_3
 	},
 
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u3__long, &_huff_book__44u3__long,
 		&_resbook_44u_3, &_resbook_44u_3
 	}
 };
-static vorbis_residue_template _res_44u_4[] =
-{
+static vorbis_residue_template _res_44u_4[] = {
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u4__short, &_huff_book__44u4__short,
 		&_resbook_44u_4, &_resbook_44u_4
 	},
 
 	{
-		1, 0,  &_residue_44_low_un,
+		1, 0, &_residue_44_low_un,
 		&_huff_book__44u4__long, &_huff_book__44u4__long,
 		&_resbook_44u_4, &_resbook_44u_4
 	}
 };
 
-static vorbis_residue_template _res_44u_5[] =
-{
+static vorbis_residue_template _res_44u_5[] = {
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u5__short, &_huff_book__44u5__short,
 		&_resbook_44u_5, &_resbook_44u_5
 	},
 
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u5__long, &_huff_book__44u5__long,
 		&_resbook_44u_5, &_resbook_44u_5
 	}
 };
 
-static vorbis_residue_template _res_44u_6[] =
-{
+static vorbis_residue_template _res_44u_6[] = {
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u6__short, &_huff_book__44u6__short,
 		&_resbook_44u_6, &_resbook_44u_6
 	},
 
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u6__long, &_huff_book__44u6__long,
 		&_resbook_44u_6, &_resbook_44u_6
 	}
 };
 
-static vorbis_residue_template _res_44u_7[] =
-{
+static vorbis_residue_template _res_44u_7[] = {
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u7__short, &_huff_book__44u7__short,
 		&_resbook_44u_7, &_resbook_44u_7
 	},
 
 	{
-		1, 0,  &_residue_44_mid_un,
+		1, 0, &_residue_44_mid_un,
 		&_huff_book__44u7__long, &_huff_book__44u7__long,
 		&_resbook_44u_7, &_resbook_44u_7
 	}
 };
 
-static vorbis_residue_template _res_44u_8[] =
-{
+static vorbis_residue_template _res_44u_8[] = {
 	{
-		1, 0,  &_residue_44_hi_un,
+		1, 0, &_residue_44_hi_un,
 		&_huff_book__44u8__short, &_huff_book__44u8__short,
 		&_resbook_44u_8, &_resbook_44u_8
 	},
 
 	{
-		1, 0,  &_residue_44_hi_un,
+		1, 0, &_residue_44_hi_un,
 		&_huff_book__44u8__long, &_huff_book__44u8__long,
 		&_resbook_44u_8, &_resbook_44u_8
 	}
 };
-static vorbis_residue_template _res_44u_9[] =
-{
+static vorbis_residue_template _res_44u_9[] = {
 	{
-		1, 0,  &_residue_44_hi_un,
+		1, 0, &_residue_44_hi_un,
 		&_huff_book__44u9__short, &_huff_book__44u9__short,
 		&_resbook_44u_9, &_resbook_44u_9
 	},
 
 	{
-		1, 0,  &_residue_44_hi_un,
+		1, 0, &_residue_44_hi_un,
 		&_huff_book__44u9__long, &_huff_book__44u9__long,
 		&_resbook_44u_9, &_resbook_44u_9
 	}
 };
 
-static vorbis_mapping_template _mapres_template_44_uncoupled[] =
-{
+static vorbis_mapping_template _mapres_template_44_uncoupled[] = {
 	{ _map_nominal_u, _res_44u_0 }, /* 0 */
 	{ _map_nominal_u, _res_44u_1 }, /* 1 */
 	{ _map_nominal_u, _res_44u_2 }, /* 2 */

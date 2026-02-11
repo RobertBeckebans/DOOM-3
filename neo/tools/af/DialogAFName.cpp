@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -43,9 +44,9 @@ IMPLEMENT_DYNAMIC( DialogAFName, CDialog )
 DialogAFName::DialogAFName
 ================
 */
-DialogAFName::DialogAFName( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogAFName::IDD, pParent )
-	, m_combo( NULL )
+DialogAFName::DialogAFName( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogAFName::IDD, pParent ),
+	m_combo( NULL )
 {
 }
 
@@ -106,7 +107,7 @@ DialogAFName::OnInitDialog
 */
 BOOL DialogAFName::OnInitDialog()
 {
-	CEdit* edit;
+	CEdit*	edit;
 	CString str;
 
 	CDialog::OnInitDialog();
@@ -126,24 +127,19 @@ EditVerifyName
 */
 void EditVerifyName( CEdit* edit )
 {
-	CString strIn, strOut;
-	int start, end;
+	CString		strIn, strOut;
+	int			start, end;
 	static bool entered = false;
 
-	if( entered )
-	{
+	if( entered ) {
 		return;
 	}
 	entered = true;
 
 	edit->GetSel( start, end );
 	edit->GetWindowText( strIn );
-	for( int i = 0; i < strIn.GetLength(); i++ )
-	{
-		if( ( strIn[i] >= 'a' && strIn[i] <= 'z' ) ||
-				( strIn[i] >= 'A' && strIn[i] <= 'Z' ) ||
-				( strIn[i] == '_' ) || ( strIn[i] >= '0' && strIn[i] <= '9' ) )
-		{
+	for( int i = 0; i < strIn.GetLength(); i++ ) {
+		if( ( strIn[i] >= 'a' && strIn[i] <= 'z' ) || ( strIn[i] >= 'A' && strIn[i] <= 'Z' ) || ( strIn[i] == '_' ) || ( strIn[i] >= '0' && strIn[i] <= '9' ) ) {
 			strOut.AppendChar( strIn[i] );
 		}
 	}
@@ -153,30 +149,24 @@ void EditVerifyName( CEdit* edit )
 	entered = false;
 }
 
-
 BEGIN_MESSAGE_MAP( DialogAFName, CDialog )
-	ON_BN_CLICKED( IDOK, OnBnClickedOk )
-	ON_EN_CHANGE( IDC_EDIT_AF_NAME, OnEnChangeEditAfName )
+ON_BN_CLICKED( IDOK, OnBnClickedOk )
+ON_EN_CHANGE( IDC_EDIT_AF_NAME, OnEnChangeEditAfName )
 END_MESSAGE_MAP()
-
 
 // DialogAFName message handlers
 
 void DialogAFName::OnBnClickedOk()
 {
-
 	UpdateData( TRUE );
-	if( m_combo && m_combo->FindStringExact( -1, m_editName ) != -1 )
-	{
+	if( m_combo && m_combo->FindStringExact( -1, m_editName ) != -1 ) {
 		MessageBox( va( "The name %s is already used.", m_editName.GetBuffer() ), "Name", MB_OK );
-	}
-	else
-	{
+	} else {
 		OnOK();
 	}
 }
 
 void DialogAFName::OnEnChangeEditAfName()
 {
-	EditVerifyName( ( CEdit* ) GetDlgItem( IDC_EDIT_AF_NAME ) );
+	EditVerifyName( ( CEdit* )GetDlgItem( IDC_EDIT_AF_NAME ) );
 }

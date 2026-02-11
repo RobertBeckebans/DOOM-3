@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,9 +38,7 @@ PROBLEM: compressed textures may break the zero clamp rule!
 
 static bool FormatIsDXT( int internalFormat )
 {
-	if( internalFormat < GL_COMPRESSED_RGB_S3TC_DXT1_EXT
-			|| internalFormat > GL_COMPRESSED_RGBA_S3TC_DXT5_EXT )
-	{
+	if( internalFormat < GL_COMPRESSED_RGB_S3TC_DXT1_EXT || internalFormat > GL_COMPRESSED_RGBA_S3TC_DXT5_EXT ) {
 		return false;
 	}
 	return true;
@@ -47,9 +46,8 @@ static bool FormatIsDXT( int internalFormat )
 
 int MakePowerOfTwo( int num )
 {
-	int		pot;
-	for( pot = 1 ; pot < num ; pot <<= 1 )
-	{
+	int pot;
+	for( pot = 1; pot < num; pot <<= 1 ) {
 	}
 	return pot;
 }
@@ -63,8 +61,7 @@ Used for determining memory utilization
 */
 int idImage::BitsForInternalFormat( int internalFormat ) const
 {
-	switch( internalFormat )
-	{
+	switch( internalFormat ) {
 		case GL_INTENSITY8:
 		case 1:
 			return 8;
@@ -72,7 +69,7 @@ int idImage::BitsForInternalFormat( int internalFormat ) const
 		case GL_LUMINANCE8_ALPHA8:
 			return 16;
 		case 3:
-			return 32;		// on some future hardware, this may actually be 24, but be conservative
+			return 32; // on some future hardware, this may actually be 24, but be conservative
 		case 4:
 			return 32;
 		case GL_LUMINANCE8:
@@ -82,7 +79,7 @@ int idImage::BitsForInternalFormat( int internalFormat ) const
 		case GL_RGBA8:
 			return 32;
 		case GL_RGB8:
-			return 32;		// on some future hardware, this may actually be 24, but be conservative
+			return 32; // on some future hardware, this may actually be 24, but be conservative
 		case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
 			return 4;
 		case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
@@ -100,9 +97,9 @@ int idImage::BitsForInternalFormat( int internalFormat ) const
 		case GL_COLOR_INDEX:
 			return 8;
 		case GL_COMPRESSED_RGB_ARB:
-			return 4;			// not sure
+			return 4; // not sure
 		case GL_COMPRESSED_RGBA_ARB:
-			return 8;			// not sure
+			return 8; // not sure
 		default:
 			common->Error( "R_BitsForInternalFormat: BAD FORMAT:%i", internalFormat );
 	}
@@ -118,102 +115,80 @@ Create a 256 color palette to be used by compressed normal maps
 */
 void idImage::UploadCompressedNormalMap( int width, int height, const byte* rgba, int mipLevel )
 {
-	byte*	normals;
-	const byte*	in;
-	byte*	out;
-	int		i, j;
-	int		x, y, z;
-	int		row;
+	byte*		normals;
+	const byte* in;
+	byte*		out;
+	int			i, j;
+	int			x, y, z;
+	int			row;
 
 	// OpenGL's pixel packing rule
 	row = width < 4 ? 4 : width;
 
 	normals = ( byte* )_alloca( row * height );
-	if( !normals )
-	{
+	if( !normals ) {
 		common->Error( "R_UploadCompressedNormalMap: _alloca failed" );
 	}
 
-	in = rgba;
+	in	= rgba;
 	out = normals;
-	for( i = 0 ; i < height ; i++, out += row, in += width * 4 )
-	{
-		for( j = 0 ; j < width ; j++ )
-		{
-			x = in[ j * 4 + 0 ];
-			y = in[ j * 4 + 1 ];
-			z = in[ j * 4 + 2 ];
+	for( i = 0; i < height; i++, out += row, in += width * 4 ) {
+		for( j = 0; j < width; j++ ) {
+			x = in[j * 4 + 0];
+			y = in[j * 4 + 1];
+			z = in[j * 4 + 2];
 
 			int c;
-			if( x == 128 && y == 128 && z == 128 )
-			{
+			if( x == 128 && y == 128 && z == 128 ) {
 				// the "nullnormal" color
 				c = 255;
-			}
-			else
-			{
+			} else {
 				c = ( globalImages->originalToCompressed[x] << 4 ) | globalImages->originalToCompressed[y];
-				if( c == 255 )
-				{
-					c = 254;	// don't use the nullnormal color
+				if( c == 255 ) {
+					c = 254; // don't use the nullnormal color
 				}
 			}
 			out[j] = c;
 		}
 	}
 
-	if( mipLevel == 0 )
-	{
+	if( mipLevel == 0 ) {
 		// Optionally write out the paletized normal map to a .tga
-		if( globalImages->image_writeNormalTGAPalletized.GetBool() )
-		{
+		if( globalImages->image_writeNormalTGAPalletized.GetBool() ) {
 			char filename[MAX_IMAGE_NAME];
 			ImageProgramStringToCompressedFileName( imgName, filename );
 			char* ext = strrchr( filename, '.' );
-			if( ext )
-			{
+			if( ext ) {
 				strcpy( ext, "_pal.tga" );
 				R_WritePalTGA( filename, normals, globalImages->compressedPalette, width, height );
 			}
 		}
 	}
 
-	if( glConfig.sharedTexturePaletteAvailable )
-	{
-		qglTexImage2D( GL_TEXTURE_2D,
-					   mipLevel,
-					   GL_COLOR_INDEX8_EXT,
-					   width,
-					   height,
-					   0,
-					   GL_COLOR_INDEX,
-					   GL_UNSIGNED_BYTE,
-					   normals );
+	if( glConfig.sharedTexturePaletteAvailable ) {
+		qglTexImage2D( GL_TEXTURE_2D, mipLevel, GL_COLOR_INDEX8_EXT, width, height, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE, normals );
 	}
 }
 
-
 //=======================================================================
 
-
-static byte	mipBlendColors[16][4] =
-{
-	{0, 0, 0, 0},
-	{255, 0, 0, 128},
-	{0, 255, 0, 128},
-	{0, 0, 255, 128},
-	{255, 0, 0, 128},
-	{0, 255, 0, 128},
-	{0, 0, 255, 128},
-	{255, 0, 0, 128},
-	{0, 255, 0, 128},
-	{0, 0, 255, 128},
-	{255, 0, 0, 128},
-	{0, 255, 0, 128},
-	{0, 0, 255, 128},
-	{255, 0, 0, 128},
-	{0, 255, 0, 128},
-	{0, 0, 255, 128},
+static byte mipBlendColors[16][4] = {
+	{ 0, 0, 0, 0 },
+	{ 255, 0, 0, 128 },
+	{ 0, 255, 0, 128 },
+	{ 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 },
+	{ 0, 255, 0, 128 },
+	{ 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 },
+	{ 0, 255, 0, 128 },
+	{ 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 },
+	{ 0, 255, 0, 128 },
+	{ 0, 0, 255, 128 },
+	{ 255, 0, 0, 128 },
+	{ 0, 255, 0, 128 },
+	{ 0, 0, 255, 128 },
 };
 
 /*
@@ -223,37 +198,34 @@ SelectInternalFormat
 This may need to scan six cube map images
 ===============
 */
-GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, int width, int height,
-									  textureDepth_t minimumDepth, bool* monochromeResult ) const
+GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, int width, int height, textureDepth_t minimumDepth, bool* monochromeResult ) const
 {
-	int		i, c;
-	const byte*	scan;
-	int		rgbOr, rgbAnd, aOr, aAnd;
-	int		rgbDiffer, rgbaDiffer;
+	int			i, c;
+	const byte* scan;
+	int			rgbOr, rgbAnd, aOr, aAnd;
+	int			rgbDiffer, rgbaDiffer;
 
 	// determine if the rgb channels are all the same
 	// and if either all rgb or all alpha are 255
-	c = width * height;
-	rgbDiffer = 0;
+	c		   = width * height;
+	rgbDiffer  = 0;
 	rgbaDiffer = 0;
-	rgbOr = 0;
-	rgbAnd = -1;
-	aOr = 0;
-	aAnd = -1;
+	rgbOr	   = 0;
+	rgbAnd	   = -1;
+	aOr		   = 0;
+	aAnd	   = -1;
 
-	*monochromeResult = true;	// until shown otherwise
+	*monochromeResult = true; // until shown otherwise
 
-	for( int side = 0 ; side < numDataPtrs ; side++ )
-	{
+	for( int side = 0; side < numDataPtrs; side++ ) {
 		scan = dataPtrs[side];
-		for( i = 0; i < c; i++, scan += 4 )
-		{
-			int		cor, cand;
+		for( i = 0; i < c; i++, scan += 4 ) {
+			int cor, cand;
 
 			aOr |= scan[3];
 			aAnd &= scan[3];
 
-			cor = scan[0] | scan[1] | scan[2];
+			cor	 = scan[0] | scan[1] | scan[2];
 			cand = scan[0] & scan[1] & scan[2];
 
 			// if rgb are all the same, the or and and will match
@@ -262,11 +234,8 @@ GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, in
 			// our "isMonochrome" test is more lax than rgbDiffer,
 			// allowing the values to be off by several units and
 			// still use the NV20 mono path
-			if( *monochromeResult )
-			{
-				if( abs( scan[0] - scan[1] ) > 16
-						|| abs( scan[0] - scan[2] ) > 16 )
-				{
+			if( *monochromeResult ) {
+				if( abs( scan[0] - scan[1] ) > 16 || abs( scan[0] - scan[2] ) > 16 ) {
 					*monochromeResult = false;
 				}
 			}
@@ -286,73 +255,50 @@ GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, in
 	// of 255 alpha, but if the alpha actually is referenced, there will be
 	// different behavior in the compressed vs uncompressed states.
 	bool needAlpha;
-	if( aAnd == 255 || aOr == 0 )
-	{
+	if( aAnd == 255 || aOr == 0 ) {
 		needAlpha = false;
-	}
-	else
-	{
+	} else {
 		needAlpha = true;
 	}
 
 	// catch normal maps first
-	if( minimumDepth == TD_BUMP )
-	{
-		if( globalImages->image_useCompression.GetBool() && globalImages->image_useNormalCompression.GetInteger() == 1 && glConfig.sharedTexturePaletteAvailable )
-		{
+	if( minimumDepth == TD_BUMP ) {
+		if( globalImages->image_useCompression.GetBool() && globalImages->image_useNormalCompression.GetInteger() == 1 && glConfig.sharedTexturePaletteAvailable ) {
 			// image_useNormalCompression should only be set to 1 on nv_10 and nv_20 paths
 			return GL_COLOR_INDEX8_EXT;
-		}
-		else if( globalImages->image_useCompression.GetBool() && globalImages->image_useNormalCompression.GetInteger() && glConfig.textureCompressionAvailable )
-		{
+		} else if( globalImages->image_useCompression.GetBool() && globalImages->image_useNormalCompression.GetInteger() && glConfig.textureCompressionAvailable ) {
 			// image_useNormalCompression == 2 uses rxgb format which produces really good quality for medium settings
 			return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-		}
-		else
-		{
+		} else {
 			// we always need the alpha channel for bump maps for swizzling
 			return GL_RGBA8;
 		}
 	}
 
 	// allow a complete override of image compression with a cvar
-	if( !globalImages->image_useCompression.GetBool() )
-	{
+	if( !globalImages->image_useCompression.GetBool() ) {
 		minimumDepth = TD_HIGH_QUALITY;
 	}
 
-	if( minimumDepth == TD_SPECULAR )
-	{
+	if( minimumDepth == TD_SPECULAR ) {
 		// we are assuming that any alpha channel is unintentional
-		if( glConfig.textureCompressionAvailable )
-		{
+		if( glConfig.textureCompressionAvailable ) {
 			return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-		}
-		else
-		{
+		} else {
 			return GL_RGB5;
 		}
 	}
-	if( minimumDepth == TD_DIFFUSE )
-	{
+	if( minimumDepth == TD_DIFFUSE ) {
 		// we might intentionally have an alpha channel for alpha tested textures
-		if( glConfig.textureCompressionAvailable )
-		{
-			if( !needAlpha )
-			{
+		if( glConfig.textureCompressionAvailable ) {
+			if( !needAlpha ) {
 				return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-			}
-			else
-			{
+			} else {
 				return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
 			}
-		}
-		else if( ( aAnd == 255 || aOr == 0 ) )
-		{
+		} else if( ( aAnd == 255 || aOr == 0 ) ) {
 			return GL_RGB5;
-		}
-		else
-		{
+		} else {
 			return GL_RGBA4;
 		}
 	}
@@ -360,37 +306,31 @@ GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, in
 	// there will probably be some drivers that don't
 	// correctly handle the intensity/alpha/luminance/luminance+alpha
 	// formats, so provide a fallback that only uses the rgb/rgba formats
-	if( !globalImages->image_useAllFormats.GetBool() )
-	{
+	if( !globalImages->image_useAllFormats.GetBool() ) {
 		// pretend rgb is varying and inconsistant, which
 		// prevents any of the more compact forms
-		rgbDiffer = 1;
+		rgbDiffer  = 1;
 		rgbaDiffer = 1;
-		rgbAnd = 0;
+		rgbAnd	   = 0;
 	}
 
 	// cases without alpha
-	if( !needAlpha )
-	{
-		if( minimumDepth == TD_HIGH_QUALITY )
-		{
-			return GL_RGB8;			// four bytes
+	if( !needAlpha ) {
+		if( minimumDepth == TD_HIGH_QUALITY ) {
+			return GL_RGB8; // four bytes
 		}
-		if( glConfig.textureCompressionAvailable )
-		{
-			return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;	// half byte
+		if( glConfig.textureCompressionAvailable ) {
+			return GL_COMPRESSED_RGB_S3TC_DXT1_EXT; // half byte
 		}
-		return GL_RGB5;			// two bytes
+		return GL_RGB5; // two bytes
 	}
 
 	// cases with alpha
-	if( !rgbaDiffer )
-	{
-		if( minimumDepth != TD_HIGH_QUALITY && glConfig.textureCompressionAvailable )
-		{
-			return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;	// one byte
+	if( !rgbaDiffer ) {
+		if( minimumDepth != TD_HIGH_QUALITY && glConfig.textureCompressionAvailable ) {
+			return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT; // one byte
 		}
-		return GL_INTENSITY8;	// single byte for all channels
+		return GL_INTENSITY8; // single byte for all channels
 	}
 
 #if 0
@@ -398,25 +338,21 @@ GLenum idImage::SelectInternalFormat( const byte** dataPtrs, int numDataPtrs, in
 	// is a discrepancy in the definition of TEX_ENV_COMBINE that
 	// causes them to be treated as 0 0 0 A, instead of 1 1 1 A as
 	// normal texture modulation treats them
-	if( rgbAnd == 255 )
-	{
+	if( rgbAnd == 255 ) {
 		return GL_ALPHA8;		// single byte, only alpha
 	}
 #endif
 
-	if( minimumDepth == TD_HIGH_QUALITY )
-	{
-		return GL_RGBA8;	// four bytes
+	if( minimumDepth == TD_HIGH_QUALITY ) {
+		return GL_RGBA8; // four bytes
 	}
-	if( glConfig.textureCompressionAvailable )
-	{
-		return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;	// one byte
+	if( glConfig.textureCompressionAvailable ) {
+		return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT; // one byte
 	}
-	if( !rgbDiffer )
-	{
-		return GL_LUMINANCE8_ALPHA8;	// two bytes, max quality
+	if( !rgbDiffer ) {
+		return GL_LUMINANCE8_ALPHA8; // two bytes, max quality
 	}
-	return GL_RGBA4;	// two bytes
+	return GL_RGBA4; // two bytes
 }
 
 /*
@@ -427,8 +363,7 @@ SetImageFilterAndRepeat
 void idImage::SetImageFilterAndRepeat() const
 {
 	// set the minimize / maximize filtering
-	switch( filter )
-	{
+	switch( filter ) {
 		case TF_DEFAULT:
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, globalImages->textureMinFilter );
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, globalImages->textureMaxFilter );
@@ -445,26 +380,20 @@ void idImage::SetImageFilterAndRepeat() const
 			common->FatalError( "R_CreateImage: bad texture filter" );
 	}
 
-	if( glConfig.anisotropicAvailable )
-	{
+	if( glConfig.anisotropicAvailable ) {
 		// only do aniso filtering on mip mapped images
-		if( filter == TF_DEFAULT )
-		{
+		if( filter == TF_DEFAULT ) {
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, globalImages->textureAnisotropy );
-		}
-		else
-		{
+		} else {
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1 );
 		}
 	}
-	if( glConfig.textureLODBiasAvailable )
-	{
+	if( glConfig.textureLODBiasAvailable ) {
 		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS_EXT, globalImages->textureLODBias );
 	}
 
 	// set the wrap/clamp modes
-	switch( repeat )
-	{
+	switch( repeat ) {
 		case TR_REPEAT:
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 			qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
@@ -495,53 +424,39 @@ void idImage::GetDownsize( int& scaled_width, int& scaled_height ) const
 	int size = 0;
 
 	// perform optional picmip operation to save texture memory
-	if( depth == TD_SPECULAR && globalImages->image_downSizeSpecular.GetInteger() )
-	{
+	if( depth == TD_SPECULAR && globalImages->image_downSizeSpecular.GetInteger() ) {
 		size = globalImages->image_downSizeSpecularLimit.GetInteger();
-		if( size == 0 )
-		{
+		if( size == 0 ) {
 			size = 64;
 		}
-	}
-	else if( depth == TD_BUMP && globalImages->image_downSizeBump.GetInteger() )
-	{
+	} else if( depth == TD_BUMP && globalImages->image_downSizeBump.GetInteger() ) {
 		size = globalImages->image_downSizeBumpLimit.GetInteger();
-		if( size == 0 )
-		{
+		if( size == 0 ) {
 			size = 64;
 		}
-	}
-	else if( ( allowDownSize || globalImages->image_forceDownSize.GetBool() ) && globalImages->image_downSize.GetInteger() )
-	{
+	} else if( ( allowDownSize || globalImages->image_forceDownSize.GetBool() ) && globalImages->image_downSize.GetInteger() ) {
 		size = globalImages->image_downSizeLimit.GetInteger();
-		if( size == 0 )
-		{
+		if( size == 0 ) {
 			size = 256;
 		}
 	}
 
-	if( size > 0 )
-	{
-		while( scaled_width > size || scaled_height > size )
-		{
-			if( scaled_width > 1 )
-			{
+	if( size > 0 ) {
+		while( scaled_width > size || scaled_height > size ) {
+			if( scaled_width > 1 ) {
 				scaled_width >>= 1;
 			}
-			if( scaled_height > 1 )
-			{
+			if( scaled_height > 1 ) {
 				scaled_height >>= 1;
 			}
 		}
 	}
 
 	// clamp to minimum size
-	if( scaled_width < 1 )
-	{
+	if( scaled_width < 1 ) {
 		scaled_width = 1;
 	}
-	if( scaled_height < 1 )
-	{
+	if( scaled_height < 1 ) {
 		scaled_height = 1;
 	}
 
@@ -550,9 +465,7 @@ void idImage::GetDownsize( int& scaled_width, int& scaled_height ) const
 	// deal with a half mip resampling
 	// This causes a 512*256 texture to sample down to
 	// 256*128 on a voodoo3, even though it could be 256*256
-	while( scaled_width > glConfig.maxTextureSize
-			|| scaled_height > glConfig.maxTextureSize )
-	{
+	while( scaled_width > glConfig.maxTextureSize || scaled_height > glConfig.maxTextureSize ) {
 		scaled_width >>= 1;
 		scaled_height >>= 1;
 	}
@@ -587,47 +500,40 @@ There is no way to specify explicit mip map levels
 
 ================
 */
-void idImage::GenerateImage( const byte* pic, int width, int height,
-							 textureFilter_t filterParm, bool allowDownSizeParm,
-							 textureRepeat_t repeatParm, textureDepth_t depthParm )
+void idImage::GenerateImage( const byte* pic, int width, int height, textureFilter_t filterParm, bool allowDownSizeParm, textureRepeat_t repeatParm, textureDepth_t depthParm )
 {
-	bool	preserveBorder;
-	byte*		scaledBuffer;
-	int			scaled_width, scaled_height;
-	byte*		shrunk;
+	bool  preserveBorder;
+	byte* scaledBuffer;
+	int	  scaled_width, scaled_height;
+	byte* shrunk;
 
 	PurgeImage();
 
-	filter = filterParm;
+	filter		  = filterParm;
 	allowDownSize = allowDownSizeParm;
-	repeat = repeatParm;
-	depth = depthParm;
+	repeat		  = repeatParm;
+	depth		  = depthParm;
 
 	// if we don't have a rendering context, just return after we
 	// have filled in the parms.  We must have the values set, or
 	// an image match from a shader before OpenGL starts would miss
 	// the generated texture
-	if( !glConfig.isInitialized )
-	{
+	if( !glConfig.isInitialized ) {
 		return;
 	}
 
 	// don't let mip mapping smear the texture into the clamped border
-	if( repeat == TR_CLAMP_TO_ZERO )
-	{
+	if( repeat == TR_CLAMP_TO_ZERO ) {
 		preserveBorder = true;
-	}
-	else
-	{
+	} else {
 		preserveBorder = false;
 	}
 
 	// make sure it is a power of 2
-	scaled_width = MakePowerOfTwo( width );
+	scaled_width  = MakePowerOfTwo( width );
 	scaled_height = MakePowerOfTwo( height );
 
-	if( scaled_width != width || scaled_height != height )
-	{
+	if( scaled_width != width || scaled_height != height ) {
 		common->Error( "R_CreateImage: not a power of 2 image" );
 	}
 
@@ -643,83 +549,71 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 	internalFormat = SelectInternalFormat( &pic, 1, width, height, depth, &isMonochrome );
 
 	// copy or resample data as appropriate for first MIP level
-	if( ( scaled_width == width ) && ( scaled_height == height ) )
-	{
+	if( ( scaled_width == width ) && ( scaled_height == height ) ) {
 		// we must copy even if unchanged, because the border zeroing
 		// would otherwise modify const data
 		scaledBuffer = ( byte* )R_StaticAlloc( sizeof( unsigned ) * scaled_width * scaled_height );
 		memcpy( scaledBuffer, pic, width * height * 4 );
-	}
-	else
-	{
+	} else {
 		// resample down as needed (FIXME: this doesn't seem like it resamples anymore!)
 		// scaledBuffer = R_ResampleTexture( pic, width, height, width >>= 1, height >>= 1 );
 		scaledBuffer = R_MipMap( pic, width, height, preserveBorder );
 		width >>= 1;
 		height >>= 1;
-		if( width < 1 )
-		{
+		if( width < 1 ) {
 			width = 1;
 		}
-		if( height < 1 )
-		{
+		if( height < 1 ) {
 			height = 1;
 		}
 
-		while( width > scaled_width || height > scaled_height )
-		{
+		while( width > scaled_width || height > scaled_height ) {
 			shrunk = R_MipMap( scaledBuffer, width, height, preserveBorder );
 			R_StaticFree( scaledBuffer );
 			scaledBuffer = shrunk;
 
 			width >>= 1;
 			height >>= 1;
-			if( width < 1 )
-			{
+			if( width < 1 ) {
 				width = 1;
 			}
-			if( height < 1 )
-			{
+			if( height < 1 ) {
 				height = 1;
 			}
 		}
 
 		// one might have shrunk down below the target size
-		scaled_width = width;
+		scaled_width  = width;
 		scaled_height = height;
 	}
 
 	uploadHeight = scaled_height;
-	uploadWidth = scaled_width;
-	type = TT_2D;
+	uploadWidth	 = scaled_width;
+	type		 = TT_2D;
 
 	// zero the border if desired, allowing clamped projection textures
 	// even after picmip resampling or careless artists.
-	if( repeat == TR_CLAMP_TO_ZERO )
-	{
-		byte	rgba[4];
+	if( repeat == TR_CLAMP_TO_ZERO ) {
+		byte rgba[4];
 
 		rgba[0] = rgba[1] = rgba[2] = 0;
-		rgba[3] = 255;
+		rgba[3]						= 255;
 		R_SetBorderTexels( ( byte* )scaledBuffer, width, height, rgba );
 	}
-	if( repeat == TR_CLAMP_TO_ZERO_ALPHA )
-	{
-		byte	rgba[4];
+	if( repeat == TR_CLAMP_TO_ZERO_ALPHA ) {
+		byte rgba[4];
 
 		rgba[0] = rgba[1] = rgba[2] = 255;
-		rgba[3] = 0;
+		rgba[3]						= 0;
 		R_SetBorderTexels( ( byte* )scaledBuffer, width, height, rgba );
 	}
 
-	if( generatorFunction == NULL && ( depth == TD_BUMP && globalImages->image_writeNormalTGA.GetBool() || depth != TD_BUMP && globalImages->image_writeTGA.GetBool() ) )
-	{
+	if( generatorFunction == NULL && ( depth == TD_BUMP && globalImages->image_writeNormalTGA.GetBool() || depth != TD_BUMP && globalImages->image_writeTGA.GetBool() ) ) {
 		// Optionally write out the texture to a .tga
 		char filename[MAX_IMAGE_NAME];
 		ImageProgramStringToCompressedFileName( imgName, filename );
 		char* ext = strrchr( filename, '.' );
-		if( ext )
-		{
+		if( ext ) {
 			strcpy( ext, ".tga" );
 			// swap the red/alpha for the write
 			/*
@@ -749,20 +643,16 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 	// one fragment program
 	// if the image is precompressed ( either in palletized mode or true rxgb mode )
 	// then it is loaded above and the swap never happens here
-	if( depth == TD_BUMP && globalImages->image_useNormalCompression.GetInteger() != 1 )
-	{
-		for( int i = 0; i < scaled_width * scaled_height * 4; i += 4 )
-		{
-			scaledBuffer[ i + 3 ] = scaledBuffer[ i ];
-			scaledBuffer[ i ] = 0;
+	if( depth == TD_BUMP && globalImages->image_useNormalCompression.GetInteger() != 1 ) {
+		for( int i = 0; i < scaled_width * scaled_height * 4; i += 4 ) {
+			scaledBuffer[i + 3] = scaledBuffer[i];
+			scaledBuffer[i]		= 0;
 		}
 	}
 	// upload the main image level
 	Bind();
 
-
-	if( internalFormat == GL_COLOR_INDEX8_EXT )
-	{
+	if( internalFormat == GL_COLOR_INDEX8_EXT ) {
 		/*
 		if ( depth == TD_BUMP ) {
 			for ( int i = 0; i < scaled_width * scaled_height * 4; i += 4 ) {
@@ -772,18 +662,15 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 		}
 		*/
 		UploadCompressedNormalMap( scaled_width, scaled_height, scaledBuffer, 0 );
-	}
-	else
-	{
+	} else {
 		qglTexImage2D( GL_TEXTURE_2D, 0, internalFormat, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaledBuffer );
 	}
 
 	// create and upload the mip map levels, which we do in all cases, even if we don't think they are needed
-	int		miplevel;
+	int miplevel;
 
 	miplevel = 0;
-	while( scaled_width > 1 || scaled_height > 1 )
-	{
+	while( scaled_width > 1 || scaled_height > 1 ) {
 		// preserve the border after mip map unless repeating
 		shrunk = R_MipMap( scaledBuffer, scaled_width, scaled_height, preserveBorder );
 		R_StaticFree( scaledBuffer );
@@ -791,12 +678,10 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 
 		scaled_width >>= 1;
 		scaled_height >>= 1;
-		if( scaled_width < 1 )
-		{
+		if( scaled_width < 1 ) {
 			scaled_width = 1;
 		}
-		if( scaled_height < 1 )
-		{
+		if( scaled_height < 1 ) {
 			scaled_height = 1;
 		}
 		miplevel++;
@@ -805,25 +690,19 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 		// level with a different color so you can see the
 		// rasterizer's texture level selection algorithm
 		// Changing the color doesn't help with lumminance/alpha/intensity formats...
-		if( depth == TD_DIFFUSE && globalImages->image_colorMipLevels.GetBool() )
-		{
+		if( depth == TD_DIFFUSE && globalImages->image_colorMipLevels.GetBool() ) {
 			R_BlendOverTexture( ( byte* )scaledBuffer, scaled_width * scaled_height, mipBlendColors[miplevel] );
 		}
 
 		// upload the mip map
-		if( internalFormat == GL_COLOR_INDEX8_EXT )
-		{
+		if( internalFormat == GL_COLOR_INDEX8_EXT ) {
 			UploadCompressedNormalMap( scaled_width, scaled_height, scaledBuffer, miplevel );
-		}
-		else
-		{
-			qglTexImage2D( GL_TEXTURE_2D, miplevel, internalFormat, scaled_width, scaled_height,
-						   0, GL_RGBA, GL_UNSIGNED_BYTE, scaledBuffer );
+		} else {
+			qglTexImage2D( GL_TEXTURE_2D, miplevel, internalFormat, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaledBuffer );
 		}
 	}
 
-	if( scaledBuffer != 0 )
-	{
+	if( scaledBuffer != 0 ) {
 		R_StaticFree( scaledBuffer );
 	}
 
@@ -833,40 +712,35 @@ void idImage::GenerateImage( const byte* pic, int width, int height,
 	GL_CheckErrors();
 }
 
-
 /*
 ==================
 Generate3DImage
 ==================
 */
-void idImage::Generate3DImage( const byte* pic, int width, int height, int picDepth,
-							   textureFilter_t filterParm, bool allowDownSizeParm,
-							   textureRepeat_t repeatParm, textureDepth_t minDepthParm )
+void idImage::Generate3DImage( const byte* pic, int width, int height, int picDepth, textureFilter_t filterParm, bool allowDownSizeParm, textureRepeat_t repeatParm, textureDepth_t minDepthParm )
 {
-	int			scaled_width, scaled_height, scaled_depth;
+	int scaled_width, scaled_height, scaled_depth;
 
 	PurgeImage();
 
-	filter = filterParm;
+	filter		  = filterParm;
 	allowDownSize = allowDownSizeParm;
-	repeat = repeatParm;
-	depth = minDepthParm;
+	repeat		  = repeatParm;
+	depth		  = minDepthParm;
 
 	// if we don't have a rendering context, just return after we
 	// have filled in the parms.  We must have the values set, or
 	// an image match from a shader before OpenGL starts would miss
 	// the generated texture
-	if( !glConfig.isInitialized )
-	{
+	if( !glConfig.isInitialized ) {
 		return;
 	}
 
 	// make sure it is a power of 2
-	scaled_width = MakePowerOfTwo( width );
+	scaled_width  = MakePowerOfTwo( width );
 	scaled_height = MakePowerOfTwo( height );
-	scaled_depth = MakePowerOfTwo( picDepth );
-	if( scaled_width != width || scaled_height != height || scaled_depth != picDepth )
-	{
+	scaled_depth  = MakePowerOfTwo( picDepth );
+	if( scaled_width != width || scaled_height != height || scaled_depth != picDepth ) {
 		common->Error( "R_Create3DImage: not a power of 2 image" );
 	}
 
@@ -880,59 +754,50 @@ void idImage::Generate3DImage( const byte* pic, int width, int height, int picDe
 	internalFormat = SelectInternalFormat( &pic, 1, width, height * picDepth, minDepthParm, &isMonochrome );
 
 	uploadHeight = scaled_height;
-	uploadWidth = scaled_width;
-	uploadDepth = scaled_depth;
-
+	uploadWidth	 = scaled_width;
+	uploadDepth	 = scaled_depth;
 
 	type = TT_3D;
 
 	// upload the main image level
 	Bind();
 
-	qglTexImage3D( GL_TEXTURE_3D, 0, internalFormat, scaled_width, scaled_height, scaled_depth,
-				   0, GL_RGBA, GL_UNSIGNED_BYTE, pic );
+	qglTexImage3D( GL_TEXTURE_3D, 0, internalFormat, scaled_width, scaled_height, scaled_depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, pic );
 
 	// create and upload the mip map levels
-	int		miplevel;
-	byte*	scaledBuffer, *shrunk;
+	int	  miplevel;
+	byte *scaledBuffer, *shrunk;
 
 	scaledBuffer = ( byte* )R_StaticAlloc( scaled_width * scaled_height * scaled_depth * 4 );
 	memcpy( scaledBuffer, pic, scaled_width * scaled_height * scaled_depth * 4 );
 	miplevel = 0;
-	while( scaled_width > 1 || scaled_height > 1 || scaled_depth > 1 )
-	{
+	while( scaled_width > 1 || scaled_height > 1 || scaled_depth > 1 ) {
 		// preserve the border after mip map unless repeating
-		shrunk = R_MipMap3D( scaledBuffer, scaled_width, scaled_height, scaled_depth,
-							 ( bool )( repeat != TR_REPEAT ) );
+		shrunk = R_MipMap3D( scaledBuffer, scaled_width, scaled_height, scaled_depth, ( bool )( repeat != TR_REPEAT ) );
 		R_StaticFree( scaledBuffer );
 		scaledBuffer = shrunk;
 
 		scaled_width >>= 1;
 		scaled_height >>= 1;
 		scaled_depth >>= 1;
-		if( scaled_width < 1 )
-		{
+		if( scaled_width < 1 ) {
 			scaled_width = 1;
 		}
-		if( scaled_height < 1 )
-		{
+		if( scaled_height < 1 ) {
 			scaled_height = 1;
 		}
-		if( scaled_depth < 1 )
-		{
+		if( scaled_depth < 1 ) {
 			scaled_depth = 1;
 		}
 		miplevel++;
 
 		// upload the mip map
-		qglTexImage3D( GL_TEXTURE_3D, miplevel, internalFormat, scaled_width, scaled_height, scaled_depth,
-					   0, GL_RGBA, GL_UNSIGNED_BYTE, scaledBuffer );
+		qglTexImage3D( GL_TEXTURE_3D, miplevel, internalFormat, scaled_width, scaled_height, scaled_depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaledBuffer );
 	}
 	R_StaticFree( scaledBuffer );
 
 	// set the minimize / maximize filtering
-	switch( filter )
-	{
+	switch( filter ) {
 		case TF_DEFAULT:
 			qglTexParameterf( GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, globalImages->textureMinFilter );
 			qglTexParameterf( GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, globalImages->textureMaxFilter );
@@ -950,8 +815,7 @@ void idImage::Generate3DImage( const byte* pic, int width, int height, int picDe
 	}
 
 	// set the wrap/clamp modes
-	switch( repeat )
-	{
+	switch( repeat ) {
 		case TR_REPEAT:
 			qglTexParameterf( GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT );
 			qglTexParameterf( GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT );
@@ -976,7 +840,6 @@ void idImage::Generate3DImage( const byte* pic, int width, int height, int picDe
 	GL_CheckErrors();
 }
 
-
 /*
 ====================
 GenerateCubeImage
@@ -984,19 +847,17 @@ GenerateCubeImage
 Non-square cube sides are not allowed
 ====================
 */
-void idImage::GenerateCubeImage( const byte* pic[6], int size,
-								 textureFilter_t filterParm, bool allowDownSizeParm,
-								 textureDepth_t depthParm )
+void idImage::GenerateCubeImage( const byte* pic[6], int size, textureFilter_t filterParm, bool allowDownSizeParm, textureDepth_t depthParm )
 {
-	int			scaled_width, scaled_height;
-	int			width, height;
-	int			i;
+	int scaled_width, scaled_height;
+	int width, height;
+	int i;
 
 	PurgeImage();
 
-	filter = filterParm;
+	filter		  = filterParm;
 	allowDownSize = allowDownSizeParm;
-	depth = depthParm;
+	depth		  = depthParm;
 
 	type = TT_CUBIC;
 
@@ -1004,13 +865,11 @@ void idImage::GenerateCubeImage( const byte* pic[6], int size,
 	// have filled in the parms.  We must have the values set, or
 	// an image match from a shader before OpenGL starts would miss
 	// the generated texture
-	if( !glConfig.isInitialized )
-	{
+	if( !glConfig.isInitialized ) {
 		return;
 	}
 
-	if( ! glConfig.cubeMapAvailable )
-	{
+	if( !glConfig.cubeMapAvailable ) {
 		return;
 	}
 
@@ -1023,11 +882,11 @@ void idImage::GenerateCubeImage( const byte* pic[6], int size,
 	internalFormat = SelectInternalFormat( pic, 6, width, height, depth, &isMonochrome );
 
 	// don't bother with downsample for now
-	scaled_width = width;
+	scaled_width  = width;
 	scaled_height = height;
 
 	uploadHeight = scaled_height;
-	uploadWidth = scaled_width;
+	uploadWidth	 = scaled_width;
 
 	Bind();
 
@@ -1036,8 +895,7 @@ void idImage::GenerateCubeImage( const byte* pic[6], int size,
 	qglTexParameteri( GL_TEXTURE_CUBE_MAP_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
 	// set the minimize / maximize filtering
-	switch( filter )
-	{
+	switch( filter ) {
 		case TF_DEFAULT:
 			qglTexParameterf( GL_TEXTURE_CUBE_MAP_EXT, GL_TEXTURE_MIN_FILTER, globalImages->textureMinFilter );
 			qglTexParameterf( GL_TEXTURE_CUBE_MAP_EXT, GL_TEXTURE_MAG_FILTER, globalImages->textureMaxFilter );
@@ -1056,39 +914,28 @@ void idImage::GenerateCubeImage( const byte* pic[6], int size,
 
 	// upload the base level
 	// FIXME: support GL_COLOR_INDEX8_EXT?
-	for( i = 0 ; i < 6 ; i++ )
-	{
-		qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, internalFormat, scaled_width, scaled_height, 0,
-					   GL_RGBA, GL_UNSIGNED_BYTE, pic[i] );
+	for( i = 0; i < 6; i++ ) {
+		qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, internalFormat, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pic[i] );
 	}
 
-
 	// create and upload the mip map levels
-	int		miplevel;
-	byte*	shrunk[6];
+	int	  miplevel;
+	byte* shrunk[6];
 
-	for( i = 0 ; i < 6 ; i++ )
-	{
+	for( i = 0; i < 6; i++ ) {
 		shrunk[i] = R_MipMap( pic[i], scaled_width, scaled_height, false );
 	}
 
 	miplevel = 1;
-	while( scaled_width > 1 )
-	{
-		for( i = 0 ; i < 6 ; i++ )
-		{
-			byte*	shrunken;
+	while( scaled_width > 1 ) {
+		for( i = 0; i < 6; i++ ) {
+			byte* shrunken;
 
-			qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, miplevel, internalFormat,
-						   scaled_width / 2, scaled_height / 2, 0,
-						   GL_RGBA, GL_UNSIGNED_BYTE, shrunk[i] );
+			qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, miplevel, internalFormat, scaled_width / 2, scaled_height / 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, shrunk[i] );
 
-			if( scaled_width > 2 )
-			{
+			if( scaled_width > 2 ) {
 				shrunken = R_MipMap( shrunk[i], scaled_width / 2, scaled_height / 2, false );
-			}
-			else
-			{
+			} else {
 				shrunken = NULL;
 			}
 
@@ -1105,7 +952,6 @@ void idImage::GenerateCubeImage( const byte* pic[6], int size,
 	GL_CheckErrors();
 }
 
-
 /*
 ================
 ImageProgramStringToFileCompressedFileName
@@ -1113,8 +959,8 @@ ImageProgramStringToFileCompressedFileName
 */
 void idImage::ImageProgramStringToCompressedFileName( const char* imageProg, char* fileName ) const
 {
-	const char*	s;
-	char*	f;
+	const char* s;
+	char*		f;
 
 	strcpy( fileName, "dds/" );
 	f = fileName + strlen( fileName );
@@ -1123,34 +969,21 @@ void idImage::ImageProgramStringToCompressedFileName( const char* imageProg, cha
 
 	// convert all illegal characters to underscores
 	// this could conceivably produce a duplicated mapping, but we aren't going to worry about it
-	for( s = imageProg ; *s ; s++ )
-	{
-		if( *s == '/' || *s == '\\' || *s == '(' )
-		{
-			if( depth < 4 )
-			{
+	for( s = imageProg; *s; s++ ) {
+		if( *s == '/' || *s == '\\' || *s == '(' ) {
+			if( depth < 4 ) {
 				*f = '/';
-				depth ++;
-			}
-			else
-			{
+				depth++;
+			} else {
 				*f = ' ';
 			}
 			f++;
-		}
-		else if( *s == '<' || *s == '>' || *s == ':' || *s == '|' || *s == '"' || *s == '.' )
-		{
+		} else if( *s == '<' || *s == '>' || *s == ':' || *s == '|' || *s == '"' || *s == '.' ) {
 			*f = '_';
 			f++;
-		}
-		else if( *s == ' ' && *( f - 1 ) == '/' )  	// ignore a space right after a slash
-		{
-		}
-		else if( *s == ')' || *s == ',' )  		// always ignore these
-		{
-		}
-		else
-		{
+		} else if( *s == ' ' && *( f - 1 ) == '/' ) { // ignore a space right after a slash
+		} else if( *s == ')' || *s == ',' ) {		  // always ignore these
+		} else {
 			*f = *s;
 			f++;
 		}
@@ -1164,12 +997,11 @@ void idImage::ImageProgramStringToCompressedFileName( const char* imageProg, cha
 NumLevelsForImageSize
 ==================
 */
-int	idImage::NumLevelsForImageSize( int width, int height ) const
+int idImage::NumLevelsForImageSize( int width, int height ) const
 {
-	int	numLevels = 1;
+	int numLevels = 1;
 
-	while( width > 1 || height > 1 )
-	{
+	while( width > 1 || height > 1 ) {
 		numLevels++;
 		width >>= 1;
 		height >>= 1;
@@ -1188,29 +1020,22 @@ versions of everything to speed future load times.
 */
 void idImage::WritePrecompressedImage()
 {
-
 	// Always write the precompressed image if we're making a build
-	if( !com_makingBuild.GetBool() )
-	{
-		if( !globalImages->image_writePrecompressedTextures.GetBool() || !globalImages->image_usePrecompressedTextures.GetBool() )
-		{
+	if( !com_makingBuild.GetBool() ) {
+		if( !globalImages->image_writePrecompressedTextures.GetBool() || !globalImages->image_usePrecompressedTextures.GetBool() ) {
 			return;
 		}
 	}
 
-	if( !glConfig.isInitialized )
-	{
+	if( !glConfig.isInitialized ) {
 		return;
 	}
 
 	char filename[MAX_IMAGE_NAME];
 	ImageProgramStringToCompressedFileName( imgName, filename );
 
-
-
 	int numLevels = NumLevelsForImageSize( uploadWidth, uploadHeight );
-	if( numLevels > MAX_TEXTURE_LEVELS )
-	{
+	if( numLevels > MAX_TEXTURE_LEVELS ) {
 		common->Warning( "R_WritePrecompressedImage: level > MAX_TEXTURE_LEVELS for image %s", filename );
 		return;
 	}
@@ -1218,15 +1043,14 @@ void idImage::WritePrecompressedImage()
 	// glGetTexImage only supports a small subset of all the available internal formats
 	// We have to use BGRA because DDS is a windows based format
 	int altInternalFormat = 0;
-	int bitSize = 0;
-	switch( internalFormat )
-	{
+	int bitSize			  = 0;
+	switch( internalFormat ) {
 		case GL_COLOR_INDEX8_EXT:
 		case GL_COLOR_INDEX:
 			// this will not work with dds viewers but we need it in this format to save disk
 			// load speed ( i.e. size )
 			altInternalFormat = GL_COLOR_INDEX;
-			bitSize = 24;
+			bitSize			  = 24;
 			break;
 		case 1:
 		case GL_INTENSITY8:
@@ -1234,45 +1058,37 @@ void idImage::WritePrecompressedImage()
 		case 3:
 		case GL_RGB8:
 			altInternalFormat = GL_BGR_EXT;
-			bitSize = 24;
+			bitSize			  = 24;
 			break;
 		case GL_LUMINANCE8_ALPHA8:
 		case 4:
 		case GL_RGBA8:
 			altInternalFormat = GL_BGRA_EXT;
-			bitSize = 32;
+			bitSize			  = 32;
 			break;
 		case GL_ALPHA8:
 			altInternalFormat = GL_ALPHA;
-			bitSize = 8;
+			bitSize			  = 8;
 			break;
 		default:
-			if( FormatIsDXT( internalFormat ) )
-			{
+			if( FormatIsDXT( internalFormat ) ) {
 				altInternalFormat = internalFormat;
-			}
-			else
-			{
+			} else {
 				common->Warning( "Unknown or unsupported format for %s", filename );
 				return;
 			}
 	}
 
-	if( globalImages->image_useOffLineCompression.GetBool() && FormatIsDXT( altInternalFormat ) )
-	{
+	if( globalImages->image_useOffLineCompression.GetBool() && FormatIsDXT( altInternalFormat ) ) {
 		idStr outFile = fileSystem->RelativePathToOSPath( filename, "fs_basepath" );
-		idStr inFile = outFile;
+		idStr inFile  = outFile;
 		inFile.StripFileExtension();
 		inFile.SetFileExtension( "tga" );
 		idStr format;
-		if( depth == TD_BUMP )
-		{
+		if( depth == TD_BUMP ) {
 			format = "RXGB +red 0.0 +green 0.5 +blue 0.5";
-		}
-		else
-		{
-			switch( altInternalFormat )
-			{
+		} else {
+			switch( altInternalFormat ) {
 				case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
 					format = "DXT1";
 					break;
@@ -1291,29 +1107,23 @@ void idImage::WritePrecompressedImage()
 		return;
 	}
 
-
 	ddsFileHeader_t header;
 	memset( &header, 0, sizeof( header ) );
-	header.dwSize = sizeof( header );
-	header.dwFlags = DDSF_CAPS | DDSF_PIXELFORMAT | DDSF_WIDTH | DDSF_HEIGHT;
+	header.dwSize	= sizeof( header );
+	header.dwFlags	= DDSF_CAPS | DDSF_PIXELFORMAT | DDSF_WIDTH | DDSF_HEIGHT;
 	header.dwHeight = uploadHeight;
-	header.dwWidth = uploadWidth;
+	header.dwWidth	= uploadWidth;
 
 	// hack in our monochrome flag for the NV20 optimization
-	if( isMonochrome )
-	{
+	if( isMonochrome ) {
 		header.dwFlags |= DDSF_ID_MONOCHROME;
 	}
 
-	if( FormatIsDXT( altInternalFormat ) )
-	{
+	if( FormatIsDXT( altInternalFormat ) ) {
 		// size (in bytes) of the compressed base image
 		header.dwFlags |= DDSF_LINEARSIZE;
-		header.dwPitchOrLinearSize = ( ( uploadWidth + 3 ) / 4 ) * ( ( uploadHeight + 3 ) / 4 ) *
-									 ( altInternalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
-	}
-	else
-	{
+		header.dwPitchOrLinearSize = ( ( uploadWidth + 3 ) / 4 ) * ( ( uploadHeight + 3 ) / 4 ) * ( altInternalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
+	} else {
 		// 4 Byte aligned line width (from nv_dds)
 		header.dwFlags |= DDSF_PITCH;
 		header.dwPitchOrLinearSize = ( ( uploadWidth * bitSize + 31 ) & -32 ) >> 3;
@@ -1321,19 +1131,16 @@ void idImage::WritePrecompressedImage()
 
 	header.dwCaps1 = DDSF_TEXTURE;
 
-	if( numLevels > 1 )
-	{
+	if( numLevels > 1 ) {
 		header.dwMipMapCount = numLevels;
 		header.dwFlags |= DDSF_MIPMAPCOUNT;
 		header.dwCaps1 |= DDSF_MIPMAP | DDSF_COMPLEX;
 	}
 
 	header.ddspf.dwSize = sizeof( header.ddspf );
-	if( FormatIsDXT( altInternalFormat ) )
-	{
+	if( FormatIsDXT( altInternalFormat ) ) {
 		header.ddspf.dwFlags = DDSF_FOURCC;
-		switch( altInternalFormat )
-		{
+		switch( altInternalFormat ) {
 			case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
 				header.ddspf.dwFourCC = DDS_MAKEFOURCC( 'D', 'X', 'T', '1' );
 				break;
@@ -1348,13 +1155,10 @@ void idImage::WritePrecompressedImage()
 				header.ddspf.dwFourCC = DDS_MAKEFOURCC( 'D', 'X', 'T', '5' );
 				break;
 		}
-	}
-	else
-	{
-		header.ddspf.dwFlags = ( internalFormat == GL_COLOR_INDEX8_EXT ) ? DDSF_RGB | DDSF_ID_INDEXCOLOR : DDSF_RGB;
+	} else {
+		header.ddspf.dwFlags	   = ( internalFormat == GL_COLOR_INDEX8_EXT ) ? DDSF_RGB | DDSF_ID_INDEXCOLOR : DDSF_RGB;
 		header.ddspf.dwRGBBitCount = bitSize;
-		switch( altInternalFormat )
-		{
+		switch( altInternalFormat ) {
 			case GL_BGRA_EXT:
 			case GL_LUMINANCE_ALPHA:
 				header.ddspf.dwFlags |= DDSF_ALPHAPIXELS;
@@ -1368,7 +1172,7 @@ void idImage::WritePrecompressedImage()
 				header.ddspf.dwBBitMask = 0x000000FF;
 				break;
 			case GL_ALPHA:
-				header.ddspf.dwFlags = DDSF_ALPHAPIXELS;
+				header.ddspf.dwFlags	= DDSF_ALPHAPIXELS;
 				header.ddspf.dwABitMask = 0xFF000000;
 				break;
 			default:
@@ -1378,8 +1182,7 @@ void idImage::WritePrecompressedImage()
 	}
 
 	idFile* f = fileSystem->OpenFileWrite( filename );
-	if( f == NULL )
-	{
+	if( f == NULL ) {
 		common->Warning( "Could not open %s trying to write precompressed image", filename );
 		return;
 	}
@@ -1391,39 +1194,29 @@ void idImage::WritePrecompressedImage()
 	// bind to the image so we can read back the contents
 	Bind();
 
-	qglPixelStorei( GL_PACK_ALIGNMENT, 1 );	// otherwise small rows get padded to 32 bits
+	qglPixelStorei( GL_PACK_ALIGNMENT, 1 ); // otherwise small rows get padded to 32 bits
 
-	int uw = uploadWidth;
-	int uh = uploadHeight;
+	int	  uw = uploadWidth;
+	int	  uh = uploadHeight;
 
 	// Will be allocated first time through the loop
 	byte* data = NULL;
 
-	for( int level = 0 ; level < numLevels ; level++ )
-	{
-
+	for( int level = 0; level < numLevels; level++ ) {
 		int size = 0;
-		if( FormatIsDXT( altInternalFormat ) )
-		{
-			size = ( ( uw + 3 ) / 4 ) * ( ( uh + 3 ) / 4 ) *
-				   ( altInternalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
-		}
-		else
-		{
+		if( FormatIsDXT( altInternalFormat ) ) {
+			size = ( ( uw + 3 ) / 4 ) * ( ( uh + 3 ) / 4 ) * ( altInternalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
+		} else {
 			size = uw * uh * ( bitSize / 8 );
 		}
 
-		if( data == NULL )
-		{
+		if( data == NULL ) {
 			data = ( byte* )R_StaticAlloc( size );
 		}
 
-		if( FormatIsDXT( altInternalFormat ) )
-		{
+		if( FormatIsDXT( altInternalFormat ) ) {
 			qglGetCompressedTexImageARB( GL_TEXTURE_2D, level, data );
-		}
-		else
-		{
+		} else {
 			qglGetTexImage( GL_TEXTURE_2D, level, altInternalFormat, GL_UNSIGNED_BYTE, data );
 		}
 
@@ -1431,18 +1224,15 @@ void idImage::WritePrecompressedImage()
 
 		uw /= 2;
 		uh /= 2;
-		if( uw < 1 )
-		{
+		if( uw < 1 ) {
 			uw = 1;
 		}
-		if( uh < 1 )
-		{
+		if( uh < 1 ) {
 			uh = 1;
 		}
 	}
 
-	if( data != NULL )
-	{
+	if( data != NULL ) {
 		R_StaticFree( data );
 	}
 
@@ -1459,41 +1249,35 @@ to be worth caching
 */
 bool idImage::ShouldImageBePartialCached()
 {
-	if( !glConfig.textureCompressionAvailable )
-	{
+	if( !glConfig.textureCompressionAvailable ) {
 		return false;
 	}
 
-	if( !globalImages->image_useCache.GetBool() )
-	{
+	if( !globalImages->image_useCache.GetBool() ) {
 		return false;
 	}
 
 	// the allowDownSize flag does double-duty as don't-partial-load
-	if( !allowDownSize )
-	{
+	if( !allowDownSize ) {
 		return false;
 	}
 
-	if( globalImages->image_cacheMinK.GetInteger() <= 0 )
-	{
+	if( globalImages->image_cacheMinK.GetInteger() <= 0 ) {
 		return false;
 	}
 
 	// if we are doing a copyFiles, make sure the original images are referenced
-	if( fileSystem->PerformingCopyFiles() )
-	{
+	if( fileSystem->PerformingCopyFiles() ) {
 		return false;
 	}
 
-	char	filename[MAX_IMAGE_NAME];
+	char filename[MAX_IMAGE_NAME];
 	ImageProgramStringToCompressedFileName( imgName, filename );
 
 	// get the file timestamp
 	fileSystem->ReadFile( filename, NULL, &timestamp );
 
-	if( timestamp == FILE_NOT_FOUND_TIMESTAMP )
-	{
+	if( timestamp == FILE_NOT_FOUND_TIMESTAMP ) {
 		return false;
 	}
 
@@ -1501,16 +1285,14 @@ bool idImage::ShouldImageBePartialCached()
 	idFile* f;
 
 	f = fileSystem->OpenFileRead( filename );
-	if( !f )
-	{
+	if( !f ) {
 		return false;
 	}
 
-	int	len = f->Length();
+	int len = f->Length();
 	fileSystem->CloseFile( f );
 
-	if( len <= globalImages->image_cacheMinK.GetInteger() * 1024 )
-	{
+	if( len <= globalImages->image_cacheMinK.GetInteger() * 1024 ) {
 		return false;
 	}
 
@@ -1527,27 +1309,23 @@ If fullLoad is false, only the small mip levels of the image will be loaded
 */
 bool idImage::CheckPrecompressedImage( bool fullLoad )
 {
-	if( !glConfig.isInitialized || !glConfig.textureCompressionAvailable )
-	{
+	if( !glConfig.isInitialized || !glConfig.textureCompressionAvailable ) {
 		return false;
 	}
 
 #if 1 // ( _D3XP had disabled ) - Allow grabbing of DDS's from original Doom pak files
 	// if we are doing a copyFiles, make sure the original images are referenced
-	if( fileSystem->PerformingCopyFiles() )
-	{
+	if( fileSystem->PerformingCopyFiles() ) {
 		return false;
 	}
 #endif
 
-	if( depth == TD_BUMP && globalImages->image_useNormalCompression.GetInteger() != 2 )
-	{
+	if( depth == TD_BUMP && globalImages->image_useNormalCompression.GetInteger() != 2 ) {
 		return false;
 	}
 
 	// god i love last minute hacks :-)
-	if( com_machineSpec.GetInteger() >= 1 && com_videoRam.GetInteger() >= 128 && imgName.Icmpn( "lights/", 7 ) == 0 )
-	{
+	if( com_machineSpec.GetInteger() >= 1 && com_videoRam.GetInteger() >= 128 && imgName.Icmpn( "lights/", 7 ) == 0 ) {
 		return false;
 	}
 
@@ -1558,16 +1336,12 @@ bool idImage::CheckPrecompressedImage( bool fullLoad )
 	ID_TIME_T precompTimestamp;
 	fileSystem->ReadFile( filename, NULL, &precompTimestamp );
 
-
-	if( precompTimestamp == FILE_NOT_FOUND_TIMESTAMP )
-	{
+	if( precompTimestamp == FILE_NOT_FOUND_TIMESTAMP ) {
 		return false;
 	}
 
-	if( !generatorFunction && timestamp != FILE_NOT_FOUND_TIMESTAMP )
-	{
-		if( precompTimestamp < timestamp )
-		{
+	if( !generatorFunction && timestamp != FILE_NOT_FOUND_TIMESTAMP ) {
+		if( precompTimestamp < timestamp ) {
 			// The image has changed after being precompressed
 			return false;
 		}
@@ -1579,20 +1353,17 @@ bool idImage::CheckPrecompressedImage( bool fullLoad )
 	idFile* f;
 
 	f = fileSystem->OpenFileRead( filename );
-	if( !f )
-	{
+	if( !f ) {
 		return false;
 	}
 
-	int	len = f->Length();
-	if( len < sizeof( ddsFileHeader_t ) )
-	{
+	int len = f->Length();
+	if( len < sizeof( ddsFileHeader_t ) ) {
 		fileSystem->CloseFile( f );
 		return false;
 	}
 
-	if( !fullLoad && len > globalImages->image_cacheMinK.GetInteger() * 1024 )
-	{
+	if( !fullLoad && len > globalImages->image_cacheMinK.GetInteger() * 1024 ) {
 		len = globalImages->image_cacheMinK.GetInteger() * 1024;
 	}
 
@@ -1602,12 +1373,11 @@ bool idImage::CheckPrecompressedImage( bool fullLoad )
 
 	fileSystem->CloseFile( f );
 
-	unsigned long magic = LittleLong( *( unsigned long* )data );
-	ddsFileHeader_t*	_header = ( ddsFileHeader_t* )( data + 4 );
-	int ddspf_dwFlags = LittleLong( _header->ddspf.dwFlags );
+	unsigned long	 magic		   = LittleLong( *( unsigned long* )data );
+	ddsFileHeader_t* _header	   = ( ddsFileHeader_t* )( data + 4 );
+	int				 ddspf_dwFlags = LittleLong( _header->ddspf.dwFlags );
 
-	if( magic != DDS_MAKEFOURCC( 'D', 'D', 'S', ' ' ) )
-	{
+	if( magic != DDS_MAKEFOURCC( 'D', 'D', 'S', ' ' ) ) {
 		common->Printf( "CheckPrecompressedImage( %s ): magic != 'DDS '\n", imgName.c_str() );
 		R_StaticFree( data );
 		return false;
@@ -1615,8 +1385,7 @@ bool idImage::CheckPrecompressedImage( bool fullLoad )
 
 	// if we don't support color index textures, we must load the full image
 	// should we just expand the 256 color image to 32 bit for upload?
-	if( ddspf_dwFlags & DDSF_ID_INDEXCOLOR && !glConfig.sharedTexturePaletteAvailable )
-	{
+	if( ddspf_dwFlags & DDSF_ID_INDEXCOLOR && !glConfig.sharedTexturePaletteAvailable ) {
 		R_StaticFree( data );
 		return false;
 	}
@@ -1640,27 +1409,27 @@ has completed
 */
 void idImage::UploadPrecompressedImage( byte* data, int len )
 {
-	ddsFileHeader_t*	header = ( ddsFileHeader_t* )( data + 4 );
+	ddsFileHeader_t* header = ( ddsFileHeader_t* )( data + 4 );
 
 	// ( not byte swapping dwReserved1 dwReserved2 )
-	header->dwSize = LittleLong( header->dwSize );
-	header->dwFlags = LittleLong( header->dwFlags );
-	header->dwHeight = LittleLong( header->dwHeight );
-	header->dwWidth = LittleLong( header->dwWidth );
+	header->dwSize				= LittleLong( header->dwSize );
+	header->dwFlags				= LittleLong( header->dwFlags );
+	header->dwHeight			= LittleLong( header->dwHeight );
+	header->dwWidth				= LittleLong( header->dwWidth );
 	header->dwPitchOrLinearSize = LittleLong( header->dwPitchOrLinearSize );
-	header->dwDepth = LittleLong( header->dwDepth );
-	header->dwMipMapCount = LittleLong( header->dwMipMapCount );
-	header->dwCaps1 = LittleLong( header->dwCaps1 );
-	header->dwCaps2 = LittleLong( header->dwCaps2 );
+	header->dwDepth				= LittleLong( header->dwDepth );
+	header->dwMipMapCount		= LittleLong( header->dwMipMapCount );
+	header->dwCaps1				= LittleLong( header->dwCaps1 );
+	header->dwCaps2				= LittleLong( header->dwCaps2 );
 
-	header->ddspf.dwSize = LittleLong( header->ddspf.dwSize );
-	header->ddspf.dwFlags = LittleLong( header->ddspf.dwFlags );
-	header->ddspf.dwFourCC = LittleLong( header->ddspf.dwFourCC );
+	header->ddspf.dwSize		= LittleLong( header->ddspf.dwSize );
+	header->ddspf.dwFlags		= LittleLong( header->ddspf.dwFlags );
+	header->ddspf.dwFourCC		= LittleLong( header->ddspf.dwFourCC );
 	header->ddspf.dwRGBBitCount = LittleLong( header->ddspf.dwRGBBitCount );
-	header->ddspf.dwRBitMask = LittleLong( header->ddspf.dwRBitMask );
-	header->ddspf.dwGBitMask = LittleLong( header->ddspf.dwGBitMask );
-	header->ddspf.dwBBitMask = LittleLong( header->ddspf.dwBBitMask );
-	header->ddspf.dwABitMask = LittleLong( header->ddspf.dwABitMask );
+	header->ddspf.dwRBitMask	= LittleLong( header->ddspf.dwRBitMask );
+	header->ddspf.dwGBitMask	= LittleLong( header->ddspf.dwGBitMask );
+	header->ddspf.dwBBitMask	= LittleLong( header->ddspf.dwBBitMask );
+	header->ddspf.dwABitMask	= LittleLong( header->ddspf.dwABitMask );
 
 	// generate the texture number
 	qglGenTextures( 1, &texnum );
@@ -1669,19 +1438,14 @@ void idImage::UploadPrecompressedImage( byte* data, int len )
 
 	precompressedFile = true;
 
-	uploadWidth = header->dwWidth;
+	uploadWidth	 = header->dwWidth;
 	uploadHeight = header->dwHeight;
-	if( header->ddspf.dwFlags & DDSF_FOURCC )
-	{
-		switch( header->ddspf.dwFourCC )
-		{
+	if( header->ddspf.dwFlags & DDSF_FOURCC ) {
+		switch( header->ddspf.dwFourCC ) {
 			case DDS_MAKEFOURCC( 'D', 'X', 'T', '1' ):
-				if( header->ddspf.dwFlags & DDSF_ALPHAPIXELS )
-				{
+				if( header->ddspf.dwFlags & DDSF_ALPHAPIXELS ) {
 					internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-				}
-				else
-				{
+				} else {
 					internalFormat = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				}
 				break;
@@ -1698,54 +1462,39 @@ void idImage::UploadPrecompressedImage( byte* data, int len )
 				common->Warning( "Invalid compressed internal format\n" );
 				return;
 		}
-	}
-	else if( ( header->ddspf.dwFlags & DDSF_RGBA ) && header->ddspf.dwRGBBitCount == 32 )
-	{
+	} else if( ( header->ddspf.dwFlags & DDSF_RGBA ) && header->ddspf.dwRGBBitCount == 32 ) {
 		externalFormat = GL_BGRA_EXT;
 		internalFormat = GL_RGBA8;
-	}
-	else if( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 32 )
-	{
+	} else if( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 32 ) {
 		externalFormat = GL_BGRA_EXT;
 		internalFormat = GL_RGBA8;
-	}
-	else if( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 24 )
-	{
-		if( header->ddspf.dwFlags & DDSF_ID_INDEXCOLOR )
-		{
+	} else if( ( header->ddspf.dwFlags & DDSF_RGB ) && header->ddspf.dwRGBBitCount == 24 ) {
+		if( header->ddspf.dwFlags & DDSF_ID_INDEXCOLOR ) {
 			externalFormat = GL_COLOR_INDEX;
 			internalFormat = GL_COLOR_INDEX8_EXT;
-		}
-		else
-		{
+		} else {
 			externalFormat = GL_BGR_EXT;
 			internalFormat = GL_RGB8;
 		}
-	}
-	else if( header->ddspf.dwRGBBitCount == 8 )
-	{
+	} else if( header->ddspf.dwRGBBitCount == 8 ) {
 		externalFormat = GL_ALPHA;
 		internalFormat = GL_ALPHA8;
-	}
-	else
-	{
+	} else {
 		common->Warning( "Invalid uncompressed internal format\n" );
 		return;
 	}
 
 	// we need the monochrome flag for the NV20 optimized path
-	if( header->dwFlags & DDSF_ID_MONOCHROME )
-	{
+	if( header->dwFlags & DDSF_ID_MONOCHROME ) {
 		isMonochrome = true;
 	}
 
-	type = TT_2D;			// FIXME: we may want to support pre-compressed cube maps in the future
+	type = TT_2D; // FIXME: we may want to support pre-compressed cube maps in the future
 
 	Bind();
 
 	int numMipmaps = 1;
-	if( header->dwFlags & DDSF_MIPMAPCOUNT )
-	{
+	if( header->dwFlags & DDSF_MIPMAPCOUNT ) {
 		numMipmaps = header->dwMipMapCount;
 	}
 
@@ -1758,31 +1507,20 @@ void idImage::UploadPrecompressedImage( byte* data, int len )
 
 	byte* imagedata = data + sizeof( ddsFileHeader_t ) + 4;
 
-	for( int i = 0 ; i < numMipmaps; i++ )
-	{
+	for( int i = 0; i < numMipmaps; i++ ) {
 		int size = 0;
-		if( FormatIsDXT( internalFormat ) )
-		{
-			size = ( ( uw + 3 ) / 4 ) * ( ( uh + 3 ) / 4 ) *
-				   ( internalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
-		}
-		else
-		{
+		if( FormatIsDXT( internalFormat ) ) {
+			size = ( ( uw + 3 ) / 4 ) * ( ( uh + 3 ) / 4 ) * ( internalFormat <= GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16 );
+		} else {
 			size = uw * uh * ( header->ddspf.dwRGBBitCount / 8 );
 		}
 
-		if( uw > uploadWidth || uh > uploadHeight )
-		{
+		if( uw > uploadWidth || uh > uploadHeight ) {
 			skipMip++;
-		}
-		else
-		{
-			if( FormatIsDXT( internalFormat ) )
-			{
+		} else {
+			if( FormatIsDXT( internalFormat ) ) {
 				qglCompressedTexImage2DARB( GL_TEXTURE_2D, i - skipMip, internalFormat, uw, uh, 0, size, imagedata );
-			}
-			else
-			{
+			} else {
 				qglTexImage2D( GL_TEXTURE_2D, i - skipMip, internalFormat, uw, uh, 0, externalFormat, GL_UNSIGNED_BYTE, imagedata );
 			}
 		}
@@ -1790,12 +1528,10 @@ void idImage::UploadPrecompressedImage( byte* data, int len )
 		imagedata += size;
 		uw /= 2;
 		uh /= 2;
-		if( uw < 1 )
-		{
+		if( uw < 1 ) {
 			uw = 1;
 		}
-		if( uh < 1 )
-		{
+		if( uh < 1 ) {
 			uh = 1;
 		}
 	}
@@ -1811,23 +1547,20 @@ Absolutely every image goes through this path
 On exit, the idImage will have a valid OpenGL texture number that can be bound
 ===============
 */
-void	idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
+void idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
 {
-	int		width, height;
-	byte*	pic;
+	int	  width, height;
+	byte* pic;
 
 	// this is the ONLY place generatorFunction will ever be called
-	if( generatorFunction )
-	{
+	if( generatorFunction ) {
 		generatorFunction( this );
 		return;
 	}
 
 	// if we are a partial image, we are only going to load from a compressed file
-	if( isPartialImage )
-	{
-		if( CheckPrecompressedImage( false ) )
-		{
+	if( isPartialImage ) {
+		if( CheckPrecompressedImage( false ) ) {
 			return;
 		}
 		// this is an error -- the partial image failed to load
@@ -1838,15 +1571,13 @@ void	idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
 	//
 	// load the image from disk
 	//
-	if( cubeFiles != CF_2D )
-	{
-		byte*	pics[6];
+	if( cubeFiles != CF_2D ) {
+		byte* pics[6];
 
 		// we don't check for pre-compressed cube images currently
 		R_LoadCubeImages( imgName, cubeFiles, pics, &width, &timestamp );
 
-		if( pics[0] == NULL )
-		{
+		if( pics[0] == NULL ) {
 			common->Warning( "Couldn't load cube image: %s", imgName.c_str() );
 			MakeDefault();
 			return;
@@ -1855,22 +1586,16 @@ void	idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
 		GenerateCubeImage( ( const byte** )pics, width, filter, allowDownSize, depth );
 		precompressedFile = false;
 
-		for( int i = 0 ; i < 6 ; i++ )
-		{
-			if( pics[i] )
-			{
+		for( int i = 0; i < 6; i++ ) {
+			if( pics[i] ) {
 				R_StaticFree( pics[i] );
 			}
 		}
-	}
-	else
-	{
+	} else {
 		// see if we have a pre-generated image file that is
 		// already image processed and compressed
-		if( checkForPrecompressed && globalImages->image_usePrecompressedTextures.GetBool() )
-		{
-			if( CheckPrecompressedImage( true ) )
-			{
+		if( checkForPrecompressed && globalImages->image_usePrecompressedTextures.GetBool() ) {
+			if( CheckPrecompressedImage( true ) ) {
 				// we got the precompressed image
 				return;
 			}
@@ -1879,8 +1604,7 @@ void	idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
 
 		R_LoadImageProgram( imgName, &pic, &width, &height, &timestamp, &depth );
 
-		if( pic == NULL )
-		{
+		if( pic == NULL ) {
 			common->Warning( "Couldn't load image: %s", imgName.c_str() );
 			MakeDefault();
 			return;
@@ -1904,7 +1628,7 @@ void	idImage::ActuallyLoadImage( bool checkForPrecompressed, bool fromBackEnd )
 		imageHash = MD4_BlockChecksum( pic, width * height * 4 );
 
 		GenerateImage( pic, width, height, filter, allowDownSize, repeat, depth );
-		timestamp = timestamp;
+		timestamp		  = timestamp;
 		precompressedFile = false;
 
 		R_StaticFree( pic );
@@ -1923,21 +1647,18 @@ PurgeImage
 */
 void idImage::PurgeImage()
 {
-	if( texnum != TEXTURE_NOT_LOADED )
-	{
+	if( texnum != TEXTURE_NOT_LOADED ) {
 		// sometimes is NULL when exiting with an error
-		if( qglDeleteTextures )
-		{
-			qglDeleteTextures( 1, &texnum );	// this should be the ONLY place it is ever called!
+		if( qglDeleteTextures ) {
+			qglDeleteTextures( 1, &texnum ); // this should be the ONLY place it is ever called!
 		}
 		texnum = TEXTURE_NOT_LOADED;
 	}
 
 	// clear all the current binding caches, so the next bind will do a real one
-	for( int i = 0 ; i < MAX_MULTITEXTURE_UNITS ; i++ )
-	{
-		backEnd.glState.tmu[i].current2DMap = -1;
-		backEnd.glState.tmu[i].current3DMap = -1;
+	for( int i = 0; i < MAX_MULTITEXTURE_UNITS; i++ ) {
+		backEnd.glState.tmu[i].current2DMap	  = -1;
+		backEnd.glState.tmu[i].current3DMap	  = -1;
 		backEnd.glState.tmu[i].currentCubeMap = -1;
 	}
 }
@@ -1951,16 +1672,13 @@ Automatically enables 2D mapping, cube mapping, or 3D texturing if needed
 */
 void idImage::Bind()
 {
-	if( tr.logFile )
-	{
+	if( tr.logFile ) {
 		RB_LogComment( "idImage::Bind( %s )\n", imgName.c_str() );
 	}
 
 	// if this is an image that we are caching, move it to the front of the LRU chain
-	if( partialImage )
-	{
-		if( cacheUsageNext )
-		{
+	if( partialImage ) {
+		if( cacheUsageNext ) {
 			// unlink from old position
 			cacheUsageNext->cacheUsagePrev = cacheUsagePrev;
 			cacheUsagePrev->cacheUsageNext = cacheUsageNext;
@@ -1974,91 +1692,67 @@ void idImage::Bind()
 	}
 
 	// load the image if necessary (FIXME: not SMP safe!)
-	if( texnum == TEXTURE_NOT_LOADED )
-	{
-		if( partialImage )
-		{
+	if( texnum == TEXTURE_NOT_LOADED ) {
+		if( partialImage ) {
 			// if we have a partial image, go ahead and use that
 			this->partialImage->Bind();
 
 			// start a background load of the full thing if it isn't already in the queue
-			if( !backgroundLoadInProgress )
-			{
+			if( !backgroundLoadInProgress ) {
 				StartBackgroundImageLoad();
 			}
 			return;
 		}
 
 		// load the image on demand here, which isn't our normal game operating mode
-		ActuallyLoadImage( true, true );	// check for precompressed, load is from back end
+		ActuallyLoadImage( true, true ); // check for precompressed, load is from back end
 	}
-
 
 	// bump our statistic counters
 	frameUsed = backEnd.frameCount;
 	bindCount++;
 
-	tmu_t*			tmu = &backEnd.glState.tmu[backEnd.glState.currenttmu];
+	tmu_t* tmu = &backEnd.glState.tmu[backEnd.glState.currenttmu];
 
 	// enable or disable apropriate texture modes
-	if( tmu->textureType != type && ( backEnd.glState.currenttmu <	glConfig.maxTextureUnits ) )
-	{
-		if( tmu->textureType == TT_CUBIC )
-		{
+	if( tmu->textureType != type && ( backEnd.glState.currenttmu < glConfig.maxTextureUnits ) ) {
+		if( tmu->textureType == TT_CUBIC ) {
 			qglDisable( GL_TEXTURE_CUBE_MAP_EXT );
-		}
-		else if( tmu->textureType == TT_3D )
-		{
+		} else if( tmu->textureType == TT_3D ) {
 			qglDisable( GL_TEXTURE_3D );
-		}
-		else if( tmu->textureType == TT_2D )
-		{
+		} else if( tmu->textureType == TT_2D ) {
 			qglDisable( GL_TEXTURE_2D );
 		}
 
-		if( type == TT_CUBIC )
-		{
+		if( type == TT_CUBIC ) {
 			qglEnable( GL_TEXTURE_CUBE_MAP_EXT );
-		}
-		else if( type == TT_3D )
-		{
+		} else if( type == TT_3D ) {
 			qglEnable( GL_TEXTURE_3D );
-		}
-		else if( type == TT_2D )
-		{
+		} else if( type == TT_2D ) {
 			qglEnable( GL_TEXTURE_2D );
 		}
 		tmu->textureType = type;
 	}
 
 	// bind the texture
-	if( type == TT_2D )
-	{
-		if( tmu->current2DMap != texnum )
-		{
+	if( type == TT_2D ) {
+		if( tmu->current2DMap != texnum ) {
 			tmu->current2DMap = texnum;
 			qglBindTexture( GL_TEXTURE_2D, texnum );
 		}
-	}
-	else if( type == TT_CUBIC )
-	{
-		if( tmu->currentCubeMap != texnum )
-		{
+	} else if( type == TT_CUBIC ) {
+		if( tmu->currentCubeMap != texnum ) {
 			tmu->currentCubeMap = texnum;
 			qglBindTexture( GL_TEXTURE_CUBE_MAP_EXT, texnum );
 		}
-	}
-	else if( type == TT_3D )
-	{
-		if( tmu->current3DMap != texnum )
-		{
+	} else if( type == TT_3D ) {
+		if( tmu->current3DMap != texnum ) {
 			tmu->current3DMap = texnum;
 			qglBindTexture( GL_TEXTURE_3D, texnum );
 		}
 	}
 
-	if( com_purgeAll.GetBool() )
-	{
+	if( com_purgeAll.GetBool() ) {
 		GLclampf priority = 1.0f;
 		qglPrioritizeTextures( 1, &texnum, &priority );
 	}
@@ -2074,16 +1768,13 @@ do any enable / disable changes
 */
 void idImage::BindFragment()
 {
-	if( tr.logFile )
-	{
+	if( tr.logFile ) {
 		RB_LogComment( "idImage::BindFragment %s )\n", imgName.c_str() );
 	}
 
 	// if this is an image that we are caching, move it to the front of the LRU chain
-	if( partialImage )
-	{
-		if( cacheUsageNext )
-		{
+	if( partialImage ) {
+		if( cacheUsageNext ) {
 			// unlink from old position
 			cacheUsageNext->cacheUsagePrev = cacheUsagePrev;
 			cacheUsagePrev->cacheUsageNext = cacheUsageNext;
@@ -2097,49 +1788,37 @@ void idImage::BindFragment()
 	}
 
 	// load the image if necessary (FIXME: not SMP safe!)
-	if( texnum == TEXTURE_NOT_LOADED )
-	{
-		if( partialImage )
-		{
+	if( texnum == TEXTURE_NOT_LOADED ) {
+		if( partialImage ) {
 			// if we have a partial image, go ahead and use that
 			this->partialImage->BindFragment();
 
 			// start a background load of the full thing if it isn't already in the queue
-			if( !backgroundLoadInProgress )
-			{
+			if( !backgroundLoadInProgress ) {
 				StartBackgroundImageLoad();
 			}
 			return;
 		}
 
 		// load the image on demand here, which isn't our normal game operating mode
-		ActuallyLoadImage( true, true );	// check for precompressed, load is from back end
+		ActuallyLoadImage( true, true ); // check for precompressed, load is from back end
 	}
-
 
 	// bump our statistic counters
 	frameUsed = backEnd.frameCount;
 	bindCount++;
 
 	// bind the texture
-	if( type == TT_2D )
-	{
+	if( type == TT_2D ) {
 		qglBindTexture( GL_TEXTURE_2D, texnum );
-	}
-	else if( type == TT_RECT )
-	{
+	} else if( type == TT_RECT ) {
 		qglBindTexture( GL_TEXTURE_RECTANGLE_NV, texnum );
-	}
-	else if( type == TT_CUBIC )
-	{
+	} else if( type == TT_CUBIC ) {
 		qglBindTexture( GL_TEXTURE_CUBE_MAP_EXT, texnum );
-	}
-	else if( type == TT_3D )
-	{
+	} else if( type == TT_3D ) {
 		qglBindTexture( GL_TEXTURE_3D, texnum );
 	}
 }
-
 
 /*
 ====================
@@ -2150,16 +1829,15 @@ void idImage::CopyFramebuffer( int x, int y, int imageWidth, int imageHeight, bo
 {
 	Bind();
 
-	if( cvarSystem->GetCVarBool( "g_lowresFullscreenFX" ) )
-	{
-		imageWidth = 512;
+	if( cvarSystem->GetCVarBool( "g_lowresFullscreenFX" ) ) {
+		imageWidth	= 512;
 		imageHeight = 512;
 	}
 
 	// if the size isn't a power of 2, the image must be increased in size
-	int	potWidth, potHeight;
+	int potWidth, potHeight;
 
-	potWidth = MakePowerOfTwo( imageWidth );
+	potWidth  = MakePowerOfTwo( imageWidth );
 	potHeight = MakePowerOfTwo( imageHeight );
 
 	GetDownsize( imageWidth, imageHeight );
@@ -2169,26 +1847,20 @@ void idImage::CopyFramebuffer( int x, int y, int imageWidth, int imageHeight, bo
 
 	// only resize if the current dimensions can't hold it at all,
 	// otherwise subview renderings could thrash this
-	if( ( useOversizedBuffer && ( uploadWidth < potWidth || uploadHeight < potHeight ) )
-			|| ( !useOversizedBuffer && ( uploadWidth != potWidth || uploadHeight != potHeight ) ) )
-	{
-		uploadWidth = potWidth;
+	if( ( useOversizedBuffer && ( uploadWidth < potWidth || uploadHeight < potHeight ) ) || ( !useOversizedBuffer && ( uploadWidth != potWidth || uploadHeight != potHeight ) ) ) {
+		uploadWidth	 = potWidth;
 		uploadHeight = potHeight;
-		if( potWidth == imageWidth && potHeight == imageHeight )
-		{
+		if( potWidth == imageWidth && potHeight == imageHeight ) {
 			qglCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGB8, x, y, imageWidth, imageHeight, 0 );
-		}
-		else
-		{
-			byte*	junk;
+		} else {
+			byte* junk;
 			// we need to create a dummy image with power of two dimensions,
 			// then do a qglCopyTexSubImage2D of the data we want
 			// this might be a 16+ meg allocation, which could fail on _alloca
 			junk = ( byte* )Mem_Alloc( potWidth * potHeight * 4 );
-			memset( junk, 0, potWidth * potHeight * 4 );		//!@#
-#if 0 // Disabling because it's unnecessary and introduces a green strip on edge of _currentRender
-			for( int i = 0 ; i < potWidth * potHeight * 4 ; i += 4 )
-			{
+			memset( junk, 0, potWidth * potHeight * 4 ); //!@#
+#if 0													 // Disabling because it's unnecessary and introduces a green strip on edge of _currentRender
+			for( int i = 0 ; i < potWidth * potHeight * 4 ; i += 4 ) {
 				junk[i + 1] = 255;
 			}
 #endif
@@ -2197,21 +1869,17 @@ void idImage::CopyFramebuffer( int x, int y, int imageWidth, int imageHeight, bo
 
 			qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, x, y, imageWidth, imageHeight );
 		}
-	}
-	else
-	{
+	} else {
 		// otherwise, just subimage upload it so that drivers can tell we are going to be changing
 		// it and don't try and do a texture compression or some other silliness
 		qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, x, y, imageWidth, imageHeight );
 	}
 
 	// if the image isn't a full power of two, duplicate an extra row and/or column to fix bilerps
-	if( imageWidth != potWidth )
-	{
+	if( imageWidth != potWidth ) {
 		qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, imageWidth, 0, x + imageWidth - 1, y, 1, imageHeight );
 	}
-	if( imageHeight != potHeight )
-	{
+	if( imageHeight != potHeight ) {
 		qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, 0, imageHeight, x, y + imageHeight - 1, imageWidth, 1 );
 	}
 
@@ -2236,36 +1904,30 @@ void idImage::CopyDepthbuffer( int x, int y, int imageWidth, int imageHeight )
 	Bind();
 
 	// if the size isn't a power of 2, the image must be increased in size
-	int	potWidth, potHeight;
+	int potWidth, potHeight;
 
-	potWidth = MakePowerOfTwo( imageWidth );
+	potWidth  = MakePowerOfTwo( imageWidth );
 	potHeight = MakePowerOfTwo( imageHeight );
 
-	if( uploadWidth != potWidth || uploadHeight != potHeight )
-	{
-		uploadWidth = potWidth;
+	if( uploadWidth != potWidth || uploadHeight != potHeight ) {
+		uploadWidth	 = potWidth;
 		uploadHeight = potHeight;
-		if( potWidth == imageWidth && potHeight == imageHeight )
-		{
+		if( potWidth == imageWidth && potHeight == imageHeight ) {
 			qglCopyTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, x, y, imageWidth, imageHeight, 0 );
-		}
-		else
-		{
+		} else {
 			// we need to create a dummy image with power of two dimensions,
 			// then do a qglCopyTexSubImage2D of the data we want
 			qglTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, potWidth, potHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL );
 			qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, x, y, imageWidth, imageHeight );
 		}
-	}
-	else
-	{
+	} else {
 		// otherwise, just subimage upload it so that drivers can tell we are going to be changing
 		// it and don't try and do a texture compression or some other silliness
 		qglCopyTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, x, y, imageWidth, imageHeight );
 	}
 
-//	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-//	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+	//	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+	//	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
 	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 	qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
@@ -2280,41 +1942,32 @@ if rows = cols * 6, assume it is a cube map animation
 */
 void idImage::UploadScratch( const byte* data, int cols, int rows )
 {
-	int			i;
+	int i;
 
 	// if rows = cols * 6, assume it is a cube map animation
-	if( rows == cols * 6 )
-	{
-		if( type != TT_CUBIC )
-		{
-			type = TT_CUBIC;
-			uploadWidth = -1;	// for a non-sub upload
+	if( rows == cols * 6 ) {
+		if( type != TT_CUBIC ) {
+			type		= TT_CUBIC;
+			uploadWidth = -1; // for a non-sub upload
 		}
 
 		Bind();
 
 		rows /= 6;
 		// if the scratchImage isn't in the format we want, specify it as a new texture
-		if( cols != uploadWidth || rows != uploadHeight )
-		{
-			uploadWidth = cols;
+		if( cols != uploadWidth || rows != uploadHeight ) {
+			uploadWidth	 = cols;
 			uploadHeight = rows;
 
 			// upload the base level
-			for( i = 0 ; i < 6 ; i++ )
-			{
-				qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, GL_RGB8, cols, rows, 0,
-							   GL_RGBA, GL_UNSIGNED_BYTE, data + cols * rows * 4 * i );
+			for( i = 0; i < 6; i++ ) {
+				qglTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, GL_RGB8, cols, rows, 0, GL_RGBA, GL_UNSIGNED_BYTE, data + cols * rows * 4 * i );
 			}
-		}
-		else
-		{
+		} else {
 			// otherwise, just subimage upload it so that drivers can tell we are going to be changing
 			// it and don't try and do a texture compression
-			for( i = 0 ; i < 6 ; i++ )
-			{
-				qglTexSubImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, 0, 0, cols, rows,
-								  GL_RGBA, GL_UNSIGNED_BYTE, data + cols * rows * 4 * i );
+			for( i = 0; i < 6; i++ ) {
+				qglTexSubImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X_EXT + i, 0, 0, 0, cols, rows, GL_RGBA, GL_UNSIGNED_BYTE, data + cols * rows * 4 * i );
 			}
 		}
 		qglTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -2322,27 +1975,21 @@ void idImage::UploadScratch( const byte* data, int cols, int rows )
 		// no other clamp mode makes sense
 		qglTexParameteri( GL_TEXTURE_CUBE_MAP_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		qglTexParameteri( GL_TEXTURE_CUBE_MAP_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-	}
-	else
-	{
+	} else {
 		// otherwise, it is a 2D image
-		if( type != TT_2D )
-		{
-			type = TT_2D;
-			uploadWidth = -1;	// for a non-sub upload
+		if( type != TT_2D ) {
+			type		= TT_2D;
+			uploadWidth = -1; // for a non-sub upload
 		}
 
 		Bind();
 
 		// if the scratchImage isn't in the format we want, specify it as a new texture
-		if( cols != uploadWidth || rows != uploadHeight )
-		{
-			uploadWidth = cols;
+		if( cols != uploadWidth || rows != uploadHeight ) {
+			uploadWidth	 = cols;
 			uploadHeight = rows;
 			qglTexImage2D( GL_TEXTURE_2D, 0, GL_RGB8, cols, rows, 0, GL_RGBA, GL_UNSIGNED_BYTE, data );
-		}
-		else
-		{
+		} else {
 			// otherwise, just subimage upload it so that drivers can tell we are going to be changing
 			// it and don't try and do a texture compression
 			qglTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, cols, rows, GL_RGBA, GL_UNSIGNED_BYTE, data );
@@ -2362,7 +2009,6 @@ void idImage::UploadScratch( const byte* data, int cols, int rows )
 	}
 }
 
-
 void idImage::SetClassification( int tag )
 {
 	classification = tag;
@@ -2375,15 +2021,13 @@ StorageSize
 */
 int idImage::StorageSize() const
 {
-	int		baseSize;
+	int baseSize;
 
-	if( texnum == TEXTURE_NOT_LOADED )
-	{
+	if( texnum == TEXTURE_NOT_LOADED ) {
 		return 0;
 	}
 
-	switch( type )
-	{
+	switch( type ) {
 		default:
 		case TT_2D:
 			baseSize = uploadWidth * uploadHeight;
@@ -2413,21 +2057,15 @@ Print
 */
 void idImage::Print() const
 {
-	if( precompressedFile )
-	{
+	if( precompressedFile ) {
 		common->Printf( "P" );
-	}
-	else if( generatorFunction )
-	{
+	} else if( generatorFunction ) {
 		common->Printf( "F" );
-	}
-	else
-	{
+	} else {
 		common->Printf( " " );
 	}
 
-	switch( type )
-	{
+	switch( type ) {
 		case TT_2D:
 			common->Printf( " " );
 			break;
@@ -2445,10 +2083,9 @@ void idImage::Print() const
 			break;
 	}
 
-	common->Printf( "%4i %4i ",	uploadWidth, uploadHeight );
+	common->Printf( "%4i %4i ", uploadWidth, uploadHeight );
 
-	switch( filter )
-	{
+	switch( filter ) {
 		case TF_DEFAULT:
 			common->Printf( "dflt " );
 			break;
@@ -2463,8 +2100,7 @@ void idImage::Print() const
 			break;
 	}
 
-	switch( internalFormat )
-	{
+	switch( internalFormat ) {
 		case GL_INTENSITY8:
 		case 1:
 			common->Printf( "I     " );
@@ -2529,8 +2165,7 @@ void idImage::Print() const
 			break;
 	}
 
-	switch( repeat )
-	{
+	switch( repeat ) {
 		case TR_REPEAT:
 			common->Printf( "rept " );
 			break;

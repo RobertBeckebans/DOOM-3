@@ -50,8 +50,7 @@ const char* si_spectateArgs[]		= { "Play", "Spectate", NULL };
 const char* ui_skinArgs[]			= { "skins/characters/player/marine_mp", "skins/characters/player/marine_mp_red", "skins/characters/player/marine_mp_blue", "skins/characters/player/marine_mp_green", "skins/characters/player/marine_mp_yellow", NULL };
 const char* ui_teamArgs[]			= { "Red", "Blue", NULL };
 
-struct gameVersion_s
-{
+struct gameVersion_s {
 	gameVersion_s()
 	{
 		sprintf( string, "%s.%d%s %s %s", ENGINE_VERSION, BUILD_NUMBER, BUILD_DEBUG, BUILD_STRING, __DATE__, __TIME__ );
@@ -67,7 +66,8 @@ idCVar gamedate(	"gamedate",					__DATE__,		CVAR_GAME | CVAR_ROM, "" );
 
 // server info
 idCVar si_name(	"si_name",					"DOOM Server",	CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE, "name of the server" );
-idCVar si_gameType(	"si_gameType",		si_gameTypeArgs[ 0 ],	CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE, "game type - singleplayer, deathmatch, Tourney, Team DM or Last Man", si_gameTypeArgs, idCmdSystem::ArgCompletion_String<si_gameTypeArgs> );
+idCVar si_gameType(	"si_gameType",		si_gameTypeArgs[ 0 ],	CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE, "game type - singleplayer, deathmatch, Tourney, Team DM or Last Man", si_gameTypeArgs,
+					idCmdSystem::ArgCompletion_String<si_gameTypeArgs> );
 idCVar si_map(	"si_map",					"game/mp/d3dm1", CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE, "map to be played next on server", idCmdSystem::ArgCompletion_MapName );
 idCVar si_maxPlayers(	"si_maxPlayers",			"4",			CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_INTEGER, "max number of players allowed on the server", 1, 4 );
 idCVar si_fragLimit(	"si_fragLimit",				"10",			CVAR_GAME | CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_INTEGER, "frag limit", 1, MP_PLAYER_MAXFRAGS );
@@ -96,7 +96,8 @@ idCVar developer(	"developer",				"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar r_aspectRatio(	"r_aspectRatio",			"0",			CVAR_RENDERER | CVAR_INTEGER | CVAR_ARCHIVE, "aspect ratio of view:\n0 = 4:3\n1 = 16:9\n2 = 16:10", 0, 2 );
 
 idCVar g_cinematic(	"g_cinematic",				"1",			CVAR_GAME | CVAR_BOOL, "skips updating entities that aren't marked 'cinematic' '1' during cinematics" );
-idCVar g_cinematicMaxSkipTime(	"g_cinematicMaxSkipTime",	"600",			CVAR_GAME | CVAR_FLOAT, "# of seconds to allow game to run when skipping cinematic.  prevents lock-up when cinematic doesn't end.", 0, 3600 );
+idCVar g_cinematicMaxSkipTime(	"g_cinematicMaxSkipTime",	"600",			CVAR_GAME | CVAR_FLOAT, "# of seconds to allow game to run when skipping cinematic.  prevents lock-up when cinematic doesn't end.", 0,
+								3600 );
 
 idCVar g_muzzleFlash(	"g_muzzleFlash",			"1",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, "show muzzle flashes" );
 idCVar g_projectileLights(	"g_projectileLights",		"1",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, "show dynamic lights on projectiles" );
@@ -143,7 +144,8 @@ idCVar g_showEntityInfo(	"g_showEntityInfo",			"0",			CVAR_GAME | CVAR_BOOL, "" 
 idCVar g_showviewpos(	"g_showviewpos",			"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_showcamerainfo(	"g_showcamerainfo",			"0",			CVAR_GAME | CVAR_ARCHIVE, "displays the current frame # for the camera when playing cinematics" );
 idCVar g_showTestModelFrame(	"g_showTestModelFrame",		"0",			CVAR_GAME | CVAR_BOOL, "displays the current animation and frame # for testmodels" );
-idCVar g_showActiveEntities(	"g_showActiveEntities",		"0",			CVAR_GAME | CVAR_BOOL, "draws boxes around thinking entities.  dormant entities (outside of pvs) are drawn yellow.  non-dormant are green." );
+idCVar g_showActiveEntities(	"g_showActiveEntities",		"0",			CVAR_GAME | CVAR_BOOL,
+								"draws boxes around thinking entities.  dormant entities (outside of pvs) are drawn yellow.  non-dormant are green." );
 idCVar g_showEnemies(	"g_showEnemies",			"0",			CVAR_GAME | CVAR_BOOL, "draws boxes around monsters that have targeted the the player" );
 
 idCVar g_frametime(	"g_frametime",				"0",			CVAR_GAME | CVAR_BOOL, "displays timing information for each game frame" );
@@ -155,7 +157,8 @@ idCVar ai_debugTrajectory(	"ai_debugTrajectory",		"0",			CVAR_GAME | CVAR_BOOL, 
 idCVar ai_testPredictPath(	"ai_testPredictPath",		"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar ai_showCombatNodes(	"ai_showCombatNodes",		"0",			CVAR_GAME | CVAR_BOOL, "draws attack cones for monsters" );
 idCVar ai_showPaths(	"ai_showPaths",				"0",			CVAR_GAME | CVAR_BOOL, "draws path_* entities" );
-idCVar ai_showObstacleAvoidance(	"ai_showObstacleAvoidance",	"0",			CVAR_GAME | CVAR_INTEGER, "draws obstacle avoidance information for monsters.  if 2, draws obstacles for player, as well", 0, 2, idCmdSystem::ArgCompletion_Integer<0, 2> );
+idCVar ai_showObstacleAvoidance(	"ai_showObstacleAvoidance",	"0",			CVAR_GAME | CVAR_INTEGER, "draws obstacle avoidance information for monsters.  if 2, draws obstacles for player, as well", 0, 2,
+									idCmdSystem::ArgCompletion_Integer<0, 2> );
 idCVar ai_blockedFailSafe(	"ai_blockedFailSafe",		"1",			CVAR_GAME | CVAR_BOOL, "enable blocked fail safe handling" );
 
 idCVar g_dvTime(	"g_dvTime",					"1",			CVAR_GAME | CVAR_FLOAT, "" );
@@ -169,13 +172,13 @@ idCVar g_blobSize(	"g_blobSize",				"1",			CVAR_GAME | CVAR_FLOAT, "" );
 
 idCVar g_testHealthVision(	"g_testHealthVision",		"0",			CVAR_GAME | CVAR_FLOAT, "" );
 idCVar g_editEntityMode(	"g_editEntityMode",			"0",			CVAR_GAME | CVAR_INTEGER,	"0 = off\n"
-							"1 = lights\n"
-							"2 = sounds\n"
-							"3 = articulated figures\n"
-							"4 = particle systems\n"
-							"5 = monsters\n"
-							"6 = entity names\n"
-							"7 = entity models", 0, 7, idCmdSystem::ArgCompletion_Integer<0, 7> );
+						 "1 = lights\n"
+						 "2 = sounds\n"
+						 "3 = articulated figures\n"
+						 "4 = particle systems\n"
+						 "5 = monsters\n"
+						 "6 = entity names\n"
+						 "7 = entity models", 0, 7, idCmdSystem::ArgCompletion_Integer<0, 7> );
 idCVar g_dragEntity(	"g_dragEntity",				"0",			CVAR_GAME | CVAR_BOOL, "allows dragging physics objects around by placing the crosshair over them and holding the fire button" );
 idCVar g_dragDamping(	"g_dragDamping",			"0.5",			CVAR_GAME | CVAR_FLOAT, "" );
 idCVar g_dragShowSelection(	"g_dragShowSelection",		"0",			CVAR_GAME | CVAR_BOOL, "" );
@@ -244,7 +247,8 @@ idCVar pm_minviewpitch(	"pm_minviewpitch",			"-89",			CVAR_GAME | CVAR_NETWORKSY
 idCVar pm_maxviewpitch(	"pm_maxviewpitch",			"89",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "amount player's view can look down" );
 idCVar pm_stamina(	"pm_stamina",				"24",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "length of time player can run" );
 idCVar pm_staminathreshold(	"pm_staminathreshold",		"45",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "when stamina drops below this value, player gradually slows to a walk" );
-idCVar pm_staminarate(	"pm_staminarate",			"0.75",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "rate that player regains stamina. divide pm_stamina by this value to determine how long it takes to fully recharge." );
+idCVar pm_staminarate(	"pm_staminarate",			"0.75",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT,
+						"rate that player regains stamina. divide pm_stamina by this value to determine how long it takes to fully recharge." );
 idCVar pm_crouchheight(	"pm_crouchheight",			"38",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "height of player's bounding box while crouched" );
 idCVar pm_crouchviewheight(	"pm_crouchviewheight",		"32",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "height of player's view while crouched" );
 idCVar pm_normalheight(	"pm_normalheight",			"74",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_FLOAT, "height of player's bounding box while standing" );
@@ -267,7 +271,8 @@ idCVar pm_thirdPersonAngle(	"pm_thirdPersonAngle",		"0",			CVAR_GAME | CVAR_NETW
 idCVar pm_thirdPersonClip(	"pm_thirdPersonClip",		"1",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_BOOL, "clip third person view into world space" );
 idCVar pm_thirdPerson(	"pm_thirdPerson",			"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_BOOL, "enables third person view" );
 idCVar pm_thirdPersonDeath(	"pm_thirdPersonDeath",		"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_BOOL, "enables third person view when player dies" );
-idCVar pm_modelView(	"pm_modelView",				"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER, "draws camera from POV of player model (1 = always, 2 = when dead)", 0, 2, idCmdSystem::ArgCompletion_Integer<0, 2> );
+idCVar pm_modelView(	"pm_modelView",				"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER, "draws camera from POV of player model (1 = always, 2 = when dead)", 0, 2,
+						idCmdSystem::ArgCompletion_Integer<0, 2> );
 idCVar pm_airTics(	"pm_air",					"1800",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR_INTEGER, "how long in milliseconds the player can go without air before he starts taking damage" );
 
 idCVar g_showPlayerShadow(	"g_showPlayerShadow",		"0",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, "enables shadow of player model" );
@@ -288,11 +293,11 @@ idCVar g_testParticleName(	"g_testParticleName",		"",				CVAR_GAME, "name of the
 idCVar g_testModelRotate(	"g_testModelRotate",		"0",			CVAR_GAME, "test model rotation speed" );
 idCVar g_testPostProcess(	"g_testPostProcess",		"",				CVAR_GAME, "name of material to draw over screen" );
 idCVar g_testModelAnimate(	"g_testModelAnimate",		"0",			CVAR_GAME | CVAR_INTEGER, "test model animation,\n"
-							"0 = cycle anim with origin reset\n"
-							"1 = cycle anim with fixed origin\n"
-							"2 = cycle anim with continuous origin\n"
-							"3 = frame by frame with continuous origin\n"
-							"4 = play anim once", 0, 4, idCmdSystem::ArgCompletion_Integer<0, 4> );
+						   "0 = cycle anim with origin reset\n"
+						   "1 = cycle anim with fixed origin\n"
+						   "2 = cycle anim with continuous origin\n"
+						   "3 = frame by frame with continuous origin\n"
+						   "4 = play anim once", 0, 4, idCmdSystem::ArgCompletion_Integer<0, 4> );
 idCVar g_testModelBlend(	"g_testModelBlend",			"0",			CVAR_GAME | CVAR_INTEGER, "number of frames to blend" );
 idCVar g_testDeath(	"g_testDeath",				"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_exportMask(	"g_exportMask",				"",				CVAR_GAME, "" );
@@ -330,8 +335,11 @@ idCVar g_voteFlags(	"g_voteFlags",				"0",			CVAR_GAME | CVAR_NETWORKSYNC | CVAR
 					"bit 7 (+128) next map" );
 idCVar g_mapCycle(	"g_mapCycle",				"mapcycle",		CVAR_GAME | CVAR_ARCHIVE, "map cycling script for multiplayer games - see mapcycle.scriptcfg" );
 
-idCVar mod_validSkins(	"mod_validSkins",			"skins/characters/player/marine_mp;skins/characters/player/marine_mp_green;skins/characters/player/marine_mp_blue;skins/characters/player/marine_mp_red;skins/characters/player/marine_mp_yellow",		CVAR_GAME | CVAR_ARCHIVE, "valid skins for the game" );
+idCVar mod_validSkins(	"mod_validSkins",
+						"skins/characters/player/marine_mp;skins/characters/player/marine_mp_green;skins/characters/player/marine_mp_blue;skins/characters/player/marine_mp_red;skins/characters/player/marine_mp_yellow",
+						CVAR_GAME | CVAR_ARCHIVE, "valid skins for the game" );
 
-idCVar net_serverDownload(	"net_serverDownload",		"0",			CVAR_GAME | CVAR_INTEGER | CVAR_ARCHIVE, "enable server download redirects. 0: off 1: redirect to si_serverURL 2: use builtin download. see net_serverDl cvars for configuration" );
+idCVar net_serverDownload(	"net_serverDownload",		"0",			CVAR_GAME | CVAR_INTEGER | CVAR_ARCHIVE,
+							"enable server download redirects. 0: off 1: redirect to si_serverURL 2: use builtin download. see net_serverDl cvars for configuration" );
 idCVar net_serverDlBaseURL(	"net_serverDlBaseURL",		"",				CVAR_GAME | CVAR_ARCHIVE, "base URL for the download redirection" );
 idCVar net_serverDlTable(	"net_serverDlTable",		"",				CVAR_GAME | CVAR_ARCHIVE, "pak names for which download is provided, seperated by ;" );

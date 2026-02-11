@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -46,68 +47,65 @@ class idProgram;
 class rvDebuggerServer
 {
 public:
-
 	rvDebuggerServer();
 	~rvDebuggerServer();
 
-	bool		Initialize();
-	void		Shutdown();
+	bool Initialize();
+	void Shutdown();
 
-	bool		ProcessMessages();
+	bool ProcessMessages();
 
-	bool		IsConnected();
+	bool IsConnected();
 
-	void		CheckBreakpoints( idInterpreter* interpreter, idProgram* program, int instructionPointer );
+	void CheckBreakpoints( idInterpreter* interpreter, idProgram* program, int instructionPointer );
 
-	void		Print( const char* text );
+	void Print( const char* text );
 
-	void		OSPathToRelativePath( const char* osPath, idStr& qpath );
+	void OSPathToRelativePath( const char* osPath, idStr& qpath );
 
 protected:
-
 	// protected member variables
-	bool							mConnected;
-	netadr_t						mClientAdr;
-	idPort							mPort;
-	idList<rvDebuggerBreakpoint*>	mBreakpoints;
-	CRITICAL_SECTION				mCriticalSection;
+	bool						  mConnected;
+	netadr_t					  mClientAdr;
+	idPort						  mPort;
+	idList<rvDebuggerBreakpoint*> mBreakpoints;
+	CRITICAL_SECTION			  mCriticalSection;
 
-	HANDLE							mGameThread;
+	HANDLE						  mGameThread;
 
-	bool							mBreak;
-	bool							mBreakNext;
-	bool							mBreakStepOver;
-	bool							mBreakStepInto;
-	int								mBreakStepOverDepth;
-	const function_t*				mBreakStepOverFunc1;
-	const function_t*				mBreakStepOverFunc2;
-	idProgram*						mBreakProgram;
-	int								mBreakInstructionPointer;
-	idInterpreter*					mBreakInterpreter;
+	bool						  mBreak;
+	bool						  mBreakNext;
+	bool						  mBreakStepOver;
+	bool						  mBreakStepInto;
+	int							  mBreakStepOverDepth;
+	const function_t*			  mBreakStepOverFunc1;
+	const function_t*			  mBreakStepOverFunc2;
+	idProgram*					  mBreakProgram;
+	int							  mBreakInstructionPointer;
+	idInterpreter*				  mBreakInterpreter;
 
-	idStr							mLastStatementFile;
-	int								mLastStatementLine;
+	idStr						  mLastStatementFile;
+	int							  mLastStatementLine;
 
 private:
+	void ClearBreakpoints();
 
-	void		ClearBreakpoints();
+	void Break( idInterpreter* interpreter, idProgram* program, int instructionPointer );
+	void Resume();
 
-	void		Break( idInterpreter* interpreter, idProgram* program, int instructionPointer );
-	void		Resume();
-
-	void		SendMessage( EDebuggerMessage dbmsg );
-	void		SendPacket( void* data, int datasize );
+	void SendMessage( EDebuggerMessage dbmsg );
+	void SendPacket( void* data, int datasize );
 
 	// Message handlers
-	void		HandleAddBreakpoint( msg_t* msg );
-	void		HandleRemoveBreakpoint( msg_t* msg );
-	void		HandleResume( msg_t* msg );
-	void		HandleInspectVariable( msg_t* msg );
-	void		HandleInspectCallstack( msg_t* msg );
-	void		HandleInspectThreads( msg_t* msg );
+	void HandleAddBreakpoint( msg_t* msg );
+	void HandleRemoveBreakpoint( msg_t* msg );
+	void HandleResume( msg_t* msg );
+	void HandleInspectVariable( msg_t* msg );
+	void HandleInspectCallstack( msg_t* msg );
+	void HandleInspectThreads( msg_t* msg );
 
 	// MSG helper routines
-	void		MSG_WriteCallstackFunc( msg_t* msg, const prstack_t* stack );
+	void MSG_WriteCallstackFunc( msg_t* msg, const prstack_t* stack );
 };
 
 /*

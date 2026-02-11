@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -41,15 +42,15 @@ If you have questions concerning this license or the applicable additional terms
 	#include <mcheck.h>
 #endif
 
-static idStr	basepath;
-static idStr	savepath;
+static idStr basepath;
+static idStr savepath;
 
 /*
 ===========
 Sys_InitScanTable
 ===========
 */
-void Sys_InitScanTable()
+void		 Sys_InitScanTable()
 {
 	common->DPrintf( "TODO: Sys_InitScanTable\n" );
 }
@@ -63,42 +64,37 @@ void Sys_AsyncThread()
 {
 	int now;
 	int next;
-	int	want_sleep;
+	int want_sleep;
 
 	// multi tick compensate for poor schedulers (Linux 2.4)
 	int ticked, to_ticked;
-	now = Sys_Milliseconds();
+	now	   = Sys_Milliseconds();
 	ticked = now >> 4;
-	while( 1 )
-	{
+	while( 1 ) {
 		// sleep
-		now = Sys_Milliseconds();
-		next = ( now & 0xFFFFFFF0 ) + 0x10;
+		now		   = Sys_Milliseconds();
+		next	   = ( now & 0xFFFFFFF0 ) + 0x10;
 		want_sleep = ( next - now - 1 ) * 1000;
-		if( want_sleep > 0 )
-		{
+		if( want_sleep > 0 ) {
 			usleep( want_sleep ); // sleep 1ms less than true target
 		}
 
 		// compensate if we slept too long
-		now = Sys_Milliseconds();
+		now		  = Sys_Milliseconds();
 		to_ticked = now >> 4;
 
 		// show ticking statistics - every 100 ticks, print a summary
 #if 0
-#define STAT_BUF 100
+	#define STAT_BUF 100
 		static int stats[STAT_BUF];
 		static int counter = 0;
 		// how many ticks to play
 		stats[counter] = to_ticked - ticked;
 		counter++;
-		if( counter == STAT_BUF )
-		{
+		if( counter == STAT_BUF ) {
 			Sys_DebugPrintf( "\n" );
-			for( int i = 0; i < STAT_BUF; i++ )
-			{
-				if( !( i & 0xf ) )
-				{
+			for( int i = 0; i < STAT_BUF; i++ ) {
+				if( !( i & 0xf ) ) {
 					Sys_DebugPrintf( "\n" );
 				}
 				Sys_DebugPrintf( "%d ", stats[i] );
@@ -108,8 +104,7 @@ void Sys_AsyncThread()
 		}
 #endif
 
-		while( ticked < to_ticked )
-		{
+		while( ticked < to_ticked ) {
 			common->Async();
 			ticked++;
 			Sys_TriggerEvent( TRIGGER_EVENT_ONE );
@@ -140,17 +135,16 @@ Sys_EXEPath
 */
 const char* Sys_EXEPath()
 {
-	static char	buf[ 1024 ];
+	static char buf[1024];
 	idStr		linkpath;
 	int			len;
 
-	buf[ 0 ] = '\0';
+	buf[0] = '\0';
 	sprintf( linkpath, "/proc/%d/exe", getpid() );
 	len = readlink( linkpath.c_str(), buf, sizeof( buf ) );
-	if( len == -1 )
-	{
+	if( len == -1 ) {
 		Sys_Printf( "couldn't stat exe path link %s\n", linkpath.c_str() );
-		buf[ len ] = '\0';
+		buf[len] = '\0';
 	}
 	return buf;
 }
@@ -169,35 +163,27 @@ Try to be intelligent: if there is no BASE_GAMEDIR, try the next path
 const char* Sys_DefaultBasePath()
 {
 	struct stat st;
-	idStr testbase;
+	idStr		testbase;
 	basepath = Sys_EXEPath();
-	if( basepath.Length() )
-	{
+	if( basepath.Length() ) {
 		basepath.StripFilename();
 		testbase = basepath;
 		testbase += "/";
 		testbase += BASE_GAMEDIR;
-		if( stat( testbase.c_str(), &st ) != -1 && S_ISDIR( st.st_mode ) )
-		{
+		if( stat( testbase.c_str(), &st ) != -1 && S_ISDIR( st.st_mode ) ) {
 			return basepath.c_str();
-		}
-		else
-		{
+		} else {
 			common->Printf( "no '%s' directory in exe path %s, skipping\n", BASE_GAMEDIR, basepath.c_str() );
 		}
 	}
-	if( basepath != Posix_Cwd() )
-	{
+	if( basepath != Posix_Cwd() ) {
 		basepath = Posix_Cwd();
 		testbase = basepath;
 		testbase += "/";
 		testbase += BASE_GAMEDIR;
-		if( stat( testbase.c_str(), &st ) != -1 && S_ISDIR( st.st_mode ) )
-		{
+		if( stat( testbase.c_str(), &st ) != -1 && S_ISDIR( st.st_mode ) ) {
 			return basepath.c_str();
-		}
-		else
-		{
+		} else {
 			common->Printf( "no '%s' directory in cwd path %s, skipping\n", BASE_GAMEDIR, basepath.c_str() );
 		}
 	}
@@ -277,18 +263,17 @@ double Sys_GetClockTicks()
 #if defined( __i386__ )
 	unsigned long lo, hi;
 
-	__asm__ __volatile__(
-		"push %%ebx\n"			\
-		"xor %%eax,%%eax\n"		\
-		"cpuid\n"					\
-		"rdtsc\n"					\
-		"mov %%eax,%0\n"			\
-		"mov %%edx,%1\n"			\
-		"pop %%ebx\n"
-		: "=r"( lo ), "=r"( hi ) );
-	return ( double ) lo + ( double ) 0xFFFFFFFF * hi;
+	__asm__ __volatile__( "push %%ebx\n"
+						  "xor %%eax,%%eax\n"
+						  "cpuid\n"
+						  "rdtsc\n"
+						  "mov %%eax,%0\n"
+						  "mov %%edx,%1\n"
+						  "pop %%ebx\n"
+						  : "=r"( lo ), "=r"( hi ) );
+	return ( double )lo + ( double )0xFFFFFFFF * hi;
 #else
-#error unsupported CPU
+	#error unsupported CPU
 #endif
 }
 
@@ -314,22 +299,20 @@ Sys_ClockTicksPerSecond
 */
 double Sys_ClockTicksPerSecond()
 {
-	static bool		init = false;
-	static double	ret;
+	static bool	  init = false;
+	static double ret;
 
-	int		fd, len, pos, end;
-	char	buf[ 4096 ];
+	int			  fd, len, pos, end;
+	char		  buf[4096];
 
-	if( init )
-	{
+	if( init ) {
 		return ret;
 	}
 
 	fd = open( "/proc/cpuinfo", O_RDONLY );
-	if( fd == -1 )
-	{
+	if( fd == -1 ) {
 		common->Printf( "couldn't read /proc/cpuinfo\n" );
-		ret = MeasureClockTicks();
+		ret	 = MeasureClockTicks();
 		init = true;
 		common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
 		return ret;
@@ -337,21 +320,16 @@ double Sys_ClockTicksPerSecond()
 	len = read( fd, buf, 4096 );
 	close( fd );
 	pos = 0;
-	while( pos < len )
-	{
-		if( !idStr::Cmpn( buf + pos, "cpu MHz", 7 ) )
-		{
+	while( pos < len ) {
+		if( !idStr::Cmpn( buf + pos, "cpu MHz", 7 ) ) {
 			pos = strchr( buf + pos, ':' ) - buf + 2;
 			end = strchr( buf + pos, '\n' ) - buf;
-			if( pos < len && end < len )
-			{
+			if( pos < len && end < len ) {
 				buf[end] = '\0';
-				ret = atof( buf + pos );
-			}
-			else
-			{
+				ret		 = atof( buf + pos );
+			} else {
 				common->Printf( "failed parsing /proc/cpuinfo\n" );
-				ret = MeasureClockTicks();
+				ret	 = MeasureClockTicks();
 				init = true;
 				common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
 				return ret;
@@ -364,7 +342,7 @@ double Sys_ClockTicksPerSecond()
 		pos = strchr( buf + pos, '\n' ) - buf + 1;
 	}
 	common->Printf( "failed parsing /proc/cpuinfo\n" );
-	ret = MeasureClockTicks();
+	ret	 = MeasureClockTicks();
 	init = true;
 	common->Printf( "measured CPU frequency: %g MHz\n", ret / 1000000.0 );
 	return ret;
@@ -378,18 +356,16 @@ returns in megabytes
 */
 int Sys_GetSystemRam()
 {
-	long	count, page_size;
-	int		mb;
+	long count, page_size;
+	int	 mb;
 
 	count = sysconf( _SC_PHYS_PAGES );
-	if( count == -1 )
-	{
+	if( count == -1 ) {
 		common->Printf( "GetSystemRam: sysconf _SC_PHYS_PAGES failed\n" );
 		return 512;
 	}
 	page_size = sysconf( _SC_PAGE_SIZE );
-	if( page_size == -1 )
-	{
+	if( page_size == -1 ) {
 		common->Printf( "GetSystemRam: sysconf _SC_PAGE_SIZE failed\n" );
 		return 512;
 	}
@@ -411,42 +387,30 @@ if the command contains spaces, system() is used. Otherwise the more straightfor
 void Sys_DoStartProcess( const char* exeName, bool dofork )
 {
 	bool use_system = false;
-	if( strchr( exeName, ' ' ) )
-	{
+	if( strchr( exeName, ' ' ) ) {
 		use_system = true;
-	}
-	else
-	{
+	} else {
 		// set exec rights when it's about a single file to execute
 		struct stat buf;
-		if( stat( exeName, &buf ) == -1 )
-		{
+		if( stat( exeName, &buf ) == -1 ) {
 			printf( "stat %s failed: %s\n", exeName, strerror( errno ) );
-		}
-		else
-		{
-			if( chmod( exeName, buf.st_mode | S_IXUSR ) == -1 )
-			{
+		} else {
+			if( chmod( exeName, buf.st_mode | S_IXUSR ) == -1 ) {
 				printf( "cmod +x %s failed: %s\n", exeName, strerror( errno ) );
 			}
 		}
 	}
-	if( dofork )
-	{
-		switch( fork() )
-		{
+	if( dofork ) {
+		switch( fork() ) {
 			case -1:
 				// main thread
 				break;
 			case 0:
-				if( use_system )
-				{
+				if( use_system ) {
 					printf( "system %s\n", exeName );
 					system( exeName );
 					_exit( 0 );
-				}
-				else
-				{
+				} else {
 					printf( "execl %s\n", exeName );
 					execl( exeName, exeName, NULL );
 					printf( "execl failed: %s\n", strerror( errno ) );
@@ -454,17 +418,12 @@ void Sys_DoStartProcess( const char* exeName, bool dofork )
 				}
 				break;
 		}
-	}
-	else
-	{
-		if( use_system )
-		{
+	} else {
+		if( use_system ) {
 			printf( "system %s\n", exeName );
 			system( exeName );
-			sleep( 1 );	// on some systems I've seen that starting the new process and exiting this one should not be too close
-		}
-		else
-		{
+			sleep( 1 ); // on some systems I've seen that starting the new process and exiting this one should not be too close
+		} else {
 			printf( "execl %s\n", exeName );
 			execl( exeName, exeName, NULL );
 			printf( "execl failed: %s\n", strerror( errno ) );
@@ -481,14 +440,13 @@ Sys_OpenURL
 */
 void idSysLocal::OpenURL( const char* url, bool quit )
 {
-	const char*	script_path;
+	const char* script_path;
 	idFile*		script_file;
-	char		cmdline[ 1024 ];
+	char		cmdline[1024];
 
-	static bool	quit_spamguard = false;
+	static bool quit_spamguard = false;
 
-	if( quit_spamguard )
-	{
+	if( quit_spamguard ) {
 		common->DPrintf( "Sys_OpenURL: already in a doexit sequence, ignoring %s\n", url );
 		return;
 	}
@@ -500,13 +458,11 @@ void idSysLocal::OpenURL( const char* url, bool quit )
 	// look in the savepath first, then in the basepath
 	script_path = fileSystem->BuildOSPath( cvarSystem->GetCVarString( "fs_savepath" ), "", "openurl.sh" );
 	script_file = fileSystem->OpenExplicitFileRead( script_path );
-	if( !script_file )
-	{
+	if( !script_file ) {
 		script_path = fileSystem->BuildOSPath( cvarSystem->GetCVarString( "fs_basepath" ), "", "openurl.sh" );
 		script_file = fileSystem->OpenExplicitFileRead( script_path );
 	}
-	if( !script_file )
-	{
+	if( !script_file ) {
 		common->Printf( "Can't find URL script 'openurl.sh' in either savepath or basepath\n" );
 		common->Printf( "OpenURL '%s' failed\n", url );
 		return;
@@ -514,15 +470,14 @@ void idSysLocal::OpenURL( const char* url, bool quit )
 	fileSystem->CloseFile( script_file );
 
 	// if we are going to quit, only accept a single URL before quitting and spawning the script
-	if( quit )
-	{
+	if( quit ) {
 		quit_spamguard = true;
 	}
 
 	common->Printf( "URL script: %s\n", script_path );
 
 	// StartProcess is going to execute a system() call with that - hence the &
-	idStr::snPrintf( cmdline, 1024, "%s '%s' &",  script_path, url );
+	idStr::snPrintf( cmdline, 1024, "%s '%s' &", script_path, url );
 	sys->StartProcess( cmdline, quit );
 }
 
@@ -531,7 +486,9 @@ void idSysLocal::OpenURL( const char* url, bool quit )
  Sys_DoPreferences
  ==================
  */
-void Sys_DoPreferences() { }
+void Sys_DoPreferences()
+{
+}
 
 /*
 ================
@@ -589,18 +546,17 @@ mem consistency stuff
 
 #ifdef ID_MCHECK
 
-const char* mcheckstrings[] =
-{
+const char* mcheckstrings[] = {
 	"MCHECK_DISABLED",
 	"MCHECK_OK",
-	"MCHECK_FREE",	// block freed twice
-	"MCHECK_HEAD",	// memory before the block was clobbered
-	"MCHECK_TAIL"	// memory after the block was clobbered
+	"MCHECK_FREE", // block freed twice
+	"MCHECK_HEAD", // memory before the block was clobbered
+	"MCHECK_TAIL"  // memory after the block was clobbered
 };
 
 void abrt_func( mcheck_status status )
 {
-	Sys_Printf( "memory consistency failure: %s\n", mcheckstrings[ status + 1 ] );
+	Sys_Printf( "memory consistency failure: %s\n", mcheckstrings[status + 1] );
 	Posix_SetExit( EXIT_FAILURE );
 	common->Quit();
 }
@@ -622,19 +578,15 @@ int main( int argc, const char** argv )
 
 	Posix_EarlyInit();
 
-	if( argc > 1 )
-	{
+	if( argc > 1 ) {
 		common->Init( argc - 1, &argv[1], NULL );
-	}
-	else
-	{
+	} else {
 		common->Init( 0, NULL, NULL );
 	}
 
 	Posix_LateInit();
 
-	while( 1 )
-	{
+	while( 1 ) {
 		common->Frame();
 	}
 }

@@ -48,8 +48,7 @@ void Sys_MarkMapModified()
 {
 	idStr title;
 
-	if( mapModified != 1 )
-	{
+	if( mapModified != 1 ) {
 		mapModified = 1;	// mark the map as changed
 		title = currentmap;
 		title += " *";
@@ -86,8 +85,7 @@ bool Sys_Waiting()
 
 void Sys_EndWait()
 {
-	if( waitcursor )
-	{
+	if( waitcursor ) {
 		SetCursor( waitcursor );
 		waitcursor = NULL;
 	}
@@ -136,15 +134,11 @@ char* TranslateString( char* buf )
 
 	l = strlen( buf );
 	out = buf2;
-	for( i = 0; i < l; i++ )
-	{
-		if( buf[i] == '\n' )
-		{
+	for( i = 0; i < l; i++ ) {
+		if( buf[i] == '\n' ) {
 			*out++ = '\r';
 			*out++ = '\n';
-		}
-		else
-		{
+		} else {
 			*out++ = buf[i];
 		}
 	}
@@ -173,10 +167,8 @@ void PrintPixels( HDC hDC )
 	PIXELFORMATDESCRIPTOR	p[64];
 
 	printf( "### flags color layer\n" );
-	for( i = 1; i < 64; i++ )
-	{
-		if( !DescribePixelFormat( hDC, i, sizeof( p[0] ), &p[i] ) )
-		{
+	for( i = 1; i < 64; i++ ) {
+		if( !DescribePixelFormat( hDC, i, sizeof( p[0] ), &p[i] ) ) {
 			break;
 		}
 
@@ -195,22 +187,17 @@ int WINAPI QEW_SetupPixelFormat( HDC hDC, bool zbuffer )
 #if 1
 
 	int pixelFormat = ChoosePixelFormat( hDC, &win32.pfd );
-	if( pixelFormat > 0 )
-	{
-		if( SetPixelFormat( hDC, pixelFormat, &win32.pfd ) == NULL )
-		{
+	if( pixelFormat > 0 ) {
+		if( SetPixelFormat( hDC, pixelFormat, &win32.pfd ) == NULL ) {
 			Error( "SetPixelFormat failed." );
 		}
-	}
-	else
-	{
+	} else {
 		Error( "ChoosePixelFormat failed." );
 	}
 
 	return pixelFormat;
 #else
-	static PIXELFORMATDESCRIPTOR	pfd =
-	{
+	static PIXELFORMATDESCRIPTOR	pfd = {
 		sizeof( PIXELFORMATDESCRIPTOR ),	// size of this pfd
 		1,						// version number
 		PFD_DRAW_TO_WINDOW |	// support window
@@ -243,19 +230,16 @@ int WINAPI QEW_SetupPixelFormat( HDC hDC, bool zbuffer )
 	int pixelformat = 0;
 
 	zbuffer = true;
-	if( !zbuffer )
-	{
+	if( !zbuffer ) {
 		pfd.cDepthBits = 0;
 	}
 
-	if( ( pixelformat = ChoosePixelFormat( hDC, &pfd ) ) == 0 )
-	{
+	if( ( pixelformat = ChoosePixelFormat( hDC, &pfd ) ) == 0 ) {
 		printf( "%d", GetLastError() );
 		Error( "ChoosePixelFormat failed" );
 	}
 
-	if( !SetPixelFormat( hDC, pixelformat, &pfd ) )
-	{
+	if( !SetPixelFormat( hDC, pixelformat, &pfd ) ) {
 		Error( "SetPixelFormat failed" );
 	}
 
@@ -292,8 +276,7 @@ void Error( char* error, ... )
 		i
 	);
 
-	if( g_pParentWnd->MessageBox( text2, "Error", MB_YESNO ) == IDYES )
-	{
+	if( g_pParentWnd->MessageBox( text2, "Error", MB_YESNO ) == IDYES ) {
 		g_PrefsDlg.LoadPrefs();
 		g_PrefsDlg.DoModal();
 	}
@@ -329,13 +312,11 @@ void Warning( char* error, ... )
  */
 bool ConfirmModified()
 {
-	if( !mapModified )
-	{
+	if( !mapModified ) {
 		return true;
 	}
 
-	if( g_pParentWnd->MessageBox( "This will lose changes to the map", "warning", MB_OKCANCEL ) == IDCANCEL )
-	{
+	if( g_pParentWnd->MessageBox( "This will lose changes to the map", "warning", MB_OKCANCEL ) == IDCANCEL ) {
 		return false;
 	}
 
@@ -362,14 +343,12 @@ void OpenDialog()
 {
 	/* Obtain the system directory name and store it in szDirName. */
 	strcpy( szDirName, ValueForKey( g_qeglobals.d_project_entity, "mapspath" ) );
-	if( strlen( szDirName ) == 0 )
-	{
+	if( strlen( szDirName ) == 0 ) {
 		strcpy( szDirName, ValueForKey( g_qeglobals.d_project_entity, "basepath" ) );
 		strcat( szDirName, "\\maps" );
 	}
 
-	if( g_PrefsDlg.m_strMaps.GetLength() > 0 )
-	{
+	if( g_PrefsDlg.m_strMaps.GetLength() > 0 ) {
 		strcat( szDirName, va( "\\%s", g_PrefsDlg.m_strMaps ) );
 	}
 
@@ -389,8 +368,7 @@ void OpenDialog()
 	ofn.Flags = OFN_SHOWHELP | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
 	/* Display the Open dialog box. */
-	if( !GetOpenFileName( &ofn ) )
-	{
+	if( !GetOpenFileName( &ofn ) ) {
 		return; // canceled
 	}
 
@@ -432,8 +410,7 @@ void ProjectDialog()
 	ofn.Flags = OFN_SHOWHELP | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
 	/* Display the Open dialog box. */
-	if( !GetOpenFileName( &ofn ) )
-	{
+	if( !GetOpenFileName( &ofn ) ) {
 		return; // canceled
 	}
 
@@ -441,8 +418,7 @@ void ProjectDialog()
 	PlaceMenuMRUItem( g_qeglobals.d_lpMruMenu, GetSubMenu( GetMenu( g_pParentWnd->GetSafeHwnd() ), 0 ), ID_FILE_EXIT );
 
 	/* Open the file. */
-	if( !QE_LoadProject( ofn.lpstrFile ) )
-	{
+	if( !QE_LoadProject( ofn.lpstrFile ) ) {
 		Error( "Couldn't load project file" );
 	}
 }
@@ -460,8 +436,7 @@ void SaveAsDialog( bool bRegion )
 	CString strPath = szDirName;
 	AddSlash( strPath );
 	strPath += "maps";
-	if( g_PrefsDlg.m_strMaps.GetLength() > 0 )
-	{
+	if( g_PrefsDlg.m_strMaps.GetLength() > 0 ) {
 		strPath += va( "\\%s", g_PrefsDlg.m_strMaps );
 	}
 
@@ -481,22 +456,17 @@ void SaveAsDialog( bool bRegion )
 	ofn.Flags = OFN_SHOWHELP | OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT;
 
 	/* Display the Open dialog box. */
-	if( !GetSaveFileName( &ofn ) )
-	{
+	if( !GetSaveFileName( &ofn ) ) {
 		return; // canceled
 	}
 
-	if( bRegion )
-	{
+	if( bRegion ) {
 		DefaultExtension( ofn.lpstrFile, ".reg" );
-	}
-	else
-	{
+	} else {
 		DefaultExtension( ofn.lpstrFile, ".map" );
 	}
 
-	if( !bRegion )
-	{
+	if( !bRegion ) {
 		strcpy( currentmap, ofn.lpstrFile );
 		AddNewItem( g_qeglobals.d_lpMruMenu, ofn.lpstrFile );
 		PlaceMenuMRUItem( g_qeglobals.d_lpMruMenu, GetSubMenu( GetMenu( g_pParentWnd->GetSafeHwnd() ), 0 ), ID_FILE_EXIT );
@@ -523,17 +493,15 @@ void FillBSPMenu()
 
 	hmenu = GetSubMenu( GetMenu( g_pParentWnd->GetSafeHwnd() ), MENU_BSP );
 
-	for( i = 0; i < count; i++ )
-	{
+	for( i = 0; i < count; i++ ) {
 		DeleteMenu( hmenu, CMD_BSPCOMMAND + i, MF_BYCOMMAND );
 	}
 
 	i = 0;
 	count = g_qeglobals.d_project_entity->epairs.GetNumKeyVals();
-	for( int j = 0; j < count; j++ )
-	{
-		if( g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[0] == 'b' && g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[1] == 's' && g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[2] == 'p' )
-		{
+	for( int j = 0; j < count; j++ ) {
+		if( g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[0] == 'b' && g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[1] == 's'
+				&& g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey()[2] == 'p' ) {
 			bsp_commands[i] = g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey().c_str();
 			AppendMenu( hmenu, MF_ENABLED | MF_STRING, CMD_BSPCOMMAND + i, ( LPCTSTR ) g_qeglobals.d_project_entity->epairs.GetKeyVal( j )->GetKey().c_str() );
 			i++;
@@ -549,10 +517,8 @@ void FillBSPMenu()
  */
 void AddSlash( CString& strPath )
 {
-	if( strPath.GetLength() > 0 )
-	{
-		if( strPath.GetAt( strPath.GetLength() - 1 ) != '\\' )
-		{
+	if( strPath.GetLength() > 0 ) {
+		if( strPath.GetAt( strPath.GetLength() - 1 ) != '\\' ) {
 			strPath += '\\';
 		}
 	}

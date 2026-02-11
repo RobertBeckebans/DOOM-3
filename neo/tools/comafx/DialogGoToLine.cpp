@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -39,7 +40,6 @@ If you have questions concerning this license or the applicable additional terms
 	#define DEBUG_NEW new
 #endif
 
-
 IMPLEMENT_DYNAMIC( DialogGoToLine, CDialog )
 
 /*
@@ -47,11 +47,11 @@ IMPLEMENT_DYNAMIC( DialogGoToLine, CDialog )
 DialogGoToLine::DialogGoToLine
 ================
 */
-DialogGoToLine::DialogGoToLine( CWnd* pParent /*=NULL*/ )
-	: CDialog( DialogGoToLine::IDD, pParent )
-	, firstLine( 0 )
-	, lastLine( 0 )
-	, line( 0 )
+DialogGoToLine::DialogGoToLine( CWnd* pParent /*=NULL*/ ) :
+	CDialog( DialogGoToLine::IDD, pParent ),
+	firstLine( 0 ),
+	lastLine( 0 ),
+	line( 0 )
 {
 }
 
@@ -85,7 +85,7 @@ DialogGoToLine::SetRange
 void DialogGoToLine::SetRange( int firstLine, int lastLine )
 {
 	this->firstLine = firstLine;
-	this->lastLine = lastLine;
+	this->lastLine	= lastLine;
 }
 
 /*
@@ -105,7 +105,6 @@ DialogGoToLine::OnInitDialog
 */
 BOOL DialogGoToLine::OnInitDialog()
 {
-
 	CDialog::OnInitDialog();
 
 	GetDlgItem( IDC_GOTOLINE_STATIC )->SetWindowText( va( "&Line number (%d - %d):", firstLine, lastLine ) );
@@ -115,14 +114,12 @@ BOOL DialogGoToLine::OnInitDialog()
 	numberEdit.SetFocus();
 
 	return FALSE; // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-
 BEGIN_MESSAGE_MAP( DialogGoToLine, CDialog )
-	ON_BN_CLICKED( IDOK, OnBnClickedOk )
+ON_BN_CLICKED( IDOK, OnBnClickedOk )
 END_MESSAGE_MAP()
-
 
 // DialogGoToLine message handlers
 

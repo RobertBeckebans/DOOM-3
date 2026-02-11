@@ -52,8 +52,7 @@ typedef HRESULT( FAR PASCAL* LPEAXDIRECTSOUNDCREATE )( GUID*, LPDIRECTSOUND*, IU
 
 #ifndef GUID_DEFINED
 #define GUID_DEFINED
-typedef struct _GUID
-{
+typedef struct _GUID {
 	unsigned long Data1;
 	unsigned short Data2;
 	unsigned short Data3;
@@ -120,13 +119,12 @@ DEFINE_GUID( EAX_PrimaryFXSlotID,
 // Structures
 
 // Use this structure for EAXCONTEXT_ALL property.
-typedef struct _EAXCONTEXTPROPERTIES
-{
+typedef struct _EAXCONTEXTPROPERTIES {
 	GUID          guidPrimaryFXSlotID;
 	float         flDistanceFactor;
 	float         flAirAbsorptionHF;
 	float         flHFReference;
-} EAXCONTEXTPROPERTIES, *LPEAXCONTEXTPROPERTIES;
+} EAXCONTEXTPROPERTIES, * LPEAXCONTEXTPROPERTIES;
 
 // Use this structure for EAXSOURCE_ALLPARAMETERS
 // - all levels are hundredths of decibels
@@ -141,8 +139,7 @@ typedef struct _EAXCONTEXTPROPERTIES
 //       instead of:
 //              myBuffer = { 0, -200, ... , 0x00000003 };
 //
-typedef struct _EAXSOURCEPROPERTIES
-{
+typedef struct _EAXSOURCEPROPERTIES {
 	long          lDirect;                 // direct path level (at low and mid frequencies)
 	long          lDirectHF;               // relative direct path level at high frequencies
 	long          lRoom;                   // room effect level (at low and mid frequencies)
@@ -161,13 +158,12 @@ typedef struct _EAXSOURCEPROPERTIES
 	float         flRoomRolloffFactor;     // like DS3D flRolloffFactor but for room effect
 	float         flAirAbsorptionFactor;   // multiplies EAXREVERB_AIRABSORPTIONHF
 	unsigned long ulFlags;                 // modifies the behavior of properties
-} EAXSOURCEPROPERTIES, *LPEAXSOURCEPROPERTIES;
+} EAXSOURCEPROPERTIES, * LPEAXSOURCEPROPERTIES;
 
 // Use this structure for EAXSOURCE_ALLSENDPARAMETERS
 // - all levels are hundredths of decibels
 //
-typedef struct _EAXSOURCEALLSENDPROPERTIES
-{
+typedef struct _EAXSOURCEALLSENDPROPERTIES {
 	GUID          guidReceivingFXSlotID;
 	long          lSend;                   // send level (at low and mid frequencies)
 	long          lSendHF;                 // relative send level at high frequencies
@@ -177,71 +173,64 @@ typedef struct _EAXSOURCEALLSENDPROPERTIES
 	float         flOcclusionDirectRatio;
 	long          lExclusion;
 	float         flExclusionLFRatio;
-} EAXSOURCEALLSENDPROPERTIES, *LPEAXSOURCEALLSENDPROPERTIES;
+} EAXSOURCEALLSENDPROPERTIES, * LPEAXSOURCEALLSENDPROPERTIES;
 
 // Use this structure for EAXSOURCE_ACTIVEFXSLOTID
-typedef struct _EAXACTIVEFXSLOTS
-{
+typedef struct _EAXACTIVEFXSLOTS {
 	GUID          guidActiveFXSlots[EAX_MAX_ACTIVE_FXSLOTS];
-} EAXACTIVEFXSLOTS, *LPEAXACTIVEFXSLOTS;
+} EAXACTIVEFXSLOTS, * LPEAXACTIVEFXSLOTS;
 
 // Use this structure for EAXSOURCE_OBSTRUCTIONPARAMETERS property.
 #ifndef EAX_OBSTRUCTIONPROPERTIES_DEFINED
 #define EAX_OBSTRUCTIONPROPERTIES_DEFINED
-typedef struct _EAXOBSTRUCTIONPROPERTIES
-{
+typedef struct _EAXOBSTRUCTIONPROPERTIES {
 	long          lObstruction;
 	float         flObstructionLFRatio;
-} EAXOBSTRUCTIONPROPERTIES, *LPEAXOBSTRUCTIONPROPERTIES;
+} EAXOBSTRUCTIONPROPERTIES, * LPEAXOBSTRUCTIONPROPERTIES;
 #endif
 
 // Use this structure for EAXSOURCE_OCCLUSIONPARAMETERS property.
 #ifndef EAX_OCCLUSIONPROPERTIES_DEFINED
 #define EAX_OCCLUSIONPROPERTIES_DEFINED
-typedef struct _EAXOCCLUSIONPROPERTIES
-{
+typedef struct _EAXOCCLUSIONPROPERTIES {
 	long          lOcclusion;
 	float         flOcclusionLFRatio;
 	float         flOcclusionRoomRatio;
 	float         flOcclusionDirectRatio;
-} EAXOCCLUSIONPROPERTIES, *LPEAXOCCLUSIONPROPERTIES;
+} EAXOCCLUSIONPROPERTIES, * LPEAXOCCLUSIONPROPERTIES;
 #endif
 
 // Use this structure for EAXSOURCE_EXCLUSIONPARAMETERS property.
 #ifndef EAX_EXCLUSIONPROPERTIES_DEFINED
 #define EAX_EXCLUSIONPROPERTIES_DEFINED
-typedef struct _EAXEXCLUSIONPROPERTIES
-{
+typedef struct _EAXEXCLUSIONPROPERTIES {
 	long          lExclusion;
 	float         flExclusionLFRatio;
-} EAXEXCLUSIONPROPERTIES, *LPEAXEXCLUSIONPROPERTIES;
+} EAXEXCLUSIONPROPERTIES, * LPEAXEXCLUSIONPROPERTIES;
 #endif
 
 // Use this structure for EAXSOURCE_SENDPARAMETERS properties.
-typedef struct _EAXSOURCESENDPROPERTIES
-{
+typedef struct _EAXSOURCESENDPROPERTIES {
 	GUID          guidReceivingFXSlotID;
 	long          lSend;
 	long          lSendHF;
-} EAXSOURCESENDPROPERTIES, *LPEAXSOURCESENDPROPERTIES;
+} EAXSOURCESENDPROPERTIES, * LPEAXSOURCESENDPROPERTIES;
 
 // Use this structure for EAXSOURCE_OCCLUSIONSENDPARAMETERS
-typedef struct _EAXSOURCEOCCLUSIONSENDPROPERTIES
-{
+typedef struct _EAXSOURCEOCCLUSIONSENDPROPERTIES {
 	GUID          guidReceivingFXSlotID;
 	long          lOcclusion;
 	float         flOcclusionLFRatio;
 	float         flOcclusionRoomRatio;
 	float         flOcclusionDirectRatio;
-} EAXSOURCEOCCLUSIONSENDPROPERTIES, *LPEAXSOURCEOCCLUSIONSENDPROPERTIES;
+} EAXSOURCEOCCLUSIONSENDPROPERTIES, * LPEAXSOURCEOCCLUSIONSENDPROPERTIES;
 
 // Use this structure for EAXSOURCE_EXCLUSIONSENDPARAMETERS
-typedef struct _EAXSOURCEEXCLUSIONSENDPROPERTIES
-{
+typedef struct _EAXSOURCEEXCLUSIONSENDPROPERTIES {
 	GUID          guidReceivingFXSlotID;
 	long          lExclusion;
 	float         flExclusionLFRatio;
-} EAXSOURCEEXCLUSIONSENDPROPERTIES, *LPEAXSOURCEEXCLUSIONSENDPROPERTIES;
+} EAXSOURCEEXCLUSIONSENDPROPERTIES, * LPEAXSOURCEEXCLUSIONSENDPROPERTIES;
 
 // Use this structure for EAXFXSLOT_ALLPARAMETERS
 // - all levels are hundredths of decibels
@@ -255,19 +244,17 @@ typedef struct _EAXSOURCEEXCLUSIONSENDPROPERTIES
 //       instead of:
 //              myFXSlot = { EAX_REVERB_EFFECT, 0, 1, 0x00000001 };
 //
-typedef struct _EAXFXSLOTPROPERTIES
-{
+typedef struct _EAXFXSLOTPROPERTIES {
 	GUID          guidLoadEffect;
 	long          lVolume;
 	long          lLock;
 	unsigned long ulFlags;
-} EAXFXSLOTPROPERTIES, *LPEAXFXSLOTPROPERTIES;
+} EAXFXSLOTPROPERTIES, * LPEAXFXSLOTPROPERTIES;
 
 // Use this structure for EAXREVERB_REFLECTIONSPAN and EAXREVERB_REVERBPAN properties.
 #ifndef EAXVECTOR_DEFINED
 #define EAXVECTOR_DEFINED
-typedef struct _EAXVECTOR
-{
+typedef struct _EAXVECTOR {
 	float x;
 	float y;
 	float z;
@@ -306,8 +293,7 @@ DEFINE_GUID( EAXPROPERTYID_EAX40_Context,
 // For compatibility with future EAX versions:
 #define EAXPROPERTYID_EAX_Context EAXPROPERTYID_EAX40_Context
 
-typedef enum
-{
+typedef enum {
 	EAXCONTEXT_NONE = 0,
 	EAXCONTEXT_ALLPARAMETERS,
 	EAXCONTEXT_PRIMARYFXSLOTID,
@@ -383,8 +369,7 @@ DEFINE_GUID( EAXPROPERTYID_EAX40_FXSlot3,
 #define EAXPROPERTYID_EAX_FXSlot3 EAXPROPERTYID_EAX40_FXSlot3
 
 // FXSlot object properties
-typedef enum
-{
+typedef enum {
 	EAXFXSLOT_PARAMETER = 0, // range 0-0x40 reserved for loaded effect parameters
 	EAXFXSLOT_NONE = 0x10000,
 	EAXFXSLOT_ALLPARAMETERS,
@@ -411,8 +396,7 @@ typedef enum
 #define EAXFXSLOT_MINLOCK    0
 #define EAXFXSLOT_MAXLOCK    1
 
-enum
-{
+enum {
 	EAXFXSLOT_UNLOCKED = 0,
 	EAXFXSLOT_LOCKED = 1
 };
@@ -437,8 +421,7 @@ DEFINE_GUID( EAXPROPERTYID_EAX40_Source,
 #define EAXPROPERTYID_EAX_Source EAXPROPERTYID_EAX40_Source
 
 // Source object properties
-typedef enum
-{
+typedef enum {
 	EAXSOURCE_NONE,
 	EAXSOURCE_ALLPARAMETERS,
 	EAXSOURCE_OBSTRUCTIONPARAMETERS,
@@ -598,8 +581,7 @@ DEFINE_GUID( EAX_REVERB_EFFECT,
 			 0xb0, 0xb6, 0x83, 0x2e, 0xcc, 0x18, 0x22, 0xdf );
 
 // Reverb effect properties
-typedef enum
-{
+typedef enum {
 	EAXREVERB_NONE,
 	EAXREVERB_ALLPARAMETERS,
 	EAXREVERB_ENVIRONMENT,
@@ -637,8 +619,7 @@ typedef enum
 // used by EAXREVERB_ENVIRONMENT
 #ifndef EAX_ENVIRONMENTS_DEFINED
 #define EAX_ENVIRONMENTS_DEFINED
-enum
-{
+enum {
 	EAX_ENVIRONMENT_GENERIC,
 	EAX_ENVIRONMENT_PADDEDCELL,
 	EAX_ENVIRONMENT_ROOM,
@@ -707,8 +688,7 @@ enum
 //       If you want to save and load presets in binary form, you
 //       should define your own structure to insure future compatibility.
 //
-typedef struct _EAXREVERBPROPERTIES
-{
+typedef struct _EAXREVERBPROPERTIES {
 	unsigned long ulEnvironment;   // sets all reverb properties
 	float flEnvironmentSize;       // environment size in meters
 	float flEnvironmentDiffusion;  // environment diffusion
@@ -733,7 +713,7 @@ typedef struct _EAXREVERBPROPERTIES
 	float flLFReference;           // reference low frequency
 	float flRoomRolloffFactor;     // like DS3D flRolloffFactor but for room effect
 	unsigned long ulFlags;         // modifies the behavior of properties
-} EAXREVERBPROPERTIES, *LPEAXREVERBPROPERTIES;
+} EAXREVERBPROPERTIES, * LPEAXREVERBPROPERTIES;
 
 // Property ranges and defaults:
 #define EAXREVERB_MINENVIRONMENT                0
@@ -854,8 +834,7 @@ DEFINE_GUID( EAX_AGCCOMPRESSOR_EFFECT,
 			 0x92, 0x7f, 0x3, 0xaa, 0xbd, 0xa0, 0xc5, 0x60 );
 
 // AGC Compressor properties
-typedef enum
-{
+typedef enum {
 	EAXAGCCOMPRESSOR_NONE,
 	EAXAGCCOMPRESSOR_ALLPARAMETERS,
 	EAXAGCCOMPRESSOR_ONOFF
@@ -868,10 +847,9 @@ typedef enum
                                                  EAXAGCCOMPRESSOR_IMMEDIATE)
 
 // Use this structure for EAXAGCCOMPRESSOR_ALLPARAMETERS
-typedef struct _EAXAGCCOMPRESSORPROPERTIES
-{
+typedef struct _EAXAGCCOMPRESSORPROPERTIES {
 	unsigned long ulOnOff;   // Switch Compressor on or off
-} EAXAGCCOMPRESSORPROPERTIES, *LPEAXAGCCOMPRESSORPROPERTIES;
+} EAXAGCCOMPRESSORPROPERTIES, * LPEAXAGCCOMPRESSORPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -893,8 +871,7 @@ DEFINE_GUID( EAX_AUTOWAH_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Autowah properties
-typedef enum
-{
+typedef enum {
 	EAXAUTOWAH_NONE,
 	EAXAUTOWAH_ALLPARAMETERS,
 	EAXAUTOWAH_ATTACKTIME,
@@ -910,13 +887,12 @@ typedef enum
                                            EAXAUTOWAH_IMMEDIATE)
 
 // Use this structure for EAXAUTOWAH_ALLPARAMETERS
-typedef struct _EAXAUTOWAHPROPERTIES
-{
+typedef struct _EAXAUTOWAHPROPERTIES {
 	float   flAttackTime;                // Attack time (seconds)
 	float   flReleaseTime;          // Release time (seconds)
 	long    lResonance;             // Resonance (mB)
 	long    lPeakLevel;             // Peak level (mB)
-} EAXAUTOWAHPROPERTIES, *LPEAXAUTOWAHPROPERTIES;
+} EAXAUTOWAHPROPERTIES, * LPEAXAUTOWAHPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -952,8 +928,7 @@ DEFINE_GUID( EAX_CHORUS_EFFECT,
 
 
 // Chorus properties
-typedef enum
-{
+typedef enum {
 	EAXCHORUS_NONE,
 	EAXCHORUS_ALLPARAMETERS,
 	EAXCHORUS_WAVEFORM,
@@ -971,22 +946,20 @@ typedef enum
                                           EAXCHORUS_IMMEDIATE)
 
 // used by EAXCHORUS_WAVEFORM
-enum
-{
+enum {
 	EAX_CHORUS_SINUSOID,
 	EAX_CHORUS_TRIANGLE
 };
 
 // Use this structure for EAXCHORUS_ALLPARAMETERS
-typedef struct _EAXCHORUSPROPERTIES
-{
+typedef struct _EAXCHORUSPROPERTIES {
 	unsigned long   ulWaveform;      // Waveform selector - see enum above
 	long            lPhase;         // Phase (Degrees)
 	float           flRate;         // Rate (Hz)
 	float           flDepth;        // Depth (0 to 1)
 	float           flFeedback;     // Feedback (-1 to 1)
 	float           flDelay;        // Delay (seconds)
-} EAXCHORUSPROPERTIES, *LPEAXCHORUSPROPERTIES;
+} EAXCHORUSPROPERTIES, * LPEAXCHORUSPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1029,8 +1002,7 @@ DEFINE_GUID( EAX_DISTORTION_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Distortion properties
-typedef enum
-{
+typedef enum {
 	EAXDISTORTION_NONE,
 	EAXDISTORTION_ALLPARAMETERS,
 	EAXDISTORTION_EDGE,
@@ -1047,14 +1019,13 @@ typedef enum
                                               EAXDISTORTION_IMMEDIATE)
 
 // Use this structure for EAXDISTORTION_ALLPARAMETERS
-typedef struct _EAXDISTORTIONPROPERTIES
-{
+typedef struct _EAXDISTORTIONPROPERTIES {
 	float   flEdge;             // Controls the shape of the distortion (0 to 1)
 	long    lGain;              // Controls the post distortion gain (mB)
 	float   flLowPassCutOff;    // Controls the cut-off of the filter pre-distortion (Hz)
 	float   flEQCenter;         // Controls the center frequency of the EQ post-distortion (Hz)
 	float   flEQBandwidth;      // Controls the bandwidth of the EQ post-distortion (Hz)
-} EAXDISTORTIONPROPERTIES, *LPEAXDISTORTIONPROPERTIES;
+} EAXDISTORTIONPROPERTIES, * LPEAXDISTORTIONPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1093,8 +1064,7 @@ DEFINE_GUID( EAX_ECHO_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Echo properties
-typedef enum
-{
+typedef enum {
 	EAXECHO_NONE,
 	EAXECHO_ALLPARAMETERS,
 	EAXECHO_DELAY,
@@ -1111,14 +1081,13 @@ typedef enum
                                         EAXECHO_IMMEDIATE)
 
 // Use this structure for EAXECHO_ALLPARAMETERS
-typedef struct _EAXECHOPROPERTIES
-{
+typedef struct _EAXECHOPROPERTIES {
 	float   flDelay;            // Controls the initial delay time (seconds)
 	float   flLRDelay;          // Controls the delay time between the first and second taps (seconds)
 	float   flDamping;          // Controls a low-pass filter that dampens the echoes (0 to 1)
 	float   flFeedback;         // Controls the duration of echo repetition (0 to 1)
 	float   flSpread;           // Controls the left-right spread of the echoes
-} EAXECHOPROPERTIES, *LPEAXECHOPROPERTIES;
+} EAXECHOPROPERTIES, * LPEAXECHOPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1158,8 +1127,7 @@ DEFINE_GUID( EAX_EQUALIZER_EFFECT,
 
 
 // Equalizer properties
-typedef enum
-{
+typedef enum {
 	EAXEQUALIZER_NONE,
 	EAXEQUALIZER_ALLPARAMETERS,
 	EAXEQUALIZER_LOWGAIN,
@@ -1181,8 +1149,7 @@ typedef enum
                                              EAXEQUALIZER_IMMEDIATE)
 
 // Use this structure for EAXEQUALIZER_ALLPARAMETERS
-typedef struct _EAXEQUALIZERPROPERTIES
-{
+typedef struct _EAXEQUALIZERPROPERTIES {
 	long    lLowGain;           // (mB)
 	float   flLowCutOff;        // (Hz)
 	long    lMid1Gain;          // (mB)
@@ -1193,7 +1160,7 @@ typedef struct _EAXEQUALIZERPROPERTIES
 	float   flMid2Width;        // (octaves)
 	long    lHighGain;          // (mB)
 	float   flHighCutOff;       // (Hz)
-} EAXEQUALIZERPROPERTIES, *LPEAXEQUALIZERPROPERTIES;
+} EAXEQUALIZERPROPERTIES, * LPEAXEQUALIZERPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1252,8 +1219,7 @@ DEFINE_GUID( EAX_FLANGER_EFFECT,
 			 0x9b, 0x1e, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Flanger properties
-typedef enum
-{
+typedef enum {
 	EAXFLANGER_NONE,
 	EAXFLANGER_ALLPARAMETERS,
 	EAXFLANGER_WAVEFORM,
@@ -1271,22 +1237,20 @@ typedef enum
                                            EAXFLANGER_IMMEDIATE)
 
 // used by EAXFLANGER_WAVEFORM
-enum
-{
+enum {
 	EAX_FLANGER_SINUSOID,
 	EAX_FLANGER_TRIANGLE
 };
 
 // Use this structure for EAXFLANGER_ALLPARAMETERS
-typedef struct _EAXFLANGERPROPERTIES
-{
+typedef struct _EAXFLANGERPROPERTIES {
 	unsigned long   ulWaveform;  // Waveform selector - see enum above
 	long            lPhase;     // Phase (Degrees)
 	float           flRate;     // Rate (Hz)
 	float           flDepth;    // Depth (0 to 1)
 	float           flFeedback; // Feedback (0 to 1)
 	float           flDelay;    // Delay (seconds)
-} EAXFLANGERPROPERTIES, *LPEAXFLANGERPROPERTIES;
+} EAXFLANGERPROPERTIES, * LPEAXFLANGERPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1329,8 +1293,7 @@ DEFINE_GUID( EAX_FREQUENCYSHIFTER_EFFECT,
 			 0x93, 0x9d, 0x0, 0xc0, 0xf0, 0x2d, 0xd6, 0xf0 );
 
 // Frequency Shifter properties
-typedef enum
-{
+typedef enum {
 	EAXFREQUENCYSHIFTER_NONE,
 	EAXFREQUENCYSHIFTER_ALLPARAMETERS,
 	EAXFREQUENCYSHIFTER_FREQUENCY,
@@ -1345,20 +1308,18 @@ typedef enum
                                                     EAXFREQUENCYSHIFTER_IMMEDIATE)
 
 // used by EAXFREQUENCYSHIFTER_LEFTDIRECTION and EAXFREQUENCYSHIFTER_RIGHTDIRECTION
-enum
-{
+enum {
 	EAX_FREQUENCYSHIFTER_DOWN,
 	EAX_FREQUENCYSHIFTER_UP,
 	EAX_FREQUENCYSHIFTER_OFF
 };
 
 // Use this structure for EAXFREQUENCYSHIFTER_ALLPARAMETERS
-typedef struct _EAXFREQUENCYSHIFTERPROPERTIES
-{
+typedef struct _EAXFREQUENCYSHIFTERPROPERTIES {
 	float           flFrequency;        // (Hz)
 	unsigned long   ulLeftDirection;     // see enum above
 	unsigned long   ulRightDirection;    // see enum above
-} EAXFREQUENCYSHIFTERPROPERTIES, *LPEAXFREQUENCYSHIFTERPROPERTIES;
+} EAXFREQUENCYSHIFTERPROPERTIES, * LPEAXFREQUENCYSHIFTERPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1389,8 +1350,7 @@ DEFINE_GUID( EAX_VOCALMORPHER_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Vocal Morpher properties
-typedef enum
-{
+typedef enum {
 	EAXVOCALMORPHER_NONE,
 	EAXVOCALMORPHER_ALLPARAMETERS,
 	EAXVOCALMORPHER_PHONEMEA,
@@ -1408,30 +1368,27 @@ typedef enum
                                                 EAXVOCALMORPHER_IMMEDIATE)
 
 // used by EAXVOCALMORPHER_PHONEMEA and EAXVOCALMORPHER_PHONEMEB
-enum
-{
+enum {
 	A, E, I, O, U, AA, AE, AH, AO, EH, ER, IH, IY, UH, UW, B, D, F, G,
 	J, K, L, M, N, P, R, S, T, V, Z
 };
 
 // used by EAXVOCALMORPHER_WAVEFORM
-enum
-{
+enum {
 	EAX_VOCALMORPHER_SINUSOID,
 	EAX_VOCALMORPHER_TRIANGLE,
 	EAX_VOCALMORPHER_SAWTOOTH
 };
 
 // Use this structure for EAXVOCALMORPHER_ALLPARAMETERS
-typedef struct _EAXVOCALMORPHERPROPERTIES
-{
+typedef struct _EAXVOCALMORPHERPROPERTIES {
 	unsigned long   ulPhonemeA;              // see enum above
 	long            lPhonemeACoarseTuning;  // (semitones)
 	unsigned long   ulPhonemeB;              // see enum above
 	long            lPhonemeBCoarseTuning;  // (semitones)
 	unsigned long   ulWaveform;              // Waveform selector - see enum above
 	float           flRate;                 // (Hz)
-} EAXVOCALMORPHERPROPERTIES, *LPEAXVOCALMORPHERPROPERTIES;
+} EAXVOCALMORPHERPROPERTIES, * LPEAXVOCALMORPHERPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1474,8 +1431,7 @@ DEFINE_GUID( EAX_PITCHSHIFTER_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Pitch Shifter properties
-typedef enum
-{
+typedef enum {
 	EAXPITCHSHIFTER_NONE,
 	EAXPITCHSHIFTER_ALLPARAMETERS,
 	EAXPITCHSHIFTER_COARSETUNE,
@@ -1489,11 +1445,10 @@ typedef enum
                                                 EAXPITCHSHIFTER_IMMEDIATE)
 
 // Use this structure for EAXPITCHSHIFTER_ALLPARAMETERS
-typedef struct _EAXPITCHSHIFTERPROPERTIES
-{
+typedef struct _EAXPITCHSHIFTERPROPERTIES {
 	long    lCoarseTune;    // Amount of pitch shift (semitones)
 	long    lFineTune;      // Amount of pitch shift (cents)
-} EAXPITCHSHIFTERPROPERTIES, *LPEAXPITCHSHIFTERPROPERTIES;
+} EAXPITCHSHIFTERPROPERTIES, * LPEAXPITCHSHIFTERPROPERTIES;
 
 // Property ranges and defaults:
 
@@ -1520,8 +1475,7 @@ DEFINE_GUID( EAX_RINGMODULATOR_EFFECT,
 			 0x88, 0xdd, 0x0, 0xa0, 0x24, 0xd1, 0x3c, 0xe1 );
 
 // Ring Modulator properties
-typedef enum
-{
+typedef enum {
 	EAXRINGMODULATOR_NONE,
 	EAXRINGMODULATOR_ALLPARAMETERS,
 	EAXRINGMODULATOR_FREQUENCY,
@@ -1536,20 +1490,18 @@ typedef enum
                                                  EAXRINGMODULATOR_IMMEDIATE)
 
 // used by EAXRINGMODULATOR_WAVEFORM
-enum
-{
+enum {
 	EAX_RINGMODULATOR_SINUSOID,
 	EAX_RINGMODULATOR_SAWTOOTH,
 	EAX_RINGMODULATOR_SQUARE
 };
 
 // Use this structure for EAXRINGMODULATOR_ALLPARAMETERS
-typedef struct _EAXRINGMODULATORPROPERTIES
-{
+typedef struct _EAXRINGMODULATORPROPERTIES {
 	float           flFrequency;        // Frequency of modulation (Hz)
 	float           flHighPassCutOff;   // Cut-off frequency of high-pass filter (Hz)
 	unsigned long   ulWaveform;          // Waveform selector - see enum above
-} EAXRINGMODULATORPROPERTIES, *LPEAXRINGMODULATORPROPERTIES;
+} EAXRINGMODULATORPROPERTIES, * LPEAXRINGMODULATORPROPERTIES;
 
 // Property ranges and defaults:
 

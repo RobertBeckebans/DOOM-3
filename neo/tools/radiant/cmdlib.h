@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -37,18 +38,17 @@ If you have questions concerning this license or the applicable additional terms
 #include <time.h>
 #include <stdarg.h>
 
-
-int		LoadFile( const char* filename, void** bufferptr );
-void 	DefaultExtension( char* path, char* extension );
-void 	DefaultPath( char* path, char* basepath );
-void 	StripFilename( char* path );
-void 	StripExtension( char* path );
+int	 LoadFile( const char* filename, void** bufferptr );
+void DefaultExtension( char* path, char* extension );
+void DefaultPath( char* path, char* basepath );
+void StripFilename( char* path );
+void StripExtension( char* path );
 
 // error and printf functions
-typedef void ( PFN_ERR )( const char* pFormat, ... );
-typedef void ( PFN_PRINTF )( const char* pFormat, ... );
-typedef void ( PFN_ERR_NUM )( int nNum, const char* pFormat, ... );
-typedef void ( PFN_PRINTF_NUM )( int nNum, const char* pFormat, ... );
+typedef void( PFN_ERR )( const char* pFormat, ... );
+typedef void( PFN_PRINTF )( const char* pFormat, ... );
+typedef void( PFN_ERR_NUM )( int nNum, const char* pFormat, ... );
+typedef void( PFN_PRINTF_NUM )( int nNum, const char* pFormat, ... );
 
 void Error( const char* pFormat, ... );
 void Printf( const char* pFormat, ... );

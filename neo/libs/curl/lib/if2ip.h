@@ -32,17 +32,14 @@
 #endif
 #ifdef __INTERIX
 /* Nedelcho Stanev's work-around for SFU 3.0 */
-struct ifreq
-{
+struct ifreq {
 #define IFNAMSIZ 16
 #define IFHWADDRLEN 6
-	union
-	{
+	union {
 		char ifrn_name[IFNAMSIZ]; /* if name, e.g. "en0" */
 	} ifr_ifrn;
 
-	union
-	{
+	union {
 		struct sockaddr ifru_addr;
 		struct sockaddr ifru_broadaddr;
 		struct sockaddr ifru_netmask;

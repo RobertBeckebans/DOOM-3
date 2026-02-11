@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -112,97 +113,97 @@ const idEventDef EV_Thread_DrawText( "drawText", "svfvdf" );
 const idEventDef EV_Thread_InfluenceActive( "influenceActive", NULL, 'd' );
 
 CLASS_DECLARATION( idClass, idThread )
-EVENT( EV_Thread_Execute,				idThread::Event_Execute )
-EVENT( EV_Thread_TerminateThread,		idThread::Event_TerminateThread )
-EVENT( EV_Thread_Pause,					idThread::Event_Pause )
-EVENT( EV_Thread_Wait,					idThread::Event_Wait )
-EVENT( EV_Thread_WaitFrame,				idThread::Event_WaitFrame )
-EVENT( EV_Thread_WaitFor,				idThread::Event_WaitFor )
-EVENT( EV_Thread_WaitForThread,			idThread::Event_WaitForThread )
-EVENT( EV_Thread_Print,					idThread::Event_Print )
-EVENT( EV_Thread_PrintLn,				idThread::Event_PrintLn )
-EVENT( EV_Thread_Say,					idThread::Event_Say )
-EVENT( EV_Thread_Assert,				idThread::Event_Assert )
-EVENT( EV_Thread_Trigger,				idThread::Event_Trigger )
-EVENT( EV_Thread_SetCvar,				idThread::Event_SetCvar )
-EVENT( EV_Thread_GetCvar,				idThread::Event_GetCvar )
-EVENT( EV_Thread_Random,				idThread::Event_Random )
-EVENT( EV_Thread_GetTime,				idThread::Event_GetTime )
-EVENT( EV_Thread_KillThread,			idThread::Event_KillThread )
-EVENT( EV_Thread_SetThreadName,			idThread::Event_SetThreadName )
-EVENT( EV_Thread_GetEntity,				idThread::Event_GetEntity )
-EVENT( EV_Thread_Spawn,					idThread::Event_Spawn )
-EVENT( EV_Thread_CopySpawnArgs,			idThread::Event_CopySpawnArgs )
-EVENT( EV_Thread_SetSpawnArg,			idThread::Event_SetSpawnArg )
-EVENT( EV_Thread_SpawnString,			idThread::Event_SpawnString )
-EVENT( EV_Thread_SpawnFloat,			idThread::Event_SpawnFloat )
-EVENT( EV_Thread_SpawnVector,			idThread::Event_SpawnVector )
-EVENT( EV_Thread_ClearPersistantArgs,	idThread::Event_ClearPersistantArgs )
-EVENT( EV_Thread_SetPersistantArg,		idThread::Event_SetPersistantArg )
-EVENT( EV_Thread_GetPersistantString,	idThread::Event_GetPersistantString )
-EVENT( EV_Thread_GetPersistantFloat,	idThread::Event_GetPersistantFloat )
-EVENT( EV_Thread_GetPersistantVector,	idThread::Event_GetPersistantVector )
-EVENT( EV_Thread_AngToForward,			idThread::Event_AngToForward )
-EVENT( EV_Thread_AngToRight,			idThread::Event_AngToRight )
-EVENT( EV_Thread_AngToUp,				idThread::Event_AngToUp )
-EVENT( EV_Thread_Sine,					idThread::Event_GetSine )
-EVENT( EV_Thread_Cosine,				idThread::Event_GetCosine )
-EVENT( EV_Thread_SquareRoot,			idThread::Event_GetSquareRoot )
-EVENT( EV_Thread_Normalize,				idThread::Event_VecNormalize )
-EVENT( EV_Thread_VecLength,				idThread::Event_VecLength )
-EVENT( EV_Thread_VecDotProduct,			idThread::Event_VecDotProduct )
-EVENT( EV_Thread_VecCrossProduct,		idThread::Event_VecCrossProduct )
-EVENT( EV_Thread_VecToAngles,			idThread::Event_VecToAngles )
-EVENT( EV_Thread_OnSignal,				idThread::Event_OnSignal )
-EVENT( EV_Thread_ClearSignal,			idThread::Event_ClearSignalThread )
-EVENT( EV_Thread_SetCamera,				idThread::Event_SetCamera )
-EVENT( EV_Thread_FirstPerson,			idThread::Event_FirstPerson )
-EVENT( EV_Thread_Trace,					idThread::Event_Trace )
-EVENT( EV_Thread_TracePoint,			idThread::Event_TracePoint )
-EVENT( EV_Thread_GetTraceFraction,		idThread::Event_GetTraceFraction )
-EVENT( EV_Thread_GetTraceEndPos,		idThread::Event_GetTraceEndPos )
-EVENT( EV_Thread_GetTraceNormal,		idThread::Event_GetTraceNormal )
-EVENT( EV_Thread_GetTraceEntity,		idThread::Event_GetTraceEntity )
-EVENT( EV_Thread_GetTraceJoint,			idThread::Event_GetTraceJoint )
-EVENT( EV_Thread_GetTraceBody,			idThread::Event_GetTraceBody )
-EVENT( EV_Thread_FadeIn,				idThread::Event_FadeIn )
-EVENT( EV_Thread_FadeOut,				idThread::Event_FadeOut )
-EVENT( EV_Thread_FadeTo,				idThread::Event_FadeTo )
-EVENT( EV_SetShaderParm,				idThread::Event_SetShaderParm )
-EVENT( EV_Thread_StartMusic,			idThread::Event_StartMusic )
-EVENT( EV_Thread_Warning,				idThread::Event_Warning )
-EVENT( EV_Thread_Error,					idThread::Event_Error )
-EVENT( EV_Thread_StrLen,				idThread::Event_StrLen )
-EVENT( EV_Thread_StrLeft,				idThread::Event_StrLeft )
-EVENT( EV_Thread_StrRight,				idThread::Event_StrRight )
-EVENT( EV_Thread_StrSkip,				idThread::Event_StrSkip )
-EVENT( EV_Thread_StrMid,				idThread::Event_StrMid )
-EVENT( EV_Thread_StrToFloat,			idThread::Event_StrToFloat )
-EVENT( EV_Thread_RadiusDamage,			idThread::Event_RadiusDamage )
-EVENT( EV_Thread_IsClient,				idThread::Event_IsClient )
-EVENT( EV_Thread_IsMultiplayer,			idThread::Event_IsMultiplayer )
-EVENT( EV_Thread_GetFrameTime,			idThread::Event_GetFrameTime )
-EVENT( EV_Thread_GetTicsPerSecond,		idThread::Event_GetTicsPerSecond )
-EVENT( EV_CacheSoundShader,				idThread::Event_CacheSoundShader )
-EVENT( EV_Thread_DebugLine,				idThread::Event_DebugLine )
-EVENT( EV_Thread_DebugArrow,			idThread::Event_DebugArrow )
-EVENT( EV_Thread_DebugCircle,			idThread::Event_DebugCircle )
-EVENT( EV_Thread_DebugBounds,			idThread::Event_DebugBounds )
-EVENT( EV_Thread_DrawText,				idThread::Event_DrawText )
-EVENT( EV_Thread_InfluenceActive,		idThread::Event_InfluenceActive )
+EVENT( EV_Thread_Execute, idThread::Event_Execute )
+EVENT( EV_Thread_TerminateThread, idThread::Event_TerminateThread )
+EVENT( EV_Thread_Pause, idThread::Event_Pause )
+EVENT( EV_Thread_Wait, idThread::Event_Wait )
+EVENT( EV_Thread_WaitFrame, idThread::Event_WaitFrame )
+EVENT( EV_Thread_WaitFor, idThread::Event_WaitFor )
+EVENT( EV_Thread_WaitForThread, idThread::Event_WaitForThread )
+EVENT( EV_Thread_Print, idThread::Event_Print )
+EVENT( EV_Thread_PrintLn, idThread::Event_PrintLn )
+EVENT( EV_Thread_Say, idThread::Event_Say )
+EVENT( EV_Thread_Assert, idThread::Event_Assert )
+EVENT( EV_Thread_Trigger, idThread::Event_Trigger )
+EVENT( EV_Thread_SetCvar, idThread::Event_SetCvar )
+EVENT( EV_Thread_GetCvar, idThread::Event_GetCvar )
+EVENT( EV_Thread_Random, idThread::Event_Random )
+EVENT( EV_Thread_GetTime, idThread::Event_GetTime )
+EVENT( EV_Thread_KillThread, idThread::Event_KillThread )
+EVENT( EV_Thread_SetThreadName, idThread::Event_SetThreadName )
+EVENT( EV_Thread_GetEntity, idThread::Event_GetEntity )
+EVENT( EV_Thread_Spawn, idThread::Event_Spawn )
+EVENT( EV_Thread_CopySpawnArgs, idThread::Event_CopySpawnArgs )
+EVENT( EV_Thread_SetSpawnArg, idThread::Event_SetSpawnArg )
+EVENT( EV_Thread_SpawnString, idThread::Event_SpawnString )
+EVENT( EV_Thread_SpawnFloat, idThread::Event_SpawnFloat )
+EVENT( EV_Thread_SpawnVector, idThread::Event_SpawnVector )
+EVENT( EV_Thread_ClearPersistantArgs, idThread::Event_ClearPersistantArgs )
+EVENT( EV_Thread_SetPersistantArg, idThread::Event_SetPersistantArg )
+EVENT( EV_Thread_GetPersistantString, idThread::Event_GetPersistantString )
+EVENT( EV_Thread_GetPersistantFloat, idThread::Event_GetPersistantFloat )
+EVENT( EV_Thread_GetPersistantVector, idThread::Event_GetPersistantVector )
+EVENT( EV_Thread_AngToForward, idThread::Event_AngToForward )
+EVENT( EV_Thread_AngToRight, idThread::Event_AngToRight )
+EVENT( EV_Thread_AngToUp, idThread::Event_AngToUp )
+EVENT( EV_Thread_Sine, idThread::Event_GetSine )
+EVENT( EV_Thread_Cosine, idThread::Event_GetCosine )
+EVENT( EV_Thread_SquareRoot, idThread::Event_GetSquareRoot )
+EVENT( EV_Thread_Normalize, idThread::Event_VecNormalize )
+EVENT( EV_Thread_VecLength, idThread::Event_VecLength )
+EVENT( EV_Thread_VecDotProduct, idThread::Event_VecDotProduct )
+EVENT( EV_Thread_VecCrossProduct, idThread::Event_VecCrossProduct )
+EVENT( EV_Thread_VecToAngles, idThread::Event_VecToAngles )
+EVENT( EV_Thread_OnSignal, idThread::Event_OnSignal )
+EVENT( EV_Thread_ClearSignal, idThread::Event_ClearSignalThread )
+EVENT( EV_Thread_SetCamera, idThread::Event_SetCamera )
+EVENT( EV_Thread_FirstPerson, idThread::Event_FirstPerson )
+EVENT( EV_Thread_Trace, idThread::Event_Trace )
+EVENT( EV_Thread_TracePoint, idThread::Event_TracePoint )
+EVENT( EV_Thread_GetTraceFraction, idThread::Event_GetTraceFraction )
+EVENT( EV_Thread_GetTraceEndPos, idThread::Event_GetTraceEndPos )
+EVENT( EV_Thread_GetTraceNormal, idThread::Event_GetTraceNormal )
+EVENT( EV_Thread_GetTraceEntity, idThread::Event_GetTraceEntity )
+EVENT( EV_Thread_GetTraceJoint, idThread::Event_GetTraceJoint )
+EVENT( EV_Thread_GetTraceBody, idThread::Event_GetTraceBody )
+EVENT( EV_Thread_FadeIn, idThread::Event_FadeIn )
+EVENT( EV_Thread_FadeOut, idThread::Event_FadeOut )
+EVENT( EV_Thread_FadeTo, idThread::Event_FadeTo )
+EVENT( EV_SetShaderParm, idThread::Event_SetShaderParm )
+EVENT( EV_Thread_StartMusic, idThread::Event_StartMusic )
+EVENT( EV_Thread_Warning, idThread::Event_Warning )
+EVENT( EV_Thread_Error, idThread::Event_Error )
+EVENT( EV_Thread_StrLen, idThread::Event_StrLen )
+EVENT( EV_Thread_StrLeft, idThread::Event_StrLeft )
+EVENT( EV_Thread_StrRight, idThread::Event_StrRight )
+EVENT( EV_Thread_StrSkip, idThread::Event_StrSkip )
+EVENT( EV_Thread_StrMid, idThread::Event_StrMid )
+EVENT( EV_Thread_StrToFloat, idThread::Event_StrToFloat )
+EVENT( EV_Thread_RadiusDamage, idThread::Event_RadiusDamage )
+EVENT( EV_Thread_IsClient, idThread::Event_IsClient )
+EVENT( EV_Thread_IsMultiplayer, idThread::Event_IsMultiplayer )
+EVENT( EV_Thread_GetFrameTime, idThread::Event_GetFrameTime )
+EVENT( EV_Thread_GetTicsPerSecond, idThread::Event_GetTicsPerSecond )
+EVENT( EV_CacheSoundShader, idThread::Event_CacheSoundShader )
+EVENT( EV_Thread_DebugLine, idThread::Event_DebugLine )
+EVENT( EV_Thread_DebugArrow, idThread::Event_DebugArrow )
+EVENT( EV_Thread_DebugCircle, idThread::Event_DebugCircle )
+EVENT( EV_Thread_DebugBounds, idThread::Event_DebugBounds )
+EVENT( EV_Thread_DrawText, idThread::Event_DrawText )
+EVENT( EV_Thread_InfluenceActive, idThread::Event_InfluenceActive )
 END_CLASS
 
-idThread*			idThread::currentThread = NULL;
-int					idThread::threadIndex = 0;
-idList<idThread*>	idThread::threadList;
-trace_t				idThread::trace;
+idThread*		  idThread::currentThread = NULL;
+int				  idThread::threadIndex	  = 0;
+idList<idThread*> idThread::threadList;
+trace_t			  idThread::trace;
 
 /*
 ================
 idThread::CurrentThread
 ================
 */
-idThread* idThread::CurrentThread()
+idThread*		  idThread::CurrentThread()
 {
 	return currentThread;
 }
@@ -214,12 +215,9 @@ idThread::CurrentThreadNum
 */
 int idThread::CurrentThreadNum()
 {
-	if( currentThread )
-	{
+	if( currentThread ) {
 		return currentThread->GetThreadNum();
-	}
-	else
-	{
+	} else {
 		return 0;
 	}
 }
@@ -231,8 +229,7 @@ idThread::BeginMultiFrameEvent
 */
 bool idThread::BeginMultiFrameEvent( idEntity* ent, const idEventDef* event )
 {
-	if( !currentThread )
-	{
+	if( !currentThread ) {
 		gameLocal.Error( "idThread::BeginMultiFrameEvent called without a current thread" );
 	}
 	return currentThread->interpreter.BeginMultiFrameEvent( ent, event );
@@ -245,8 +242,7 @@ idThread::EndMultiFrameEvent
 */
 void idThread::EndMultiFrameEvent( idEntity* ent, const idEventDef* event )
 {
-	if( !currentThread )
-	{
+	if( !currentThread ) {
 		gameLocal.Error( "idThread::EndMultiFrameEvent called without a current thread" );
 	}
 	currentThread->interpreter.EndMultiFrameEvent( ent, event );
@@ -261,8 +257,7 @@ idThread::idThread()
 {
 	Init();
 	SetThreadName( va( "thread_%d", threadIndex ) );
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: create thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 }
@@ -279,8 +274,7 @@ idThread::idThread( idEntity* self, const function_t* func )
 	Init();
 	SetThreadName( self->name );
 	interpreter.EnterObjectFunction( self, func, false );
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: create thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 }
@@ -297,8 +291,7 @@ idThread::idThread( const function_t* func )
 	Init();
 	SetThreadName( func->Name() );
 	interpreter.EnterFunction( func, false );
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: create thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 }
@@ -312,8 +305,7 @@ idThread::idThread( idInterpreter* source, const function_t* func, int args )
 {
 	Init();
 	interpreter.ThreadCall( source, func, args );
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: create thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 }
@@ -330,8 +322,7 @@ idThread::idThread( idInterpreter* source, idEntity* self, const function_t* fun
 	Init();
 	SetThreadName( self->name );
 	interpreter.ThreadCall( source, func, args );
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: create thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 }
@@ -343,27 +334,23 @@ idThread::~idThread
 */
 idThread::~idThread()
 {
-	idThread*	thread;
-	int			i;
-	int			n;
+	idThread* thread;
+	int		  i;
+	int		  n;
 
-	if( g_debugScript.GetBool() )
-	{
+	if( g_debugScript.GetBool() ) {
 		gameLocal.Printf( "%d: end thread (%d) '%s'\n", gameLocal.time, threadNum, threadName.c_str() );
 	}
 	threadList.Remove( this );
 	n = threadList.Num();
-	for( i = 0; i < n; i++ )
-	{
-		thread = threadList[ i ];
-		if( thread->WaitingOnThread() == this )
-		{
+	for( i = 0; i < n; i++ ) {
+		thread = threadList[i];
+		if( thread->WaitingOnThread() == this ) {
 			thread->ThreadCallback( this );
 		}
 	}
 
-	if( currentThread == this )
-	{
+	if( currentThread == this ) {
 		currentThread = NULL;
 	}
 }
@@ -385,7 +372,6 @@ idThread::Save
 */
 void idThread::Save( idSaveGame* savefile ) const
 {
-
 	// We will check on restore that threadNum is still the same,
 	//  threads should have been restored in the same order.
 	savefile->WriteInt( threadNum );
@@ -437,22 +423,19 @@ idThread::Init
 void idThread::Init()
 {
 	// create a unique threadNum
-	do
-	{
+	do {
 		threadIndex++;
-		if( threadIndex == 0 )
-		{
+		if( threadIndex == 0 ) {
 			threadIndex = 1;
 		}
-	}
-	while( GetThread( threadIndex ) );
+	} while( GetThread( threadIndex ) );
 
 	threadNum = threadIndex;
 	threadList.Append( this );
 
-	creationTime = gameLocal.time;
+	creationTime	= gameLocal.time;
 	lastExecuteTime = 0;
-	manualControl = false;
+	manualControl	= false;
 
 	ClearWaitFor();
 
@@ -466,16 +449,14 @@ idThread::GetThread
 */
 idThread* idThread::GetThread( int num )
 {
-	int			i;
-	int			n;
-	idThread*	thread;
+	int		  i;
+	int		  n;
+	idThread* thread;
 
 	n = threadList.Num();
-	for( i = 0; i < n; i++ )
-	{
-		thread = threadList[ i ];
-		if( thread->GetThreadNum() == num )
-		{
+	for( i = 0; i < n; i++ ) {
+		thread = threadList[i];
+		if( thread->GetThreadNum() == num ) {
 			return thread;
 		}
 	}
@@ -490,43 +471,34 @@ idThread::DisplayInfo
 */
 void idThread::DisplayInfo()
 {
-	gameLocal.Printf(
-		"%12i: '%s'\n"
-		"        File: %s(%d)\n"
-		"     Created: %d (%d ms ago)\n"
-		"      Status: ",
-		threadNum, threadName.c_str(),
-		interpreter.CurrentFile(), interpreter.CurrentLine(),
-		creationTime, gameLocal.time - creationTime );
+	gameLocal.Printf( "%12i: '%s'\n"
+					  "        File: %s(%d)\n"
+					  "     Created: %d (%d ms ago)\n"
+					  "      Status: ",
+		threadNum,
+		threadName.c_str(),
+		interpreter.CurrentFile(),
+		interpreter.CurrentLine(),
+		creationTime,
+		gameLocal.time - creationTime );
 
-	if( interpreter.threadDying )
-	{
+	if( interpreter.threadDying ) {
 		gameLocal.Printf( "Dying\n" );
-	}
-	else if( interpreter.doneProcessing )
-	{
-		gameLocal.Printf(
-			"Paused since %d (%d ms)\n"
-			"      Reason: ",  lastExecuteTime, gameLocal.time - lastExecuteTime );
-		if( waitingForThread )
-		{
+	} else if( interpreter.doneProcessing ) {
+		gameLocal.Printf( "Paused since %d (%d ms)\n"
+						  "      Reason: ",
+			lastExecuteTime,
+			gameLocal.time - lastExecuteTime );
+		if( waitingForThread ) {
 			gameLocal.Printf( "Waiting for thread #%3i '%s'\n", waitingForThread->GetThreadNum(), waitingForThread->GetThreadName() );
-		}
-		else if( ( waitingFor != ENTITYNUM_NONE ) && ( gameLocal.entities[ waitingFor ] ) )
-		{
-			gameLocal.Printf( "Waiting for entity #%3i '%s'\n", waitingFor, gameLocal.entities[ waitingFor ]->name.c_str() );
-		}
-		else if( waitingUntil )
-		{
+		} else if( ( waitingFor != ENTITYNUM_NONE ) && ( gameLocal.entities[waitingFor] ) ) {
+			gameLocal.Printf( "Waiting for entity #%3i '%s'\n", waitingFor, gameLocal.entities[waitingFor]->name.c_str() );
+		} else if( waitingUntil ) {
 			gameLocal.Printf( "Waiting until %d (%d ms total wait time)\n", waitingUntil, waitingUntil - lastExecuteTime );
-		}
-		else
-		{
+		} else {
 			gameLocal.Printf( "None\n" );
 		}
-	}
-	else
-	{
+	} else {
 		gameLocal.Printf( "Processing\n" );
 	}
 
@@ -542,14 +514,13 @@ idThread::ListThreads_f
 */
 void idThread::ListThreads_f( const idCmdArgs& args )
 {
-	int	i;
-	int	n;
+	int i;
+	int n;
 
 	n = threadList.Num();
-	for( i = 0; i < n; i++ )
-	{
-		//threadList[ i ]->DisplayInfo();
-		gameLocal.Printf( "%3i: %-20s : %s(%d)\n", threadList[ i ]->threadNum, threadList[ i ]->threadName.c_str(), threadList[ i ]->interpreter.CurrentFile(), threadList[ i ]->interpreter.CurrentLine() );
+	for( i = 0; i < n; i++ ) {
+		// threadList[ i ]->DisplayInfo();
+		gameLocal.Printf( "%3i: %-20s : %s(%d)\n", threadList[i]->threadNum, threadList[i]->threadName.c_str(), threadList[i]->interpreter.CurrentFile(), threadList[i]->interpreter.CurrentLine() );
 	}
 	gameLocal.Printf( "%d active threads\n\n", n );
 }
@@ -561,17 +532,16 @@ idThread::Restart
 */
 void idThread::Restart()
 {
-	int	i;
-	int	n;
+	int i;
+	int n;
 
 	// reset the threadIndex
 	threadIndex = 0;
 
 	currentThread = NULL;
-	n = threadList.Num();
-	for( i = n - 1; i >= 0; i-- )
-	{
-		delete threadList[ i ];
+	n			  = threadList.Num();
+	for( i = n - 1; i >= 0; i-- ) {
+		delete threadList[i];
 	}
 	threadList.Clear();
 
@@ -587,8 +557,7 @@ idThread::DelayedStart
 void idThread::DelayedStart( int delay )
 {
 	CancelEvents( &EV_Thread_Execute );
-	if( gameLocal.time <= 0 )
-	{
+	if( gameLocal.time <= 0 ) {
 		delay++;
 	}
 	PostEventMS( &EV_Thread_Execute, delay );
@@ -628,14 +597,12 @@ void idThread::ObjectMoveDone( int threadnum, idEntity* obj )
 {
 	idThread* thread;
 
-	if( !threadnum )
-	{
+	if( !threadnum ) {
 		return;
 	}
 
 	thread = GetThread( threadnum );
-	if( thread )
-	{
+	if( thread ) {
 		thread->ObjectMoveDone( obj );
 	}
 }
@@ -649,7 +616,7 @@ void idThread::End()
 {
 	// Tell thread to die.  It will exit on its own.
 	Pause();
-	interpreter.threadDying	= true;
+	interpreter.threadDying = true;
 }
 
 /*
@@ -662,27 +629,22 @@ void idThread::KillThread( const char* name )
 	int			i;
 	int			num;
 	int			len;
-	const char*	ptr;
+	const char* ptr;
 	idThread*	thread;
 
 	// see if the name uses a wild card
 	ptr = strchr( name, '*' );
-	if( ptr )
-	{
+	if( ptr ) {
 		len = ptr - name;
-	}
-	else
-	{
+	} else {
 		len = strlen( name );
 	}
 
 	// kill only those threads whose name matches name
 	num = threadList.Num();
-	for( i = 0; i < num; i++ )
-	{
-		thread = threadList[ i ];
-		if( !idStr::Cmpn( thread->GetThreadName(), name, len ) )
-		{
+	for( i = 0; i < num; i++ ) {
+		thread = threadList[i];
+		if( !idStr::Cmpn( thread->GetThreadName(), name, len ) ) {
 			thread->End();
 		}
 	}
@@ -698,8 +660,7 @@ void idThread::KillThread( int num )
 	idThread* thread;
 
 	thread = GetThread( num );
-	if( thread )
-	{
+	if( thread ) {
 		// Tell thread to die.  It will delete itself on it's own.
 		thread->End();
 	}
@@ -712,36 +673,28 @@ idThread::Execute
 */
 bool idThread::Execute()
 {
-	idThread*	oldThread;
-	bool		done;
+	idThread* oldThread;
+	bool	  done;
 
-	if( manualControl && ( waitingUntil > gameLocal.time ) )
-	{
+	if( manualControl && ( waitingUntil > gameLocal.time ) ) {
 		return false;
 	}
 
-	oldThread = currentThread;
+	oldThread	  = currentThread;
 	currentThread = this;
 
 	lastExecuteTime = gameLocal.time;
 	ClearWaitFor();
 	done = interpreter.Execute();
-	if( done )
-	{
+	if( done ) {
 		End();
-		if( interpreter.terminateOnExit )
-		{
+		if( interpreter.terminateOnExit ) {
 			PostEventMS( &EV_Remove, 0 );
 		}
-	}
-	else if( !manualControl )
-	{
-		if( waitingUntil > lastExecuteTime )
-		{
+	} else if( !manualControl ) {
+		if( waitingUntil > lastExecuteTime ) {
 			PostEventMS( &EV_Thread_Execute, waitingUntil - lastExecuteTime );
-		}
-		else if( interpreter.MultiFrameEventInProgress() )
-		{
+		} else if( interpreter.MultiFrameEventInProgress() ) {
 			PostEventMS( &EV_Thread_Execute, gameLocal.msec );
 		}
 	}
@@ -760,13 +713,11 @@ Checks if thread is still waiting for some event to occur.
 */
 bool idThread::IsWaiting()
 {
-	if( waitingForThread || ( waitingFor != ENTITYNUM_NONE ) )
-	{
+	if( waitingForThread || ( waitingFor != ENTITYNUM_NONE ) ) {
 		return true;
 	}
 
-	if( waitingUntil && ( waitingUntil > gameLocal.time ) )
-	{
+	if( waitingUntil && ( waitingUntil > gameLocal.time ) ) {
 		return true;
 	}
 
@@ -807,9 +758,9 @@ idThread::ClearWaitFor
 */
 void idThread::ClearWaitFor()
 {
-	waitingFor			= ENTITYNUM_NONE;
-	waitingForThread	= NULL;
-	waitingUntil		= 0;
+	waitingFor		 = ENTITYNUM_NONE;
+	waitingForThread = NULL;
+	waitingUntil	 = 0;
 }
 
 /*
@@ -832,8 +783,7 @@ void idThread::ObjectMoveDone( idEntity* obj )
 {
 	assert( obj );
 
-	if( IsWaitingFor( obj ) )
-	{
+	if( IsWaitingFor( obj ) ) {
 		ClearWaitFor();
 		DelayedStart( 0 );
 	}
@@ -846,13 +796,11 @@ idThread::ThreadCallback
 */
 void idThread::ThreadCallback( idThread* thread )
 {
-	if( interpreter.threadDying )
-	{
+	if( interpreter.threadDying ) {
 		return;
 	}
 
-	if( thread == waitingForThread )
-	{
+	if( thread == waitingForThread ) {
 		ClearWaitFor();
 		DelayedStart( 0 );
 	}
@@ -875,8 +823,8 @@ idThread::Error
 */
 void idThread::Error( const char* fmt, ... ) const
 {
-	va_list	argptr;
-	char	text[ 1024 ];
+	va_list argptr;
+	char	text[1024];
 
 	va_start( argptr, fmt );
 	vsprintf( text, fmt, argptr );
@@ -892,8 +840,8 @@ idThread::Warning
 */
 void idThread::Warning( const char* fmt, ... ) const
 {
-	va_list	argptr;
-	char	text[ 1024 ];
+	va_list argptr;
+	char	text[1024];
 
 	va_start( argptr, fmt );
 	vsprintf( text, fmt, argptr );
@@ -1007,8 +955,7 @@ void idThread::WaitFrame()
 
 	// manual control threads don't set waitingUntil so that they can be run again
 	// that frame if necessary.
-	if( !manualControl )
-	{
+	if( !manualControl ) {
 		waitingUntil = gameLocal.time + gameLocal.msec;
 	}
 }
@@ -1069,11 +1016,9 @@ idThread::Event_WaitFor
 */
 void idThread::Event_WaitFor( idEntity* ent )
 {
-	if( ent && ent->RespondsTo( EV_Thread_SetCallback ) )
-	{
+	if( ent && ent->RespondsTo( EV_Thread_SetCallback ) ) {
 		ent->ProcessEvent( &EV_Thread_SetCallback );
-		if( gameLocal.program.GetReturnedInteger() )
-		{
+		if( gameLocal.program.GetReturnedInteger() ) {
 			Pause();
 			waitingFor = ent->entityNumber;
 		}
@@ -1090,16 +1035,12 @@ void idThread::Event_WaitForThread( int num )
 	idThread* thread;
 
 	thread = GetThread( num );
-	if( !thread )
-	{
-		if( g_debugScript.GetBool() )
-		{
+	if( !thread ) {
+		if( g_debugScript.GetBool() ) {
 			// just print a warning and continue executing
 			Warning( "Thread %d not running", num );
 		}
-	}
-	else
-	{
+	} else {
 		Pause();
 		waitingForThread = thread;
 	}
@@ -1152,8 +1093,7 @@ idThread::Event_Trigger
 */
 void idThread::Event_Trigger( idEntity* ent )
 {
-	if( ent )
-	{
+	if( ent ) {
 		ent->Signal( SIG_TRIGGER );
 		ent->ProcessEvent( &EV_Activate, gameLocal.GetLocalPlayer() );
 		ent->TriggerGuis();
@@ -1220,22 +1160,18 @@ idThread::Event_GetEntity
 */
 void idThread::Event_GetEntity( const char* name )
 {
-	int			entnum;
-	idEntity*	ent;
+	int		  entnum;
+	idEntity* ent;
 
 	assert( name );
 
-	if( name[ 0 ] == '*' )
-	{
-		entnum = atoi( &name[ 1 ] );
-		if( ( entnum < 0 ) || ( entnum >= MAX_GENTITIES ) )
-		{
+	if( name[0] == '*' ) {
+		entnum = atoi( &name[1] );
+		if( ( entnum < 0 ) || ( entnum >= MAX_GENTITIES ) ) {
 			Error( "Entity number in string out of range." );
 		}
-		ReturnEntity( gameLocal.entities[ entnum ] );
-	}
-	else
-	{
+		ReturnEntity( gameLocal.entities[entnum] );
+	} else {
 		ent = gameLocal.FindEntity( name );
 		ReturnEntity( ent );
 	}
@@ -1324,7 +1260,6 @@ void idThread::Event_ClearPersistantArgs()
 {
 	gameLocal.persistentLevelInfo.Clear();
 }
-
 
 /*
 ================
@@ -1507,19 +1442,16 @@ void idThread::Event_OnSignal( int signal, idEntity* ent, const char* func )
 
 	assert( func );
 
-	if( !ent )
-	{
+	if( !ent ) {
 		Error( "Entity not found" );
 	}
 
-	if( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) )
-	{
+	if( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) ) {
 		Error( "Signal out of range" );
 	}
 
 	function = gameLocal.program.FindFunction( func );
-	if( !function )
-	{
+	if( !function ) {
 		Error( "Function '%s' not found", func );
 	}
 
@@ -1533,13 +1465,11 @@ idThread::Event_ClearSignalThread
 */
 void idThread::Event_ClearSignalThread( int signal, idEntity* ent )
 {
-	if( !ent )
-	{
+	if( !ent ) {
 		Error( "Entity not found" );
 	}
 
-	if( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) )
-	{
+	if( ( signal < 0 ) || ( signal >= NUM_SIGNALS ) ) {
 		Error( "Signal out of range" );
 	}
 
@@ -1553,14 +1483,12 @@ idThread::Event_SetCamera
 */
 void idThread::Event_SetCamera( idEntity* ent )
 {
-	if( !ent )
-	{
+	if( !ent ) {
 		Error( "Entity not found" );
 		return;
 	}
 
-	if( !ent->IsType( idCamera::Type ) )
-	{
+	if( !ent->IsType( idCamera::Type ) ) {
 		Error( "Entity is not a camera" );
 		return;
 	}
@@ -1585,12 +1513,9 @@ idThread::Event_Trace
 */
 void idThread::Event_Trace( const idVec3& start, const idVec3& end, const idVec3& mins, const idVec3& maxs, int contents_mask, idEntity* passEntity )
 {
-	if( mins == vec3_origin && maxs == vec3_origin )
-	{
+	if( mins == vec3_origin && maxs == vec3_origin ) {
 		gameLocal.clip.TracePoint( trace, start, end, contents_mask, passEntity );
-	}
-	else
-	{
+	} else {
 		gameLocal.clip.TraceBounds( trace, start, end, idBounds( mins, maxs ), contents_mask, passEntity );
 	}
 	ReturnFloat( trace.fraction );
@@ -1634,12 +1559,9 @@ idThread::Event_GetTraceNormal
 */
 void idThread::Event_GetTraceNormal()
 {
-	if( trace.fraction < 1.0f )
-	{
+	if( trace.fraction < 1.0f ) {
 		ReturnVector( trace.c.normal );
-	}
-	else
-	{
+	} else {
 		ReturnVector( vec3_origin );
 	}
 }
@@ -1651,12 +1573,9 @@ idThread::Event_GetTraceEntity
 */
 void idThread::Event_GetTraceEntity()
 {
-	if( trace.fraction < 1.0f )
-	{
-		ReturnEntity( gameLocal.entities[ trace.c.entityNum ] );
-	}
-	else
-	{
+	if( trace.fraction < 1.0f ) {
+		ReturnEntity( gameLocal.entities[trace.c.entityNum] );
+	} else {
 		ReturnEntity( ( idEntity* )NULL );
 	}
 }
@@ -1668,11 +1587,9 @@ idThread::Event_GetTraceJoint
 */
 void idThread::Event_GetTraceJoint()
 {
-	if( trace.fraction < 1.0f && trace.c.id < 0 )
-	{
-		idAFEntity_Base* af = static_cast<idAFEntity_Base*>( gameLocal.entities[ trace.c.entityNum ] );
-		if( af && af->IsType( idAFEntity_Base::Type ) && af->IsActiveAF() )
-		{
+	if( trace.fraction < 1.0f && trace.c.id < 0 ) {
+		idAFEntity_Base* af = static_cast<idAFEntity_Base*>( gameLocal.entities[trace.c.entityNum] );
+		if( af && af->IsType( idAFEntity_Base::Type ) && af->IsActiveAF() ) {
 			ReturnString( af->GetAnimator()->GetJointName( CLIPMODEL_ID_TO_JOINT_HANDLE( trace.c.id ) ) );
 			return;
 		}
@@ -1687,15 +1604,12 @@ idThread::Event_GetTraceBody
 */
 void idThread::Event_GetTraceBody()
 {
-	if( trace.fraction < 1.0f && trace.c.id < 0 )
-	{
-		idAFEntity_Base* af = static_cast<idAFEntity_Base*>( gameLocal.entities[ trace.c.entityNum ] );
-		if( af && af->IsType( idAFEntity_Base::Type ) && af->IsActiveAF() )
-		{
-			int bodyId = af->BodyForClipModelId( trace.c.id );
-			idAFBody* body = af->GetAFPhysics()->GetBody( bodyId );
-			if( body )
-			{
+	if( trace.fraction < 1.0f && trace.c.id < 0 ) {
+		idAFEntity_Base* af = static_cast<idAFEntity_Base*>( gameLocal.entities[trace.c.entityNum] );
+		if( af && af->IsType( idAFEntity_Base::Type ) && af->IsActiveAF() ) {
+			int		  bodyId = af->BodyForClipModelId( trace.c.id );
+			idAFBody* body	 = af->GetAFPhysics()->GetBody( bodyId );
+			if( body ) {
 				ReturnString( body->GetName() );
 				return;
 			}
@@ -1711,13 +1625,12 @@ idThread::Event_FadeIn
 */
 void idThread::Event_FadeIn( idVec3& color, float time )
 {
-	idVec4		fadeColor;
-	idPlayer*	player;
+	idVec4	  fadeColor;
+	idPlayer* player;
 
 	player = gameLocal.GetLocalPlayer();
-	if( player )
-	{
-		fadeColor.Set( color[ 0 ], color[ 1 ], color[ 2 ], 0.0f );
+	if( player ) {
+		fadeColor.Set( color[0], color[1], color[2], 0.0f );
 		player->playerView.Fade( fadeColor, SEC2MS( time ) );
 	}
 }
@@ -1729,13 +1642,12 @@ idThread::Event_FadeOut
 */
 void idThread::Event_FadeOut( idVec3& color, float time )
 {
-	idVec4		fadeColor;
-	idPlayer*	player;
+	idVec4	  fadeColor;
+	idPlayer* player;
 
 	player = gameLocal.GetLocalPlayer();
-	if( player )
-	{
-		fadeColor.Set( color[ 0 ], color[ 1 ], color[ 2 ], 1.0f );
+	if( player ) {
+		fadeColor.Set( color[0], color[1], color[2], 1.0f );
 		player->playerView.Fade( fadeColor, SEC2MS( time ) );
 	}
 }
@@ -1747,13 +1659,12 @@ idThread::Event_FadeTo
 */
 void idThread::Event_FadeTo( idVec3& color, float alpha, float time )
 {
-	idVec4		fadeColor;
-	idPlayer*	player;
+	idVec4	  fadeColor;
+	idPlayer* player;
 
 	player = gameLocal.GetLocalPlayer();
-	if( player )
-	{
-		fadeColor.Set( color[ 0 ], color[ 1 ], color[ 2 ], alpha );
+	if( player ) {
+		fadeColor.Set( color[0], color[1], color[2], alpha );
 		player->playerView.Fade( fadeColor, SEC2MS( time ) );
 	}
 }
@@ -1765,12 +1676,11 @@ idThread::Event_SetShaderParm
 */
 void idThread::Event_SetShaderParm( int parmnum, float value )
 {
-	if( ( parmnum < 0 ) || ( parmnum >= MAX_GLOBAL_SHADER_PARMS ) )
-	{
+	if( ( parmnum < 0 ) || ( parmnum >= MAX_GLOBAL_SHADER_PARMS ) ) {
 		Error( "shader parm index (%d) out of range", parmnum );
 	}
 
-	gameLocal.globalShaderParms[ parmnum ] = value;
+	gameLocal.globalShaderParms[parmnum] = value;
 }
 
 /*
@@ -1825,15 +1735,13 @@ void idThread::Event_StrLeft( const char* string, int num )
 {
 	int len;
 
-	if( num < 0 )
-	{
+	if( num < 0 ) {
 		idThread::ReturnString( "" );
 		return;
 	}
 
 	len = strlen( string );
-	if( len < num )
-	{
+	if( len < num ) {
 		idThread::ReturnString( string );
 		return;
 	}
@@ -1851,15 +1759,13 @@ void idThread::Event_StrRight( const char* string, int num )
 {
 	int len;
 
-	if( num < 0 )
-	{
+	if( num < 0 ) {
 		idThread::ReturnString( "" );
 		return;
 	}
 
 	len = strlen( string );
-	if( len < num )
-	{
+	if( len < num ) {
 		idThread::ReturnString( string );
 		return;
 	}
@@ -1876,15 +1782,13 @@ void idThread::Event_StrSkip( const char* string, int num )
 {
 	int len;
 
-	if( num < 0 )
-	{
+	if( num < 0 ) {
 		idThread::ReturnString( string );
 		return;
 	}
 
 	len = strlen( string );
-	if( len < num )
-	{
+	if( len < num ) {
 		idThread::ReturnString( "" );
 		return;
 	}
@@ -1901,24 +1805,20 @@ void idThread::Event_StrMid( const char* string, int start, int num )
 {
 	int len;
 
-	if( num < 0 )
-	{
+	if( num < 0 ) {
 		idThread::ReturnString( "" );
 		return;
 	}
 
-	if( start < 0 )
-	{
+	if( start < 0 ) {
 		start = 0;
 	}
 	len = strlen( string );
-	if( start > len )
-	{
+	if( start > len ) {
 		start = len;
 	}
 
-	if( start + num > len )
-	{
+	if( start + num > len ) {
 		num = len - start;
 	}
 
@@ -2059,12 +1959,9 @@ void idThread::Event_InfluenceActive()
 	idPlayer* player;
 
 	player = gameLocal.GetLocalPlayer();
-	if( player && player->GetInfluenceLevel() )
-	{
+	if( player && player->GetInfluenceLevel() ) {
 		idThread::ReturnInt( true );
-	}
-	else
-	{
+	} else {
 		idThread::ReturnInt( false );
 	}
 }

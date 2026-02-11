@@ -19,7 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
@@ -36,15 +37,14 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CRotateDlg dialog
 
-
-CRotateDlg::CRotateDlg( CWnd* pParent /*=NULL*/ )
-	: CDialog( CRotateDlg::IDD, pParent )
+CRotateDlg::CRotateDlg( CWnd* pParent /*=NULL*/ ) :
+	CDialog( CRotateDlg::IDD, pParent )
 {
 	//{{AFX_DATA_INIT(CRotateDlg)
 	m_strX = _T( "" );
@@ -52,7 +52,6 @@ CRotateDlg::CRotateDlg( CWnd* pParent /*=NULL*/ )
 	m_strZ = _T( "" );
 	//}}AFX_DATA_INIT
 }
-
 
 void CRotateDlg::DoDataExchange( CDataExchange* pDX )
 {
@@ -67,14 +66,13 @@ void CRotateDlg::DoDataExchange( CDataExchange* pDX )
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP( CRotateDlg, CDialog )
-	//{{AFX_MSG_MAP(CRotateDlg)
-	ON_BN_CLICKED( IDC_APPLY, OnApply )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN1, OnDeltaposSpin1 )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN2, OnDeltaposSpin2 )
-	ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN3, OnDeltaposSpin3 )
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CRotateDlg)
+ON_BN_CLICKED( IDC_APPLY, OnApply )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN1, OnDeltaposSpin1 )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN2, OnDeltaposSpin2 )
+ON_NOTIFY( UDN_DELTAPOS, IDC_SPIN3, OnDeltaposSpin3 )
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,18 +88,15 @@ void CRotateDlg::OnApply()
 {
 	UpdateData( TRUE );
 	float f = atof( m_strX );
-	if( f != 0.0 )
-	{
+	if( f != 0.0 ) {
 		Select_RotateAxis( 0, f );
 	}
 	f = atof( m_strY );
-	if( f != 0.0 )
-	{
+	if( f != 0.0 ) {
 		Select_RotateAxis( 1, f );
 	}
 	f = atof( m_strZ );
-	if( f != 0.0 )
-	{
+	if( f != 0.0 ) {
 		Select_RotateAxis( 2, f );
 	}
 }
@@ -112,8 +107,8 @@ BOOL CRotateDlg::OnInitDialog()
 	m_wndSpin1.SetRange( 0, 359 );
 	m_wndSpin2.SetRange( 0, 359 );
 	m_wndSpin3.SetRange( 0, 359 );
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; // return TRUE unless you set the focus to a control
+				 // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CRotateDlg::OnDeltaposSpin1( NMHDR* pNMHDR, LRESULT* pResult )
@@ -139,5 +134,4 @@ void CRotateDlg::OnDeltaposSpin3( NMHDR* pNMHDR, LRESULT* pResult )
 
 void CRotateDlg::ApplyNoPaint()
 {
-
 }

@@ -19,22 +19,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Doom 3 Source Code.  If not, see <http://www.gnu.org/licenses/>.
 
-In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
+In addition, the Doom 3 Source Code is also subject to certain additional terms. You should have received a copy of these additional terms immediately following the terms and conditions of the GNU
+General Public License which accompanied the Doom 3 Source Code.  If not, please request a copy in writing from id Software at the address below.
 
 If you have questions concerning this license or the applicable additional terms, you may contact in writing id Software LLC, c/o ZeniMax Media Inc., Suite 120, Rockville, Maryland 20850 USA.
 
 ===========================================================================
 */
-#if !defined(AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_)
-#define AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_
+#if !defined( AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_ )
+	#define AFX_ZWND_H__44B4BA02_781B_11D1_B53C_00AA00A410FC__INCLUDED_
 
-#if _MSC_VER >= 1000
-	#pragma once
-#endif // _MSC_VER >= 1000
+	#if _MSC_VER >= 1000
+		#pragma once
+	#endif // _MSC_VER >= 1000
 // ZWnd.h : header file
 //
 
-#include "zclip.h"
+	#include "zclip.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CZWnd window
@@ -42,24 +43,22 @@ If you have questions concerning this license or the applicable additional terms
 class CZWnd : public CWnd
 {
 	DECLARE_DYNCREATE( CZWnd );
-// Construction
+	// Construction
 public:
 	CZWnd();
 
-// Attributes
+	// Attributes
 public:
-
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CZWnd)
 protected:
 	virtual BOOL PreCreateWindow( CREATESTRUCT& cs );
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CZWnd();
 
@@ -67,10 +66,10 @@ public:
 
 	// Generated message map functions
 protected:
-	HDC m_dcZ;
-	HGLRC m_hglrcZ;
+	HDC			 m_dcZ;
+	HGLRC		 m_hglrcZ;
 	//{{AFX_MSG(CZWnd)
-	afx_msg int OnCreate( LPCREATESTRUCT lpCreateStruct );
+	afx_msg int	 OnCreate( LPCREATESTRUCT lpCreateStruct );
 	afx_msg void OnDestroy();
 	afx_msg void OnKeyDown( UINT nChar, UINT nRepCnt, UINT nFlags );
 	afx_msg void OnLButtonDown( UINT nFlags, CPoint point );
