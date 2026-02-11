@@ -82,10 +82,10 @@ find . -regex ".*\.\(c\|cpp\)" \
 	! -path "./libs/*" \
 	! -path "./extern/*" \
 	! -path "./idlib/math/Simd_SSE.cpp" \
-	! -path "./d3xp/gamesys/SysCvar.cpp" \
-	! -path "./d3xp/gamesys/Callbacks.cpp" \
-	! -path "./sys/win32/win_cpu.cpp" \
-	! -path "./sys/win32/win_main.cpp" \
+	! -path "./game/gamesys/SysCvar.cpp" \
+	! -path "./game/gamesys/Callbacks.cpp" \
+	! -path "./engine/sys/win32/win_cpu.cpp" \
+	! -path "./engine/sys/win32/win_main.cpp" \
 	-print0 | xargs -0 -P 16 "$CLANGFMT_BIN" -i --verbose
 
 rm .clang-format
