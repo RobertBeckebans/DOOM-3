@@ -27,7 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 const float idMath::PI			 = 3.14159265358979323846f;

@@ -1079,7 +1079,7 @@ ftp_pasv_verbose( struct connectdata *conn,
 #else
 	answer = NULL;
 #endif
-	( void ) memcpy( &in.s_addr, addr, sizeof ( Curl_ipconnect ) );
+	( void ) memcpy( &in.s_addr, addr, sizeof( Curl_ipconnect ) );
 	infof( conn->data, "Connecting to %s (%s) port %u\n",
 		   answer ? answer->h_name : newhost,
 #if defined(HAVE_INET_NTOA_R)
@@ -1103,14 +1103,14 @@ ftp_pasv_verbose( struct connectdata *conn,
 	const int niflags = NI_NUMERICHOST | NI_NUMERICSERV;
 #endif
 	( void )port; /* prevent compiler warning */
-	if ( getnameinfo( addr->ai_addr, addr->ai_addrlen,
-					  nbuf, sizeof( nbuf ), sbuf, sizeof( sbuf ), niflags ) ) {
+	if( getnameinfo( addr->ai_addr, addr->ai_addrlen,
+					 nbuf, sizeof( nbuf ), sbuf, sizeof( sbuf ), niflags ) ) {
 		snprintf( nbuf, sizeof( nbuf ), "?" );
 		snprintf( sbuf, sizeof( sbuf ), "?" );
 	}
 
-	if ( getnameinfo( addr->ai_addr, addr->ai_addrlen,
-					  hbuf, sizeof( hbuf ), NULL, 0, 0 ) ) {
+	if( getnameinfo( addr->ai_addr, addr->ai_addrlen,
+					 hbuf, sizeof( hbuf ), NULL, 0, 0 ) ) {
 		infof( conn->data, "Connecting to %s (%s) port %s\n", nbuf, newhost, sbuf );
 	} else {
 		infof( conn->data, "Connecting to %s (%s) port %s\n", hbuf, nbuf, sbuf );
@@ -1195,26 +1195,26 @@ CURLcode ftp_use_port( struct connectdata *conn )
 	}
 
 	portsock = CURL_SOCKET_BAD;
-	for ( ai = res; ai; ai = ai->ai_next ) {
+	for( ai = res; ai; ai = ai->ai_next ) {
 		/*
 		 * Workaround for AIX5 getaddrinfo() problem (it doesn't set ai_socktype):
 		 */
-		if ( ai->ai_socktype == 0 ) {
+		if( ai->ai_socktype == 0 ) {
 			ai->ai_socktype = hints.ai_socktype;
 		}
 
 		portsock = socket( ai->ai_family, ai->ai_socktype, ai->ai_protocol );
-		if ( portsock == CURL_SOCKET_BAD ) {
+		if( portsock == CURL_SOCKET_BAD ) {
 			continue;
 		}
 
-		if ( bind( portsock, ai->ai_addr, ai->ai_addrlen ) < 0 ) {
+		if( bind( portsock, ai->ai_addr, ai->ai_addrlen ) < 0 ) {
 			sclose( portsock );
 			portsock = CURL_SOCKET_BAD;
 			continue;
 		}
 
-		if ( listen( portsock, 1 ) < 0 ) {
+		if( listen( portsock, 1 ) < 0 ) {
 			sclose( portsock );
 			portsock = CURL_SOCKET_BAD;
 			continue;
@@ -1223,23 +1223,23 @@ CURLcode ftp_use_port( struct connectdata *conn )
 		break;
 	}
 	freeaddrinfo( res );
-	if ( portsock == CURL_SOCKET_BAD ) {
+	if( portsock == CURL_SOCKET_BAD ) {
 		failf( data, "%s", strerror( errno ) );
 		return CURLE_FTP_PORT_FAILED;
 	}
 
 	sslen = sizeof( ss );
-	if ( getsockname( portsock, sa, &sslen ) < 0 ) {
+	if( getsockname( portsock, sa, &sslen ) < 0 ) {
 		failf( data, "%s", strerror( errno ) );
 		return CURLE_FTP_PORT_FAILED;
 	}
 
-	for ( modep = ( char** )( data->set.ftp_use_eprt ? &mode[0] : &mode[2] );
+	for( modep = ( char** )( data->set.ftp_use_eprt ? &mode[0] : &mode[2] );
 			modep && *modep; modep++ ) {
 		int lprtaf, eprtaf;
 		int alen = 0, plen = 0;
 
-		switch ( sa->sa_family ) {
+		switch( sa->sa_family ) {
 			case AF_INET:
 				ap = ( unsigned char* ) & ( ( struct sockaddr_in* )&ss )->sin_addr;
 				alen = sizeof( ( ( struct sockaddr_in* )&ss )->sin_addr );
@@ -1262,20 +1262,20 @@ CURLcode ftp_use_port( struct connectdata *conn )
 				break;
 		}
 
-		if ( strcmp( *modep, "EPRT" ) == 0 ) {
-			if ( eprtaf < 0 ) {
+		if( strcmp( *modep, "EPRT" ) == 0 ) {
+			if( eprtaf < 0 ) {
 				continue;
 			}
-			if ( getnameinfo( ( struct sockaddr* )&ss, sslen,
-							  portmsgbuf, sizeof( portmsgbuf ), tmp, sizeof( tmp ),
-							  NIFLAGS ) ) {
+			if( getnameinfo( ( struct sockaddr* )&ss, sslen,
+							 portmsgbuf, sizeof( portmsgbuf ), tmp, sizeof( tmp ),
+							 NIFLAGS ) ) {
 				continue;
 			}
 
 			/* do not transmit IPv6 scope identifier to the wire */
-			if ( sa->sa_family == AF_INET6 ) {
+			if( sa->sa_family == AF_INET6 ) {
 				char* q = strchr( portmsgbuf, '%' );
-				if ( q ) {
+				if( q ) {
 					*q = '\0';
 				}
 			}
@@ -1285,51 +1285,51 @@ CURLcode ftp_use_port( struct connectdata *conn )
 			if( result ) {
 				return result;
 			}
-		} else if ( strcmp( *modep, "LPRT" ) == 0 ||
-					strcmp( *modep, "PORT" ) == 0 ) {
+		} else if( strcmp( *modep, "LPRT" ) == 0 ||
+				   strcmp( *modep, "PORT" ) == 0 ) {
 			int i;
 
-			if ( strcmp( *modep, "LPRT" ) == 0 && lprtaf < 0 ) {
+			if( strcmp( *modep, "LPRT" ) == 0 && lprtaf < 0 ) {
 				continue;
 			}
-			if ( strcmp( *modep, "PORT" ) == 0 && sa->sa_family != AF_INET ) {
+			if( strcmp( *modep, "PORT" ) == 0 && sa->sa_family != AF_INET ) {
 				continue;
 			}
 
 			portmsgbuf[0] = '\0';
-			if ( strcmp( *modep, "LPRT" ) == 0 ) {
+			if( strcmp( *modep, "LPRT" ) == 0 ) {
 				snprintf( tmp, sizeof( tmp ), "%d,%d", lprtaf, alen );
-				if ( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
+				if( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
 						sizeof( portmsgbuf ) ) {
 					continue;
 				}
 			}
 
-			for ( i = 0; i < alen; i++ ) {
-				if ( portmsgbuf[0] ) {
+			for( i = 0; i < alen; i++ ) {
+				if( portmsgbuf[0] ) {
 					snprintf( tmp, sizeof( tmp ), ",%u", ap[i] );
 				} else {
 					snprintf( tmp, sizeof( tmp ), "%u", ap[i] );
 				}
 
-				if ( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
+				if( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
 						sizeof( portmsgbuf ) ) {
 					continue;
 				}
 			}
 
-			if ( strcmp( *modep, "LPRT" ) == 0 ) {
+			if( strcmp( *modep, "LPRT" ) == 0 ) {
 				snprintf( tmp, sizeof( tmp ), ",%d", plen );
 
-				if ( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >= sizeof( portmsgbuf ) ) {
+				if( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >= sizeof( portmsgbuf ) ) {
 					continue;
 				}
 			}
 
-			for ( i = 0; i < plen; i++ ) {
+			for( i = 0; i < plen; i++ ) {
 				snprintf( tmp, sizeof( tmp ), ",%u", pp[i] );
 
-				if ( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
+				if( strlcat( portmsgbuf, tmp, sizeof( portmsgbuf ) ) >=
 						sizeof( portmsgbuf ) ) {
 					continue;
 				}
@@ -1346,14 +1346,14 @@ CURLcode ftp_use_port( struct connectdata *conn )
 			return result;
 		}
 
-		if ( ftpcode != 200 ) {
+		if( ftpcode != 200 ) {
 			continue;
 		} else {
 			break;
 		}
 	}
 
-	if ( !*modep ) {
+	if( !*modep ) {
 		sclose( portsock );
 		failf( data, "PORT command attempts failed" );
 		return CURLE_FTP_PORT_FAILED;
@@ -1407,8 +1407,8 @@ CURLcode ftp_use_port( struct connectdata *conn )
 		socklen_t sslen;
 
 		sslen = sizeof( sa );
-		if ( getsockname( conn->sock[FIRSTSOCKET],
-						  ( struct sockaddr* )&sa, &sslen ) < 0 ) {
+		if( getsockname( conn->sock[FIRSTSOCKET],
+						 ( struct sockaddr* )&sa, &sslen ) < 0 ) {
 			failf( data, "getsockname() failed" );
 			return CURLE_FTP_PORT_FAILED;
 		}
@@ -1422,7 +1422,7 @@ CURLcode ftp_use_port( struct connectdata *conn )
 		Curl_resolv_unlock( data, h );
 	}
 
-	if ( h || sa_filled_in ) {
+	if( h || sa_filled_in ) {
 		if( ( portsock = socket( AF_INET, SOCK_STREAM, 0 ) ) != CURL_SOCKET_BAD ) {
 			int size;
 
@@ -1455,7 +1455,7 @@ CURLcode ftp_use_port( struct connectdata *conn )
 				}
 				porttouse = ntohs( add.sin_port );
 
-				if ( listen( portsock, 1 ) < 0 ) {
+				if( listen( portsock, 1 ) < 0 ) {
 					failf( data, "listen(2) failed on socket" );
 					return CURLE_FTP_PORT_FAILED;
 				}
@@ -1479,7 +1479,7 @@ CURLcode ftp_use_port( struct connectdata *conn )
 		unsigned short ip[5];
 		( void ) memcpy( &in.s_addr,
 						 h ? *h->addr->h_addr_list : ( char* )&sa.sin_addr.s_addr,
-						 sizeof ( in.s_addr ) );
+						 sizeof( in.s_addr ) );
 
 #ifdef HAVE_INET_NTOA_R
 		/* ignore the return code from inet_ntoa_r() as it is int or
@@ -1564,7 +1564,7 @@ CURLcode ftp_use_pasv( struct connectdata *conn,
 	char newhost[48];
 	char* newhostp = NULL;
 
-	for ( modeoff = ( data->set.ftp_use_epsv ? 0 : 1 );
+	for( modeoff = ( data->set.ftp_use_epsv ? 0 : 1 );
 			mode[modeoff]; modeoff++ ) {
 		result = Curl_ftpsendf( conn, "%s", mode[modeoff] );
 		if( result ) {
@@ -1574,15 +1574,15 @@ CURLcode ftp_use_pasv( struct connectdata *conn,
 		if( result ) {
 			return result;
 		}
-		if ( ftpcode == results[modeoff] ) {
+		if( ftpcode == results[modeoff] ) {
 			break;
 		}
 	}
 
-	if ( !mode[modeoff] ) {
+	if( !mode[modeoff] ) {
 		failf( data, "Odd return code after PASV" );
 		return CURLE_FTP_WEIRD_PASV_REPLY;
-	} else if ( 227 == results[modeoff] ) {
+	} else if( 227 == results[modeoff] ) {
 		int ip[4];
 		int port[2];
 		char* str = buf;
@@ -1599,9 +1599,9 @@ CURLcode ftp_use_pasv( struct connectdata *conn,
 		 */
 
 		while( *str ) {
-			if ( 6 == sscanf( str, "%d,%d,%d,%d,%d,%d",
-							  &ip[0], &ip[1], &ip[2], &ip[3],
-							  &port[0], &port[1] ) ) {
+			if( 6 == sscanf( str, "%d,%d,%d,%d,%d,%d",
+							 &ip[0], &ip[1], &ip[2], &ip[3],
+							 &port[0], &port[1] ) ) {
 				break;
 			}
 			str++;
@@ -1615,7 +1615,7 @@ CURLcode ftp_use_pasv( struct connectdata *conn,
 		sprintf( newhost, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3] );
 		newhostp = newhost;
 		newport = ( port[0] << 8 ) + port[1];
-	} else if ( 229 == results[modeoff] ) {
+	} else if( 229 == results[modeoff] ) {
 		char* ptr = strchr( buf, '(' );
 		if( ptr ) {
 			unsigned int num;
@@ -1752,7 +1752,7 @@ CURLcode Curl_ftp_nextconnect( struct connectdata *conn )
 
 		/* Send any PREQUOTE strings after transfer type is set? (Wesley Laxton)*/
 		if( data->set.prequote ) {
-			if ( ( result = ftp_sendquote( conn, data->set.prequote ) ) != CURLE_OK ) {
+			if( ( result = ftp_sendquote( conn, data->set.prequote ) ) != CURLE_OK ) {
 				return result;
 			}
 		}
@@ -1957,7 +1957,7 @@ CURLcode Curl_ftp_nextconnect( struct connectdata *conn )
 
 			/* Send any PREQUOTE strings after transfer type is set? */
 			if( data->set.prequote ) {
-				if ( ( result = ftp_sendquote( conn, data->set.prequote ) ) != CURLE_OK ) {
+				if( ( result = ftp_sendquote( conn, data->set.prequote ) ) != CURLE_OK ) {
 					return result;
 				}
 			}
@@ -1967,7 +1967,7 @@ CURLcode Curl_ftp_nextconnect( struct connectdata *conn )
 			   in the RETR response line. */
 			result = ftp_getsize( conn, ftp->file, &foundsize );
 			if( CURLE_OK == result ) {
-				if ( data->set.max_filesize && foundsize > data->set.max_filesize ) {
+				if( data->set.max_filesize && foundsize > data->set.max_filesize ) {
 					failf( data, "Maximum file size exceeded" );
 					return CURLE_FILESIZE_EXCEEDED;
 				}
@@ -2019,7 +2019,7 @@ CURLcode Curl_ftp_nextconnect( struct connectdata *conn )
 					}
 				}
 
-				if ( downloadsize == 0 ) {
+				if( downloadsize == 0 ) {
 					/* no data to transfer */
 					result = Curl_Transfer( conn, -1, -1, FALSE, NULL, -1, NULL );
 					infof( data, "File already completely downloaded\n" );
@@ -2195,7 +2195,7 @@ CURLcode ftp_perform( struct connectdata *conn,
 
 	/* Send any QUOTE strings? */
 	if( data->set.quote ) {
-		if ( ( result = ftp_sendquote( conn, data->set.quote ) ) != CURLE_OK ) {
+		if( ( result = ftp_sendquote( conn, data->set.quote ) ) != CURLE_OK ) {
 			return result;
 		}
 	}
@@ -2203,18 +2203,18 @@ CURLcode ftp_perform( struct connectdata *conn,
 	/* This is a re-used connection. Since we change directory to where the
 	   transfer is taking place, we must now get back to the original dir
 	   where we ended up after login: */
-	if ( conn->bits.reuse && ftp->entrypath ) {
-		if ( ( result = ftp_cwd_and_mkd( conn, ftp->entrypath ) ) != CURLE_OK ) {
+	if( conn->bits.reuse && ftp->entrypath ) {
+		if( ( result = ftp_cwd_and_mkd( conn, ftp->entrypath ) ) != CURLE_OK ) {
 			return result;
 		}
 	}
 
 	{
 		int i; /* counter for loop */
-		for ( i = 0; ftp->dirs[i]; i++ ) {
+		for( i = 0; ftp->dirs[i]; i++ ) {
 			/* RFC 1738 says empty components should be respected too, but
 			   that is plain stupid since CWD can't be used with an empty argument */
-			if ( ( result = ftp_cwd_and_mkd( conn, ftp->dirs[i] ) ) != CURLE_OK ) {
+			if( ( result = ftp_cwd_and_mkd( conn, ftp->dirs[i] ) ) != CURLE_OK ) {
 				return result;
 			}
 		}
@@ -2292,7 +2292,7 @@ CURLcode ftp_perform( struct connectdata *conn,
 		FTPSENDF( conn, "REST 0", NULL );
 		result = Curl_GetFTPResponse( &nread, conn, &ftpcode );
 
-		if ( ( CURLE_OK == result ) && ( ftpcode == 350 ) ) {
+		if( ( CURLE_OK == result ) && ( ftpcode == 350 ) ) {
 			result = Curl_client_write( data, CLIENTWRITE_BOTH,
 										( char* )"Accept-ranges: bytes\r\n", 0 );
 			if( result ) {
@@ -2394,14 +2394,14 @@ CURLcode Curl_ftp( struct connectdata *conn )
 		bool absolute_dir = ( cur_pos - conn->ppath > 0 ) && ( path_part == 0 );
 
 		/* seek out the next path component */
-		if ( slash_pos - cur_pos ) {
+		if( slash_pos - cur_pos ) {
 			/* we skip empty path components, like "x//y" since the FTP command CWD
 			   requires a parameter and a non-existant parameter a) doesn't work on
 			   many servers and b) has no effect on the others. */
 			ftp->dirs[path_part] = curl_unescape( cur_pos - absolute_dir,
 												  slash_pos - cur_pos + absolute_dir );
 
-			if ( !ftp->dirs[path_part] ) { /* run out of memory ... */
+			if( !ftp->dirs[path_part] ) {  /* run out of memory ... */
 				failf( data, "no memory" );
 				freedirs( ftp );
 				return CURLE_OUT_OF_MEMORY;
@@ -2641,11 +2641,11 @@ CURLcode ftp_cwd( struct connectdata *conn, char* path )
 
 	FTPSENDF( conn, "CWD %s", path );
 	result = Curl_GetFTPResponse( &nread, conn, &ftpcode );
-	if ( !result ) {
+	if( !result ) {
 		/* According to RFC959, CWD is supposed to return 250 on success, but
 		   there seem to be non-compliant FTP servers out there that return 200,
 		   so we accept any '2xy' code here. */
-		if ( ftpcode / 100 != 2 ) {
+		if( ftpcode / 100 != 2 ) {
 			result = CURLE_FTP_ACCESS_DENIED;
 		}
 	}
@@ -2666,10 +2666,10 @@ static CURLcode ftp_cwd_and_mkd( struct connectdata *conn, char* path )
 	CURLcode result;
 
 	result = ftp_cwd( conn, path );
-	if ( result ) {
+	if( result ) {
 		if( conn->data->set.ftp_create_missing_dirs ) {
 			result = ftp_mkd( conn, path );
-			if ( result )
+			if( result )
 				/* ftp_mkd() calls failf() itself */
 			{
 				return result;

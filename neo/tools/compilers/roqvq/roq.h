@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 #define JPEG_INTERNALS
 extern "C" {
 #include "../../../libs/jpeg-6/jpeglib.h"
-		 "
+"
 }
 #pragma once
 

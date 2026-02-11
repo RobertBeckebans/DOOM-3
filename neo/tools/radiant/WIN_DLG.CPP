@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "qe3.h"
@@ -561,7 +561,7 @@ BOOL CALLBACK AboutDlgProc( HWND hwndDlg,
 	switch( uMsg ) {
 		case WM_INITDIALOG: {
 			char buffer[1024];
-			idStr::snPrintf( buffer, 1024, "DOOM Radiant Build %d\nCopyright ©1999-2004 Id Software, Inc.\n", BUILD_NUMBER );
+			idStr::snPrintf( buffer, 1024, "DOOM Radiant Build %d\nCopyright ï¿½1999-2004 Id Software, Inc.\n", BUILD_NUMBER );
 			//			SetDlgItemText( hwndDlg, IDC_ABOUT_INFO, buffer);
 
 			idStr::snPrintf( buffer, 1024, "Renderer:\t%s", qglGetString( GL_RENDERER ) );

@@ -27,7 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 idSphere sphere_zero( vec3_zero, 0.0f );

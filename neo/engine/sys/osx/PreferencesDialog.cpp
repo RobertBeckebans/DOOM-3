@@ -27,7 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #include <Carbon/Carbon.h>
 #include "PreferencesDialog.h"
 #include "PickMonitor.h"
@@ -44,7 +44,7 @@ static idCVar r_stretched( "r_stretched", "0", CVAR_ARCHIVE | CVAR_BOOL, "Used s
 #endif
 
 const UInt32 kRes_Stretched = ( 1 << 0 ); // set if the resolution is a stretched mode (kCGDisplayModeIsStretched)
-const UInt32 kRes_Safe		= ( 1 << 1 ); // ¥¥¥Ê(currently unused) set if the resolution is safe (kCGDisplayModeIsSafeForHardware)
+const UInt32 kRes_Safe		= ( 1 << 1 ); // ï¿½ï¿½ï¿½ï¿½(currently unused) set if the resolution is safe (kCGDisplayModeIsSafeForHardware)
 
 // Data to be presented and edited in the prefs dialog
 struct PrefInfo {
@@ -786,7 +786,7 @@ static DEFINE_ONE_SHOT_HANDLER_GETTER( PrefHandler )
 }
 
 //------------------------------------------------------------------------------------
-// ¥ RunGameDisplayPreferencesDialog
+// ï¿½ RunGameDisplayPreferencesDialog
 //------------------------------------------------------------------------------------
 // Runs the Mac-specific preferences dialog.
 

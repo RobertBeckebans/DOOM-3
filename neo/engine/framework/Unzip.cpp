@@ -1,4 +1,4 @@
-#include "../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "Unzip.h"
@@ -1983,8 +1983,9 @@ extern int unzReadCurrentFile( unzFile file, void* buf, unsigned len )
 
 	pfile_in_zip_read_info->stream.avail_out = ( uInt )len;
 
-	if( len > pfile_in_zip_read_info->rest_read_uncompressed )
+	if( len > pfile_in_zip_read_info->rest_read_uncompressed ) {
 		pfile_in_zip_read_info->stream.avail_out = ( uInt )pfile_in_zip_read_info->rest_read_uncompressed;
+	}
 
 	while( pfile_in_zip_read_info->stream.avail_out > 0 ) {
 		if( ( pfile_in_zip_read_info->stream.avail_in == 0 ) && ( pfile_in_zip_read_info->rest_read_compressed > 0 ) ) {
@@ -2018,8 +2019,9 @@ extern int unzReadCurrentFile( unzFile file, void* buf, unsigned len )
 				uDoCopy = pfile_in_zip_read_info->stream.avail_in;
 			}
 
-			for( i = 0; i < uDoCopy; i++ )
+			for( i = 0; i < uDoCopy; i++ ) {
 				*( pfile_in_zip_read_info->stream.next_out + i ) = *( pfile_in_zip_read_info->stream.next_in + i );
+			}
 
 			pfile_in_zip_read_info->crc32 = crc32( pfile_in_zip_read_info->crc32, pfile_in_zip_read_info->stream.next_out, uDoCopy );
 			pfile_in_zip_read_info->rest_read_uncompressed -= uDoCopy;
@@ -3365,9 +3367,9 @@ static int huft_build OF( ( uInt*, /* code lengths in bits */
 static const uInt	  cplens[31] = /* Copy lengths for literal codes 257..285 */
 	{ 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0 };
 /* see note #13 above about 258 */
-static const uInt cplext[31] = /* Extra bits for literal codes 257..285 */
+static const uInt cplext[31] =																			 /* Extra bits for literal codes 257..285 */
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 112, 112 }; /* 112==invalid */
-static const uInt cpdist[30] = /* Copy offsets for distance codes 0..29 */
+static const uInt cpdist[30] =																			 /* Copy offsets for distance codes 0..29 */
 	{ 1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577 };
 static const uInt cpdext[30] = /* Extra bits for distance codes */
 	{ 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13 };

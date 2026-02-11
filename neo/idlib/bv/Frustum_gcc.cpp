@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#include "../precompiled.h"
+#include "precompiled.h"
 
 void BoxToPoints( const idVec3& center, const idVec3& extents, const idMat3& axis, idVec3 points[8] );
 

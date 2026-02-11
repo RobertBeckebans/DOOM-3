@@ -27,7 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #include <Carbon/Carbon.h>
 #include "PickMonitor.h"
 
@@ -96,24 +96,27 @@ OSErr SetupUserPaneProcs( ControlRef inUserPane, ControlUserPaneDrawProcPtr inDr
 
 		if( 0 == drawUPP ) {
 			err = memFullErr;
-		} else
+		} else {
 			err = SetControlData( inUserPane, kControlEntireControl, kControlUserPaneDrawProcTag, sizeof( ControlUserPaneDrawUPP ), ( Ptr )&drawUPP );
+		}
 	}
 	if( inHitTestProc && noErr == err ) {
 		hitTestUPP = NewControlUserPaneHitTestUPP( inHitTestProc );
 
 		if( 0 == hitTestUPP ) {
 			err = memFullErr;
-		} else
+		} else {
 			err = SetControlData( inUserPane, kControlEntireControl, kControlUserPaneHitTestProcTag, sizeof( ControlUserPaneHitTestUPP ), ( Ptr )&hitTestUPP );
+		}
 	}
 	if( inTrackingProc && noErr == err ) {
 		trackingUPP = NewControlUserPaneTrackingUPP( inTrackingProc );
 
 		if( 0 == trackingUPP ) {
 			err = memFullErr;
-		} else
+		} else {
 			err = SetControlData( inUserPane, kControlEntireControl, kControlUserPaneTrackingProcTag, sizeof( ControlUserPaneTrackingUPP ), ( Ptr )&trackingUPP );
+		}
 	}
 
 	return err;
@@ -353,7 +356,7 @@ OSErr TearDownPickMonitorPane( ControlRef inPane )
 #pragma mark -
 
 //------------------------------------------------------------------------------------
-// ¥ PickMonitorHandler
+// ï¿½ PickMonitorHandler
 //------------------------------------------------------------------------------------
 // Our command handler for the PickMonitor dialog.
 

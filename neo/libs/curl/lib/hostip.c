@@ -984,7 +984,7 @@ static Curl_addrinfo* my_getaddrinfo( struct connectdata *conn,
 	*waitp = 0; /* don't wait, we act synchronously */
 
 	in = inet_addr( hostname );
-	if ( in != CURL_INADDR_NONE ) {
+	if( in != CURL_INADDR_NONE ) {
 		struct in_addr *addrentry;
 		struct namebuf {
 			struct hostent hostentry;
@@ -1172,7 +1172,7 @@ static Curl_addrinfo* my_getaddrinfo( struct connectdata *conn,
 	else {
 
 #ifdef USE_THREADING_GETHOSTBYNAME
-		if ( init_gethostbyname_thread( conn, hostname, port ) ) {
+		if( init_gethostbyname_thread( conn, hostname, port ) ) {
 			*waitp = TRUE;  /* please wait for the response */
 			return NULL;
 		}
@@ -1180,7 +1180,7 @@ static Curl_addrinfo* my_getaddrinfo( struct connectdata *conn,
 			   hostname, GetLastError() );
 #endif
 		h = gethostbyname( hostname );
-		if ( !h ) {
+		if( !h ) {
 			infof( data, "gethostbyname(2) failed for %s\n", hostname );
 		} else {
 			char* buf = ( char* )malloc( CURL_NAMELOOKUP_SIZE );
@@ -1202,33 +1202,33 @@ static Curl_addrinfo* my_getaddrinfo( struct connectdata *conn,
 
 #if defined(USE_THREADING_GETHOSTBYNAME)
 #ifdef DEBUG_THREADING_GETHOSTBYNAME
-static void trace_it ( const char* fmt, ... ) {
+static void trace_it( const char* fmt, ... ) {
 	static int do_trace = -1;
 	va_list args;
 
-	if ( do_trace == -1 ) {
+	if( do_trace == -1 ) {
 		do_trace = getenv( "CURL_TRACE" ) ? 1 : 0;
 	}
-	if ( !do_trace ) {
+	if( !do_trace ) {
 		return;
 	}
-	va_start ( args, fmt );
-	vfprintf ( stderr, fmt, args );
-	fflush ( stderr );
-	va_end ( args );
+	va_start( args, fmt );
+	vfprintf( stderr, fmt, args );
+	fflush( stderr );
+	va_end( args );
 }
 #endif
 
 /* For builds without ARES/USE_IPV6, create a resolver thread and wait on it.
  */
-static DWORD WINAPI gethostbyname_thread ( void* arg ) {
+static DWORD WINAPI gethostbyname_thread( void* arg ) {
 	struct connectdata *conn = ( struct connectdata* ) arg;
 	struct hostent *he;
 	int    rc;
 
-	WSASetLastError ( conn->async.status = NO_DATA ); /* pending status */
-	he = gethostbyname ( conn->async.hostname );
-	if ( he ) {
+	WSASetLastError( conn->async.status = NO_DATA );  /* pending status */
+	he = gethostbyname( conn->async.hostname );
+	if( he ) {
 		host_callback( conn, ARES_SUCCESS, he );
 		rc = 1;
 	} else {
@@ -1243,30 +1243,30 @@ static DWORD WINAPI gethostbyname_thread ( void* arg ) {
 
 /* complementary of ares_destroy
  */
-static void destroy_thread_data ( struct connectdata * conn ) {
-	if ( conn->async.hostname ) {
+static void destroy_thread_data( struct connectdata * conn ) {
+	if( conn->async.hostname ) {
 		free( conn->async.hostname );
 	}
-	if ( conn->async.os_specific ) {
+	if( conn->async.os_specific ) {
 		free( conn->async.os_specific );
 	}
 	conn->async.hostname = NULL;
 	conn->async.os_specific = NULL;
 }
 
-static bool init_gethostbyname_thread ( struct connectdata * conn,
-										const char* hostname, int port ) {
+static bool init_gethostbyname_thread( struct connectdata * conn,
+									   const char* hostname, int port ) {
 	struct thread_data *td = malloc( sizeof( *td ) );
 
-	if ( !td ) {
+	if( !td ) {
 		SetLastError( ENOMEM );
 		return ( 0 );
 	}
 
-	memset ( td, 0, sizeof( *td ) );
+	memset( td, 0, sizeof( *td ) );
 	Curl_safefree( conn->async.hostname );
 	conn->async.hostname = strdup( hostname );
-	if ( !conn->async.hostname ) {
+	if( !conn->async.hostname ) {
 		free( td );
 		SetLastError( ENOMEM );
 		return ( 0 );
@@ -1280,7 +1280,7 @@ static bool init_gethostbyname_thread ( struct connectdata * conn,
 
 	td->thread_hnd = CreateThread( NULL, 0, gethostbyname_thread,
 								   conn, 0, &td->thread_id );
-	if ( !td->thread_hnd ) {
+	if( !td->thread_hnd ) {
 		TRACE( ( "CreateThread() failed; %lu\n", GetLastError() ) );
 		destroy_thread_data( conn );
 		return ( 0 );
@@ -1297,7 +1297,7 @@ CURLcode Curl_wait_for_resolv( struct connectdata * conn,
 	DWORD  status, ticks;
 	CURLcode rc;
 
-	curlassert ( conn && td );
+	curlassert( conn && td );
 
 	/* now, see if there's a connect timeout or a regular timeout to
 	   use instead of the default one */
@@ -1307,7 +1307,7 @@ CURLcode Curl_wait_for_resolv( struct connectdata * conn,
 	ticks = GetTickCount();
 
 	status = WaitForSingleObject( td->thread_hnd, 1000UL * timeout );
-	if ( status == WAIT_OBJECT_0 || status == WAIT_ABANDONED ) {
+	if( status == WAIT_OBJECT_0 || status == WAIT_ABANDONED ) {
 		/* Thread finished before timeout; propagate Winsock error to this thread */
 		WSASetLastError( conn->async.status );
 		GetExitCodeThread( td->thread_hnd, &td->thread_status );
@@ -1327,9 +1327,9 @@ CURLcode Curl_wait_for_resolv( struct connectdata * conn,
 
 	rc = CURLE_OK;
 
-	if ( !conn->async.dns ) {
+	if( !conn->async.dns ) {
 		/* a name was not resolved */
-		if ( td->thread_status == ( DWORD ) -1 || conn->async.status == NO_DATA ) {
+		if( td->thread_status == ( DWORD ) -1 || conn->async.status == NO_DATA ) {
 			failf( data, "Resolving host timed out: %s", conn->name );
 			rc = CURLE_OPERATION_TIMEDOUT;
 		} else if( conn->async.done ) {
@@ -1351,10 +1351,10 @@ CURLcode Curl_is_resolved( struct connectdata * conn,
 						   struct Curl_dns_entry** entry ) {
 	*entry = NULL;
 
-	if ( conn->async.done ) {
+	if( conn->async.done ) {
 		/* we're done */
 		destroy_thread_data( conn );
-		if ( !conn->async.dns ) {
+		if( !conn->async.dns ) {
 			TRACE( ( "Curl_is_resolved(): CURLE_COULDNT_RESOLVE_HOST\n" ) );
 			return CURLE_COULDNT_RESOLVE_HOST;
 		}

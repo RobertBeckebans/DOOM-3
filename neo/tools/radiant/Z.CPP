@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "qe3.h"
@@ -216,7 +216,7 @@ void Z_MouseMoved( int x, int y, int buttons )
 
 /*
  =======================================================================================================================
-    DRAWING £
+    DRAWING ï¿½
     Z_DrawGrid
  =======================================================================================================================
  */
@@ -362,10 +362,10 @@ void Z_Draw()
 	);
 
 	/*
-	 * GL Bug £
+	 * GL Bug ï¿½
 	 * When not using hw acceleration, gl will fault if we clear the depth buffer bit
 	 * on the first pass. The hack fix is to set the GL_DEPTH_BUFFER_BIT only after
-	 * Z_Draw() has been called once. Yeah, right. £
+	 * Z_Draw() has been called once. Yeah, right. ï¿½
 	 * qglClear(glbitClear);
 	 */
 	qglClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );

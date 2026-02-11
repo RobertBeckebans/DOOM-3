@@ -139,8 +139,8 @@ public:
 	virtual void	   ReadFromSnapshot( const idBitMsgDelta& msg );
 
 	enum { EVENT_RELOAD = idEntity::EVENT_MAXEVENTS, EVENT_ENDRELOAD, EVENT_CHANGESKIN, EVENT_MAXEVENTS };
-	virtual bool		   ClientReceiveEvent( int event, int time, const idBitMsg& msg );
-	virtual void		   ClientPredictionThink();
+	virtual bool ClientReceiveEvent( int event, int time, const idBitMsg& msg );
+	virtual void ClientPredictionThink();
 
 private:
 	// script control

@@ -32,7 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 #define private	  public
 #define protected public
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "../Game_local.h"

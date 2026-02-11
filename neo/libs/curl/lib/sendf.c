@@ -401,7 +401,7 @@ int Curl_read( struct connectdata *conn, /* connection data */
 					/* openssl/ssl.h says "look at error stack/return value/errno" */
 				{
 					char error_buffer[120]; /* OpenSSL documents that this must be at
-                                    least 120 bytes long. */
+                                   least 120 bytes long. */
 					int sslerror = ERR_get_error();
 					failf( conn->data, "SSL read: %s, errno %d",
 						   ERR_error_string( sslerror, error_buffer ),

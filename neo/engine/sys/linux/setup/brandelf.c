@@ -196,7 +196,8 @@ static void printelftypes()
 	int elfwalk;
 
 	fprintf( stderr, "known ELF types are: " );
-	for( elfwalk = 0; elfwalk < sizeof( elftypes ) / sizeof( elftypes[0] ); elfwalk++ )
+	for( elfwalk = 0; elfwalk < sizeof( elftypes ) / sizeof( elftypes[0] ); elfwalk++ ) {
 		fprintf( stderr, "%s(%u) ", elftypes[elfwalk].str, elftypes[elfwalk].value );
+	}
 	fprintf( stderr, "\n" );
 }

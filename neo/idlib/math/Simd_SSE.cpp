@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "Simd_Generic.h"
@@ -8488,51 +8488,51 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					case 2: {			// 2x2 * 2x6
 
 #define MUL_Nx2_2x6_INIT								\
-				__asm mov		esi, m2Ptr								\
-				__asm mov		edi, m1Ptr								\
-				__asm mov		eax, dstPtr								\
-				__asm movaps	xmm0, [esi]								\
-				__asm movlps	xmm1, [esi+16]							\
-				__asm movhps	xmm1, [esi+40]							\
-				__asm movlps	xmm2, [esi+24]							\
-				__asm movhps	xmm2, [esi+32]
+		__asm mov		esi, m2Ptr								\
+		__asm mov		edi, m1Ptr								\
+		__asm mov		eax, dstPtr								\
+		__asm movaps	xmm0, [esi]								\
+		__asm movlps	xmm1, [esi+16]							\
+		__asm movhps	xmm1, [esi+40]							\
+		__asm movlps	xmm2, [esi+24]							\
+		__asm movhps	xmm2, [esi+32]
 
 #define MUL_Nx2_2x6_ROW2( row )							\
-				__asm movaps	xmm3, [edi+row*16]						\
-				__asm movaps	xmm5, xmm0								\
-				__asm movaps	xmm4, xmm3								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm5, xmm4								\
-				__asm movaps	xmm4, xmm3								\
-				__asm movaps	xmm6, xmm2								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 1, 1, 1, 1 )	\
-				__asm mulps		xmm6, xmm4								\
-				__asm addps		xmm5, xmm6								\
-				__asm movaps	[eax+row*48], xmm5						\
-				__asm movaps	xmm4, xmm3								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-				__asm movaps	xmm7, xmm1								\
-				__asm mulps		xmm7, xmm4								\
-				__asm movaps	xmm4, xmm3								\
-				__asm movaps	xmm5, xmm0								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 2, 2, 2, 2 )	\
-				__asm mulps		xmm5, xmm4								\
-				__asm movaps	xmm4, xmm3								\
-				__asm movaps	xmm6, xmm2								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 3, 3, 3, 3 )	\
-				__asm mulps		xmm6, xmm4								\
-				__asm addps		xmm5, xmm6								\
-				__asm shufps	xmm3, xmm3, R_SHUFFLEPS( 2, 2, 3, 3 )	\
-				__asm movaps	xmm6, xmm1								\
-				__asm mulps		xmm6, xmm3								\
-				__asm movaps	xmm4, xmm7								\
-				__asm movlhps	xmm7, xmm6								\
-				__asm movhlps	xmm6, xmm4								\
-				__asm addps		xmm6, xmm7								\
-				__asm movlps	[eax+row*48+16], xmm6					\
-				__asm movlps	[eax+row*48+24], xmm5					\
-				__asm movhps	[eax+row*48+32], xmm5					\
-				__asm movhps	[eax+row*48+40], xmm6
+		__asm movaps	xmm3, [edi+row*16]						\
+		__asm movaps	xmm5, xmm0								\
+		__asm movaps	xmm4, xmm3								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm5, xmm4								\
+		__asm movaps	xmm4, xmm3								\
+		__asm movaps	xmm6, xmm2								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 1, 1, 1, 1 )	\
+		__asm mulps		xmm6, xmm4								\
+		__asm addps		xmm5, xmm6								\
+		__asm movaps	[eax+row*48], xmm5						\
+		__asm movaps	xmm4, xmm3								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+		__asm movaps	xmm7, xmm1								\
+		__asm mulps		xmm7, xmm4								\
+		__asm movaps	xmm4, xmm3								\
+		__asm movaps	xmm5, xmm0								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 2, 2, 2, 2 )	\
+		__asm mulps		xmm5, xmm4								\
+		__asm movaps	xmm4, xmm3								\
+		__asm movaps	xmm6, xmm2								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 3, 3, 3, 3 )	\
+		__asm mulps		xmm6, xmm4								\
+		__asm addps		xmm5, xmm6								\
+		__asm shufps	xmm3, xmm3, R_SHUFFLEPS( 2, 2, 3, 3 )	\
+		__asm movaps	xmm6, xmm1								\
+		__asm mulps		xmm6, xmm3								\
+		__asm movaps	xmm4, xmm7								\
+		__asm movlhps	xmm7, xmm6								\
+		__asm movhlps	xmm6, xmm4								\
+		__asm addps		xmm6, xmm7								\
+		__asm movlps	[eax+row*48+16], xmm6					\
+		__asm movlps	[eax+row*48+24], xmm5					\
+		__asm movhps	[eax+row*48+32], xmm5					\
+		__asm movhps	[eax+row*48+40], xmm6
 
 						MUL_Nx2_2x6_INIT
 						MUL_Nx2_2x6_ROW2( 0 )
@@ -8646,83 +8646,83 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					}
 					case 6: {			// 6x3 * 3x6
 #define MUL_Nx3_3x6_FIRST4COLUMNS_INIT						\
-				__asm mov			esi, m2Ptr								\
-				__asm mov			edi, m1Ptr								\
-				__asm mov			eax, dstPtr								\
-				__asm movlps		xmm0, [esi+ 0*4]						\
-				__asm movhps		xmm0, [esi+ 2*4]						\
-				__asm movlps		xmm1, [esi+ 6*4]						\
-				__asm movhps		xmm1, [esi+ 8*4]						\
-				__asm movlps		xmm2, [esi+12*4]						\
-				__asm movhps		xmm2, [esi+14*4]
+		__asm mov			esi, m2Ptr								\
+		__asm mov			edi, m1Ptr								\
+		__asm mov			eax, dstPtr								\
+		__asm movlps		xmm0, [esi+ 0*4]						\
+		__asm movhps		xmm0, [esi+ 2*4]						\
+		__asm movlps		xmm1, [esi+ 6*4]						\
+		__asm movhps		xmm1, [esi+ 8*4]						\
+		__asm movlps		xmm2, [esi+12*4]						\
+		__asm movhps		xmm2, [esi+14*4]
 
 #define MUL_Nx3_3x6_FIRST4COLUMNS_ROW( row )				\
-				__asm movss			xmm3, [edi+(row*3+0)*4]					\
-				__asm shufps		xmm3, xmm3, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm3, xmm0								\
-				__asm movss			xmm4, [edi+(row*3+1)*4]					\
-				__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm4, xmm1								\
-				__asm addps			xmm3, xmm4								\
-				__asm movss			xmm5, [edi+(row*3+2)*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm3, xmm5								\
-				__asm movlps		[eax+(row*6+0)*4], xmm3					\
-				__asm movhps		[eax+(row*6+2)*4], xmm3
+		__asm movss			xmm3, [edi+(row*3+0)*4]					\
+		__asm shufps		xmm3, xmm3, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm3, xmm0								\
+		__asm movss			xmm4, [edi+(row*3+1)*4]					\
+		__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm4, xmm1								\
+		__asm addps			xmm3, xmm4								\
+		__asm movss			xmm5, [edi+(row*3+2)*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm3, xmm5								\
+		__asm movlps		[eax+(row*6+0)*4], xmm3					\
+		__asm movhps		[eax+(row*6+2)*4], xmm3
 
 #define MUL_Nx3_3x6_LAST2COLUMNS_ROW6						\
-				__asm movlps		xmm0, [esi+ 4*4]						\
-				__asm movlps		xmm1, [esi+10*4]						\
-				__asm movlps		xmm2, [esi+16*4]						\
-				__asm shufps		xmm0, xmm0, 0x44						\
-				__asm shufps		xmm1, xmm1, 0x44						\
-				__asm shufps		xmm2, xmm2, 0x44						\
-				__asm movlps		xmm3, [edi+0*4]							\
-				__asm movhps		xmm3, [edi+2*4]							\
-				__asm movaps		xmm4, xmm3								\
-				__asm movaps		xmm5, xmm3								\
-				__asm shufps		xmm3, xmm3, 0xF0						\
-				__asm mulps			xmm3, xmm0								\
-				__asm movlps		xmm6, [edi+4*4]							\
-				__asm movhps		xmm6, [edi+6*4]							\
-				__asm shufps		xmm4, xmm6, 0x05						\
-				__asm mulps			xmm4, xmm1								\
-				__asm addps			xmm3, xmm4								\
-				__asm shufps		xmm5, xmm6, 0x5A						\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm3, xmm5								\
-				__asm movlps		[eax+4*4], xmm3							\
-				__asm movhps		[eax+10*4], xmm3						\
-				__asm movaps		xmm5, xmm6								\
-				__asm movlps		xmm3, [edi+8*4]							\
-				__asm movhps		xmm3, [edi+10*4]						\
-				__asm movaps		xmm4, xmm3								\
-				__asm shufps		xmm5, xmm3, 0x5A						\
-				__asm mulps			xmm5, xmm0								\
-				__asm shufps		xmm6, xmm3, 0xAF						\
-				__asm mulps			xmm6, xmm1								\
-				__asm addps			xmm5, xmm6								\
-				__asm shufps		xmm4, xmm4, 0xF0						\
-				__asm mulps			xmm4, xmm2								\
-				__asm addps			xmm4, xmm5								\
-				__asm movlps		[eax+16*4], xmm4						\
-				__asm movhps		[eax+22*4], xmm4						\
-				__asm movlps		xmm6, [edi+12*4]						\
-				__asm movhps		xmm6, [edi+14*4]						\
-				__asm movaps		xmm5, xmm6								\
-				__asm movaps		xmm4, xmm6								\
-				__asm shufps		xmm6, xmm6, 0xF0						\
-				__asm mulps			xmm6, xmm0								\
-				__asm movlps		xmm3, [edi+16*4]						\
-				__asm shufps		xmm5, xmm3, 0x05						\
-				__asm mulps			xmm5, xmm1								\
-				__asm addps			xmm5, xmm6								\
-				__asm shufps		xmm4, xmm3, 0x5A						\
-				__asm mulps			xmm4, xmm2								\
-				__asm addps			xmm4, xmm5								\
-				__asm movlps		[eax+28*4], xmm4						\
-				__asm movhps		[eax+34*4], xmm4
+		__asm movlps		xmm0, [esi+ 4*4]						\
+		__asm movlps		xmm1, [esi+10*4]						\
+		__asm movlps		xmm2, [esi+16*4]						\
+		__asm shufps		xmm0, xmm0, 0x44						\
+		__asm shufps		xmm1, xmm1, 0x44						\
+		__asm shufps		xmm2, xmm2, 0x44						\
+		__asm movlps		xmm3, [edi+0*4]							\
+		__asm movhps		xmm3, [edi+2*4]							\
+		__asm movaps		xmm4, xmm3								\
+		__asm movaps		xmm5, xmm3								\
+		__asm shufps		xmm3, xmm3, 0xF0						\
+		__asm mulps			xmm3, xmm0								\
+		__asm movlps		xmm6, [edi+4*4]							\
+		__asm movhps		xmm6, [edi+6*4]							\
+		__asm shufps		xmm4, xmm6, 0x05						\
+		__asm mulps			xmm4, xmm1								\
+		__asm addps			xmm3, xmm4								\
+		__asm shufps		xmm5, xmm6, 0x5A						\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm3, xmm5								\
+		__asm movlps		[eax+4*4], xmm3							\
+		__asm movhps		[eax+10*4], xmm3						\
+		__asm movaps		xmm5, xmm6								\
+		__asm movlps		xmm3, [edi+8*4]							\
+		__asm movhps		xmm3, [edi+10*4]						\
+		__asm movaps		xmm4, xmm3								\
+		__asm shufps		xmm5, xmm3, 0x5A						\
+		__asm mulps			xmm5, xmm0								\
+		__asm shufps		xmm6, xmm3, 0xAF						\
+		__asm mulps			xmm6, xmm1								\
+		__asm addps			xmm5, xmm6								\
+		__asm shufps		xmm4, xmm4, 0xF0						\
+		__asm mulps			xmm4, xmm2								\
+		__asm addps			xmm4, xmm5								\
+		__asm movlps		[eax+16*4], xmm4						\
+		__asm movhps		[eax+22*4], xmm4						\
+		__asm movlps		xmm6, [edi+12*4]						\
+		__asm movhps		xmm6, [edi+14*4]						\
+		__asm movaps		xmm5, xmm6								\
+		__asm movaps		xmm4, xmm6								\
+		__asm shufps		xmm6, xmm6, 0xF0						\
+		__asm mulps			xmm6, xmm0								\
+		__asm movlps		xmm3, [edi+16*4]						\
+		__asm shufps		xmm5, xmm3, 0x05						\
+		__asm mulps			xmm5, xmm1								\
+		__asm addps			xmm5, xmm6								\
+		__asm shufps		xmm4, xmm3, 0x5A						\
+		__asm mulps			xmm4, xmm2								\
+		__asm addps			xmm4, xmm5								\
+		__asm movlps		[eax+28*4], xmm4						\
+		__asm movhps		[eax+34*4], xmm4
 
 						MUL_Nx3_3x6_FIRST4COLUMNS_INIT
 						MUL_Nx3_3x6_FIRST4COLUMNS_ROW( 0 )
@@ -8753,67 +8753,67 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					case 4: {			// 4x4 * 4x6
 
 #define MUL_Nx4_4x6_FIRST4COLUMNS_INIT						\
-				__asm mov			esi, m2Ptr								\
-				__asm mov			edi, m1Ptr								\
-				__asm mov			eax, dstPtr								\
-				__asm movlps		xmm0, [esi+ 0*4]						\
-				__asm movhps		xmm0, [esi+ 2*4]						\
-				__asm movlps		xmm1, [esi+ 6*4]						\
-				__asm movhps		xmm1, [esi+ 8*4]						\
-				__asm movlps		xmm2, [esi+12*4]						\
-				__asm movhps		xmm2, [esi+14*4]						\
-				__asm movlps		xmm3, [esi+18*4]						\
-				__asm movhps		xmm3, [esi+20*4]
+		__asm mov			esi, m2Ptr								\
+		__asm mov			edi, m1Ptr								\
+		__asm mov			eax, dstPtr								\
+		__asm movlps		xmm0, [esi+ 0*4]						\
+		__asm movhps		xmm0, [esi+ 2*4]						\
+		__asm movlps		xmm1, [esi+ 6*4]						\
+		__asm movhps		xmm1, [esi+ 8*4]						\
+		__asm movlps		xmm2, [esi+12*4]						\
+		__asm movhps		xmm2, [esi+14*4]						\
+		__asm movlps		xmm3, [esi+18*4]						\
+		__asm movhps		xmm3, [esi+20*4]
 
 #define MUL_Nx4_4x6_FIRST4COLUMNS_ROW( row )				\
-				__asm movss			xmm4, [edi+row*16+0*4]					\
-				__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm4, xmm0								\
-				__asm movss			xmm5, [edi+row*16+1*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm1								\
-				__asm addps			xmm4, xmm5								\
-				__asm movss			xmm6, [edi+row*16+2*4]					\
-				__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm6, xmm2								\
-				__asm addps			xmm4, xmm6								\
-				__asm movss			xmm7, [edi+row*16+3*4]					\
-				__asm shufps		xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm7, xmm3								\
-				__asm addps			xmm4, xmm7								\
-				__asm movlps		[eax+row*24+0], xmm4					\
-				__asm movhps		[eax+row*24+8], xmm4
+		__asm movss			xmm4, [edi+row*16+0*4]					\
+		__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm4, xmm0								\
+		__asm movss			xmm5, [edi+row*16+1*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm1								\
+		__asm addps			xmm4, xmm5								\
+		__asm movss			xmm6, [edi+row*16+2*4]					\
+		__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm6, xmm2								\
+		__asm addps			xmm4, xmm6								\
+		__asm movss			xmm7, [edi+row*16+3*4]					\
+		__asm shufps		xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm7, xmm3								\
+		__asm addps			xmm4, xmm7								\
+		__asm movlps		[eax+row*24+0], xmm4					\
+		__asm movhps		[eax+row*24+8], xmm4
 
 #define MUL_Nx4_4x6_LAST2COLUMNS_INIT						\
-				__asm movlps		xmm0, [esi+ 4*4]						\
-				__asm movlps		xmm1, [esi+10*4]						\
-				__asm movlps		xmm2, [esi+16*4]						\
-				__asm movlps		xmm3, [esi+22*4]						\
-				__asm shufps		xmm0, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm1, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm2, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm3, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )
+		__asm movlps		xmm0, [esi+ 4*4]						\
+		__asm movlps		xmm1, [esi+10*4]						\
+		__asm movlps		xmm2, [esi+16*4]						\
+		__asm movlps		xmm3, [esi+22*4]						\
+		__asm shufps		xmm0, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm1, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm2, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm3, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )
 
 #define MUL_Nx4_4x6_LAST2COLUMNS_ROW2( row )				\
-				__asm movlps		xmm7, [edi+row*32+ 0*4]					\
-				__asm movhps		xmm7, [edi+row*32+ 4*4]					\
-				__asm movaps		xmm6, xmm7								\
-				__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 3, 3 )	\
-				__asm mulps			xmm6, xmm0								\
-				__asm shufps		xmm7, xmm7, R_SHUFFLEPS( 1, 1, 2, 2 )	\
-				__asm mulps			xmm7, xmm1								\
-				__asm addps			xmm6, xmm7								\
-				__asm movlps		xmm4, [edi+row*32+ 2*4]					\
-				__asm movhps		xmm4, [edi+row*32+ 6*4]					\
-				__asm movaps		xmm5, xmm4								\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 3, 3 )	\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm6, xmm5								\
-				__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 1, 1, 2, 2 )	\
-				__asm mulps			xmm4, xmm3								\
-				__asm addps			xmm6, xmm4								\
-				__asm movlps		[eax+row*48+ 4*4], xmm6					\
-				__asm movhps		[eax+row*48+10*4], xmm6
+		__asm movlps		xmm7, [edi+row*32+ 0*4]					\
+		__asm movhps		xmm7, [edi+row*32+ 4*4]					\
+		__asm movaps		xmm6, xmm7								\
+		__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 3, 3 )	\
+		__asm mulps			xmm6, xmm0								\
+		__asm shufps		xmm7, xmm7, R_SHUFFLEPS( 1, 1, 2, 2 )	\
+		__asm mulps			xmm7, xmm1								\
+		__asm addps			xmm6, xmm7								\
+		__asm movlps		xmm4, [edi+row*32+ 2*4]					\
+		__asm movhps		xmm4, [edi+row*32+ 6*4]					\
+		__asm movaps		xmm5, xmm4								\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 3, 3 )	\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm6, xmm5								\
+		__asm shufps		xmm4, xmm4, R_SHUFFLEPS( 1, 1, 2, 2 )	\
+		__asm mulps			xmm4, xmm3								\
+		__asm addps			xmm6, xmm4								\
+		__asm movlps		[eax+row*48+ 4*4], xmm6					\
+		__asm movhps		[eax+row*48+10*4], xmm6
 
 						MUL_Nx4_4x6_FIRST4COLUMNS_INIT
 						MUL_Nx4_4x6_FIRST4COLUMNS_ROW( 0 )
@@ -8861,97 +8861,97 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					case 5: {			// 5x5 * 5x6
 
 #define MUL_Nx5_5x6_FIRST4COLUMNS_INIT						\
-				__asm mov			esi, m2Ptr								\
-				__asm mov			edi, m1Ptr								\
-				__asm mov			eax, dstPtr								\
-				__asm movlps		xmm0, [esi+ 0*4]						\
-				__asm movhps		xmm0, [esi+ 2*4]						\
-				__asm movlps		xmm1, [esi+ 6*4]						\
-				__asm movhps		xmm1, [esi+ 8*4]						\
-				__asm movlps		xmm2, [esi+12*4]						\
-				__asm movhps		xmm2, [esi+14*4]						\
-				__asm movlps		xmm3, [esi+18*4]						\
-				__asm movhps		xmm3, [esi+20*4]						\
-				__asm movlps		xmm4, [esi+24*4]						\
-				__asm movhps		xmm4, [esi+26*4]
+		__asm mov			esi, m2Ptr								\
+		__asm mov			edi, m1Ptr								\
+		__asm mov			eax, dstPtr								\
+		__asm movlps		xmm0, [esi+ 0*4]						\
+		__asm movhps		xmm0, [esi+ 2*4]						\
+		__asm movlps		xmm1, [esi+ 6*4]						\
+		__asm movhps		xmm1, [esi+ 8*4]						\
+		__asm movlps		xmm2, [esi+12*4]						\
+		__asm movhps		xmm2, [esi+14*4]						\
+		__asm movlps		xmm3, [esi+18*4]						\
+		__asm movhps		xmm3, [esi+20*4]						\
+		__asm movlps		xmm4, [esi+24*4]						\
+		__asm movhps		xmm4, [esi+26*4]
 
 #define MUL_Nx5_5x6_FIRST4COLUMNS_ROW( row )				\
-				__asm movss			xmm6, [edi+row*20+0*4]					\
-				__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm6, xmm0								\
-				__asm movss			xmm5, [edi+row*20+1*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm1								\
-				__asm addps			xmm6, xmm5								\
-				__asm movss			xmm5, [edi+row*20+2*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm6, xmm5								\
-				__asm movss			xmm5, [edi+row*20+3*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm3								\
-				__asm addps			xmm6, xmm5								\
-				__asm movss			xmm5, [edi+row*20+4*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps			xmm5, xmm4								\
-				__asm addps			xmm6, xmm5								\
-				__asm movlps		[eax+row*24+0], xmm6					\
-				__asm movhps		[eax+row*24+8], xmm6
+		__asm movss			xmm6, [edi+row*20+0*4]					\
+		__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm6, xmm0								\
+		__asm movss			xmm5, [edi+row*20+1*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm1								\
+		__asm addps			xmm6, xmm5								\
+		__asm movss			xmm5, [edi+row*20+2*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm6, xmm5								\
+		__asm movss			xmm5, [edi+row*20+3*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm3								\
+		__asm addps			xmm6, xmm5								\
+		__asm movss			xmm5, [edi+row*20+4*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps			xmm5, xmm4								\
+		__asm addps			xmm6, xmm5								\
+		__asm movlps		[eax+row*24+0], xmm6					\
+		__asm movhps		[eax+row*24+8], xmm6
 
 #define MUL_Nx5_5x6_LAST2COLUMNS_INIT						\
-				__asm movlps		xmm0, [esi+ 4*4]						\
-				__asm movlps		xmm1, [esi+10*4]						\
-				__asm movlps		xmm2, [esi+16*4]						\
-				__asm movlps		xmm3, [esi+22*4]						\
-				__asm movlps		xmm4, [esi+28*4]						\
-				__asm shufps		xmm0, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm1, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm2, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm3, xmm4, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-				__asm shufps		xmm4, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )
+		__asm movlps		xmm0, [esi+ 4*4]						\
+		__asm movlps		xmm1, [esi+10*4]						\
+		__asm movlps		xmm2, [esi+16*4]						\
+		__asm movlps		xmm3, [esi+22*4]						\
+		__asm movlps		xmm4, [esi+28*4]						\
+		__asm shufps		xmm0, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm1, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm2, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm3, xmm4, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+		__asm shufps		xmm4, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )
 
 #define MUL_Nx5_5x6_LAST2COLUMNS_ROW2( row )				\
-				__asm movlps		xmm7, [edi+row*40+ 0*4]					\
-				__asm movhps		xmm7, [edi+row*40+ 6*4]					\
-				__asm movaps		xmm6, xmm7								\
-				__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 2, 2 )	\
-				__asm mulps			xmm6, xmm0								\
-				__asm movaps		xmm5, xmm7								\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 1, 1, 3, 3 )	\
-				__asm mulps			xmm5, xmm1								\
-				__asm addps			xmm6, xmm5								\
-				__asm movlps		xmm7, [edi+row*40+ 2*4]					\
-				__asm movhps		xmm7, [edi+row*40+ 8*4]					\
-				__asm movaps		xmm5, xmm7								\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 2, 2 )	\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm6, xmm5								\
-				__asm movaps		xmm5, xmm7								\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 1, 1, 3, 3 )	\
-				__asm mulps			xmm5, xmm3								\
-				__asm addps			xmm6, xmm5								\
-				__asm movlps		xmm5, [edi+row*40+ 4*4]					\
-				__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-				__asm mulps			xmm5, xmm4								\
-				__asm addps			xmm6, xmm5								\
-				__asm movlps		[eax+row*48+ 4*4], xmm6					\
-				__asm movhps		[eax+row*48+10*4], xmm6
+		__asm movlps		xmm7, [edi+row*40+ 0*4]					\
+		__asm movhps		xmm7, [edi+row*40+ 6*4]					\
+		__asm movaps		xmm6, xmm7								\
+		__asm shufps		xmm6, xmm6, R_SHUFFLEPS( 0, 0, 2, 2 )	\
+		__asm mulps			xmm6, xmm0								\
+		__asm movaps		xmm5, xmm7								\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 1, 1, 3, 3 )	\
+		__asm mulps			xmm5, xmm1								\
+		__asm addps			xmm6, xmm5								\
+		__asm movlps		xmm7, [edi+row*40+ 2*4]					\
+		__asm movhps		xmm7, [edi+row*40+ 8*4]					\
+		__asm movaps		xmm5, xmm7								\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 2, 2 )	\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm6, xmm5								\
+		__asm movaps		xmm5, xmm7								\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 1, 1, 3, 3 )	\
+		__asm mulps			xmm5, xmm3								\
+		__asm addps			xmm6, xmm5								\
+		__asm movlps		xmm5, [edi+row*40+ 4*4]					\
+		__asm shufps		xmm5, xmm5, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+		__asm mulps			xmm5, xmm4								\
+		__asm addps			xmm6, xmm5								\
+		__asm movlps		[eax+row*48+ 4*4], xmm6					\
+		__asm movhps		[eax+row*48+10*4], xmm6
 
 #define MUL_Nx5_5x6_LAST2COLUMNS_ROW( row )					\
-				__asm movlps		xmm6, [edi+20*4+0*4]					\
-				__asm unpcklps		xmm6, xmm6								\
-				__asm mulps			xmm6, xmm0								\
-				__asm movlps		xmm5, [edi+20*4+2*4]					\
-				__asm unpcklps		xmm5, xmm5								\
-				__asm mulps			xmm5, xmm2								\
-				__asm addps			xmm6, xmm5								\
-				__asm movss			xmm5, [edi+20*4+4*4]					\
-				__asm unpcklps		xmm5, xmm5								\
-				__asm mulps			xmm5, xmm4								\
-				__asm addps			xmm6, xmm5								\
-				__asm movhlps		xmm7, xmm6								\
-				__asm addps			xmm6, xmm7								\
-				__asm movlps		[eax+row*24+4*4], xmm6
+		__asm movlps		xmm6, [edi+20*4+0*4]					\
+		__asm unpcklps		xmm6, xmm6								\
+		__asm mulps			xmm6, xmm0								\
+		__asm movlps		xmm5, [edi+20*4+2*4]					\
+		__asm unpcklps		xmm5, xmm5								\
+		__asm mulps			xmm5, xmm2								\
+		__asm addps			xmm6, xmm5								\
+		__asm movss			xmm5, [edi+20*4+4*4]					\
+		__asm unpcklps		xmm5, xmm5								\
+		__asm mulps			xmm5, xmm4								\
+		__asm addps			xmm6, xmm5								\
+		__asm movhlps		xmm7, xmm6								\
+		__asm addps			xmm6, xmm7								\
+		__asm movlps		[eax+row*24+4*4], xmm6
 
 						MUL_Nx5_5x6_FIRST4COLUMNS_INIT
 						MUL_Nx5_5x6_FIRST4COLUMNS_ROW( 0 )
@@ -9009,41 +9009,41 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					if( !( l ^ 2 ) ) {		// 2x6 * 6x2
 
 #define MUL_Nx6_6x2_INIT								\
-				__asm mov		esi, m2Ptr								\
-				__asm mov		edi, m1Ptr								\
-				__asm mov		eax, dstPtr								\
-				__asm movaps	xmm0, [esi]								\
-				__asm movaps	xmm1, [esi+16]							\
-				__asm movaps	xmm2, [esi+32]
+		__asm mov		esi, m2Ptr								\
+		__asm mov		edi, m1Ptr								\
+		__asm mov		eax, dstPtr								\
+		__asm movaps	xmm0, [esi]								\
+		__asm movaps	xmm1, [esi+16]							\
+		__asm movaps	xmm2, [esi+32]
 
 #define MUL_Nx6_6x2_ROW2( row )							\
-				__asm movaps	xmm7, [edi+row*48+0*4]					\
-				__asm movaps	xmm6, xmm7								\
-				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-				__asm mulps		xmm7, xmm0								\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 2, 2, 3, 3 )	\
-				__asm mulps		xmm6, xmm1								\
-				__asm addps		xmm7, xmm6								\
-				__asm movaps	xmm6, [edi+row*48+4*4]					\
-				__asm movaps	xmm5, xmm6								\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-				__asm mulps		xmm6, xmm2								\
-				__asm addps		xmm7, xmm6								\
-				__asm shufps	xmm5, xmm5, R_SHUFFLEPS( 2, 2, 3, 3 )	\
-				__asm mulps		xmm5, xmm0								\
-				__asm movaps	xmm6, [edi+row*48+24+2*4]				\
-				__asm movaps	xmm4, xmm6								\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-				__asm mulps		xmm6, xmm1								\
-				__asm addps		xmm5, xmm6								\
-				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 2, 2, 3, 3 )	\
-				__asm mulps		xmm4, xmm2								\
-				__asm addps		xmm5, xmm4								\
-				__asm movaps	xmm4, xmm5								\
-				__asm movhlps	xmm5, xmm7								\
-				__asm movlhps	xmm7, xmm4								\
-				__asm addps		xmm7, xmm5								\
-				__asm movaps	[eax+row*16], xmm7
+		__asm movaps	xmm7, [edi+row*48+0*4]					\
+		__asm movaps	xmm6, xmm7								\
+		__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+		__asm mulps		xmm7, xmm0								\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 2, 2, 3, 3 )	\
+		__asm mulps		xmm6, xmm1								\
+		__asm addps		xmm7, xmm6								\
+		__asm movaps	xmm6, [edi+row*48+4*4]					\
+		__asm movaps	xmm5, xmm6								\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+		__asm mulps		xmm6, xmm2								\
+		__asm addps		xmm7, xmm6								\
+		__asm shufps	xmm5, xmm5, R_SHUFFLEPS( 2, 2, 3, 3 )	\
+		__asm mulps		xmm5, xmm0								\
+		__asm movaps	xmm6, [edi+row*48+24+2*4]				\
+		__asm movaps	xmm4, xmm6								\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+		__asm mulps		xmm6, xmm1								\
+		__asm addps		xmm5, xmm6								\
+		__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 2, 2, 3, 3 )	\
+		__asm mulps		xmm4, xmm2								\
+		__asm addps		xmm5, xmm4								\
+		__asm movaps	xmm4, xmm5								\
+		__asm movhlps	xmm5, xmm7								\
+		__asm movlhps	xmm7, xmm4								\
+		__asm addps		xmm7, xmm5								\
+		__asm movaps	[eax+row*16], xmm7
 
 						MUL_Nx6_6x2_INIT
 						MUL_Nx6_6x2_ROW2( 0 )
@@ -9056,48 +9056,48 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					if( !( l ^ 3 ) ) {		// 3x6 * 6x3
 
 #define MUL_Nx6_6x3_INIT								\
-				__asm mov		esi, m2Ptr								\
-				__asm mov		edi, m1Ptr								\
-				__asm mov		eax, dstPtr								\
-				__asm movss		xmm0, [esi+ 0*4]						\
-				__asm movhps	xmm0, [esi+ 1*4]						\
-				__asm movss		xmm1, [esi+ 3*4]						\
-				__asm movhps	xmm1, [esi+ 4*4]						\
-				__asm movss		xmm2, [esi+ 6*4]						\
-				__asm movhps	xmm2, [esi+ 7*4]						\
-				__asm movss		xmm3, [esi+ 9*4]						\
-				__asm movhps	xmm3, [esi+10*4]						\
-				__asm movss		xmm4, [esi+12*4]						\
-				__asm movhps	xmm4, [esi+13*4]						\
-				__asm movss		xmm5, [esi+15*4]						\
-				__asm movhps	xmm5, [esi+16*4]
+		__asm mov		esi, m2Ptr								\
+		__asm mov		edi, m1Ptr								\
+		__asm mov		eax, dstPtr								\
+		__asm movss		xmm0, [esi+ 0*4]						\
+		__asm movhps	xmm0, [esi+ 1*4]						\
+		__asm movss		xmm1, [esi+ 3*4]						\
+		__asm movhps	xmm1, [esi+ 4*4]						\
+		__asm movss		xmm2, [esi+ 6*4]						\
+		__asm movhps	xmm2, [esi+ 7*4]						\
+		__asm movss		xmm3, [esi+ 9*4]						\
+		__asm movhps	xmm3, [esi+10*4]						\
+		__asm movss		xmm4, [esi+12*4]						\
+		__asm movhps	xmm4, [esi+13*4]						\
+		__asm movss		xmm5, [esi+15*4]						\
+		__asm movhps	xmm5, [esi+16*4]
 
 #define MUL_Nx6_6x3_ROW( row )							\
-				__asm movss		xmm7, [edi+row*24+0]					\
-				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm7, xmm0								\
-				__asm movss		xmm6, [edi+row*24+4]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm1								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+8]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm2								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+12]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm3								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+16]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm4								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+20]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm5								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		[eax+row*12+0], xmm7					\
-				__asm movhps	[eax+row*12+4], xmm7
+		__asm movss		xmm7, [edi+row*24+0]					\
+		__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm7, xmm0								\
+		__asm movss		xmm6, [edi+row*24+4]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm1								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+8]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm2								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+12]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm3								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+16]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm4								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+20]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm5								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		[eax+row*12+0], xmm7					\
+		__asm movhps	[eax+row*12+4], xmm7
 
 						MUL_Nx6_6x3_INIT
 						MUL_Nx6_6x3_ROW( 0 )
@@ -9112,41 +9112,41 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					if( !( l ^ 4 ) ) {		// 4x6 * 6x4
 
 #define MUL_Nx6_6x4_INIT								\
-				__asm mov		esi, m2Ptr								\
-				__asm mov		edi, m1Ptr								\
-				__asm mov		eax, dstPtr								\
-				__asm movaps	xmm0, [esi]								\
-				__asm movaps	xmm1, [esi+16]							\
-				__asm movaps	xmm2, [esi+32]							\
-				__asm movaps	xmm3, [esi+48]							\
-				__asm movaps	xmm4, [esi+64]							\
-				__asm movaps	xmm5, [esi+80]
+		__asm mov		esi, m2Ptr								\
+		__asm mov		edi, m1Ptr								\
+		__asm mov		eax, dstPtr								\
+		__asm movaps	xmm0, [esi]								\
+		__asm movaps	xmm1, [esi+16]							\
+		__asm movaps	xmm2, [esi+32]							\
+		__asm movaps	xmm3, [esi+48]							\
+		__asm movaps	xmm4, [esi+64]							\
+		__asm movaps	xmm5, [esi+80]
 
 #define MUL_Nx6_6x4_ROW( row )							\
-				__asm movss		xmm7, [edi+row*24+0]					\
-				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm7, xmm0								\
-				__asm movss		xmm6, [edi+row*24+4]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm1								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+8]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm2								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+12]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm3								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+16]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm4								\
-				__asm addps		xmm7, xmm6								\
-				__asm movss		xmm6, [edi+row*24+20]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm5								\
-				__asm addps		xmm7, xmm6								\
-				__asm movaps	[eax+row*16], xmm7
+		__asm movss		xmm7, [edi+row*24+0]					\
+		__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm7, xmm0								\
+		__asm movss		xmm6, [edi+row*24+4]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm1								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+8]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm2								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+12]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm3								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+16]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm4								\
+		__asm addps		xmm7, xmm6								\
+		__asm movss		xmm6, [edi+row*24+20]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm5								\
+		__asm addps		xmm7, xmm6								\
+		__asm movaps	[eax+row*16], xmm7
 
 						MUL_Nx6_6x4_INIT
 						MUL_Nx6_6x4_ROW( 0 )
@@ -9162,64 +9162,64 @@ void VPCALL idSIMD_SSE::MatX_MultiplyMatX( idMatX &dst, const idMatX &m1, const 
 					if( !( l ^ 5 ) ) {		// 5x6 * 6x5
 
 #define MUL_Nx6_6x5_INIT								\
-				__asm mov		esi, m2Ptr								\
-				__asm mov		edi, m1Ptr								\
-				__asm mov		eax, dstPtr								\
-				__asm movaps	xmm0, [esi]								\
-				__asm movlps	xmm1, [esi+20]							\
-				__asm movhps	xmm1, [esi+28]							\
-				__asm movlps	xmm2, [esi+40]							\
-				__asm movhps	xmm2, [esi+48]							\
-				__asm movlps	xmm3, [esi+60]							\
-				__asm movhps	xmm3, [esi+68]							\
-				__asm movaps	xmm4, [esi+80]							\
-				__asm movlps	xmm5, [esi+100]							\
-				__asm movhps	xmm5, [esi+108]
+		__asm mov		esi, m2Ptr								\
+		__asm mov		edi, m1Ptr								\
+		__asm mov		eax, dstPtr								\
+		__asm movaps	xmm0, [esi]								\
+		__asm movlps	xmm1, [esi+20]							\
+		__asm movhps	xmm1, [esi+28]							\
+		__asm movlps	xmm2, [esi+40]							\
+		__asm movhps	xmm2, [esi+48]							\
+		__asm movlps	xmm3, [esi+60]							\
+		__asm movhps	xmm3, [esi+68]							\
+		__asm movaps	xmm4, [esi+80]							\
+		__asm movlps	xmm5, [esi+100]							\
+		__asm movhps	xmm5, [esi+108]
 
 #define MUL_Nx6_6x5_ROW( row )							\
-				__asm movss		xmm7, [edi+row*24+0]					\
-				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm7, xmm0								\
-				__asm fld		dword ptr [edi+(row*6+0)*4]				\
-				__asm fmul		dword ptr [esi+(4+0*5)*4]				\
-				__asm movss		xmm6, [edi+row*24+4]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm1								\
-				__asm addps		xmm7, xmm6								\
-				__asm fld		dword ptr [edi+(row*6+1)*4]				\
-				__asm fmul		dword ptr [esi+(4+1*5)*4]				\
-				__asm faddp		st(1),st								\
-				__asm movss		xmm6, [edi+row*24+8]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm2								\
-				__asm addps		xmm7, xmm6								\
-				__asm fld		dword ptr [edi+(row*6+2)*4]				\
-				__asm fmul		dword ptr [esi+(4+2*5)*4]				\
-				__asm faddp		st(1),st								\
-				__asm movss		xmm6, [edi+row*24+12]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm3								\
-				__asm addps		xmm7, xmm6								\
-				__asm fld		dword ptr [edi+(row*6+3)*4]				\
-				__asm fmul		dword ptr [esi+(4+3*5)*4]				\
-				__asm faddp		st(1),st								\
-				__asm movss		xmm6, [edi+row*24+16]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm4								\
-				__asm addps		xmm7, xmm6								\
-				__asm fld		dword ptr [edi+(row*6+4)*4]				\
-				__asm fmul		dword ptr [esi+(4+4*5)*4]				\
-				__asm faddp		st(1),st								\
-				__asm movss		xmm6, [edi+row*24+20]					\
-				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-				__asm mulps		xmm6, xmm5								\
-				__asm addps		xmm7, xmm6								\
-				__asm fld		dword ptr [edi+(row*6+5)*4]				\
-				__asm fmul		dword ptr [esi+(4+5*5)*4]				\
-				__asm faddp		st(1),st								\
-				__asm fstp		dword ptr [eax+(row*5+4)*4]				\
-				__asm movlps	[eax+row*20], xmm7						\
-				__asm movhps	[eax+row*20+8], xmm7
+		__asm movss		xmm7, [edi+row*24+0]					\
+		__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm7, xmm0								\
+		__asm fld		dword ptr [edi+(row*6+0)*4]				\
+		__asm fmul		dword ptr [esi+(4+0*5)*4]				\
+		__asm movss		xmm6, [edi+row*24+4]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm1								\
+		__asm addps		xmm7, xmm6								\
+		__asm fld		dword ptr [edi+(row*6+1)*4]				\
+		__asm fmul		dword ptr [esi+(4+1*5)*4]				\
+		__asm faddp		st(1),st								\
+		__asm movss		xmm6, [edi+row*24+8]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm2								\
+		__asm addps		xmm7, xmm6								\
+		__asm fld		dword ptr [edi+(row*6+2)*4]				\
+		__asm fmul		dword ptr [esi+(4+2*5)*4]				\
+		__asm faddp		st(1),st								\
+		__asm movss		xmm6, [edi+row*24+12]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm3								\
+		__asm addps		xmm7, xmm6								\
+		__asm fld		dword ptr [edi+(row*6+3)*4]				\
+		__asm fmul		dword ptr [esi+(4+3*5)*4]				\
+		__asm faddp		st(1),st								\
+		__asm movss		xmm6, [edi+row*24+16]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm4								\
+		__asm addps		xmm7, xmm6								\
+		__asm fld		dword ptr [edi+(row*6+4)*4]				\
+		__asm fmul		dword ptr [esi+(4+4*5)*4]				\
+		__asm faddp		st(1),st								\
+		__asm movss		xmm6, [edi+row*24+20]					\
+		__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+		__asm mulps		xmm6, xmm5								\
+		__asm addps		xmm7, xmm6								\
+		__asm fld		dword ptr [edi+(row*6+5)*4]				\
+		__asm fmul		dword ptr [esi+(4+5*5)*4]				\
+		__asm faddp		st(1),st								\
+		__asm fstp		dword ptr [eax+(row*5+4)*4]				\
+		__asm movlps	[eax+row*20], xmm7						\
+		__asm movhps	[eax+row*20+8], xmm7
 
 						MUL_Nx6_6x5_INIT
 						MUL_Nx6_6x5_ROW( 0 )
@@ -9992,115 +9992,115 @@ void VPCALL idSIMD_SSE::MatX_TransposeMultiplyMatX( idMatX &dst, const idMatX &m
 				switch( k ) {
 					case 1: {					// 6x1 * 6x6
 #define MUL_6xN_6x6_FIRST4COLUMNS_INIT					\
-					__asm mov		esi, m2Ptr								\
-					__asm mov		edi, m1Ptr								\
-					__asm mov		eax, dstPtr								\
-					__asm movlps	xmm0, [esi+ 0*4]						\
-					__asm movhps	xmm0, [esi+ 2*4]						\
-					__asm movlps	xmm1, [esi+ 6*4]						\
-					__asm movhps	xmm1, [esi+ 8*4]						\
-					__asm movlps	xmm2, [esi+12*4]						\
-					__asm movhps	xmm2, [esi+14*4]						\
-					__asm movlps	xmm3, [esi+18*4]						\
-					__asm movhps	xmm3, [esi+20*4]						\
-					__asm movlps	xmm4, [esi+24*4]						\
-					__asm movhps	xmm4, [esi+26*4]						\
-					__asm movlps	xmm5, [esi+30*4]						\
-					__asm movhps	xmm5, [esi+32*4]
+				__asm mov		esi, m2Ptr								\
+				__asm mov		edi, m1Ptr								\
+				__asm mov		eax, dstPtr								\
+				__asm movlps	xmm0, [esi+ 0*4]						\
+				__asm movhps	xmm0, [esi+ 2*4]						\
+				__asm movlps	xmm1, [esi+ 6*4]						\
+				__asm movhps	xmm1, [esi+ 8*4]						\
+				__asm movlps	xmm2, [esi+12*4]						\
+				__asm movhps	xmm2, [esi+14*4]						\
+				__asm movlps	xmm3, [esi+18*4]						\
+				__asm movhps	xmm3, [esi+20*4]						\
+				__asm movlps	xmm4, [esi+24*4]						\
+				__asm movhps	xmm4, [esi+26*4]						\
+				__asm movlps	xmm5, [esi+30*4]						\
+				__asm movhps	xmm5, [esi+32*4]
 
 #define MUL_6xN_6x6_FIRST4COLUMNS_ROW( N, row )			\
-					__asm movss		xmm7, [edi+(row+0*N)*4]					\
-					__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm7, xmm0								\
-					__asm movss		xmm6, [edi+(row+1*N)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm1								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(row+2*N)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm2								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(row+3*N)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm3								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(row+4*N)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm4								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(row+5*N)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm5								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	[eax+(row*6+0)*4], xmm7					\
-					__asm movhps	[eax+(row*6+2)*4], xmm7
+				__asm movss		xmm7, [edi+(row+0*N)*4]					\
+				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm7, xmm0								\
+				__asm movss		xmm6, [edi+(row+1*N)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm1								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(row+2*N)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm2								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(row+3*N)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm3								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(row+4*N)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm4								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(row+5*N)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm5								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	[eax+(row*6+0)*4], xmm7					\
+				__asm movhps	[eax+(row*6+2)*4], xmm7
 
 #define MUL_6xN_6x6_LAST2COLUMNS_INIT					\
-					__asm movlps	xmm0, [esi+ 4*4]						\
-					__asm movlps	xmm1, [esi+10*4]						\
-					__asm shufps	xmm0, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-					__asm shufps	xmm1, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-					__asm movlps	xmm2, [esi+16*4]						\
-					__asm movlps	xmm3, [esi+22*4]						\
-					__asm shufps	xmm2, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-					__asm shufps	xmm3, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-					__asm movlps	xmm4, [esi+28*4]						\
-					__asm movlps	xmm5, [esi+34*4]						\
-					__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 1, 0, 1 )	\
-					__asm shufps	xmm5, xmm5, R_SHUFFLEPS( 0, 1, 0, 1 )
+				__asm movlps	xmm0, [esi+ 4*4]						\
+				__asm movlps	xmm1, [esi+10*4]						\
+				__asm shufps	xmm0, xmm0, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+				__asm shufps	xmm1, xmm1, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+				__asm movlps	xmm2, [esi+16*4]						\
+				__asm movlps	xmm3, [esi+22*4]						\
+				__asm shufps	xmm2, xmm2, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+				__asm shufps	xmm3, xmm3, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+				__asm movlps	xmm4, [esi+28*4]						\
+				__asm movlps	xmm5, [esi+34*4]						\
+				__asm shufps	xmm4, xmm4, R_SHUFFLEPS( 0, 1, 0, 1 )	\
+				__asm shufps	xmm5, xmm5, R_SHUFFLEPS( 0, 1, 0, 1 )
 
 #define MUL_6xN_6x6_LAST2COLUMNS_ROW2( N, row )			\
-					__asm movlps	xmm7, [edi+(row*2+0*N)*4]				\
-					__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm7, xmm0								\
-					__asm movlps	xmm6, [edi+(row*2+1*N)*4]				\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm6, xmm1								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	xmm6, [edi+(row*2+2*N)*4]				\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm6, xmm2								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	xmm6, [edi+(row*2+3*N)*4]				\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm6, xmm3								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	xmm6, [edi+(row*2+4*N)*4]				\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm6, xmm4								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	xmm6, [edi+(row*2+5*N)*4]				\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
-					__asm mulps		xmm6, xmm5								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	[eax+(row*12+ 4)*4], xmm7				\
-					__asm movhps	[eax+(row*12+10)*4], xmm7
+				__asm movlps	xmm7, [edi+(row*2+0*N)*4]				\
+				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm7, xmm0								\
+				__asm movlps	xmm6, [edi+(row*2+1*N)*4]				\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm6, xmm1								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	xmm6, [edi+(row*2+2*N)*4]				\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm6, xmm2								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	xmm6, [edi+(row*2+3*N)*4]				\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm6, xmm3								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	xmm6, [edi+(row*2+4*N)*4]				\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm6, xmm4								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	xmm6, [edi+(row*2+5*N)*4]				\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 1, 1 )	\
+				__asm mulps		xmm6, xmm5								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	[eax+(row*12+ 4)*4], xmm7				\
+				__asm movhps	[eax+(row*12+10)*4], xmm7
 
 #define MUL_6xN_6x6_LAST2COLUMNS_ROW( N, row )			\
-					__asm movss		xmm7, [edi+(1*N-1)*4]					\
-					__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm7, xmm0								\
-					__asm movss		xmm6, [edi+(2*N-1)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm1								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(3*N-1)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm2								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(4*N-1)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm3								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(5*N-1)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm4								\
-					__asm addps		xmm7, xmm6								\
-					__asm movss		xmm6, [edi+(6*N-1)*4]					\
-					__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
-					__asm mulps		xmm6, xmm5								\
-					__asm addps		xmm7, xmm6								\
-					__asm movlps	[eax+(row*6+4)*4], xmm7
+				__asm movss		xmm7, [edi+(1*N-1)*4]					\
+				__asm shufps	xmm7, xmm7, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm7, xmm0								\
+				__asm movss		xmm6, [edi+(2*N-1)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm1								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(3*N-1)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm2								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(4*N-1)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm3								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(5*N-1)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm4								\
+				__asm addps		xmm7, xmm6								\
+				__asm movss		xmm6, [edi+(6*N-1)*4]					\
+				__asm shufps	xmm6, xmm6, R_SHUFFLEPS( 0, 0, 0, 0 )	\
+				__asm mulps		xmm6, xmm5								\
+				__asm addps		xmm7, xmm6								\
+				__asm movlps	[eax+(row*6+4)*4], xmm7
 
 						MUL_6xN_6x6_FIRST4COLUMNS_INIT
 						MUL_6xN_6x6_FIRST4COLUMNS_ROW( 1, 0 )

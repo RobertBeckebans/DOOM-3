@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "qe3.h"
@@ -476,7 +476,7 @@ void SaveAsDialog( bool bRegion )
 }
 
 /*
- * Menu modifications £
+ * Menu modifications ï¿½
  * FillBSPMenu
  */
 const char*	bsp_commands[256];

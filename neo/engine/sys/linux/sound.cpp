@@ -37,7 +37,7 @@ If you have questions concerning this license or the applicable additional terms
 // http://www.opensound.com/
 #include <sys/soundcard.h>
 
-#include "../../idlib/precompiled.h"
+#include "precompiled.h"
 #include "../../sound/snd_local.h"
 #include "../posix/posix_public.h"
 #include "sound.h"
