@@ -1,7 +1,7 @@
 // PropTreeItemFileEdit.cpp : implementation file
 
 // #include "stdafx.h"
-#include "../../../idlib/precompiled.h"
+#include "precompiled.h"
 #pragma hdrstop
 
 #include "proptree.h"
